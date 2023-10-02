@@ -41,7 +41,7 @@ Please consider what kind of change it is:
 
 ### <a name="submit-issue"></a> Submitting an Issue
 
-Before you submit an issue, please search the [issues tracker](https://github.com/Kryha/zk-states/issues), maybe an issue for your problem already exists and the discussion might inform you of workarounds readily available.
+Before you submit an issue, please search the [issues tracker](https://github.com/Kryha/bot-busters/issues), maybe an issue for your problem already exists and the discussion might inform you of workarounds readily available.
 
 We want to fix all the issues as soon as possible, but before fixing a bug we need to reproduce and confirm it. In order to reproduce bugs, we will systematically ask you to provide some clear steps to reproduce this issue. Keep in mind that maintainers invest their time trying to reproduce and fix bugs, and any extra information you provide will speed up the resolution of the issue. Please, consider the time you put into asking properly for an issue to be fixed. We would like to spend our time fixing issues and adding new features, not investigating irrelevant reports.
 
