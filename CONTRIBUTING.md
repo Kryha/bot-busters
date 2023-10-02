@@ -1,6 +1,6 @@
-# Contributing to zkStates
+# Contributing to Bot-Busters
 
-We would love for you to contribute to zkStates and help make it even better than it is
+We would love for you to contribute to Bot-Busters and help make it even better than it is
 today! As a contributor, here are the guidelines we would like you to follow:
 
 - [Code of Conduct](#coc)
@@ -13,7 +13,7 @@ today! As a contributor, here are the guidelines we would like you to follow:
 
 ## <a name="coc"></a> Code of Conduct
 
-Help us keep zkStates open and inclusive. Please read and follow our [Code of Conduct](code_of_conduct.md).
+Help us keep Bot-Busters open and inclusive. Please read and follow our [Code of Conduct](code_of_conduct.md).
 
 ## <a name="question"></a> Got a Question or Problem?
 
@@ -47,7 +47,7 @@ We want to fix all the issues as soon as possible, but before fixing a bug we ne
 
 Include things like:
 
-- Version of zkStates used
+- Version of Bot-Busters used
 - Browser and version used
 - Step by step guide on how reach the issue
 
@@ -80,7 +80,7 @@ Before you submit your Pull Request (PR) consider the following guidelines:
 
 4. Create your patch, **including appropriate test cases**.
 5. Follow our [Coding Rules](#rules).
-6. Run the full zkStates test suite, as described in the [Readme][readme],
+6. Run the full Bot-Busters test suite, as described in the [Readme][readme],
    and ensure that all tests pass.
 7. Commit your changes using a descriptive commit message that follows our
    [commit message conventions](#commit). Adherence to these conventions
@@ -103,7 +103,7 @@ Before you submit your Pull Request (PR) consider the following guidelines:
 - If we suggest changes then:
 
   - Make the required updates.
-  - Re-run the zkStates test suites to ensure tests are still passing.
+  - Re-run the Bot-Busters test suites to ensure tests are still passing.
   - Rebase your branch and force push to your GitHub repository (this will update your Pull Request):
 
     ```shell
