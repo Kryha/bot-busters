@@ -39,9 +39,9 @@ cargo install --path .
 Now that we have installed the necessary tools we can start building our first smart contract. Let's first use SnarkOS to run a local Aleo node where we are going to deploy our programs during development.
 
 ## Running the chain locally
-In this section we will run a local node of snarkOs and deploy a contract to it. If you want a more detailed explanation of the steps below you can read the [Aleo Documentation](https://developer.aleo.org/testnet/getting_started/deploy_execute).
+In this section we will run a local node of SnarkOs and deploy a contract to it. If you want a more detailed explanation of the steps below you can read the [Aleo Documentation](https://developer.aleo.org/testnet/getting_started/deploy_execute).
 
-Run a local node of snarkOs using the following command:
+Run a local node of SnarkOs using the following command:
 
 ```bash
 snarkos start --nodisplay --dev 0 --beacon
@@ -53,7 +53,7 @@ If you previously started a chain and want to start with a clean chain you can r
 snarkos clean --dev 0
 ```
 
-It will take some time before the node is started. When it's done loading, you will see a promt containing details about the deployer account: private key, view-key and address. When you are running the node in dev mode, the following account will be used:
+It will take some time before the node is started. When it's done loading, you will see a prompt containing details about the deployer account: private key, view-key and address. When you are running the node in dev mode, the following account will be used:
 
 - **Private Key:** APrivateKey1zkp8CZNn3yeCseEtxuVPbDCwSyhGW6yZKUYKfgXmcpoGPWH
 - **View Key:** AViewKey1mSnpFFC8Mj4fXbK5YiWgZ3mjiV8CxA79bYNa8ymUpTrw
@@ -100,14 +100,7 @@ Let's put the copied record in a environment variable:
 
 Now we have everything to develop and locally deploy a Leo contract. Go to the location of your Leo contract or start a new project.
 
-Make sure you build the project with the latest changes and check if there is a folder **./build** directory in the directory of our program. To deploy the program make sure you are in the program folder and run:
-
-TODO: add proper function call
-```bash
-
-snarkos developer execute leaderboard.aleo addPlayer <Player-Data> --private-key $PRIVATE_KEY --query "http://localhost:3030" --broadcast "http://localhost:3030/testnet3/transaction/broadcast" 
-
-```
+Make sure you build the project with the latest changes and check if there is a **./build** directory in the directory of our program. To deploy the program make sure you are in the program directory and run:
 
 ```bash
 
@@ -115,11 +108,20 @@ snarkos developer deploy leaderboard.aleo --private-key $PRIVATE_KEY --query "ht
 
 ```
 
-The program is now deployed to the local node. The record you provided is now spend and you can't be used again. If you want new record that can be spend. You can copy the transaction ID from the deployment command output. When copying the transaction ID open your browser or program that you use to interact with REST Api's and make a GET request to the following endpoint:
+The program is now deployed to the local node. The record you provided is now spent and you can't be used again. If you want a new spendable record, you can copy the transaction ID from the deployment command output. When copying the transaction ID open your browser or program that you use to interact with REST APIs and make a GET request to the following endpoint:
 
 ```text
 http://localhost:3030/testnet3/transaction/<transaction-id>
 ```
 
-In the response look for the record cipher text. Now go to the [Aleo SDK website](https://aleo.tools/sdk) and decrypt the record. You can now set the output of the function as your new $RECORD environment variable.
+In the response look for the record cipher text (it's in the `outputs` field and should start with `record1`). Now go to the [Aleo SDK website](https://aleo.tools/record) and decrypt the record with the view key of the account used to deploy the program. You can now set the output of the function as your new $RECORD environment variable.
+
 Now your contract is deployed. Interacting with the contract can be done with the following command.
+
+<!-- TODO: add proper function call -->
+
+```bash
+
+snarkos developer execute leaderboard.aleo addPlayer <Player-Data> --private-key $PRIVATE_KEY --query "http://localhost:3030" --broadcast "http://localhost:3030/testnet3/transaction/broadcast" 
+
+```
