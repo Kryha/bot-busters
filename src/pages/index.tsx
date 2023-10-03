@@ -10,6 +10,7 @@ import { AuthButton } from "@/components/authentication";
 export default function Home() {
   const { data: sessionData } = useSession();
 
+  // TODO: remove example queries
   const hello = api.example.hello.useQuery({ text: "from tRPC" });
   const { data: secretMessage } = api.example.getSecretMessage.useQuery(
     undefined, // no input
