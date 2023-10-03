@@ -17,7 +17,7 @@ Help us keep Bot-Busters open and inclusive. Please read and follow our [Code of
 
 ## <a name="question"></a> Got a Question or Problem?
 
-Do not open issues for general support questions as we want to keep GitHub issues for bug reports and feature requests.
+Do not open issues for general support questions as we want to keep GitHub issues for bug reports and feature requests. If you have questions about how to use Bot-Busters, please read the [documentation][readme] and ask on [Discord][https://discord.gg/bgsMKgRz]. The Aleo Discord is also a great place to browse and ask general questions.
 
 ## <a name="issue"></a> Found a Bug?
 
@@ -51,7 +51,7 @@ Include things like:
 - Browser and version used
 - Step by step guide on how reach the issue
 
-You can file new [issues in github](https://github.com/Kryha/zk-states/issues)
+You can file new [issues in github](https://github.com/Kryha/bot-busters/issues)
 
 ### <a name="branch-naming"></a> Branch Naming
 
@@ -69,9 +69,9 @@ Accepted branch prefixes:
 
 Before you submit your Pull Request (PR) consider the following guidelines:
 
-1. Search [GitHub](https://github.com/Kryha/zk-states/pulls) for an open or closed PR
+1. Search [GitHub](https://github.com/Kryha/bot-busters/pulls) for an open or closed PR
    that relates to your submission. You don't want to duplicate effort.
-2. Fork the Kryha/zk-states repo.
+2. Fork the Kryha/bot-busters repo.
 3. Make your changes in a new git branch:
 
    ```shell
@@ -98,7 +98,7 @@ Before you submit your Pull Request (PR) consider the following guidelines:
    git push origin fix/my-fix-branch
    ```
 
-9. In GitHub, send a pull request to `zk-states:develop`.
+9. In GitHub, send a pull request to `bot-busters:develop`.
 
 - If we suggest changes then:
 
@@ -154,7 +154,7 @@ To ensure consistency throughout the source code, keep these rules in mind as yo
 
 We have very precise rules over how our git commit messages can be formatted. This leads to **more
 readable messages** that are easy to follow when looking through the **project history**. But also,
-we use the git commit messages to **generate the zkStates change log**.
+we use the git commit messages to **generate the Bot Busters change log**.
 
 ### Commit Message Format
 
@@ -176,7 +176,7 @@ to read on GitHub as well as in various git tools.
 
 The footer should contain a [closing reference to an issue](https://help.github.com/articles/closing-issues-via-commit-messages/) if any.
 
-Check the [last commits](https://github.com/Kryha/zk-states/commits)
+Check the [last commits](https://github.com/Kryha/bot-busters/commits)
 
 Samples:
 
@@ -240,5 +240,5 @@ reference GitHub issues that this commit **Closes**.
 
 <hr>
 
-[readme]: https://github.com/Kryha/zk-states/blob/develop/README.md
-[github]: https://github.com/Kryha/zk-states
+[readme]: https://github.com/Kryha/bot-busters/blob/develop/README.md
+[github]: https://github.com/Kryha/bot-busters
