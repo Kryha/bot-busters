@@ -4,12 +4,13 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import { useWallet } from "@demox-labs/aleo-wallet-adapter-react";
 import {
   DecryptPermission,
-  WalletAdapterNetwork,
+  type WalletAdapterNetwork,
 } from "@demox-labs/aleo-wallet-adapter-base";
 import { LeoWalletName } from "@demox-labs/aleo-wallet-adapter-leo";
 import { Button } from "@mui/material";
 import { isValidSession } from "@/utils/session";
 import { text } from "@/assets/text";
+import { env } from "@/env.mjs";
 
 export const AuthButton = () => {
   const { data: sessionData, status } = useSession();
@@ -19,6 +20,7 @@ export const AuthButton = () => {
     connect,
     connected: walletConnected,
     select,
+    disconnect,
   } = useWallet();
 
   useEffect(() => {
@@ -41,8 +43,17 @@ export const AuthButton = () => {
     try {
       await connect(
         DecryptPermission.UponRequest,
-        WalletAdapterNetwork.Testnet
+        env.NEXT_PUBLIC_ALEO_NETWORK as WalletAdapterNetwork
       );
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleSignOut = async () => {
+    try {
+      await disconnect();
+      await signOut();
     } catch (error) {
       console.error(error);
     }
@@ -52,7 +63,7 @@ export const AuthButton = () => {
     <Button
       onClick={
         isValidSession(sessionData)
-          ? () => void signOut()
+          ? () => void handleSignOut()
           : () => void handleSignIn()
       }
     >
