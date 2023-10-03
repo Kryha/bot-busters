@@ -32,7 +32,6 @@ export const authOptions: NextAuthOptions = {
   },
   providers: [
     CredentialsProvider({
-      name: "Credentials",
       credentials: {
         publicKey: {
           label: "Public Key",
