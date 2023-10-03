@@ -1,12 +1,21 @@
-import { signIn, signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import Head from "next/head";
 
 import { api } from "@/utils/api";
-import { Button, Container, Typography } from "@mui/material";
+import { Container, Typography } from "@mui/material";
+import { isValidSession } from "@/utils/session";
+import { AuthButton } from "@/components/authentication";
 
 // TODO: define text in another file
 export default function Home() {
+  const { data: sessionData } = useSession();
+
+  // TODO: remove example queries
   const hello = api.example.hello.useQuery({ text: "from tRPC" });
+  const { data: secretMessage } = api.example.getSecretMessage.useQuery(
+    undefined, // no input
+    { enabled: isValidSession(sessionData) }
+  );
 
   const renderHello = () => {
     if (hello.isLoading) return "Loading from tRPC...";
@@ -32,34 +41,14 @@ export default function Home() {
 
           <Typography variant="body1">{renderHello()}</Typography>
 
-          <AuthShowcase />
+          <Typography variant="body1">
+            {sessionData && <span>Address: {sessionData.publicKey}</span>}
+            {secretMessage && <span> - {secretMessage}</span>}
+          </Typography>
+
+          <AuthButton />
         </Container>
       </main>
     </>
-  );
-}
-
-// TODO: use wallet login instead of discord
-function AuthShowcase() {
-  const { data: sessionData } = useSession();
-
-  const { data: secretMessage } = api.example.getSecretMessage.useQuery(
-    undefined, // no input
-    { enabled: sessionData?.user !== undefined }
-  );
-
-  return (
-    <Container>
-      <Typography variant="body1">
-        {sessionData && <span>Logged in as {sessionData.user?.name}</span>}
-        {secretMessage && <span> - {secretMessage}</span>}
-      </Typography>
-
-      <Button
-        onClick={sessionData ? () => void signOut() : () => void signIn()}
-      >
-        {sessionData ? "Sign out" : "Sign in"}
-      </Button>
-    </Container>
   );
 }

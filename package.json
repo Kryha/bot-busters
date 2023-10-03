@@ -9,6 +9,10 @@
     "start": "next start"
   },
   "dependencies": {
+    "@demox-labs/aleo-wallet-adapter-base": "^0.0.18",
+    "@demox-labs/aleo-wallet-adapter-leo": "^0.0.17",
+    "@demox-labs/aleo-wallet-adapter-react": "^0.0.17",
+    "@demox-labs/aleo-wallet-adapter-reactui": "^0.0.29",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.14.11",
