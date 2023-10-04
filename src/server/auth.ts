@@ -6,6 +6,10 @@ import {
 } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
+import { db, dbSchema } from "@/server/db";
+import { env } from "@/env.mjs";
+import { eq } from "drizzle-orm";
+
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
  * object and keep type safety.
@@ -24,6 +28,7 @@ declare module "next-auth" {
  * @see https://next-auth.js.org/configuration/options
  */
 export const authOptions: NextAuthOptions = {
+  debug: env.NODE_ENV === "development",
   callbacks: {
     session: ({ session, token }) => ({
       ...session,
@@ -38,8 +43,21 @@ export const authOptions: NextAuthOptions = {
           type: "text",
         },
       },
-      authorize(credentials) {
+      async authorize(credentials) {
         if (!credentials?.publicKey) return null;
+        // TODO: add signature verification
+
+        const selectedUsers = await db
+          .select()
+          .from(dbSchema.users)
+          .where(eq(dbSchema.users.publicKey, credentials.publicKey));
+
+        if (!selectedUsers.length) {
+          await db
+            .insert(dbSchema.users)
+            .values({ publicKey: credentials.publicKey });
+        }
+
         return {
           id: credentials.publicKey,
         };
