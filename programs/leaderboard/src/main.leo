@@ -8,7 +8,7 @@ program leaderboard.aleo {
 
     mapping leaderboard: address => i64;
     
-    transition new (player:address) ->  Score{
+    transition add_player (player:address) ->  Score{
         is_owner_of_program();
         let initialScore: i64 = 0i64;
         let score: Score = Score{
@@ -19,7 +19,7 @@ program leaderboard.aleo {
         return score then finalize(player,initialScore);
     }
 
-    finalize new (player:address, score:i64) {
+    finalize add_player (player:address, score:i64) {
         let playerExists: bool = Mapping::contains(leaderboard, player);
         assert(!playerExists);
 
@@ -51,10 +51,8 @@ program leaderboard.aleo {
     }
 
 
-    // TODO: Change to the address of the Backend address
-    // Local development address: aleo1rhgdu77hgyqd3xjj8ucu3jj9r2krwz6mnzyd80gncr5fxcwlh5rsvzp9px
     transition remove (player:address){
-        let is_owner:bool = is_owner_of_program();
+        is_owner_of_program();
 
         return then finalize(player);
     }
@@ -74,7 +72,8 @@ program leaderboard.aleo {
             }
     }
 
-    // TODO: Change to the address of the Backend address
+    // TODO: Change to the address of the Backend service
+    // TODO: Paramaterize owner address
     // Local development address: aleo1rhgdu77hgyqd3xjj8ucu3jj9r2krwz6mnzyd80gncr5fxcwlh5rsvzp9px
     inline is_owner_of_program(){
         let program_owner: address = aleo1rhgdu77hgyqd3xjj8ucu3jj9r2krwz6mnzyd80gncr5fxcwlh5rsvzp9px;
