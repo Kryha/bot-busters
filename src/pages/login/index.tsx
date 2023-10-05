@@ -7,6 +7,7 @@ import { AuthButton } from "@/components/authentication";
 import { isValidSession } from "@/utils/session";
 import { api } from "@/utils/api";
 
+// TODO: define text in another file
 const Login = () => {
   const { data: sessionData } = useSession();
   const router = useRouter();

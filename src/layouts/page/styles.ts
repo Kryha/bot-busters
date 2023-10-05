@@ -1,6 +1,6 @@
 import { type SxProps } from "@mui/material";
 
-export const styles: Record<string, SxProps> = {
+export const styles = {
   container: {
     alignItems: "center",
     justifyContent: "start",
@@ -9,5 +9,5 @@ export const styles: Record<string, SxProps> = {
       minHeight: "100dvh",
     },
     overflow: "scroll",
-  },
+  } satisfies SxProps,
 };
