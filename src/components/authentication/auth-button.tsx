@@ -21,7 +21,10 @@ export const AuthButton = () => {
     connected: walletConnected,
     select,
     disconnect,
+    connecting: walletConnecting,
   } = useWallet();
+
+  const isLoading = walletConnecting || status === "loading";
 
   useEffect(() => {
     select(LeoWalletName);
@@ -61,6 +64,7 @@ export const AuthButton = () => {
 
   return (
     <Button
+      disabled={isLoading}
       onClick={
         isValidSession(sessionData)
           ? () => void handleSignOut()
