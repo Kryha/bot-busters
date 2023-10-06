@@ -64,23 +64,27 @@ export const authOptions: NextAuthOptions = {
         // TODO: Uncomment this line once Aleo SDK supports Node.js execution. (v0.6.0<)
         //const isVerified = await verifySignature(credentials.publicKey,credentials.message,credentials.playerSign);
         // if (!isVerified) {
-        //   return { id: credentials.publicKey };
+        //   return null;
         // }
+        try {
+          const selectedUsers = await db
+            .select()
+            .from(dbSchema.users)
+            .where(eq(dbSchema.users.publicKey, credentials.publicKey));
 
-        const selectedUsers = await db
-          .select()
-          .from(dbSchema.users)
-          .where(eq(dbSchema.users.publicKey, credentials.publicKey));
+          if (!selectedUsers.length) {
+            await db
+              .insert(dbSchema.users)
+              .values({ publicKey: credentials.publicKey });
+          }
 
-        if (!selectedUsers.length) {
-          await db
-            .insert(dbSchema.users)
-            .values({ publicKey: credentials.publicKey });
+          return {
+            id: credentials.publicKey,
+          };
+        } catch (e) {
+          console.log(e);
+          return null;
         }
-
-        return {
-          id: credentials.publicKey,
-        };
       },
     }),
   ],
