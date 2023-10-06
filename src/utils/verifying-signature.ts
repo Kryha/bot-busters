@@ -1,12 +1,10 @@
-import { initializeWasm, Address, Signature } from "@aleohq/sdk";
+import { Address, Signature } from "@aleohq/sdk";
 
-export const verifySignature = async (
+export const verifySignature = (
   pubAddress: string,
   message: string,
   playerSign: string
-): Promise<boolean> => {
-  await initializeWasm();
-
+): boolean => {
   const messageBuffer = new TextEncoder().encode(message);
 
   const signature = Signature.from_string(playerSign);
