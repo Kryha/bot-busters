@@ -15,11 +15,10 @@ import {
   DecryptPermission,
   WalletAdapterNetwork,
 } from "@demox-labs/aleo-wallet-adapter-base";
-
-const AUTH_SIGN_MESSAGE = "Sign in to Bot Busters";
+import { AUTH_SIGN_MESSAGE } from "@/constants";
 
 export const AuthButton = () => {
-  const { data: sessionData, status } = useSession();
+  const { data: sessionData } = useSession();
   const {
     publicKey,
     wallet,
@@ -31,9 +30,6 @@ export const AuthButton = () => {
   } = useWallet();
 
   const [signature, setSignature] = useState<string>();
-  const [walletStatus, setWalletStatus] = useState<
-    "connecting" | "checking-signature" | "success" | "error"
-  >();
   const isCheckingSign = useRef(false);
   const authTriggered = useRef(false);
 
@@ -72,8 +68,8 @@ export const AuthButton = () => {
         isCheckingSign.current = false;
         authTriggered.current = false;
       } catch (error) {
+        //TODO: handle unauthorized error
         console.error(error);
-        setWalletStatus("error");
       } finally {
         setSignature(undefined);
       }
@@ -83,18 +79,15 @@ export const AuthButton = () => {
 
   const authenticatePlayer = async () => {
     try {
-      setWalletStatus("connecting");
       if (!connected) {
         await connect(
           DecryptPermission.UponRequest,
           WalletAdapterNetwork.Testnet
         );
       }
-      setWalletStatus("checking-signature");
       authTriggered.current = true;
     } catch (error) {
       console.warn(error);
-      setWalletStatus("error");
     }
   };
   const logout = async () => {
