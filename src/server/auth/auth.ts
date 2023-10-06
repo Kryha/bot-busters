@@ -71,7 +71,7 @@ export const authOptions: NextAuthOptions = {
           return null;
         }
         try {
-          //TODO: Identify what to store in the database
+          //TODO: Identify what to store in the database of the user
           const selectedUsers = await db
             .select()
             .from(dbSchema.users)
