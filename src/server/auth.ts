@@ -1,4 +1,4 @@
-import { verifySignature } from "@/utils/verifying-signature";
+// import { verifySignature } from "@/utils/verifying-signature";
 import { type GetServerSidePropsContext } from "next";
 import {
   getServerSession,
@@ -6,6 +6,10 @@ import {
   type NextAuthOptions,
 } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+
+import { db, dbSchema } from "@/server/db";
+import { env } from "@/env.mjs";
+import { eq } from "drizzle-orm";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -25,6 +29,7 @@ declare module "next-auth" {
  * @see https://next-auth.js.org/configuration/options
  */
 export const authOptions: NextAuthOptions = {
+  debug: env.NODE_ENV === "development",
   callbacks: {
     session: ({ session, token }) => ({
       ...session,
@@ -47,7 +52,7 @@ export const authOptions: NextAuthOptions = {
           type: "text",
         },
       },
-      authorize(credentials) {
+      async authorize(credentials) {
         if (
           !credentials?.message ||
           !credentials?.playerSign ||
@@ -55,12 +60,27 @@ export const authOptions: NextAuthOptions = {
         ) {
           return null;
         }
+
         // TODO: Uncomment this line once Aleo SDK supports Node.js execution. (v0.6.0<)
-        // await verifySignature(credentials.publicKey,credentials.message,credentials.playerSign);
-        if (credentials) {
-          return { id: credentials.publicKey };
+        //const isVerified = await verifySignature(credentials.publicKey,credentials.message,credentials.playerSign);
+        // if (!isVerified) {
+        //   return { id: credentials.publicKey };
+        // }
+
+        const selectedUsers = await db
+          .select()
+          .from(dbSchema.users)
+          .where(eq(dbSchema.users.publicKey, credentials.publicKey));
+
+        if (!selectedUsers.length) {
+          await db
+            .insert(dbSchema.users)
+            .values({ publicKey: credentials.publicKey });
         }
-        return null;
+
+        return {
+          id: credentials.publicKey,
+        };
       },
     }),
   ],

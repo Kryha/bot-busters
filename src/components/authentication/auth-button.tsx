@@ -38,6 +38,10 @@ export const AuthButton = () => {
   const authTriggered = useRef(false);
 
   useEffect(() => {
+    select(LeoWalletName);
+  }, [select]);
+
+  useEffect(() => {
     const connectWallet = async () => {
       if (
         connecting ||
@@ -80,7 +84,6 @@ export const AuthButton = () => {
   const authenticatePlayer = async () => {
     try {
       setWalletStatus("connecting");
-      select(LeoWalletName);
       if (!connected) {
         await connect(
           DecryptPermission.UponRequest,
