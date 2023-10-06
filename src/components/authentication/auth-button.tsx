@@ -49,10 +49,10 @@ export const AuthButton = () => {
         !publicKey ||
         !authTriggered.current ||
         isCheckingSign.current
-      )
+      ) {
         return;
+      }
       isCheckingSign.current = true;
-
       try {
         const adapter = wallet.adapter as LeoWalletAdapter;
 
@@ -102,21 +102,14 @@ export const AuthButton = () => {
     await disconnect();
   };
   return (
-    <>
-      <p>
-        <a>Wallet status: {walletStatus}</a>
-        <br />
-        <a>Session status: {status}</a>
-      </p>
-      <Button
-        onClick={
-          isValidSession(sessionData)
-            ? () => void logout()
-            : () => void authenticatePlayer()
-        }
-      >
-        {isValidSession(sessionData) ? text.auth.signOut : text.auth.signIn}
-      </Button>
-    </>
+    <Button
+      onClick={
+        isValidSession(sessionData)
+          ? () => void logout()
+          : () => void authenticatePlayer()
+      }
+    >
+      {isValidSession(sessionData) ? text.auth.signOut : text.auth.signIn}
+    </Button>
   );
 };
