@@ -21,14 +21,14 @@ export const styles = {
   left: {
     borderTopRightRadius: "0.625rem",
     borderBottomRightRadius: "0.625rem",
-    backgroundColor: "#f0f0f0",
-    color: "black",
+    backgroundColor: "common.white",
+    color: "common.black",
   },
   right: {
     borderTopLeftRadius: "0.625rem",
     borderBottomLeftRadius: "0.625rem",
-    backgroundColor: "#AFA3D1",
-    color: "black",
+    backgroundColor: "secondary.main",
+    color: "common.black",
   },
   leftFirst: {
     borderTopLeftRadius: "0.625rem",
