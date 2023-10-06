@@ -1,4 +1,4 @@
-import { verifySignature } from "@/utils/verifying-signature";
+// import { verifySignature } from "@/utils/verifying-signature";
 import { type GetServerSidePropsContext } from "next";
 import {
   getServerSession,
@@ -61,18 +61,12 @@ export const authOptions: NextAuthOptions = {
           return null;
         }
 
-        const isVerified = verifySignature(
-          credentials.publicKey,
-          credentials.message,
-          credentials.playerSign
-        );
-
-        if (!isVerified) {
-          return null;
-        }
-
+        // TODO: Uncomment this line once Aleo SDK supports Node.js execution. (v0.6.0<)
+        //const isVerified = await verifySignature(credentials.publicKey,credentials.message,credentials.playerSign);
+        // if (!isVerified) {
+        //   return null;
+        // }
         try {
-          //TODO: Identify what to store in the database
           const selectedUsers = await db
             .select()
             .from(dbSchema.users)
