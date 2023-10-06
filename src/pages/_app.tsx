@@ -17,7 +17,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
   const wallets = useMemo(
     () => [
       new LeoWalletAdapter({
-        appName: "Leo Demo App",
+        appName: "Bot Busters",
       }),
     ],
     []
