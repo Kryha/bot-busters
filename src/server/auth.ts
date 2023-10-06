@@ -1,3 +1,4 @@
+import { verifySignature } from "@/utils/verifying-signature";
 import { type GetServerSidePropsContext } from "next";
 import {
   getServerSession,
@@ -37,12 +38,29 @@ export const authOptions: NextAuthOptions = {
           label: "Public Key",
           type: "text",
         },
+        playerSign: {
+          label: "Signature",
+          type: "text",
+        },
+        message: {
+          label: "Signed message",
+          type: "text",
+        },
       },
       authorize(credentials) {
-        if (!credentials?.publicKey) return null;
-        return {
-          id: credentials.publicKey,
-        };
+        if (
+          !credentials?.message ||
+          !credentials?.playerSign ||
+          !credentials?.publicKey
+        ) {
+          return null;
+        }
+        // TODO: Uncomment this line once Aleo SDK supports Node.js execution. (v0.6.0<)
+        // await verifySignature(credentials.publicKey,credentials.message,credentials.playerSign);
+        if (credentials) {
+          return { id: credentials.publicKey };
+        }
+        return null;
       },
     }),
   ],
