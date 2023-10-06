@@ -16,7 +16,7 @@ export const styles = {
       textOverflow: "ellipsis",
     },
   },
-  listTitle: {
+  listUsername: {
     flexDirection: "row",
     justifyContent: "space-between",
   } satisfies SxProps,

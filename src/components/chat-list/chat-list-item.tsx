@@ -13,7 +13,7 @@ import { styles } from "./styles";
 import { type OverridableComponent } from "@mui/material/OverridableComponent";
 
 interface Props {
-  title: string;
+  username: string;
   time: string;
   lastMessage?: string;
   AvatarImage: OverridableComponent<SvgIconTypeMap<object, "svg">> & {
@@ -23,7 +23,7 @@ interface Props {
 
 export const ChatListItem: FC<Props> = ({
   time,
-  title,
+  username,
   lastMessage,
   AvatarImage,
 }) => {
@@ -38,8 +38,8 @@ export const ChatListItem: FC<Props> = ({
         </ListItemAvatar>
         <ListItemText
           primary={
-            <Stack sx={styles.listTitle}>
-              <Typography variant="h5">{title}</Typography>
+            <Stack sx={styles.listUsername}>
+              <Typography variant="h5">{username}</Typography>
               <Typography variant="body2" color="secondary.dark">
                 {time}
               </Typography>

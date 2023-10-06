@@ -14,7 +14,7 @@ export const ChatList = () => {
           <>
             <ChatListItem
               time={item.time}
-              title={item.title}
+              username={item.username}
               AvatarImage={item.image}
               lastMessage={item.lastMessage}
               key={index}
