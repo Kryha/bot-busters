@@ -9,16 +9,26 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import { text } from "@/assets/text";
 import { styles } from "./styles";
+import { ToolbarMenu } from "../toolbar-menu";
+import { type NextRouter } from "next/router";
 
 interface Props {
+  anchorEl: HTMLElement | null;
+
   setToggle: () => void;
+  setAnchorEl: (element: HTMLElement | null) => void;
+  router: NextRouter;
 }
 
-export const ChatToolBar: FC<Props> = ({ setToggle }) => {
+export const ChatToolBar: FC<Props> = ({
+  setToggle,
+  anchorEl,
+  setAnchorEl,
+  router,
+}) => {
   return (
     <AppBar position="fixed" sx={styles.appBar}>
       <Toolbar sx={styles.toolbar}>
@@ -45,9 +55,11 @@ export const ChatToolBar: FC<Props> = ({ setToggle }) => {
           </Typography>
         </Stack>
         <Stack sx={styles.expandButton}>
-          <IconButton onClick={setToggle}>
-            <ExpandMoreIcon />
-          </IconButton>
+          <ToolbarMenu
+            anchorEl={anchorEl}
+            setAnchorEl={setAnchorEl}
+            router={router}
+          />
         </Stack>
       </Toolbar>
     </AppBar>
