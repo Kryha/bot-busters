@@ -3,7 +3,7 @@ import { type SxProps } from "@mui/material";
 
 export const styles = {
   wrapper: {
-    ml: `${DRAWER_WIDTH}px`,
+    ml: DRAWER_WIDTH,
     backgroundColor: "common.white",
     "@media (max-width:600px)": {
       ml: 0,
@@ -25,13 +25,13 @@ export const styles = {
   input: {
     position: "fixed",
     bottom: 0,
-    width: `calc(100vw - ${DRAWER_WIDTH}px)`,
+    width: `calc(100vw - ${DRAWER_WIDTH})`,
     backgroundColor: "common.white",
     "@media (max-width:600px)": {
       width: 1,
     },
   },
   text: {
-    ml: `${DRAWER_WIDTH}px`,
+    ml: DRAWER_WIDTH,
   } satisfies SxProps,
 };

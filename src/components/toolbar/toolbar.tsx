@@ -30,7 +30,7 @@ export const ChatToolBar: FC<Props> = ({
   router,
 }) => {
   return (
-    <AppBar position="fixed" sx={styles.appBar}>
+    <AppBar position="fixed" sx={styles.appBar} elevation={0}>
       <Toolbar sx={styles.toolbar}>
         <Stack sx={styles.container}>
           <IconButton
