@@ -13,7 +13,7 @@ import { type NextRouter } from "next/router";
 
 import { text } from "@/assets/text";
 import { styles } from "./styles";
-import { ToolbarMenu } from "../toolbar-menu";
+import { ToolbarMenu } from "@/features/chat/components";
 
 interface Props {
   anchorEl: HTMLElement | null;
