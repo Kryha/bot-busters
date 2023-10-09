@@ -48,4 +48,4 @@ jobs:
           NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
         run: |-
           envsubst < deployment/staging/secrets.template.yaml > deployment/staging/secrets.yaml
-          skaffold run --filename skaffold.staging.yaml
+          skaffold run --filename skaffold.staging.yml
