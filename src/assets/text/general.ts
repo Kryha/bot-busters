@@ -3,5 +3,5 @@ export const general = {
   home: "Home",
   decision: "Decision",
   logout: "Logout",
-  clickChat: "Click chat to open messages",
+  clickChat: "Click on the chat to open messages",
 };
