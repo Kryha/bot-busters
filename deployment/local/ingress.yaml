@@ -3,7 +3,7 @@ kind: Ingress
 metadata:
   name: bot-busters
   annotations:
-    spec.ingressClassName: "nginx"
+    kubernetes.io/ingress.class: "nginx"
     nginx.ingress.kubernetes.io/rewrite-target: /$1
     nginx.ingress.kubernetes.io/proxy-body-size: 200m
 spec:
