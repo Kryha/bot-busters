@@ -9,8 +9,7 @@ export const MuiIconButton = (theme: Theme): Components["MuiIconButton"] => {
           color: palette.opaqueGrey.main,
         },
         "@media (min-width:2000px)": {
-          fontSize: "6rem",
-          padding: "18px",
+          fontSize: "2.2rem",
         },
       },
     },
