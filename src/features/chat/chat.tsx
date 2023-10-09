@@ -1,9 +1,9 @@
 import { Box, useMediaQuery } from "@mui/material";
 import { useState } from "react";
 
-import { ChatToolBar, ChatDrawer, MainChatView } from "@/components";
 import { styles } from "./styles";
 import { useRouter } from "next/router";
+import { ChatDrawer, ChatToolBar, MainChatView } from "./components";
 
 export const ChatView = () => {
   // TODO: update component

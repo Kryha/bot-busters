@@ -2,7 +2,7 @@ import { Stack, type StackProps } from "@mui/material";
 import { type FC } from "react";
 import { styles } from "./styles";
 
-export const GeneralPage: FC<StackProps> = (props) => {
+export const ChatPage: FC<StackProps> = (props) => {
   const { children } = props;
 
   return (

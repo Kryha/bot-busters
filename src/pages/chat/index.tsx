@@ -1,14 +1,14 @@
 import { type FC } from "react";
 
-import { GeneralPage } from "@/layouts";
+import { ChatPage } from "@/layouts";
 import withAuth from "@/utils/withAuth";
 import { ChatView } from "@/features";
 
 const Chat: FC = () => {
   return (
-    <GeneralPage>
+    <ChatPage>
       <ChatView />
-    </GeneralPage>
+    </ChatPage>
   );
 };
 

@@ -1,9 +1,10 @@
+import { type FC } from "react";
 import { Box, Divider, List } from "@mui/material";
 import { drawerItems } from "./drawer-items";
 import { styles } from "./styles";
+
 import { ChatListToolbar } from "../chat-list-toolbar";
 import { ChatListItem } from "../chat-list";
-import { type FC } from "react";
 
 interface Props {
   toggle: () => void;

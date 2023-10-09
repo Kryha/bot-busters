@@ -9,11 +9,11 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import { type NextRouter } from "next/router";
 
 import { text } from "@/assets/text";
 import { styles } from "./styles";
 import { ToolbarMenu } from "../toolbar-menu";
-import { type NextRouter } from "next/router";
 
 interface Props {
   anchorEl: HTMLElement | null;

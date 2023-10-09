@@ -1,7 +1,7 @@
 import { type FC } from "react";
-
 import { SendRounded } from "@mui/icons-material";
 import { InputAdornment, Stack, TextField, Typography } from "@mui/material";
+
 import { styles } from "./styles";
 import { ChatMsg } from "../chat-message";
 import { chats } from "./chats";
