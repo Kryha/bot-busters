@@ -1,11 +1,8 @@
 name: Build and Deploy staging to GKE
 
 on:
-  # release:
-  #   types: [published]
-  push:
-    branches:
-      - "chore/deployment"
+  release:
+    types: [published]
 
 env:
   PROJECT_ID: web3-335312
