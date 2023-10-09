@@ -4,7 +4,7 @@ RUN apk --no-cache add --update git python3 g++
 
 WORKDIR /app
 
-RUN yarn set version 3.6.3 --only-if-needed
+# RUN yarn set version 3.6.3 --only-if-needed
 
 ENV GENERATE_SOURCEMAP false
 ENV NODE_ENV production
