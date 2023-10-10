@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/unbound-method */
-
-import { useEffect, useRef, useState } from "react";
-import { useSession } from "next-auth/react";
+import { useEffect } from "react";
 import {
   LeoWalletName,
   type LeoWalletAdapter,
@@ -10,7 +8,7 @@ import { Button } from "@mui/material";
 import { isValidSession } from "@/utils/session";
 import { text } from "@/assets/text";
 import { useWallet } from "@demox-labs/aleo-wallet-adapter-react";
-import { signIn, signOut } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import {
   DecryptPermission,
   WalletAdapterNetwork,
@@ -29,53 +27,34 @@ export const AuthButton = () => {
     disconnect,
   } = useWallet();
 
-  const [signature, setSignature] = useState<string>();
-  const isCheckingSign = useRef(false);
-  const authTriggered = useRef(false);
-
   useEffect(() => {
     select(LeoWalletName);
   }, [select]);
 
   useEffect(() => {
     const connectWallet = async () => {
-      if (
-        connecting ||
-        !wallet ||
-        !publicKey ||
-        !authTriggered.current ||
-        isCheckingSign.current
-      ) {
+      if (connecting || !wallet || !publicKey || sessionData !== null) {
         return;
       }
-      isCheckingSign.current = true;
       try {
         const adapter = wallet.adapter as LeoWalletAdapter;
 
-        let newSignature = signature;
-        if (!newSignature) {
-          const bytes = new TextEncoder().encode(AUTH_SIGN_MESSAGE);
-          const signatureBytes = await adapter.signMessage(bytes);
-          newSignature = new TextDecoder().decode(signatureBytes);
+        const bytes = new TextEncoder().encode(AUTH_SIGN_MESSAGE);
+        const signatureBytes = await adapter.signMessage(bytes);
+        const signature = new TextDecoder().decode(signatureBytes);
 
-          setSignature(newSignature);
-        }
         await signIn("credentials", {
           publicKey,
-          playerSign: newSignature,
+          playerSign: signature,
           message: AUTH_SIGN_MESSAGE,
         });
-        isCheckingSign.current = false;
-        authTriggered.current = false;
       } catch (error) {
         //TODO: handle unauthorized error
         console.error(error);
-      } finally {
-        setSignature(undefined);
       }
     };
     void connectWallet();
-  }, [wallet, publicKey, connecting, signature]);
+  }, [wallet, publicKey, connecting, sessionData, connected]);
 
   const authenticatePlayer = async () => {
     try {
@@ -85,15 +64,16 @@ export const AuthButton = () => {
           WalletAdapterNetwork.Testnet
         );
       }
-      authTriggered.current = true;
     } catch (error) {
       console.warn(error);
     }
   };
+
   const logout = async () => {
     await signOut();
     await disconnect();
   };
+
   return (
     <Button
       onClick={
