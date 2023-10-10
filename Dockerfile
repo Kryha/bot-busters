@@ -1,4 +1,4 @@
-FROM node:18-alpine as build
+FROM node:20-alpine as build
 
 RUN apk --no-cache add --update git python3 g++
 
@@ -38,7 +38,7 @@ RUN yarn install --silent
 
 RUN NODE_OPTIONS='--max-old-space-size=4096' yarn build
 
-FROM node:18-alpine as run
+FROM node:20-alpine as run
 
 RUN apk --no-cache add busybox
 
