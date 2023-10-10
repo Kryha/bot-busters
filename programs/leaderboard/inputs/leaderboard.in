@@ -1,7 +1,7 @@
 [add_player]
-player:address = aleo17pahmhudjt89v27rkwmq25ez5z0d5ef89s6x355ls2yvh4t70vzqwzxghz;
+player: address = aleo17pahmhudjt89v27rkwmq25ez5z0d5ef89s6x355ls2yvh4t70vzqwzxghz;
 
 [update]
-player:address = aleo17pahmhudjt89v27rkwmq25ez5z0d5ef89s6x355ls2yvh4t70vzqwzxghz;
-current_score:i64 = 0i64;
-win:bool = false;
+player: address = aleo17pahmhudjt89v27rkwmq25ez5z0d5ef89s6x355ls2yvh4t70vzqwzxghz;
+current_score: i64 = 0i64;
+win: bool = false;
