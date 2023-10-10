@@ -44,7 +44,7 @@ export const authOptions: NextAuthOptions = {
           type: "text",
         },
         signedMessage: {
-          label: "Signature",
+          label: "Signed Message",
           type: "text",
         },
       },
