@@ -1,4 +1,4 @@
-import { verifySignature } from "@/utils/verifying-signature";
+import { verifySignature } from "@/utils/wallet";
 import { type GetServerSidePropsContext } from "next";
 import {
   getServerSession,
@@ -43,51 +43,45 @@ export const authOptions: NextAuthOptions = {
           label: "Public Key",
           type: "text",
         },
-        playerSign: {
+        signature: {
           label: "Signature",
           type: "text",
         },
-        message: {
+        signedMessage: {
           label: "Signed message",
           type: "text",
         },
       },
       async authorize(credentials) {
         if (
-          !credentials?.message ||
-          !credentials?.playerSign ||
+          !credentials?.signature ||
+          !credentials?.signedMessage ||
           !credentials?.publicKey
         ) {
           return null;
         }
 
-        const isVerified = verifySignature(
-          credentials.publicKey,
-          credentials.message,
-          credentials.playerSign
-        );
+        const { publicKey, signature, signedMessage } = credentials;
 
-        if (!isVerified) {
-          return null;
-        }
+        const isVerified = verifySignature(publicKey, signedMessage, signature);
+
+        if (!isVerified) return null;
+
         try {
-          //TODO: Identify what to store in the database of the user
           const selectedUsers = await db
             .select()
             .from(dbSchema.users)
-            .where(eq(dbSchema.users.publicKey, credentials.publicKey));
+            .where(eq(dbSchema.users.publicKey, publicKey));
 
           if (!selectedUsers.length) {
-            await db
-              .insert(dbSchema.users)
-              .values({ publicKey: credentials.publicKey });
+            await db.insert(dbSchema.users).values({ publicKey: publicKey });
           }
 
           return {
-            id: credentials.publicKey,
+            id: publicKey,
           };
         } catch (e) {
-          console.log(e);
+          console.error(e);
           return null;
         }
       },
