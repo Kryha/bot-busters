@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: bot-busters
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    cert-manager.io/cluster-issuer: "letsencrypt-staging"
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.ingress.kubernetes.io/proxy-body-size: 200m
+spec:
+  tls:
+    - secretName: bot-busters.staging.kryha.dev
+      hosts:
+        - bot-busters.staging.kryha.dev
+  rules:
+    - host: "bot-busters.staging.kryha.dev"
+      http:
+        paths:
+          - path: "/(.*)"
+            pathType: Prefix
+            backend:
+              service:
+                name: bot-busters
+                port:
+                  name: bot-busters
