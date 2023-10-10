@@ -1,0 +1,48 @@
+name: Build and Deploy staging to GKE
+
+on:
+  release:
+    types: [published]
+
+env:
+  PROJECT_ID: web3-335312
+  GKE_CLUSTER: zk-gaming
+  GKE_ZONE: europe-west1-b
+
+jobs:
+  setup-build-publish-deploy:
+    name: Setup, Build, Publish, and Deploy staging
+    runs-on: ubuntu-latest
+    environment: staging
+
+    steps:
+      - id: checkout
+        name: Checkout
+        uses: actions/checkout@v3
+
+      - id: auth
+        name: Authenticate with GCloud
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GKE_SA_KEY }}
+
+      - id: get-credentials
+        name: Retrieve GCloud credentials
+        uses: google-github-actions/get-gke-credentials@v1
+        with:
+          cluster_name: ${{ env.GKE_CLUSTER }}
+          location: ${{ env.GKE_ZONE }}
+
+      - id: skaffold-install
+        name: Download and install Skaffold
+        run: |-
+          curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64 && sudo install skaffold /usr/local/bin/
+
+      - id: build-and-push
+        name: Build and push Docker images
+        env:
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
+        run: |-
+          envsubst < deployment/staging/secrets.template.yaml > deployment/staging/secrets.yaml
+          skaffold run --filename skaffold.staging.yml

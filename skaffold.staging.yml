@@ -1,0 +1,21 @@
+apiVersion: skaffold/v3
+kind: Config
+metadata:
+  name: bot-busters
+build:
+  tagPolicy:
+    sha256: {}
+  local:
+    concurrency: 0
+  artifacts:
+    - image: eu.gcr.io/web3-335312/zk/bot-busters/bot-busters-staging
+      docker:
+        dockerfile: Dockerfile
+        buildArgs:
+          NEXT_PUBLIC_ALEO_NETWORK: testnet3
+manifests:
+  kustomize:
+    paths:
+      - ./deployment/staging/
+deploy:
+  kubectl: {}
