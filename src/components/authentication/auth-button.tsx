@@ -45,8 +45,8 @@ export const AuthButton = () => {
 
         await signIn("credentials", {
           publicKey,
-          playerSign: signature,
-          message: AUTH_SIGN_MESSAGE,
+          signature,
+          signedMessage: AUTH_SIGN_MESSAGE,
         });
       } catch (error) {
         //TODO: handle unauthorized error
