@@ -2,48 +2,40 @@ program leaderboard.aleo {
 
     struct Score {
         player: address;
-        score: i64;
+        score: u64;
     }
 
-    mapping leaderboard: address => i64;
+    mapping leaderboard: address => u64;
     
     transition add_player(player: address) -> Score {
         is_owner_of_program();
-        let initial_score: i64 = 0i64;
-        let score: Score = Score {
-            player: player,
-            score: initial_score
-        };
+        let initial_score: u64 = 1000u64;
 
-        return score then finalize(player, initial_score);
+        return then finalize(player, initial_score);
     }
 
-    finalize add_player(player: address, score: i64) {
+    finalize add_player(player: address, score: u64) {
         let player_exists: bool = Mapping::contains(leaderboard, player);
         assert(!player_exists);
 
         Mapping::set(leaderboard, player, score);
     }
 
-    transition update(player: address, current_score: i64, player_won: bool) -> Score {
+    transition update(player: address, current_score: u64, player_won: bool) {
         is_owner_of_program();
 
-        let new_score: i64 = calculate_score(current_score, player_won);
+        let new_score: u64 = calculate_score(current_score, player_won);
 
-        let score: Score = Score {
-            player: player,
-            score: new_score
-        };
         
-        return score then finalize(player, current_score, new_score);
+        return then finalize(player, current_score, new_score);
 
     }
 
-    finalize update(player: address, current_score: i64, new_score: i64) {
+    finalize update(player: address, current_score: u64, new_score: u64) {
        let player_exists: bool = Mapping::contains(leaderboard, player);
        assert(player_exists);
 
-       let current_onchain_score: i64 = Mapping::get(leaderboard, player);
+       let current_onchain_score: u64 = Mapping::get(leaderboard, player);
        assert_eq(current_score,current_onchain_score);
 
        Mapping::set(leaderboard, player, new_score);
@@ -63,11 +55,11 @@ program leaderboard.aleo {
         Mapping::remove(leaderboard, player);
     }
 
-    function calculate_score(current_score: i64, player_won: bool) -> i64 {
+    function calculate_score(current_score: u64, player_won: bool) -> u64 {
             if(player_won) {
-                return current_score + 10i64;
+                return current_score + 10u64;
             } else {
-                return current_score - 10i64;
+                return current_score - 10u64;
             }
     }
 
