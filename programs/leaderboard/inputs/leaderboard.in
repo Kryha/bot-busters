@@ -3,5 +3,5 @@ player: address = aleo17pahmhudjt89v27rkwmq25ez5z0d5ef89s6x355ls2yvh4t70vzqwzxgh
 
 [update]
 player: address = aleo17pahmhudjt89v27rkwmq25ez5z0d5ef89s6x355ls2yvh4t70vzqwzxghz;
-current_score: u64 = 1000u64;
+current_score: i64 = 0i64;
 win: bool = false;
