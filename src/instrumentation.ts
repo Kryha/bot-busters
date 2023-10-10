@@ -9,7 +9,7 @@ export async function register() {
 
     // TODO: find a more scalable way to perform this action
     const { stderr, stdout } = await pExec(
-      `DATABASE_URL=${process.env.DATABASE_URL} yarn drizzle-kit push:pg`
+      `DATABASE_URL="${process.env.DATABASE_URL}" yarn drizzle-kit push:pg`
     );
 
     if (stderr) {
