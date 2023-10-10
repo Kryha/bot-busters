@@ -40,13 +40,12 @@ export const AuthButton = () => {
         const adapter = wallet.adapter as LeoWalletAdapter;
 
         const bytes = new TextEncoder().encode(AUTH_SIGN_MESSAGE);
-        const signatureBytes = await adapter.signMessage(bytes);
-        const signature = new TextDecoder().decode(signatureBytes);
+        const signatureMessageBytes = await adapter.signMessage(bytes);
+        const signedMessage = new TextDecoder().decode(signatureMessageBytes);
 
         await signIn("credentials", {
           publicKey,
-          signature,
-          signedMessage: AUTH_SIGN_MESSAGE,
+          signedMessage,
         });
       } catch (error) {
         //TODO: handle unauthorized error

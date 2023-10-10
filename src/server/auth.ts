@@ -43,27 +43,19 @@ export const authOptions: NextAuthOptions = {
           label: "Public Key",
           type: "text",
         },
-        signature: {
-          label: "Signature",
-          type: "text",
-        },
         signedMessage: {
-          label: "Signed message",
+          label: "Signature",
           type: "text",
         },
       },
       async authorize(credentials) {
-        if (
-          !credentials?.signature ||
-          !credentials?.signedMessage ||
-          !credentials?.publicKey
-        ) {
+        if (!credentials?.signedMessage || !credentials?.publicKey) {
           return null;
         }
 
-        const { publicKey, signature, signedMessage } = credentials;
+        const { publicKey, signedMessage } = credentials;
 
-        const isVerified = verifySignature(publicKey, signedMessage, signature);
+        const isVerified = verifySignature(publicKey, signedMessage);
 
         if (!isVerified) return null;
 
