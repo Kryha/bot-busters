@@ -25,7 +25,6 @@ program leaderboard.aleo {
         is_owner_of_program();
 
         let new_score: u64 = calculate_score(current_score, player_won);
-
         
         return then finalize(player, current_score, new_score);
 
@@ -58,6 +57,10 @@ program leaderboard.aleo {
     function calculate_score(current_score: u64, player_won: bool) -> u64 {
             if(player_won) {
                 return current_score + 10u64;
+                
+            } else if( !player_won && current_score == 10u64) {
+                // lowest posible score is 10 
+                return current_score;
             } else {
                 return current_score - 10u64;
             }
