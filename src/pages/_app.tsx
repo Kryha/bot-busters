@@ -9,6 +9,7 @@ import { WalletProvider } from "@demox-labs/aleo-wallet-adapter-react";
 import { api } from "@/utils/api";
 import { ThemeProvider } from "@/features/mui";
 import "@/styles/globals.css";
+import { APP_NAME } from "@/constants";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -17,7 +18,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
   const wallets = useMemo(
     () => [
       new LeoWalletAdapter({
-        appName: "Bot Busters",
+        appName: APP_NAME,
       }),
     ],
     []
