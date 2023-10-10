@@ -2,11 +2,33 @@
 
 Chat, be human and bust bots!
 
-# Getting started with Aleo
+## Local development
+
+Before running the app in dev mode, make sure you have a running instance of [Docker](https://www.docker.com/), and run the following command from the root directory to spin up a database instance:
+
+```sh
+docker-compose up -d
+```
+
+Create all the necessary DB tables:
+
+```sh
+yarn db:push
+```
+
+Now, run the application in dev mode:
+
+```sh
+yarn dev
+```
+
+Happy hacking!
+
+## Getting started with Aleo
 
 Aleo is aiming to build a platform for web applications that are performant, secure, and private.
 
-### Getting started:
+### Getting started
 
 Before getting started there are a few prerequisites that you need to have installed on your machine. these are listed below:
 
@@ -38,7 +60,8 @@ cargo install --path .
 
 Now that we have installed the necessary tools we can start building our first smart contract. Let's first use SnarkOS to run a local Aleo node where we are going to deploy our programs during development.
 
-## Running the chain locally
+### Running the chain locally
+
 In this section we will run a local node of SnarkOs and deploy a contract to it. If you want a more detailed explanation of the steps below you can read the [Aleo Documentation](https://developer.aleo.org/testnet/getting_started/deploy_execute).
 
 Run a local node of SnarkOs using the following command:
@@ -96,7 +119,7 @@ Let's put the copied record in a environment variable:
   RECORD="{  owner: aleo1rhgdu77hgyqd3xjj8ucu3jj9r2krwz6mnzyd80gncr5fxcwlh5rsvzp9px.private,  microcredits: 93750000000000u64.private,  _nonce: 239342958985106763708738609678182549854111744243820417353521050114416207606group.public}"
 ```
 
-## Deploy to the local chain
+### Deploy to the local chain
 
 Now we have everything to develop and locally deploy a Leo contract. Go to the location of your Leo contract or start a new project.
 
@@ -122,6 +145,6 @@ Now your contract is deployed. Interacting with the contract can be done with th
 
 ```bash
 
-snarkos developer execute leaderboard.aleo addPlayer <Player-Data> --private-key $PRIVATE_KEY --query "http://localhost:3030" --broadcast "http://localhost:3030/testnet3/transaction/broadcast" 
+snarkos developer execute leaderboard.aleo addPlayer <Player-Data> --private-key $PRIVATE_KEY --query "http://localhost:3030" --broadcast "http://localhost:3030/testnet3/transaction/broadcast"
 
 ```

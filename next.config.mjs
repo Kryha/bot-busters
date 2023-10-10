@@ -17,6 +17,10 @@ const config = {
     locales: ["en"],
     defaultLocale: "en",
   },
+
+  experimental: {
+    instrumentationHook: true,
+  },
 };
 
 export default config;
