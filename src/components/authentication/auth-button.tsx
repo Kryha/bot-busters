@@ -1,74 +1,83 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import { useEffect } from "react";
-import { signIn, signOut, useSession } from "next-auth/react";
-import { useWallet } from "@demox-labs/aleo-wallet-adapter-react";
 import {
-  DecryptPermission,
-  type WalletAdapterNetwork,
-} from "@demox-labs/aleo-wallet-adapter-base";
-import { LeoWalletName } from "@demox-labs/aleo-wallet-adapter-leo";
+  LeoWalletName,
+  type LeoWalletAdapter,
+} from "@demox-labs/aleo-wallet-adapter-leo";
 import { Button } from "@mui/material";
 import { isValidSession } from "@/utils/session";
 import { text } from "@/assets/text";
-import { env } from "@/env.mjs";
+import { useWallet } from "@demox-labs/aleo-wallet-adapter-react";
+import { signIn, signOut, useSession } from "next-auth/react";
+import {
+  DecryptPermission,
+  WalletAdapterNetwork,
+} from "@demox-labs/aleo-wallet-adapter-base";
+import { AUTH_SIGN_MESSAGE } from "@/constants";
 
 export const AuthButton = () => {
-  const { data: sessionData, status } = useSession();
-
+  const { data: sessionData } = useSession();
   const {
-    publicKey,
-    connect,
-    connected: walletConnected,
+    publicKey: aleoAddress,
+    wallet,
     select,
+    connect,
+    connected,
+    connecting,
     disconnect,
-    connecting: walletConnecting,
   } = useWallet();
-
-  const isLoading = walletConnecting || status === "loading";
 
   useEffect(() => {
     select(LeoWalletName);
   }, [select]);
 
   useEffect(() => {
-    const authenticate = async () => {
-      if (!walletConnected || !publicKey || status === "authenticated") return;
+    const connectWallet = async () => {
+      if (connecting || !wallet || !aleoAddress || sessionData !== null) {
+        return;
+      }
       try {
-        await signIn("credentials", { publicKey });
+        const adapter = wallet.adapter as LeoWalletAdapter;
+
+        const bytes = new TextEncoder().encode(AUTH_SIGN_MESSAGE);
+        const signatureMessageBytes = await adapter.signMessage(bytes);
+        const signedMessage = new TextDecoder().decode(signatureMessageBytes);
+        await signIn("credentials", {
+          aleoAddress,
+          signedMessage,
+        });
       } catch (error) {
+        //TODO: handle unauthorized error
         console.error(error);
       }
     };
-    void authenticate();
-  }, [publicKey, status, walletConnected]);
+    void connectWallet();
+  }, [wallet, aleoAddress, connecting, sessionData, connected]);
 
-  const handleSignIn = async () => {
+  const authenticatePlayer = async () => {
     try {
-      await connect(
-        DecryptPermission.UponRequest,
-        env.NEXT_PUBLIC_ALEO_NETWORK as WalletAdapterNetwork
-      );
+      if (!connected) {
+        await connect(
+          DecryptPermission.UponRequest,
+          WalletAdapterNetwork.Testnet
+        );
+      }
     } catch (error) {
       console.error(error);
     }
   };
 
-  const handleSignOut = async () => {
-    try {
-      await disconnect();
-      await signOut();
-    } catch (error) {
-      console.error(error);
-    }
+  const logout = async () => {
+    await signOut();
+    await disconnect();
   };
 
   return (
     <Button
-      disabled={isLoading}
       onClick={
         isValidSession(sessionData)
-          ? () => void handleSignOut()
-          : () => void handleSignIn()
+          ? () => void logout()
+          : () => void authenticatePlayer()
       }
     >
       {isValidSession(sessionData) ? text.auth.signOut : text.auth.signIn}

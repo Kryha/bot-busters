@@ -1,3 +1,4 @@
+import { verifySignature } from "@/utils/wallet";
 import { type GetServerSidePropsContext } from "next";
 import {
   getServerSession,
@@ -38,29 +39,43 @@ export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
       credentials: {
-        publicKey: {
+        aleoAddress: {
           label: "Public Key",
+          type: "text",
+        },
+        signedMessage: {
+          label: "Signed Message",
           type: "text",
         },
       },
       async authorize(credentials) {
-        if (!credentials?.publicKey) return null;
-        // TODO: add signature verification
-
-        const selectedUsers = await db
-          .select()
-          .from(dbSchema.users)
-          .where(eq(dbSchema.users.publicKey, credentials.publicKey));
-
-        if (!selectedUsers.length) {
-          await db
-            .insert(dbSchema.users)
-            .values({ publicKey: credentials.publicKey });
+        if (!credentials?.signedMessage || !credentials?.aleoAddress) {
+          return null;
         }
 
-        return {
-          id: credentials.publicKey,
-        };
+        const { aleoAddress, signedMessage } = credentials;
+
+        const isVerified = verifySignature(aleoAddress, signedMessage);
+
+        if (!isVerified) return null;
+
+        try {
+          const selectedUsers = await db
+            .select()
+            .from(dbSchema.users)
+            .where(eq(dbSchema.users.publicKey, aleoAddress));
+
+          if (!selectedUsers.length) {
+            await db.insert(dbSchema.users).values({ publicKey: aleoAddress });
+          }
+
+          return {
+            id: aleoAddress,
+          };
+        } catch (e) {
+          console.error(e);
+          return null;
+        }
       },
     }),
   ],
