@@ -12,7 +12,7 @@ export const styles = {
     textAlign: "right",
   },
   msg: {
-    padding: "0.25rem 0.5rem",
+    padding: 1.5,
     borderRadius: 4,
     marginBottom: 0.5,
     display: "inline-block",
@@ -21,7 +21,7 @@ export const styles = {
   left: {
     borderTopRightRadius: "0.625rem",
     borderBottomRightRadius: "0.625rem",
-    backgroundColor: "common.white",
+    backgroundColor: "secondary.light",
     color: "common.black",
   },
   right: {
@@ -29,17 +29,5 @@ export const styles = {
     borderBottomLeftRadius: "0.625rem",
     backgroundColor: "secondary.main",
     color: "common.black",
-  },
-  leftFirst: {
-    borderTopLeftRadius: "0.625rem",
-  },
-  leftLast: {
-    borderBottomLeftRadius: "0.625rem",
-  },
-  rightFirst: {
-    borderTopRightRadius: "0.625rem",
-  },
-  rightLast: {
-    borderBottomRightRadius: "0.625rem",
   } satisfies SxProps,
 };

@@ -1,3 +1,4 @@
+import { type FC } from "react";
 import {
   ListItem,
   ListItemButton,
@@ -8,9 +9,8 @@ import {
   Typography,
   type SvgIconTypeMap,
 } from "@mui/material";
-import { type FC } from "react";
-import { styles } from "./styles";
 import { type OverridableComponent } from "@mui/material/OverridableComponent";
+import { styles } from "./styles";
 
 interface Props {
   username: string;

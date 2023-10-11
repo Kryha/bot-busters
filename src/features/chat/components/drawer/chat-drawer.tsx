@@ -21,10 +21,10 @@ export const ChatDrawer: FC<Props> = ({ open, toggle }) => {
         }}
         sx={styles.drawerMobile}
       >
-        <ChatList />
+        <ChatList toggle={toggle} />
       </Drawer>
       <Drawer variant="permanent" sx={styles.drawerDesktop} open>
-        <ChatList />
+        <ChatList toggle={toggle} />
       </Drawer>
     </Box>
   );

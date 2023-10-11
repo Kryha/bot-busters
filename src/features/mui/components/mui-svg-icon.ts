@@ -5,7 +5,7 @@ export const MuiSvgIcon = (_theme: Theme): Components["MuiSvgIcon"] => {
     styleOverrides: {
       root: {
         "@media (min-width:2000px)": {
-          fontSize: "6rem",
+          fontSize: "2.2rem",
         },
       },
     },

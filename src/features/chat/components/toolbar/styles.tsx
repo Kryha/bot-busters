@@ -4,8 +4,8 @@ import { type SxProps } from "@mui/material";
 export const styles = {
   appBar: {
     backgroundColor: "secondary.light",
-    width: { sm: `calc(100% - ${DRAWER_WIDTH}px)` },
-    ml: { sm: `${DRAWER_WIDTH}px` },
+    width: { sm: `calc(100% - ${DRAWER_WIDTH})` },
+    ml: { sm: DRAWER_WIDTH },
   },
   iconButton: { mr: 2, display: { sm: "none" } },
   avatar: {
