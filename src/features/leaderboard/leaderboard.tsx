@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { type ChangeEvent, useState } from "react";
 import { Stack, Typography } from "@mui/material";
 
 import { LeaderboardList, LeaderboardPagination } from "./components";
@@ -17,10 +17,7 @@ export const Leaderboard = () => {
 
   const totalPages = Math.ceil(leaderboard.length / itemsPerPage);
 
-  const handlePageChange = (
-    _event: React.ChangeEvent<unknown>,
-    newPage: number
-  ) => {
+  const handlePageChange = (_event: ChangeEvent<unknown>, newPage: number) => {
     setCurrentPage(newPage);
   };
 
