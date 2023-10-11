@@ -2,12 +2,13 @@ import { type ChangeEvent, useState } from "react";
 import { Stack, Typography, useMediaQuery } from "@mui/material";
 
 import { LeaderboardList, LeaderboardPagination } from "./components";
-import { leaderboard } from "./fake-data";
 import { text } from "./assets";
 import { styles } from "./styles";
+import { useLeaderboardStore } from "@/store";
 
 export const Leaderboard = () => {
   const [currentPage, setCurrentPage] = useState(1);
+  const leaderboard = useLeaderboardStore((state) => state.leaderboard);
   const isSmallScreen = useMediaQuery("(max-width: 600px)");
 
   const heading = isSmallScreen ? "h3" : "h2";
