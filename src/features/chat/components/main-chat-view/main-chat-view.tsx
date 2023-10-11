@@ -2,16 +2,17 @@ import { type FC } from "react";
 import { SendRounded } from "@mui/icons-material";
 import { InputAdornment, Stack, TextField, Typography } from "@mui/material";
 
-import { styles } from "./styles";
-import { ChatMsg } from "../chat-message";
-import { chats } from "./chats";
+import { ChatMsg } from "@/features/chat/components";
 import { text } from "@/assets/text";
-
+import { type ChatMessage } from "@/types";
+import { styles } from "./styles";
 interface Props {
   open: boolean;
   isSmallScreen: boolean;
+  messages: ChatMessage[];
 }
-export const MainChatView: FC<Props> = ({ open, isSmallScreen }) => {
+
+export const MainChatView: FC<Props> = ({ open, isSmallScreen, messages }) => {
   if (!isSmallScreen && !open)
     return (
       <Typography variant="h2" sx={styles.text}>
@@ -22,13 +23,8 @@ export const MainChatView: FC<Props> = ({ open, isSmallScreen }) => {
   return (
     <Stack sx={styles.wrapper}>
       <Stack sx={styles.container}>
-        {chats.map((msgs, index) => (
-          <ChatMsg
-            key={index}
-            avatar={""}
-            messages={msgs.msg}
-            side={msgs.side}
-          />
+        {messages.map((msg, index) => (
+          <ChatMsg key={index} message={msg} />
         ))}
       </Stack>
       <TextField

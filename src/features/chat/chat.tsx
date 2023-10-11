@@ -4,10 +4,13 @@ import { useState } from "react";
 import { styles } from "./styles";
 import { useRouter } from "next/router";
 import { ChatDrawer, ChatToolBar, MainChatView } from "./components";
+import { useGlobalStore } from "@/store";
 
 export const ChatView = () => {
   // TODO: update component
   const [toggle, setToggle] = useState(false);
+  const messages = useGlobalStore((state) => state.messages);
+  const contactList = useGlobalStore((state) => state.contactList);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const isSmallScreen = useMediaQuery("(max-width: 600px)");
   const router = useRouter();
@@ -19,6 +22,8 @@ export const ChatView = () => {
     }
   };
 
+  if (!contactList.length || !messages.length) return null;
+
   return (
     <>
       <ChatToolBar
@@ -27,9 +32,13 @@ export const ChatView = () => {
         setAnchorEl={setAnchorEl}
         router={router}
       />
-      <ChatDrawer open={toggle} toggle={showChat} />
+      <ChatDrawer open={toggle} toggle={showChat} contactList={contactList} />
       <Box sx={styles.drawerHeader} />
-      <MainChatView open={toggle} isSmallScreen={isSmallScreen} />
+      <MainChatView
+        open={toggle}
+        isSmallScreen={isSmallScreen}
+        messages={messages}
+      />
     </>
   );
 };
