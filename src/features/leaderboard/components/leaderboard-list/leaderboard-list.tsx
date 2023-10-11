@@ -2,9 +2,10 @@ import { type FC } from "react";
 import { Box, Divider, List, ListItem, Typography } from "@mui/material";
 
 import { LeaderBoardItem } from "@/features/leaderboard/components";
-import { text } from "@/features/leaderboard/assets";
+
 import { type Leaderboard } from "@/types";
 import { styles } from "./styles";
+import { text } from "@/features/leaderboard/assets";
 
 interface Props {
   leaderboard: Leaderboard[];
@@ -20,7 +21,7 @@ export const LeaderboardList: FC<Props> = ({ leaderboard }) => {
           sx={styles.list}
           secondaryAction={
             <Typography variant="h5" color="primary.main">
-              {text.general.score}
+              {text.score}
             </Typography>
           }
         />

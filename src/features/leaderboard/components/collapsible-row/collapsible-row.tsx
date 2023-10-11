@@ -27,13 +27,13 @@ export const CollapsibleRow: FC<Props> = ({ open, leaderboard }) => {
         <Collapse in={open} timeout="auto" unmountOnExit>
           <Box sx={styles.box}>
             <Typography variant="h6" gutterBottom component="div">
-              {text.general.playerInfo}
+              {text.playerInfo}
             </Typography>
             <Table size="small" aria-label="purchases">
               <TableHead>
                 <TableRow>
                   <TableCell sx={styles.tableCellHeading}>
-                    {text.general.address}
+                    {text.address}
                   </TableCell>
                 </TableRow>
               </TableHead>

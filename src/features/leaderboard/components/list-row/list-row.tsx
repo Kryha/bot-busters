@@ -35,7 +35,7 @@ export const ListRow: FC<Props> = ({ leaderboard }) => {
         primary={
           <Stack sx={styles.listUsername}>
             <Typography variant="h5" color="secondary.main">
-              {leaderboard.name}
+              {leaderboard.username}
             </Typography>
             <Typography variant="body2" color="secondary.light">
               {leaderboard.score}

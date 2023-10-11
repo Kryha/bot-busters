@@ -27,10 +27,10 @@ export const Leaderboard = () => {
     <Stack sx={styles.wrapper}>
       <Stack sx={styles.container}>
         <Typography variant={heading} sx={styles.text}>
-          {text.general.leaderboard}
+          {text.leaderboard}
         </Typography>
         <Typography variant="body1" sx={styles.text}>
-          {text.general.leaderboardDescription}
+          {text.leaderboardDescription}
         </Typography>
       </Stack>
       <LeaderboardList leaderboard={currentData} />

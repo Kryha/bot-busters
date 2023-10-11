@@ -1,3 +1,1 @@
-import { general } from "./general";
-
-export const text = { general };
+export * from "./text";

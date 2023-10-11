@@ -2,7 +2,7 @@
 export interface Leaderboard {
   rank: number;
   avatar: string;
-  name: string;
+  username: string;
   score: number;
   address: string;
 }
