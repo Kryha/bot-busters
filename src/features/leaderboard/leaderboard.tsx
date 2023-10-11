@@ -1,5 +1,5 @@
 import { type ChangeEvent, useState } from "react";
-import { Stack, Typography } from "@mui/material";
+import { Stack, Typography, useMediaQuery } from "@mui/material";
 
 import { LeaderboardList, LeaderboardPagination } from "./components";
 import { leaderboard } from "./fake-data";
@@ -8,7 +8,9 @@ import { styles } from "./styles";
 
 export const Leaderboard = () => {
   const [currentPage, setCurrentPage] = useState(1);
+  const isSmallScreen = useMediaQuery("(max-width: 600px)");
 
+  const heading = isSmallScreen ? "h3" : "h2";
   const itemsPerPage = 6;
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
@@ -24,7 +26,7 @@ export const Leaderboard = () => {
   return (
     <Stack sx={styles.wrapper}>
       <Stack sx={styles.container}>
-        <Typography variant="h2" sx={styles.text}>
+        <Typography variant={heading} sx={styles.text}>
           {text.general.leaderboard}
         </Typography>
         <Typography variant="body1" sx={styles.text}>
