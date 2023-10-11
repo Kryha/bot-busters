@@ -1,13 +1,8 @@
-import { type GetServerSidePropsContext } from "next";
-import {
-  getServerSession,
-  type DefaultSession,
-  type NextAuthOptions,
-} from "next-auth";
+import { type DefaultSession, type NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 import { db, dbSchema } from "@/server/db";
-import { env } from "@/env.mjs";
+import { env } from "@/env.cjs";
 import { eq } from "drizzle-orm";
 
 /**
@@ -70,16 +65,4 @@ export const authOptions: NextAuthOptions = {
     error: "/",
     newUser: "/",
   },
-};
-
-/**
- * Wrapper for `getServerSession` so that you don't need to import the `authOptions` in every file.
- *
- * @see https://next-auth.js.org/configuration/nextjs
- */
-export const getServerAuthSession = (ctx: {
-  req: GetServerSidePropsContext["req"];
-  res: GetServerSidePropsContext["res"];
-}) => {
-  return getServerSession(ctx.req, ctx.res, authOptions);
 };

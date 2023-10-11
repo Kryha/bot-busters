@@ -3,12 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "next build",
+    "build:next": "next build",
+    "build:dist": "dotenv tsc --project tsconfig.server.json && tsc-alias --project tsconfig.server.json",
+    "db:run": "docker-compose up -d",
     "db:push": "dotenv drizzle-kit push:pg",
     "db:studio": "dotenv drizzle-kit studio",
     "dev": "next dev",
     "lint": "next lint",
-    "start": "next start"
+    "start": "next start",
+    "start:ws": "dotenv node dist/server/api/wss-dev-server.js",
+    "start:prod": "dotenv node dist/server/api/prod-server.js"
   },
   "dependencies": {
     "@demox-labs/aleo-wallet-adapter-base": "^0.0.18",
@@ -19,19 +23,21 @@
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.14.11",
     "@mui/material": "^5.14.11",
-    "@t3-oss/env-nextjs": "^0.6.0",
+    "@t3-oss/env-nextjs": "^0.7.0",
     "@tanstack/react-query": "^4.32.6",
     "@trpc/client": "^10.37.1",
     "@trpc/next": "^10.37.1",
     "@trpc/react-query": "^10.37.1",
     "@trpc/server": "^10.37.1",
     "drizzle-orm": "^0.28.6",
+    "drizzle-zod": "^0.5.1",
     "next": "^13.4.19",
     "next-auth": "^4.23.0",
     "postgres": "^3.3.5",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "superjson": "^1.13.1",
+    "ws": "^8.14.2",
     "zod": "^3.21.4"
   },
   "devDependencies": {
@@ -39,6 +45,7 @@
     "@types/node": "^18.16.0",
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
+    "@types/ws": "^8.5.6",
     "@typescript-eslint/eslint-plugin": "^6.3.0",
     "@typescript-eslint/parser": "^6.3.0",
     "dotenv-cli": "^7.3.0",
@@ -46,6 +53,7 @@
     "eslint": "^8.47.0",
     "eslint-config-next": "^13.4.19",
     "pg": "^8.11.3",
+    "tsc-alias": "^1.8.8",
     "typescript": "^5.1.6"
   },
   "ct3aMetadata": {

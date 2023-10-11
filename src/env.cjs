@@ -1,7 +1,8 @@
-import { createEnv } from "@t3-oss/env-nextjs";
-import { z } from "zod";
+/* eslint-disable @typescript-eslint/no-var-requires */
+const { createEnv } = require("@t3-oss/env-nextjs");
+const { z } = require("zod");
 
-export const env = createEnv({
+const env = createEnv({
   /**
    * Specify your server-side environment variables schema here. This way you can ensure the app
    * isn't built with invalid env vars.
@@ -16,6 +17,7 @@ export const env = createEnv({
         ? z.string().min(1)
         : z.string().min(1).optional(),
     NEXTAUTH_URL: z.string().url(),
+    APP_URL: z.string().url(),
   },
 
   /**
@@ -24,6 +26,7 @@ export const env = createEnv({
    * `NEXT_PUBLIC_`.
    */
   client: {
+    NEXT_PUBLIC_WS_URL: z.string().url(),
     NEXT_PUBLIC_ALEO_NETWORK: z
       .enum(["testnet3", "mainnet", "localnet"])
       .default("testnet3"),
@@ -39,6 +42,8 @@ export const env = createEnv({
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
     NEXT_PUBLIC_ALEO_NETWORK: process.env.NEXT_PUBLIC_ALEO_NETWORK,
+    APP_URL: process.env.APP_URL,
+    NEXT_PUBLIC_WS_URL: process.env.NEXT_PUBLIC_WS_URL,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.
@@ -46,3 +51,5 @@ export const env = createEnv({
    */
   skipValidation: !!process.env.SKIP_ENV_VALIDATION,
 });
+
+module.exports = { env };

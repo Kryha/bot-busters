@@ -10,7 +10,7 @@ import { LeoWalletName } from "@demox-labs/aleo-wallet-adapter-leo";
 import { Button } from "@mui/material";
 import { isValidSession } from "@/utils/session";
 import { text } from "@/assets/text";
-import { env } from "@/env.mjs";
+import { env } from "@/env.cjs";
 
 export const AuthButton = () => {
   const { data: sessionData, status } = useSession();

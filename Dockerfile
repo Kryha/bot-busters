@@ -7,11 +7,7 @@ WORKDIR /app
 ENV GENERATE_SOURCEMAP false
 ENV NODE_ENV production
 
-# these are server variables and are specified in the kustomization files
-# however, a placeholder value is now required for the build to succeed
-ENV DATABASE_URL http://placeholder.io
-ENV NEXTAUTH_SECRET server_placeholder
-ENV NEXTAUTH_URL http://placeholder.io
+ENV SKIP_ENV_VALIDATION true
 
 ARG NEXT_PUBLIC_ALEO_NETWORK
 ENV NEXT_PUBLIC_ALEO_NETWORK $NEXT_PUBLIC_ALEO_NETWORK
