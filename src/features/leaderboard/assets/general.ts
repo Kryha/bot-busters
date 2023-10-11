@@ -1,11 +1,8 @@
 export const general = {
-  playerData: "Player Data",
-  experience: "Experience",
-  victories: "Victories",
-  losses: "Losses",
-  rank: "Rank",
+  playerInfo: "Player Info",
   score: "Score",
   address: "Address",
-  avatar: "Avatar",
-  name: "Name",
+  leaderboardDescription:
+    "Here's the latest leaderboard; continue playing to maintain your lead.",
+  leaderboard: "Leaderboard",
 };

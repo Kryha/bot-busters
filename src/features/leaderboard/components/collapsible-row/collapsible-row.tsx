@@ -9,8 +9,10 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import { type Leaderboard } from "@/features/leaderboard/fake-data";
+
+import { type Leaderboard } from "@/types";
 import { text } from "@/features/leaderboard/assets";
+import { styles } from "./styles";
 
 interface Props {
   open: boolean;
@@ -18,33 +20,28 @@ interface Props {
 }
 
 export const CollapsibleRow: FC<Props> = ({ open, leaderboard }) => {
+  // TODO: update styles and content
   return (
     <TableRow>
-      <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+      <TableCell style={styles.mainTableCell} colSpan={6}>
         <Collapse in={open} timeout="auto" unmountOnExit>
-          <Box sx={{ margin: 1 }}>
+          <Box sx={styles.box}>
             <Typography variant="h6" gutterBottom component="div">
-              {text.general.playerData}
+              {text.general.playerInfo}
             </Typography>
             <Table size="small" aria-label="purchases">
               <TableHead>
                 <TableRow>
-                  <TableCell>{text.general.experience}</TableCell>
-                  <TableCell>{text.general.victories}</TableCell>
-                  <TableCell align="right">{text.general.losses}</TableCell>
-                  <TableCell align="right">{text.general.address}</TableCell>
+                  <TableCell sx={styles.tableCellHeading}>
+                    {text.general.address}
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 <TableRow>
-                  <TableCell component="th" scope="row">
-                    {leaderboard.extraInfo.experience}
+                  <TableCell sx={styles.tableCellRow}>
+                    {leaderboard.address}
                   </TableCell>
-                  <TableCell>{leaderboard.extraInfo.lost}</TableCell>
-                  <TableCell align="right">
-                    {leaderboard.extraInfo.won}
-                  </TableCell>
-                  <TableCell align="right">{leaderboard.address}</TableCell>
                 </TableRow>
               </TableBody>
             </Table>
