@@ -15,16 +15,6 @@ export const ChatMsg: FC<ChatMsgProps> = ({
 }) => {
   const gridContent = side === "right" ? "flex-end" : "flex-start";
 
-  const attachClass = (index: number) => {
-    if (index === 0) {
-      return styles[`${side}First`];
-    }
-    if (index === messages.length - 1) {
-      return styles[`${side}Last`];
-    }
-    return "";
-  };
-
   return (
     <Grid container spacing={2} justifyContent={gridContent}>
       {side === "left" && (
@@ -37,7 +27,6 @@ export const ChatMsg: FC<ChatMsgProps> = ({
           const textStyle = {
             ...styles.msg,
             ...styles[side],
-            ...attachClass(i),
           };
           return (
             <Box key={`${msg}.${i}`} component="div" sx={styles[`${side}Row`]}>
