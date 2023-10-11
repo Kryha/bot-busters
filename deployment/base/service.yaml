@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: bot-busters
+  labels:
+    app: bot-busters
+spec:
+  type: ClusterIP
+  selector:
+    app: bot-busters
+  ports:
+    - port: 80
+      targetPort: 3000
+      protocol: TCP
+      name: bot-busters

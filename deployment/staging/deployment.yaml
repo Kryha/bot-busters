@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bot-busters
+spec:
+  selector:
+    matchLabels:
+      app: bot-busters
+  template:
+    spec:
+      containers:
+        - name: bot-busters
+          image: eu.gcr.io/web3-335312/zk/bot-busters/bot-busters-staging:latest
+          env:
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets
+                  key: db_password
+            - name: NEXTAUTH_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets
+                  key: nextauth_secret
+            - name: DATABASE_URL
+              value: postgresql://postgres:$(DB_PASSWORD)@postgres.$(POD_NAMESPACE).svc.cluster.local:5432
+            - name: NEXTAUTH_URL
+              value: https://bot-busters.staging.kryha.dev
