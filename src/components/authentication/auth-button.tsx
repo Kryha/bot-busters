@@ -18,7 +18,7 @@ import { AUTH_SIGN_MESSAGE } from "@/constants";
 export const AuthButton = () => {
   const { data: sessionData } = useSession();
   const {
-    publicKey,
+    publicKey: aleoAddress,
     wallet,
     select,
     connect,
@@ -33,7 +33,7 @@ export const AuthButton = () => {
 
   useEffect(() => {
     const connectWallet = async () => {
-      if (connecting || !wallet || !publicKey || sessionData !== null) {
+      if (connecting || !wallet || !aleoAddress || sessionData !== null) {
         return;
       }
       try {
@@ -42,9 +42,8 @@ export const AuthButton = () => {
         const bytes = new TextEncoder().encode(AUTH_SIGN_MESSAGE);
         const signatureMessageBytes = await adapter.signMessage(bytes);
         const signedMessage = new TextDecoder().decode(signatureMessageBytes);
-
         await signIn("credentials", {
-          publicKey,
+          aleoAddress,
           signedMessage,
         });
       } catch (error) {
@@ -53,7 +52,7 @@ export const AuthButton = () => {
       }
     };
     void connectWallet();
-  }, [wallet, publicKey, connecting, sessionData, connected]);
+  }, [wallet, aleoAddress, connecting, sessionData, connected]);
 
   const authenticatePlayer = async () => {
     try {

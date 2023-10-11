@@ -39,7 +39,7 @@ export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
       credentials: {
-        publicKey: {
+        aleoAddress: {
           label: "Public Key",
           type: "text",
         },
@@ -49,13 +49,13 @@ export const authOptions: NextAuthOptions = {
         },
       },
       async authorize(credentials) {
-        if (!credentials?.signedMessage || !credentials?.publicKey) {
+        if (!credentials?.signedMessage || !credentials?.aleoAddress) {
           return null;
         }
 
-        const { publicKey, signedMessage } = credentials;
+        const { aleoAddress, signedMessage } = credentials;
 
-        const isVerified = verifySignature(publicKey, signedMessage);
+        const isVerified = verifySignature(aleoAddress, signedMessage);
 
         if (!isVerified) return null;
 
@@ -63,14 +63,14 @@ export const authOptions: NextAuthOptions = {
           const selectedUsers = await db
             .select()
             .from(dbSchema.users)
-            .where(eq(dbSchema.users.publicKey, publicKey));
+            .where(eq(dbSchema.users.publicKey, aleoAddress));
 
           if (!selectedUsers.length) {
-            await db.insert(dbSchema.users).values({ publicKey: publicKey });
+            await db.insert(dbSchema.users).values({ publicKey: aleoAddress });
           }
 
           return {
-            id: publicKey,
+            id: aleoAddress,
           };
         } catch (e) {
           console.error(e);
