@@ -34,3 +34,5 @@ spec:
               value: http://localhost:3000
             - name: NEXT_PUBLIC_WS_URL
               value: wss://ws.bot-busters.staging.kryha.dev
+            - name: NODE_ENV
+              value: production
