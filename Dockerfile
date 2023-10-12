@@ -5,7 +5,7 @@ RUN apk --no-cache add --update git python3 g++
 WORKDIR /app
 
 ENV GENERATE_SOURCEMAP false
-# ENV NODE_ENV production
+ENV NODE_ENV production
 
 ENV SKIP_ENV_VALIDATION true
 
@@ -44,7 +44,7 @@ RUN apk --no-cache add busybox
 
 WORKDIR /app
 
-# ENV NODE_ENV production
+ENV NODE_ENV production
 
 RUN addgroup -g 1001 -S nodejs
 RUN adduser -S nextjs -u 1001
