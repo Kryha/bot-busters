@@ -59,6 +59,7 @@ export const createTRPCContext = async (
     | CreateNextContextOptions
 ) => {
   const session = await getSession(opts);
+  console.log("🚀 ~ session:", session);
 
   return createInnerTRPCContext({
     session,

@@ -25,10 +25,14 @@ declare module "next-auth" {
 export const authOptions: NextAuthOptions = {
   debug: env.NODE_ENV === "development",
   callbacks: {
-    session: ({ session, token }) => ({
-      ...session,
-      publicKey: token.sub,
-    }),
+    session: ({ session, token }) => {
+      console.log("session cb:", session);
+
+      return {
+        ...session,
+        publicKey: token.sub,
+      };
+    },
   },
   providers: [
     CredentialsProvider({
@@ -52,6 +56,8 @@ export const authOptions: NextAuthOptions = {
             .insert(dbSchema.users)
             .values({ publicKey: credentials.publicKey });
         }
+
+        console.log("auth credentials:", credentials);
 
         return {
           id: credentials.publicKey,
