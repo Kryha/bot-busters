@@ -4,15 +4,16 @@
   "private": true,
   "scripts": {
     "build:next": "next build",
-    "build:dist": "dotenv tsc --project tsconfig.server.json && tsc-alias --project tsconfig.server.json",
+    "build:ws": "tsc --project tsconfig.server.json && tsc-alias --project tsconfig.server.json",
+    "build": "concurrently \"yarn build:next\" \"yarn build:ws\"",
+    "start:next": "next start",
+    "start:ws": "dotenv node dist/server/api/ws-server.js",
+    "start": "concurrently \"yarn start:next\" \"yarn start:ws\"",
     "db:run": "docker-compose up -d",
     "db:push": "dotenv drizzle-kit push:pg",
     "db:studio": "dotenv drizzle-kit studio",
     "dev": "next dev",
-    "lint": "next lint",
-    "start": "next start",
-    "start:ws": "dotenv node dist/server/api/wss-dev-server.js",
-    "start:prod": "dotenv node dist/server/api/prod-server.js"
+    "lint": "next lint"
   },
   "dependencies": {
     "@demox-labs/aleo-wallet-adapter-base": "^0.0.18",
@@ -48,6 +49,7 @@
     "@types/ws": "^8.5.6",
     "@typescript-eslint/eslint-plugin": "^6.3.0",
     "@typescript-eslint/parser": "^6.3.0",
+    "concurrently": "^8.2.1",
     "dotenv-cli": "^7.3.0",
     "drizzle-kit": "^0.19.13",
     "eslint": "^8.47.0",
