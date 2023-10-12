@@ -12,6 +12,9 @@ spec:
     - secretName: bot-busters.staging.kryha.dev
       hosts:
         - bot-busters.staging.kryha.dev
+    - secretName: ws.bot-busters.staging.kryha.dev
+      hosts:
+        - ws.bot-busters.staging.kryha.dev
   rules:
     - host: "bot-busters.staging.kryha.dev"
       http:
@@ -23,3 +26,13 @@ spec:
                 name: bot-busters
                 port:
                   name: bot-busters
+    - host: "ws.bot-busters.staging.kryha.dev"
+      http:
+        paths:
+          - path: "/(.*)"
+            pathType: Prefix
+            backend:
+              service:
+                name: bot-busters
+                port:
+                  name: bot-busters-ws
