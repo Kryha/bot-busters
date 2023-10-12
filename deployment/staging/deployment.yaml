@@ -30,8 +30,9 @@ spec:
               value: postgresql://postgres:$(DB_PASSWORD)@postgres.$(POD_NAMESPACE).svc.cluster.local:5432
             - name: NEXTAUTH_URL
               value: https://bot-busters.staging.kryha.dev
+            - name: NEXTAUTH_URL_INTERNAL
+              value: http://localhost:3000
             - name: APP_URL
               value: https://bot-busters.staging.kryha.dev
-              # value: http://localhost:3000
             - name: NEXT_PUBLIC_WS_URL
               value: wss://ws.bot-busters.staging.kryha.dev

@@ -17,6 +17,7 @@ const env = createEnv({
         ? z.string().min(1)
         : z.string().min(1).optional(),
     NEXTAUTH_URL: z.string().url(),
+    NEXTAUTH_URL_INTERNAL: z.string().url(),
     APP_URL: z.string().url(),
   },
 
@@ -41,6 +42,7 @@ const env = createEnv({
     NODE_ENV: process.env.NODE_ENV,
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
+    NEXTAUTH_URL_INTERNAL: process.env.NEXTAUTH_URL_INTERNAL,
     NEXT_PUBLIC_ALEO_NETWORK: process.env.NEXT_PUBLIC_ALEO_NETWORK,
     APP_URL: process.env.APP_URL,
     NEXT_PUBLIC_WS_URL: process.env.NEXT_PUBLIC_WS_URL,
