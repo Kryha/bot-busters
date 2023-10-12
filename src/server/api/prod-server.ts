@@ -34,6 +34,13 @@ void app.prepare().then(() => {
     createContext: createTRPCContext,
   });
 
+  wss.on("connection", (ws) => {
+    console.log(`++ Connection (${wss.clients.size})`);
+    ws.once("close", () => {
+      console.log(`-- Connection (${wss.clients.size})`);
+    });
+  });
+
   process.on("SIGTERM", () => {
     console.log("SIGTERM");
     handler.broadcastReconnectNotification();
