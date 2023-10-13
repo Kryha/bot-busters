@@ -33,8 +33,8 @@ spec:
             - name: NEXTAUTH_URL_INTERNAL
               value: http://localhost:3000
             - name: APP_URL
-              value: http://localhost:3000
-              # value: https://bot-busters.staging.kryha.dev
+              # value: http://localhost:3000
+              value: https://bot-busters.staging.kryha.dev
             - name: NEXT_PUBLIC_WS_URL
-              value: wss://bot-busters.staging.kryha.dev
-              # value: wss://ws.bot-busters.staging.kryha.dev
+              # value: wss://bot-busters.staging.kryha.dev
+              value: wss://ws.bot-busters.staging.kryha.dev
