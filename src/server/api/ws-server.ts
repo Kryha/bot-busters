@@ -1,16 +1,34 @@
-import { createTRPCWSContext } from "./trpc";
+import { createTRPCContext } from "./trpc";
 import { appRouter } from "./root";
 import { applyWSSHandler } from "@trpc/server/adapters/ws";
 import ws from "ws";
 import { env } from "@/env.cjs";
+import { createServer } from "http";
 
-const wss = new ws.Server({
-  port: 3001,
-});
+const server = createServer();
+
+if (env.NODE_ENV === "production") {
+  server.on("upgrade", (request, socket, head) => {
+    const origin = request?.headers?.origin;
+    const corsRegex = /^https?:\/\/(.*\.?)kryha\.dev(:\d+)?\/$/g;
+    if (origin?.match(corsRegex) !== null) {
+      wss.handleUpgrade(request, socket, head, (ws) => {
+        wss.emit("connection", ws, request);
+      });
+    } else {
+      socket.destroy();
+    }
+  });
+}
+
+const wss = new ws.Server({ server });
+// const wss = new ws.Server({
+//   port: 3001,
+// });
 const handler = applyWSSHandler({
   wss,
   router: appRouter,
-  createContext: createTRPCWSContext,
+  createContext: createTRPCContext,
 });
 
 wss.on("connection", (ws) => {
@@ -29,3 +47,5 @@ process.on("SIGTERM", () => {
   handler.broadcastReconnectNotification();
   wss.close();
 });
+
+server.listen(3001);
