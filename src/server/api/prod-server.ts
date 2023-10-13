@@ -7,6 +7,7 @@ import { parse } from "url";
 import ws from "ws";
 import { env } from "@/env.cjs";
 
+const port = 3000;
 const app = next({ dev: env.NODE_ENV !== "production" });
 const handle = app.getRequestHandler();
 
@@ -26,7 +27,7 @@ void app.prepare().then(() => {
     const parsedUrl = parse(req.url!, true);
     void handle(req, res, parsedUrl);
   });
-  const wss = new ws.Server({ server, port: 3001 });
+  const wss = new ws.Server({ server });
   const handler = applyWSSHandler({
     wss,
     router: appRouter,
@@ -56,9 +57,9 @@ void app.prepare().then(() => {
     console.log("SIGTERM");
     handler.broadcastReconnectNotification();
   });
-  server.listen(3000);
+  server.listen(port);
 
   console.log(
-    `> Server listening at http://localhost:${3000} as ${env.NODE_ENV}`
+    `> Server listening at http://localhost:${port} as ${env.NODE_ENV}`
   );
 });

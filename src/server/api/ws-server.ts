@@ -3,12 +3,12 @@ import { appRouter } from "./root";
 import { applyWSSHandler } from "@trpc/server/adapters/ws";
 import ws from "ws";
 import { env } from "@/env.cjs";
-import { createServer } from "http";
+// import { createServer } from "http";
 
 // const app = next({ dev: env.NODE_ENV !== "production" });
 // const handle = app.getRequestHandler();
 
-const server = createServer();
+// const server = createServer();
 
 // if (env.NODE_ENV === "production") {
 //   server.on("upgrade", (request, socket, head) => {
@@ -24,7 +24,7 @@ const server = createServer();
 //   });
 // }
 
-const wss = new ws.Server({ server });
+const wss = new ws.Server({ port: 3001 });
 // const wss = new ws.Server({
 //   port: 3001,
 // });
@@ -51,4 +51,4 @@ process.on("SIGTERM", () => {
   wss.close();
 });
 
-server.listen(3001);
+// server.listen(3001);
