@@ -1,4 +1,4 @@
-import { createTRPCContext } from "./trpc";
+import { createTRPCWSContext } from "./trpc";
 import { appRouter } from "./root";
 import { applyWSSHandler } from "@trpc/server/adapters/ws";
 import http from "http";
@@ -31,7 +31,7 @@ void app.prepare().then(() => {
   const handler = applyWSSHandler({
     wss,
     router: appRouter,
-    createContext: createTRPCContext,
+    createContext: createTRPCWSContext,
   });
 
   // server.on("upgrade", (request, socket, head) => {
