@@ -54,21 +54,12 @@ const createInnerTRPCContext = ({ session }: CreateContextOptions) => {
  *
  * @see https://trpc.io/docs/context
  */
-// export const createTRPCContext = async (
-//   opts:
-//     | CreateNextContextOptions
-//     | NodeHTTPCreateContextFnOptions<IncomingMessage, ws>
-// ) => {
-//   const session = await getSession(opts);
-//   console.log("🚀 ~ session:", session);
-
-//   return createInnerTRPCContext({
-//     session,
-//   });
-// };
-
-export const createTRPCContext = async (opts: CreateNextContextOptions) => {
-  const session = await getServerSession(opts.req, opts.res, authOptions);
+export const createTRPCContext = async (
+  opts:
+    | CreateNextContextOptions
+    | NodeHTTPCreateContextFnOptions<IncomingMessage, ws>
+) => {
+  const session = await getSession(opts);
   console.log("🚀 ~ session:", session);
 
   return createInnerTRPCContext({
@@ -76,16 +67,25 @@ export const createTRPCContext = async (opts: CreateNextContextOptions) => {
   });
 };
 
-export const createTRPCWSContext = async (
-  opts: NodeHTTPCreateContextFnOptions<IncomingMessage, ws>
-) => {
-  const session = await getSession(opts);
-  console.log("🚀 ~ ws session:", session);
+// export const createTRPCContext = async (opts: CreateNextContextOptions) => {
+//   const session = await getServerSession(opts.req, opts.res, authOptions);
+//   console.log("🚀 ~ session:", session);
 
-  return createInnerTRPCContext({
-    session,
-  });
-};
+//   return createInnerTRPCContext({
+//     session,
+//   });
+// };
+
+// export const createTRPCWSContext = async (
+//   opts: NodeHTTPCreateContextFnOptions<IncomingMessage, ws>
+// ) => {
+//   const session = await getSession(opts);
+//   console.log("🚀 ~ ws session:", session);
+
+//   return createInnerTRPCContext({
+//     session,
+//   });
+// };
 
 /**
  * 2. INITIALIZATION
