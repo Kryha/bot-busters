@@ -5,6 +5,7 @@ export const chatMessageSchema = z.object({
   avatar: z.string(),
   content: z.array(z.string()),
   isLocalUser: z.boolean(),
+  time: z.string(),
 });
 
 export type ChatMessage = z.infer<typeof chatMessageSchema>;

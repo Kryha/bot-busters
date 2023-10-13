@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import { styles } from "./styles";
 import { type ContactList } from "@/types";
+import { formatDate } from "@/utils/date";
 
 interface Props {
   contactList: ContactList;
@@ -30,7 +31,7 @@ export const ChatListItem: FC<Props> = ({ contactList }) => {
                 {contactList.username}
               </Typography>
               <Typography variant="body2" color="secondary.dark">
-                {contactList.time}
+                {formatDate(contactList.time)}
               </Typography>
             </Stack>
           }

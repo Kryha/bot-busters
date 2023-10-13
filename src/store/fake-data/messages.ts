@@ -10,6 +10,7 @@ export const messageData: ChatMessage[] = [
       "I love Mexican food! I'll have to check it out. Thanks for the tip!",
     ],
     isLocalUser: true,
+    time: new Date().toString(),
   },
   {
     username: "User B",
@@ -18,6 +19,7 @@ export const messageData: ChatMessage[] = [
       "I tried a new Mexican place called 'Sabor Mexicano' last week. Their tacos are amazing!",
     ],
     isLocalUser: false,
+    time: new Date().toString(),
   },
   {
     username: "User A",
@@ -26,6 +28,7 @@ export const messageData: ChatMessage[] = [
       "I'll definitely do that. By the way, have you been to any new restaurants in town recently?",
     ],
     isLocalUser: true,
+    time: new Date().toString(),
   },
   {
     username: "User B",
@@ -34,12 +37,14 @@ export const messageData: ChatMessage[] = [
       "You're welcome! Let me know what you think after you've read it.",
     ],
     isLocalUser: false,
+    time: new Date().toString(),
   },
   {
     username: "User A",
     avatar: "user_a_avatar.png",
     content: ["I will, thanks for the recommendation!"],
     isLocalUser: true,
+    time: new Date().toString(),
   },
   {
     username: "User B",
@@ -48,6 +53,7 @@ export const messageData: ChatMessage[] = [
       "Absolutely! The author's attention to scientific detail makes it even more thrilling. You should definitely read it.",
     ],
     isLocalUser: false,
+    time: new Date().toString(),
   },
   {
     username: "User A",
@@ -56,6 +62,7 @@ export const messageData: ChatMessage[] = [
       "I've heard of 'The Martian'! It's on my to-read list. Is it as good as they say?",
     ],
     isLocalUser: true,
+    time: new Date().toString(),
   },
   {
     username: "User B",
@@ -65,6 +72,7 @@ export const messageData: ChatMessage[] = [
       "It's so exciting!",
     ],
     isLocalUser: false,
+    time: new Date().toString(),
   },
   {
     username: "User A",
@@ -74,6 +82,7 @@ export const messageData: ChatMessage[] = [
       "What book are you currently reading?",
     ],
     isLocalUser: true,
+    time: new Date().toString(),
   },
   {
     username: "User B",
@@ -84,11 +93,13 @@ export const messageData: ChatMessage[] = [
       "How about you? Did you do anything fun?",
     ],
     isLocalUser: false,
+    time: new Date().toString(),
   },
   {
     username: "User A",
     avatar: "user_a_avatar.png",
     content: ["Hey there! How's it going?", "I hope you had a great weekend."],
     isLocalUser: true,
+    time: new Date().toString(),
   },
 ];
