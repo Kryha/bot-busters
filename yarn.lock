@@ -518,6 +518,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@faker-js/faker@npm:^8.1.0":
+  version: 8.1.0
+  resolution: "@faker-js/faker@npm:8.1.0"
+  checksum: 76036cbad2f0735fe2a2834bb3e16233e7c1aa4998cf90dbd097631465f3fcd4e7022c901f80b6de1c25b47154880f06916609a81dacb039a25f9cb000a3ab4e
+  languageName: node
+  linkType: hard
+
 "@floating-ui/core@npm:^1.4.2":
   version: 1.5.0
   resolution: "@floating-ui/core@npm:1.5.0"
@@ -1538,6 +1545,7 @@ __metadata:
     "@demox-labs/aleo-wallet-adapter-reactui": ^0.0.29
     "@emotion/react": ^11.11.1
     "@emotion/styled": ^11.11.0
+    "@faker-js/faker": ^8.1.0
     "@mui/icons-material": ^5.14.11
     "@mui/material": ^5.14.11
     "@t3-oss/env-nextjs": ^0.6.0
@@ -1557,6 +1565,7 @@ __metadata:
     drizzle-orm: ^0.28.6
     eslint: ^8.47.0
     eslint-config-next: ^13.4.19
+    minidenticons: ^4.2.0
     next: ^13.4.19
     next-auth: ^4.23.0
     pg: ^8.11.3
@@ -3777,6 +3786,13 @@ __metadata:
   bin:
     mime: cli.js
   checksum: f43f9b7bfa64534e6b05bd6062961681aeb406a5b53673b53b683f27fcc4e739989941836a355eef831f4478923651ecc739f4a5f6e20a76487b432bfd4db928
+  languageName: node
+  linkType: hard
+
+"minidenticons@npm:^4.2.0":
+  version: 4.2.0
+  resolution: "minidenticons@npm:4.2.0"
+  checksum: 348a5f5760b212d6c37016e1005b3de875b90f224cb3552c389ed2c54723d991e3b7f455bf765473f68b2ad69581a37d98c37bf295cd67304c52c7db9463558d
   languageName: node
   linkType: hard
 
