@@ -13,16 +13,16 @@ const handle = app.getRequestHandler();
 
 void app.prepare().then(() => {
   const server = http.createServer((req, res) => {
-    // const proto = req.headers["x-forwarded-proto"];
-    // if (proto && proto === "http") {
-    //   // redirect to ssl
-    //   res.writeHead(303, {
-    //     location:
-    //       `https://` + req.headers.host + ((req.headers.url as string) ?? ""),
-    //   });
-    //   res.end();
-    //   return;
-    // }
+    const proto = req.headers["x-forwarded-proto"];
+    if (proto && proto === "http") {
+      // redirect to ssl
+      res.writeHead(303, {
+        location:
+          `https://` + req.headers.host + ((req.headers.url as string) ?? ""),
+      });
+      res.end();
+      return;
+    }
 
     const parsedUrl = parse(req.url!, true);
     void handle(req, res, parsedUrl);
@@ -34,17 +34,17 @@ void app.prepare().then(() => {
     createContext: createTRPCContext,
   });
 
-  server.on("upgrade", (request, socket, head) => {
-    const origin = request?.headers?.origin;
-    const corsRegex = /^https?:\/\/(.*\.?)abc\.com(:\d+)?\/$/g;
-    if (origin?.match(corsRegex) !== null) {
-      wss.handleUpgrade(request, socket, head, (ws) => {
-        wss.emit("connection", ws, request);
-      });
-    } else {
-      socket.destroy();
-    }
-  });
+  // server.on("upgrade", (request, socket, head) => {
+  //   const origin = request?.headers?.origin;
+  //   const corsRegex = /^https?:\/\/(.*\.?)kryha\.dev(:\d+)?\/$/g;
+  //   if (origin?.match(corsRegex) !== null) {
+  //     wss.handleUpgrade(request, socket, head, (ws) => {
+  //       wss.emit("connection", ws, request);
+  //     });
+  //   } else {
+  //     socket.destroy();
+  //   }
+  // });
 
   wss.on("connection", (ws) => {
     console.log(`++ Connection (${wss.clients.size})`);

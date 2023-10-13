@@ -5,21 +5,24 @@ import ws from "ws";
 import { env } from "@/env.cjs";
 import { createServer } from "http";
 
+// const app = next({ dev: env.NODE_ENV !== "production" });
+// const handle = app.getRequestHandler();
+
 const server = createServer();
 
-if (env.NODE_ENV === "production") {
-  server.on("upgrade", (request, socket, head) => {
-    const origin = request?.headers?.origin;
-    const corsRegex = /^https?:\/\/(.*\.?)kryha\.dev(:\d+)?\/$/g;
-    if (origin?.match(corsRegex) !== null) {
-      wss.handleUpgrade(request, socket, head, (ws) => {
-        wss.emit("connection", ws, request);
-      });
-    } else {
-      socket.destroy();
-    }
-  });
-}
+// if (env.NODE_ENV === "production") {
+//   server.on("upgrade", (request, socket, head) => {
+//     const origin = request?.headers?.origin;
+//     const corsRegex = /^https?:\/\/(.*\.?)kryha\.dev(:\d+)?\/$/g;
+//     if (origin?.match(corsRegex) !== null) {
+//       wss.handleUpgrade(request, socket, head, (ws) => {
+//         wss.emit("connection", ws, request);
+//       });
+//     } else {
+//       socket.destroy();
+//     }
+//   });
+// }
 
 const wss = new ws.Server({ server });
 // const wss = new ws.Server({
