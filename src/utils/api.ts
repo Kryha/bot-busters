@@ -20,7 +20,7 @@ import { env } from "@/env.cjs";
 const getEndingLink = (ctx: NextPageContext | undefined) => {
   if (typeof window === "undefined") {
     return httpBatchLink({
-      url: `${env.APP_URL}/api/trpc`,
+      url: env.APP_URL,
       headers() {
         if (!ctx?.req?.headers) {
           return {};
