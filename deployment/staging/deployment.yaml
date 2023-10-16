@@ -31,13 +31,8 @@ spec:
             - name: NEXTAUTH_URL
               value: https://bot-busters.staging.kryha.dev
             - name: NEXTAUTH_URL_INTERNAL
-              # value: https://bot-busters.staging.kryha.dev
-              # value: http://bot-busters.$(POD_NAMESPACE).svc.cluster.local:3000
               value: http://127.0.0.1:3000
             - name: APP_URL
               value: http://localhost:3000
-              # value: http://bot-busters.$(POD_NAMESPACE).svc.cluster.local:3000
-              # value: https://bot-busters.staging.kryha.dev
             - name: NEXT_PUBLIC_WS_URL
-              # value: wss://ws.bot-busters.staging.kryha.dev
               value: wss://bot-busters.staging.kryha.dev

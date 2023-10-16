@@ -13,7 +13,3 @@ spec:
       targetPort: 3000
       protocol: TCP
       name: bot-busters
-    - port: 3001
-      targetPort: 3001
-      protocol: TCP
-      name: bot-busters-ws

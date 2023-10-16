@@ -20,13 +20,3 @@ spec:
                 name: bot-busters
                 port:
                   name: bot-busters
-    - host: "ws.bot-busters.localhost"
-      http:
-        paths:
-          - path: "/(.*)"
-            pathType: Prefix
-            backend:
-              service:
-                name: bot-busters
-                port:
-                  name: bot-busters-ws

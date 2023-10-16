@@ -2,7 +2,7 @@ import { type DefaultSession, type NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 import { db, dbSchema } from "@/server/db";
-// import { env } from "@/env.cjs";
+import { env } from "@/env.cjs";
 import { eq } from "drizzle-orm";
 
 /**
@@ -23,8 +23,7 @@ declare module "next-auth" {
  * @see https://next-auth.js.org/configuration/options
  */
 export const authOptions: NextAuthOptions = {
-  // debug: env.NODE_ENV === "development",
-  debug: true,
+  debug: env.NODE_ENV === "development",
   callbacks: {
     session: ({ session, token }) => {
       return {

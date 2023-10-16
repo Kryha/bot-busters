@@ -69,6 +69,5 @@ COPY --from=build --chown=nextjs:nodejs /app/tsconfig.server.json ./tsconfig.ser
 USER nextjs
 
 EXPOSE 3000
-EXPOSE 3001
 
 CMD ["yarn", "start:prod"]
