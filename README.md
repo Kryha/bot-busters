@@ -16,7 +16,14 @@ Create all the necessary DB tables:
 yarn db:push
 ```
 
-Now, run the application in dev mode:
+Build the development web socket and run it:
+
+```sh
+yarn build:ws
+yarn start:ws
+```
+
+Open another terminal window and run the application in dev mode:
 
 ```sh
 yarn dev
