@@ -11,10 +11,15 @@ const port = 3000;
 const app = next({ dev: env.NODE_ENV !== "production" });
 const handle = app.getRequestHandler();
 
-const server = http.createServer((req, res) => {
-  const parsedUrl = parse(req.url!, true);
-  void handle(req, res, parsedUrl);
-});
+const ONE_HOUR_MS = 3600 * 1000;
+
+const server = http.createServer(
+  { requestTimeout: ONE_HOUR_MS, keepAliveTimeout: ONE_HOUR_MS },
+  (req, res) => {
+    const parsedUrl = parse(req.url!, true);
+    void handle(req, res, parsedUrl);
+  }
+);
 
 const wss = new ws.Server({ server });
 const handler = applyWSSHandler({
