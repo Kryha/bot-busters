@@ -35,4 +35,4 @@ spec:
             - name: APP_URL
               value: http://localhost:3000
             - name: NEXT_PUBLIC_WS_URL
-              value: ws://ws.bot-busters.localhost
+              value: ws://bot-busters.localhost

@@ -3,31 +3,9 @@ import { appRouter } from "./root";
 import { applyWSSHandler } from "@trpc/server/adapters/ws";
 import ws from "ws";
 import { env } from "@/env.cjs";
-// import { createServer } from "http";
-
-// const app = next({ dev: env.NODE_ENV !== "production" });
-// const handle = app.getRequestHandler();
-
-// const server = createServer();
-
-// if (env.NODE_ENV === "production") {
-//   server.on("upgrade", (request, socket, head) => {
-//     const origin = request?.headers?.origin;
-//     const corsRegex = /^https?:\/\/(.*\.?)kryha\.dev(:\d+)?\/$/g;
-//     if (origin?.match(corsRegex) !== null) {
-//       wss.handleUpgrade(request, socket, head, (ws) => {
-//         wss.emit("connection", ws, request);
-//       });
-//     } else {
-//       socket.destroy();
-//     }
-//   });
-// }
 
 const wss = new ws.Server({ port: 3001 });
-// const wss = new ws.Server({
-//   port: 3001,
-// });
+
 const handler = applyWSSHandler({
   wss,
   router: appRouter,
@@ -36,13 +14,14 @@ const handler = applyWSSHandler({
 
 wss.on("connection", (ws) => {
   console.log(`++ Connection (${wss.clients.size})`);
+
+  ws.on("error", (error) => {
+    console.error(error);
+  });
+
   ws.once("close", () => {
     console.log(`-- Connection (${wss.clients.size})`);
   });
-});
-
-wss.on("error", (error) => {
-  console.error(error);
 });
 
 console.log(
@@ -54,5 +33,3 @@ process.on("SIGTERM", () => {
   handler.broadcastReconnectNotification();
   wss.close();
 });
-
-// server.listen(3001);
