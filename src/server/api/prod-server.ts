@@ -23,6 +23,8 @@ const server = http.createServer((req, res) => {
     return;
   }
 
+  console.log("parsing url:", req.url);
+
   const parsedUrl = parse(req.url!, true);
   void handle(req, res, parsedUrl);
 });
