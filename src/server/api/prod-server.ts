@@ -12,19 +12,6 @@ const app = next({ dev: env.NODE_ENV !== "production" });
 const handle = app.getRequestHandler();
 
 const server = http.createServer((req, res) => {
-  const proto = req.headers["x-forwarded-proto"];
-  if (proto && proto === "http") {
-    // redirect to ssl
-    res.writeHead(303, {
-      location:
-        `https://` + req.headers.host + ((req.headers.url as string) ?? ""),
-    });
-    res.end();
-    return;
-  }
-
-  console.log("parsing url:", req.url);
-
   const parsedUrl = parse(req.url!, true);
   void handle(req, res, parsedUrl);
 });
