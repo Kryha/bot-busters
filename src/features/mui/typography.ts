@@ -30,10 +30,6 @@ export const typography = (props: Theme): Typography => {
       fontWeight: 700,
       lineHeight: "117px",
       color: palette.secondary.main,
-      "@media (min-width:2000px)": {
-        fontSize: "200px",
-        lineHeight: "187px",
-      },
     },
     h2: {
       fontFamily: font.style.fontFamily,
@@ -41,10 +37,6 @@ export const typography = (props: Theme): Typography => {
       fontWeight: 700,
       lineHeight: "64px",
       color: palette.secondary.main,
-      "@media (min-width:2000px)": {
-        fontSize: "114px",
-        lineHeight: "114px",
-      },
     },
     h3: {
       fontFamily: font.style.fontFamily,
@@ -52,10 +44,6 @@ export const typography = (props: Theme): Typography => {
       fontWeight: 700,
       lineHeight: "44px",
       color: palette.secondary.main,
-      "@media (min-width:2000px)": {
-        fontSize: "70px",
-        lineHeight: "74px",
-      },
     },
     h4: {
       fontFamily: font.style.fontFamily,
@@ -63,20 +51,12 @@ export const typography = (props: Theme): Typography => {
       fontWeight: 700,
       lineHeight: "26px",
       color: palette.secondary.main,
-      "@media (min-width:2000px)": {
-        fontSize: "44px",
-        lineHeight: "46px",
-      },
     },
     h5: {
       fontFamily: font.style.fontFamily,
       fontSize: "16px",
       fontWeight: 700,
       lineHeight: "20px",
-      "@media (min-width:2000px)": {
-        fontSize: "36px",
-        lineHeight: "40px",
-      },
     },
     h6: {
       fontFamily: font.style.fontFamily,
@@ -84,20 +64,12 @@ export const typography = (props: Theme): Typography => {
       fontWeight: 500,
       lineHeight: "33.6px",
       color: palette.secondary.main,
-      "@media (min-width:2000px)": {
-        fontSize: "44px",
-        lineHeight: "53.6px",
-      },
     },
     subtitle1: {
       fontFamily: font.style.fontFamily,
       fontSize: "20px",
       fontWeight: 700,
       lineHeight: "20px",
-      "@media (min-width:2000px)": {
-        fontSize: "40px",
-        lineHeight: "40px",
-      },
     },
     subtitle2: {
       fontFamily: font.style.fontFamily,
@@ -106,10 +78,6 @@ export const typography = (props: Theme): Typography => {
       lineHeight: "18px",
       textTransform: "uppercase" as const,
       color: palette.secondary.dark,
-      "@media (min-width:2000px)": {
-        fontSize: "34px",
-        lineHeight: "38px",
-      },
     },
     body1: {
       fontFamily: font.style.fontFamily,
@@ -117,20 +85,12 @@ export const typography = (props: Theme): Typography => {
       fontWeight: 400,
       lineHeight: "22.4px",
       color: palette.secondary.main,
-      "@media (min-width:2000px)": {
-        fontSize: "42px",
-        lineHeight: 1.3,
-      },
     },
     body2: {
       fontFamily: font.style.fontFamily,
       fontSize: "14px",
       fontWeight: 400,
       lineHeight: "19.6px",
-      "@media (min-width:2000px)": {
-        fontSize: "34px",
-        lineHeight: "40.4px",
-      },
     },
     button: {
       fontFamily: font.style.fontFamily,
@@ -139,10 +99,6 @@ export const typography = (props: Theme): Typography => {
       lineHeight: "22.6px",
       color: palette.primary.main,
       textTransform: "none" as const,
-      "@media (min-width:2000px)": {
-        fontSize: "45px",
-        lineHeight: 1.2,
-      },
     },
     caption: {
       fontFamily: font.style.fontFamily,
@@ -151,10 +107,6 @@ export const typography = (props: Theme): Typography => {
       lineHeight: "19.6px",
       textTransform: "uppercase" as const,
       color: palette.secondary.main,
-      "@media (min-width:2000px)": {
-        fontSize: "34px",
-        lineHeight: "40.4px",
-      },
     },
     overline: {
       fontFamily: font.style.fontFamily,
@@ -162,10 +114,6 @@ export const typography = (props: Theme): Typography => {
       fontWeight: 500,
       lineHeight: "16.9px",
       color: palette.common.white,
-      "@media (min-width:2000px)": {
-        fontSize: "42px",
-        lineHeight: 1.3,
-      },
     },
   };
 };

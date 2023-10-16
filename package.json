@@ -17,6 +17,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@aleohq/sdk": "^0.6.1",
     "@demox-labs/aleo-wallet-adapter-base": "^0.0.18",
     "@demox-labs/aleo-wallet-adapter-leo": "^0.0.17",
     "@demox-labs/aleo-wallet-adapter-react": "^0.0.17",
