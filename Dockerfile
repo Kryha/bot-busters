@@ -71,4 +71,4 @@ USER nextjs
 EXPOSE 3000
 EXPOSE 3001
 
-CMD ["yarn", "start"]
+CMD ["yarn", "start:prod"]

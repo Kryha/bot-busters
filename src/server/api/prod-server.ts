@@ -53,6 +53,10 @@ void app.prepare().then(() => {
     });
   });
 
+  wss.on("error", (error) => {
+    console.error(error);
+  });
+
   process.on("SIGTERM", () => {
     console.log("SIGTERM");
     handler.broadcastReconnectNotification();

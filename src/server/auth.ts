@@ -27,9 +27,6 @@ export const authOptions: NextAuthOptions = {
   debug: true,
   callbacks: {
     session: ({ session, token }) => {
-      console.log("session cb:", session);
-      console.log("session cb token:", token);
-
       return {
         ...session,
         publicKey: token.sub,
@@ -58,8 +55,6 @@ export const authOptions: NextAuthOptions = {
             .insert(dbSchema.users)
             .values({ publicKey: credentials.publicKey });
         }
-
-        console.log("auth credentials:", credentials);
 
         return {
           id: credentials.publicKey,
