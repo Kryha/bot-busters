@@ -41,6 +41,10 @@ wss.on("connection", (ws) => {
   });
 });
 
+wss.on("error", (error) => {
+  console.error(error);
+});
+
 console.log(
   `✅ WebSocket Server listening on ws://localhost:3001 in ${env.NODE_ENV} environment`
 );

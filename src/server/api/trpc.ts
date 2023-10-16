@@ -8,7 +8,7 @@
  */
 import { initTRPC, TRPCError } from "@trpc/server";
 import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
-import { getServerSession, type Session } from "next-auth";
+import { type Session } from "next-auth";
 import superjson from "superjson";
 import { ZodError } from "zod";
 import { getSession } from "next-auth/react";
@@ -17,7 +17,6 @@ import { db } from "@/server/db";
 import { type NodeHTTPCreateContextFnOptions } from "@trpc/server/dist/adapters/node-http";
 import { type IncomingMessage } from "http";
 import type ws from "ws";
-import { authOptions } from "../auth";
 
 /**
  * 1. CONTEXT
@@ -66,26 +65,6 @@ export const createTRPCContext = async (
     session,
   });
 };
-
-// export const createTRPCContext = async (opts: CreateNextContextOptions) => {
-//   const session = await getServerSession(opts.req, opts.res, authOptions);
-//   console.log("🚀 ~ session:", session);
-
-//   return createInnerTRPCContext({
-//     session,
-//   });
-// };
-
-// export const createTRPCWSContext = async (
-//   opts: NodeHTTPCreateContextFnOptions<IncomingMessage, ws>
-// ) => {
-//   const session = await getSession(opts);
-//   console.log("🚀 ~ ws session:", session);
-
-//   return createInnerTRPCContext({
-//     session,
-//   });
-// };
 
 /**
  * 2. INITIALIZATION
