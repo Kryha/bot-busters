@@ -14,7 +14,7 @@ import { eq } from "drizzle-orm";
  */
 declare module "next-auth" {
   interface Session extends DefaultSession {
-    publicKey: string;
+    address: string;
   }
 }
 
@@ -29,15 +29,15 @@ export const authOptions: NextAuthOptions = {
     session: ({ session, token }) => {
       return {
         ...session,
-        publicKey: token.sub,
+        address: token.sub,
       };
     },
   },
   providers: [
     CredentialsProvider({
       credentials: {
-        aleoAddress: {
-          label: "Public Key",
+        address: {
+          label: "Address",
           type: "text",
         },
         signedMessage: {
@@ -46,13 +46,13 @@ export const authOptions: NextAuthOptions = {
         },
       },
       async authorize(credentials) {
-        if (!credentials?.signedMessage || !credentials?.aleoAddress) {
+        if (!credentials?.signedMessage || !credentials?.address) {
           return null;
         }
 
-        const { aleoAddress, signedMessage } = credentials;
+        const { address, signedMessage } = credentials;
 
-        const isVerified = verifySignature(aleoAddress, signedMessage);
+        const isVerified = verifySignature(address, signedMessage);
 
         if (!isVerified) return null;
 
@@ -60,14 +60,14 @@ export const authOptions: NextAuthOptions = {
           const selectedUsers = await db
             .select()
             .from(dbSchema.users)
-            .where(eq(dbSchema.users.publicKey, aleoAddress));
+            .where(eq(dbSchema.users.address, address));
 
           if (!selectedUsers.length) {
-            await db.insert(dbSchema.users).values({ publicKey: aleoAddress });
+            await db.insert(dbSchema.users).values({ address });
           }
 
           return {
-            id: aleoAddress,
+            id: address,
           };
         } catch (e) {
           console.error(e);

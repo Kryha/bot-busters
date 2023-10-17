@@ -11,8 +11,8 @@ const Lobby: FC = () => {
   // TODO: update component
 
   api.lobby.onJoin.useSubscription(undefined, {
-    onData(publicKey) {
-      console.log("[sub]", publicKey, "joined");
+    onData(address) {
+      console.log("[sub]", address, "joined");
     },
     onError(err) {
       console.error(err);

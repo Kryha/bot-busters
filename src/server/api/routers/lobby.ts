@@ -21,10 +21,10 @@ export const lobbyRouter = createTRPCRouter({
     });
   }),
   join: protectedProcedure.mutation(({ ctx }) => {
-    const { publicKey } = ctx.session;
-    lobbyQueue.push(publicKey);
-    ee.emit("join", publicKey);
-    return publicKey;
+    const { address } = ctx.session;
+    lobbyQueue.push(address);
+    ee.emit("join", address);
+    return address;
   }),
 
   onLeave: protectedProcedure.subscription(() => {
@@ -39,11 +39,11 @@ export const lobbyRouter = createTRPCRouter({
     });
   }),
   leave: protectedProcedure.mutation(({ ctx }) => {
-    const { publicKey } = ctx.session;
-    const index = lobbyQueue.indexOf(publicKey);
+    const { address } = ctx.session;
+    const index = lobbyQueue.indexOf(address);
     if (index < 0) return;
     lobbyQueue.splice(index, 1);
-    ee.emit("leave", publicKey);
-    return publicKey;
+    ee.emit("leave", address);
+    return address;
   }),
 });

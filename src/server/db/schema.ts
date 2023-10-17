@@ -12,7 +12,7 @@ import { type z } from "zod";
 export const bbPgTable = pgTableCreator((name) => `bot_busters_${name}`);
 
 export const users = bbPgTable("user", {
-  publicKey: varchar("publicKey", { length: PUBLIC_KEY_LENGTH }).primaryKey(),
+  address: varchar("address", { length: PUBLIC_KEY_LENGTH }).primaryKey(),
   createdAt: date("createdAt").defaultNow(),
 });
 
