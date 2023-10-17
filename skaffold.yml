@@ -13,6 +13,7 @@ build:
         dockerfile: Dockerfile
         buildArgs:
           NEXT_PUBLIC_ALEO_NETWORK: testnet3
+          NEXT_PUBLIC_WS_URL: ws://bot-busters.localhost
 manifests:
   kustomize:
     paths:
