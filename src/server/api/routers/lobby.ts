@@ -9,41 +9,35 @@ const ee = new EventEmitter();
 const lobbyQueue: string[] = [];
 
 export const lobbyRouter = createTRPCRouter({
-  onJoin: protectedProcedure.subscription(() => {
+  onJoin: protectedProcedure.subscription(({ ctx }) => {
     return observable<string>((emit) => {
-      const handle = (data: string) => {
-        emit.next(data);
+      const handleEvent = (address: string) => {
+        // emit data to client
+        emit.next(address);
       };
-      ee.on("join", handle);
+
+      ee.on("join", handleEvent);
       return () => {
-        ee.off("join", handle);
+        ee.off("join", handleEvent);
+
+        const { address } = ctx.session;
+
+        console.log(address, "leaving...");
+
+        const index = lobbyQueue.indexOf(address);
+        if (index < 0) return;
+        lobbyQueue.splice(index, 1);
       };
     });
   }),
   join: protectedProcedure.mutation(({ ctx }) => {
     const { address } = ctx.session;
+
+    const hasJoined = lobbyQueue.indexOf(address) !== -1;
+    if (hasJoined) return address;
+
     lobbyQueue.push(address);
     ee.emit("join", address);
-    return address;
-  }),
-
-  onLeave: protectedProcedure.subscription(() => {
-    return observable<string>((emit) => {
-      const handle = (data: string) => {
-        emit.next(data);
-      };
-      ee.on("leave", handle);
-      return () => {
-        ee.off("leave", handle);
-      };
-    });
-  }),
-  leave: protectedProcedure.mutation(({ ctx }) => {
-    const { address } = ctx.session;
-    const index = lobbyQueue.indexOf(address);
-    if (index < 0) return;
-    lobbyQueue.splice(index, 1);
-    ee.emit("leave", address);
     return address;
   }),
 });
