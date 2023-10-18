@@ -439,14 +439,14 @@
       "updated": 1696322924369,
       "link": null,
       "locked": false,
-      "text": "publicKey",
+      "text": "address",
       "fontSize": 28,
       "fontFamily": 1,
       "textAlign": "center",
       "verticalAlign": "middle",
       "baseline": 25,
       "containerId": "40ligmjcj-JdbvRvunIz1",
-      "originalText": "publicKey",
+      "originalText": "address",
       "lineHeight": 1.25
     },
     {
@@ -909,14 +909,14 @@
       "updated": 1696323090865,
       "link": null,
       "locked": false,
-      "text": "publicKey",
+      "text": "address",
       "fontSize": 28,
       "fontFamily": 1,
       "textAlign": "center",
       "verticalAlign": "middle",
       "baseline": 25,
       "containerId": "RuY012FwPDh2xvw775jTD",
-      "originalText": "publicKey",
+      "originalText": "address",
       "lineHeight": 1.25
     }
   ],
