@@ -10,7 +10,7 @@ export const components = (theme: Theme): Components => {
   return {
     MuiButton: MuiButton(theme),
     MuiCard: MuiCard(theme),
-    MuiIconButton: MuiIconButton(theme),
+    MuiIconButton: MuiIconButton(),
     MuiSvgIcon: MuiSvgIcon(theme),
     MuiAvatar: MuiAvatar(theme),
   };

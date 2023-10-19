@@ -18,5 +18,5 @@ theme.components = {
 
 theme.typography = {
   ...theme.typography,
-  ...typography(theme),
+  ...typography(),
 };

@@ -1,4 +1,3 @@
-import { type Theme } from "@mui/material";
 import { type Typography } from "@mui/material/styles/createTypography";
 import { Inter } from "next/font/google";
 
@@ -10,7 +9,7 @@ const font = Inter({
   subsets: ["latin"],
 });
 
-export const typography = (props: Theme): Typography => {
+export const typography = (): Typography => {
   const coefficient = FONT_SIZE / COEFFICIENT;
   const pxToRem = (px: number) => `${(px / FONT_SIZE) * coefficient}rem`;
 

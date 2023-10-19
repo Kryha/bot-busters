@@ -1,6 +1,6 @@
-import { type Components, type Theme } from "@mui/material";
+import { type Components } from "@mui/material";
 
-export const MuiIconButton = (theme: Theme): Components["MuiIconButton"] => {
+export const MuiIconButton = (): Components["MuiIconButton"] => {
   return {
     styleOverrides: {
       root: {
