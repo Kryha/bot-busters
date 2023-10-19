@@ -10,7 +10,7 @@ export const styles = {
       textOverflow: "ellipsis",
     },
     "& .MuiListItemText-secondary": {
-      color: "secondary.dark",
+      color: "primary",
       whiteSpace: "nowrap",
       overflow: "hidden",
       textOverflow: "ellipsis",

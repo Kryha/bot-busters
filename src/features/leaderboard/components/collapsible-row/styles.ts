@@ -14,6 +14,6 @@ export const styles = {
   },
   tableCellRow: {
     borderBottom: "none",
-    color: "secondary.main",
+    color: "primary.light",
   } satisfies SxProps,
 };

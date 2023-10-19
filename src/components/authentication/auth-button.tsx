@@ -76,6 +76,7 @@ export const AuthButton = () => {
 
   return (
     <Button
+      variant="outlined"
       onClick={
         isValidSession(sessionData)
           ? () => void logout()
