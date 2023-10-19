@@ -29,10 +29,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./",\
           "packageDependencies": [\
             ["@aleohq/sdk", "npm:0.6.1"],\
-            ["@demox-labs/aleo-wallet-adapter-base", "npm:0.0.18"],\
-            ["@demox-labs/aleo-wallet-adapter-leo", "npm:0.0.17"],\
-            ["@demox-labs/aleo-wallet-adapter-react", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:0.0.17"],\
-            ["@demox-labs/aleo-wallet-adapter-reactui", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:0.0.29"],\
+            ["@demox-labs/aleo-wallet-adapter-base", "npm:0.0.19"],\
+            ["@demox-labs/aleo-wallet-adapter-leo", "npm:0.0.18"],\
+            ["@demox-labs/aleo-wallet-adapter-react", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:0.0.18"],\
+            ["@demox-labs/aleo-wallet-adapter-reactui", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:0.0.30"],\
             ["@emotion/react", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:11.11.1"],\
             ["@emotion/styled", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:11.11.0"],\
             ["@mui/icons-material", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:5.14.11"],\
@@ -197,39 +197,39 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@demox-labs/aleo-wallet-adapter-base", [\
-        ["npm:0.0.18", {\
-          "packageLocation": "./.yarn/cache/@demox-labs-aleo-wallet-adapter-base-npm-0.0.18-06b6dec272-c78b077825.zip/node_modules/@demox-labs/aleo-wallet-adapter-base/",\
+        ["npm:0.0.19", {\
+          "packageLocation": "./.yarn/cache/@demox-labs-aleo-wallet-adapter-base-npm-0.0.19-1a1821fabc-5a4d58f5c7.zip/node_modules/@demox-labs/aleo-wallet-adapter-base/",\
           "packageDependencies": [\
-            ["@demox-labs/aleo-wallet-adapter-base", "npm:0.0.18"],\
+            ["@demox-labs/aleo-wallet-adapter-base", "npm:0.0.19"],\
             ["eventemitter3", "npm:4.0.7"]\
           ],\
           "linkType": "HARD"\
         }]\
       ]],\
       ["@demox-labs/aleo-wallet-adapter-leo", [\
-        ["npm:0.0.17", {\
-          "packageLocation": "./.yarn/cache/@demox-labs-aleo-wallet-adapter-leo-npm-0.0.17-9c4d2c8a76-1cb362ad5f.zip/node_modules/@demox-labs/aleo-wallet-adapter-leo/",\
+        ["npm:0.0.18", {\
+          "packageLocation": "./.yarn/cache/@demox-labs-aleo-wallet-adapter-leo-npm-0.0.18-57fb507cda-9191597d77.zip/node_modules/@demox-labs/aleo-wallet-adapter-leo/",\
           "packageDependencies": [\
-            ["@demox-labs/aleo-wallet-adapter-leo", "npm:0.0.17"],\
-            ["@demox-labs/aleo-wallet-adapter-base", "npm:0.0.18"],\
+            ["@demox-labs/aleo-wallet-adapter-leo", "npm:0.0.18"],\
+            ["@demox-labs/aleo-wallet-adapter-base", "npm:0.0.19"],\
             ["nanoid", "npm:4.0.2"]\
           ],\
           "linkType": "HARD"\
         }]\
       ]],\
       ["@demox-labs/aleo-wallet-adapter-react", [\
-        ["npm:0.0.17", {\
-          "packageLocation": "./.yarn/cache/@demox-labs-aleo-wallet-adapter-react-npm-0.0.17-9bbd927dba-52a9c5c17e.zip/node_modules/@demox-labs/aleo-wallet-adapter-react/",\
+        ["npm:0.0.18", {\
+          "packageLocation": "./.yarn/cache/@demox-labs-aleo-wallet-adapter-react-npm-0.0.18-48490cd4c9-e846cffaa0.zip/node_modules/@demox-labs/aleo-wallet-adapter-react/",\
           "packageDependencies": [\
-            ["@demox-labs/aleo-wallet-adapter-react", "npm:0.0.17"]\
+            ["@demox-labs/aleo-wallet-adapter-react", "npm:0.0.18"]\
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:0.0.17", {\
-          "packageLocation": "./.yarn/__virtual__/@demox-labs-aleo-wallet-adapter-react-virtual-f626570a8b/0/cache/@demox-labs-aleo-wallet-adapter-react-npm-0.0.17-9bbd927dba-52a9c5c17e.zip/node_modules/@demox-labs/aleo-wallet-adapter-react/",\
+        ["virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:0.0.18", {\
+          "packageLocation": "./.yarn/__virtual__/@demox-labs-aleo-wallet-adapter-react-virtual-67907d37d6/0/cache/@demox-labs-aleo-wallet-adapter-react-npm-0.0.18-48490cd4c9-e846cffaa0.zip/node_modules/@demox-labs/aleo-wallet-adapter-react/",\
           "packageDependencies": [\
-            ["@demox-labs/aleo-wallet-adapter-react", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:0.0.17"],\
-            ["@demox-labs/aleo-wallet-adapter-base", "npm:0.0.18"],\
+            ["@demox-labs/aleo-wallet-adapter-react", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:0.0.18"],\
+            ["@demox-labs/aleo-wallet-adapter-base", "npm:0.0.19"],\
             ["@types/react", "npm:18.2.23"],\
             ["react", "npm:18.2.0"]\
           ],\
@@ -241,19 +241,19 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@demox-labs/aleo-wallet-adapter-reactui", [\
-        ["npm:0.0.29", {\
-          "packageLocation": "./.yarn/cache/@demox-labs-aleo-wallet-adapter-reactui-npm-0.0.29-6e8087608f-a0d3fc440c.zip/node_modules/@demox-labs/aleo-wallet-adapter-reactui/",\
+        ["npm:0.0.30", {\
+          "packageLocation": "./.yarn/cache/@demox-labs-aleo-wallet-adapter-reactui-npm-0.0.30-2043ae904d-2256d79575.zip/node_modules/@demox-labs/aleo-wallet-adapter-reactui/",\
           "packageDependencies": [\
-            ["@demox-labs/aleo-wallet-adapter-reactui", "npm:0.0.29"]\
+            ["@demox-labs/aleo-wallet-adapter-reactui", "npm:0.0.30"]\
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:0.0.29", {\
-          "packageLocation": "./.yarn/__virtual__/@demox-labs-aleo-wallet-adapter-reactui-virtual-eb9e54a29d/0/cache/@demox-labs-aleo-wallet-adapter-reactui-npm-0.0.29-6e8087608f-a0d3fc440c.zip/node_modules/@demox-labs/aleo-wallet-adapter-reactui/",\
+        ["virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:0.0.30", {\
+          "packageLocation": "./.yarn/__virtual__/@demox-labs-aleo-wallet-adapter-reactui-virtual-066decbbb0/0/cache/@demox-labs-aleo-wallet-adapter-reactui-npm-0.0.30-2043ae904d-2256d79575.zip/node_modules/@demox-labs/aleo-wallet-adapter-reactui/",\
           "packageDependencies": [\
-            ["@demox-labs/aleo-wallet-adapter-reactui", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:0.0.29"],\
-            ["@demox-labs/aleo-wallet-adapter-base", "npm:0.0.18"],\
-            ["@demox-labs/aleo-wallet-adapter-react", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:0.0.17"],\
+            ["@demox-labs/aleo-wallet-adapter-reactui", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:0.0.30"],\
+            ["@demox-labs/aleo-wallet-adapter-base", "npm:0.0.19"],\
+            ["@demox-labs/aleo-wallet-adapter-react", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:0.0.18"],\
             ["@types/react", "npm:18.2.23"],\
             ["@types/react-dom", "npm:18.2.8"],\
             ["react", "npm:18.2.0"],\
@@ -2358,10 +2358,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["bot-busters", "workspace:."],\
             ["@aleohq/sdk", "npm:0.6.1"],\
-            ["@demox-labs/aleo-wallet-adapter-base", "npm:0.0.18"],\
-            ["@demox-labs/aleo-wallet-adapter-leo", "npm:0.0.17"],\
-            ["@demox-labs/aleo-wallet-adapter-react", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:0.0.17"],\
-            ["@demox-labs/aleo-wallet-adapter-reactui", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:0.0.29"],\
+            ["@demox-labs/aleo-wallet-adapter-base", "npm:0.0.19"],\
+            ["@demox-labs/aleo-wallet-adapter-leo", "npm:0.0.18"],\
+            ["@demox-labs/aleo-wallet-adapter-react", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:0.0.18"],\
+            ["@demox-labs/aleo-wallet-adapter-reactui", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:0.0.30"],\
             ["@emotion/react", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:11.11.1"],\
             ["@emotion/styled", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:11.11.0"],\
             ["@mui/icons-material", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:5.14.11"],\

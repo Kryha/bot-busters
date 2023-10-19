@@ -115,46 +115,46 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@demox-labs/aleo-wallet-adapter-base@npm:^0.0.18":
-  version: 0.0.18
-  resolution: "@demox-labs/aleo-wallet-adapter-base@npm:0.0.18"
+"@demox-labs/aleo-wallet-adapter-base@npm:^0.0.19":
+  version: 0.0.19
+  resolution: "@demox-labs/aleo-wallet-adapter-base@npm:0.0.19"
   dependencies:
     eventemitter3: ^4.0.7
-  checksum: c78b0778251107d1a3b0966034585ca4c32f6c1da4f34dd069bec8c06dac54372a25fb5ab6ab55bc1354d17f99a80c374fc349429adc230c1cb0e79cf39e79f7
+  checksum: 5a4d58f5c70b13d5c778ef19bf1955c4431362a829bdc34e3b72815231dd7165417458d550ccc0c762a5777f3e986cdcd8d4d32df70faa923c0053451513c8b5
   languageName: node
   linkType: hard
 
-"@demox-labs/aleo-wallet-adapter-leo@npm:^0.0.17":
-  version: 0.0.17
-  resolution: "@demox-labs/aleo-wallet-adapter-leo@npm:0.0.17"
+"@demox-labs/aleo-wallet-adapter-leo@npm:^0.0.18":
+  version: 0.0.18
+  resolution: "@demox-labs/aleo-wallet-adapter-leo@npm:0.0.18"
   dependencies:
-    "@demox-labs/aleo-wallet-adapter-base": ^0.0.18
+    "@demox-labs/aleo-wallet-adapter-base": ^0.0.19
     nanoid: ^4.0.0
-  checksum: 1cb362ad5f4dd323597c9962688dcf844356268f18da97901fc276c142cf30e1622a45aecc6dfafb8d34e6548af7f243e5dd63778532c3604faab205bcdfb95b
+  checksum: 9191597d778442542e6ed454c5e2eb08e918d9f281f7659dd4c5ed4ba398800dab0f43a94acb9ee2e04ebcac051de7e18e439ee64b5cb676a4c18e022b1e2e65
   languageName: node
   linkType: hard
 
-"@demox-labs/aleo-wallet-adapter-react@npm:^0.0.17":
-  version: 0.0.17
-  resolution: "@demox-labs/aleo-wallet-adapter-react@npm:0.0.17"
+"@demox-labs/aleo-wallet-adapter-react@npm:^0.0.18":
+  version: 0.0.18
+  resolution: "@demox-labs/aleo-wallet-adapter-react@npm:0.0.18"
   dependencies:
-    "@demox-labs/aleo-wallet-adapter-base": ^0.0.18
+    "@demox-labs/aleo-wallet-adapter-base": ^0.0.19
   peerDependencies:
     react: ^18.2.0
-  checksum: 52a9c5c17e2b6d074ea0a58e23722b03d6f22a085ad9f877df610e31add73731078049e13385c67056df64d3e4689092660f2861aa917a6f4789cdee02a44883
+  checksum: e846cffaa01e73f79b9ff9118ffbef61383549796332ac74fe011cb3fcc2e78e8d248d0a831da988554d1a22f4712dfd81404e5fde414732e2c416b379e3c4eb
   languageName: node
   linkType: hard
 
-"@demox-labs/aleo-wallet-adapter-reactui@npm:^0.0.29":
-  version: 0.0.29
-  resolution: "@demox-labs/aleo-wallet-adapter-reactui@npm:0.0.29"
+"@demox-labs/aleo-wallet-adapter-reactui@npm:^0.0.30":
+  version: 0.0.30
+  resolution: "@demox-labs/aleo-wallet-adapter-reactui@npm:0.0.30"
   dependencies:
-    "@demox-labs/aleo-wallet-adapter-base": ^0.0.18
-    "@demox-labs/aleo-wallet-adapter-react": ^0.0.17
+    "@demox-labs/aleo-wallet-adapter-base": ^0.0.19
+    "@demox-labs/aleo-wallet-adapter-react": ^0.0.18
   peerDependencies:
     react: ^18.2.0
     react-dom: ^18.2.0
-  checksum: a0d3fc440ce820c433778a25810bc9dbf7bd3f51ba78c6a7737e62744bc44695bd22b54a1aa05bad5f6a7ebde7fea565c2f3bd973adb7c6ceaa37f7f40d7c4fd
+  checksum: 2256d79575e86c9454813d3d4dd1ef013a31c1278f3cc358d29a455704e44312c79f7d3e0845ce2c712867e686a37a25e9b64eaebeb22d93af2e609cf7413547
   languageName: node
   linkType: hard
 
@@ -1678,10 +1678,10 @@ __metadata:
   resolution: "bot-busters@workspace:."
   dependencies:
     "@aleohq/sdk": ^0.6.1
-    "@demox-labs/aleo-wallet-adapter-base": ^0.0.18
-    "@demox-labs/aleo-wallet-adapter-leo": ^0.0.17
-    "@demox-labs/aleo-wallet-adapter-react": ^0.0.17
-    "@demox-labs/aleo-wallet-adapter-reactui": ^0.0.29
+    "@demox-labs/aleo-wallet-adapter-base": ^0.0.19
+    "@demox-labs/aleo-wallet-adapter-leo": ^0.0.18
+    "@demox-labs/aleo-wallet-adapter-react": ^0.0.18
+    "@demox-labs/aleo-wallet-adapter-reactui": ^0.0.30
     "@emotion/react": ^11.11.1
     "@emotion/styled": ^11.11.0
     "@mui/icons-material": ^5.14.11

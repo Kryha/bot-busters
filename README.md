@@ -6,6 +6,8 @@ Chat, be human and bust bots!
 
 Before running the app in dev mode, make sure you have a running instance of [Docker](https://www.docker.com/), and run the following command from the root directory to spin up a database instance:
 
+<!-- TODO: document .env -->
+
 ```sh
 yarn db:run
 ```

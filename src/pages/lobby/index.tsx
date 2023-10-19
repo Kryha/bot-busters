@@ -1,4 +1,4 @@
-import { type FC } from "react";
+import { useState, type FC } from "react";
 import { useRouter } from "next/router";
 import { Typography, Button, Stack } from "@mui/material";
 
@@ -8,34 +8,51 @@ import { api } from "@/utils/api";
 
 const Lobby: FC = () => {
   const router = useRouter();
-  // TODO: update component
 
-  api.lobby.onJoin.useSubscription(undefined, {
-    onData(address) {
-      console.log("[sub]", address, "joined");
+  const initialQueueLength = Number(router.query.queueLength);
+  const initialMyPlaceInQueue = Number(router.query.myPlaceInQueue);
+
+  const [queueLength, setQueueLength] = useState(
+    isNaN(initialQueueLength) ? 0 : initialQueueLength
+  );
+  const [myPlaceInQueue, setMyPlaceInQueue] = useState(
+    isNaN(initialMyPlaceInQueue) ? 0 : initialMyPlaceInQueue
+  );
+
+  if (isNaN(initialQueueLength) || isNaN(initialMyPlaceInQueue)) {
+    void router.push("/");
+  }
+
+  api.lobby.onQueueUpdate.useSubscription(undefined, {
+    onData(payload) {
+      setQueueLength(payload.queueLength);
+      setMyPlaceInQueue(payload.myPlaceInQueue);
     },
-    onError(err) {
-      console.error(err);
+    onError(error) {
+      console.error("Queue update error:", error);
     },
   });
 
-  const join = api.lobby.join.useMutation();
+  api.lobby.onReadyToPlay.useSubscription(undefined, {
+    onData({ roomId }) {
+      void router.push({ pathname: "/chat", query: { roomId } });
+    },
+    onError(error) {
+      console.error("Ready to play error:", error);
+    },
+  });
 
   return (
     <Page>
       <Typography variant="h1">Lobby</Typography>
       <Stack flexDirection="row" mt={2}>
         <Button variant="text" onClick={() => void router.push("/")}>
-          Back to home
+          Leave
         </Button>
 
-        <Button variant="outlined" onClick={() => join.mutate()}>
-          Join
-        </Button>
-
-        <Button variant="outlined" onClick={() => void router.push("/chat")}>
-          Chat
-        </Button>
+        {/* TODO: maybe don't show queue length */}
+        <Typography>People in queue: {queueLength}</Typography>
+        <Typography>Your place in queue: {myPlaceInQueue}</Typography>
       </Stack>
     </Page>
   );
