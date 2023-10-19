@@ -1,4 +1,3 @@
-import { type Theme } from "@mui/material";
 import { type Typography } from "@mui/material/styles/createTypography";
 import { Inter } from "next/font/google";
 
@@ -10,10 +9,9 @@ const font = Inter({
   subsets: ["latin"],
 });
 
-export const typography = (props: Theme): Typography => {
+export const typography = (): Typography => {
   const coefficient = FONT_SIZE / COEFFICIENT;
   const pxToRem = (px: number) => `${(px / FONT_SIZE) * coefficient}rem`;
-  const { palette } = props;
 
   return {
     fontFamily: font.style.fontFamily,
@@ -29,28 +27,24 @@ export const typography = (props: Theme): Typography => {
       fontSize: "130px",
       fontWeight: 700,
       lineHeight: "117px",
-      color: palette.secondary.main,
     },
     h2: {
       fontFamily: font.style.fontFamily,
       fontSize: "64px",
       fontWeight: 700,
       lineHeight: "64px",
-      color: palette.secondary.main,
     },
     h3: {
       fontFamily: font.style.fontFamily,
       fontSize: "40px",
       fontWeight: 700,
       lineHeight: "44px",
-      color: palette.secondary.main,
     },
     h4: {
       fontFamily: font.style.fontFamily,
       fontSize: "24px",
       fontWeight: 700,
       lineHeight: "26px",
-      color: palette.secondary.main,
     },
     h5: {
       fontFamily: font.style.fontFamily,
@@ -63,7 +57,6 @@ export const typography = (props: Theme): Typography => {
       fontSize: "24px",
       fontWeight: 500,
       lineHeight: "33.6px",
-      color: palette.secondary.main,
     },
     subtitle1: {
       fontFamily: font.style.fontFamily,
@@ -77,14 +70,12 @@ export const typography = (props: Theme): Typography => {
       fontWeight: 700,
       lineHeight: "18px",
       textTransform: "uppercase" as const,
-      color: palette.secondary.dark,
     },
     body1: {
       fontFamily: font.style.fontFamily,
       fontSize: "16px",
       fontWeight: 400,
       lineHeight: "22.4px",
-      color: palette.secondary.main,
     },
     body2: {
       fontFamily: font.style.fontFamily,
@@ -97,7 +88,6 @@ export const typography = (props: Theme): Typography => {
       fontSize: "16px",
       fontWeight: 500,
       lineHeight: "22.6px",
-      color: palette.primary.main,
       textTransform: "none" as const,
     },
     caption: {
@@ -106,14 +96,12 @@ export const typography = (props: Theme): Typography => {
       fontWeight: 300,
       lineHeight: "19.6px",
       textTransform: "uppercase" as const,
-      color: palette.secondary.main,
     },
     overline: {
       fontFamily: font.style.fontFamily,
       fontSize: "12px",
       fontWeight: 500,
       lineHeight: "16.9px",
-      color: palette.common.white,
     },
   };
 };
