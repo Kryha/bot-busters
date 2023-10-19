@@ -2,7 +2,6 @@ import { Box, useMediaQuery } from "@mui/material";
 import { type FC, useState } from "react";
 
 import { styles } from "./styles";
-import { useRouter } from "next/router";
 import {
   ChatDrawer,
   ChatToolBar,
@@ -18,10 +17,9 @@ interface Props {
 }
 
 export const ChatView: FC<Props> = ({ roomId }) => {
-  const [toggle, setToggle] = useState(false);
+  const [toggle, setToggle] = useState(true);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const isSmallScreen = useMediaQuery("(max-width: 600px)");
-  const router = useRouter();
 
   const { data: sessionData } = useSession();
 
@@ -39,7 +37,7 @@ export const ChatView: FC<Props> = ({ roomId }) => {
   });
 
   const appendMessage = (newMessage: ChatMessagePayload) =>
-    setMessages((prev) => [...prev, newMessage]);
+    setMessages((prev) => [newMessage, ...prev]);
 
   const sendChatMessage = api.lobby.sendChatMessage.useMutation();
 
@@ -78,7 +76,6 @@ export const ChatView: FC<Props> = ({ roomId }) => {
         setToggle={() => setToggle(!toggle)}
         anchorEl={anchorEl}
         setAnchorEl={setAnchorEl}
-        router={router}
       />
 
       <ChatDrawer open={toggle} toggle={showChat} />
