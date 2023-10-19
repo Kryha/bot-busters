@@ -31,6 +31,10 @@ const env = createEnv({
     NEXT_PUBLIC_ALEO_NETWORK: z
       .enum(["testnet3", "mainnet", "localnet"])
       .default("testnet3"),
+    NEXT_PUBLIC_MOCK_AUTH: z
+      .enum(["true", "false"])
+      .default("false")
+      .transform((val) => Boolean(val)),
   },
 
   /**
@@ -46,6 +50,7 @@ const env = createEnv({
     NEXT_PUBLIC_ALEO_NETWORK: process.env.NEXT_PUBLIC_ALEO_NETWORK,
     APP_URL: process.env.APP_URL,
     NEXT_PUBLIC_WS_URL: process.env.NEXT_PUBLIC_WS_URL,
+    NEXT_PUBLIC_MOCK_AUTH: process.env.NEXT_PUBLIC_MOCK_AUTH,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.

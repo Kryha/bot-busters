@@ -12,17 +12,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aleohq/sdk@npm:^0.6.1":
-  version: 0.6.1
-  resolution: "@aleohq/sdk@npm:0.6.1"
+"@aleohq/sdk@npm:^0.6.2":
+  version: 0.6.2
+  resolution: "@aleohq/sdk@npm:0.6.2"
   dependencies:
     "@aleohq/wasm": ^0.6.0
-    axios: ^1.1.3
     comlink: ^4.4.1
     jsdoc: ^3.6.11
     mime: ^3.0.0
     sync-request: ^6.1.0
-  checksum: 0dfc64ec26a2984820c9d723edaebf6a20a8e930aefd7b469749ee104bae890b3bdd485edd8531673904dddbff20d5b2ce89d1909d2d5ef906e79a846ec4094c
+  checksum: 3df8e4ee8bfa4c3897771f2d85f003dfe12802525cf3a649b99db3dbc2739b90f3168e11b548b3fddef4e94e5be8f5bbeb07e07a4fa0532f52b53060a21d368a
   languageName: node
   linkType: hard
 
@@ -1621,17 +1620,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^1.1.3":
-  version: 1.5.1
-  resolution: "axios@npm:1.5.1"
-  dependencies:
-    follow-redirects: ^1.15.0
-    form-data: ^4.0.0
-    proxy-from-env: ^1.1.0
-  checksum: 4444f06601f4ede154183767863d2b8e472b4a6bfc5253597ed6d21899887e1fd0ee2b3de792ac4f8459fe2e359d2aa07c216e45fd8b9e4e0688a6ebf48a5a8d
-  languageName: node
-  linkType: hard
-
 "axobject-query@npm:^3.1.1":
   version: 3.2.1
   resolution: "axobject-query@npm:3.2.1"
@@ -1677,7 +1665,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "bot-busters@workspace:."
   dependencies:
-    "@aleohq/sdk": ^0.6.1
+    "@aleohq/sdk": ^0.6.2
     "@demox-labs/aleo-wallet-adapter-base": ^0.0.19
     "@demox-labs/aleo-wallet-adapter-leo": ^0.0.18
     "@demox-labs/aleo-wallet-adapter-react": ^0.0.18
@@ -1978,7 +1966,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"combined-stream@npm:^1.0.6, combined-stream@npm:^1.0.8":
+"combined-stream@npm:^1.0.6":
   version: 1.0.8
   resolution: "combined-stream@npm:1.0.8"
   dependencies:
@@ -3104,16 +3092,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"follow-redirects@npm:^1.15.0":
-  version: 1.15.3
-  resolution: "follow-redirects@npm:1.15.3"
-  peerDependenciesMeta:
-    debug:
-      optional: true
-  checksum: 584da22ec5420c837bd096559ebfb8fe69d82512d5585004e36a3b4a6ef6d5905780e0c74508c7b72f907d1fa2b7bd339e613859e9c304d0dc96af2027fd0231
-  languageName: node
-  linkType: hard
-
 "for-each@npm:^0.3.3":
   version: 0.3.3
   resolution: "for-each@npm:0.3.3"
@@ -3141,17 +3119,6 @@ __metadata:
     combined-stream: ^1.0.6
     mime-types: ^2.1.12
   checksum: 5134ada56cc246b293a1ac7678dba6830000603a3979cf83ff7b2f21f2e3725202237cfb89e32bcb38a1d35727efbd3c3a22e65b42321e8ade8eec01ce755d08
-  languageName: node
-  linkType: hard
-
-"form-data@npm:^4.0.0":
-  version: 4.0.0
-  resolution: "form-data@npm:4.0.0"
-  dependencies:
-    asynckit: ^0.4.0
-    combined-stream: ^1.0.8
-    mime-types: ^2.1.12
-  checksum: 01135bf8675f9d5c61ff18e2e2932f719ca4de964e3be90ef4c36aacfc7b9cb2fceb5eca0b7e0190e3383fe51c5b37f4cb80b62ca06a99aaabfcfd6ac7c9328c
   languageName: node
   linkType: hard
 
@@ -5135,13 +5102,6 @@ __metadata:
     object-assign: ^4.1.1
     react-is: ^16.13.1
   checksum: c056d3f1c057cb7ff8344c645450e14f088a915d078dcda795041765047fa080d38e5d626560ccaac94a4e16e3aa15f3557c1a9a8d1174530955e992c675e459
-  languageName: node
-  linkType: hard
-
-"proxy-from-env@npm:^1.1.0":
-  version: 1.1.0
-  resolution: "proxy-from-env@npm:1.1.0"
-  checksum: ed7fcc2ba0a33404958e34d95d18638249a68c430e30fcb6c478497d72739ba64ce9810a24f53a7d921d0c065e5b78e3822759800698167256b04659366ca4d4
   languageName: node
   linkType: hard
 

@@ -28,7 +28,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         [null, {\
           "packageLocation": "./",\
           "packageDependencies": [\
-            ["@aleohq/sdk", "npm:0.6.1"],\
+            ["@aleohq/sdk", "npm:0.6.2"],\
             ["@demox-labs/aleo-wallet-adapter-base", "npm:0.0.19"],\
             ["@demox-labs/aleo-wallet-adapter-leo", "npm:0.0.18"],\
             ["@demox-labs/aleo-wallet-adapter-react", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:0.0.18"],\
@@ -82,12 +82,11 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@aleohq/sdk", [\
-        ["npm:0.6.1", {\
-          "packageLocation": "./.yarn/cache/@aleohq-sdk-npm-0.6.1-6bebb5ab30-0dfc64ec26.zip/node_modules/@aleohq/sdk/",\
+        ["npm:0.6.2", {\
+          "packageLocation": "./.yarn/cache/@aleohq-sdk-npm-0.6.2-b9980e687b-3df8e4ee8b.zip/node_modules/@aleohq/sdk/",\
           "packageDependencies": [\
-            ["@aleohq/sdk", "npm:0.6.1"],\
+            ["@aleohq/sdk", "npm:0.6.2"],\
             ["@aleohq/wasm", "npm:0.6.0"],\
-            ["axios", "npm:1.5.1"],\
             ["comlink", "npm:4.4.1"],\
             ["jsdoc", "npm:3.6.11"],\
             ["mime", "npm:3.0.0"],\
@@ -2291,18 +2290,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
-      ["axios", [\
-        ["npm:1.5.1", {\
-          "packageLocation": "./.yarn/cache/axios-npm-1.5.1-6bc68e7d25-4444f06601.zip/node_modules/axios/",\
-          "packageDependencies": [\
-            ["axios", "npm:1.5.1"],\
-            ["follow-redirects", "virtual:6bc68e7d25b7055a51c269c1fa5648c8246286db1b7949168396e2ffbde7ed58cf742783c99b4e376ba9a3e96fcc4d029f96bd1b532b606b5055545461060ec6#npm:1.15.3"],\
-            ["form-data", "npm:4.0.0"],\
-            ["proxy-from-env", "npm:1.1.0"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
       ["axobject-query", [\
         ["npm:3.2.1", {\
           "packageLocation": "./.yarn/cache/axobject-query-npm-3.2.1-b147b3f32c-a94047e702.zip/node_modules/axobject-query/",\
@@ -2357,7 +2344,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./",\
           "packageDependencies": [\
             ["bot-busters", "workspace:."],\
-            ["@aleohq/sdk", "npm:0.6.1"],\
+            ["@aleohq/sdk", "npm:0.6.2"],\
             ["@demox-labs/aleo-wallet-adapter-base", "npm:0.0.19"],\
             ["@demox-labs/aleo-wallet-adapter-leo", "npm:0.0.18"],\
             ["@demox-labs/aleo-wallet-adapter-react", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:0.0.18"],\
@@ -4067,28 +4054,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
-      ["follow-redirects", [\
-        ["npm:1.15.3", {\
-          "packageLocation": "./.yarn/cache/follow-redirects-npm-1.15.3-ca69c47b72-584da22ec5.zip/node_modules/follow-redirects/",\
-          "packageDependencies": [\
-            ["follow-redirects", "npm:1.15.3"]\
-          ],\
-          "linkType": "SOFT"\
-        }],\
-        ["virtual:6bc68e7d25b7055a51c269c1fa5648c8246286db1b7949168396e2ffbde7ed58cf742783c99b4e376ba9a3e96fcc4d029f96bd1b532b606b5055545461060ec6#npm:1.15.3", {\
-          "packageLocation": "./.yarn/__virtual__/follow-redirects-virtual-ddb0bfe676/0/cache/follow-redirects-npm-1.15.3-ca69c47b72-584da22ec5.zip/node_modules/follow-redirects/",\
-          "packageDependencies": [\
-            ["follow-redirects", "virtual:6bc68e7d25b7055a51c269c1fa5648c8246286db1b7949168396e2ffbde7ed58cf742783c99b4e376ba9a3e96fcc4d029f96bd1b532b606b5055545461060ec6#npm:1.15.3"],\
-            ["@types/debug", null],\
-            ["debug", null]\
-          ],\
-          "packagePeers": [\
-            "@types/debug",\
-            "debug"\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
       ["for-each", [\
         ["npm:0.3.3", {\
           "packageLocation": "./.yarn/cache/for-each-npm-0.3.3-0010ca8cdd-6c48ff2bc6.zip/node_modules/for-each/",\
@@ -4115,16 +4080,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/form-data-npm-2.5.1-47256351b5-5134ada56c.zip/node_modules/form-data/",\
           "packageDependencies": [\
             ["form-data", "npm:2.5.1"],\
-            ["asynckit", "npm:0.4.0"],\
-            ["combined-stream", "npm:1.0.8"],\
-            ["mime-types", "npm:2.1.35"]\
-          ],\
-          "linkType": "HARD"\
-        }],\
-        ["npm:4.0.0", {\
-          "packageLocation": "./.yarn/cache/form-data-npm-4.0.0-916facec2d-01135bf867.zip/node_modules/form-data/",\
-          "packageDependencies": [\
-            ["form-data", "npm:4.0.0"],\
             ["asynckit", "npm:0.4.0"],\
             ["combined-stream", "npm:1.0.8"],\
             ["mime-types", "npm:2.1.35"]\
@@ -6391,15 +6346,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["loose-envify", "npm:1.4.0"],\
             ["object-assign", "npm:4.1.1"],\
             ["react-is", "npm:16.13.1"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["proxy-from-env", [\
-        ["npm:1.1.0", {\
-          "packageLocation": "./.yarn/cache/proxy-from-env-npm-1.1.0-c13d07f26b-ed7fcc2ba0.zip/node_modules/proxy-from-env/",\
-          "packageDependencies": [\
-            ["proxy-from-env", "npm:1.1.0"]\
           ],\
           "linkType": "HARD"\
         }]\

@@ -57,12 +57,29 @@ export const AuthButton = () => {
 
   const authenticatePlayer = async () => {
     try {
-      if (!connected) {
-        await connect(
-          DecryptPermission.UponRequest,
-          // leave the following as an env variable
-          env.NEXT_PUBLIC_ALEO_NETWORK as WalletAdapterNetwork
-        );
+      if (env.NEXT_PUBLIC_MOCK_AUTH) {
+        /*
+          Private Key  APrivateKey1zkp3aZuKP6xy1Br3sEH7StvdQ5MP67jShHJaJ7TjpgLHRbe
+          View Key  AViewKey1u9GpMuSqvEQsw7kiXS8E374pHHpvNyPB6iZhpqa3bQhf
+          Address  aleo1uktye0ckresgayj3aayejj87sjr5vzwy49hgqdnrae5edenvkvpseq23e6 
+
+          Private Key  APrivateKey1zkpBfRcDC68LowTszyKdR2y1SDYcSpvytwpbpfsf2aExstt
+          View Key  AViewKey1oSaAbRT1qc7RxV2H8avPPkY6JWt1n4TihkcZJWfmwfgc
+          Address  aleo1aa2ymf79lnw6l5wtcz5pypzlnyw0q00h4uqn5uwxrmz43nre3ugsnv44ln
+        */
+
+        await signIn("credentials", {
+          address:
+            "aleo1uktye0ckresgayj3aayejj87sjr5vzwy49hgqdnrae5edenvkvpseq23e6",
+        });
+      } else {
+        if (!connected) {
+          await connect(
+            DecryptPermission.UponRequest,
+            // leave the following as an env variable
+            env.NEXT_PUBLIC_ALEO_NETWORK as WalletAdapterNetwork
+          );
+        }
       }
     } catch (error) {
       console.error(error);
