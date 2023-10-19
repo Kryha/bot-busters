@@ -44,10 +44,7 @@ const Login = () => {
       <Stack flexDirection="row" mt={2}>
         <AuthButton />
         {sessionData && (
-          <Button
-            variant="contained"
-            onClick={() => void router.push("/lobby")}
-          >
+          <Button variant="outlined" onClick={() => void router.push("/lobby")}>
             Lobby
           </Button>
         )}

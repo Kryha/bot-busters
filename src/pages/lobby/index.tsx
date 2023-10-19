@@ -29,11 +29,11 @@ const Lobby: FC = () => {
           Back to home
         </Button>
 
-        <Button variant="contained" onClick={() => join.mutate()}>
+        <Button variant="outlined" onClick={() => join.mutate()}>
           Join
         </Button>
 
-        <Button variant="contained" onClick={() => void router.push("/chat")}>
+        <Button variant="outlined" onClick={() => void router.push("/chat")}>
           Chat
         </Button>
       </Stack>

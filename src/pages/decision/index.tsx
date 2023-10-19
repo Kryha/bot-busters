@@ -16,10 +16,7 @@ const Decision: FC = () => {
         <Button variant="text" onClick={() => void router.push("/")}>
           Back to home
         </Button>
-        <Button
-          variant="contained"
-          onClick={() => void router.push("/results")}
-        >
+        <Button variant="outlined" onClick={() => void router.push("/results")}>
           Results
         </Button>
       </Stack>
