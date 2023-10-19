@@ -1,13 +1,9 @@
-import { type Components, type Theme } from "@mui/material";
+import { type Components } from "@mui/material";
 
-export const MuiIconButton = (theme: Theme): Components["MuiIconButton"] => {
-  const { palette } = theme;
+export const MuiIconButton = (): Components["MuiIconButton"] => {
   return {
     styleOverrides: {
       root: {
-        "&.Mui-disabled": {
-          color: palette.opaqueGrey.main,
-        },
         "@media (min-width:2000px)": {
           fontSize: "2.2rem",
         },

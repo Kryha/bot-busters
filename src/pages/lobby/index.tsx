@@ -45,7 +45,7 @@ const Lobby: FC = () => {
   return (
     <Page>
       <Typography variant="h1">Lobby</Typography>
-      <Stack flexDirection="row" mt={2}>
+      <Stack flexDirection="row" mt={2} gap={1}>
         <Button variant="text" onClick={() => void router.push("/")}>
           Leave
         </Button>
