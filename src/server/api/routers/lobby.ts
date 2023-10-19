@@ -4,6 +4,9 @@ import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 import { randomUUID } from "crypto";
 import { z } from "zod";
 
+// TODO: move chat behaviour in another route
+// TODO: handle deleting chat rooms
+
 // create a global event emitter (could be replaced by redis, etc)
 const ee = new EventEmitter();
 
@@ -157,5 +160,3 @@ export const lobbyRouter = createTRPCRouter({
       return payload;
     }),
 });
-
-// TODO: handle deleting chat rooms

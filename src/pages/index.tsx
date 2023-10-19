@@ -1,11 +1,11 @@
-import Login from "./login";
 import { useSession } from "next-auth/react";
 import { Page } from "@/layouts";
 import { isValidSession } from "@/utils/session";
-import { Button } from "@mui/material";
+import { Button, Stack, Typography } from "@mui/material";
 import { api } from "@/utils/api";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import { AuthButton } from "@/components";
 
 // TODO: define text in another file
 export default function Home() {
@@ -27,11 +27,18 @@ export default function Home() {
 
   return (
     <Page>
-      {isValidSession(sessionData) ? (
-        <Button onClick={() => join.mutate()}>Play</Button>
-      ) : (
-        <Login />
-      )}
+      <Typography variant="h1">Bot Busters</Typography>
+      <Typography variant="body1">
+        Chat, be human and bust some bots!
+      </Typography>
+
+      <Stack flexDirection="row" mt={2}>
+        {isValidSession(sessionData) && (
+          <Button onClick={() => join.mutate()}>Play</Button>
+        )}
+
+        <AuthButton />
+      </Stack>
     </Page>
   );
 }

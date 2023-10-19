@@ -1,8 +1,8 @@
 import { type ComponentType } from "react";
 import { useSession } from "next-auth/react";
 
-import Login from "@/pages/login";
 import { isValidSession } from "./session";
+import Home from "@/pages";
 
 const withAuth = (Component: ComponentType) => {
   return function WithAuth() {
@@ -10,7 +10,7 @@ const withAuth = (Component: ComponentType) => {
     const isAuthenticated = isValidSession(sessionData);
 
     if (!isAuthenticated) {
-      return <Login />;
+      return <Home />;
     }
 
     return <Component />;

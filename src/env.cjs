@@ -34,7 +34,7 @@ const env = createEnv({
     NEXT_PUBLIC_MOCK_AUTH: z
       .enum(["true", "false"])
       .default("false")
-      .transform((val) => Boolean(val)),
+      .transform((val) => (val === "true" ? true : false)),
   },
 
   /**

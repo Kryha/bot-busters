@@ -1,5 +1,5 @@
 import { Box, useMediaQuery } from "@mui/material";
-import { type FC, useState } from "react";
+import { type FC, useState, useEffect, useCallback } from "react";
 
 import { styles } from "./styles";
 import {
@@ -41,14 +41,12 @@ export const ChatView: FC<Props> = ({ roomId }) => {
 
   const sendChatMessage = api.lobby.sendChatMessage.useMutation();
 
-  const sendMessage = () => {
-    console.log("attempting send...");
+  const sendMessage = useCallback(() => {
     if (!message) return;
-    console.log("sending...");
     sendChatMessage.mutate({ message, sentAt: Date.now(), roomId });
     // TODO: append message immediately and show progress
     setMessage("");
-  };
+  }, [message, roomId, sendChatMessage]);
 
   api.lobby.onChatMessage.useSubscription(
     { roomId },
@@ -62,6 +60,20 @@ export const ChatView: FC<Props> = ({ roomId }) => {
       },
     }
   );
+
+  useEffect(() => {
+    const listener = (event: KeyboardEvent) => {
+      if (event.code === "Enter" || event.code === "NumpadEnter") {
+        console.log("Enter key was pressed. Run your function.");
+        event.preventDefault();
+        sendMessage();
+      }
+    };
+    document.addEventListener("keydown", listener);
+    return () => {
+      document.removeEventListener("keydown", listener);
+    };
+  }, [sendMessage]);
 
   const showChat = () => {
     if (isSmallScreen) setToggle(!toggle);
