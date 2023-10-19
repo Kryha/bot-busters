@@ -24,16 +24,16 @@ const Lobby: FC = () => {
   return (
     <Page>
       <Typography variant="h1">Lobby</Typography>
-      <Stack flexDirection="row" mt={2}>
+      <Stack flexDirection="row" mt={2} gap={1}>
         <Button variant="text" onClick={() => void router.push("/")}>
           Back to home
         </Button>
 
-        <Button variant="outlined" onClick={() => join.mutate()}>
+        <Button variant="contained" onClick={() => join.mutate()}>
           Join
         </Button>
 
-        <Button variant="outlined" onClick={() => void router.push("/chat")}>
+        <Button variant="contained" onClick={() => void router.push("/chat")}>
           Chat
         </Button>
       </Stack>
