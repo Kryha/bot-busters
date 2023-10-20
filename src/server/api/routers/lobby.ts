@@ -1,8 +1,8 @@
 import { EventEmitter } from "events";
 import { observable } from "@trpc/server/observable";
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
-import { randomUUID } from "crypto";
 import { z } from "zod";
+import { v4 as uuid } from "uuid";
 
 // TODO: move chat behaviour in another route
 // TODO: handle deleting chat rooms
@@ -39,7 +39,7 @@ const makeMatch = () => {
 
     if (!playerA || !playerB) throw new Error("Players not found in queue");
 
-    const roomId = randomUUID();
+    const roomId = uuid();
 
     chatRooms[roomId] = [playerA, playerB];
 

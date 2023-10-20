@@ -26,9 +26,6 @@ const Chat: FC = () => {
   );
 };
 
-// TODO: check if this works on start and dev
 export default dynamic(() => Promise.resolve(Chat), {
   ssr: false,
 });
-
-// export default Chat;
