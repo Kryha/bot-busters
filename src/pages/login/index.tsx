@@ -37,7 +37,7 @@ const Login = () => {
 
       <Typography variant="body1">
         {sessionData && (
-          <Stack component="span">Address: {sessionData.address}</Stack>
+          <Stack component="span">Player ID: {sessionData.uuid}</Stack>
         )}
         {secretMessage && <Stack component="span"> - {secretMessage}</Stack>}
       </Typography>

@@ -4,7 +4,7 @@ import {
   LeoWalletName,
   type LeoWalletAdapter,
 } from "@demox-labs/aleo-wallet-adapter-leo";
-import { Button } from "@mui/material";
+import { Button, Stack } from "@mui/material";
 import { isValidSession } from "@/utils/session";
 import { text } from "@/assets/text";
 import { env } from "@/env.cjs";
@@ -55,7 +55,7 @@ export const AuthButton = () => {
     void connectWallet();
   }, [wallet, address, connecting, sessionData, connected]);
 
-  const authenticatePlayer = async () => {
+  const walletAuthentication = async () => {
     try {
       if (!connected) {
         await connect(
@@ -69,21 +69,37 @@ export const AuthButton = () => {
     }
   };
 
+  const anonymousAuthentication = async () => {
+    try {
+      await signIn("credentials", {});
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const logout = async () => {
     await signOut();
     await disconnect();
   };
 
   return (
-    <Button
-      variant="outlined"
-      onClick={
-        isValidSession(sessionData)
-          ? () => void logout()
-          : () => void authenticatePlayer()
-      }
-    >
-      {isValidSession(sessionData) ? text.auth.signOut : text.auth.signIn}
-    </Button>
+    <Stack direction="row" spacing={2}>
+      {!isValidSession(sessionData) && (
+        <Button onClick={() => void anonymousAuthentication()}>
+          {text.auth.playGame}
+        </Button>
+      )}
+      <Button
+        onClick={
+          isValidSession(sessionData)
+            ? () => void logout()
+            : () => void walletAuthentication()
+        }
+      >
+        {isValidSession(sessionData)
+          ? text.auth.signOut
+          : text.auth.walletSignIn}
+      </Button>
+    </Stack>
   );
 };
