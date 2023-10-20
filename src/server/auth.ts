@@ -1,10 +1,11 @@
-import { verifySignature } from "@/utils/wallet";
+import { generateRandomString, verifySignature } from "@/utils/wallet";
 import { type DefaultSession, type NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 import { db, dbSchema } from "@/server/db";
 import { env } from "@/env.cjs";
-import { eq } from "drizzle-orm";
+import { eq, or } from "drizzle-orm";
+import { randomUUID } from "crypto";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -14,10 +15,9 @@ import { eq } from "drizzle-orm";
  */
 declare module "next-auth" {
   interface Session extends DefaultSession {
-    address: string;
+    uuid: string;
   }
 }
-
 /**
  * Options for NextAuth.js used to configure adapters, providers, callbacks, etc.
  *
@@ -29,7 +29,7 @@ export const authOptions: NextAuthOptions = {
     session: ({ session, token }) => {
       return {
         ...session,
-        address: token.sub,
+        uuid: token.sub,
       };
     },
   },
@@ -46,10 +46,23 @@ export const authOptions: NextAuthOptions = {
         },
       },
       async authorize(credentials) {
+        const uuid = randomUUID();
+        //TODO: make this name random username
+        const username = generateRandomString(32);
         if (!credentials?.signedMessage || !credentials?.address) {
-          return null;
+          try {
+            await db.insert(dbSchema.users).values({
+              uuid: uuid,
+              username: username,
+            });
+            return {
+              id: uuid,
+            };
+          } catch (e) {
+            console.error(e);
+            return null;
+          }
         }
-
         const { address, signedMessage } = credentials;
 
         const isVerified = verifySignature(address, signedMessage);
@@ -57,17 +70,25 @@ export const authOptions: NextAuthOptions = {
         if (!isVerified) return null;
 
         try {
-          const selectedUsers = await db
-            .select()
-            .from(dbSchema.users)
-            .where(eq(dbSchema.users.address, address));
+          const selectedUser = await db.query.users.findFirst({
+            where: eq(dbSchema.users.address, address),
+          });
 
-          if (!selectedUsers.length) {
-            await db.insert(dbSchema.users).values({ address });
+          if (!selectedUser) {
+            await db.insert(dbSchema.users).values({
+              uuid: uuid,
+              username: username,
+              address: address,
+            });
+            return {
+              id: uuid,
+              username: username,
+            };
           }
 
           return {
-            id: address,
+            id: selectedUser.uuid,
+            username: selectedUser.username,
           };
         } catch (e) {
           console.error(e);
