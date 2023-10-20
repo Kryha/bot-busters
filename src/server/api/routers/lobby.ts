@@ -50,6 +50,7 @@ const makeMatch = () => {
   }
 };
 
+// TODO: delete
 setInterval(() => {
   console.log("queue:", lobbyQueue);
   console.log("rooms:", chatRooms);
@@ -74,8 +75,6 @@ export const lobbyRouter = createTRPCRouter({
         ee.off("queueUpdate", handleEvent);
 
         const { address } = ctx.session;
-
-        console.log(address, "leaving...");
 
         const index = lobbyQueue.indexOf(address);
         if (index < 0) return;

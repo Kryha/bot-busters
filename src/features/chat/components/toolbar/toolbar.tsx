@@ -21,6 +21,7 @@ interface Props {
   setAnchorEl: (element: HTMLElement | null) => void;
 }
 
+// TODO: delete component
 export const ChatToolBar: FC<Props> = ({
   setToggle,
   anchorEl,

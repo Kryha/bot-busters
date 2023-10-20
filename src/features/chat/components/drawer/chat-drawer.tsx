@@ -9,6 +9,7 @@ interface Props {
   toggle: () => void;
 }
 
+// TODO: delete component
 export const ChatDrawer: FC<Props> = ({ open, toggle }) => {
   return (
     <Box component="nav" sx={styles.nav}>
