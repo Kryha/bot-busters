@@ -39,7 +39,7 @@ export const ChatView: FC<Props> = ({ roomId }) => {
   const appendMessage = (newMessage: ChatMessagePayload) =>
     setMessages((prev) => [newMessage, ...prev]);
 
-  const sendChatMessage = api.lobby.sendChatMessage.useMutation();
+  const sendChatMessage = api.chat.sendMessage.useMutation();
 
   const sendMessage = useCallback(() => {
     if (!message) return;
@@ -48,7 +48,7 @@ export const ChatView: FC<Props> = ({ roomId }) => {
     setMessage("");
   }, [message, roomId, sendChatMessage]);
 
-  api.lobby.onChatMessage.useSubscription(
+  api.chat.onMessage.useSubscription(
     { roomId },
     {
       onData(payload) {

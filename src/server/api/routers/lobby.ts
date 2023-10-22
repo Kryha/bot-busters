@@ -1,7 +1,7 @@
 import { observable } from "@trpc/server/observable";
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
-import { z } from "zod";
-import { chatRooms, ee, lobbyQueue } from "@/server/api/match-maker";
+
+import { ee, lobbyQueue } from "@/server/api/match-maker";
 
 interface ReadyToPlayPayload {
   players: [string, string];
@@ -11,12 +11,6 @@ interface ReadyToPlayPayload {
 interface QueueUpdatePayload {
   myPlaceInQueue: number;
   queueLength: number;
-}
-
-export interface ChatMessagePayload {
-  sender: string;
-  message: string;
-  sentAt: number; // unix time
 }
 
 export const lobbyRouter = createTRPCRouter({
@@ -76,48 +70,4 @@ export const lobbyRouter = createTRPCRouter({
       };
     });
   }),
-
-  onChatMessage: protectedProcedure
-    .input(z.object({ roomId: z.string().uuid() }))
-    .subscription(({ ctx, input }) => {
-      const room = chatRooms[input.roomId];
-      if (!room) throw new Error("Room not found");
-
-      const isUserInRoom = room.players.includes(ctx.session.address);
-      if (!isUserInRoom) throw new Error("User is not part of this room");
-
-      return observable<ChatMessagePayload>((emit) => {
-        const handleEvent = (payload: ChatMessagePayload) => {
-          emit.next(payload);
-        };
-
-        ee.on(input.roomId, handleEvent);
-        return () => {
-          ee.off(input.roomId, handleEvent);
-        };
-      });
-    }),
-
-  sendChatMessage: protectedProcedure
-    .input(
-      z.object({
-        message: z.string(),
-        sentAt: z.number(),
-        roomId: z.string().uuid(),
-      })
-    )
-    .mutation(({ ctx, input }) => {
-      const { message, sentAt, roomId } = input;
-      const sender = ctx.session.address;
-
-      const room = chatRooms[input.roomId];
-      if (!room) throw new Error("Room not found");
-
-      const isUserInRoom = room.players.includes(sender);
-      if (!isUserInRoom) throw new Error("User is not part of this room");
-
-      const payload: ChatMessagePayload = { sender, message, sentAt };
-      ee.emit(roomId, payload);
-      return payload;
-    }),
 });
