@@ -1,19 +1,7 @@
-import { EventEmitter } from "events";
 import { observable } from "@trpc/server/observable";
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 import { z } from "zod";
-import { v4 as uuid } from "uuid";
-
-// TODO: move chat behaviour in another route
-// TODO: handle deleting chat rooms
-
-// create a global event emitter (could be replaced by redis, etc)
-const ee = new EventEmitter();
-
-// TODO: improve or remove
-const lobbyQueue: string[] = [];
-
-const chatRooms: Record<string, [string, string]> = {};
+import { chatRooms, ee, lobbyQueue } from "@/server/api/match-maker";
 
 interface ReadyToPlayPayload {
   players: [string, string];
@@ -30,32 +18,6 @@ export interface ChatMessagePayload {
   message: string;
   sentAt: number; // unix time
 }
-
-const makeMatch = () => {
-  try {
-    if (lobbyQueue.length < 2) return;
-    const playerA = lobbyQueue.shift();
-    const playerB = lobbyQueue.shift();
-
-    if (!playerA || !playerB) throw new Error("Players not found in queue");
-
-    const roomId = uuid();
-
-    chatRooms[roomId] = [playerA, playerB];
-
-    ee.emit("readyToPlay", { roomId, players: [playerA, playerB] });
-    ee.emit("queueUpdate");
-  } catch (error) {
-    console.error("Match making error:", error);
-  }
-};
-
-// TODO: delete
-setInterval(() => {
-  console.log("queue:", lobbyQueue);
-  console.log("rooms:", chatRooms);
-  makeMatch();
-}, 10000);
 
 export const lobbyRouter = createTRPCRouter({
   onQueueUpdate: protectedProcedure.subscription(({ ctx }) => {
@@ -121,7 +83,7 @@ export const lobbyRouter = createTRPCRouter({
       const room = chatRooms[input.roomId];
       if (!room) throw new Error("Room not found");
 
-      const isUserInRoom = room.includes(ctx.session.address);
+      const isUserInRoom = room.players.includes(ctx.session.address);
       if (!isUserInRoom) throw new Error("User is not part of this room");
 
       return observable<ChatMessagePayload>((emit) => {
@@ -151,7 +113,7 @@ export const lobbyRouter = createTRPCRouter({
       const room = chatRooms[input.roomId];
       if (!room) throw new Error("Room not found");
 
-      const isUserInRoom = room.includes(sender);
+      const isUserInRoom = room.players.includes(sender);
       if (!isUserInRoom) throw new Error("User is not part of this room");
 
       const payload: ChatMessagePayload = { sender, message, sentAt };
