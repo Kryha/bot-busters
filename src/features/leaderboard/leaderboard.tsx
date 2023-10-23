@@ -4,11 +4,10 @@ import { Stack, Typography, useMediaQuery } from "@mui/material";
 import { LeaderboardList, LeaderboardPagination } from "./components";
 import { text } from "./assets";
 import { styles } from "./styles";
-import { useLeaderboardStore } from "@/store";
+import { leaderboardData } from "@/constants";
 
 export const Leaderboard = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const leaderboard = useLeaderboardStore((state) => state.leaderboard);
   const isSmallScreen = useMediaQuery("(max-width: 600px)");
 
   const heading = isSmallScreen ? "h3" : "h2";
@@ -16,9 +15,9 @@ export const Leaderboard = () => {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
 
-  const currentData = leaderboard.slice(startIndex, endIndex);
+  const currentData = leaderboardData.slice(startIndex, endIndex);
 
-  const totalPages = Math.ceil(leaderboard.length / itemsPerPage);
+  const totalPages = Math.ceil(leaderboardData.length / itemsPerPage);
 
   const handlePageChange = (_event: ChangeEvent<unknown>, newPage: number) => {
     setCurrentPage(newPage);
