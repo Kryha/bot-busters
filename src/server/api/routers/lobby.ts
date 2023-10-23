@@ -59,7 +59,6 @@ export const lobbyRouter = createTRPCRouter({
         const isPlayer = payload.players.includes(ctx.session.address);
 
         if (isPlayer) {
-          // This event will trigger a redirect to the chat page on the client
           emit.next(payload);
         }
       };
