@@ -11,12 +11,15 @@ import {
 import { api } from "@/utils/api";
 import { type ChatMessagePayload } from "@/server/api/routers";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 interface Props {
   roomId: string;
 }
 
 export const ChatView: FC<Props> = ({ roomId }) => {
+  const router = useRouter();
+
   const [toggle, setToggle] = useState(true);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const isSmallScreen = useMediaQuery("(max-width: 600px)");
@@ -55,8 +58,20 @@ export const ChatView: FC<Props> = ({ roomId }) => {
         appendMessage(payload);
       },
       onError(error) {
-        // TODO: redirect if user does not belong to the chat
         console.error("Chat message error:", error);
+        void router.push("/");
+      },
+    }
+  );
+
+  api.chat.onTimeout.useSubscription(
+    { roomId },
+    {
+      onData() {
+        void router.push("/decision");
+      },
+      onError(error) {
+        console.error("Error on timeout:", error);
       },
     }
   );

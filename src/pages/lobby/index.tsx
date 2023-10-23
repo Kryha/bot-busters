@@ -8,8 +8,6 @@ import { api } from "@/utils/api";
 const Lobby: FC = () => {
   const router = useRouter();
 
-  const [roomId, setRoomId] = useState<string>();
-
   const [queueLength, setQueueLength] = useState(0);
   const [myPlaceInQueue, setMyPlaceInQueue] = useState(0);
 
@@ -26,42 +24,28 @@ const Lobby: FC = () => {
     onError(error) {
       console.error("Queue update error:", error);
     },
-    enabled: !roomId,
   });
 
   api.lobby.onReadyToPlay.useSubscription(undefined, {
     onData({ roomId }) {
-      setRoomId(roomId);
+      void router.push({ pathname: "/chat", query: { roomId } });
     },
     onError(error) {
       console.error("Ready to play error:", error);
     },
-    enabled: !roomId,
   });
 
   return (
     <Page>
       <Typography variant="h1">Lobby</Typography>
       <Stack flexDirection="row" mt={2} gap={1}>
-        {roomId ? (
-          <Button
-            onClick={() =>
-              void router.push({ pathname: "/chat", query: { roomId } })
-            }
-          >
-            Start!
-          </Button>
-        ) : (
-          <>
-            <Button variant="text" onClick={() => void router.push("/")}>
-              Leave
-            </Button>
+        <Button variant="text" onClick={() => void router.push("/")}>
+          Leave
+        </Button>
 
-            {/* TODO: maybe don't show queue length */}
-            <Typography>People in queue: {queueLength}</Typography>
-            <Typography>Your place in queue: {myPlaceInQueue}</Typography>
-          </>
-        )}
+        {/* TODO: maybe don't show queue length */}
+        <Typography>People in queue: {queueLength}</Typography>
+        <Typography>Your place in queue: {myPlaceInQueue}</Typography>
       </Stack>
     </Page>
   );

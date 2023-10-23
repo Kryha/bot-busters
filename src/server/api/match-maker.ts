@@ -13,6 +13,15 @@ type ChatRooms = Record<string, ChatRoom>;
 
 export let chatRooms: ChatRooms = {};
 
+export type ChatEventType = "message" | "timeout";
+
+export const chatEvent = (
+  roomId: string,
+  eventType: ChatEventType = "message"
+) => {
+  return `chat_${roomId}_${eventType}`;
+};
+
 const TWO_MINUTES = 120000;
 
 const makeMatch = () => {
@@ -39,13 +48,13 @@ const makeMatch = () => {
 
 const deleteStaleMatches = () => {
   const preservedRooms: ChatRooms = Object.entries(chatRooms).reduce(
-    (accRooms, [key, room]) => {
+    (accRooms, [roomId, room]) => {
       // delete rooms that have been created more than 2 minutes ago
       if (Date.now() - room.createdAt >= TWO_MINUTES) {
-        // TODO: emit event to clients after adding end of match logic
+        ee.emit(chatEvent(roomId, "timeout"));
         return accRooms;
       } else {
-        return { ...accRooms, [key]: room };
+        return { ...accRooms, [roomId]: room };
       }
     },
     {} satisfies ChatRooms
