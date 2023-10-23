@@ -3,12 +3,12 @@ import { Box, Drawer } from "@mui/material";
 
 import { styles } from "./styles";
 import { ChatList } from "./chat-list";
-import { type ContactList } from "@/types";
+import { type ContactListData } from "@/types";
 
 interface Props {
   open: boolean;
   toggle: () => void;
-  contactList: ContactList[];
+  contactList: ContactListData[];
 }
 
 export const ChatDrawer: FC<Props> = ({ open, toggle, contactList }) => {

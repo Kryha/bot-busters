@@ -4,11 +4,11 @@ import { styles } from "./styles";
 
 import { ChatListToolbar } from "../chat-list-toolbar";
 import { ChatListItem } from "../chat-list";
-import { type ContactList } from "@/types";
+import { type ContactListData } from "@/types";
 
 interface Props {
   toggle: () => void;
-  contactList: ContactList[];
+  contactList: ContactListData[];
 }
 
 export const ChatList: FC<Props> = ({ toggle, contactList }) => {

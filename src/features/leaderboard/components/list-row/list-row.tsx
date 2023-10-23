@@ -9,10 +9,10 @@ import {
 } from "@mui/material";
 
 import { styles } from "./styles";
-import { type Leaderboard } from "@/types";
+import { type LeaderboardData } from "@/types";
 
 interface Props {
-  leaderboard: Leaderboard;
+  leaderboard: LeaderboardData;
 }
 
 export const ListRow: FC<Props> = ({ leaderboard }) => {

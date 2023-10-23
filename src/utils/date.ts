@@ -33,7 +33,7 @@ export const getDayOfWeek = (date: Date): string => {
   return daysOfWeek[date.getDay()] ?? "";
 };
 
-export const formatDate = (date: string): string => {
+export const formatDate = (date: string | number): string => {
   const inputDate = new Date(date);
   const currentDate = new Date();
 

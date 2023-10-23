@@ -1,20 +1,20 @@
 import { z } from "zod";
 
-export const chatMessageSchema = z.object({
+export const chatMessageDataSchema = z.object({
   username: z.string(),
   avatar: z.string(),
   content: z.array(z.string()),
   isLocalUser: z.boolean(),
-  time: z.string(),
+  time: z.number(),
 });
 
-export type ChatMessage = z.infer<typeof chatMessageSchema>;
+export type ChatMessageData = z.infer<typeof chatMessageDataSchema>;
 
-export const contactListSchema = z.object({
+export const contactListDataSchema = z.object({
   username: z.string(),
   avatar: z.string(),
   lastMessage: z.string(),
-  time: z.string(),
+  time: z.number(),
 });
 
-export type ContactList = z.infer<typeof contactListSchema>;
+export type ContactListData = z.infer<typeof contactListDataSchema>;

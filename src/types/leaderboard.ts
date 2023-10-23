@@ -1,6 +1,7 @@
 import { z } from "zod";
 
-export const leaderboardSchema = z.object({
+// These are for the data rendered on the page
+export const leaderboardDataSchema = z.object({
   rank: z.number(),
   avatar: z.string(),
   username: z.string(),
@@ -8,4 +9,4 @@ export const leaderboardSchema = z.object({
   address: z.string(),
 });
 
-export type Leaderboard = z.infer<typeof leaderboardSchema>;
+export type LeaderboardData = z.infer<typeof leaderboardDataSchema>;

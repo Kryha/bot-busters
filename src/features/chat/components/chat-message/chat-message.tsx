@@ -1,10 +1,10 @@
 import React, { type FC } from "react";
 import { styles } from "./styles";
 import { Avatar, Box, Grid, Typography } from "@mui/material";
-import { type ChatMessage } from "@/types";
+import { type ChatMessageData } from "@/types";
 
 interface ChatMsgProps {
-  message: ChatMessage;
+  message: ChatMessageData;
 }
 
 export const ChatMsg: FC<ChatMsgProps> = ({ message }) => {

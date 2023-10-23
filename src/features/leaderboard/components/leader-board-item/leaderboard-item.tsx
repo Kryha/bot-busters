@@ -2,10 +2,10 @@ import { useState, type FC } from "react";
 import { ListItem, ListItemButton } from "@mui/material";
 
 import { ListRow, CollapsibleRow } from "@/features/leaderboard/components";
-import { type Leaderboard } from "@/types";
+import { type LeaderboardData } from "@/types";
 
 interface Props {
-  leaderboard: Leaderboard;
+  leaderboard: LeaderboardData;
 }
 
 export const LeaderBoardItem: FC<Props> = ({ leaderboard }) => {

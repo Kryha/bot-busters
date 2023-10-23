@@ -4,12 +4,13 @@ import { InputAdornment, Stack, TextField, Typography } from "@mui/material";
 
 import { ChatMsg } from "@/features/chat/components";
 import { text } from "@/assets/text";
-import { type ChatMessage } from "@/types";
+import { type ChatMessageData } from "@/types";
 import { styles } from "./styles";
+
 interface Props {
   open: boolean;
   isSmallScreen: boolean;
-  messages: ChatMessage[];
+  messages: ChatMessageData[];
 }
 
 export const MainChatView: FC<Props> = ({ open, isSmallScreen, messages }) => {

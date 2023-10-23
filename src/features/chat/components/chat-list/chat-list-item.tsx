@@ -9,11 +9,11 @@ import {
   Typography,
 } from "@mui/material";
 import { styles } from "./styles";
-import { type ContactList } from "@/types";
+import { type ContactListData } from "@/types";
 import { formatDate } from "@/utils/date";
 
 interface Props {
-  contactList: ContactList;
+  contactList: ContactListData;
 }
 
 export const ChatListItem: FC<Props> = ({ contactList }) => {

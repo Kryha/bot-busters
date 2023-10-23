@@ -1,8 +1,8 @@
 // TODO: delete
 
-import { type Leaderboard } from "@/types";
+import { type LeaderboardData } from "@/types";
 
-export const leaderboardData: Leaderboard[] = [
+export const leaderboardData: LeaderboardData[] = [
   {
     rank: 1,
     score: 5,
