@@ -28,11 +28,11 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         [null, {\
           "packageLocation": "./",\
           "packageDependencies": [\
-            ["@aleohq/sdk", "npm:0.6.1"],\
-            ["@demox-labs/aleo-wallet-adapter-base", "npm:0.0.18"],\
-            ["@demox-labs/aleo-wallet-adapter-leo", "npm:0.0.17"],\
-            ["@demox-labs/aleo-wallet-adapter-react", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:0.0.17"],\
-            ["@demox-labs/aleo-wallet-adapter-reactui", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:0.0.29"],\
+            ["@aleohq/sdk", "npm:0.6.2"],\
+            ["@demox-labs/aleo-wallet-adapter-base", "npm:0.0.19"],\
+            ["@demox-labs/aleo-wallet-adapter-leo", "npm:0.0.18"],\
+            ["@demox-labs/aleo-wallet-adapter-react", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:0.0.18"],\
+            ["@demox-labs/aleo-wallet-adapter-reactui", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:0.0.30"],\
             ["@emotion/react", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:11.11.1"],\
             ["@emotion/styled", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:11.11.0"],\
             ["@mui/icons-material", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:5.14.11"],\
@@ -47,6 +47,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/node", "npm:18.18.0"],\
             ["@types/react", "npm:18.2.23"],\
             ["@types/react-dom", "npm:18.2.8"],\
+            ["@types/uuid", "npm:9.0.6"],\
             ["@types/ws", "npm:8.5.6"],\
             ["@typescript-eslint/eslint-plugin", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:6.7.3"],\
             ["@typescript-eslint/parser", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:6.7.3"],\
@@ -66,6 +67,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["superjson", "npm:1.13.3"],\
             ["tsc-alias", "npm:1.8.8"],\
             ["typescript", "patch:typescript@npm%3A5.2.2#~builtin<compat/typescript>::version=5.2.2&hash=f3b441"],\
+            ["uuid", "npm:9.0.1"],\
             ["ws", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:8.14.2"],\
             ["zod", "npm:3.22.2"]\
           ],\
@@ -82,12 +84,11 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@aleohq/sdk", [\
-        ["npm:0.6.1", {\
-          "packageLocation": "./.yarn/cache/@aleohq-sdk-npm-0.6.1-6bebb5ab30-0dfc64ec26.zip/node_modules/@aleohq/sdk/",\
+        ["npm:0.6.2", {\
+          "packageLocation": "./.yarn/cache/@aleohq-sdk-npm-0.6.2-b9980e687b-3df8e4ee8b.zip/node_modules/@aleohq/sdk/",\
           "packageDependencies": [\
-            ["@aleohq/sdk", "npm:0.6.1"],\
+            ["@aleohq/sdk", "npm:0.6.2"],\
             ["@aleohq/wasm", "npm:0.6.0"],\
-            ["axios", "npm:1.5.1"],\
             ["comlink", "npm:4.4.1"],\
             ["jsdoc", "npm:3.6.11"],\
             ["mime", "npm:3.0.0"],\
@@ -197,39 +198,39 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@demox-labs/aleo-wallet-adapter-base", [\
-        ["npm:0.0.18", {\
-          "packageLocation": "./.yarn/cache/@demox-labs-aleo-wallet-adapter-base-npm-0.0.18-06b6dec272-c78b077825.zip/node_modules/@demox-labs/aleo-wallet-adapter-base/",\
+        ["npm:0.0.19", {\
+          "packageLocation": "./.yarn/cache/@demox-labs-aleo-wallet-adapter-base-npm-0.0.19-1a1821fabc-5a4d58f5c7.zip/node_modules/@demox-labs/aleo-wallet-adapter-base/",\
           "packageDependencies": [\
-            ["@demox-labs/aleo-wallet-adapter-base", "npm:0.0.18"],\
+            ["@demox-labs/aleo-wallet-adapter-base", "npm:0.0.19"],\
             ["eventemitter3", "npm:4.0.7"]\
           ],\
           "linkType": "HARD"\
         }]\
       ]],\
       ["@demox-labs/aleo-wallet-adapter-leo", [\
-        ["npm:0.0.17", {\
-          "packageLocation": "./.yarn/cache/@demox-labs-aleo-wallet-adapter-leo-npm-0.0.17-9c4d2c8a76-1cb362ad5f.zip/node_modules/@demox-labs/aleo-wallet-adapter-leo/",\
+        ["npm:0.0.18", {\
+          "packageLocation": "./.yarn/cache/@demox-labs-aleo-wallet-adapter-leo-npm-0.0.18-57fb507cda-9191597d77.zip/node_modules/@demox-labs/aleo-wallet-adapter-leo/",\
           "packageDependencies": [\
-            ["@demox-labs/aleo-wallet-adapter-leo", "npm:0.0.17"],\
-            ["@demox-labs/aleo-wallet-adapter-base", "npm:0.0.18"],\
+            ["@demox-labs/aleo-wallet-adapter-leo", "npm:0.0.18"],\
+            ["@demox-labs/aleo-wallet-adapter-base", "npm:0.0.19"],\
             ["nanoid", "npm:4.0.2"]\
           ],\
           "linkType": "HARD"\
         }]\
       ]],\
       ["@demox-labs/aleo-wallet-adapter-react", [\
-        ["npm:0.0.17", {\
-          "packageLocation": "./.yarn/cache/@demox-labs-aleo-wallet-adapter-react-npm-0.0.17-9bbd927dba-52a9c5c17e.zip/node_modules/@demox-labs/aleo-wallet-adapter-react/",\
+        ["npm:0.0.18", {\
+          "packageLocation": "./.yarn/cache/@demox-labs-aleo-wallet-adapter-react-npm-0.0.18-48490cd4c9-e846cffaa0.zip/node_modules/@demox-labs/aleo-wallet-adapter-react/",\
           "packageDependencies": [\
-            ["@demox-labs/aleo-wallet-adapter-react", "npm:0.0.17"]\
+            ["@demox-labs/aleo-wallet-adapter-react", "npm:0.0.18"]\
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:0.0.17", {\
-          "packageLocation": "./.yarn/__virtual__/@demox-labs-aleo-wallet-adapter-react-virtual-f626570a8b/0/cache/@demox-labs-aleo-wallet-adapter-react-npm-0.0.17-9bbd927dba-52a9c5c17e.zip/node_modules/@demox-labs/aleo-wallet-adapter-react/",\
+        ["virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:0.0.18", {\
+          "packageLocation": "./.yarn/__virtual__/@demox-labs-aleo-wallet-adapter-react-virtual-67907d37d6/0/cache/@demox-labs-aleo-wallet-adapter-react-npm-0.0.18-48490cd4c9-e846cffaa0.zip/node_modules/@demox-labs/aleo-wallet-adapter-react/",\
           "packageDependencies": [\
-            ["@demox-labs/aleo-wallet-adapter-react", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:0.0.17"],\
-            ["@demox-labs/aleo-wallet-adapter-base", "npm:0.0.18"],\
+            ["@demox-labs/aleo-wallet-adapter-react", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:0.0.18"],\
+            ["@demox-labs/aleo-wallet-adapter-base", "npm:0.0.19"],\
             ["@types/react", "npm:18.2.23"],\
             ["react", "npm:18.2.0"]\
           ],\
@@ -241,19 +242,19 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@demox-labs/aleo-wallet-adapter-reactui", [\
-        ["npm:0.0.29", {\
-          "packageLocation": "./.yarn/cache/@demox-labs-aleo-wallet-adapter-reactui-npm-0.0.29-6e8087608f-a0d3fc440c.zip/node_modules/@demox-labs/aleo-wallet-adapter-reactui/",\
+        ["npm:0.0.30", {\
+          "packageLocation": "./.yarn/cache/@demox-labs-aleo-wallet-adapter-reactui-npm-0.0.30-2043ae904d-2256d79575.zip/node_modules/@demox-labs/aleo-wallet-adapter-reactui/",\
           "packageDependencies": [\
-            ["@demox-labs/aleo-wallet-adapter-reactui", "npm:0.0.29"]\
+            ["@demox-labs/aleo-wallet-adapter-reactui", "npm:0.0.30"]\
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:0.0.29", {\
-          "packageLocation": "./.yarn/__virtual__/@demox-labs-aleo-wallet-adapter-reactui-virtual-eb9e54a29d/0/cache/@demox-labs-aleo-wallet-adapter-reactui-npm-0.0.29-6e8087608f-a0d3fc440c.zip/node_modules/@demox-labs/aleo-wallet-adapter-reactui/",\
+        ["virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:0.0.30", {\
+          "packageLocation": "./.yarn/__virtual__/@demox-labs-aleo-wallet-adapter-reactui-virtual-066decbbb0/0/cache/@demox-labs-aleo-wallet-adapter-reactui-npm-0.0.30-2043ae904d-2256d79575.zip/node_modules/@demox-labs/aleo-wallet-adapter-reactui/",\
           "packageDependencies": [\
-            ["@demox-labs/aleo-wallet-adapter-reactui", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:0.0.29"],\
-            ["@demox-labs/aleo-wallet-adapter-base", "npm:0.0.18"],\
-            ["@demox-labs/aleo-wallet-adapter-react", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:0.0.17"],\
+            ["@demox-labs/aleo-wallet-adapter-reactui", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:0.0.30"],\
+            ["@demox-labs/aleo-wallet-adapter-base", "npm:0.0.19"],\
+            ["@demox-labs/aleo-wallet-adapter-react", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:0.0.18"],\
             ["@types/react", "npm:18.2.23"],\
             ["@types/react-dom", "npm:18.2.8"],\
             ["react", "npm:18.2.0"],\
@@ -1736,6 +1737,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["@types/uuid", [\
+        ["npm:9.0.6", {\
+          "packageLocation": "./.yarn/cache/@types-uuid-npm-9.0.6-741993c9d3-739dcb2e62.zip/node_modules/@types/uuid/",\
+          "packageDependencies": [\
+            ["@types/uuid", "npm:9.0.6"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["@types/ws", [\
         ["npm:8.5.6", {\
           "packageLocation": "./.yarn/cache/@types-ws-npm-8.5.6-7146801532-7addb0c5fa.zip/node_modules/@types/ws/",\
@@ -2291,18 +2301,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
-      ["axios", [\
-        ["npm:1.5.1", {\
-          "packageLocation": "./.yarn/cache/axios-npm-1.5.1-6bc68e7d25-4444f06601.zip/node_modules/axios/",\
-          "packageDependencies": [\
-            ["axios", "npm:1.5.1"],\
-            ["follow-redirects", "virtual:6bc68e7d25b7055a51c269c1fa5648c8246286db1b7949168396e2ffbde7ed58cf742783c99b4e376ba9a3e96fcc4d029f96bd1b532b606b5055545461060ec6#npm:1.15.3"],\
-            ["form-data", "npm:4.0.0"],\
-            ["proxy-from-env", "npm:1.1.0"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
       ["axobject-query", [\
         ["npm:3.2.1", {\
           "packageLocation": "./.yarn/cache/axobject-query-npm-3.2.1-b147b3f32c-a94047e702.zip/node_modules/axobject-query/",\
@@ -2357,11 +2355,11 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./",\
           "packageDependencies": [\
             ["bot-busters", "workspace:."],\
-            ["@aleohq/sdk", "npm:0.6.1"],\
-            ["@demox-labs/aleo-wallet-adapter-base", "npm:0.0.18"],\
-            ["@demox-labs/aleo-wallet-adapter-leo", "npm:0.0.17"],\
-            ["@demox-labs/aleo-wallet-adapter-react", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:0.0.17"],\
-            ["@demox-labs/aleo-wallet-adapter-reactui", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:0.0.29"],\
+            ["@aleohq/sdk", "npm:0.6.2"],\
+            ["@demox-labs/aleo-wallet-adapter-base", "npm:0.0.19"],\
+            ["@demox-labs/aleo-wallet-adapter-leo", "npm:0.0.18"],\
+            ["@demox-labs/aleo-wallet-adapter-react", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:0.0.18"],\
+            ["@demox-labs/aleo-wallet-adapter-reactui", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:0.0.30"],\
             ["@emotion/react", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:11.11.1"],\
             ["@emotion/styled", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:11.11.0"],\
             ["@mui/icons-material", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:5.14.11"],\
@@ -2376,6 +2374,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/node", "npm:18.18.0"],\
             ["@types/react", "npm:18.2.23"],\
             ["@types/react-dom", "npm:18.2.8"],\
+            ["@types/uuid", "npm:9.0.6"],\
             ["@types/ws", "npm:8.5.6"],\
             ["@typescript-eslint/eslint-plugin", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:6.7.3"],\
             ["@typescript-eslint/parser", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:6.7.3"],\
@@ -2395,6 +2394,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["superjson", "npm:1.13.3"],\
             ["tsc-alias", "npm:1.8.8"],\
             ["typescript", "patch:typescript@npm%3A5.2.2#~builtin<compat/typescript>::version=5.2.2&hash=f3b441"],\
+            ["uuid", "npm:9.0.1"],\
             ["ws", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:8.14.2"],\
             ["zod", "npm:3.22.2"]\
           ],\
@@ -4067,28 +4067,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
-      ["follow-redirects", [\
-        ["npm:1.15.3", {\
-          "packageLocation": "./.yarn/cache/follow-redirects-npm-1.15.3-ca69c47b72-584da22ec5.zip/node_modules/follow-redirects/",\
-          "packageDependencies": [\
-            ["follow-redirects", "npm:1.15.3"]\
-          ],\
-          "linkType": "SOFT"\
-        }],\
-        ["virtual:6bc68e7d25b7055a51c269c1fa5648c8246286db1b7949168396e2ffbde7ed58cf742783c99b4e376ba9a3e96fcc4d029f96bd1b532b606b5055545461060ec6#npm:1.15.3", {\
-          "packageLocation": "./.yarn/__virtual__/follow-redirects-virtual-ddb0bfe676/0/cache/follow-redirects-npm-1.15.3-ca69c47b72-584da22ec5.zip/node_modules/follow-redirects/",\
-          "packageDependencies": [\
-            ["follow-redirects", "virtual:6bc68e7d25b7055a51c269c1fa5648c8246286db1b7949168396e2ffbde7ed58cf742783c99b4e376ba9a3e96fcc4d029f96bd1b532b606b5055545461060ec6#npm:1.15.3"],\
-            ["@types/debug", null],\
-            ["debug", null]\
-          ],\
-          "packagePeers": [\
-            "@types/debug",\
-            "debug"\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
       ["for-each", [\
         ["npm:0.3.3", {\
           "packageLocation": "./.yarn/cache/for-each-npm-0.3.3-0010ca8cdd-6c48ff2bc6.zip/node_modules/for-each/",\
@@ -4115,16 +4093,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/form-data-npm-2.5.1-47256351b5-5134ada56c.zip/node_modules/form-data/",\
           "packageDependencies": [\
             ["form-data", "npm:2.5.1"],\
-            ["asynckit", "npm:0.4.0"],\
-            ["combined-stream", "npm:1.0.8"],\
-            ["mime-types", "npm:2.1.35"]\
-          ],\
-          "linkType": "HARD"\
-        }],\
-        ["npm:4.0.0", {\
-          "packageLocation": "./.yarn/cache/form-data-npm-4.0.0-916facec2d-01135bf867.zip/node_modules/form-data/",\
-          "packageDependencies": [\
-            ["form-data", "npm:4.0.0"],\
             ["asynckit", "npm:0.4.0"],\
             ["combined-stream", "npm:1.0.8"],\
             ["mime-types", "npm:2.1.35"]\
@@ -6395,15 +6363,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
-      ["proxy-from-env", [\
-        ["npm:1.1.0", {\
-          "packageLocation": "./.yarn/cache/proxy-from-env-npm-1.1.0-c13d07f26b-ed7fcc2ba0.zip/node_modules/proxy-from-env/",\
-          "packageDependencies": [\
-            ["proxy-from-env", "npm:1.1.0"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
       ["punycode", [\
         ["npm:2.3.0", {\
           "packageLocation": "./.yarn/cache/punycode-npm-2.3.0-df4bdce06b-39f760e09a.zip/node_modules/punycode/",\
@@ -7619,6 +7578,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/uuid-npm-8.3.2-eca0baba53-5575a8a75c.zip/node_modules/uuid/",\
           "packageDependencies": [\
             ["uuid", "npm:8.3.2"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["npm:9.0.1", {\
+          "packageLocation": "./.yarn/cache/uuid-npm-9.0.1-39a8442bc6-39931f6da7.zip/node_modules/uuid/",\
+          "packageDependencies": [\
+            ["uuid", "npm:9.0.1"]\
           ],\
           "linkType": "HARD"\
         }]\

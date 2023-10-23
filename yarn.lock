@@ -12,17 +12,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aleohq/sdk@npm:^0.6.1":
-  version: 0.6.1
-  resolution: "@aleohq/sdk@npm:0.6.1"
+"@aleohq/sdk@npm:^0.6.2":
+  version: 0.6.2
+  resolution: "@aleohq/sdk@npm:0.6.2"
   dependencies:
     "@aleohq/wasm": ^0.6.0
-    axios: ^1.1.3
     comlink: ^4.4.1
     jsdoc: ^3.6.11
     mime: ^3.0.0
     sync-request: ^6.1.0
-  checksum: 0dfc64ec26a2984820c9d723edaebf6a20a8e930aefd7b469749ee104bae890b3bdd485edd8531673904dddbff20d5b2ce89d1909d2d5ef906e79a846ec4094c
+  checksum: 3df8e4ee8bfa4c3897771f2d85f003dfe12802525cf3a649b99db3dbc2739b90f3168e11b548b3fddef4e94e5be8f5bbeb07e07a4fa0532f52b53060a21d368a
   languageName: node
   linkType: hard
 
@@ -115,46 +114,46 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@demox-labs/aleo-wallet-adapter-base@npm:^0.0.18":
-  version: 0.0.18
-  resolution: "@demox-labs/aleo-wallet-adapter-base@npm:0.0.18"
+"@demox-labs/aleo-wallet-adapter-base@npm:^0.0.19":
+  version: 0.0.19
+  resolution: "@demox-labs/aleo-wallet-adapter-base@npm:0.0.19"
   dependencies:
     eventemitter3: ^4.0.7
-  checksum: c78b0778251107d1a3b0966034585ca4c32f6c1da4f34dd069bec8c06dac54372a25fb5ab6ab55bc1354d17f99a80c374fc349429adc230c1cb0e79cf39e79f7
+  checksum: 5a4d58f5c70b13d5c778ef19bf1955c4431362a829bdc34e3b72815231dd7165417458d550ccc0c762a5777f3e986cdcd8d4d32df70faa923c0053451513c8b5
   languageName: node
   linkType: hard
 
-"@demox-labs/aleo-wallet-adapter-leo@npm:^0.0.17":
-  version: 0.0.17
-  resolution: "@demox-labs/aleo-wallet-adapter-leo@npm:0.0.17"
+"@demox-labs/aleo-wallet-adapter-leo@npm:^0.0.18":
+  version: 0.0.18
+  resolution: "@demox-labs/aleo-wallet-adapter-leo@npm:0.0.18"
   dependencies:
-    "@demox-labs/aleo-wallet-adapter-base": ^0.0.18
+    "@demox-labs/aleo-wallet-adapter-base": ^0.0.19
     nanoid: ^4.0.0
-  checksum: 1cb362ad5f4dd323597c9962688dcf844356268f18da97901fc276c142cf30e1622a45aecc6dfafb8d34e6548af7f243e5dd63778532c3604faab205bcdfb95b
+  checksum: 9191597d778442542e6ed454c5e2eb08e918d9f281f7659dd4c5ed4ba398800dab0f43a94acb9ee2e04ebcac051de7e18e439ee64b5cb676a4c18e022b1e2e65
   languageName: node
   linkType: hard
 
-"@demox-labs/aleo-wallet-adapter-react@npm:^0.0.17":
-  version: 0.0.17
-  resolution: "@demox-labs/aleo-wallet-adapter-react@npm:0.0.17"
+"@demox-labs/aleo-wallet-adapter-react@npm:^0.0.18":
+  version: 0.0.18
+  resolution: "@demox-labs/aleo-wallet-adapter-react@npm:0.0.18"
   dependencies:
-    "@demox-labs/aleo-wallet-adapter-base": ^0.0.18
+    "@demox-labs/aleo-wallet-adapter-base": ^0.0.19
   peerDependencies:
     react: ^18.2.0
-  checksum: 52a9c5c17e2b6d074ea0a58e23722b03d6f22a085ad9f877df610e31add73731078049e13385c67056df64d3e4689092660f2861aa917a6f4789cdee02a44883
+  checksum: e846cffaa01e73f79b9ff9118ffbef61383549796332ac74fe011cb3fcc2e78e8d248d0a831da988554d1a22f4712dfd81404e5fde414732e2c416b379e3c4eb
   languageName: node
   linkType: hard
 
-"@demox-labs/aleo-wallet-adapter-reactui@npm:^0.0.29":
-  version: 0.0.29
-  resolution: "@demox-labs/aleo-wallet-adapter-reactui@npm:0.0.29"
+"@demox-labs/aleo-wallet-adapter-reactui@npm:^0.0.30":
+  version: 0.0.30
+  resolution: "@demox-labs/aleo-wallet-adapter-reactui@npm:0.0.30"
   dependencies:
-    "@demox-labs/aleo-wallet-adapter-base": ^0.0.18
-    "@demox-labs/aleo-wallet-adapter-react": ^0.0.17
+    "@demox-labs/aleo-wallet-adapter-base": ^0.0.19
+    "@demox-labs/aleo-wallet-adapter-react": ^0.0.18
   peerDependencies:
     react: ^18.2.0
     react-dom: ^18.2.0
-  checksum: a0d3fc440ce820c433778a25810bc9dbf7bd3f51ba78c6a7737e62744bc44695bd22b54a1aa05bad5f6a7ebde7fea565c2f3bd973adb7c6ceaa37f7f40d7c4fd
+  checksum: 2256d79575e86c9454813d3d4dd1ef013a31c1278f3cc358d29a455704e44312c79f7d3e0845ce2c712867e686a37a25e9b64eaebeb22d93af2e609cf7413547
   languageName: node
   linkType: hard
 
@@ -1204,6 +1203,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/uuid@npm:^9.0.6":
+  version: 9.0.6
+  resolution: "@types/uuid@npm:9.0.6"
+  checksum: 739dcb2e620ff097fa916edeab455eb75640c4883a850784fdb15b32f67b719e05275c6d6419bb6da11350d26bd14ed05ba5e992ff228411cdd98cbc772d71ef
+  languageName: node
+  linkType: hard
+
 "@types/ws@npm:^8.5.6":
   version: 8.5.6
   resolution: "@types/ws@npm:8.5.6"
@@ -1621,17 +1627,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^1.1.3":
-  version: 1.5.1
-  resolution: "axios@npm:1.5.1"
-  dependencies:
-    follow-redirects: ^1.15.0
-    form-data: ^4.0.0
-    proxy-from-env: ^1.1.0
-  checksum: 4444f06601f4ede154183767863d2b8e472b4a6bfc5253597ed6d21899887e1fd0ee2b3de792ac4f8459fe2e359d2aa07c216e45fd8b9e4e0688a6ebf48a5a8d
-  languageName: node
-  linkType: hard
-
 "axobject-query@npm:^3.1.1":
   version: 3.2.1
   resolution: "axobject-query@npm:3.2.1"
@@ -1677,11 +1672,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "bot-busters@workspace:."
   dependencies:
-    "@aleohq/sdk": ^0.6.1
-    "@demox-labs/aleo-wallet-adapter-base": ^0.0.18
-    "@demox-labs/aleo-wallet-adapter-leo": ^0.0.17
-    "@demox-labs/aleo-wallet-adapter-react": ^0.0.17
-    "@demox-labs/aleo-wallet-adapter-reactui": ^0.0.29
+    "@aleohq/sdk": ^0.6.2
+    "@demox-labs/aleo-wallet-adapter-base": ^0.0.19
+    "@demox-labs/aleo-wallet-adapter-leo": ^0.0.18
+    "@demox-labs/aleo-wallet-adapter-react": ^0.0.18
+    "@demox-labs/aleo-wallet-adapter-reactui": ^0.0.30
     "@emotion/react": ^11.11.1
     "@emotion/styled": ^11.11.0
     "@mui/icons-material": ^5.14.11
@@ -1696,6 +1691,7 @@ __metadata:
     "@types/node": ^18.16.0
     "@types/react": ^18.2.20
     "@types/react-dom": ^18.2.7
+    "@types/uuid": ^9.0.6
     "@types/ws": ^8.5.6
     "@typescript-eslint/eslint-plugin": ^6.3.0
     "@typescript-eslint/parser": ^6.3.0
@@ -1715,6 +1711,7 @@ __metadata:
     superjson: ^1.13.1
     tsc-alias: ^1.8.8
     typescript: ^5.1.6
+    uuid: ^9.0.1
     ws: ^8.14.2
     zod: ^3.21.4
   languageName: unknown
@@ -1978,7 +1975,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"combined-stream@npm:^1.0.6, combined-stream@npm:^1.0.8":
+"combined-stream@npm:^1.0.6":
   version: 1.0.8
   resolution: "combined-stream@npm:1.0.8"
   dependencies:
@@ -3104,16 +3101,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"follow-redirects@npm:^1.15.0":
-  version: 1.15.3
-  resolution: "follow-redirects@npm:1.15.3"
-  peerDependenciesMeta:
-    debug:
-      optional: true
-  checksum: 584da22ec5420c837bd096559ebfb8fe69d82512d5585004e36a3b4a6ef6d5905780e0c74508c7b72f907d1fa2b7bd339e613859e9c304d0dc96af2027fd0231
-  languageName: node
-  linkType: hard
-
 "for-each@npm:^0.3.3":
   version: 0.3.3
   resolution: "for-each@npm:0.3.3"
@@ -3141,17 +3128,6 @@ __metadata:
     combined-stream: ^1.0.6
     mime-types: ^2.1.12
   checksum: 5134ada56cc246b293a1ac7678dba6830000603a3979cf83ff7b2f21f2e3725202237cfb89e32bcb38a1d35727efbd3c3a22e65b42321e8ade8eec01ce755d08
-  languageName: node
-  linkType: hard
-
-"form-data@npm:^4.0.0":
-  version: 4.0.0
-  resolution: "form-data@npm:4.0.0"
-  dependencies:
-    asynckit: ^0.4.0
-    combined-stream: ^1.0.8
-    mime-types: ^2.1.12
-  checksum: 01135bf8675f9d5c61ff18e2e2932f719ca4de964e3be90ef4c36aacfc7b9cb2fceb5eca0b7e0190e3383fe51c5b37f4cb80b62ca06a99aaabfcfd6ac7c9328c
   languageName: node
   linkType: hard
 
@@ -5138,13 +5114,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"proxy-from-env@npm:^1.1.0":
-  version: 1.1.0
-  resolution: "proxy-from-env@npm:1.1.0"
-  checksum: ed7fcc2ba0a33404958e34d95d18638249a68c430e30fcb6c478497d72739ba64ce9810a24f53a7d921d0c065e5b78e3822759800698167256b04659366ca4d4
-  languageName: node
-  linkType: hard
-
 "punycode@npm:^2.1.0":
   version: 2.3.0
   resolution: "punycode@npm:2.3.0"
@@ -6195,6 +6164,15 @@ __metadata:
   bin:
     uuid: dist/bin/uuid
   checksum: 5575a8a75c13120e2f10e6ddc801b2c7ed7d8f3c8ac22c7ed0c7b2ba6383ec0abda88c905085d630e251719e0777045ae3236f04c812184b7c765f63a70e58df
+  languageName: node
+  linkType: hard
+
+"uuid@npm:^9.0.1":
+  version: 9.0.1
+  resolution: "uuid@npm:9.0.1"
+  bin:
+    uuid: dist/bin/uuid
+  checksum: 39931f6da74e307f51c0fb463dc2462807531dc80760a9bff1e35af4316131b4fc3203d16da60ae33f07fdca5b56f3f1dd662da0c99fea9aaeab2004780cc5f4
   languageName: node
   linkType: hard
 

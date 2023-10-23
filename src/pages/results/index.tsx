@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import { Typography, Button, Stack } from "@mui/material";
 
 import { Page } from "@/layouts";
-import withAuth from "@/utils/withAuth";
 
 const Results: FC = () => {
   const router = useRouter();
@@ -26,4 +25,4 @@ const Results: FC = () => {
   );
 };
 
-export default withAuth(Results);
+export default Results;

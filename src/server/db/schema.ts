@@ -17,5 +17,4 @@ export const users = bbPgTable("user", {
 });
 
 export const userSchema = createInsertSchema(users);
-
 export type User = z.infer<typeof userSchema>;
