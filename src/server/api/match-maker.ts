@@ -3,10 +3,17 @@ import { v4 as uuid } from "uuid";
 
 export const ee = new EventEmitter();
 export const lobbyQueue: string[] = [];
-export const chatRooms: Record<
-  string,
-  { players: [string, string]; createdAt: number }
-> = {};
+
+interface ChatRoom {
+  players: [string, string];
+  createdAt: number; // unix timestamp
+}
+
+type ChatRooms = Record<string, ChatRoom>;
+
+export let chatRooms: ChatRooms = {};
+
+const TWO_MINUTES = 120000;
 
 const makeMatch = () => {
   try {
@@ -18,7 +25,10 @@ const makeMatch = () => {
 
     const roomId = uuid();
 
-    chatRooms[roomId] = { players: [playerA, playerB], createdAt: Date.now() };
+    chatRooms[roomId] = {
+      players: [playerA, playerB],
+      createdAt: Date.now(),
+    } satisfies ChatRoom;
 
     ee.emit("readyToPlay", { roomId, players: [playerA, playerB] });
     ee.emit("queueUpdate");
@@ -28,13 +38,22 @@ const makeMatch = () => {
 };
 
 const deleteStaleMatches = () => {
-  // TODO: implement
+  const preservedRooms: ChatRooms = Object.entries(chatRooms).reduce(
+    (accRooms, [key, room]) => {
+      // delete rooms that have been created more than 2 minutes ago
+      if (Date.now() - room.createdAt >= TWO_MINUTES) {
+        // TODO: emit event to clients after adding end of match logic
+        return accRooms;
+      } else {
+        return { ...accRooms, [key]: room };
+      }
+    },
+    {} satisfies ChatRooms
+  );
+  chatRooms = preservedRooms;
 };
 
 setInterval(() => {
-  // TODO: delete logs
-  console.log("queue:", lobbyQueue);
-  console.log("rooms:", chatRooms);
   deleteStaleMatches();
   makeMatch();
 }, 10000);
