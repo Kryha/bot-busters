@@ -7,7 +7,7 @@ Chat, be human and bust bots!
 Before running the app in dev mode, make sure you have a running instance of [Docker](https://www.docker.com/), and run the following command from the root directory to spin up a database instance:
 
 ```sh
-docker-compose up -d
+yarn db:run
 ```
 
 Create all the necessary DB tables:
@@ -16,7 +16,14 @@ Create all the necessary DB tables:
 yarn db:push
 ```
 
-Now, run the application in dev mode:
+Build the development web socket and run it:
+
+```sh
+yarn build:ws
+yarn start:ws
+```
+
+Open another terminal window and run the application in dev mode:
 
 ```sh
 yarn dev

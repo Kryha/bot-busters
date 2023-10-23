@@ -1,14 +1,9 @@
 import { verifySignature } from "@/utils/wallet";
-import { type GetServerSidePropsContext } from "next";
-import {
-  getServerSession,
-  type DefaultSession,
-  type NextAuthOptions,
-} from "next-auth";
+import { type DefaultSession, type NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 import { db, dbSchema } from "@/server/db";
-import { env } from "@/env.mjs";
+import { env } from "@/env.cjs";
 import { eq } from "drizzle-orm";
 
 /**
@@ -19,7 +14,7 @@ import { eq } from "drizzle-orm";
  */
 declare module "next-auth" {
   interface Session extends DefaultSession {
-    publicKey: string;
+    address: string;
   }
 }
 
@@ -31,16 +26,18 @@ declare module "next-auth" {
 export const authOptions: NextAuthOptions = {
   debug: env.NODE_ENV === "development",
   callbacks: {
-    session: ({ session, token }) => ({
-      ...session,
-      publicKey: token.sub,
-    }),
+    session: ({ session, token }) => {
+      return {
+        ...session,
+        address: token.sub,
+      };
+    },
   },
   providers: [
     CredentialsProvider({
       credentials: {
-        aleoAddress: {
-          label: "Public Key",
+        address: {
+          label: "Address",
           type: "text",
         },
         signedMessage: {
@@ -49,13 +46,13 @@ export const authOptions: NextAuthOptions = {
         },
       },
       async authorize(credentials) {
-        if (!credentials?.signedMessage || !credentials?.aleoAddress) {
+        if (!credentials?.signedMessage || !credentials?.address) {
           return null;
         }
 
-        const { aleoAddress, signedMessage } = credentials;
+        const { address, signedMessage } = credentials;
 
-        const isVerified = verifySignature(aleoAddress, signedMessage);
+        const isVerified = verifySignature(address, signedMessage);
 
         if (!isVerified) return null;
 
@@ -63,14 +60,14 @@ export const authOptions: NextAuthOptions = {
           const selectedUsers = await db
             .select()
             .from(dbSchema.users)
-            .where(eq(dbSchema.users.publicKey, aleoAddress));
+            .where(eq(dbSchema.users.address, address));
 
           if (!selectedUsers.length) {
-            await db.insert(dbSchema.users).values({ publicKey: aleoAddress });
+            await db.insert(dbSchema.users).values({ address });
           }
 
           return {
-            id: aleoAddress,
+            id: address,
           };
         } catch (e) {
           console.error(e);
@@ -85,16 +82,4 @@ export const authOptions: NextAuthOptions = {
     error: "/",
     newUser: "/",
   },
-};
-
-/**
- * Wrapper for `getServerSession` so that you don't need to import the `authOptions` in every file.
- *
- * @see https://next-auth.js.org/configuration/nextjs
- */
-export const getServerAuthSession = (ctx: {
-  req: GetServerSidePropsContext["req"];
-  res: GetServerSidePropsContext["res"];
-}) => {
-  return getServerSession(ctx.req, ctx.res, authOptions);
 };

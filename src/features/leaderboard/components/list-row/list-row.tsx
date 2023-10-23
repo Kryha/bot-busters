@@ -19,7 +19,7 @@ export const ListRow: FC<Props> = ({ leaderboard }) => {
   return (
     <>
       <ListItemIcon>
-        <Typography variant="h3" color="primary.main">
+        <Typography variant="h3" color="primary">
           {leaderboard.rank}
         </Typography>
       </ListItemIcon>
@@ -34,10 +34,10 @@ export const ListRow: FC<Props> = ({ leaderboard }) => {
       <ListItemText
         primary={
           <Stack sx={styles.listUsername}>
-            <Typography variant="h5" color="secondary.main">
+            <Typography variant="h5" color="primary.light">
               {leaderboard.username}
             </Typography>
-            <Typography variant="body2" color="secondary.light">
+            <Typography variant="body2" color="primary">
               {leaderboard.score}
             </Typography>
           </Stack>
