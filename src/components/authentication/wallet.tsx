@@ -4,19 +4,18 @@ import {
   LeoWalletName,
   type LeoWalletAdapter,
 } from "@demox-labs/aleo-wallet-adapter-leo";
-import { Button, Stack } from "@mui/material";
-import { isValidSession } from "@/utils/session";
+import { Button } from "@mui/material";
 import { text } from "@/assets/text";
 import { env } from "@/env.cjs";
 import { useWallet } from "@demox-labs/aleo-wallet-adapter-react";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import {
   DecryptPermission,
   type WalletAdapterNetwork,
 } from "@demox-labs/aleo-wallet-adapter-base";
 import { AUTH_SIGN_MESSAGE } from "@/constants";
 
-export const AuthButton = () => {
+export const WalletAuthenticationButton = () => {
   const { data: sessionData } = useSession();
   const {
     publicKey: address,
@@ -25,7 +24,6 @@ export const AuthButton = () => {
     connect,
     connected,
     connecting,
-    disconnect,
   } = useWallet();
 
   useEffect(() => {
@@ -55,7 +53,7 @@ export const AuthButton = () => {
     void connectWallet();
   }, [wallet, address, connecting, sessionData, connected]);
 
-  const walletAuthentication = async () => {
+  const connectWallet = async () => {
     try {
       if (!connected) {
         await connect(
@@ -69,33 +67,9 @@ export const AuthButton = () => {
     }
   };
 
-  const anonymousAuthentication = async () => {
-    try {
-      await signIn("credentials", {});
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const logout = async () => {
-    await signOut();
-    await disconnect();
-  };
-
   return (
-    <Stack direction="row" spacing={2}>
-      {!isValidSession(sessionData) ? (
-        <>
-          <Button onClick={() => void anonymousAuthentication()}>
-            {text.auth.playGame}
-          </Button>
-          <Button onClick={() => void walletAuthentication()}>
-            {text.auth.walletSignIn}
-          </Button>
-        </>
-      ) : (
-        <Button onClick={() => void logout()}>{text.auth.signOut}</Button>
-      )}
-    </Stack>
+    <Button onClick={() => void connectWallet()}>
+      {text.auth.walletSignIn}
+    </Button>
   );
 };
