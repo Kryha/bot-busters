@@ -10,7 +10,7 @@ spec:
     spec:
       containers:
         - name: bot-busters
-          image: eu.gcr.io/web3-335312/zk/bot-busters/bot-busters-staging:latest
+          image: eu.gcr.io/aleo-botbusters/bot-busters/bot-busters-staging:latest
           env:
             - name: POD_NAMESPACE
               valueFrom:

@@ -1,2 +1,2 @@
-export * from "./example";
 export * from "./lobby";
+export * from "./chat";

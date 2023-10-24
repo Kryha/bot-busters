@@ -15,11 +15,11 @@ spec:
         - name: bot-busters
           resources:
             requests:
-              cpu: 500m
-              memory: 1024Mi
+              cpu: 470m
+              memory: 512Mi
             limits:
-              cpu: "2"
-              memory: 2048Mi
+              cpu: 940m
+              memory: 1024Mi
           ports:
             - containerPort: 3000
           env:
