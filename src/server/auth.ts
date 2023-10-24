@@ -35,19 +35,14 @@ const credentialsProvider = CredentialsProvider({
 
   async authorize(credentials) {
     const uuid = randomUUID();
-    //TODO: make this name a random username
-    const username = generateRandomString(32);
 
     if (!credentials?.signedMessage || !credentials?.address) {
       try {
-        //TODO: Check if the random username already exists in the DB
         await db.insert(dbSchema.users).values({
           id: uuid,
-          username: username,
         });
         return {
           id: uuid,
-          username: username,
         };
       } catch (e) {
         console.error(e);
@@ -68,13 +63,11 @@ const credentialsProvider = CredentialsProvider({
       if (!selectedUser) {
         await db.insert(dbSchema.users).values({
           id: uuid,
-          username: username,
           address: address,
         });
 
         return {
           id: uuid,
-          username: username,
           address: address,
         };
       }
