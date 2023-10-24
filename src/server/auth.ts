@@ -15,7 +15,9 @@ import { randomUUID } from "crypto";
  */
 declare module "next-auth" {
   interface Session extends DefaultSession {
-    uuid: string;
+    id: string;
+    username?: string;
+    address?: string;
   }
 }
 
@@ -40,11 +42,12 @@ const credentialsProvider = CredentialsProvider({
       try {
         //TODO: Check if the random username already exists in the DB
         await db.insert(dbSchema.users).values({
-          uuid: uuid,
+          id: uuid,
           username: username,
         });
         return {
           id: uuid,
+          username: username,
         };
       } catch (e) {
         console.error(e);
@@ -54,6 +57,7 @@ const credentialsProvider = CredentialsProvider({
     const { address, signedMessage } = credentials;
     const isVerified = verifySignature(address, signedMessage);
 
+    //TODO: Return a proper error message when the signature is not verified
     if (!isVerified) return null;
 
     try {
@@ -63,7 +67,7 @@ const credentialsProvider = CredentialsProvider({
 
       if (!selectedUser) {
         await db.insert(dbSchema.users).values({
-          uuid: uuid,
+          id: uuid,
           username: username,
           address: address,
         });
@@ -71,12 +75,14 @@ const credentialsProvider = CredentialsProvider({
         return {
           id: uuid,
           username: username,
+          address: address,
         };
       }
 
       return {
-        id: selectedUser.uuid,
+        id: selectedUser.id,
         username: selectedUser.username,
+        address: selectedUser.address,
       };
     } catch (e) {
       console.error(e);
@@ -97,7 +103,7 @@ export const authOptions: NextAuthOptions = {
     session: ({ session, token }) => {
       return {
         ...session,
-        uuid: token.sub,
+        id: token.sub,
       };
     },
   },

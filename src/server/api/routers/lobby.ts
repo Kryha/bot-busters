@@ -17,7 +17,7 @@ export const lobbyRouter = createTRPCRouter({
   onQueueUpdate: protectedProcedure.subscription(({ ctx }) => {
     return observable<QueueUpdatePayload>((emit) => {
       const handleEvent = () => {
-        const myPlaceInQueue = lobbyQueue.indexOf(ctx.session.uuid) + 1;
+        const myPlaceInQueue = lobbyQueue.indexOf(ctx.session.id) + 1;
         // emit data to client
         emit.next({
           myPlaceInQueue,
@@ -30,24 +30,24 @@ export const lobbyRouter = createTRPCRouter({
       return () => {
         ee.off("queueUpdate", handleEvent);
 
-        const { uuid } = ctx.session;
+        const { id } = ctx.session;
 
-        const index = lobbyQueue.indexOf(uuid);
+        const index = lobbyQueue.indexOf(id);
         if (index < 0) return;
         lobbyQueue.splice(index, 1);
       };
     });
   }),
   join: protectedProcedure.mutation(({ ctx }) => {
-    const { uuid } = ctx.session;
+    const { id } = ctx.session;
 
-    const hasJoined = lobbyQueue.includes(uuid);
+    const hasJoined = lobbyQueue.includes(id);
 
     if (!hasJoined) {
-      lobbyQueue.push(uuid);
+      lobbyQueue.push(id);
     }
 
-    const myPlaceInQueue = lobbyQueue.indexOf(ctx.session.uuid) + 1;
+    const myPlaceInQueue = lobbyQueue.indexOf(ctx.session.id) + 1;
 
     ee.emit("queueUpdate");
     return { myPlaceInQueue, queueLength: lobbyQueue.length };
@@ -56,7 +56,7 @@ export const lobbyRouter = createTRPCRouter({
   onReadyToPlay: protectedProcedure.subscription(({ ctx }) => {
     return observable<ReadyToPlayPayload>((emit) => {
       const handleEvent = (payload: ReadyToPlayPayload) => {
-        const isPlayer = payload.players.includes(ctx.session.uuid);
+        const isPlayer = payload.players.includes(ctx.session.id);
 
         if (isPlayer) {
           emit.next(payload);

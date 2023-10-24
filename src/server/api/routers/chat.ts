@@ -21,7 +21,7 @@ export const chatRouter = createTRPCRouter({
   onMessage: protectedProcedure
     .input(z.object({ roomId: z.string().uuid() }))
     .subscription(({ ctx, input }) => {
-      verifyUser(ctx.session.uuid, input.roomId);
+      verifyUser(ctx.session.id, input.roomId);
 
       return observable<ChatMessagePayload>((emit) => {
         const handleEvent = (payload: ChatMessagePayload) => {
@@ -45,7 +45,7 @@ export const chatRouter = createTRPCRouter({
     )
     .mutation(({ ctx, input }) => {
       const { message, sentAt, roomId } = input;
-      const sender = ctx.session.uuid;
+      const sender = ctx.session.id;
 
       verifyUser(sender, input.roomId);
 
@@ -57,7 +57,7 @@ export const chatRouter = createTRPCRouter({
   onTimeout: protectedProcedure
     .input(z.object({ roomId: z.string().uuid() }))
     .subscription(({ ctx, input }) => {
-      verifyUser(ctx.session.uuid, input.roomId);
+      verifyUser(ctx.session.id, input.roomId);
 
       return observable<void>((emit) => {
         const handleEvent = () => {

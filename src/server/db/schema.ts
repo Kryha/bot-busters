@@ -12,7 +12,7 @@ import { type z } from "zod";
 export const bbPgTable = pgTableCreator((name) => `bot_busters_${name}`);
 
 export const users = bbPgTable("user", {
-  uuid: varchar("uuid", { length: 36 }).unique().primaryKey(),
+  id: varchar("id", { length: 36 }).unique().primaryKey(),
   username: varchar("username", { length: 32 }).unique().notNull(),
   address: varchar("address", { length: PUBLIC_KEY_LENGTH }),
   score: integer("score").default(0).notNull(),
