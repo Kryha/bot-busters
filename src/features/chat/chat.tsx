@@ -30,7 +30,7 @@ export const ChatView: FC<Props> = ({ roomId }) => {
   const [messages, setMessages] = useState<ChatMessagePayload[]>([]);
 
   const groupedMessages: GroupedMessage[] = messages.map((message) => {
-    const isLocalSender = message.sender === sessionData?.address;
+    const isLocalSender = message.sender === sessionData?.uuid;
 
     // TODO: group properly, use `sentAt`
     return {
