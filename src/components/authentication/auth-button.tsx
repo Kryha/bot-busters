@@ -15,7 +15,6 @@ import {
   type WalletAdapterNetwork,
 } from "@demox-labs/aleo-wallet-adapter-base";
 import { AUTH_SIGN_MESSAGE } from "@/constants";
-import { v4 as uuid } from "uuid";
 
 export const AuthButton = () => {
   const { data: sessionData } = useSession();
@@ -82,25 +81,21 @@ export const AuthButton = () => {
     await signOut();
     await disconnect();
   };
-  console.log(sessionData);
+
   return (
     <Stack direction="row" spacing={2}>
-      {!isValidSession(sessionData) && (
-        <Button onClick={() => void anonymousAuthentication()}>
-          {text.auth.playGame}
-        </Button>
+      {!isValidSession(sessionData) ? (
+        <>
+          <Button onClick={() => void anonymousAuthentication()}>
+            {text.auth.playGame}
+          </Button>
+          <Button onClick={() => void walletAuthentication()}>
+            {text.auth.walletSignIn}
+          </Button>
+        </>
+      ) : (
+        <Button onClick={() => void logout()}>{text.auth.signOut}</Button>
       )}
-      <Button
-        onClick={
-          isValidSession(sessionData)
-            ? () => void logout()
-            : () => void walletAuthentication()
-        }
-      >
-        {isValidSession(sessionData)
-          ? text.auth.signOut
-          : text.auth.walletSignIn}
-      </Button>
     </Stack>
   );
 };
