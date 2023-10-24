@@ -9,11 +9,11 @@ export interface ChatMessagePayload {
   sentAt: number; // unix time
 }
 
-const verifyUser = (userUuid: string, roomId: string) => {
+const verifyUser = (userId: string, roomId: string) => {
   const room = chatRooms[roomId];
   if (!room) throw new Error("Room not found");
 
-  const isUserInRoom = room.players.includes(userUuid);
+  const isUserInRoom = room.players.includes(userId);
   if (!isUserInRoom) throw new Error("User is not part of this room");
 };
 
