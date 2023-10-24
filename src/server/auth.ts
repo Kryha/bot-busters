@@ -30,13 +30,15 @@ const credentialsProvider = CredentialsProvider({
       type: "text",
     },
   },
+
   async authorize(credentials) {
     const uuid = randomUUID();
     //TODO: make this name a random username
     const username = generateRandomString(32);
+
     if (!credentials?.signedMessage || !credentials?.address) {
       try {
-        console.log("no signed message in the credentials");
+        //TODO: Check if the random username already exists in the DB
         await db.insert(dbSchema.users).values({
           uuid: uuid,
           username: username,
@@ -50,7 +52,6 @@ const credentialsProvider = CredentialsProvider({
       }
     }
     const { address, signedMessage } = credentials;
-
     const isVerified = verifySignature(address, signedMessage);
 
     if (!isVerified) return null;
@@ -66,6 +67,7 @@ const credentialsProvider = CredentialsProvider({
           username: username,
           address: address,
         });
+
         return {
           id: uuid,
           username: username,
@@ -78,6 +80,7 @@ const credentialsProvider = CredentialsProvider({
       };
     } catch (e) {
       console.error(e);
+
       return null;
     }
   },
