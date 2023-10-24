@@ -1,5 +1,5 @@
 import { type FC, type MouseEvent } from "react";
-import { type NextRouter } from "next/router";
+import { useRouter } from "next/router";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -13,11 +13,12 @@ import { text } from "@/assets/text";
 interface Props {
   anchorEl: HTMLElement | null;
   setAnchorEl: (element: HTMLElement | null) => void;
-  router: NextRouter;
 }
 
-export const ToolbarMenu: FC<Props> = ({ anchorEl, setAnchorEl, router }) => {
+export const ToolbarMenu: FC<Props> = ({ anchorEl, setAnchorEl }) => {
   // TODO: update component
+
+  const router = useRouter();
 
   const open = Boolean(anchorEl);
   const controls = open ? "toolbar-menu" : undefined;

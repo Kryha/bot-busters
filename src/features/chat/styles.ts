@@ -1,6 +1,7 @@
 import { theme } from "@/features/mui/theme";
 import { type SxProps } from "@mui/material";
 
+// TODO: delete after deleting component
 export const styles = {
   drawerHeader: {
     display: "flex",

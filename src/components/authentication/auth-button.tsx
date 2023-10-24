@@ -15,6 +15,7 @@ import {
   type WalletAdapterNetwork,
 } from "@demox-labs/aleo-wallet-adapter-base";
 import { AUTH_SIGN_MESSAGE } from "@/constants";
+import { v4 as uuid } from "uuid";
 
 export const AuthButton = () => {
   const { data: sessionData } = useSession();
@@ -57,12 +58,18 @@ export const AuthButton = () => {
 
   const walletAuthentication = async () => {
     try {
-      if (!connected) {
-        await connect(
-          DecryptPermission.UponRequest,
-          // leave the following as an env variable
-          env.NEXT_PUBLIC_ALEO_NETWORK as WalletAdapterNetwork
-        );
+      if (env.NEXT_PUBLIC_MOCK_AUTH) {
+        await signIn("credentials", {
+          address: uuid(),
+        });
+      } else {
+        if (!connected) {
+          await connect(
+            DecryptPermission.UponRequest,
+            // leave the following as an env variable
+            env.NEXT_PUBLIC_ALEO_NETWORK as WalletAdapterNetwork
+          );
+        }
       }
     } catch (error) {
       console.error(error);

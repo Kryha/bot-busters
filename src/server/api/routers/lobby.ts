@@ -1,49 +1,72 @@
-import { EventEmitter } from "events";
 import { observable } from "@trpc/server/observable";
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 
-// create a global event emitter (could be replaced by redis, etc)
-const ee = new EventEmitter();
+import { ee, lobbyQueue } from "@/server/api/match-maker";
 
-// TODO: improve or remove
-const lobbyQueue: string[] = [];
+interface ReadyToPlayPayload {
+  players: [string, string];
+  roomId: string;
+}
+
+interface QueueUpdatePayload {
+  myPlaceInQueue: number;
+  queueLength: number;
+}
 
 export const lobbyRouter = createTRPCRouter({
-  onJoin: protectedProcedure.subscription(() => {
-    return observable<string>((emit) => {
-      const handle = (data: string) => {
-        emit.next(data);
+  onQueueUpdate: protectedProcedure.subscription(({ ctx }) => {
+    return observable<QueueUpdatePayload>((emit) => {
+      const handleEvent = () => {
+        const myPlaceInQueue = lobbyQueue.indexOf(ctx.session.address) + 1;
+        // emit data to client
+        emit.next({
+          myPlaceInQueue,
+          queueLength: lobbyQueue.length,
+        });
       };
-      ee.on("join", handle);
+
+      ee.on("queueUpdate", handleEvent);
+
       return () => {
-        ee.off("join", handle);
+        ee.off("queueUpdate", handleEvent);
+
+        const { address } = ctx.session;
+
+        const index = lobbyQueue.indexOf(address);
+        if (index < 0) return;
+        lobbyQueue.splice(index, 1);
       };
     });
   }),
   join: protectedProcedure.mutation(({ ctx }) => {
     const { address } = ctx.session;
-    lobbyQueue.push(address);
-    ee.emit("join", address);
-    return address;
+
+    const hasJoined = lobbyQueue.includes(address);
+
+    if (!hasJoined) {
+      lobbyQueue.push(address);
+    }
+
+    const myPlaceInQueue = lobbyQueue.indexOf(ctx.session.address) + 1;
+
+    ee.emit("queueUpdate");
+    return { myPlaceInQueue, queueLength: lobbyQueue.length };
   }),
 
-  onLeave: protectedProcedure.subscription(() => {
-    return observable<string>((emit) => {
-      const handle = (data: string) => {
-        emit.next(data);
+  onReadyToPlay: protectedProcedure.subscription(({ ctx }) => {
+    return observable<ReadyToPlayPayload>((emit) => {
+      const handleEvent = (payload: ReadyToPlayPayload) => {
+        const isPlayer = payload.players.includes(ctx.session.address);
+
+        if (isPlayer) {
+          emit.next(payload);
+        }
       };
-      ee.on("leave", handle);
+
+      ee.on("readyToPlay", handleEvent);
       return () => {
-        ee.off("leave", handle);
+        ee.off("readyToPlay", handleEvent);
       };
     });
-  }),
-  leave: protectedProcedure.mutation(({ ctx }) => {
-    const { address } = ctx.session;
-    const index = lobbyQueue.indexOf(address);
-    if (index < 0) return;
-    lobbyQueue.splice(index, 1);
-    ee.emit("leave", address);
-    return address;
   }),
 });

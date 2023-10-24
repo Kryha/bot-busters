@@ -16,11 +16,29 @@ Create all the necessary DB tables:
 yarn db:push
 ```
 
-Build the development web socket and run it:
+Create a `.env` file from `.env.example`:
 
 ```sh
-yarn build:ws
-yarn start:ws
+cp .env.example .env
+```
+
+### Building and running
+
+To build and run the application locally, run the following commands:
+
+```sh
+yarn build
+yarn start
+```
+
+### Running in dev mode
+
+> ⚠️ There are currently some issues with router redirection when using `yarn dev`. Please prefer running it with `yarn start` until those issues are fixed.
+
+Build and run the development web socket:
+
+```sh
+yarn dev:ws
 ```
 
 Open another terminal window and run the application in dev mode:

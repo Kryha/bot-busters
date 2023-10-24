@@ -18,23 +18,24 @@ declare module "next-auth" {
     uuid: string;
   }
 }
-/**
- * Options for NextAuth.js used to configure adapters, providers, callbacks, etc.
- *
- * @see https://next-auth.js.org/configuration/options
- */
-export const authOptions: NextAuthOptions = {
-  debug: env.NODE_ENV === "development",
-  callbacks: {
-    session: ({ session, token }) => {
-      return {
-        ...session,
-        uuid: token.sub,
-      };
-    },
-  },
-  providers: [
-    CredentialsProvider({
+
+const credentialsProvider = env.NEXT_PUBLIC_MOCK_AUTH
+  ? CredentialsProvider({
+      credentials: {
+        address: {
+          label: "Address",
+          type: "text",
+        },
+      },
+      authorize(credentials) {
+        if (!credentials?.address) return null;
+
+        return {
+          id: credentials.address,
+        };
+      },
+    })
+  : CredentialsProvider({
       credentials: {
         address: {
           label: "Address",
@@ -95,8 +96,24 @@ export const authOptions: NextAuthOptions = {
           return null;
         }
       },
-    }),
-  ],
+    });
+
+/**
+ * Options for NextAuth.js used to configure adapters, providers, callbacks, etc.
+ *
+ * @see https://next-auth.js.org/configuration/options
+ */
+export const authOptions: NextAuthOptions = {
+  debug: env.NODE_ENV === "development",
+  callbacks: {
+    session: ({ session, token }) => {
+      return {
+        ...session,
+        address: token.sub,
+      };
+    },
+  },
+  providers: [credentialsProvider],
   pages: {
     signIn: "/",
     signOut: "/",
