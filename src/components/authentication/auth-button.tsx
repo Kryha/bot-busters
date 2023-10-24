@@ -58,18 +58,12 @@ export const AuthButton = () => {
 
   const walletAuthentication = async () => {
     try {
-      if (env.NEXT_PUBLIC_MOCK_AUTH) {
-        await signIn("credentials", {
-          address: uuid(),
-        });
-      } else {
-        if (!connected) {
-          await connect(
-            DecryptPermission.UponRequest,
-            // leave the following as an env variable
-            env.NEXT_PUBLIC_ALEO_NETWORK as WalletAdapterNetwork
-          );
-        }
+      if (!connected) {
+        await connect(
+          DecryptPermission.UponRequest,
+          // leave the following as an env variable
+          env.NEXT_PUBLIC_ALEO_NETWORK as WalletAdapterNetwork
+        );
       }
     } catch (error) {
       console.error(error);
@@ -88,7 +82,7 @@ export const AuthButton = () => {
     await signOut();
     await disconnect();
   };
-
+  console.log(sessionData);
   return (
     <Stack direction="row" spacing={2}>
       {!isValidSession(sessionData) && (
