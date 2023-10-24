@@ -3,12 +3,12 @@ import { Box, Divider, List, ListItem, Typography } from "@mui/material";
 
 import { LeaderBoardItem } from "@/features/leaderboard/components";
 
-import { type Leaderboard } from "@/types";
+import { type LeaderboardData } from "@/types";
 import { styles } from "./styles";
 import { text } from "@/features/leaderboard/assets";
 
 interface Props {
-  leaderboard: Leaderboard[];
+  leaderboard: LeaderboardData[];
 }
 
 export const LeaderboardList: FC<Props> = ({ leaderboard }) => {

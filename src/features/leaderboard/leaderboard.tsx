@@ -2,9 +2,9 @@ import { type ChangeEvent, useState } from "react";
 import { Stack, Typography, useMediaQuery } from "@mui/material";
 
 import { LeaderboardList, LeaderboardPagination } from "./components";
-import { leaderboard } from "./fake-data";
 import { text } from "./assets";
 import { styles } from "./styles";
+import { leaderboardData } from "@/constants";
 
 export const Leaderboard = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -15,9 +15,9 @@ export const Leaderboard = () => {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
 
-  const currentData = leaderboard.slice(startIndex, endIndex);
+  const currentData = leaderboardData.slice(startIndex, endIndex);
 
-  const totalPages = Math.ceil(leaderboard.length / itemsPerPage);
+  const totalPages = Math.ceil(leaderboardData.length / itemsPerPage);
 
   const handlePageChange = (_event: ChangeEvent<unknown>, newPage: number) => {
     setCurrentPage(newPage);

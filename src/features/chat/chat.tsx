@@ -12,6 +12,7 @@ import { api } from "@/utils/api";
 import { type ChatMessagePayload } from "@/server/api/routers";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import { contactListData } from "@/constants";
 
 interface Props {
   roomId: string;
@@ -104,7 +105,11 @@ export const ChatView: FC<Props> = ({ roomId }) => {
         setAnchorEl={setAnchorEl}
       />
 
-      <ChatDrawer open={toggle} toggle={showChat} />
+      <ChatDrawer
+        open={toggle}
+        toggle={showChat}
+        contactList={contactListData}
+      />
       <Box sx={styles.drawerHeader} />
 
       <MainChatView
