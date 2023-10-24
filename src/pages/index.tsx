@@ -25,7 +25,7 @@ export default function Home() {
             disabled={join.status === "loading"}
             onClick={() => void router.push("/lobby")}
           >
-            Play
+            Go to lobby
           </Button>
         )}
 
