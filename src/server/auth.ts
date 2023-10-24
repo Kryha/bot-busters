@@ -109,7 +109,7 @@ export const authOptions: NextAuthOptions = {
     session: ({ session, token }) => {
       return {
         ...session,
-        address: token.sub,
+        uuid: token.sub,
       };
     },
   },
