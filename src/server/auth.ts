@@ -1,4 +1,4 @@
-import { generateRandomString, verifySignature } from "@/utils/wallet";
+import { verifySignature } from "@/utils/wallet";
 import { type DefaultSession, type NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
