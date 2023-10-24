@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { minidenticon } from "minidenticons";
 
-export const MinidenticonImg = (username: string) => {
+export const useMinidenticonImg = (username: string) => {
   const svgURI = useMemo(
     () =>
       "data:image/svg+xml;utf8," +
