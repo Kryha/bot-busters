@@ -8,7 +8,7 @@ on:
 
 env:
   PROJECT_ID: aleo-botbusters
-  GKE_CLUSTER: zk-gaming
+  GKE_CLUSTER: bot-busters
   GKE_ZONE: europe-west1-b
 
 jobs:
