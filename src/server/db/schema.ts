@@ -1,5 +1,5 @@
 import { PUBLIC_KEY_LENGTH } from "@/constants";
-import { date, pgTableCreator, varchar } from "drizzle-orm/pg-core";
+import { date, integer, pgTableCreator, varchar } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { type z } from "zod";
 
@@ -12,9 +12,13 @@ import { type z } from "zod";
 export const bbPgTable = pgTableCreator((name) => `bot_busters_${name}`);
 
 export const users = bbPgTable("user", {
-  address: varchar("address", { length: PUBLIC_KEY_LENGTH }).primaryKey(),
+  uuid: varchar("uuid", { length: 36 }).unique().primaryKey(),
+  username: varchar("username", { length: 32 }).unique().notNull(),
+  address: varchar("address", { length: PUBLIC_KEY_LENGTH }),
+  score: integer("score").default(0).notNull(),
   createdAt: date("createdAt").defaultNow(),
 });
 
 export const userSchema = createInsertSchema(users);
+
 export type User = z.infer<typeof userSchema>;
