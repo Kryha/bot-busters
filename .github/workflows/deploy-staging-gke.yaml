@@ -3,10 +3,11 @@ name: Build and Deploy staging to GKE
 on:
   push:
     branches:
-      - "main"
+      # - "main"
+      - "chore/gcloud-project"
 
 env:
-  PROJECT_ID: web3-335312
+  PROJECT_ID: aleo-botbusters
   GKE_CLUSTER: zk-gaming
   GKE_ZONE: europe-west1-b
 

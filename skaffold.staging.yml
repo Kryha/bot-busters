@@ -8,7 +8,7 @@ build:
   local:
     concurrency: 0
   artifacts:
-    - image: eu.gcr.io/web3-335312/zk/bot-busters/bot-busters-staging
+    - image: eu.gcr.io/aleo-botbusters/bot-busters/bot-busters-staging
       docker:
         dockerfile: Dockerfile
         buildArgs:
