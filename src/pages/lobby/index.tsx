@@ -4,6 +4,7 @@ import { Typography, Button, Stack, Avatar } from "@mui/material";
 
 import { Page } from "@/layouts";
 import withAuth from "@/utils/withAuth";
+import { api } from "@/utils/api";
 
 import { faker } from "@faker-js/faker";
 import { minidenticon } from "minidenticons";
@@ -47,6 +48,17 @@ const Lobby: FC = () => {
   // TODO: update component
   const a = faker.helpers.multiple(generateUser, { count: 100 });
 
+  api.lobby.onJoin.useSubscription(undefined, {
+    onData(address) {
+      console.log("[sub]", address, "joined");
+    },
+    onError(err) {
+      console.error(err);
+    },
+  });
+
+  const join = api.lobby.join.useMutation();
+
   return (
     <Page>
       <Typography variant="h1">Lobby</Typography>
@@ -60,11 +72,15 @@ const Lobby: FC = () => {
           <Typography variant="h3">{something.username}</Typography>
         </Stack>
       ))}
-
-      <Stack flexDirection="row" mt={2}>
+      <Stack flexDirection="row" mt={2} gap={1}>
         <Button variant="text" onClick={() => void router.push("/")}>
           Back to home
         </Button>
+
+        <Button variant="outlined" onClick={() => join.mutate()}>
+          Join
+        </Button>
+
         <Button variant="outlined" onClick={() => void router.push("/chat")}>
           Chat
         </Button>

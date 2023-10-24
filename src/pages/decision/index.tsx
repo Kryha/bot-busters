@@ -12,7 +12,7 @@ const Decision: FC = () => {
   return (
     <Page>
       <Typography variant="h1">Decision</Typography>
-      <Stack flexDirection="row" mt={2}>
+      <Stack flexDirection="row" mt={2} gap={1}>
         <Button variant="text" onClick={() => void router.push("/")}>
           Back to home
         </Button>

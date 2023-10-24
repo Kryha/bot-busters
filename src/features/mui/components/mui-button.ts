@@ -15,18 +15,8 @@ export const MuiButton = (theme: Theme): Components["MuiButton"] => {
       },
     ],
     styleOverrides: {
-      root: {
-        "@media (min-width:2000px)": {
-          fontSize: "3.4rem",
-        },
-      },
       startIcon: {
         marginRight: "16px",
-        "@media (min-width:2000px)": {
-          "> svg": {
-            fontSize: "6rem !important",
-          },
-        },
       },
     },
   };
