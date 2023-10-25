@@ -4,7 +4,7 @@ import { Stack } from "@mui/material";
 
 import { BlurredLeaderboard } from "@/features/connect-wallet/assets";
 import { useViewport } from "@/hooks/use-viewport";
-import { CreateUsername } from "../create-username/create-username";
+import { CreateUsername } from "@/features/connect-wallet/components/create-username";
 
 export const UsernameSelect: FC = () => {
   const { height } = useViewport();
