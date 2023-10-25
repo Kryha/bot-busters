@@ -36,3 +36,5 @@ spec:
               value: http://localhost:3000
             - name: NEXT_PUBLIC_WS_URL
               value: ws://bot-busters.localhost
+            - name: PLAYERS_PER_MATCH
+              value: "2"
