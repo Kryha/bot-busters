@@ -13,7 +13,7 @@ export const AnonymousAuthButton = () => {
   };
 
   return (
-    <Button onClick={() => void authenticateAnonymous()}>
+    <Button variant="contained" onClick={() => void authenticateAnonymous()}>
       {text.auth.playGame}
     </Button>
   );
