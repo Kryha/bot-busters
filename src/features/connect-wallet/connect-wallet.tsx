@@ -7,5 +7,7 @@ interface Props {
 }
 
 export const ConnectWallet: FC<Props> = ({ isAuthenticated }) => {
-  return <>{isAuthenticated ? <UsernameSelect /> : <ConnectPlaceholder />}</>;
+  if (isAuthenticated) return <UsernameSelect />;
+
+  return <ConnectPlaceholder />;
 };

@@ -11,7 +11,7 @@ export default function Home() {
   const router = useRouter();
   const { data: sessionData } = useSession();
   const join = api.lobby.join.useMutation();
-  // TODO: finish and fix styling
+  // TODO: finish and fix styling and text
   return (
     <Page>
       <Button variant="contained" onClick={() => void router.push("/login")}>
