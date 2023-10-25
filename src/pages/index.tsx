@@ -9,6 +9,8 @@ import {
   LogoutButton,
   WalletAuthButton,
 } from "@/components";
+import { pages } from "@/utils/router";
+import { text } from "@/assets/text";
 
 // TODO: define text in another file
 export default function Home() {
@@ -18,18 +20,16 @@ export default function Home() {
 
   return (
     <Page>
-      <Typography variant="h1">Bot Busters</Typography>
-      <Typography variant="body1">
-        Chat, be human and bust some bots!
-      </Typography>
+      <Typography variant="h1">{text.general.appTitle}</Typography>
+      <Typography variant="body1">{text.general.appDescription}</Typography>
 
       <Stack flexDirection="row" mt={2}>
         {isValidSession(sessionData) && (
           <Button
             disabled={join.status === "loading"}
-            onClick={() => void router.push("/lobby")}
+            onClick={() => void router.push(pages.lobby)}
           >
-            Play
+            {text.general.play}
           </Button>
         )}
         {

@@ -10,13 +10,13 @@ import {
   Typography,
 } from "@mui/material";
 
-import { type Leaderboard } from "@/types";
+import { type LeaderboardData } from "@/types";
 import { text } from "@/features/leaderboard/assets";
 import { styles } from "./styles";
 
 interface Props {
   open: boolean;
-  leaderboard: Leaderboard;
+  leaderboard: LeaderboardData;
 }
 
 export const CollapsibleRow: FC<Props> = ({ open, leaderboard }) => {

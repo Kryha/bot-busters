@@ -1,3 +1,4 @@
+import { env } from "@/env.cjs";
 import { EventEmitter } from "events";
 import { v4 as uuid } from "uuid";
 
@@ -5,7 +6,7 @@ export const ee = new EventEmitter();
 export const lobbyQueue: string[] = [];
 
 interface ChatRoom {
-  players: [string, string];
+  players: string[];
   createdAt: number; // unix timestamp
 }
 
@@ -26,20 +27,18 @@ const TWO_MINUTES = 120000;
 
 const makeMatch = () => {
   try {
-    if (lobbyQueue.length < 2) return;
-    const playerA = lobbyQueue.shift();
-    const playerB = lobbyQueue.shift();
+    if (lobbyQueue.length < env.PLAYERS_PER_MATCH) return;
 
-    if (!playerA || !playerB) throw new Error("Players not found in queue");
+    const players = lobbyQueue.splice(0, env.PLAYERS_PER_MATCH);
 
     const roomId = uuid();
 
     chatRooms[roomId] = {
-      players: [playerA, playerB],
+      players,
       createdAt: Date.now(),
     } satisfies ChatRoom;
 
-    ee.emit("readyToPlay", { roomId, players: [playerA, playerB] });
+    ee.emit("readyToPlay", { roomId, players });
     ee.emit("queueUpdate");
   } catch (error) {
     console.error("Match making error:", error);

@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { z } from "zod";
 import { ChatView } from "@/features";
 import dynamic from "next/dynamic";
+import { pages } from "@/utils/router";
 
 const Chat: FC = () => {
   const router = useRouter();
@@ -13,7 +14,7 @@ const Chat: FC = () => {
 
   useEffect(() => {
     if (!roomId.success) {
-      void router.push("/");
+      void router.push(pages.home);
     }
   }, [roomId.success, router]);
 

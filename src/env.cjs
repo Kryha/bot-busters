@@ -19,6 +19,10 @@ const env = createEnv({
     NEXTAUTH_URL: z.string().url(),
     NEXTAUTH_URL_INTERNAL: z.string().url(),
     APP_URL: z.string().url(),
+    PLAYERS_PER_MATCH: z
+      .string()
+      .default("5")
+      .transform((val) => Number(val)),
   },
 
   /**
@@ -51,6 +55,7 @@ const env = createEnv({
     APP_URL: process.env.APP_URL,
     NEXT_PUBLIC_WS_URL: process.env.NEXT_PUBLIC_WS_URL,
     NEXT_PUBLIC_MOCK_AUTH: process.env.NEXT_PUBLIC_MOCK_AUTH,
+    PLAYERS_PER_MATCH: process.env.PLAYERS_PER_MATCH,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.

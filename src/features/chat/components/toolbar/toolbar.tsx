@@ -48,7 +48,7 @@ export const ChatToolBar: FC<Props> = ({
             component="div"
             color="secondary.dark"
           >
-            {text.general.appBarTitle}
+            {text.general.appTitle}
           </Typography>
         </Stack>
         <Stack sx={styles.expandButton}>
