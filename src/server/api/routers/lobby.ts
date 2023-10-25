@@ -9,7 +9,7 @@ interface ReadyToPlayPayload {
 }
 
 interface QueueUpdatePayload {
-  myPlaceInQueue: number;
+  playerQueuePosition: number;
   queueLength: number;
 }
 
@@ -17,10 +17,10 @@ export const lobbyRouter = createTRPCRouter({
   onQueueUpdate: protectedProcedure.subscription(({ ctx }) => {
     return observable<QueueUpdatePayload>((emit) => {
       const handleEvent = () => {
-        const myPlaceInQueue = lobbyQueue.indexOf(ctx.session.id) + 1;
+        const playerQueuePosition = lobbyQueue.indexOf(ctx.session.id) + 1;
         // emit data to client
         emit.next({
-          myPlaceInQueue,
+          playerQueuePosition,
           queueLength: lobbyQueue.length,
         });
       };
@@ -47,10 +47,10 @@ export const lobbyRouter = createTRPCRouter({
       lobbyQueue.push(id);
     }
 
-    const myPlaceInQueue = lobbyQueue.indexOf(ctx.session.id) + 1;
+    const playerQueuePosition = lobbyQueue.indexOf(ctx.session.id) + 1;
 
     ee.emit("queueUpdate");
-    return { myPlaceInQueue, queueLength: lobbyQueue.length };
+    return { playerQueuePosition, queueLength: lobbyQueue.length };
   }),
 
   onReadyToPlay: protectedProcedure.subscription(({ ctx }) => {
