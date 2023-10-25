@@ -58,18 +58,12 @@ const Login: FC = () => {
 
   const authenticatePlayer = async () => {
     try {
-      if (env.NEXT_PUBLIC_MOCK_AUTH) {
-        await signIn("credentials", {
-          address: uuid(),
-        });
-      } else {
-        if (!connected) {
-          await connect(
-            DecryptPermission.UponRequest,
-            // leave the following as an env variable
-            env.NEXT_PUBLIC_ALEO_NETWORK as WalletAdapterNetwork
-          );
-        }
+      if (!connected) {
+        await connect(
+          DecryptPermission.UponRequest,
+          // leave the following as an env variable
+          env.NEXT_PUBLIC_ALEO_NETWORK as WalletAdapterNetwork
+        );
       }
     } catch (error) {
       console.error(error);
