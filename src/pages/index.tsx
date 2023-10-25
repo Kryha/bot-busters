@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { useSession } from "next-auth/react";
 import { Page } from "@/layouts";
 import { isValidSession } from "@/utils/session";
@@ -6,6 +7,7 @@ import { api } from "@/utils/api";
 import { useRouter } from "next/router";
 import { AuthButton } from "@/components";
 import { pages } from "@/utils/router";
+import { text } from "@/assets/text";
 
 // TODO: define text in another file
 export default function Home() {
@@ -15,21 +17,18 @@ export default function Home() {
   // TODO: finish and fix styling and text
   return (
     <Page>
+      <Typography variant="h1">{text.general.appTitle}</Typography>
+      <Typography variant="body1">{text.general.appDescription}</Typography>
       <Button variant="contained" onClick={() => void router.push(pages.login)}>
-        Connect leo wallet
+        {text.auth.connectLeoWallet}
       </Button>
-      <Typography variant="h1">Bot Busters</Typography>
-      <Typography variant="body1">
-        Chat, be human and bust some bots!
-      </Typography>
-
       <Stack flexDirection="row" mt={2}>
         {isValidSession(sessionData) && (
           <Button
             disabled={join.status === "loading"}
             onClick={() => void router.push(pages.lobby)}
           >
-            Play
+            {text.general.play}
           </Button>
         )}
 

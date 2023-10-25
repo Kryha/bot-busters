@@ -3,13 +3,15 @@ import { type FC } from "react";
 import { styles } from "./styles";
 import Head from "next/head";
 
+const headTitle = "Bot Busters";
+
 export const Page: FC<StackProps> = (props) => {
   const { children } = props;
 
   return (
     <>
       <Head>
-        <title>Bot Busters</title>
+        <title>{headTitle}</title>
         <meta name="description" content="Bust the bots!" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

@@ -5,6 +5,7 @@ import { Typography, Button, Stack } from "@mui/material";
 import { Page } from "@/layouts";
 import { api } from "@/utils/api";
 import { pages } from "@/utils/router";
+import { text } from "@/assets/text";
 
 const Lobby: FC = () => {
   const router = useRouter();
@@ -41,12 +42,12 @@ const Lobby: FC = () => {
       <Typography variant="h1">Lobby</Typography>
       <Stack flexDirection="row" mt={2} gap={1}>
         <Button variant="text" onClick={() => void router.push(pages.home)}>
-          Leave
+          {text.lobby.leave}
         </Button>
 
         {/* TODO: maybe don't show queue length */}
-        <Typography>People in queue: {queueLength}</Typography>
-        <Typography>Your place in queue: {myPlaceInQueue}</Typography>
+        <Typography>{text.lobby.peopleInQueue(queueLength)}</Typography>
+        <Typography>{text.lobby.placeInQueue(myPlaceInQueue)}</Typography>
       </Stack>
     </Page>
   );
