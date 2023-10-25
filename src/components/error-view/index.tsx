@@ -1,3 +1,4 @@
+import { pages } from "@/utils/router";
 import { Button, Stack, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import { type FC } from "react";
@@ -25,7 +26,7 @@ export const ErrorView: FC<Props> = ({ errorType = "general" }) => {
   return (
     <Stack>
       <Typography variant="h2">{errorText[errorType]}</Typography>
-      <Button onClick={() => void router.push("/")}>
+      <Button onClick={() => void router.push(pages.home)}>
         {componentText.goHome}
       </Button>
     </Stack>
