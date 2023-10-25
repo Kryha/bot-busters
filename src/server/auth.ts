@@ -5,7 +5,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { db, dbSchema } from "@/server/db";
 import { env } from "@/env.cjs";
 import { eq } from "drizzle-orm";
-import { randomUUID } from "crypto";
+import { object } from "zod";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -34,15 +34,14 @@ const credentialsProvider = CredentialsProvider({
   },
 
   async authorize(credentials) {
-    const uuid = randomUUID();
-
     if (!credentials?.signedMessage || !credentials?.address) {
       try {
-        await db.insert(dbSchema.users).values({
-          id: uuid,
-        });
+        const newUsers = await db.insert(dbSchema.users).values({}).returning();
+        const newUser = newUsers.at(0);
+        if (!newUser) return null;
+
         return {
-          id: uuid,
+          id: newUser.id,
         };
       } catch (e) {
         console.error(e);
@@ -61,14 +60,18 @@ const credentialsProvider = CredentialsProvider({
       });
 
       if (!selectedUser) {
-        await db.insert(dbSchema.users).values({
-          id: uuid,
-          address: address,
-        });
+        const newUsers = await db
+          .insert(dbSchema.users)
+          .values({
+            address: address,
+          })
+          .returning();
+        const newUser = newUsers.at(0);
+        if (!newUser) return null;
 
         return {
-          id: uuid,
-          address: address,
+          id: newUser.id,
+          address: newUser.address,
         };
       }
 
