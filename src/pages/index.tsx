@@ -4,7 +4,11 @@ import { isValidSession } from "@/utils/session";
 import { Button, Stack, Typography } from "@mui/material";
 import { api } from "@/utils/api";
 import { useRouter } from "next/router";
-import { AuthButton } from "@/components";
+import {
+  AnonymousAuthButton,
+  LogoutButton,
+  WalletAuthButton,
+} from "@/components";
 
 // TODO: define text in another file
 export default function Home() {
@@ -25,11 +29,20 @@ export default function Home() {
             disabled={join.status === "loading"}
             onClick={() => void router.push("/lobby")}
           >
-            Go to lobby
+            Play
           </Button>
         )}
-
-        <AuthButton />
+        {
+          /* TODO: remove this logic when UI is implemented */
+          isValidSession(sessionData) ? (
+            <>
+              <AnonymousAuthButton />
+              <WalletAuthButton />
+            </>
+          ) : (
+            <LogoutButton />
+          )
+        }
       </Stack>
     </Page>
   );
