@@ -5,5 +5,5 @@ export const pages = {
   decision: "/decision",
   results: "/results",
   leaderboard: "/leaderboard",
-  login: "login",
+  login: "/login",
 };
