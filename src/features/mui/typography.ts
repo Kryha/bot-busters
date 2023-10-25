@@ -83,13 +83,13 @@ export const typography = (): Typography => {
       fontSize: "12px",
       fontWeight: 400,
       lineHeight: "20px",
-      textTransform: "uppercase" as const,
     },
     overline: {
       fontFamily: font.style.fontFamily,
       fontSize: "12px",
       fontWeight: 400,
       lineHeight: "32px",
+      textTransform: "uppercase" as const,
     },
   };
 };
