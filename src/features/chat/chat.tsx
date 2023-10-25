@@ -13,6 +13,7 @@ import { type ChatMessagePayload } from "@/server/api/routers";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { contactListData } from "@/constants";
+import { pages } from "@/utils/router";
 
 interface Props {
   roomId: string;
@@ -60,7 +61,7 @@ export const ChatView: FC<Props> = ({ roomId }) => {
       },
       onError(error) {
         console.error("Chat message error:", error);
-        void router.push("/");
+        void router.push(pages.home);
       },
     }
   );
@@ -69,7 +70,7 @@ export const ChatView: FC<Props> = ({ roomId }) => {
     { roomId },
     {
       onData() {
-        void router.push("/decision");
+        void router.push(pages.decision);
       },
       onError(error) {
         console.error("Error on timeout:", error);
