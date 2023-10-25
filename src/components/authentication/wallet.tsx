@@ -15,7 +15,7 @@ import {
 } from "@demox-labs/aleo-wallet-adapter-base";
 import { AUTH_SIGN_MESSAGE } from "@/constants";
 
-export const WalletAuthenticationButton = () => {
+export const WalletAuthButton = () => {
   const { data: sessionData } = useSession();
   const {
     publicKey: address,

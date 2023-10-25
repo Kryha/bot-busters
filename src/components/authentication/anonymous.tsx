@@ -3,7 +3,7 @@ import { Button } from "@mui/material";
 import { text } from "@/assets/text";
 import { signIn } from "next-auth/react";
 
-export const AnonymousAuthenticationButton = () => {
+export const AnonymousAuthButton = () => {
   const authenticateAnonymous = async () => {
     try {
       await signIn("credentials", {});
