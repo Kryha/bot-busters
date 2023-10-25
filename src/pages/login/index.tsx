@@ -15,7 +15,6 @@ import { signIn, useSession } from "next-auth/react";
 
 import { AUTH_SIGN_MESSAGE } from "@/constants";
 import { Page } from "@/layouts";
-import { useRouter } from "next/router";
 import { ConnectWallet } from "@/features/connect-wallet";
 import { isValidSession } from "@/utils/session";
 
@@ -29,7 +28,6 @@ const Login: FC = () => {
     connected,
     connecting,
   } = useWallet();
-  const router = useRouter();
 
   useEffect(() => {
     select(LeoWalletName);
@@ -64,7 +62,6 @@ const Login: FC = () => {
         await signIn("credentials", {
           address: uuid(),
         });
-        await router.push("/");
       } else {
         if (!connected) {
           await connect(
