@@ -5,7 +5,7 @@ import { Stack } from "@mui/material";
 import { BlurredLeaderboard } from "@/features/connect-wallet/assets";
 import { useViewport } from "@/hooks/use-viewport";
 
-export const AddUsername: FC = () => {
+export const UsernameSelect: FC = () => {
   const { height } = useViewport();
   // TODO: finish component
   return (
