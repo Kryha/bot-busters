@@ -32,7 +32,7 @@ export const WalletAuthButton = () => {
   }, [select]);
 
   useEffect(() => {
-    const connectWallet = async () => {
+    const auth = async () => {
       if (connecting || !wallet || !address || sessionData !== null) {
         return;
       }
@@ -51,7 +51,7 @@ export const WalletAuthButton = () => {
         console.error(error);
       }
     };
-    void connectWallet();
+    void auth();
   }, [wallet, address, connecting, sessionData, connected]);
 
   const connectWallet = async () => {

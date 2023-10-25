@@ -1,3 +1,3 @@
-export * from "./anonymous";
-export * from "./wallet";
-export * from "./log-out";
+export * from "./anonymous-auth-button";
+export * from "./wallet-auth-button";
+export * from "./logout-button";
