@@ -5,7 +5,6 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { db, dbSchema } from "@/server/db";
 import { env } from "@/env.cjs";
 import { eq } from "drizzle-orm";
-import { object } from "zod";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`

@@ -5,11 +5,7 @@ import { isValidSession } from "@/utils/session";
 import { Button, Stack, Typography } from "@mui/material";
 import { api } from "@/utils/api";
 import { useRouter } from "next/router";
-import {
-  AnonymousAuthButton,
-  LogoutButton,
-  WalletAuthButton,
-} from "@/components";
+import { AnonymousAuthButton, LogoutButton } from "@/components";
 import { pages } from "@/utils/router";
 import { text } from "@/assets/text";
 
