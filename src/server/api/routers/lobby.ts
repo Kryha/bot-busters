@@ -9,7 +9,7 @@ interface ReadyToPlayPayload {
 }
 
 interface QueueUpdatePayload {
-  myPlaceInQueue: number;
+  playerQueuePosition: number;
   queueLength: number;
 }
 
@@ -17,10 +17,10 @@ export const lobbyRouter = createTRPCRouter({
   onQueueUpdate: protectedProcedure.subscription(({ ctx }) => {
     return observable<QueueUpdatePayload>((emit) => {
       const handleEvent = () => {
-        const myPlaceInQueue = lobbyQueue.indexOf(ctx.session.address) + 1;
+        const playerQueuePosition = lobbyQueue.indexOf(ctx.session.id) + 1;
         // emit data to client
         emit.next({
-          myPlaceInQueue,
+          playerQueuePosition,
           queueLength: lobbyQueue.length,
         });
       };
@@ -30,33 +30,33 @@ export const lobbyRouter = createTRPCRouter({
       return () => {
         ee.off("queueUpdate", handleEvent);
 
-        const { address } = ctx.session;
+        const { id } = ctx.session;
 
-        const index = lobbyQueue.indexOf(address);
+        const index = lobbyQueue.indexOf(id);
         if (index < 0) return;
         lobbyQueue.splice(index, 1);
       };
     });
   }),
   join: protectedProcedure.mutation(({ ctx }) => {
-    const { address } = ctx.session;
+    const { id } = ctx.session;
 
-    const hasJoined = lobbyQueue.includes(address);
+    const hasJoined = lobbyQueue.includes(id);
 
     if (!hasJoined) {
-      lobbyQueue.push(address);
+      lobbyQueue.push(id);
     }
 
-    const myPlaceInQueue = lobbyQueue.indexOf(ctx.session.address) + 1;
+    const playerQueuePosition = lobbyQueue.indexOf(ctx.session.id) + 1;
 
     ee.emit("queueUpdate");
-    return { myPlaceInQueue, queueLength: lobbyQueue.length };
+    return { playerQueuePosition, queueLength: lobbyQueue.length };
   }),
 
   onReadyToPlay: protectedProcedure.subscription(({ ctx }) => {
     return observable<ReadyToPlayPayload>((emit) => {
       const handleEvent = (payload: ReadyToPlayPayload) => {
-        const isPlayer = payload.players.includes(ctx.session.address);
+        const isPlayer = payload.players.includes(ctx.session.id);
 
         if (isPlayer) {
           emit.next(payload);

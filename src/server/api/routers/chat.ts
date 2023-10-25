@@ -9,11 +9,11 @@ export interface ChatMessagePayload {
   sentAt: number; // unix time
 }
 
-const verifyUser = (userAddress: string, roomId: string) => {
+const verifyUser = (userId: string, roomId: string) => {
   const room = chatRooms[roomId];
   if (!room) throw new Error("Room not found");
 
-  const isUserInRoom = room.players.includes(userAddress);
+  const isUserInRoom = room.players.includes(userId);
   if (!isUserInRoom) throw new Error("User is not part of this room");
 };
 
@@ -21,7 +21,7 @@ export const chatRouter = createTRPCRouter({
   onMessage: protectedProcedure
     .input(z.object({ roomId: z.string().uuid() }))
     .subscription(({ ctx, input }) => {
-      verifyUser(ctx.session.address, input.roomId);
+      verifyUser(ctx.session.id, input.roomId);
 
       return observable<ChatMessagePayload>((emit) => {
         const handleEvent = (payload: ChatMessagePayload) => {
@@ -45,7 +45,7 @@ export const chatRouter = createTRPCRouter({
     )
     .mutation(({ ctx, input }) => {
       const { message, sentAt, roomId } = input;
-      const sender = ctx.session.address;
+      const sender = ctx.session.id;
 
       verifyUser(sender, input.roomId);
 
@@ -57,7 +57,7 @@ export const chatRouter = createTRPCRouter({
   onTimeout: protectedProcedure
     .input(z.object({ roomId: z.string().uuid() }))
     .subscription(({ ctx, input }) => {
-      verifyUser(ctx.session.address, input.roomId);
+      verifyUser(ctx.session.id, input.roomId);
 
       return observable<void>((emit) => {
         const handleEvent = () => {

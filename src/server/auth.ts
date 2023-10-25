@@ -14,67 +14,78 @@ import { eq } from "drizzle-orm";
  */
 declare module "next-auth" {
   interface Session extends DefaultSession {
-    address: string;
+    id: string;
+    username?: string;
+    address?: string;
   }
 }
 
-const credentialsProvider = env.NEXT_PUBLIC_MOCK_AUTH
-  ? CredentialsProvider({
-      credentials: {
-        address: {
-          label: "Address",
-          type: "text",
-        },
-      },
-      authorize(credentials) {
-        if (!credentials?.address) return null;
+const credentialsProvider = CredentialsProvider({
+  credentials: {
+    address: {
+      label: "Address",
+      type: "text",
+    },
+    signedMessage: {
+      label: "Signed Message",
+      type: "text",
+    },
+  },
+
+  async authorize(credentials) {
+    if (!credentials?.signedMessage || !credentials?.address) {
+      try {
+        const newUsers = await db.insert(dbSchema.users).values({}).returning();
+        const newUser = newUsers.at(0);
+        if (!newUser) return null;
 
         return {
-          id: credentials.address,
+          id: newUser.id,
         };
-      },
-    })
-  : CredentialsProvider({
-      credentials: {
-        address: {
-          label: "Address",
-          type: "text",
-        },
-        signedMessage: {
-          label: "Signed Message",
-          type: "text",
-        },
-      },
-      async authorize(credentials) {
-        if (!credentials?.signedMessage || !credentials?.address) {
-          return null;
-        }
+      } catch (e) {
+        console.error(e);
+        return null;
+      }
+    }
+    const { address, signedMessage } = credentials;
+    const isVerified = verifySignature(address, signedMessage);
 
-        const { address, signedMessage } = credentials;
+    //TODO: Return a proper error message when the signature is not verified
+    if (!isVerified) return null;
 
-        const isVerified = verifySignature(address, signedMessage);
+    try {
+      const selectedUser = await db.query.users.findFirst({
+        where: eq(dbSchema.users.address, address),
+      });
 
-        if (!isVerified) return null;
+      if (!selectedUser) {
+        const newUsers = await db
+          .insert(dbSchema.users)
+          .values({
+            address: address,
+          })
+          .returning();
+        const newUser = newUsers.at(0);
+        if (!newUser) return null;
 
-        try {
-          const selectedUsers = await db
-            .select()
-            .from(dbSchema.users)
-            .where(eq(dbSchema.users.address, address));
+        return {
+          id: newUser.id,
+          address: newUser.address,
+        };
+      }
 
-          if (!selectedUsers.length) {
-            await db.insert(dbSchema.users).values({ address });
-          }
+      return {
+        id: selectedUser.id,
+        username: selectedUser.username,
+        address: selectedUser.address,
+      };
+    } catch (e) {
+      console.error(e);
 
-          return {
-            id: address,
-          };
-        } catch (e) {
-          console.error(e);
-          return null;
-        }
-      },
-    });
+      return null;
+    }
+  },
+});
 
 /**
  * Options for NextAuth.js used to configure adapters, providers, callbacks, etc.
@@ -87,7 +98,7 @@ export const authOptions: NextAuthOptions = {
     session: ({ session, token }) => {
       return {
         ...session,
-        address: token.sub,
+        id: token.sub,
       };
     },
   },
