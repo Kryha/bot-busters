@@ -23,9 +23,6 @@ export default function Home() {
     <Page>
       <Typography variant="h1">{text.general.appTitle}</Typography>
       <Typography variant="body1">{text.general.appDescription}</Typography>
-      <Button variant="contained" onClick={() => void router.push(pages.login)}>
-        {text.auth.connectLeoWallet}
-      </Button>
       <Stack flexDirection="row" mt={2}>
         {isValidSession(sessionData) && (
           <Button
@@ -40,7 +37,12 @@ export default function Home() {
           !isValidSession(sessionData) ? (
             <>
               <AnonymousAuthButton />
-              <WalletAuthButton />
+              <Button
+                variant="contained"
+                onClick={() => void router.push(pages.login)}
+              >
+                {text.auth.connectLeoWallet}
+              </Button>
             </>
           ) : (
             <LogoutButton />
