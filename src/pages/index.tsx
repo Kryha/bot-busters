@@ -5,6 +5,7 @@ import { Button, Stack, Typography } from "@mui/material";
 import { api } from "@/utils/api";
 import { useRouter } from "next/router";
 import { AuthButton } from "@/components";
+import { pages } from "@/utils/router";
 
 // TODO: define text in another file
 export default function Home() {
@@ -23,7 +24,7 @@ export default function Home() {
         {isValidSession(sessionData) && (
           <Button
             disabled={join.status === "loading"}
-            onClick={() => void router.push("/lobby")}
+            onClick={() => void router.push(pages.lobby)}
           >
             Play
           </Button>

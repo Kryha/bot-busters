@@ -9,6 +9,7 @@ import Home from "@mui/icons-material/Home";
 import NextPlan from "@mui/icons-material/NextPlan";
 
 import { text } from "@/assets/text";
+import { pages } from "@/utils/router";
 
 interface Props {
   anchorEl: HTMLElement | null;
@@ -52,13 +53,13 @@ export const ToolbarMenu: FC<Props> = ({ anchorEl, setAnchorEl }) => {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem onClick={() => handleClose("/")}>
+        <MenuItem onClick={() => handleClose(pages.home)}>
           <ListItemIcon>
             <Home />
           </ListItemIcon>
           {text.general.home}
         </MenuItem>
-        <MenuItem onClick={() => handleClose("/decision")}>
+        <MenuItem onClick={() => handleClose(pages.decision)}>
           <ListItemIcon>
             <NextPlan />
           </ListItemIcon>

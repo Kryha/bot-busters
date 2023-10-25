@@ -4,6 +4,7 @@ import { Typography, Button, Stack } from "@mui/material";
 
 import { Page } from "@/layouts";
 import { api } from "@/utils/api";
+import { pages } from "@/utils/router";
 
 const Lobby: FC = () => {
   const router = useRouter();
@@ -28,7 +29,7 @@ const Lobby: FC = () => {
 
   api.lobby.onReadyToPlay.useSubscription(undefined, {
     onData({ roomId }) {
-      void router.push({ pathname: "/chat", query: { roomId } });
+      void router.push({ pathname: pages.chat, query: { roomId } });
     },
     onError(error) {
       console.error("Ready to play error:", error);
@@ -39,7 +40,7 @@ const Lobby: FC = () => {
     <Page>
       <Typography variant="h1">Lobby</Typography>
       <Stack flexDirection="row" mt={2} gap={1}>
-        <Button variant="text" onClick={() => void router.push("/")}>
+        <Button variant="text" onClick={() => void router.push(pages.home)}>
           Leave
         </Button>
 
