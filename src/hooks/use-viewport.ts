@@ -1,3 +1,4 @@
+import { isClient } from "@/utils/client";
 import { useEffect, useState } from "react";
 
 interface ViewportProps {
@@ -12,6 +13,7 @@ export const useViewport = () => {
   });
 
   useEffect(() => {
+    if (!isClient()) return;
     function handleResize() {
       setWindowSize({
         width: window.innerWidth,
@@ -19,11 +21,13 @@ export const useViewport = () => {
       });
     }
 
-    window.addEventListener("resize", handleResize);
+    if (isClient()) window.addEventListener("resize", handleResize);
 
     handleResize();
 
-    return () => window.removeEventListener("resize", handleResize);
+    return () => {
+      if (isClient()) return window.removeEventListener("resize", handleResize);
+    };
   }, []);
   return { width: windowSize.width, height: windowSize.height };
 };

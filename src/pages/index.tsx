@@ -15,7 +15,7 @@ export default function Home() {
   // TODO: finish and fix styling and text
   return (
     <Page>
-      <Button variant="contained" onClick={() => void router.push("/login")}>
+      <Button variant="contained" onClick={() => void router.push(pages.login)}>
         Connect leo wallet
       </Button>
       <Typography variant="h1">Bot Busters</Typography>

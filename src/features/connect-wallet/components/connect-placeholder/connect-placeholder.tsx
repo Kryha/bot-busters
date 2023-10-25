@@ -22,7 +22,7 @@ export const ConnectPlaceholder: FC = () => {
           />
         </Stack>
         <Stack sx={styles.text}>
-          <Typography variant="h5">{text.weUseYouWallet}</Typography>
+          <Typography variant="h5">{text.weUseYourWallet}</Typography>
           <Typography variant="h5">{text.weTransferToYourWallet}</Typography>
         </Stack>
       </Stack>
