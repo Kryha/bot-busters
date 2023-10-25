@@ -1,10 +1,10 @@
 import { type Typography } from "@mui/material/styles/createTypography";
-import { Inter } from "next/font/google";
+import { Roboto } from "next/font/google";
 
 import { COEFFICIENT, FONT_SIZE } from "./constants";
 
-const font = Inter({
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+const font = Roboto({
+  weight: ["100", "300", "400", "500", "700", "900"],
   style: ["normal"],
   subsets: ["latin"],
 });
@@ -24,33 +24,31 @@ export const typography = (): Typography => {
     pxToRem: pxToRem,
     h1: {
       fontFamily: font.style.fontFamily,
-      fontSize: "130px",
-      fontWeight: 700,
-      lineHeight: "117px",
+      fontSize: "88px",
+      fontWeight: 400,
+      lineHeight: "96px",
     },
     h2: {
       fontFamily: font.style.fontFamily,
-      fontSize: "64px",
-      fontWeight: 700,
-      lineHeight: "64px",
+      fontWeight: 400,
     },
     h3: {
       fontFamily: font.style.fontFamily,
-      fontSize: "40px",
-      fontWeight: 700,
-      lineHeight: "44px",
+      fontSize: "48px",
+      fontWeight: 400,
+      lineHeight: "50px",
     },
     h4: {
       fontFamily: font.style.fontFamily,
-      fontSize: "24px",
-      fontWeight: 700,
-      lineHeight: "26px",
+      fontSize: "34px",
+      fontWeight: 400,
+      lineHeight: "40px",
     },
     h5: {
       fontFamily: font.style.fontFamily,
-      fontSize: "16px",
-      fontWeight: 700,
-      lineHeight: "20px",
+      fontSize: "23px",
+      fontWeight: 400,
+      lineHeight: "32px",
     },
     h6: {
       fontFamily: font.style.fontFamily,
@@ -60,48 +58,38 @@ export const typography = (): Typography => {
     },
     subtitle1: {
       fontFamily: font.style.fontFamily,
-      fontSize: "20px",
-      fontWeight: 700,
-      lineHeight: "20px",
     },
     subtitle2: {
       fontFamily: font.style.fontFamily,
-      fontSize: "14px",
-      fontWeight: 700,
-      lineHeight: "18px",
-      textTransform: "uppercase" as const,
     },
     body1: {
       fontFamily: font.style.fontFamily,
       fontSize: "16px",
       fontWeight: 400,
-      lineHeight: "22.4px",
+      lineHeight: "24px",
     },
     body2: {
       fontFamily: font.style.fontFamily,
-      fontSize: "14px",
-      fontWeight: 400,
-      lineHeight: "19.6px",
     },
     button: {
       fontFamily: font.style.fontFamily,
-      fontSize: "16px",
+      fontSize: "14px",
       fontWeight: 500,
-      lineHeight: "22.6px",
+      lineHeight: "36px",
       textTransform: "none" as const,
     },
     caption: {
       fontFamily: font.style.fontFamily,
-      fontSize: "14px",
-      fontWeight: 300,
-      lineHeight: "19.6px",
+      fontSize: "12px",
+      fontWeight: 400,
+      lineHeight: "20px",
       textTransform: "uppercase" as const,
     },
     overline: {
       fontFamily: font.style.fontFamily,
       fontSize: "12px",
-      fontWeight: 500,
-      lineHeight: "16.9px",
+      fontWeight: 400,
+      lineHeight: "32px",
     },
   };
 };
