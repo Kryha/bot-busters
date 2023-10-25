@@ -34,7 +34,7 @@ export default function Home() {
         )}
         {
           /* TODO: remove this logic when UI is implemented */
-          isValidSession(sessionData) ? (
+          !isValidSession(sessionData) ? (
             <>
               <AnonymousAuthButton />
               <WalletAuthButton />
