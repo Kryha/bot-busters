@@ -5,15 +5,13 @@ export const palette = (theme: Theme): Palette => {
   return {
     ...theme.palette,
     primary: {
-      light: grey.A700,
-      main: grey[900],
-      dark: grey[800],
-      contrastText: grey[50],
+      ...theme.palette.primary,
+      contrastText: "#FFFFFF",
     },
     secondary: {
-      light: grey.A200,
-      main: grey[300],
-      dark: grey[400],
+      light: "#FFFFFF",
+      main: "#FFFFFF",
+      dark: grey[50],
       contrastText: grey[900],
     },
   };
