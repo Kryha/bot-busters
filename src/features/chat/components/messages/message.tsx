@@ -1,7 +1,7 @@
 import { type FC } from "react";
 import { styles } from "./styles";
 import { Avatar, Stack, type StackProps, Typography } from "@mui/material";
-import { GroupedMessage } from "../main-chat-view";
+import { type GroupedMessage } from "../main-chat-view";
 
 interface Props extends StackProps, GroupedMessage {
   messages?: string[];

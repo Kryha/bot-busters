@@ -6,7 +6,7 @@ import {
   type TextFieldProps,
 } from "@mui/material";
 import { styles } from "./styles";
-import { FC } from "react";
+import { type FC } from "react";
 
 type Props = Pick<ButtonProps, "onClick"> & Omit<TextFieldProps, "onClick">;
 

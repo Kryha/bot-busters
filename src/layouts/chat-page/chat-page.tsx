@@ -6,8 +6,8 @@ export const ChatPage: FC<StackProps> = (props) => {
   const { children } = props;
 
   return (
-    <Stack component="main" sx={styles.container}>
+    <Container component="main" sx={styles.container}>
       {children}
-    </Stack>
+    </Container>
   );
 };
