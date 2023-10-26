@@ -47,6 +47,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@trpc/react-query", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:10.38.5"],\
             ["@trpc/server", "npm:10.38.5"],\
             ["@types/eslint", "npm:8.44.3"],\
+            ["@types/jest", "npm:29.5.6"],\
             ["@types/node", "npm:18.18.0"],\
             ["@types/react", "npm:18.2.23"],\
             ["@types/react-dom", "npm:18.2.8"],\
@@ -2543,7 +2544,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@adobe/css-tools", "npm:4.3.1"],\
             ["@babel/runtime", "npm:7.23.2"],\
             ["@jest/globals", null],\
-            ["@types/jest", null],\
+            ["@types/jest", "npm:29.5.6"],\
             ["@types/jest__globals", null],\
             ["@types/vitest", null],\
             ["aria-query", "npm:5.3.0"],\
@@ -2848,6 +2849,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@types/istanbul-reports", "npm:3.0.3"],\
             ["@types/istanbul-lib-report", "npm:3.0.2"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@types/jest", [\
+        ["npm:29.5.6", {\
+          "packageLocation": "./.yarn/cache/@types-jest-npm-29.5.6-fa191e2675-fa13a27bd1.zip/node_modules/@types/jest/",\
+          "packageDependencies": [\
+            ["@types/jest", "npm:29.5.6"],\
+            ["expect", "npm:29.7.0"],\
+            ["pretty-format", "npm:29.7.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -3892,6 +3904,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@trpc/react-query", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:10.38.5"],\
             ["@trpc/server", "npm:10.38.5"],\
             ["@types/eslint", "npm:8.44.3"],\
+            ["@types/jest", "npm:29.5.6"],\
             ["@types/node", "npm:18.18.0"],\
             ["@types/react", "npm:18.2.23"],\
             ["@types/react-dom", "npm:18.2.8"],\
