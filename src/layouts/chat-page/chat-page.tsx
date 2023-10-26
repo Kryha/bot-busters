@@ -16,7 +16,7 @@ export const ChatPage: FC<StackProps> = (props) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Container component="main" maxWidth="lg" sx={styles.container}>
+      <Container component="main" sx={styles.container}>
         {children}
       </Container>
     </>

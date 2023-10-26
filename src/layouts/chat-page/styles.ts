@@ -9,5 +9,6 @@ export const styles = {
     overflow: "scroll",
     display: "flex",
     flexDirection: "row",
+    maxWidth: "1800px !important",
   } satisfies SxProps,
 };
