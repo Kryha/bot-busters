@@ -86,7 +86,6 @@ export const MainChatView: FC<Props> = ({ open, roomId, isSmallScreen }) => {
       document.removeEventListener("keydown", listener);
     };
   }, [sendMessage]);
-  console.log({ groupedMessages });
 
   if (!isSmallScreen && !open)
     return <Typography variant="h2">{text.general.clickChat}</Typography>;
