@@ -7,5 +7,7 @@ export const styles = {
       minHeight: "100dvh",
     },
     overflow: "scroll",
+    display: "flex",
+    flexDirection: "row",
   } satisfies SxProps,
 };

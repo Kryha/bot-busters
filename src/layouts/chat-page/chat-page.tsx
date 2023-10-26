@@ -1,4 +1,4 @@
-import { Stack, type StackProps } from "@mui/material";
+import { Container, type StackProps } from "@mui/material";
 import { type FC } from "react";
 import { styles } from "./styles";
 import Head from "next/head";
@@ -16,9 +16,9 @@ export const ChatPage: FC<StackProps> = (props) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Stack component="main" sx={styles.container}>
+      <Container component="main" maxWidth="lg" sx={styles.container}>
         {children}
-      </Stack>
+      </Container>
     </>
   );
 };
