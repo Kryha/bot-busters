@@ -36,7 +36,9 @@ COPY src/ ./src/
 
 RUN yarn install --silent
 
-RUN NODE_OPTIONS='--max-old-space-size=4096' yarn build
+# `build:next` has to run first, since it generates `next-end.d.ts`, which is needed by `build:ws`
+RUN yarn build:next
+RUN yarn build:ws
 
 FROM node:20-alpine as run
 
