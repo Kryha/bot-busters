@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 /**
  * @jest-environment jsdom
  */
 import { render, screen } from "@testing-library/react";
-import { ListRow } from "@/features/leaderboard/components";
+import { ListRow } from "./list-row";
 
 describe("Leaderboard", () => {
   it("test leaderboard row entry", () => {
