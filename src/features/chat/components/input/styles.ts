@@ -11,6 +11,5 @@ export const styles: Record<string, SxProps> = {
     flexGrow: 1,
     backgroundColor: "grey.50",
     borderRadius: 1,
-  },
-  text: {} satisfies SxProps,
+  } satisfies SxProps,
 };
