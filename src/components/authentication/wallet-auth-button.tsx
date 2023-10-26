@@ -1,3 +1,4 @@
+//TODO: Check if this button component is still being used
 /* eslint-disable @typescript-eslint/unbound-method */
 import { useEffect } from "react";
 import {
@@ -5,19 +6,17 @@ import {
   type LeoWalletAdapter,
 } from "@demox-labs/aleo-wallet-adapter-leo";
 import { Button } from "@mui/material";
-import { isValidSession } from "@/utils/session";
 import { text } from "@/assets/text";
 import { env } from "@/env.cjs";
 import { useWallet } from "@demox-labs/aleo-wallet-adapter-react";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import {
   DecryptPermission,
   type WalletAdapterNetwork,
 } from "@demox-labs/aleo-wallet-adapter-base";
 import { AUTH_SIGN_MESSAGE } from "@/constants";
-import { v4 as uuid } from "uuid";
 
-export const AuthButton = () => {
+export const WalletAuthButton = () => {
   const { data: sessionData } = useSession();
   const {
     publicKey: address,
@@ -26,7 +25,6 @@ export const AuthButton = () => {
     connect,
     connected,
     connecting,
-    disconnect,
   } = useWallet();
 
   useEffect(() => {
@@ -34,7 +32,7 @@ export const AuthButton = () => {
   }, [select]);
 
   useEffect(() => {
-    const connectWallet = async () => {
+    const auth = async () => {
       if (connecting || !wallet || !address || sessionData !== null) {
         return;
       }
@@ -53,44 +51,26 @@ export const AuthButton = () => {
         console.error(error);
       }
     };
-    void connectWallet();
+    void auth();
   }, [wallet, address, connecting, sessionData, connected]);
 
-  const authenticatePlayer = async () => {
+  const connectWallet = async () => {
     try {
-      if (env.NEXT_PUBLIC_MOCK_AUTH) {
-        await signIn("credentials", {
-          address: uuid(),
-        });
-      } else {
-        if (!connected) {
-          await connect(
-            DecryptPermission.UponRequest,
-            // leave the following as an env variable
-            env.NEXT_PUBLIC_ALEO_NETWORK as WalletAdapterNetwork
-          );
-        }
+      if (!connected) {
+        await connect(
+          DecryptPermission.UponRequest,
+          // leave the following as an env variable
+          env.NEXT_PUBLIC_ALEO_NETWORK as WalletAdapterNetwork
+        );
       }
     } catch (error) {
       console.error(error);
     }
   };
 
-  const logout = async () => {
-    await signOut();
-    await disconnect();
-  };
-
   return (
-    <Button
-      variant="outlined"
-      onClick={
-        isValidSession(sessionData)
-          ? () => void logout()
-          : () => void authenticatePlayer()
-      }
-    >
-      {isValidSession(sessionData) ? text.auth.signOut : text.auth.signIn}
+    <Button onClick={() => void connectWallet()}>
+      {text.auth.walletSignIn}
     </Button>
   );
 };

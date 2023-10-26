@@ -5,7 +5,7 @@ import { isValidSession } from "@/utils/session";
 import { Button, Stack, Typography } from "@mui/material";
 import { api } from "@/utils/api";
 import { useRouter } from "next/router";
-import { AuthButton } from "@/components";
+import { AnonymousAuthButton, LogoutButton } from "@/components";
 import { pages } from "@/utils/router";
 import { text } from "@/assets/text";
 
@@ -19,9 +19,6 @@ export default function Home() {
     <Page>
       <Typography variant="h1">{text.general.appTitle}</Typography>
       <Typography variant="body1">{text.general.appDescription}</Typography>
-      <Button variant="contained" onClick={() => void router.push(pages.login)}>
-        {text.auth.connectLeoWallet}
-      </Button>
       <Stack flexDirection="row" mt={2}>
         {isValidSession(sessionData) && (
           <Button
@@ -31,8 +28,22 @@ export default function Home() {
             {text.general.play}
           </Button>
         )}
-
-        <AuthButton />
+        {
+          /* TODO: remove this logic when UI is implemented */
+          !isValidSession(sessionData) ? (
+            <>
+              <AnonymousAuthButton />
+              <Button
+                variant="contained"
+                onClick={() => void router.push(pages.login)}
+              >
+                {text.auth.connectLeoWallet}
+              </Button>
+            </>
+          ) : (
+            <LogoutButton />
+          )
+        }
       </Stack>
     </Page>
   );

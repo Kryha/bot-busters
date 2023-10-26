@@ -27,7 +27,8 @@ cp .env.example .env
 To build and run the application locally, run the following commands:
 
 ```sh
-yarn build
+yarn build:next
+yarn build:ws
 yarn start
 ```
 
