@@ -2,7 +2,10 @@ import { DRAWER_WIDTH, MOBILE_DRAWER_WIDTH } from "@/constants";
 import { type SxProps } from "@mui/material";
 
 export const styles = {
-  nav: { width: { sm: MOBILE_DRAWER_WIDTH }, flexShrink: { sm: 0 } },
+  nav: {
+    // width: { sm: MOBILE_DRAWER_WIDTH },
+    flexShrink: { sm: 0 },
+  },
   drawerMobile: {
     display: { xs: "block", sm: "none" },
     "& .MuiDrawer-paper": {
@@ -13,6 +16,7 @@ export const styles = {
   },
   drawerDesktop: {
     display: { xs: "none", sm: "block" },
+    maxWidth: 350,
     "& .MuiDrawer-paper": {
       boxSizing: "border-box",
       width: DRAWER_WIDTH,
