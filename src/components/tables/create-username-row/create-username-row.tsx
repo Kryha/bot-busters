@@ -12,7 +12,6 @@ import {
 
 import { type LeaderboardData } from "@/types";
 import { text } from "@/assets/text";
-import { useMinidenticonImg } from "@/hooks/avatar-generator";
 import { useCreateRandomUsername } from "@/hooks/name-generator";
 import { pages } from "@/utils/router";
 import { styles } from "./styles";
@@ -24,7 +23,6 @@ interface Props {
 export const CreateUsernameRow: FC<Props> = ({ leaderboard }) => {
   const router = useRouter();
   const { username, setUsername } = useCreateRandomUsername();
-  const avatar = useMinidenticonImg(username);
 
   const handleSaveUsername = () => {
     setUsername(username);
@@ -43,7 +41,9 @@ export const CreateUsernameRow: FC<Props> = ({ leaderboard }) => {
         </TableCell>
         <TableCell sx={styles.select}>
           <Stack sx={styles.wrapper}>
-            <Avatar src={avatar} alt="avatar" sx={styles.avatar} />
+            <Avatar alt="avatar" sx={styles.avatar}>
+              {text.leaderboard.avatarEmoji}
+            </Avatar>
             <TextField
               id="outlined"
               value={username}
