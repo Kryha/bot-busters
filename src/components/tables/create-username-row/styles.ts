@@ -17,13 +17,19 @@ export const styles = {
     alignItems: "center",
   },
   avatar: {
-    bgcolor: "white",
-    boxShadow:
-      "0px 1px 5px 0px rgba(0, 0, 0, 0.12), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 1px 0px rgba(0, 0, 0, 0.20)",
+    bgcolor: "common.white",
   },
   input: {
-    bgcolor: "white",
+    bgcolor: "common.white",
     minWidth: "19.5vw",
+    boxShadow:
+      "0px 1px 5px 0px rgba(0, 0, 0, 0.12), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 1px 0px rgba(0, 0, 0, 0.20)",
+    borderRadius: 1,
+    "& .MuiOutlinedInput-root": {
+      "& fieldset": {
+        border: "none",
+      },
+    },
   },
   button: {
     borderRadius: 1,
@@ -37,5 +43,6 @@ export const styles = {
     flexDirection: "row",
     gap: 1,
     alignItems: "center",
+    filter: "blur(2.5px)",
   } satisfies SxProps,
 };
