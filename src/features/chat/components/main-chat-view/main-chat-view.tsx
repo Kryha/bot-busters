@@ -28,7 +28,7 @@ export const MainChatView: FC<Props> = ({ open, roomId, isSmallScreen }) => {
   const [messages, setMessages] = useState<ChatMessagePayload[]>([]);
 
   const groupedMessages: GroupedMessage[] = messages.map((message) => {
-    const isLocalSender = message.sender === sessionData?.address;
+    const isLocalSender = message.sender === sessionData?.id;
 
     // TODO: group properly, use `sentAt`
     return {
@@ -86,6 +86,8 @@ export const MainChatView: FC<Props> = ({ open, roomId, isSmallScreen }) => {
       document.removeEventListener("keydown", listener);
     };
   }, [sendMessage]);
+
+  console.log({ groupedMessages });
 
   if (!isSmallScreen && !open)
     return <Typography variant="h2">{text.general.clickChat}</Typography>;
