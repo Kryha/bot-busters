@@ -25,7 +25,7 @@ export const useCreateRandomUsername = () => {
     setUsername(name.replace(/[0-9]/g, ""));
   }, []);
 
-  return username;
+  return { username, setUsername };
 };
 
 export const useCreateChatUsername = () => {
