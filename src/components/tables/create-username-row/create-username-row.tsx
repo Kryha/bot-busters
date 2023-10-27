@@ -25,7 +25,6 @@ export const CreateUsernameRow: FC<Props> = ({ leaderboard }) => {
   const router = useRouter();
   const { username, setUsername } = useCreateRandomUsername();
   const avatar = useMinidenticonImg(username);
-  // TODO: add check if the user already has a username
 
   const handleSaveUsername = () => {
     setUsername(username);
