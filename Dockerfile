@@ -36,9 +36,7 @@ COPY src/ ./src/
 
 RUN yarn install --silent
 
-# `build:next` has to run first, since it generates `next-end.d.ts`, which is needed by `build:ws`
-RUN yarn build:next
-RUN yarn build:ws
+RUN yarn build
 
 FROM node:20-alpine as run
 
