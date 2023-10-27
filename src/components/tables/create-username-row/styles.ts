@@ -29,6 +29,8 @@ export const styles = {
     borderRadius: 1,
     height: "fit-content",
     p: "9.6px 16px",
+    // TODO: define color in theme
+    backgroundColor: "#1976D2",
   },
   buttonText: { whiteSpace: "nowrap", overflow: "hidden" },
   container: {
