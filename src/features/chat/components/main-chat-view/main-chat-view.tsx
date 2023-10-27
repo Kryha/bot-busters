@@ -2,9 +2,9 @@ import { useState, type FC, useCallback, useEffect } from "react";
 import { Stack, Typography } from "@mui/material";
 
 import { styles } from "./styles";
-import { AllMessages } from "../messages";
+import { Messages } from "../messages";
 import { text } from "@/assets/text";
-import { Input } from "../input";
+import { InputField } from "../input-field";
 import { useSession } from "next-auth/react";
 import { type ChatMessagePayload } from "@/server/api/routers";
 import { api } from "@/utils/api";
@@ -94,8 +94,8 @@ export const MainChatView: FC<Props> = ({ open, roomId, isSmallScreen }) => {
 
   return (
     <Stack component="section" sx={styles.section}>
-      <AllMessages groupedMessages={groupedMessages} />
-      <Input
+      <Messages groupedMessages={groupedMessages} />
+      <InputField
         value={message}
         onChange={(e) => setMessage(e.target.value)}
         onClick={() => sendMessage()}

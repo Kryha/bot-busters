@@ -10,7 +10,7 @@ import { type FC } from "react";
 
 type Props = Pick<ButtonProps, "onClick"> & Omit<TextFieldProps, "onClick">;
 
-export const Input: FC<Props> = ({ onClick, ...rest }) => {
+export const InputField: FC<Props> = ({ onClick, ...rest }) => {
   return (
     <Stack sx={styles.wrapper}>
       <TextField

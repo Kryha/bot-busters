@@ -1,28 +1,29 @@
 import { type FC } from "react";
 import { styles } from "./styles";
-import { Avatar, Stack, type StackProps, Typography } from "@mui/material";
+import { Avatar, Stack, Typography } from "@mui/material";
 import { type GroupedMessage } from "../main-chat-view";
 
-interface Props extends StackProps, GroupedMessage {
-  messages?: string[];
-}
-
-export const Message: FC<Props> = ({ messages }) => {
+export const Message: FC<GroupedMessage> = ({ messages, isLocalSender }) => {
   const avatar = "../images/svg/alien.svg";
+  const username = isLocalSender ? "you - username" : "username";
+  const color = isLocalSender ? "#2196F3" : "#009688";
+  const textAlign = isLocalSender ? "left" : undefined;
 
   return (
-    <Stack sx={styles.messageContainer}>
-      <Avatar src={avatar} sx={styles.avatar} />
-      <Stack sx={styles.message}>
+    <Stack sx={styles.messageContainer(isLocalSender)}>
+      {!isLocalSender && <Avatar src={avatar} sx={styles.avatar} />}
+      <Stack sx={styles.message(isLocalSender)}>
         {messages?.map((message, index) => {
           const key = `message-${index}`;
 
           return (
-            <Stack key={key} sx={styles.messageSingle}>
-              <Typography variant="body1" color="#009688" sx={styles.username}>
-                username
+            <Stack key={key} sx={styles.messageSingle(isLocalSender)}>
+              <Typography variant="body1" color={color} sx={styles.username}>
+                {username}
               </Typography>
-              <Typography variant="body1">{message}</Typography>
+              <Typography variant="body1" textAlign={textAlign}>
+                {message}
+              </Typography>
             </Stack>
           );
         })}

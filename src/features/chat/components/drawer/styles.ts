@@ -3,7 +3,6 @@ import { type SxProps } from "@mui/material";
 
 export const styles = {
   nav: {
-    // width: { sm: MOBILE_DRAWER_WIDTH },
     flexShrink: { sm: 0 },
   },
   drawerMobile: {
