@@ -7,6 +7,8 @@ export const leaderboardDataSchema = z.object({
   username: z.string(),
   score: z.number(),
   address: z.string(),
+  gamesPlayed: z.number(),
+  payout: z.number(),
 });
 
 export type LeaderboardData = z.infer<typeof leaderboardDataSchema>;

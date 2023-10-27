@@ -6,6 +6,11 @@ export const styles = {
     alignItems: "center",
     maxWidth: "100vw",
     overflowX: "hidden",
+    "&. MuiTableContainer-root": {
+      minWidth: 650,
+      width: "51.6vw",
+      maxWidth: "60vw",
+    },
   },
   container: {
     mt: 2,

@@ -8,6 +8,9 @@ import { useRouter } from "next/router";
 import { AnonymousAuthButton, LogoutButton } from "@/components";
 import { pages } from "@/utils/router";
 import { text } from "@/assets/text";
+import { Leaderboard } from "@/features";
+import { styles } from "./styles";
+import { LeaderboardToggleButton } from "./leaderboard-toggle";
 
 // TODO: define text in another file
 export default function Home() {
@@ -17,33 +20,45 @@ export default function Home() {
   // TODO: finish and fix styling and text
   return (
     <Page>
-      <Typography variant="h1">{text.general.appTitle}</Typography>
-      <Typography variant="body1">{text.general.appDescription}</Typography>
-      <Stack flexDirection="row" mt={2}>
-        {isValidSession(sessionData) && (
+      <Stack>
+        <Stack sx={styles.statsWrapper}>
+          {/* TODO: change colors */}
+          {/*  button needs to be the same size as text */}
           <Button
+            variant="contained"
+            size="medium"
+            sx={styles.connectButton}
+            onClick={() => void router.push(pages.login)}
+          >
+            {text.landing.connectLeoWallet}
+          </Button>
+          <Typography variant="body1">{text.landing.toPlayWith}</Typography>
+        </Stack>
+        <Stack sx={styles.textContainer}>
+          <Typography variant="h1" sx={styles.title}>
+            {text.landing.appName}
+          </Typography>
+
+          <Stack sx={styles.description}>
+            <Typography variant="h5">
+              {text.landing.descriptionPart1}
+            </Typography>
+            <Typography variant="h5">
+              {text.landing.descriptionPart2}
+            </Typography>
+          </Stack>
+          <Button
+            variant="contained"
             disabled={join.status === "loading"}
             onClick={() => void router.push(pages.lobby)}
+            sx={styles.startGameButton}
+            color="info"
           >
-            {text.general.play}
+            <Typography variant="h3">{text.landing.startNewGame}</Typography>
           </Button>
-        )}
-        {
-          /* TODO: remove this logic when UI is implemented */
-          !isValidSession(sessionData) ? (
-            <>
-              <AnonymousAuthButton />
-              <Button
-                variant="contained"
-                onClick={() => void router.push(pages.login)}
-              >
-                {text.auth.connectLeoWallet}
-              </Button>
-            </>
-          ) : (
-            <LogoutButton />
-          )
-        }
+          <LeaderboardToggleButton />
+          <Leaderboard />
+        </Stack>
       </Stack>
     </Page>
   );
