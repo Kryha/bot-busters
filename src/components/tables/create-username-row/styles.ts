@@ -12,7 +12,6 @@ export const styles = {
     flexDirection: "row",
     position: "absolute",
     zIndex: 1,
-    mt: -1,
     left: "8.6%",
     alignItems: "center",
   },
@@ -26,6 +25,9 @@ export const styles = {
       "0px 1px 5px 0px rgba(0, 0, 0, 0.12), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 1px 0px rgba(0, 0, 0, 0.20)",
     borderRadius: 1,
     "& .MuiOutlinedInput-root": {
+      "& input": {
+        p: "10.5px 12px",
+      },
       "& fieldset": {
         border: "none",
       },
@@ -34,7 +36,7 @@ export const styles = {
   button: {
     borderRadius: 1,
     height: "fit-content",
-    p: "9.6px 16px",
+    p: "4px 16px !important",
     // TODO: define color in theme
     backgroundColor: "#1976D2",
   },
