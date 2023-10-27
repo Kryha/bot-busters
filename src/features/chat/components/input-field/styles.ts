@@ -7,12 +7,12 @@ export const styles: Record<string, SxProps> = {
     padding: "16px 16px 16px 24px",
     gap: 1,
   },
-  input: {
+  inputField: {
     flexGrow: 1,
     backgroundColor: "grey.50",
     borderRadius: 1,
   },
-  inputProps: {
+  inputFieldProps: {
     flexGrow: 1,
   } satisfies SxProps,
 };

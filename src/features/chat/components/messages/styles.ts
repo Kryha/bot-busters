@@ -57,7 +57,7 @@ export const styles = {
       },
     };
   },
-  allMessagesContainer: {
+  messagesContainer: {
     pl: 3,
     pr: 2,
     overflowY: "scroll",

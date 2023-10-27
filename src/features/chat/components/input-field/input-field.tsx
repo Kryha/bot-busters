@@ -17,7 +17,7 @@ export const InputField: FC<Props> = ({ onClick, ...rest }) => {
       <TextField
         placeholder={text.inputFieldPlaceholder}
         InputProps={{ sx: styles.inputFieldProps }}
-        sx={styles.input}
+        sx={styles.inputField}
         {...rest}
       />
       <Button variant="contained" onClick={onClick}>

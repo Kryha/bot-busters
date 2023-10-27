@@ -10,7 +10,7 @@ interface Props {
 
 export const Messages: FC<Props> = ({ groupedMessages }) => {
   return (
-    <Stack sx={styles.allMessagesContainer}>
+    <Stack sx={styles.messagesContainer}>
       {groupedMessages.map(({ isLocalSender, messages }, index) => (
         <Message
           key={index}
