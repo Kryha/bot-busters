@@ -87,8 +87,6 @@ export const MainChatView: FC<Props> = ({ open, roomId, isSmallScreen }) => {
     };
   }, [sendMessage]);
 
-  console.log({ groupedMessages });
-
   if (!isSmallScreen && !open)
     return <Typography variant="h2">{text.general.clickChat}</Typography>;
 
