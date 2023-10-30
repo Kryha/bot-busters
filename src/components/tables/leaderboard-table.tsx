@@ -1,21 +1,15 @@
-import { type FC } from "react";
 import { Table, TableBody, TableContainer } from "@mui/material";
 
 import { text } from "@/assets/text";
-import { type LeaderboardData } from "@/types";
+import { leaderboardData } from "@/constants";
 import { Header } from "./header";
 import { LeaderboardRow } from "./leaderboard-row";
 import { COLUMN_WIDTH } from "./constants";
 import { styles } from "./styles";
 
-interface Props {
-  leaderboardData: LeaderboardData[];
-}
-
-export const LeaderboardTable: FC<Props> = ({ leaderboardData }) => {
-  if (!leaderboardData) return;
+export const LeaderboardTable = () => {
   return (
-    <TableContainer sx={styles.wrapper}>
+    <TableContainer>
       <Table sx={styles.table} aria-label="simple table">
         <colgroup>
           <col width={COLUMN_WIDTH.sm} />
