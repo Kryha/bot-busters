@@ -23,6 +23,8 @@ export const styles = {
     zIndex: 1,
     left: "8.6%",
     alignItems: "center",
+    top: "46%",
+    transform: "translateY(-50%)",
   },
   avatar: {
     bgcolor: "common.white",
