@@ -8,6 +8,7 @@ export const leaderboard = {
     "Score",
     "Potential Payout",
   ],
+  leaderboardRank: "#5",
 
   rankNumber: (val: number) => `#${val}`,
   aleoCredits: (val: number) => `${val} Aleo credits`,

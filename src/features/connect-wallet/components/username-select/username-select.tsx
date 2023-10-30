@@ -1,7 +1,7 @@
 import { type FC } from "react";
 import { Stack } from "@mui/material";
 
-import { AddUsernameTable } from "@/components/tables";
+import { AddUsernameTable, CreateUsernameRow } from "@/components/tables";
 import { styles } from "./styles";
 
 export const UsernameSelect: FC = () => {
@@ -10,6 +10,7 @@ export const UsernameSelect: FC = () => {
     <Stack sx={styles.wrapper}>
       <Stack sx={styles.container}>
         <AddUsernameTable />
+        <CreateUsernameRow />
       </Stack>
     </Stack>
   );
