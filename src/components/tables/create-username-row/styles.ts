@@ -7,7 +7,7 @@ export const styles = {
     gap: 1,
     flexDirection: "row",
     position: "absolute",
-    top: "46%",
+    top: "50%",
     transform: "translateY(-50%)",
     zIndex: 1,
     left: "8.6%",
@@ -23,7 +23,7 @@ export const styles = {
     zIndex: 1,
     left: "8.6%",
     alignItems: "center",
-    top: "46%",
+    top: "50%",
     transform: "translateY(-50%)",
   },
   avatar: {
