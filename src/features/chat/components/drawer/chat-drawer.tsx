@@ -1,5 +1,5 @@
 import { type FC } from "react";
-import { Box, Drawer } from "@mui/material";
+import { Box, Drawer, Stack } from "@mui/material";
 
 import { styles } from "./styles";
 import { ChatList } from "./chat-list";
@@ -13,7 +13,7 @@ interface Props {
 
 export const ChatDrawer: FC<Props> = ({ open, toggle, contactList }) => {
   return (
-    <Box component="nav" sx={styles.nav}>
+    <Box component="section" sx={styles.nav}>
       <Drawer
         variant="temporary"
         open={open}
@@ -25,9 +25,9 @@ export const ChatDrawer: FC<Props> = ({ open, toggle, contactList }) => {
       >
         <ChatList toggle={toggle} contactList={contactList} />
       </Drawer>
-      <Drawer variant="permanent" sx={styles.drawerDesktop} open>
+      <Stack sx={styles.drawerDesktop}>
         <ChatList toggle={toggle} contactList={contactList} />
-      </Drawer>
+      </Stack>
     </Box>
   );
 };

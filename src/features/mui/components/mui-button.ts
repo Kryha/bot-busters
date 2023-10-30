@@ -10,7 +10,6 @@ export const MuiButton = (theme: Theme): Components["MuiButton"] => {
           color: palette.secondary.main,
           fontWeight: "bold",
           padding: "12px 32px",
-          borderRadius: "40px",
         },
       },
     ],

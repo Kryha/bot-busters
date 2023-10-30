@@ -21,7 +21,7 @@ const Lobby: FC = () => {
     },
     onData(payload) {
       setQueueLength(payload.queueLength);
-      setMyPlaceInQueue(payload.myPlaceInQueue);
+      setMyPlaceInQueue(payload.playerQueuePosition);
     },
     onError(error) {
       console.error("Queue update error:", error);
