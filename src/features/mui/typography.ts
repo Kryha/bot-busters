@@ -76,7 +76,7 @@ export const typography = (): Typography => {
       fontSize: "14px",
       fontWeight: 500,
       lineHeight: "36px",
-      textTransform: "none" as const,
+      textTransform: "uppercase" as const,
     },
     caption: {
       fontFamily: font.style.fontFamily,

@@ -1,5 +1,10 @@
 import { useState, type MouseEvent } from "react";
-import { ToggleButton, ToggleButtonGroup } from "@mui/material";
+import {
+  Button,
+  ButtonGroup,
+  ToggleButton,
+  ToggleButtonGroup,
+} from "@mui/material";
 import { text } from "@/assets/text";
 
 type LeaderboardTime = "today" | "all-time";
@@ -14,20 +19,21 @@ export const LeaderboardToggleButton = () => {
   };
 
   return (
-    <ToggleButtonGroup
-      color="primary"
-      value={alignment}
-      exclusive
-      onChange={handleChange}
-      aria-label="Platform"
-      sx={{ mb: 5 }}
-    >
-      <ToggleButton value="today" size="small" sx={{ p: "0px 16px" }}>
+    <ButtonGroup variant="outlined" sx={{ width: "590px", mb: 5 }}>
+      <Button
+        variant="contained"
+        size="small"
+        sx={{ p: "0px 16px", borderRadius: 1, flex: "1 0 0" }}
+      >
         {text.landing.todaysLeaderboard}
-      </ToggleButton>
-      <ToggleButton value="all-time" size="small" sx={{ p: "0px 16px" }}>
+      </Button>
+      <Button
+        variant="outlined"
+        size="small"
+        sx={{ p: "0px 16px", flex: "1 0 0" }}
+      >
         {text.landing.allTimeLeaderboard}
-      </ToggleButton>
-    </ToggleButtonGroup>
+      </Button>
+    </ButtonGroup>
   );
 };

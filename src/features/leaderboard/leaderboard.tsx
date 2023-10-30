@@ -1,34 +1,59 @@
-import { type ChangeEvent, useState } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { Stack } from "@mui/material";
 
 import { LeaderboardPagination } from "./components";
 import { styles } from "./styles";
 import { leaderboardData } from "@/constants";
 import { LeaderboardTable } from "@/components/tables";
+import { type LeaderboardData } from "@/types";
 
-export const Leaderboard = () => {
-  const [currentPage, setCurrentPage] = useState(1);
-
+export const Leaderboard: React.FC = () => {
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [currentData, setCurrentData] = useState<LeaderboardData[]>([]);
   const itemsPerPage = 6;
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
 
-  const currentData = leaderboardData.slice(startIndex, endIndex);
+  const loadMoreData = useCallback(() => {
+    const startIndex: number = (currentPage - 1) * itemsPerPage;
+    const endIndex: number = startIndex + itemsPerPage;
+    const newData: LeaderboardData[] = leaderboardData.slice(0, endIndex);
 
-  const totalPages = Math.ceil(leaderboardData.length / itemsPerPage);
+    setCurrentData(newData);
+  }, [currentPage]);
 
-  const handlePageChange = (_event: ChangeEvent<unknown>, newPage: number) => {
-    setCurrentPage(newPage);
+  useEffect(() => {
+    loadMoreData();
+  }, [currentPage, loadMoreData]);
+
+  const intersectionRef = useRef<HTMLDivElement | null>(null);
+
+  const handleIntersection = (entries: IntersectionObserverEntry[]) => {
+    const entry = entries[0];
+    if (entry && entry.isIntersecting) {
+      setCurrentPage((prevPage) => prevPage + 1);
+    }
   };
+
+  useEffect(() => {
+    const options = {
+      root: null,
+      rootMargin: "0px",
+      threshold: 0.1,
+    };
+
+    const observer = new IntersectionObserver(handleIntersection, options);
+    if (intersectionRef.current) {
+      observer.observe(intersectionRef.current);
+    }
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
 
   return (
     <Stack sx={styles.wrapper}>
       <LeaderboardTable leaderboardData={currentData} />
-      <LeaderboardPagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        handlePageChange={handlePageChange}
-      />
+      <div ref={intersectionRef}></div>
     </Stack>
   );
 };

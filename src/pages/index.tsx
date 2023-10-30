@@ -22,17 +22,19 @@ export default function Home() {
     <Page>
       <Stack>
         <Stack sx={styles.statsWrapper}>
-          {/* TODO: change colors */}
-          {/*  button needs to be the same size as text */}
-          <Button
-            variant="contained"
-            size="medium"
-            sx={styles.connectButton}
-            onClick={() => void router.push(pages.login)}
-          >
-            {text.landing.connectLeoWallet}
-          </Button>
-          <Typography variant="body1">{text.landing.toPlayWith}</Typography>
+          <Stack sx={styles.statsContainer}>
+            {/* TODO: change colors */}
+            {/*  button needs to be the same size as text */}
+            <Button
+              variant="contained"
+              size="medium"
+              sx={styles.connectButton}
+              onClick={() => void router.push(pages.login)}
+            >
+              {text.landing.connectLeoWallet}
+            </Button>
+            <Typography variant="body1">{text.landing.toPlayWith}</Typography>
+          </Stack>
         </Stack>
         <Stack sx={styles.textContainer}>
           <Typography variant="h1" sx={styles.title}>

@@ -1,11 +1,10 @@
 import { type SxProps } from "@mui/material";
 
 export const styles = {
-  statsWrapper: {
+  statsWrapper: { alignItems: "flex-end", pt: 3, pr: 3 },
+  statsContainer: {
     display: "flex",
-    alignItems: "flex-end",
-    pt: 3,
-    pr: 3,
+    gap: 1,
   },
   connectButton: {
     p: "0px 16px",
