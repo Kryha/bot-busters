@@ -9,4 +9,9 @@ export const landing = {
   startNewGame: "Start new game",
   todaysLeaderboard: "Today's leaderboard",
   allTimeLeaderboard: "All time leaderboard",
+  everydayTheLeaderboard:
+    "Every day the leaderboard top 100 will get Aleo credits payed out!",
+
+  countdown: (countdown: string | number) =>
+    `${countdown} until today's payout`,
 };
