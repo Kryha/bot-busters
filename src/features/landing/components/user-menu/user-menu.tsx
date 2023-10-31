@@ -1,6 +1,8 @@
-import EditIcon from "@mui/icons-material/Edit";
+/* eslint-disable @typescript-eslint/unbound-method */
 import { useState, type MouseEvent, type FC } from "react";
+import EditIcon from "@mui/icons-material/Edit";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import { signOut } from "next-auth/react";
 import {
   Avatar,
   Button,
@@ -9,6 +11,8 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import { useWallet } from "@demox-labs/aleo-wallet-adapter-react";
+
 import { text } from "@/assets/text";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { styles } from "./styles";
@@ -20,12 +24,20 @@ interface Props {
 
 export const UserMenu: FC<Props> = ({ isMenuVisible, username }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const { disconnect } = useWallet();
+
   const open = !!anchorEl;
   const handleClick = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const logout = async () => {
+    await signOut();
+    await disconnect();
+    handleClose();
   };
 
   if (!isMenuVisible) return;
@@ -63,7 +75,7 @@ export const UserMenu: FC<Props> = ({ isMenuVisible, username }) => {
         open={open}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose} disableRipple>
+        <MenuItem onClick={() => void logout()} disableRipple>
           <LogoutIcon />
           {text.landing.logout}
         </MenuItem>
