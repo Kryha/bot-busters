@@ -23,6 +23,7 @@ interface Props {
 }
 
 export const UserMenu: FC<Props> = ({ isMenuVisible, username }) => {
+  // TODO: implement new version
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const { disconnect } = useWallet();
 
