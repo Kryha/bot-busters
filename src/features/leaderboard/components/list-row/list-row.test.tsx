@@ -5,9 +5,9 @@
 import { render, screen } from "@testing-library/react";
 import { ListRow } from "./list-row";
 
-describe("Leaderboard", () => {
-  it("test leaderboard row entry", () => {
     //MOCK
+describe("Leaderboard list", () => {
+  it("Should render rows of User data", () => {
     const leaderboardData = {
       rank: 1,
       avatar: "avatar.jpeg",
