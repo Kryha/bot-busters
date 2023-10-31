@@ -9,7 +9,7 @@ import { styles } from "./styles";
 
 export const LeaderboardTable = () => {
   return (
-    <TableContainer>
+    <TableContainer sx={styles.wrapper}>
       <Table sx={styles.table} aria-label="simple table">
         <colgroup>
           <col width={COLUMN_WIDTH.sm} />

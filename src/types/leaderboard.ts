@@ -12,3 +12,7 @@ export const leaderboardDataSchema = z.object({
 });
 
 export type LeaderboardData = z.infer<typeof leaderboardDataSchema>;
+
+export const leaderboardTypeSchema = z.enum(["today", "all-time"]);
+
+export type LeaderboardType = z.infer<typeof leaderboardTypeSchema>;
