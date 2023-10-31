@@ -5,7 +5,6 @@
 import { render, screen } from "@testing-library/react";
 import { ListRow } from "./list-row";
 
-    //MOCK
 describe("Leaderboard list", () => {
   it("Should render rows of User data", () => {
     const leaderboardData = {
@@ -16,10 +15,8 @@ describe("Leaderboard list", () => {
       address: "aleoAddresss0000000",
     };
 
-    //RENDER
     render(<ListRow leaderboard={leaderboardData} />);
 
-    //ASSERT
     expect(screen.getByText(/^JohnDoe/)).toHaveTextContent("JohnDoe");
   });
 });
