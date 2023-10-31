@@ -2,6 +2,7 @@ import { Table, TableBody, TableContainer } from "@mui/material";
 
 import { leaderboardData } from "@/constants";
 import { LeaderboardRow } from "./leaderboard-row";
+
 import { styles } from "./styles";
 import { COLUMN_WIDTH } from "./constants";
 
