@@ -9,6 +9,14 @@ services:
     ports:
       - 5432:5432
 
+  test-db:
+    image: ankane/pgvector
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: test-example
+    ports:
+      - 5445:5432
+
   adminer:
     image: adminer
     restart: always
