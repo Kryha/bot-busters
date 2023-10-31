@@ -6,7 +6,7 @@ import postgres from "postgres";
 import * as schema from "./schema";
 import { eq } from "drizzle-orm";
 
-describe("users CRUD", () => {
+describe("Users CRUD", () => {
   let db: ReturnType<typeof drizzle>;
   let queryClient: ReturnType<typeof postgres>;
   let testUser: schema.User;
@@ -21,7 +21,7 @@ describe("users CRUD", () => {
     queryClient.end();
   });
 
-  it("should insert a new user", async () => {
+  it("Should insert a new user", async () => {
     const newUsers = await db.insert(schema.users).values({}).returning();
     const newUser = newUsers.at(0);
     if (!newUser) return;
@@ -30,7 +30,7 @@ describe("users CRUD", () => {
     expect(testUser).toBeDefined();
   });
 
-  it("should update the user username ", async () => {
+  it("Should update the username ", async () => {
     if (!testUser.id) return;
 
     const updatedUsers = await db
@@ -46,7 +46,7 @@ describe("users CRUD", () => {
     expect(updatedUser.username).toBe("testUserName");
   });
 
-  it("should update the user score ", async () => {
+  it("Should update the score ", async () => {
     if (!testUser.id) return;
 
     const updatedUsers = await db
@@ -62,7 +62,7 @@ describe("users CRUD", () => {
     expect(updatedUser.score).toBe(1);
   });
 
-  it("should delete the user", async () => {
+  it("Sould delete the user", async () => {
     if (!testUser.id) return;
 
     await db
