@@ -7,8 +7,6 @@ export const styles = {
     "& .MuiButtonGroup-middleButton": { borderColor: "customGrey.main" },
   },
   button: {
-    p: "0px 16px",
-    borderRadius: 1,
     flex: "1 0 0",
   } satisfies SxProps,
 };

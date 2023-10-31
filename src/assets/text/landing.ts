@@ -13,6 +13,11 @@ export const landing = {
     "Every day the leaderboard top 100 will get Aleo credits payed out!",
   yourScoreToday: "your score today",
   yourPosition: "your position",
+  logout: "logout",
+  edit: "edit",
+  fakeUsername: "CharlieBrown",
+  fakeCountdown: "11.34.12",
+  addScoreToLeaderboard: "Add your score to leaderboard",
 
   countdown: (countdown: string | number) =>
     `${countdown} until today's payout`,

@@ -16,7 +16,6 @@ export const styles = {
   startGameButton: {
     width: "fit-content",
     p: "11px 60px",
-    borderRadius: "4px",
     mb: "180px",
   },
   buttonText: { textTransform: "none" } satisfies SxProps,

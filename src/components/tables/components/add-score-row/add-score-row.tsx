@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { type FC } from "react";
 import {
   Avatar,
@@ -17,15 +16,11 @@ import { pages } from "@/utils/router";
 
 interface Props {
   leaderboard: LeaderboardData;
+  isAuthenticated: boolean;
+  isGamePlayed: boolean;
 }
 
-// container: {
-//   flexDirection: "row",
-//   gap: 1,
-//   alignItems: "center",
-// },
-// avatar: { backgroundColor: "customGrey.main" }
-export const AddScoreRow: FC<Props> = ({ leaderboard }) => {
+export const AddScoreRow: FC<Props> = ({ leaderboard, isAuthenticated }) => {
   const router = useRouter();
   return (
     <TableRow key={leaderboard.rank} sx={styles.tableRow()}>
@@ -35,22 +30,24 @@ export const AddScoreRow: FC<Props> = ({ leaderboard }) => {
         </Typography>
       </TableCell>
       <TableCell>
-        {/* <Button
-          variant="contained"
-          color="blueGrey"
-          sx={{ p: "0px 16px" }}
-          onClick={() => void router.push(pages.login)}
-        >
-          add your score to leaderboard
-        </Button> */}
-        <Stack sx={styles.container}>
-          <Avatar alt="avatar" sx={styles.avatar}>
-            {text.leaderboard.avatarEmoji}
-          </Avatar>
-          <Typography variant="body1" color="customGrey.main">
-            {leaderboard.username}
-          </Typography>
-        </Stack>
+        {!isAuthenticated ? (
+          <Button
+            variant="contained"
+            color="blueGrey"
+            onClick={() => void router.push(pages.login)}
+          >
+            {text.landing.addScoreToLeaderboard}
+          </Button>
+        ) : (
+          <Stack sx={styles.container}>
+            <Avatar alt="avatar" sx={styles.avatar}>
+              {text.leaderboard.avatarEmoji}
+            </Avatar>
+            <Typography variant="body1" color="customGrey.main">
+              {leaderboard.username}
+            </Typography>
+          </Stack>
+        )}
       </TableCell>
       <TableCell>
         <Typography variant="body1" color="customGrey.main">

@@ -1,33 +1,37 @@
 import { useState, type FC } from "react";
-import { useRouter } from "next/router";
-import { useSession } from "next-auth/react";
-import { Button, IconButton, Stack, SvgIcon, Typography } from "@mui/material";
 
-import { text } from "@/assets/text";
-import { api } from "@/utils/api";
-import { pages } from "@/utils/router";
-import { LeaderboardToggleButton, StartGame, UserStats } from "./components";
-import { styles } from "./styles";
 import { type LeaderboardType } from "@/types";
-import { LeaderboardTable } from "@/components/tables";
-import Image from "next/image";
-import arrow from "public/images/svg/arrow.svg";
-import { AddScoreTable } from "@/components/tables/add-score-table";
+import { LeaderboardTable, AddScoreTable } from "@/components/tables";
+import { LeaderboardToggleButton, StartGame, UserStats } from "./components";
+import { useSession } from "next-auth/react";
+import { isValidSession } from "@/utils/session";
+import { text } from "@/assets/text";
+
 export const Landing: FC = () => {
   const [leaderboardType, setLeaderboardType] =
     useState<LeaderboardType>("today");
+  const { data: sessionData } = useSession();
+  const isAuthenticated = isValidSession(sessionData);
+  const isGamePlayed = true;
 
   return (
     <>
-      <UserStats />
+      <UserStats
+        isAuthenticated={isAuthenticated}
+        isGamePlayed={isGamePlayed}
+        username={text.landing.fakeUsername}
+      />
       <StartGame />
       <LeaderboardToggleButton
         leaderboardType={leaderboardType}
         setLeaderboardType={setLeaderboardType}
       />
       <LeaderboardTable />
-
-      <AddScoreTable />
+      <AddScoreTable
+        isAuthenticated={isAuthenticated}
+        isGamePlayed={isGamePlayed}
+        countdown={text.landing.fakeCountdown}
+      />
     </>
   );
 };

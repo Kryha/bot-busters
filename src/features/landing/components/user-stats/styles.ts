@@ -12,8 +12,7 @@ export const styles = {
     display: "flex",
     gap: 1,
   },
-  connectButton: {
-    p: "0px 16px",
-    borderRadius: 1,
-  } satisfies SxProps,
+  stack: { gap: 3 },
+  pointsWrapper: { flexDirection: "row", gap: 5 },
+  pointsContainer: { alignItems: "center" } satisfies SxProps,
 };
