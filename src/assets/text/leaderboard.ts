@@ -11,5 +11,6 @@ export const leaderboard = {
   leaderboardRank: "#5",
 
   rankNumber: (val: number) => `#${val}`,
-  aleoCredits: (val: number) => `${val} Aleo credits`,
+  aleoCredits: (val: number) =>
+    `${val} ${val === 1 ? " Aleo credit" : "Aleo credits"}`,
 };

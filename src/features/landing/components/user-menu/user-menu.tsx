@@ -1,33 +1,30 @@
 /* eslint-disable @typescript-eslint/unbound-method */
-import { useState, type MouseEvent, type FC } from "react";
-import EditIcon from "@mui/icons-material/Edit";
+import { useState, type MouseEvent, type FC, useEffect } from "react";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { signOut } from "next-auth/react";
-import {
-  Avatar,
-  Button,
-  Menu,
-  MenuItem,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Avatar, Button, Chip, Stack, Typography } from "@mui/material";
 import { useWallet } from "@demox-labs/aleo-wallet-adapter-react";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 
 import { text } from "@/assets/text";
-import LogoutIcon from "@mui/icons-material/Logout";
 import { styles } from "./styles";
-
+import { MenuCard } from "./menu-card";
+import { fakeStats } from "@/constants";
+import { CHIP_TIMEOUT } from "@/features/landing/constants";
 interface Props {
   isMenuVisible: boolean;
   username: string;
 }
 
 export const UserMenu: FC<Props> = ({ isMenuVisible, username }) => {
-  // TODO: implement new version
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [isChipVisible, setIsChipVisible] = useState(true);
   const { disconnect } = useWallet();
-
   const open = !!anchorEl;
+  const endIcon = open ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />;
+  const expanded = open ? "true" : undefined;
+  const menuControl = open ? "menu" : undefined;
+
   const handleClick = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -41,50 +38,57 @@ export const UserMenu: FC<Props> = ({ isMenuVisible, username }) => {
     handleClose();
   };
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsChipVisible(false);
+    }, CHIP_TIMEOUT);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, []);
+
   if (!isMenuVisible) return;
 
   return (
     <Stack sx={styles.userMenuWrapper}>
+      {isChipVisible && (
+        <Chip
+          label={text.landing.youWonCredits}
+          color="warning"
+          sx={styles.creditsWonChip}
+        />
+      )}
       <Avatar alt="avatar" sx={styles.avatar}>
         {text.leaderboard.avatarEmoji}
       </Avatar>
       <Button
         id="button"
-        aria-controls={open ? "menu" : undefined}
+        aria-controls={menuControl}
         aria-haspopup="true"
-        aria-expanded={open ? "true" : undefined}
+        aria-expanded={expanded}
         variant="text"
         disableElevation
         onClick={handleClick}
-        endIcon={<ArrowDropDownIcon />}
+        endIcon={endIcon}
         color="blueGrey"
+        sx={styles.menuButton}
       >
         <Typography
           variant="body1"
-          sx={styles.buttonText}
+          sx={styles.buttonText(open)}
           color="blueGrey.main"
         >
           {username}
         </Typography>
       </Button>
-      <Menu
-        id="menu"
-        MenuListProps={{
-          "aria-labelledby": "button",
-        }}
-        anchorEl={anchorEl}
+      <MenuCard
         open={open}
-        onClose={handleClose}
-      >
-        <MenuItem onClick={() => void logout()} disableRipple>
-          <LogoutIcon />
-          {text.landing.logout}
-        </MenuItem>
-        <MenuItem onClick={handleClose} disableRipple>
-          <EditIcon />
-          {text.landing.edit}
-        </MenuItem>
-      </Menu>
+        anchorEl={anchorEl}
+        handleClose={handleClose}
+        logout={logout}
+        stats={fakeStats}
+      />
     </Stack>
   );
 };

@@ -13,14 +13,22 @@ export const landing = {
     "Every day the leaderboard top 100 will get Aleo credits payed out!",
   yourScoreToday: "your score today",
   yourPosition: "your position",
-  logout: "logout",
+  signOut: "sign out (disconnect wallet)",
   edit: "edit",
-  fakeUsername: "CharlieBrown",
-  fakeCountdown: "11.34.12",
   addScoreToLeaderboard: "Add your score to leaderboard",
+  todaysScore: "Today's score",
+  todaysPosition: "Today's position",
+  allTimeScore: "All time score",
+  allTimePosition: "All time position",
+  youWonCredits:
+    "You've won Aleo credits based on your leaderboard position yesterday. Check your wallet!",
+  aleoCreditsPayout: "Aleo credits payouts",
+  newCredits: "new",
 
   countdown: (countdown: string | number) =>
     `${countdown} until today's payout`,
   points: (val: number) => `${val} ${val === 1 ? "point" : "points"}`,
   numberPosition: (val: number) => `#${val}`,
+  dateAndCredits: (date: string, credits: number) =>
+    `${date} - ${credits} Aleo credits`,
 };

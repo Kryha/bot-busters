@@ -1,9 +1,9 @@
 import { type FC } from "react";
-
-import { StartGame, UserStats } from "./components";
 import { useSession } from "next-auth/react";
 import { isValidSession } from "@/utils/session";
-import { text } from "@/assets/text";
+
+import { fakeUsername } from "@/constants";
+import { StartGame, UserStats } from "./components";
 
 export const Landing: FC = () => {
   const { data: sessionData } = useSession();
@@ -15,7 +15,7 @@ export const Landing: FC = () => {
       <UserStats
         isAuthenticated={isAuthenticated}
         isGamePlayed={isGamePlayed}
-        username={text.landing.fakeUsername}
+        username={fakeUsername}
       />
       <StartGame />
     </>
