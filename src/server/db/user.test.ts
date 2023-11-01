@@ -1,24 +1,17 @@
 /*
  * @jest-environment node
  */
-import { drizzle } from "drizzle-orm/postgres-js";
-import postgres from "postgres";
 import * as schema from "./schema";
+import { closePostgressConnection, db } from "./index";
 import { eq } from "drizzle-orm";
 
 describe("Users CRUD", () => {
-  let db: ReturnType<typeof drizzle>;
-  let queryClient: ReturnType<typeof postgres>;
   let testUser: schema.User;
 
-  beforeAll(async () => {
-    queryClient = postgres(process.env.TEST_DATABASE_URL!);
-    db = drizzle(queryClient, { schema });
-  });
+  beforeAll(async () => { });
 
   afterAll(async () => {
-    await db.delete(schema.users);
-    queryClient.end();
+    closePostgressConnection();
   });
 
   it("Should insert a new user", async () => {
