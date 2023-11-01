@@ -1,9 +1,8 @@
 import { useState, type FC, useCallback, useEffect } from "react";
-import { Stack, Typography } from "@mui/material";
+import { Stack } from "@mui/material";
 
 import { styles } from "./styles";
 import { Messages } from "../messages";
-import { text } from "@/assets/text";
 import { InputField } from "../input-field";
 import { useSession } from "next-auth/react";
 import { type ChatMessagePayload } from "@/server/api/routers";
@@ -16,11 +15,9 @@ export interface GroupedMessage {
 }
 interface Props {
   roomId: string;
-  open: boolean;
-  isSmallScreen: boolean;
 }
 
-export const MainChatView: FC<Props> = ({ open, roomId, isSmallScreen }) => {
+export const MainChatView: FC<Props> = ({ roomId }) => {
   const router = useRouter();
   const { data: sessionData } = useSession();
 
@@ -86,9 +83,6 @@ export const MainChatView: FC<Props> = ({ open, roomId, isSmallScreen }) => {
       document.removeEventListener("keydown", listener);
     };
   }, [sendMessage]);
-
-  if (!isSmallScreen && !open)
-    return <Typography variant="h2">{text.general.clickChat}</Typography>;
 
   return (
     <Stack component="section" sx={styles.section}>
