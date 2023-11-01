@@ -6,6 +6,7 @@ import { palette } from "./palette";
 
 declare module "@mui/material/styles" {
   interface Palette {
+    blueGrey: Palette["primary"];
     orange: Palette["primary"];
     brown: Palette["primary"];
     green: Palette["primary"];
@@ -14,6 +15,7 @@ declare module "@mui/material/styles" {
   }
 
   interface PaletteOptions {
+    blueGrey?: Palette["primary"];
     orange?: PaletteOptions["primary"];
     brown?: PaletteOptions["primary"];
     green?: PaletteOptions["primary"];
@@ -23,6 +25,7 @@ declare module "@mui/material/styles" {
 }
 declare module "@mui/material/Avatar" {
   interface AvatarPropsColorOverrides {
+    blueGrey: true;
     orange: true;
     brown: true;
     green: true;
@@ -33,6 +36,7 @@ declare module "@mui/material/Avatar" {
 
 declare module "@mui/material/Typography" {
   interface TypographyPropsColorOverrides {
+    blueGrey: true;
     orange: true;
     brown: true;
     green: true;
@@ -40,28 +44,6 @@ declare module "@mui/material/Typography" {
     blue: true;
   }
 }
-
-declare module "@mui/material/styles" {
-  interface Palette {
-    blueGrey: Palette["primary"];
-  }
-
-  interface PaletteOptions {
-    blueGrey?: Palette["primary"];
-  }
-}
-declare module "@mui/material/Avatar" {
-  interface AvatarPropsColorOverrides {
-    blueGrey: true;
-  }
-}
-
-declare module "@mui/material/Typography" {
-  interface TypographyPropsColorOverrides {
-    blueGrey: true;
-  }
-}
-
 declare module "@mui/material/Button" {
   interface ButtonPropsColorOverrides {
     blueGrey: true;
