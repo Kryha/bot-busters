@@ -4,6 +4,7 @@ import { isValidSession } from "@/utils/session";
 
 import { fakeUsername } from "@/constants";
 import { StartGame, UserStats } from "./components";
+import { Timer } from "../chat/components/timer/timer";
 
 export const Landing: FC = () => {
   const { data: sessionData } = useSession();
@@ -18,6 +19,8 @@ export const Landing: FC = () => {
         username={fakeUsername}
       />
       <StartGame />
+
+      <Timer />
     </>
   );
 };

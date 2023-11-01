@@ -10,6 +10,7 @@ import { type ChatMessagePayload } from "@/server/api/routers";
 import { api } from "@/utils/api";
 import { useRouter } from "next/router";
 import { pages } from "@/utils/router";
+import { Timer } from "@/features/chat/components";
 export interface GroupedMessage {
   messages?: string[];
   isLocalSender?: boolean;
@@ -93,6 +94,7 @@ export const MainChatView: FC<Props> = ({ open, roomId, isSmallScreen }) => {
   return (
     <Stack component="section" sx={styles.section}>
       <Messages groupedMessages={groupedMessages} />
+      <Timer />
       <InputField
         value={message}
         onChange={(e) => setMessage(e.target.value)}
