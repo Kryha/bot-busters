@@ -12,7 +12,6 @@ interface Props {
   points?: number;
   position?: number;
 }
-
 export const Stats: FC<Props> = ({
   isGamePlayed,
   points = 0,

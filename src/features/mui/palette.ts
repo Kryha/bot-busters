@@ -56,5 +56,12 @@ export const palette = (theme: Theme): Palette => {
         main: "#FB8C00",
       },
     }),
+    customGrey: theme.palette.augmentColor({
+      color: {
+        light: "#BDBDBD",
+        main: "#9E9E9E",
+      },
+      name: "customGrey",
+    }),
   };
 };
