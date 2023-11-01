@@ -14,5 +14,17 @@ export const palette = (theme: Theme): Palette => {
       dark: grey[50],
       contrastText: grey[900],
     },
+    blueGrey: theme.palette.augmentColor({
+      color: {
+        light: "#ECEFF1",
+        main: "#607D8B",
+      },
+      name: "blueGrey",
+    }),
+    warning: theme.palette.augmentColor({
+      color: {
+        main: "#FB8C00",
+      },
+    }),
   };
 };

@@ -12,3 +12,12 @@ export const leaderboardDataSchema = z.object({
 });
 
 export type LeaderboardData = z.infer<typeof leaderboardDataSchema>;
+
+export const userStatsDataSchema = z.object({
+  todaysPoints: z.number(),
+  todaysPosition: z.number(),
+  allTimePoints: z.number(),
+  allTimePosition: z.number(),
+});
+
+export type UserStatsData = z.infer<typeof userStatsDataSchema>;
