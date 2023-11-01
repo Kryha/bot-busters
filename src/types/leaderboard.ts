@@ -21,3 +21,14 @@ export const userStatsDataSchema = z.object({
 });
 
 export type UserStatsData = z.infer<typeof userStatsDataSchema>;
+
+export const leaderboardTypeSchema = z.enum([
+  "all-time",
+  "today",
+  "yesterday",
+  "two-days-ago",
+  "three-days-ago",
+  "four-days-ago",
+]);
+
+export type LeaderboardType = z.infer<typeof leaderboardTypeSchema>;

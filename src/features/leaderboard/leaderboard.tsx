@@ -1,44 +1,76 @@
-import { type ChangeEvent, useState } from "react";
-import { Stack, Typography, useMediaQuery } from "@mui/material";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { useSession } from "next-auth/react";
 
-import { LeaderboardList, LeaderboardPagination } from "./components";
-import { text } from "./assets";
-import { styles } from "./styles";
-import { leaderboardData } from "@/constants";
+import { type LeaderboardData, type LeaderboardType } from "@/types";
+import { isValidSession } from "@/utils/session";
+import { AddScoreTable, LeaderboardTable } from "@/components/tables";
+import { fakeCountdown, leaderboardData } from "@/constants";
+import { LeaderboardSelect } from "./components";
+import { Box } from "@mui/material";
 
-export const Leaderboard = () => {
-  const [currentPage, setCurrentPage] = useState(1);
-  const isSmallScreen = useMediaQuery("(max-width: 600px)");
-
-  const heading = isSmallScreen ? "h3" : "h2";
+export const LeaderBoard = () => {
+  const [leaderboardType, setLeaderboardType] =
+    useState<LeaderboardType>("today");
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [currentData, setCurrentData] = useState<LeaderboardData[]>([]);
   const itemsPerPage = 6;
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
+  const { data: sessionData } = useSession();
+  const isAuthenticated = isValidSession(sessionData);
+  const isGamePlayed = true;
 
-  const currentData = leaderboardData.slice(startIndex, endIndex);
+  const loadMoreData = useCallback(() => {
+    const startIndex: number = (currentPage - 1) * itemsPerPage;
+    const endIndex: number = startIndex + itemsPerPage;
+    const newData: LeaderboardData[] = leaderboardData.slice(0, endIndex);
 
-  const totalPages = Math.ceil(leaderboardData.length / itemsPerPage);
+    setCurrentData(newData);
+  }, [currentPage]);
 
-  const handlePageChange = (_event: ChangeEvent<unknown>, newPage: number) => {
-    setCurrentPage(newPage);
+  useEffect(() => {
+    loadMoreData();
+  }, [currentPage, loadMoreData]);
+
+  const intersectionRef = useRef<HTMLDivElement | null>(null);
+
+  const handleIntersection = (entries: IntersectionObserverEntry[]) => {
+    const entry = entries[0];
+    if (entry && entry.isIntersecting) {
+      setCurrentPage((prevPage) => prevPage + 1);
+    }
   };
 
+  useEffect(() => {
+    const options = {
+      root: null,
+      rootMargin: "0px",
+      threshold: 0.1,
+    };
+
+    const observer = new IntersectionObserver(handleIntersection, options);
+    if (intersectionRef.current) {
+      observer.observe(intersectionRef.current);
+    }
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
   return (
-    <Stack sx={styles.wrapper}>
-      <Stack sx={styles.container}>
-        <Typography variant={heading} sx={styles.text}>
-          {text.leaderboard}
-        </Typography>
-        <Typography variant="body1" sx={styles.text}>
-          {text.leaderboardDescription}
-        </Typography>
-      </Stack>
-      <LeaderboardList leaderboard={currentData} />
-      <LeaderboardPagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        handlePageChange={handlePageChange}
+    <>
+      <LeaderboardSelect
+        leaderboardType={leaderboardType}
+        setLeaderboardType={setLeaderboardType}
       />
-    </Stack>
+      <Box>
+        <LeaderboardTable leaderboard={currentData} />
+        <Box ref={intersectionRef} />
+      </Box>
+      <AddScoreTable
+        isAuthenticated={isAuthenticated}
+        isGamePlayed={isGamePlayed}
+        countdown={fakeCountdown}
+      />
+    </>
   );
 };
