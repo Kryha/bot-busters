@@ -7,10 +7,11 @@ import { useWallet } from "@demox-labs/aleo-wallet-adapter-react";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 
 import { text } from "@/assets/text";
-import { styles } from "./styles";
-import { MenuCard } from "./menu-card";
 import { fakeStats } from "@/constants";
 import { CHIP_TIMEOUT } from "@/features/landing/constants";
+import { styles } from "./styles";
+import { MenuCard } from "./menu-card";
+
 interface Props {
   isMenuVisible: boolean;
   username: string;
