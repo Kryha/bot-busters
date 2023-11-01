@@ -4,6 +4,7 @@ export const styles = {
   wrapper: {
     display: "flex",
     justifyContent: "center",
+    mb: 10,
   },
   table: {
     minWidth: 650,

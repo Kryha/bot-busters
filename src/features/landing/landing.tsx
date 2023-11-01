@@ -4,6 +4,7 @@ import { isValidSession } from "@/utils/session";
 
 import { fakeUsername } from "@/constants";
 import { StartGame, UserStats } from "./components";
+import { LeaderBoard } from "@/features/leaderboard";
 
 export const Landing: FC = () => {
   const { data: sessionData } = useSession();
@@ -18,6 +19,7 @@ export const Landing: FC = () => {
         username={fakeUsername}
       />
       <StartGame />
+      <LeaderBoard />
     </>
   );
 };
