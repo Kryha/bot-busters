@@ -13,6 +13,11 @@ export const leaderboardDataSchema = z.object({
 
 export type LeaderboardData = z.infer<typeof leaderboardDataSchema>;
 
-export const leaderboardTypeSchema = z.enum(["today", "all-time"]);
+export const userStatsDataSchema = z.object({
+  todaysPoints: z.number(),
+  todaysPosition: z.number(),
+  allTimePoints: z.number(),
+  allTimePosition: z.number(),
+});
 
-export type LeaderboardType = z.infer<typeof leaderboardTypeSchema>;
+export type UserStatsData = z.infer<typeof userStatsDataSchema>;

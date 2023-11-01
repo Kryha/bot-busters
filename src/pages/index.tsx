@@ -1,5 +1,5 @@
 import { Page } from "@/layouts";
-import { Landing } from "@/features/landing";
+import { Landing } from "@/features";
 
 export default function Home() {
   return (

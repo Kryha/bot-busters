@@ -1,15 +1,11 @@
-import { useState, type FC } from "react";
-
-import { type LeaderboardType } from "@/types";
-import { LeaderboardTable, AddScoreTable } from "@/components/tables";
-import { LeaderboardToggleButton, StartGame, UserStats } from "./components";
+import { type FC } from "react";
 import { useSession } from "next-auth/react";
 import { isValidSession } from "@/utils/session";
-import { text } from "@/assets/text";
+
+import { fakeUsername } from "@/constants";
+import { StartGame, UserStats } from "./components";
 
 export const Landing: FC = () => {
-  const [leaderboardType, setLeaderboardType] =
-    useState<LeaderboardType>("today");
   const { data: sessionData } = useSession();
   const isAuthenticated = isValidSession(sessionData);
   const isGamePlayed = true;
@@ -19,19 +15,9 @@ export const Landing: FC = () => {
       <UserStats
         isAuthenticated={isAuthenticated}
         isGamePlayed={isGamePlayed}
-        username={text.landing.fakeUsername}
+        username={fakeUsername}
       />
       <StartGame />
-      <LeaderboardToggleButton
-        leaderboardType={leaderboardType}
-        setLeaderboardType={setLeaderboardType}
-      />
-      <LeaderboardTable />
-      <AddScoreTable
-        isAuthenticated={isAuthenticated}
-        isGamePlayed={isGamePlayed}
-        countdown={text.landing.fakeCountdown}
-      />
     </>
   );
 };
