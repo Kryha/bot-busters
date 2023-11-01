@@ -10,4 +10,5 @@ export const general = {
   results: "Results",
 
   clickChat: "Click on the chat to open messages",
+  countdown: (val: string) => `${val} left`,
 };

@@ -1,15 +1,18 @@
-import { useState, type FC, useEffect } from "react";
-import { Box, LinearProgress, Stack, Typography } from "@mui/material";
+import { useState, useEffect, type FC } from "react";
+import { Stack, Typography } from "@mui/material";
+
+import { text } from "@/assets/text";
+import { styles } from "./styles";
 
 export const Timer: FC = () => {
-  const [progress, setProgress] = useState(100);
-  const totalTimeInSeconds = 60;
-  const updateAtInterval = 1000;
+  const [remainingSeconds, setRemainingSeconds] = useState(40);
+  const initialTotalSeconds = 40; // Set the initial total seconds here
+  const updateAtInterval = 1000; // Update the timer every second
 
   useEffect(() => {
     const interval = setInterval(() => {
-      if (progress > 0) {
-        setProgress((prevProgress) => prevProgress - 100 / totalTimeInSeconds);
+      if (remainingSeconds > 0) {
+        setRemainingSeconds((prevRemainingSeconds) => prevRemainingSeconds - 1);
       } else {
         clearInterval(interval);
       }
@@ -18,21 +21,27 @@ export const Timer: FC = () => {
     return () => {
       clearInterval(interval);
     };
-  }, [progress]);
+  }, [remainingSeconds]);
+
+  const progress = (remainingSeconds / initialTotalSeconds) * 100;
+  const minutes = Math.floor(remainingSeconds / 60);
+  const seconds = remainingSeconds % 60;
+  const formattedCountdown = `${minutes.toString().padStart(2, "0")}:${seconds
+    .toString()
+    .padStart(2, "0")}`;
 
   return (
-    <Stack sx={{ width: "100%" }}>
-      <Stack
-        sx={{
-          width: `${progress}%`,
-          height: "16px",
-          backgroundColor: "customGrey.main",
-          alignContent: "center",
-        }}
-      >
-        <Typography variant="caption" sx={{ textAlign: "end" }}>
-          {3.1}
-        </Typography>
+    <Stack sx={styles.wrapper}>
+      <Stack sx={styles.progress(progress, remainingSeconds < 30)}>
+        <Stack sx={styles.countdownWrapper}>
+          <Typography
+            variant="caption"
+            color="common.white"
+            sx={styles.countdown}
+          >
+            {text.general.countdown(formattedCountdown)}
+          </Typography>
+        </Stack>
       </Stack>
     </Stack>
   );
