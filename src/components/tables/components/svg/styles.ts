@@ -6,5 +6,8 @@ export const styles = {
     height: "auto",
     alignSelf: "end",
     mr: 9,
+    "@media (max-width:1100px)": {
+      mr: 3,
+    },
   } satisfies SxProps,
 };

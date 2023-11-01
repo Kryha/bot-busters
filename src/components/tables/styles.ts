@@ -42,5 +42,8 @@ export const styles = {
     pr: 3,
     display: "flex",
     alignItems: "center",
+    "@media (max-width:1100px)": {
+      maxWidth: "170px",
+    },
   } satisfies SxProps,
 };
