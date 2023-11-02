@@ -29,6 +29,8 @@ export const typography = (): Typography => {
       lineHeight: "96px",
     },
     h2: {
+      fontSize: "57px",
+      lineHeight: "60px",
       fontFamily: font.style.fontFamily,
       fontWeight: 400,
     },
