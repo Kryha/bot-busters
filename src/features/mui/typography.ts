@@ -92,6 +92,7 @@ export const typography = (): Typography => {
       fontSize: "12px",
       fontWeight: 400,
       lineHeight: "32px",
+      letterSpacing: "2px",
       textTransform: "uppercase" as const,
     },
   };
