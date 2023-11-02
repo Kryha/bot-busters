@@ -2,7 +2,7 @@
  * @jest-environment node
  */
 import * as schema from "./schema";
-import { closePostgressConnection, db, dbSchema } from "./index";
+import { closeDbConnection, db, dbSchema } from "./index";
 import {
   createAnonymousUsers,
   deleteUser,
@@ -10,17 +10,14 @@ import {
   setUsername,
   updateUserScore,
 } from "./user";
-import { eq } from "drizzle-orm";
 
-describe("Users CRUD", () => {
+describe("Users CRUD API", () => {
   let testUser: schema.User;
 
-  beforeAll(async () => {});
-
   afterAll(async () => {
-    closePostgressConnection();
+    closeDbConnection();
     //TODO: check if this needs to happen
-    db.delete(dbSchema.users);
+    await db.delete(dbSchema.users);
   });
 
   it("Should insert a new user", async () => {
