@@ -9,6 +9,4 @@ export const db = drizzle(queryClient, { schema });
 
 export const dbSchema = schema;
 
-export const closePostgressConnection = () => {
-  queryClient.end();
-};
+export const closePostgressConnection = () => queryClient.end();

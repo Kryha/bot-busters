@@ -8,10 +8,8 @@ import { eq } from "drizzle-orm";
 describe("Users CRUD", () => {
   let testUser: schema.User;
 
-  beforeAll(async () => { });
-
   afterAll(async () => {
-    closePostgressConnection();
+    await closePostgressConnection();
   });
 
   it("Should insert a new user", async () => {
