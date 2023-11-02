@@ -10,6 +10,7 @@ import {
   setUsername,
   updateUserScore,
 } from "./user";
+import { eq } from "drizzle-orm";
 
 describe("Users CRUD", () => {
   let testUser: schema.User;
