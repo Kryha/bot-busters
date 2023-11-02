@@ -36,7 +36,7 @@ COPY src/ ./src/
 
 RUN yarn install --silent
 
-RUN NODE_OPTIONS='--max-old-space-size=4096' yarn build
+RUN yarn build
 
 FROM node:20-alpine as run
 

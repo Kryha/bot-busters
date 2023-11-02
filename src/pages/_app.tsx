@@ -10,6 +10,9 @@ import { api } from "@/utils/api";
 import { ThemeProvider } from "@/features/mui";
 import "@/styles/globals.css";
 import { APP_NAME } from "@/constants";
+import Head from "next/head";
+
+const headTitle = "Bot Busters";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -25,15 +28,22 @@ const MyApp: AppType<{ session: Session | null }> = ({
   );
 
   return (
-    <WalletProvider wallets={wallets}>
-      <WalletModalProvider>
-        <ThemeProvider>
-          <SessionProvider session={session}>
-            <Component {...pageProps} />
-          </SessionProvider>
-        </ThemeProvider>
-      </WalletModalProvider>
-    </WalletProvider>
+    <>
+      <Head>
+        <title>{headTitle}</title>
+        <meta name="description" content="Bust the bots!" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <WalletProvider wallets={wallets}>
+        <WalletModalProvider>
+          <ThemeProvider>
+            <SessionProvider session={session}>
+              <Component {...pageProps} />
+            </SessionProvider>
+          </ThemeProvider>
+        </WalletModalProvider>
+      </WalletProvider>
+    </>
   );
 };
 

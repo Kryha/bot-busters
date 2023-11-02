@@ -67,6 +67,7 @@ export const typography = (): Typography => {
       fontSize: "16px",
       fontWeight: 400,
       lineHeight: "24px",
+      letterSpacing: "0.5px",
     },
     body2: {
       fontFamily: font.style.fontFamily,
@@ -76,7 +77,7 @@ export const typography = (): Typography => {
       fontSize: "14px",
       fontWeight: 500,
       lineHeight: "36px",
-      textTransform: "none" as const,
+      textTransform: "uppercase" as const,
     },
     caption: {
       fontFamily: font.style.fontFamily,
