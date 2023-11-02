@@ -22,8 +22,15 @@ export const users = bbPgTable("user", {
   username: varchar("username", { length: 32 }).unique(),
   address: varchar("address", { length: PUBLIC_KEY_LENGTH }),
   score: integer("score").default(0).notNull(),
+  gamesPlayed: integer("gamesPlayed").default(0).notNull(),
+  // TODO: add zPass
+  // zPass: json("zPass"),
+
   createdAt: date("createdAt").defaultNow(),
 });
+
+// TODO: implement in score calculation flow
+// export const ranks = bbPgTable("ranks", {});
 
 export const userSchema = createInsertSchema(users);
 export type User = z.infer<typeof userSchema>;
