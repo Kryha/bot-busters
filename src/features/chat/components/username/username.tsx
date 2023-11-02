@@ -3,7 +3,6 @@ import { styles } from "./styles";
 import { type FC } from "react";
 import { text } from "../../text";
 import { Skeleton } from "./skeleton";
-import Alien from "../images/svg/alien.svg";
 
 interface Props {
   color?: string;
