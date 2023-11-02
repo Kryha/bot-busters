@@ -1,27 +1,27 @@
 /*
  * @jest-environment node
  */
-import * as schema from "./schema";
-import { closeDbConnection, db, dbSchema } from "./index";
+import { closeDbConnection } from "../index";
 import {
-  createAnonymousUsers,
+  insertAnonymousUsers,
   deleteUser,
-  getUserById,
   setUsername,
-  updateUserScore,
+  setUserScore,
+  type User,
+  selectUserById,
 } from "./user";
 
 describe("Users CRUD API", () => {
-  let testUser: schema.User;
+  let testUser: User;
 
   afterAll(async () => {
-    closeDbConnection();
-    //TODO: check if this needs to happen
-    await db.delete(dbSchema.users);
+    await closeDbConnection();
   });
 
-  it("Should insert a new user", async () => {
-    const newUser = await createAnonymousUsers();
+  it("Should insert a anonymous user", async () => {
+    const newUser = await insertAnonymousUsers();
+    if (!newUser) return;
+
     testUser = newUser;
 
     expect(testUser).toBeDefined();
@@ -41,7 +41,7 @@ describe("Users CRUD API", () => {
   it("Should update the score ", async () => {
     if (!testUser.id) return;
 
-    const updatedUsers = await updateUserScore(testUser.id, 1);
+    const updatedUsers = await setUserScore(testUser.id, 1);
     const updatedUser = updatedUsers.at(0);
 
     if (!updatedUser) return;
@@ -54,7 +54,7 @@ describe("Users CRUD API", () => {
 
     await deleteUser(testUser.id);
 
-    const deletedUser = await getUserById(testUser.id);
+    const deletedUser = await selectUserById(testUser.id);
 
     expect(deletedUser).toBeUndefined();
   });
