@@ -2,22 +2,28 @@
  * @jest-environment node
  */
 import * as schema from "./schema";
-import { closePostgressConnection, db } from "./index";
-import { eq } from "drizzle-orm";
+import { closePostgressConnection, db, dbSchema } from "./index";
+import {
+  createAnonymousUsers,
+  deleteUser,
+  getUserById,
+  setUsername,
+  updateUserScore,
+} from "./user";
 
 describe("Users CRUD", () => {
   let testUser: schema.User;
 
-  beforeAll(async () => { });
+  beforeAll(async () => {});
 
   afterAll(async () => {
     closePostgressConnection();
+    //TODO: check if this needs to happen
+    db.delete(dbSchema.users);
   });
 
   it("Should insert a new user", async () => {
-    const newUsers = await db.insert(schema.users).values({}).returning();
-    const newUser = newUsers.at(0);
-    if (!newUser) return;
+    const newUser = await createAnonymousUsers();
     testUser = newUser;
 
     expect(testUser).toBeDefined();
@@ -26,12 +32,7 @@ describe("Users CRUD", () => {
   it("Should update the username ", async () => {
     if (!testUser.id) return;
 
-    const updatedUsers = await db
-      .update(schema.users)
-      .set({ username: "testUserName" })
-      .where(eq(schema.users.id, testUser.id))
-      .returning();
-
+    const updatedUsers = await setUsername(testUser.id, "testUserName");
     const updatedUser = updatedUsers.at(0);
 
     if (!updatedUser) return;
@@ -42,12 +43,7 @@ describe("Users CRUD", () => {
   it("Should update the score ", async () => {
     if (!testUser.id) return;
 
-    const updatedUsers = await db
-      .update(schema.users)
-      .set({ score: 1 })
-      .where(eq(schema.users.id, testUser.id))
-      .returning();
-
+    const updatedUsers = await updateUserScore(testUser.id, 1);
     const updatedUser = updatedUsers.at(0);
 
     if (!updatedUser) return;
@@ -58,17 +54,9 @@ describe("Users CRUD", () => {
   it("Sould delete the user", async () => {
     if (!testUser.id) return;
 
-    await db
-      .delete(schema.users)
-      .where(eq(schema.users.id, testUser.id))
-      .returning();
+    await deleteUser(testUser.id);
 
-    const deletedUsers = await db
-      .select()
-      .from(schema.users)
-      .where(eq(schema.users.id, testUser.id));
-
-    const deletedUser = deletedUsers.at(0);
+    const deletedUser = await getUserById(testUser.id);
 
     expect(deletedUser).toBeUndefined();
   });
