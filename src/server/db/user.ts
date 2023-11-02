@@ -1,10 +1,8 @@
 import { dbSchema, User } from "@/server/db";
+import { db } from "@/server/db";
 import { eq } from "drizzle-orm";
-import { PostgresJsDatabase } from "drizzle-orm/postgres-js";
 
-export const createEmptyUsers = (
-  db: PostgresJsDatabase<typeof dbSchema>
-): User => {
+export const createAnonymousUsers = (): User => {
   const createdEmptyUsers = db
     .insert(dbSchema.users)
     .values({})
@@ -14,7 +12,6 @@ export const createEmptyUsers = (
 };
 
 export const createAuthenticatedUser = (
-  db: PostgresJsDatabase<typeof dbSchema>,
   address: string,
   username: string
 ): User => {
@@ -25,10 +22,8 @@ export const createAuthenticatedUser = (
     .then((users) => users[0]);
   return createdEmptyUsers;
 };
-export const getUser = (
-  db: PostgresJsDatabase<typeof dbSchema>,
-  id: string
-) => {
+
+export const getUserById = (id: string): User => {
   const user = db
     .select()
     .from(dbSchema.users)
@@ -42,20 +37,38 @@ export const getUser = (
   return user;
 };
 
-export const deleteUser = async (
-  db: PostgresJsDatabase<typeof dbSchema>,
-  id: string
-) => {
+export const getUserByAddress = (address: string): User => {
+  const user = db
+    .select()
+    .from(dbSchema.users)
+    .where(eq(dbSchema.users.address, address))
+    .then((users) => {
+      //TODO: handle case when user is not found
+      if (users[0] === undefined) return {};
+      return users[0];
+    });
+  if (!user) throw new Error(`User with id ${address} not found`);
+  return user;
+};
+
+export const checkIfUserExists = (username: string): boolean => {
+  const user = db
+    .select()
+    .from(dbSchema.users)
+    .where(eq(dbSchema.users.username, username))
+    .then((users) => {
+      users === undefined ? [] : users;
+    });
+  return user.length > 0;
+};
+
+export const deleteUser = async (id: string) => {
   await db.delete(dbSchema.users).where(eq(dbSchema.users.id, id));
 };
 
-export const mergeUserAccounts = async (
-  db: PostgresJsDatabase<typeof dbSchema>,
-  id: string,
-  newId: string,
-  address: string,
-  username: string
-) => {
-  const user = await getUser(db, id);
-  const newUser = await getUser(db, newId);
+export const setUsername = async (id: string, username: string) => {
+  await db
+    .update(dbSchema.users)
+    .set({ username })
+    .where(eq(dbSchema.users.id, id));
 };
