@@ -20,7 +20,7 @@ export const Landing: FC = () => {
       />
       <StartGame />
 
-      <Timer />
+      <Timer matchDurationInSeconds={50} />
     </>
   );
 };

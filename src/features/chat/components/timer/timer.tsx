@@ -4,11 +4,16 @@ import { Stack, Typography } from "@mui/material";
 import { text } from "@/assets/text";
 import { styles } from "./styles";
 
-export const Timer: FC = () => {
-  const [remainingSeconds, setRemainingSeconds] = useState(40);
-  const initialTotalSeconds = 40; // Set the initial total seconds here
-  const updateAtInterval = 1000; // Update the timer every second
+interface Props {
+  matchDurationInSeconds: number;
+}
 
+export const Timer: FC<Props> = ({ matchDurationInSeconds }) => {
+  const [remainingSeconds, setRemainingSeconds] = useState(
+    matchDurationInSeconds
+  );
+  const updateAtInterval = 500;
+  const alertPercentage = remainingSeconds < 30;
   useEffect(() => {
     const interval = setInterval(() => {
       if (remainingSeconds > 0) {
@@ -23,16 +28,14 @@ export const Timer: FC = () => {
     };
   }, [remainingSeconds]);
 
-  const progress = (remainingSeconds / initialTotalSeconds) * 100;
+  const progress = (remainingSeconds / matchDurationInSeconds) * 100;
   const minutes = Math.floor(remainingSeconds / 60);
   const seconds = remainingSeconds % 60;
-  const formattedCountdown = `${minutes.toString().padStart(2, "0")}:${seconds
-    .toString()
-    .padStart(2, "0")}`;
+  const formattedCountdown = text.general.formattedCountdown(minutes, seconds);
 
   return (
     <Stack sx={styles.wrapper}>
-      <Stack sx={styles.progress(progress, remainingSeconds < 30)}>
+      <Stack sx={styles.progress(progress, alertPercentage)}>
         <Stack sx={styles.countdownWrapper}>
           <Typography
             variant="caption"

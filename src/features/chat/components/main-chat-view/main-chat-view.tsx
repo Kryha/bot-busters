@@ -94,7 +94,7 @@ export const MainChatView: FC<Props> = ({ open, roomId, isSmallScreen }) => {
   return (
     <Stack component="section" sx={styles.section}>
       <Messages groupedMessages={groupedMessages} />
-      <Timer />
+      <Timer matchDurationInSeconds={60} />
       <InputField
         value={message}
         onChange={(e) => setMessage(e.target.value)}

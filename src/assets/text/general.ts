@@ -11,4 +11,8 @@ export const general = {
 
   clickChat: "Click on the chat to open messages",
   countdown: (val: string) => `${val} left`,
+  formattedCountdown: (minutes: number, seconds: number) =>
+    `${minutes.toString().padStart(2, "0")}:${seconds
+      .toString()
+      .padStart(2, "0")}`,
 };
