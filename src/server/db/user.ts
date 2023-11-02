@@ -2,7 +2,7 @@ import { dbSchema, User } from "@/server/db";
 import { db } from "@/server/db";
 import { eq } from "drizzle-orm";
 
-export const createAnonymousUsers = (): User => {
+export const createAnonymousUsers = async (): User => {
   const createdEmptyUsers = db
     .insert(dbSchema.users)
     .values({})
@@ -11,7 +11,7 @@ export const createAnonymousUsers = (): User => {
   return createdEmptyUsers;
 };
 
-export const createAuthenticatedUser = (
+export const createVerifiedUser = async (
   address: string,
   username: string
 ): User => {
@@ -23,21 +23,19 @@ export const createAuthenticatedUser = (
   return createdEmptyUsers;
 };
 
-export const getUserById = (id: string): User => {
+export const getUserById = async (id: string): User => {
   const user = db
     .select()
     .from(dbSchema.users)
     .where(eq(dbSchema.users.id, id))
     .then((users) => {
       //TODO: handle case when user is not found
-      if (users[0] === undefined) return {};
       return users[0];
     });
-  if (!user) throw new Error(`User with id ${id} not found`);
   return user;
 };
 
-export const getUserByAddress = (address: string): User => {
+export const getUserByAddress = async (address: string): User => {
   const user = db
     .select()
     .from(dbSchema.users)
@@ -47,28 +45,25 @@ export const getUserByAddress = (address: string): User => {
       if (users[0] === undefined) return {};
       return users[0];
     });
-  if (!user) throw new Error(`User with id ${address} not found`);
   return user;
 };
 
-export const checkIfUserExists = (username: string): boolean => {
-  const user = db
-    .select()
-    .from(dbSchema.users)
-    .where(eq(dbSchema.users.username, username))
-    .then((users) => {
-      users === undefined ? [] : users;
-    });
-  return user.length > 0;
-};
-
 export const deleteUser = async (id: string) => {
-  await db.delete(dbSchema.users).where(eq(dbSchema.users.id, id));
+  await db.delete(dbSchema.users).where(eq(dbSchema.users.id, id)).returning();
 };
 
 export const setUsername = async (id: string, username: string) => {
-  await db
+  return await db
     .update(dbSchema.users)
     .set({ username })
-    .where(eq(dbSchema.users.id, id));
+    .where(eq(dbSchema.users.id, id))
+    .returning();
+};
+
+export const updateUserScore = async (id: string, score: number) => {
+  return await db
+    .update(dbSchema.users)
+    .set({ score })
+    .where(eq(dbSchema.users.id, id))
+    .returning();
 };
