@@ -2,40 +2,35 @@ import { dbSchema, User } from "@/server/db";
 import { db } from "@/server/db";
 import { eq } from "drizzle-orm";
 
-export const createAnonymousUsers = async (): User => {
-  const createdEmptyUsers = db
+export const insertAnonymousUsers = async (): User => {
+  return await db
     .insert(dbSchema.users)
     .values({})
     .returning()
     .then((users) => users[0]);
-  return createdEmptyUsers;
 };
 
-export const createVerifiedUser = async (
+export const insertVerifiedUser = async (
   address: string,
   username: string
-): User => {
-  const createdEmptyUsers = db
+): Promise<User> => {
+  return db
     .insert(dbSchema.users)
     .values({ address, username })
     .returning()
     .then((users) => users[0]);
-  return createdEmptyUsers;
 };
 
-export const getUserById = async (id: string): User => {
-  const user = db
+export const selectUserById = async (
+  id: string
+): Promise<dbSchUser | undefined> => {
+  return await db
     .select()
     .from(dbSchema.users)
-    .where(eq(dbSchema.users.id, id))
-    .then((users) => {
-      //TODO: handle case when user is not found
-      return users[0];
-    });
-  return user;
+    .where(eq(dbSchema.users.id, id));
 };
 
-export const getUserByAddress = async (address: string): User => {
+export const selectUserByAddress = async (address: string): User => {
   const user = db
     .select()
     .from(dbSchema.users)
@@ -60,7 +55,7 @@ export const setUsername = async (id: string, username: string) => {
     .returning();
 };
 
-export const updateUserScore = async (id: string, score: number) => {
+export const setUserScore = async (id: string, score: number) => {
   return await db
     .update(dbSchema.users)
     .set({ score })
