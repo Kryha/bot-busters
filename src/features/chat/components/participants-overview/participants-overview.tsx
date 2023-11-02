@@ -3,7 +3,7 @@ import { Divider, Stack } from "@mui/material";
 
 import { styles } from "./styles";
 import { UsernameLocal } from "@/features/chat/components";
-import { UsernameOthers } from "../username-others";
+import { UsernameOthers } from "@/features/chat/components";
 
 export const ParticipantsOverview: FC = () => {
   const isFinished = false;
