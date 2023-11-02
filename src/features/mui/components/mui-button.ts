@@ -8,9 +8,7 @@ export const MuiButton = (theme: Theme): Components["MuiButton"] => {
         props: { variant: "contained" },
         style: {
           color: palette.secondary.main,
-          fontWeight: "bold",
-          padding: "12px 32px",
-          borderRadius: "40px",
+          padding: "0px 16px",
         },
       },
     ],
