@@ -11,7 +11,7 @@ import { Username } from "../username";
 import { text } from "../../text";
 import { type FC, useState } from "react";
 import { COLORS } from "../../constants";
-import { DecisionType, decisionTypeSchema } from "@/types";
+import { type DecisionType, decisionTypeSchema } from "@/types";
 
 interface VoteProps extends ToggleButtonGroupProps {
   isFinished?: boolean;
