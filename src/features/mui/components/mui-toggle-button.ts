@@ -8,6 +8,7 @@ export const MuiToggleButton = (_: Theme): Components["MuiToggleButton"] => {
         height: 64,
         borderRadius: "4px !important",
         border: 0,
+        // TODO: Fix colors after design system
         color: "#424242",
         backgroundColor: "#E0E0E0",
 

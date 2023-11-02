@@ -3,6 +3,7 @@ import { styles } from "./styles";
 import { type FC } from "react";
 import { text } from "../../text";
 import { Skeleton } from "./skeleton";
+import Alien from "../images/svg/alien.svg";
 
 interface Props {
   color?: string;
@@ -11,13 +12,12 @@ interface Props {
 
 export const Username: FC<Props> = ({ color = "blue", isLoading }) => {
   const textColor = `${color}.dark`;
-  const src = "../images/svg/alien.svg";
 
   if (isLoading) return <Skeleton />;
 
   return (
     <Stack sx={styles.container}>
-      <Avatar src={src} color={color} sx={styles.avatar} />
+      <Avatar src={Alien} color={color} sx={styles.avatar} />
       <Typography variant="body1" color={textColor}>
         {text.username}
       </Typography>

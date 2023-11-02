@@ -5,7 +5,7 @@ export const styles = {
     return {
       alignItems: isFinished ? "center" : "flex-start",
       width: 1,
-      maxWidth: isFinished ? 660 : 302,
+      maxWidth: isFinished ? 660 : 326,
       pt: 3,
       pr: 3,
     };

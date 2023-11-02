@@ -11,21 +11,24 @@ import { Username } from "../username";
 import { text } from "../../text";
 import { type FC, useState } from "react";
 import { COLORS } from "../../constants";
-
-type Decision = "human" | "bot" | null;
+import { DecisionType, decisionTypeSchema } from "@/types";
 
 interface VoteProps extends ToggleButtonGroupProps {
   isFinished?: boolean;
 }
 
 export const VoteUser: FC<VoteProps> = ({ isFinished, id }) => {
-  const [value, setValue] = useState<Decision>(null);
+  const [value, setValue] = useState<DecisionType | null>(null);
   const color = COLORS[Number(id)];
+
   const handleAlignment = (
     _: React.MouseEvent<HTMLElement>,
-    newValue: Decision
+    newValue: string
   ) => {
-    setValue(newValue);
+    const parsed = decisionTypeSchema.safeParse(newValue);
+    if (!parsed.success) return;
+
+    setValue(parsed.data);
   };
 
   if (!isFinished) return <Username color={color} />;
