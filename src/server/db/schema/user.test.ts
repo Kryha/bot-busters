@@ -9,10 +9,11 @@ import {
   setUserScore,
   selectUserById,
   deleteAllUsers,
+  insertVerifiedUser,
 } from "./user";
 
 describe("Users CRUD API", () => {
-  beforeAll(async () => {
+  beforeEach(async () => {
     await deleteAllUsers();
   });
 
@@ -59,5 +60,50 @@ describe("Users CRUD API", () => {
     const deletedUser = await selectUserById(newAnonymousUser.id);
 
     expect(deletedUser).toBeUndefined();
+  });
+
+  it("Should insert a verified user", async () => {
+    const newVerifiedUser = await insertVerifiedUser(
+      "aleo1rhgdu77hgyqd3xjj8ucu3jj9r2krwz6mnzyd80gncr5fxcwlh5rsvzp9px",
+      "testUserName"
+    );
+    expect(newVerifiedUser).toBeDefined();
+    expect(newVerifiedUser?.address).toBe(
+      "aleo1rhgdu77hgyqd3xjj8ucu3jj9r2krwz6mnzyd80gncr5fxcwlh5rsvzp9px"
+    );
+    expect(newVerifiedUser?.username).toBe("testUserName");
+  });
+
+  it("Should not insert a verified user with an existing address", async () => {
+    const existingUser = await insertVerifiedUser(
+      "aleo1rhgdu77hgyqd3xjj8ucu3jj9r2krwz6mnzyd80gncr5fxcwlh5rsvzp9px",
+      "testUserName"
+    );
+    expect(existingUser).toBeDefined();
+
+    const newUser = async () => {
+      return await insertVerifiedUser(
+        "aleo1rhgdu77hgyqd3xjj8ucu3jj9r2krwz6mnzyd80gncr5fxcwlh5rsvzp9px",
+        "testUserName2"
+      );
+    };
+    await expect(newUser()).rejects.toThrow();
+  });
+
+  it("Should not insert a verified user with an existing username", async () => {
+    const existingUser = await insertVerifiedUser(
+      "aleo1rhgdu77hgyqd3xjj8ucu3jj9r2krwz6mnzyd80gncr5fxcwlh5rsvzp9px",
+      "testUserName"
+    );
+    expect(existingUser).toBeDefined();
+
+    const newUser = async () => {
+      return await insertVerifiedUser(
+        "aleo1tes78447sw8vq0gyc2vqzwlmcvgg2jwes8d3qdveja2r9dejdqxsuegfts",
+        "testUserName"
+      );
+    };
+
+    await expect(newUser()).rejects.toThrow();
   });
 });
