@@ -10,8 +10,8 @@ export const general = {
   results: "Results",
 
   clickChat: "Click on the chat to open messages",
-  countdown: (val: string) => `${val} left`,
-  formattedCountdown: (minutes: number, seconds: number) =>
+  countdown: (val: string): string => `${val} left`,
+  formattedCountdown: (minutes: number, seconds: number): string =>
     `${minutes.toString().padStart(2, "0")}:${seconds
       .toString()
       .padStart(2, "0")}`,

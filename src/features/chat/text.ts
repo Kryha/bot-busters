@@ -3,4 +3,5 @@ export const text = {
   usernameLocal: "you - username",
   send: "SEND",
   inputFieldPlaceholder: "Type your message",
+  chatEnded: "chat ended - voting time!",
 };

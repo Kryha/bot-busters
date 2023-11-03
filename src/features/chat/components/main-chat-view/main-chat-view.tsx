@@ -11,6 +11,8 @@ import { api } from "@/utils/api";
 import { useRouter } from "next/router";
 import { pages } from "@/utils/router";
 import { Timer } from "@/features/chat/components";
+import { CHAT_DURATION_IN_SECONDS } from "@/features/chat/constants";
+
 export interface GroupedMessage {
   messages?: string[];
   isLocalSender?: boolean;
@@ -24,7 +26,7 @@ interface Props {
 export const MainChatView: FC<Props> = ({ open, roomId, isSmallScreen }) => {
   const router = useRouter();
   const { data: sessionData } = useSession();
-
+  const [isFinished, setIsFinished] = useState(false);
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState<ChatMessagePayload[]>([]);
 
@@ -94,11 +96,15 @@ export const MainChatView: FC<Props> = ({ open, roomId, isSmallScreen }) => {
   return (
     <Stack component="section" sx={styles.section}>
       <Messages groupedMessages={groupedMessages} />
-      <Timer matchDurationInSeconds={60} />
+      <Timer
+        matchDurationInSeconds={CHAT_DURATION_IN_SECONDS}
+        setIsFinished={setIsFinished}
+      />
       <InputField
         value={message}
         onChange={(e) => setMessage(e.target.value)}
         onClick={() => sendMessage()}
+        isFinished={isFinished}
       />
     </Stack>
   );
