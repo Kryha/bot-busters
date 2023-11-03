@@ -7,54 +7,56 @@ import {
   deleteUser,
   setUsername,
   setUserScore,
-  type User,
   selectUserById,
+  deleteAllUsers,
 } from "./user";
 
 describe("Users CRUD API", () => {
-  let testUser: User;
+  beforeAll(async () => {
+    await deleteAllUsers();
+  });
 
   afterAll(async () => {
     await closeDbConnection();
   });
 
   it("Should insert a anonymous user", async () => {
-    const newUser = await insertAnonymousUsers();
-    if (!newUser) return;
+    const newAnonymousUser = await insertAnonymousUsers();
+    if (!newAnonymousUser) return;
 
-    testUser = newUser;
-
-    expect(testUser).toBeDefined();
+    expect(newAnonymousUser).toBeDefined();
   });
 
   it("Should update the username ", async () => {
-    if (!testUser.id) return;
+    const newAnonymousUser = await insertAnonymousUsers();
+    if (!newAnonymousUser?.id) return;
 
-    const updatedUsers = await setUsername(testUser.id, "testUserName");
-    const updatedUser = updatedUsers.at(0);
+    const updatedUser = await setUsername(newAnonymousUser.id, "testUserName");
 
+    expect(updatedUser).toBeDefined();
     if (!updatedUser) return;
-
     expect(updatedUser.username).toBe("testUserName");
   });
 
   it("Should update the score ", async () => {
-    if (!testUser.id) return;
+    const newAnonymousUser = await insertAnonymousUsers();
+    if (!newAnonymousUser?.id) return;
 
-    const updatedUsers = await setUserScore(testUser.id, 1);
-    const updatedUser = updatedUsers.at(0);
+    const updatedUser = await setUserScore(newAnonymousUser.id, 1);
 
+    expect(updatedUser).toBeDefined();
     if (!updatedUser) return;
 
     expect(updatedUser.score).toBe(1);
   });
 
-  it("Sould delete the user", async () => {
-    if (!testUser.id) return;
+  it("Should delete the user", async () => {
+    const newAnonymousUser = await insertAnonymousUsers();
+    if (!newAnonymousUser?.id) return;
 
-    await deleteUser(testUser.id);
+    await deleteUser(newAnonymousUser.id);
 
-    const deletedUser = await selectUserById(testUser.id);
+    const deletedUser = await selectUserById(newAnonymousUser.id);
 
     expect(deletedUser).toBeUndefined();
   });
