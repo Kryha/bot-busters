@@ -25,4 +25,10 @@ export const contactListData: ContactListData[] = [
     lastMessage: "I'm looking forward to our meeting tomorrow.",
     time: Date.now(),
   },
+  {
+    username: "Chris Brown",
+    avatar: "chris_avatar.png",
+    lastMessage: "Thanks for your help!",
+    time: Date.now(),
+  },
 ];
