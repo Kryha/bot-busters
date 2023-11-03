@@ -22,7 +22,7 @@ export const bbPgTable = pgTableCreator((name) => `bot_busters_${name}`);
 export const users = bbPgTable("user", {
   id: uuid("id").defaultRandom().primaryKey(),
   username: varchar("username", { length: 32 }).unique(),
-  address: varchar("address", { length: PUBLIC_KEY_LENGTH }),
+  address: varchar("address", { length: PUBLIC_KEY_LENGTH }).unique(),
   score: integer("score").default(0).notNull(),
   createdAt: date("createdAt").defaultNow(),
 });
