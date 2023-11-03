@@ -2,18 +2,13 @@ import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 import { chatEvent, chatRooms, ee } from "@/server/api/match-maker";
 import { observable } from "@trpc/server/observable";
-
-export interface ChatMessagePayload {
-  sender: string;
-  message: string;
-  sentAt: number; // unix time
-}
+import type { ChatMessagePayload } from "@/server/api/match-types";
 
 const verifyUser = (userId: string, roomId: string) => {
   const room = chatRooms[roomId];
   if (!room) throw new Error("Room not found");
 
-  const isUserInRoom = room.players.includes(userId);
+  const isUserInRoom = room.players.find((player) => player.userId === userId);
   if (!isUserInRoom) throw new Error("User is not part of this room");
 };
 

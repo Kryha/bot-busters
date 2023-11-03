@@ -5,7 +5,7 @@ import { styles } from "./styles";
 import { Messages } from "../messages";
 import { InputField } from "../input-field";
 import { useSession } from "next-auth/react";
-import { type ChatMessagePayload } from "@/server/api/routers";
+import { type ChatMessagePayload } from "@/server/api/match-types";
 import { api } from "@/utils/api";
 import { useRouter } from "next/router";
 import { pages } from "@/utils/router";

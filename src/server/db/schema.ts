@@ -1,4 +1,5 @@
 import { PUBLIC_KEY_LENGTH } from "@/constants";
+import { relations } from "drizzle-orm";
 import {
   date,
   integer,
@@ -29,8 +30,19 @@ export const users = bbPgTable("user", {
   createdAt: date("createdAt").defaultNow(),
 });
 
-// TODO: implement in score calculation flow
-// export const ranks = bbPgTable("ranks", {});
-
 export const userSchema = createInsertSchema(users);
 export type User = z.infer<typeof userSchema>;
+
+export const usersRelations = relations(users, ({ one }) => ({
+  rank: one(ranks, {
+    fields: [users.id],
+    references: [ranks.userId],
+  }),
+}));
+
+export const ranks = bbPgTable("rank", {
+  userId: uuid("userId")
+    .references(() => users.id)
+    .primaryKey(),
+  position: integer("position").notNull().unique(),
+});
