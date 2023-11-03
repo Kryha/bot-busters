@@ -7,7 +7,6 @@ import { styles } from "./styles";
 
 interface Props {
   matchDurationInSeconds: number;
-
   setIsFinished: (isFinished: boolean) => void;
 }
 
