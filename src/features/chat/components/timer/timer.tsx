@@ -16,11 +16,12 @@ export const Timer: FC<Props> = ({
 
   setIsFinished,
 }) => {
+  // TODO: change to use backend timer
   const [remainingSeconds, setRemainingSeconds] = useState(
     matchDurationInSeconds
   );
   const updateAtInterval = 500;
-  const alertTimeInSeconds = remainingSeconds < 10;
+  const alertTimeInSeconds = remainingSeconds < 30;
   useEffect(() => {
     if (remainingSeconds === 0) setIsFinished(true);
     const interval = setInterval(() => {
