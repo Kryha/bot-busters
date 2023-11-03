@@ -30,23 +30,27 @@ export const users = bbPgTable("user", {
 export const userSchema = createInsertSchema(users);
 export type User = z.infer<typeof userSchema>;
 
+// This is only here for testing purposes
+export const deleteAllUsers = async () => {
+  await db.delete(users);
+};
+
 export const insertAnonymousUsers = async (): Promise<User | undefined> => {
-  return await db
-    .insert(users)
-    .values({})
-    .returning()
-    .then((users) => users[0]);
+  const newUser = await db.insert(users).values({}).returning();
+
+  return newUser.at(0);
 };
 
 export const insertVerifiedUser = async (
   address: string,
   username: string
 ): Promise<User | undefined> => {
-  return await db
+  const newVerifiedUser = await db
     .insert(users)
     .values({ address, username })
-    .returning()
-    .then((users) => users[0]);
+    .returning();
+
+  return newVerifiedUser.at(0);
 };
 
 export const selectUserById = async (id: string): Promise<User | undefined> => {
@@ -64,16 +68,25 @@ export const selectUserByAddress = async (
   return selectedUsers.at(0);
 };
 
-export const deleteUser = async (id: string) => {
-  await db.delete(users).where(eq(users.id, id)).returning();
+export const deleteUser = async (id: string): Promise<User | undefined> => {
+  const deletedUser = await db
+    .delete(users)
+    .where(eq(users.id, id))
+    .returning();
+  return deletedUser.at(0);
 };
 
-export const setUsername = async (id: string, username: string) => {
-  return await db
+export const setUsername = async (
+  id: string,
+  username: string
+): Promise<User | undefined> => {
+  const updatedUser = await db
     .update(users)
     .set({ username })
     .where(eq(users.id, id))
     .returning();
+
+  return updatedUser.at(0);
 };
 
 export const setUserScore = async (id: string, score: number) => {
@@ -81,5 +94,6 @@ export const setUserScore = async (id: string, score: number) => {
     .update(users)
     .set({ score })
     .where(eq(users.id, id))
-    .returning();
+    .returning()
+    .then((users) => users.at(0));
 };
