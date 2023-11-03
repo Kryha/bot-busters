@@ -1,18 +1,21 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { useState, type FC, useCallback, useEffect } from "react";
+import { z } from "zod";
 import { Stack } from "@mui/material";
-
-import { styles } from "./styles";
-import { Messages } from "../messages";
-import { InputField } from "../input-field";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
+
 import { type ChatMessagePayload } from "@/server/api/routers";
 import { api } from "@/utils/api";
-import { useRouter } from "next/router";
 import { pages } from "@/utils/router";
-import { z } from "zod";
-import { Decision } from "../decision";
-import { Timer } from "@/features/chat/components";
-import { CHAT_DURATION_IN_SECONDS } from "@/features/chat/constants";
+import {
+  Timer,
+  Decision,
+  Messages,
+  InputField,
+} from "@/features/chat/components";
+import { TIMER_IN_SECONDS } from "@/constants";
+import { styles } from "./styles";
 
 export interface GroupedMessage {
   messages?: string[];
@@ -113,11 +116,11 @@ export const MainChatView: FC<Props> = ({ roomId }) => {
         <Decision />
       ) : (
         <>
+          <Messages groupedMessages={groupedMessages} />
           <Timer
-            matchDurationInSeconds={CHAT_DURATION_IN_SECONDS}
+            matchDurationInSeconds={TIMER_IN_SECONDS}
             setIsFinished={setIsFinished}
           />
-          <Messages groupedMessages={groupedMessages} />
           <InputField
             value={message}
             onChange={(e) => setMessage(e.target.value)}
