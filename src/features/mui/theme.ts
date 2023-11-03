@@ -8,17 +8,32 @@ declare module "@mui/material/styles" {
   interface Palette {
     blueGrey: Palette["primary"];
     customGrey: Palette["primary"];
+    orange: Palette["primary"];
+    brown: Palette["primary"];
+    green: Palette["primary"];
+    pink: Palette["primary"];
+    blue: Palette["primary"];
   }
 
   interface PaletteOptions {
     blueGrey?: Palette["primary"];
     customGrey?: Palette["primary"];
+    orange?: PaletteOptions["primary"];
+    brown?: PaletteOptions["primary"];
+    green?: PaletteOptions["primary"];
+    pink?: PaletteOptions["primary"];
+    blue?: PaletteOptions["primary"];
   }
 }
 declare module "@mui/material/Avatar" {
   interface AvatarPropsColorOverrides {
     blueGrey: true;
     customGrey: true;
+    orange: true;
+    brown: true;
+    green: true;
+    pink: true;
+    blue: true;
   }
 }
 
@@ -26,18 +41,16 @@ declare module "@mui/material/Typography" {
   interface TypographyPropsColorOverrides {
     blueGrey: true;
     customGrey: true;
+    orange: true;
+    brown: true;
+    green: true;
+    pink: true;
+    blue: true;
   }
 }
-
 declare module "@mui/material/Button" {
   interface ButtonPropsColorOverrides {
     blueGrey: true;
-    customGrey: true;
-  }
-}
-
-declare module "@mui/material/LinearProgress" {
-  interface LinearProgressPropsColorOverrides {
     customGrey: true;
   }
 }

@@ -1,15 +1,16 @@
 import { useState, type FC, useCallback, useEffect } from "react";
-import { Stack, Typography } from "@mui/material";
+import { Stack } from "@mui/material";
 
 import { styles } from "./styles";
 import { Messages } from "../messages";
-import { text } from "@/assets/text";
 import { InputField } from "../input-field";
 import { useSession } from "next-auth/react";
 import { type ChatMessagePayload } from "@/server/api/routers";
 import { api } from "@/utils/api";
 import { useRouter } from "next/router";
 import { pages } from "@/utils/router";
+import { z } from "zod";
+import { Decision } from "../decision";
 import { Timer } from "@/features/chat/components";
 import { CHAT_DURATION_IN_SECONDS } from "@/features/chat/constants";
 
@@ -19,11 +20,9 @@ export interface GroupedMessage {
 }
 interface Props {
   roomId: string;
-  open: boolean;
-  isSmallScreen: boolean;
 }
 
-export const MainChatView: FC<Props> = ({ open, roomId, isSmallScreen }) => {
+export const MainChatView: FC<Props> = ({ roomId }) => {
   const router = useRouter();
   const { data: sessionData } = useSession();
   const [isFinished, setIsFinished] = useState(false);
@@ -59,8 +58,9 @@ export const MainChatView: FC<Props> = ({ open, roomId, isSmallScreen }) => {
         appendMessage(payload);
       },
       onError(error) {
+        // TODO: Fix router
         console.error("Chat message error:", error);
-        void router.push(pages.home);
+        // void router.push(pages.home);
       },
     }
   );
@@ -69,7 +69,17 @@ export const MainChatView: FC<Props> = ({ open, roomId, isSmallScreen }) => {
     { roomId },
     {
       onData() {
-        void router.push(pages.decision);
+        // TODO: Fix routing
+        void router.push(
+          {
+            pathname: pages.chat,
+            query: { roomId: roomId, gameState: "Decision" },
+          },
+          undefined,
+          {
+            shallow: true,
+          }
+        );
       },
       onError(error) {
         console.error("Error on timeout:", error);
@@ -90,22 +100,32 @@ export const MainChatView: FC<Props> = ({ open, roomId, isSmallScreen }) => {
     };
   }, [sendMessage]);
 
-  if (!isSmallScreen && !open)
-    return <Typography variant="h2">{text.general.clickChat}</Typography>;
+  // TODO: Fix routing & state management
+  const { query } = useRouter();
+
+  const parse = z.string().safeParse(query.gameState);
+  const gameState = parse.success ? parse.data : "";
+  const isResults = gameState === "Results";
 
   return (
     <Stack component="section" sx={styles.section}>
-      <Messages groupedMessages={groupedMessages} />
-      <Timer
-        matchDurationInSeconds={CHAT_DURATION_IN_SECONDS}
-        setIsFinished={setIsFinished}
-      />
-      <InputField
-        value={message}
-        onChange={(e) => setMessage(e.target.value)}
-        onClick={() => sendMessage()}
-        isFinished={isFinished}
-      />
+      {isResults ? (
+        <Decision />
+      ) : (
+        <>
+          <Timer
+            matchDurationInSeconds={CHAT_DURATION_IN_SECONDS}
+            setIsFinished={setIsFinished}
+          />
+          <Messages groupedMessages={groupedMessages} />
+          <InputField
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            onClick={() => sendMessage()}
+            isFinished={isFinished}
+          />
+        </>
+      )}
     </Stack>
   );
 };

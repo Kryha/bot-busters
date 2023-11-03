@@ -2,7 +2,7 @@ import { type UserStatsData } from "@/types";
 
 export const fakeUsername = "CharlieBrown";
 
-export const fakeCountdown = "11.34.12";
+export const fakeCountdown = "11:34:12";
 
 export const fakeStats: UserStatsData = {
   todaysPoints: 1000,

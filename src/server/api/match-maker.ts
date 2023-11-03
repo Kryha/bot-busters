@@ -23,7 +23,7 @@ export const chatEvent = (
   return `chat_${roomId}_${eventType}`;
 };
 
-const TWO_MINUTES = 120000;
+const TIMER = 3000;
 
 const makeMatch = () => {
   try {
@@ -49,7 +49,7 @@ const deleteStaleMatches = () => {
   const preservedRooms: ChatRooms = Object.entries(chatRooms).reduce(
     (accRooms, [roomId, room]) => {
       // delete rooms that have been created more than 2 minutes ago
-      if (Date.now() - room.createdAt >= TWO_MINUTES) {
+      if (Date.now() - room.createdAt >= TIMER) {
         ee.emit(chatEvent(roomId, "timeout"));
         return accRooms;
       } else {
