@@ -35,7 +35,7 @@ export const deleteAllUsers = async () => {
   await db.delete(users);
 };
 
-export const insertAnonymousUsers = async (): Promise<User | undefined> => {
+export const insertAnonymousUsers = async () => {
   const newUser = await db.insert(users).values({}).returning();
 
   return newUser.at(0);
@@ -53,7 +53,7 @@ export const insertVerifiedUser = async (
   return newVerifiedUser.at(0);
 };
 
-export const selectUserById = async (id: string): Promise<User | undefined> => {
+export const selectUserById = async (id: string) => {
   const selectedUsers = await db.select().from(users).where(eq(users.id, id));
   return selectedUsers.at(0);
 };
@@ -68,7 +68,7 @@ export const selectUserByAddress = async (
   return selectedUsers.at(0);
 };
 
-export const deleteUser = async (id: string): Promise<User | undefined> => {
+export const deleteUser = async (id: string) => {
   const deletedUser = await db
     .delete(users)
     .where(eq(users.id, id))
@@ -80,20 +80,21 @@ export const setUsername = async (
   id: string,
   username: string
 ): Promise<User | undefined> => {
-  const updatedUser = await db
+  const updatedUsers = await db
     .update(users)
     .set({ username })
     .where(eq(users.id, id))
     .returning();
 
-  return updatedUser.at(0);
+  return updatedUsers.at(0);
 };
 
 export const setUserScore = async (id: string, score: number) => {
-  return await db
+  const updatedUsers = await db
     .update(users)
     .set({ score })
     .where(eq(users.id, id))
-    .returning()
-    .then((users) => users.at(0));
+    .returning();
+
+  return updatedUsers.at(0);
 };
