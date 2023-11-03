@@ -41,6 +41,12 @@ export const insertAnonymousUsers = async () => {
   return newUser.at(0);
 };
 
+export const insertUserWithAddress = async (address: string) => {
+  const newUser = await db.insert(users).values({ address }).returning();
+
+  return newUser.at(0);
+};
+
 export const insertVerifiedUser = async (
   address: string,
   username: string
