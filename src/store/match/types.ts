@@ -1,4 +1,4 @@
-import { MatchStateType } from "@/types";
+import { type MatchStateType } from "@/types";
 
 export interface MatchSlice {
   matchState: MatchStateType;
