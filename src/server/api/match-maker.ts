@@ -7,6 +7,7 @@ import type {
   Player,
   ReadyToPlayPayload,
 } from "@/server/api/match-types";
+import { getRandomInt } from "@/utils/math";
 
 export const ee = new EventEmitter();
 export const lobbyQueue: string[] = [];
@@ -54,22 +55,34 @@ const makeMatch = () => {
   }
 };
 
-const mainLoop = () => {
+const updateRooms = () => {
   const preservedRooms: ChatRooms = Object.entries(chatRooms).reduce(
     (accRooms, [roomId, room]) => {
       const roomAge = Date.now() - room.createdAt;
 
       switch (true) {
         case roomAge >= TEN_MINUTES:
-          // delete stale chat rooms if there are any
+          // delete stale chat room
           return accRooms;
-        case roomAge >= TWO_MINUTES:
-          ee.emit(chatEvent(roomId, "timeout"));
-          return {
-            ...accRooms,
-            // TODO: set stage to `voting`, set it to `finished` after voting is complete and delete after score has been calculated
-            [roomId]: { ...room, stage: "finished" },
-          } satisfies ChatRooms;
+
+        case room.stage === "chat": {
+          if (roomAge >= TWO_MINUTES) {
+            // TODO: calculate score based on votes
+            // TODO: increment score on db
+            // TODO: delete from record of matches after a bit of time (how much time? maybe the cleanup function is enough?)
+            const players = room.players.map((player) => ({
+              ...player,
+              score: getRandomInt(25),
+            }));
+
+            ee.emit(chatEvent(roomId, "timeout"));
+            return {
+              ...accRooms,
+              // TODO: set stage to `voting`, set it to `finished` after voting is complete and delete after score has been calculated
+              [roomId]: { ...room, stage: "finished", players },
+            } satisfies ChatRooms;
+          }
+        }
 
         default:
           return { ...accRooms, [roomId]: room };
@@ -80,17 +93,22 @@ const mainLoop = () => {
   chatRooms = preservedRooms;
 };
 
-// TODO: check if finished, then calc score and delete from record of matches
 // const calculateScores = () => {
-//   // TODO: use RNG to assign score to users
 //   for (const roomId in chatRooms) {
 //     const room = chatRooms[roomId];
 //     if (room?.stage === "finished") {
+//       room.players.forEach((player) => {
+//         if (player.isBot) return;
+//         // TODO: calculate score based on votes
+//         // TODO: increment score on db
+//         // TODO: delete from record of matches after a bit of time (how much time? maybe the cleanup function is enough?)
+//         player.score = getRandomInt(25);
+//       });
 //     }
 //   }
 // };
 
 setInterval(() => {
-  mainLoop();
+  updateRooms();
   makeMatch();
 }, 10000);

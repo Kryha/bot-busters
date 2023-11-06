@@ -24,7 +24,7 @@ export interface Player {
 // TODO: add record of votes after implementing voting mechanism and distinguishing between bots and humans
 interface ChatRoom {
   players: Player[];
-  stage: "chat" | "voting" | "finished";
+  stage: "chat" | "voting" | "results" | "finished";
   createdAt: number; // unix timestamp
 }
 
