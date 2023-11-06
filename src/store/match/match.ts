@@ -2,6 +2,6 @@ import { type StateCreator } from "zustand";
 import { type MatchSlice } from "./types";
 
 export const createMatchSlice: StateCreator<MatchSlice> = (set) => ({
-  matchState: "Chat",
+  matchState: "chat",
   setMatchState: (value) => set(() => ({ matchState: value })),
 });
