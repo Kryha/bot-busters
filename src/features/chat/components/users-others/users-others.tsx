@@ -46,6 +46,7 @@ export const UsersOthers: FC<Props> = ({ onDecided }) => {
         }
       );
     }
+    // TODO: fix dependencies
   }, [users, onDecided, roomId.success]);
 
   const intro = isResults ? text.whosBotAnd : text.otherParticipants;

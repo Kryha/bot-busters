@@ -2,16 +2,10 @@ import { observable } from "@trpc/server/observable";
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 
 import { ee, lobbyQueue } from "@/server/api/match-maker";
-
-interface ReadyToPlayPayload {
-  players: [string, string];
-  roomId: string;
-}
-
-interface QueueUpdatePayload {
-  playerQueuePosition: number;
-  queueLength: number;
-}
+import type {
+  QueueUpdatePayload,
+  ReadyToPlayPayload,
+} from "@/server/api/match-types";
 
 export const lobbyRouter = createTRPCRouter({
   onQueueUpdate: protectedProcedure.subscription(({ ctx }) => {

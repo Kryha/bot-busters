@@ -3,9 +3,7 @@ import { useState, type FC, useCallback, useEffect } from "react";
 import { z } from "zod";
 import { Stack } from "@mui/material";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/router";
-
-import { type ChatMessagePayload } from "@/server/api/routers";
+import { type ChatMessagePayload } from "@/server/api/match-types";
 import { api } from "@/utils/api";
 import { pages } from "@/utils/router";
 import {
@@ -14,8 +12,9 @@ import {
   Messages,
   InputField,
 } from "@/features/chat/components";
-import { TIMER_IN_SECONDS } from "@/constants";
+import { CHAT_TIME_SEC } from "@/constants";
 import { styles } from "./styles";
+import { useRouter } from "next/router";
 
 export interface GroupedMessage {
   messages?: string[];
@@ -118,7 +117,7 @@ export const MainChatView: FC<Props> = ({ roomId }) => {
         <>
           <Messages groupedMessages={groupedMessages} />
           <Timer
-            matchDurationInSeconds={TIMER_IN_SECONDS}
+            matchDurationInSeconds={CHAT_TIME_SEC}
             setIsFinished={setIsFinished}
           />
           <InputField

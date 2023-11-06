@@ -1,7 +1,12 @@
-[add_player]
-player: address = aleo17pahmhudjt89v27rkwmq25ez5z0d5ef89s6x355ls2yvh4t70vzqwzxghz;
+// [add_player]
+// player: address = aleo17pahmhudjt89v27rkwmq25ez5z0d5ef89s6x355ls2yvh4t70vzqwzxghz;
 
-[update]
-player: address = aleo17pahmhudjt89v27rkwmq25ez5z0d5ef89s6x355ls2yvh4t70vzqwzxghz;
-current_score: i64 = 0i64;
-win: bool = false;
+// [update]
+// player: address = aleo17pahmhudjt89v27rkwmq25ez5z0d5ef89s6x355ls2yvh4t70vzqwzxghz;
+// current_score: i64 = 0i64;
+// win: bool = false;
+
+[update_score]
+user_id: field = 42field;
+username: field = 42field;
+new_score: u64 = 42u64
