@@ -1,3 +1,4 @@
+import { TIMER } from "@/constants";
 import { env } from "@/env.cjs";
 import { EventEmitter } from "events";
 import { v4 as uuid } from "uuid";
@@ -22,8 +23,6 @@ export const chatEvent = (
 ) => {
   return `chat_${roomId}_${eventType}`;
 };
-
-const TIMER = 3000;
 
 const makeMatch = () => {
   try {

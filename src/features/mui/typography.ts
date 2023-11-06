@@ -55,7 +55,7 @@ export const typography = (): Typography => {
     h6: {
       fontFamily: font.style.fontFamily,
       fontSize: "24px",
-      fontWeight: 500,
+      fontWeight: 400,
       lineHeight: "33.6px",
     },
     subtitle1: {

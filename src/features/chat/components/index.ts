@@ -5,4 +5,8 @@ export * from "./participants-overview";
 export * from "./main-chat-view";
 export * from "./toolbar";
 export * from "./messages";
+export * from "./timer";
 export * from "./toolbar-menu";
+export * from "./input-field";
+export * from "./decision";
+export * from "./prompt";

@@ -3,6 +3,7 @@ export const text = {
   usernameLocal: "you - username",
   send: "SEND",
   inputFieldPlaceholder: "Type your message",
+  chatEnded: "chat ended - voting time!",
   inThisChatRoom: "In this chat room you appear as",
   otherParticipants: "Other participants in this room",
   whosBotAnd: "Who’s bot and who’s not?",
