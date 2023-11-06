@@ -18,6 +18,7 @@ export interface Player {
   userId: string;
   score: number;
   isBot: boolean;
+  isScoreSaved: boolean;
   // TODO: add `votes` and `chatNickname` fields
 }
 
