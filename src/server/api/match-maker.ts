@@ -4,7 +4,7 @@ import { EventEmitter } from "events";
 import { v4 as uuid } from "uuid";
 import type {
   ChatEventType,
-  ChatRooms,
+  ChatRoom,
   Player,
   ReadyToPlayPayload,
 } from "@/server/api/match-types";
@@ -23,7 +23,7 @@ export const chatEvent = (
   return `chat_${roomId}_${eventType}`;
 };
 
-export let chatRooms: ChatRooms = {};
+export const chatRooms = new Map<string, ChatRoom>();
 
 const generatePlayer = (userId: string): Player => ({
   userId,
@@ -40,11 +40,11 @@ const makeMatch = () => {
 
     const roomId = uuid();
 
-    chatRooms[roomId] = {
+    chatRooms.set(roomId, {
       players: playerIds.map((id) => generatePlayer(id)),
       stage: "chat",
       createdAt: Date.now(),
-    };
+    });
 
     // TODO: update event
     ee.emit("readyToPlay", {
@@ -58,65 +58,64 @@ const makeMatch = () => {
 };
 
 const updateRooms = () => {
-  const preservedRooms: ChatRooms = Object.entries(chatRooms).reduce(
-    (accRooms: ChatRooms, [roomId, room]) => {
-      const roomAge = Date.now() - room.createdAt;
+  chatRooms.forEach((room, roomId) => {
+    const roomAge = Date.now() - room.createdAt;
 
-      switch (true) {
-        case roomAge >= MATCH_TIME_MS:
-          // delete stale chat room
-          return accRooms;
+    if (roomAge >= MATCH_TIME_MS) {
+      chatRooms.delete(roomId);
+      return;
+    }
 
-        case room.stage === "chat": {
-          if (roomAge >= CHAT_TIME_MS) {
-            // TODO: calculate score based on votes
-            const players = room.players.map((player) => ({
-              ...player,
-              score: getRandomInt(25),
-            }));
+    if (room.stage === "chat" && roomAge >= CHAT_TIME_MS) {
+      // TODO: calculate score based on votes
+      const players = room.players.map((player) => ({
+        ...player,
+        score: getRandomInt(25),
+      }));
 
-            ee.emit(chatEvent(roomId, "timeout"));
-            return {
-              ...accRooms,
-              // TODO: set stage to `voting`, set it to `results` after voting is complete and delete after score has been calculated
-              [roomId]: { ...room, stage: "results", players },
-            } satisfies ChatRooms;
-          }
-        }
-
-        default:
-          return { ...accRooms, [roomId]: room };
-      }
-    },
-    {} satisfies ChatRooms
-  );
-  chatRooms = preservedRooms;
+      ee.emit(chatEvent(roomId, "timeout"));
+      // TODO: set stage to `voting`, set it to `results` after voting is complete and delete after score has been calculated
+      chatRooms.set(roomId, { ...room, players, stage: "results" });
+    }
+  });
 };
 
-// TODO: also store match details in the db and delete record entry
+// TODO: also store match details in the db
 const saveScore = async () => {
-  const promises = Object.entries(chatRooms).flatMap(([roomId, room]) => {
+  const roomsToDelete = new Set<string>();
+
+  const promises = Array.from(chatRooms.entries()).flatMap(([roomId, room]) => {
     if (room.stage !== "results") return;
-    return room.players.map(async (player, playerIndex) => {
+    roomsToDelete.add(roomId);
+
+    return room.players.map(async (player) => {
       try {
         if (player.isScoreSaved) return;
-        chatRooms[roomId]!.players[playerIndex]!.isScoreSaved = true;
-        console.log("Updating user score", player.score);
+        player.isScoreSaved = true;
         await db.execute(
           sql`UPDATE ${users} SET score = score + ${player.score} WHERE ${users.id} = ${player.userId}`
         );
       } catch (error) {
-        chatRooms[roomId]!.players[playerIndex]!.isScoreSaved = false;
+        player.isScoreSaved = false;
         console.error("Score update error:", error);
+        roomsToDelete.delete(roomId);
       }
     });
   });
 
   await Promise.all(promises);
+
+  return roomsToDelete;
+};
+
+const deleteRooms = (roomsToDelete: Set<string>) => {
+  roomsToDelete.forEach((roomId) => {
+    chatRooms.delete(roomId);
+  });
 };
 
 setInterval(() => {
   updateRooms();
-  void saveScore();
+  void saveScore().then((roomsToDelete) => deleteRooms(roomsToDelete));
   makeMatch();
 }, 10000);
