@@ -1,14 +1,21 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { useState, type FC, useCallback, useEffect } from "react";
+import { z } from "zod";
 import { Stack } from "@mui/material";
-
-import { styles } from "./styles";
-import { Messages } from "../messages";
-import { InputField } from "../input-field";
 import { useSession } from "next-auth/react";
 import { type ChatMessagePayload } from "@/server/api/match-types";
 import { api } from "@/utils/api";
-import { useRouter } from "next/router";
 import { pages } from "@/utils/router";
+import {
+  Timer,
+  Decision,
+  Messages,
+  InputField,
+} from "@/features/chat/components";
+import { CHAT_TIME_SEC } from "@/constants";
+import { styles } from "./styles";
+import { useRouter } from "next/router";
+
 export interface GroupedMessage {
   messages?: string[];
   isLocalSender?: boolean;
@@ -20,7 +27,7 @@ interface Props {
 export const MainChatView: FC<Props> = ({ roomId }) => {
   const router = useRouter();
   const { data: sessionData } = useSession();
-
+  const [isFinished, setIsFinished] = useState(false);
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState<ChatMessagePayload[]>([]);
 
@@ -53,8 +60,9 @@ export const MainChatView: FC<Props> = ({ roomId }) => {
         appendMessage(payload);
       },
       onError(error) {
+        // TODO: Fix router
         console.error("Chat message error:", error);
-        void router.push(pages.home);
+        // void router.push(pages.home);
       },
     }
   );
@@ -63,7 +71,17 @@ export const MainChatView: FC<Props> = ({ roomId }) => {
     { roomId },
     {
       onData() {
-        void router.push(pages.decision);
+        // TODO: Fix routing
+        void router.push(
+          {
+            pathname: pages.chat,
+            query: { roomId: roomId, gameState: "Decision" },
+          },
+          undefined,
+          {
+            shallow: true,
+          }
+        );
       },
       onError(error) {
         console.error("Error on timeout:", error);
@@ -84,14 +102,32 @@ export const MainChatView: FC<Props> = ({ roomId }) => {
     };
   }, [sendMessage]);
 
+  // TODO: Fix routing & state management
+  const { query } = useRouter();
+
+  const parse = z.string().safeParse(query.gameState);
+  const gameState = parse.success ? parse.data : "";
+  const isResults = gameState === "Results";
+
   return (
     <Stack component="section" sx={styles.section}>
-      <Messages groupedMessages={groupedMessages} />
-      <InputField
-        value={message}
-        onChange={(e) => setMessage(e.target.value)}
-        onClick={() => sendMessage()}
-      />
+      {isResults ? (
+        <Decision />
+      ) : (
+        <>
+          <Messages groupedMessages={groupedMessages} />
+          <Timer
+            matchDurationInSeconds={CHAT_TIME_SEC}
+            setIsFinished={setIsFinished}
+          />
+          <InputField
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            onClick={() => sendMessage()}
+            isFinished={isFinished}
+          />
+        </>
+      )}
     </Stack>
   );
 };

@@ -1,3 +1,4 @@
+import { CHAT_TIME_MS, MATCH_TIME_MS } from "@/constants";
 import { env } from "@/env.cjs";
 import { EventEmitter } from "events";
 import { v4 as uuid } from "uuid";
@@ -20,9 +21,6 @@ export const chatEvent = (
 };
 
 export let chatRooms: ChatRooms = {};
-
-const TWO_MINUTES = 120000;
-const TEN_MINUTES = 600000;
 
 const generatePlayer = (userId: string): Player => ({
   userId,
@@ -61,12 +59,12 @@ const updateRooms = () => {
       const roomAge = Date.now() - room.createdAt;
 
       switch (true) {
-        case roomAge >= TEN_MINUTES:
+        case roomAge >= MATCH_TIME_MS:
           // delete stale chat room
           return accRooms;
 
         case room.stage === "chat": {
-          if (roomAge >= TWO_MINUTES) {
+          if (roomAge >= CHAT_TIME_MS) {
             // TODO: calculate score based on votes
             // TODO: increment score on db
             // TODO: delete from record of matches after a bit of time (how much time? maybe the cleanup function is enough?)
@@ -78,8 +76,8 @@ const updateRooms = () => {
             ee.emit(chatEvent(roomId, "timeout"));
             return {
               ...accRooms,
-              // TODO: set stage to `voting`, set it to `finished` after voting is complete and delete after score has been calculated
-              [roomId]: { ...room, stage: "finished", players },
+              // TODO: set stage to `voting`, set it to `results` after voting is complete and delete after score has been calculated
+              [roomId]: { ...room, stage: "results", players },
             } satisfies ChatRooms;
           }
         }
@@ -96,7 +94,7 @@ const updateRooms = () => {
 // const calculateScores = () => {
 //   for (const roomId in chatRooms) {
 //     const room = chatRooms[roomId];
-//     if (room?.stage === "finished") {
+//     if (room?.stage === "results") {
 //       room.players.forEach((player) => {
 //         if (player.isBot) return;
 //         // TODO: calculate score based on votes

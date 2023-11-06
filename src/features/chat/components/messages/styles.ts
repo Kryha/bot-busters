@@ -59,7 +59,7 @@ export const styles = {
   },
   messagesContainer: {
     pl: 3,
-    pr: 2,
+    pr: 3,
     overflowY: "scroll",
     flexDirection: "column-reverse",
     flexGrow: 1,

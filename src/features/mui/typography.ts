@@ -29,6 +29,8 @@ export const typography = (): Typography => {
       lineHeight: "96px",
     },
     h2: {
+      fontSize: "57px",
+      lineHeight: "60px",
       fontFamily: font.style.fontFamily,
       fontWeight: 400,
     },
@@ -53,7 +55,7 @@ export const typography = (): Typography => {
     h6: {
       fontFamily: font.style.fontFamily,
       fontSize: "24px",
-      fontWeight: 500,
+      fontWeight: 400,
       lineHeight: "33.6px",
     },
     subtitle1: {
@@ -90,6 +92,7 @@ export const typography = (): Typography => {
       fontSize: "12px",
       fontWeight: 400,
       lineHeight: "32px",
+      letterSpacing: "2px",
       textTransform: "uppercase" as const,
     },
   };
