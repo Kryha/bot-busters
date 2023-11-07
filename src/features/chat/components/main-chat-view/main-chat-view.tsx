@@ -74,7 +74,7 @@ export const MainChatView: FC<Props> = ({ roomId }) => {
         // TODO: Fix routing
         void router.push(
           {
-            pathname: pages.chat,
+            pathname: pages.match,
             query: { roomId: roomId, gameState: "Decision" },
           },
           undefined,

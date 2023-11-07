@@ -30,7 +30,7 @@ const Lobby: FC = () => {
 
   api.lobby.onReadyToPlay.useSubscription(undefined, {
     onData({ roomId }) {
-      void router.push({ pathname: pages.chat, query: { roomId } });
+      void router.push({ pathname: pages.match, query: { roomId } });
     },
     onError(error) {
       console.error("Ready to play error:", error);
