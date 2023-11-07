@@ -1,10 +1,9 @@
-import { eq, relations } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import { bbPgTable, db } from "../index";
 import { PUBLIC_KEY_LENGTH } from "@/constants";
 import { date, integer, varchar, uuid } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { type z } from "zod";
-import { ranks } from "./rank";
 
 export const users = bbPgTable("user", {
   id: uuid("id").defaultRandom().primaryKey(),
@@ -19,13 +18,6 @@ export const users = bbPgTable("user", {
 
 export const userSchema = createInsertSchema(users);
 export type User = z.infer<typeof userSchema>;
-
-export const usersRelations = relations(users, ({ one }) => ({
-  rank: one(ranks, {
-    fields: [users.id],
-    references: [ranks.userId],
-  }),
-}));
 
 // This is only here for testing purposes
 export const deleteAllUsers = async () => {
