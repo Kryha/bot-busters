@@ -8,6 +8,7 @@ program leaderboard.aleo {
 
     mapping users: field => User;
 
+    // TODO: check how to update more players at once
     transition update_score(user_id: field, username: field, new_score: u64) {
         // TODO: validate zPass
         assert_eq(self.caller, self.signer);

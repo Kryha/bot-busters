@@ -18,16 +18,15 @@ export interface Player {
   userId: string;
   score: number;
   isBot: boolean;
+  isScoreSaved: boolean;
   // TODO: add `votes` and `chatNickname` fields
 }
 
 // TODO: add record of votes after implementing voting mechanism and distinguishing between bots and humans
-interface ChatRoom {
+export interface ChatRoom {
   players: Player[];
   stage: "chat" | "voting" | "results";
   createdAt: number; // unix timestamp
 }
-
-export type ChatRooms = Record<string, ChatRoom>;
 
 export type ChatEventType = "message" | "timeout";

@@ -5,7 +5,7 @@ import { observable } from "@trpc/server/observable";
 import type { ChatMessagePayload } from "@/server/api/match-types";
 
 const verifyUser = (userId: string, roomId: string) => {
-  const room = chatRooms[roomId];
+  const room = chatRooms.get(roomId);
   if (!room) throw new Error("Room not found");
 
   const isUserInRoom = room.players.find((player) => player.userId === userId);

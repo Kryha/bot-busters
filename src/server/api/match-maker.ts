@@ -4,11 +4,14 @@ import { EventEmitter } from "events";
 import { v4 as uuid } from "uuid";
 import type {
   ChatEventType,
-  ChatRooms,
+  ChatRoom,
   Player,
   ReadyToPlayPayload,
 } from "@/server/api/match-types";
 import { getRandomInt } from "@/utils/math";
+import { db } from "@/server/db";
+import { users } from "@/server/db/schema";
+import { sql } from "drizzle-orm";
 
 export const ee = new EventEmitter();
 export const lobbyQueue: string[] = [];
@@ -20,12 +23,13 @@ export const chatEvent = (
   return `chat_${roomId}_${eventType}`;
 };
 
-export let chatRooms: ChatRooms = {};
+export const chatRooms = new Map<string, ChatRoom>();
 
 const generatePlayer = (userId: string): Player => ({
   userId,
   score: 0,
   isBot: false, // TODO: set to correct value
+  isScoreSaved: false,
 });
 
 const makeMatch = () => {
@@ -36,11 +40,11 @@ const makeMatch = () => {
 
     const roomId = uuid();
 
-    chatRooms[roomId] = {
+    chatRooms.set(roomId, {
       players: playerIds.map((id) => generatePlayer(id)),
       stage: "chat",
       createdAt: Date.now(),
-    };
+    });
 
     // TODO: update event
     ee.emit("readyToPlay", {
@@ -54,59 +58,60 @@ const makeMatch = () => {
 };
 
 const updateRooms = () => {
-  const preservedRooms: ChatRooms = Object.entries(chatRooms).reduce(
-    (accRooms, [roomId, room]) => {
-      const roomAge = Date.now() - room.createdAt;
+  chatRooms.forEach((room, roomId) => {
+    const roomAge = Date.now() - room.createdAt;
 
-      switch (true) {
-        case roomAge >= MATCH_TIME_MS:
-          // delete stale chat room
-          return accRooms;
+    if (roomAge >= MATCH_TIME_MS) {
+      chatRooms.delete(roomId);
+      return;
+    }
 
-        case room.stage === "chat": {
-          if (roomAge >= CHAT_TIME_MS) {
-            // TODO: calculate score based on votes
-            // TODO: increment score on db
-            // TODO: delete from record of matches after a bit of time (how much time? maybe the cleanup function is enough?)
-            const players = room.players.map((player) => ({
-              ...player,
-              score: getRandomInt(25),
-            }));
+    if (room.stage === "chat" && roomAge >= CHAT_TIME_MS) {
+      // TODO: calculate score based on votes
+      const players = room.players.map((player) => ({
+        ...player,
+        score: getRandomInt(25),
+      }));
 
-            ee.emit(chatEvent(roomId, "timeout"));
-            return {
-              ...accRooms,
-              // TODO: set stage to `voting`, set it to `results` after voting is complete and delete after score has been calculated
-              [roomId]: { ...room, stage: "results", players },
-            } satisfies ChatRooms;
-          }
-        }
-
-        default:
-          return { ...accRooms, [roomId]: room };
-      }
-    },
-    {} satisfies ChatRooms
-  );
-  chatRooms = preservedRooms;
+      ee.emit(chatEvent(roomId, "timeout"));
+      // TODO: set stage to `voting`, set it to `results` after voting is complete and delete after score has been calculated
+      chatRooms.set(roomId, { ...room, players, stage: "results" });
+    }
+  });
 };
 
-// const calculateScores = () => {
-//   for (const roomId in chatRooms) {
-//     const room = chatRooms[roomId];
-//     if (room?.stage === "results") {
-//       room.players.forEach((player) => {
-//         if (player.isBot) return;
-//         // TODO: calculate score based on votes
-//         // TODO: increment score on db
-//         // TODO: delete from record of matches after a bit of time (how much time? maybe the cleanup function is enough?)
-//         player.score = getRandomInt(25);
-//       });
-//     }
-//   }
-// };
+// TODO: also store match details in the db
+const saveScore = async () => {
+  const roomsToDelete = new Set<string>();
+
+  const promises = Array.from(chatRooms.entries()).flatMap(([roomId, room]) => {
+    if (room.stage !== "results") return;
+    roomsToDelete.add(roomId);
+
+    return room.players.map(async (player) => {
+      try {
+        if (player.isScoreSaved) return;
+        player.isScoreSaved = true;
+        await db.execute(
+          sql`UPDATE ${users} SET score = score + ${player.score} WHERE ${users.id} = ${player.userId}`
+        );
+      } catch (error) {
+        player.isScoreSaved = false;
+        console.error("Score update error:", error);
+        roomsToDelete.delete(roomId);
+      }
+    });
+  });
+
+  await Promise.all(promises);
+
+  roomsToDelete.forEach((roomId) => {
+    chatRooms.delete(roomId);
+  });
+};
 
 setInterval(() => {
   updateRooms();
+  void saveScore();
   makeMatch();
 }, 10000);

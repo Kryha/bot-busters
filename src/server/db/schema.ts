@@ -46,3 +46,5 @@ export const ranks = bbPgTable("rank", {
     .primaryKey(),
   position: integer("position").notNull().unique(),
 });
+
+// TODO: define `match` table for storing old matches
