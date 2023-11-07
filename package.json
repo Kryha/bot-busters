@@ -2,6 +2,7 @@
   "name": "bot-busters",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "clean": "rimraf dist/ && rimraf .next/",
     "copy-files": "copyfiles -u 1 src/**/*.gif src/**/*.png dist/",
@@ -18,7 +19,11 @@
     "db:studio": "dotenv drizzle-kit studio",
     "dev": "next dev",
     "dev:ws": "yarn build:ws && yarn start:ws",
-    "lint": "next lint"
+    "lint": "next lint",
+    "aleo:start": "snarkos start --dev 0 --validator --private-key APrivateKey1zkp8CZNn3yeCseEtxuVPbDCwSyhGW6yZKUYKfgXmcpoGPWH --nodisplay",
+    "aleo:build": "cd programs/leaderboard && leo build",
+    "aleo:deploy": "dotenv node dist/deploy-programs.js",
+    "aleo:clean": "snarkos clean --dev 0"
   },
   "dependencies": {
     "@aleohq/sdk": "^0.6.2",

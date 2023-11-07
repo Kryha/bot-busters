@@ -1,4 +1,4 @@
-import { env } from "@/env.cjs";
+import { env } from "@/env.mjs";
 import { uuidToBigInt } from "@/utils/uuid";
 import {
   Account,

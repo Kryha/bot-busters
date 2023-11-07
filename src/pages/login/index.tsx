@@ -9,7 +9,7 @@ import {
   DecryptPermission,
   type WalletAdapterNetwork,
 } from "@demox-labs/aleo-wallet-adapter-base";
-import { env } from "@/env.cjs";
+import { env } from "@/env.mjs";
 import { signIn, useSession } from "next-auth/react";
 
 import { AUTH_SIGN_MESSAGE } from "@/constants";

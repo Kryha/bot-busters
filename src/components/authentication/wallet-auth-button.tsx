@@ -7,7 +7,7 @@ import {
 } from "@demox-labs/aleo-wallet-adapter-leo";
 import { Button } from "@mui/material";
 import { text } from "@/assets/text";
-import { env } from "@/env.cjs";
+import { env } from "@/env.mjs";
 import { useWallet } from "@demox-labs/aleo-wallet-adapter-react";
 import { signIn, useSession } from "next-auth/react";
 import {
