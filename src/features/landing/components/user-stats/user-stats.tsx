@@ -6,21 +6,21 @@ import { Stats } from "./stats";
 import { styles } from "./styles";
 
 interface Props {
-  isAuthenticated: boolean;
+  isWalletConnected: boolean;
   isGamePlayed: boolean;
   username: string;
 }
 
 export const UserStats: FC<Props> = ({
-  isAuthenticated,
+  isWalletConnected,
   isGamePlayed,
   username,
 }) => {
-  const isLoggedInAndPlayed = isAuthenticated && isGamePlayed;
+  const isLoggedInAndPlayed = isWalletConnected && isGamePlayed;
 
   return (
     <Stack sx={styles.statsWrapper}>
-      {!isAuthenticated && <Stats isGamePlayed={isGamePlayed} />}
+      {!isWalletConnected && <Stats isGamePlayed={isGamePlayed} />}
       <UserMenu isMenuVisible={isLoggedInAndPlayed} username={username} />
     </Stack>
   );
