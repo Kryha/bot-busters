@@ -1,9 +1,17 @@
 import { eq } from "drizzle-orm";
-import { bbPgTable, db } from "../index";
+import { db } from "../index";
 import { PUBLIC_KEY_LENGTH } from "@/constants";
-import { date, integer, varchar, uuid } from "drizzle-orm/pg-core";
+import {
+  date,
+  integer,
+  varchar,
+  uuid,
+  pgTableCreator,
+} from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { type z } from "zod";
+
+const bbPgTable = pgTableCreator((name) => `bot_busters_${name}`);
 
 export const users = bbPgTable("user", {
   id: uuid("id").defaultRandom().primaryKey(),
