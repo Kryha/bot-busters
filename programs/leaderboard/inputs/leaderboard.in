@@ -8,5 +8,5 @@
 
 [update_score]
 user_id: field = 42field;
-username: field = 42field;
 new_score: u64 = 42u64
+// username: field = 42field;

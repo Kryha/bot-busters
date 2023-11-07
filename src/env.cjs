@@ -23,6 +23,9 @@ const env = createEnv({
       .string()
       .default("5")
       .transform((val) => Number(val)),
+    ALEO_NETWORK_URL: z.string().url(),
+    ALEO_PROGRAM_NAME: z.string().default("leaderboard.aleo"),
+    ALEO_PRIVATE_KEY: z.string().nonempty(),
   },
 
   /**
@@ -56,6 +59,9 @@ const env = createEnv({
     NEXT_PUBLIC_WS_URL: process.env.NEXT_PUBLIC_WS_URL,
     NEXT_PUBLIC_MOCK_AUTH: process.env.NEXT_PUBLIC_MOCK_AUTH,
     PLAYERS_PER_MATCH: process.env.PLAYERS_PER_MATCH,
+    ALEO_NETWORK_URL: process.env.ALEO_NETWORK_URL,
+    ALEO_PROGRAM_NAME: process.env.ALEO_PROGRAM_NAME,
+    ALEO_PRIVATE_KEY: process.env.ALEO_PRIVATE_KEY,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.
