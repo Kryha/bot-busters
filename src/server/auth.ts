@@ -5,6 +5,11 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { db, dbSchema } from "@/server/db";
 import { env } from "@/env.cjs";
 import { eq } from "drizzle-orm";
+import {
+  insertAnonymousUsers,
+  insertUserWithAddress,
+  selectUserByAddress,
+} from "./db/schema";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -33,51 +38,47 @@ const credentialsProvider = CredentialsProvider({
   },
 
   async authorize(credentials) {
-    if (!credentials?.signedMessage || !credentials?.address) {
-      try {
-        const newUsers = await db.insert(dbSchema.users).values({}).returning();
-        const newUser = newUsers.at(0);
-        if (!newUser) return null;
-
-        return {
-          id: newUser.id,
-        };
-      } catch (e) {
-        console.error(e);
-        return null;
-      }
-    }
-    const { address, signedMessage } = credentials;
-    const isVerified = verifySignature(address, signedMessage);
-
-    //TODO: Return a proper error message when the signature is not verified
-    if (!isVerified) return null;
-
     try {
-      const selectedUser = await db.query.users.findFirst({
-        where: eq(dbSchema.users.address, address),
-      });
-
-      if (!selectedUser) {
-        const newUsers = await db
-          .insert(dbSchema.users)
-          .values({
-            address: address,
-          })
-          .returning();
-        const newUser = newUsers.at(0);
+      // unverified authentication
+      if (!credentials?.signedMessage || !credentials?.address) {
+        const newUser = await insertAnonymousUsers();
         if (!newUser) return null;
 
+        return { id: newUser.id };
+      }
+
+      // verified authentication
+      const { address, signedMessage } = credentials;
+      const isVerified = verifySignature(address, signedMessage);
+
+      if (!isVerified) return null;
+
+      const verifiedUser = await selectUserByAddress(address);
+
+      if (verifiedUser) {
+        if (!verifiedUser.address) return null;
+        if (!verifiedUser.id) return null;
+        if (!verifiedUser.username) {
+          return {
+            id: verifiedUser.id,
+            address: verifiedUser.address,
+          };
+        }
         return {
-          id: newUser.id,
-          address: newUser.address,
+          id: verifiedUser.id,
+          username: verifiedUser.username,
+          address: verifiedUser.address,
         };
       }
+
+      // user authenticating with wallet for the first time
+      const newUserWithAddress = await insertUserWithAddress(address);
+      if (!newUserWithAddress) return null;
+      if (!newUserWithAddress.address) return null;
 
       return {
-        id: selectedUser.id,
-        username: selectedUser.username,
-        address: selectedUser.address,
+        id: newUserWithAddress.id,
+        address: newUserWithAddress.address,
       };
     } catch (e) {
       console.error(e);

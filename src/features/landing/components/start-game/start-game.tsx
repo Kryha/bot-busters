@@ -24,6 +24,7 @@ export const StartGame: FC = () => {
       <Button
         variant="contained"
         disabled={join.status === "loading"}
+        // TODO: LOGIN the user with anonymous account
         onClick={() => void router.push(pages.lobby)}
         sx={styles.startGameButton}
       >
