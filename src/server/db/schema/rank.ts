@@ -1,9 +1,10 @@
-import { bbPgTable } from "..";
-import { integer, uuid } from "drizzle-orm/pg-core";
+import { integer, pgTableCreator, uuid } from "drizzle-orm/pg-core";
 import { users } from "./user";
 import { relations } from "drizzle-orm";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
+
+const bbPgTable = pgTableCreator((name) => `bot_busters_${name}`);
 
 export const ranks = bbPgTable("rank", {
   userId: uuid("userId")
