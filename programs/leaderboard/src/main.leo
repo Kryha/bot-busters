@@ -1,73 +1,32 @@
 program leaderboard.aleo {
-
-    struct Score {
-        player: address;
-        score: i64;
+    struct User {
+        username: field;
+        score: u64;
+        games_played: u64;
+        // encrypted_address: address;
     }
 
-    mapping leaderboard: address => i64;
-    
-    transition add_player(player: address) -> Score {
-        is_owner_of_program();
-        let initial_score: i64 = 0i64;
+    mapping users: field => User;
 
-        return then finalize(player, initial_score);
+    // TODO: check how to update more players at once
+    transition update_score(user_id: field, username: field, new_score: u64) {
+        // TODO: validate zPass
+        assert_eq(self.caller, self.signer);
+        return then finalize(user_id, username, new_score);
     }
 
-    finalize add_player(player: address, score: i64) {
-        let player_exists: bool = Mapping::contains(leaderboard, player);
-        assert(!player_exists);
+    finalize update_score(user_id: field, username: field, new_score: u64) {
+        // TODO: also store encrypted/hashed address after zPass implementation
+        let current_user: User = Mapping::get_or_use(users, user_id, User {
+            username,
+            score: 0u64,
+            games_played: 0u64
+        });
 
-        Mapping::set(leaderboard, player, score);
-    }
-
-    transition update(player: address, current_score: i64, player_won: bool) {
-        is_owner_of_program();
-
-        let new_score: i64 = calculate_score(current_score, player_won);
-        
-        return then finalize(player, current_score, new_score);
-
-    }
-
-    finalize update(player: address, current_score: i64, new_score: i64) {
-       let player_exists: bool = Mapping::contains(leaderboard, player);
-       assert(player_exists);
-
-       let current_onchain_score: i64 = Mapping::get(leaderboard, player);
-       assert_eq(current_score,current_onchain_score);
-
-       Mapping::set(leaderboard, player, new_score);
-    }
-
-
-    transition remove(player: address) {
-        is_owner_of_program();
-
-        return then finalize(player);
-    }
-
-    finalize remove(player:address) {
-        let playerExists: bool = Mapping::contains(leaderboard, player);
-        assert(playerExists);
-
-        Mapping::remove(leaderboard, player);
-    }
-
-    function calculate_score(current_score: i64, player_won: bool) -> i64 {
-        if (!player_won && current_score <= 10i64){
-            return 0i64;
-        }
-        let updated_score :i64 = player_won ? current_score + 10i64 : current_score - 10i64;
-
-        return updated_score;
-    }
-
-    // TODO: Change to the address of the Backend service
-    // TODO: Paramaterize owner address
-    // Local development address: aleo1rhgdu77hgyqd3xjj8ucu3jj9r2krwz6mnzyd80gncr5fxcwlh5rsvzp9px
-    inline is_owner_of_program() {
-        let program_owner: address = aleo1rhgdu77hgyqd3xjj8ucu3jj9r2krwz6mnzyd80gncr5fxcwlh5rsvzp9px;
-        assert_eq(self.caller, program_owner);
+        Mapping::set(users, user_id, User {
+            username,
+            score: current_user.score + new_score,
+            games_played: current_user.games_played + 1u64
+        });
     }
 }

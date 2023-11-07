@@ -6,7 +6,7 @@ import { z } from "zod";
 import { ChatView } from "@/features";
 import dynamic from "next/dynamic";
 
-const Chat: FC = () => {
+const Match: FC = () => {
   const router = useRouter();
 
   const roomId = z.string().safeParse(router.query.roomId);
@@ -27,6 +27,6 @@ const Chat: FC = () => {
   );
 };
 
-export default dynamic(() => Promise.resolve(Chat), {
+export default dynamic(() => Promise.resolve(Match), {
   ssr: false,
 });

@@ -37,7 +37,7 @@ export const UsersOthers: FC<Props> = ({ onDecided }) => {
       onDecided();
       void push(
         {
-          pathname: pages.chat,
+          pathname: pages.match,
           query: { roomId: roomId.data, gameState: "Results" },
         },
         undefined,
@@ -46,6 +46,7 @@ export const UsersOthers: FC<Props> = ({ onDecided }) => {
         }
       );
     }
+    // TODO: fix dependencies
   }, [users, onDecided, roomId.success]);
 
   const intro = isResults ? text.whosBotAnd : text.otherParticipants;
