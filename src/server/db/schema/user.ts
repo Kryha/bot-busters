@@ -47,10 +47,7 @@ export const insertUserWithAddress = async (address: string) => {
   return newUser.at(0);
 };
 
-export const insertVerifiedUser = async (
-  address: string,
-  username: string
-): Promise<User | undefined> => {
+export const insertVerifiedUser = async (address: string, username: string) => {
   const newVerifiedUser = await db
     .insert(users)
     .values({ address, username })
@@ -82,10 +79,7 @@ export const deleteUser = async (id: string) => {
   return deletedUser.at(0);
 };
 
-export const setUsername = async (
-  id: string,
-  username: string
-): Promise<User | undefined> => {
+export const setUsername = async (id: string, username: string) => {
   const updatedUsers = await db
     .update(users)
     .set({ username })
