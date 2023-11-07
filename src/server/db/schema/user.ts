@@ -1,34 +1,31 @@
-import { eq } from "drizzle-orm";
-import { db } from "../index";
+import { eq, relations } from "drizzle-orm";
+import { bbPgTable, db } from "../index";
 import { PUBLIC_KEY_LENGTH } from "@/constants";
-import {
-  date,
-  integer,
-  pgTableCreator,
-  varchar,
-  uuid,
-} from "drizzle-orm/pg-core";
+import { date, integer, varchar, uuid } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { type z } from "zod";
-
-/**
- * Multi-project schema feature of Drizzle ORM.
- * Use the same database instance for multiple projects.
- *
- * @see https://orm.drizzle.team/docs/goodies#multi-project-schema
- */
-export const bbPgTable = pgTableCreator((name) => `bot_busters_${name}`);
+import { ranks } from "./rank";
 
 export const users = bbPgTable("user", {
   id: uuid("id").defaultRandom().primaryKey(),
   username: varchar("username", { length: 32 }).unique(),
   address: varchar("address", { length: PUBLIC_KEY_LENGTH }).unique(),
   score: integer("score").default(0).notNull(),
+  // TODO: add zPass
+  // zPass: json("zPass"),
+
   createdAt: date("createdAt").defaultNow(),
 });
 
 export const userSchema = createInsertSchema(users);
 export type User = z.infer<typeof userSchema>;
+
+export const usersRelations = relations(users, ({ one }) => ({
+  rank: one(ranks, {
+    fields: [users.id],
+    references: [ranks.userId],
+  }),
+}));
 
 // This is only here for testing purposes
 export const deleteAllUsers = async () => {
