@@ -105,10 +105,6 @@ const saveScore = async () => {
 
   await Promise.all(promises);
 
-  return roomsToDelete;
-};
-
-const deleteRooms = (roomsToDelete: Set<string>) => {
   roomsToDelete.forEach((roomId) => {
     chatRooms.delete(roomId);
   });
@@ -116,6 +112,6 @@ const deleteRooms = (roomsToDelete: Set<string>) => {
 
 setInterval(() => {
   updateRooms();
-  void saveScore().then((roomsToDelete) => deleteRooms(roomsToDelete));
+  void saveScore();
   makeMatch();
 }, 10000);
