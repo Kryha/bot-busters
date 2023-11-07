@@ -3,13 +3,17 @@ import { Button, Stack, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 
 import { text } from "@/assets/text";
-import { pages } from "@/utils/router";
 import { api } from "@/utils/api";
 import { styles } from "./styles";
+import { signIn } from "next-auth/react";
 
 export const StartGame: FC = () => {
   const router = useRouter();
   const join = api.lobby.join.useMutation();
+
+  const handleStartGame = () => {
+    void signIn("credentials", {});
+  };
 
   return (
     <Stack sx={styles.textContainer}>
@@ -24,8 +28,7 @@ export const StartGame: FC = () => {
       <Button
         variant="contained"
         disabled={join.status === "loading"}
-        // TODO: LOGIN the user with anonymous account
-        onClick={() => void router.push(pages.lobby)}
+        onClick={handleStartGame}
         sx={styles.startGameButton}
       >
         <Typography variant="h3" sx={styles.buttonText}>
