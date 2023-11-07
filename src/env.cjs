@@ -1,9 +1,10 @@
-// const { createEnv } = require("@t3-oss/env-nextjs");
-// const { z } = require("zod");
-import { createEnv } from "@t3-oss/env-nextjs";
-import { z } from "zod";
+/* eslint-disable @typescript-eslint/no-var-requires */
+const { createEnv } = require("@t3-oss/env-nextjs");
+const { z } = require("zod");
+// import { createEnv } from "@t3-oss/env-nextjs";
+// import { z } from "zod";
 
-export const env = createEnv({
+const env = createEnv({
   /**
    * Specify your server-side environment variables schema here. This way you can ensure the app
    * isn't built with invalid env vars.
@@ -71,4 +72,4 @@ export const env = createEnv({
   skipValidation: !!process.env.SKIP_ENV_VALIDATION,
 });
 
-// module.exports = { env };
+module.exports = { env };
