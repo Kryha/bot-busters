@@ -1,7 +1,7 @@
 /*
  * @jest-environment node
  */
-import { closeDbConnection } from "../index";
+import { closeDbConnection } from "@/server/db";
 import {
   insertAnonymousUsers,
   deleteUser,
