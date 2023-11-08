@@ -8,7 +8,7 @@ export const isAnonymousSession = (session: Session | null) => {
   return Boolean(validSession && !session?.address && !session?.username);
 };
 
-export const isUnverifiesSession = (session: Session | null) => {
+export const isUnverifiedSession = (session: Session | null) => {
   const validSession = isValidSession(session);
   return Boolean(validSession && session?.address && !session?.username);
 };
