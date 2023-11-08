@@ -10,10 +10,7 @@ import { useRouter } from "next/router";
 import { styles } from "./styles";
 import { InputField, Messages, Timer } from "./components";
 import { useStore } from "@/store";
-export interface GroupedMessage {
-  messages?: string[];
-  isLocalSender?: boolean;
-}
+import { type GroupedMessage } from "@/types";
 interface Props {
   roomId: string;
 }

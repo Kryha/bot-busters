@@ -3,13 +3,7 @@ import { styles } from "./styles";
 import { Avatar, Stack, Typography } from "@mui/material";
 import { text as general } from "@/assets/text";
 import { text } from "../../text";
-// import { text } from "../../text";
-
-// TODO: Fix types
-export interface GroupedMessage {
-  messages?: string[];
-  isLocalSender?: boolean;
-}
+import { type GroupedMessage } from "@/types";
 
 export const Message: FC<GroupedMessage> = ({ messages, isLocalSender }) => {
   const avatar = "../images/svg/alien.svg";

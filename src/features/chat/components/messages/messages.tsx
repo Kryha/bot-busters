@@ -2,13 +2,7 @@ import { type FC } from "react";
 import { Message } from "./message";
 import { Stack } from "@mui/material";
 import { styles } from "./styles";
-
-// TODO: Fix types
-export interface GroupedMessage {
-  messages?: string[];
-  isLocalSender?: boolean;
-}
-
+import { type GroupedMessage } from "@/types";
 interface Props {
   groupedMessages: GroupedMessage[];
 }
