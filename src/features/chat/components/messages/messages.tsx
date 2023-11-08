@@ -1,8 +1,13 @@
-import { type GroupedMessage } from "../main-chat-view";
 import { type FC } from "react";
 import { Message } from "./message";
 import { Stack } from "@mui/material";
 import { styles } from "./styles";
+
+// TODO: Fix types
+export interface GroupedMessage {
+  messages?: string[];
+  isLocalSender?: boolean;
+}
 
 interface Props {
   groupedMessages: GroupedMessage[];
