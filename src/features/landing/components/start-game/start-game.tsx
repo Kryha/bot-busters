@@ -5,14 +5,21 @@ import { useRouter } from "next/router";
 import { text } from "@/assets/text";
 import { api } from "@/utils/api";
 import { styles } from "./styles";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
+import { pages } from "@/utils/router";
+import { isValidSession } from "@/utils/session";
 
 export const StartGame: FC = () => {
   const router = useRouter();
+  const { data: sessionData } = useSession();
   const join = api.lobby.join.useMutation();
 
-  const handleStartGame = () => {
-    void signIn("credentials", {});
+  const handleStartGame = async () => {
+    console.log("handleStartGame triggered");
+    if (!isValidSession(sessionData)) {
+      await signIn("credentials", {});
+    }
+    return router.push(pages.lobby);
   };
 
   return (
@@ -28,7 +35,7 @@ export const StartGame: FC = () => {
       <Button
         variant="contained"
         disabled={join.status === "loading"}
-        onClick={handleStartGame}
+        onClick={() => void handleStartGame()}
         sx={styles.startGameButton}
       >
         <Typography variant="h3" sx={styles.buttonText}>
