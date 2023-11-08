@@ -89,7 +89,7 @@ export const Chat: FC<Props> = ({ roomId }) => {
   }, [sendMessage]);
 
   useEffect(() => {
-    // TODO: Remove after timer feature is fixed
+    // TODO: Remove after timer feature
     if (isFinished) setMatchState("voting");
   }, [isFinished, setMatchState]);
 

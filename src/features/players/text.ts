@@ -4,4 +4,5 @@ export const text = {
   whosBotAnd: "Who’s bot and who’s not?",
   human: "human",
   bot: "bot",
+  blueBird: "blue bird",
 };
