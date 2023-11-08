@@ -6,7 +6,7 @@ import {
   insertAnonymousUsers,
   insertUserWithAddress,
   selectUserByAddress,
-} from "./service/user";
+} from "@/server/service";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
