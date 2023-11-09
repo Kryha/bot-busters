@@ -1,31 +1,7 @@
 import { eq } from "drizzle-orm";
-import { db } from "../index";
-import { PUBLIC_KEY_LENGTH } from "@/constants";
-import {
-  date,
-  integer,
-  varchar,
-  uuid,
-  pgTableCreator,
-} from "drizzle-orm/pg-core";
-import { createInsertSchema } from "drizzle-zod";
-import { type z } from "zod";
+import { db, dbSchema } from "../db/";
 
-const bbPgTable = pgTableCreator((name) => `bot_busters_${name}`);
-
-export const users = bbPgTable("user", {
-  id: uuid("id").defaultRandom().primaryKey(),
-  username: varchar("username", { length: 32 }).unique(),
-  address: varchar("address", { length: PUBLIC_KEY_LENGTH }).unique(),
-  score: integer("score").default(0).notNull(),
-  // TODO: add zPass
-  // zPass: json("zPass"),
-
-  createdAt: date("createdAt").defaultNow(),
-});
-
-export const userSchema = createInsertSchema(users);
-export type User = z.infer<typeof userSchema>;
+const { users } = dbSchema;
 
 // This is only here for testing purposes
 export const deleteAllUsers = async () => {
@@ -58,9 +34,7 @@ export const selectUserById = async (id: string) => {
   return selectedUsers.at(0);
 };
 
-export const selectUserByAddress = async (
-  address: string
-): Promise<User | undefined> => {
+export const selectUserByAddress = async (address: string) => {
   const selectedUsers = await db
     .select()
     .from(users)

@@ -1,11 +1,11 @@
 import { Button, Stack, Typography } from "@mui/material";
 
 import { styles } from "./styles";
-import { text } from "@/features/chat/text";
 import { pages } from "@/utils/router";
 import { useRouter } from "next/router";
+import { text } from "../../../chat/text";
 
-export const Decision = () => {
+export const Results = () => {
   const router = useRouter();
   // TODO: get actual values
   const totalPlayers = 2;

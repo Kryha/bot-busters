@@ -1,15 +1,12 @@
 import { verifySignature } from "@/utils/wallet";
 import { type DefaultSession, type NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-
-import { db, dbSchema } from "@/server/db";
 import { env } from "@/env.cjs";
-import { eq } from "drizzle-orm";
 import {
   insertAnonymousUsers,
   insertUserWithAddress,
   selectUserByAddress,
-} from "./db/schema";
+} from "@/server/service";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
