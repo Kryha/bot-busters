@@ -4,28 +4,19 @@ import { USERS_DATA } from "@/constants";
 import { text } from "../../text";
 import { useState, type FC, useEffect } from "react";
 import { VoteUser } from "../vote-user";
-import { type GameStateType } from "../participants-overview";
 import { User } from "../user";
-import { COLORS } from "../../constants";
 import { UserResult } from "../user-results";
-import { useRouter } from "next/router";
-import { z } from "zod";
-import { pages } from "@/utils/router";
+import { COLORS } from "../../constants";
+import { useStore } from "@/store";
 
-interface Props {
-  gameState?: GameStateType;
-  onDecided: () => void;
-}
+export const UsersOthers: FC = () => {
+  const [matchState, setMatchState] = useStore((state) => [
+    state.matchState,
+    state.setMatchState,
+  ]);
+  const isVoting = matchState === "voting";
+  const isResults = matchState === "results";
 
-export const UsersOthers: FC<Props> = ({ onDecided }) => {
-  const { query, push } = useRouter();
-
-  // TODO: Fix router & Global state
-  const parse = z.string().safeParse(query.gameState);
-  const roomId = z.string().safeParse(query.roomId);
-  const gameState = parse.success ? parse.data : "Initial";
-  const isDecision = gameState === "Decision";
-  const isResults = gameState === "Results";
   const [users, setUsers] = useState(
     USERS_DATA.map((user) => ({ ...user, voted: false }))
   );
@@ -33,21 +24,10 @@ export const UsersOthers: FC<Props> = ({ onDecided }) => {
   useEffect(() => {
     const allVoted = users.every((user) => user.voted);
 
-    if (allVoted && roomId.success) {
-      onDecided();
-      void push(
-        {
-          pathname: pages.match,
-          query: { roomId: roomId.data, gameState: "Results" },
-        },
-        undefined,
-        {
-          shallow: true,
-        }
-      );
+    if (allVoted) {
+      setMatchState("results");
     }
-    // TODO: fix dependencies
-  }, [users, onDecided, roomId.success]);
+  }, [users, setMatchState]);
 
   const intro = isResults ? text.whosBotAnd : text.otherParticipants;
 
@@ -67,7 +47,7 @@ export const UsersOthers: FC<Props> = ({ onDecided }) => {
           if (voted || isResults)
             return <UserResult key={index} id={String(index)} />;
 
-          if (isDecision)
+          if (isVoting)
             return (
               <VoteUser
                 key={index}

@@ -1,8 +1,8 @@
 import { Avatar, Stack, type StackProps, Typography } from "@mui/material";
 import { styles } from "./styles";
 import { type FC } from "react";
-import { text } from "../../text";
 import { Skeleton } from "./skeleton";
+import { text } from "@/assets/text";
 
 interface Props extends StackProps {
   username?: string;
@@ -21,7 +21,7 @@ export const User: FC<Props> = ({ color = "blue", isLoading, username }) => {
     <Stack sx={styles.container}>
       <Avatar src={src} color={color} sx={styles.avatar} />
       <Typography variant="body1" color={textColor}>
-        {username ?? text.username}
+        {username ?? text.general.username}
       </Typography>
     </Stack>
   );

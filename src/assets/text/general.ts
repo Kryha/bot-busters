@@ -15,4 +15,5 @@ export const general = {
     `${minutes.toString().padStart(2, "0")}:${seconds
       .toString()
       .padStart(2, "0")}`,
+  username: "username",
 };

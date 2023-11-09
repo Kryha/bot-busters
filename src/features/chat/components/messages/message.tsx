@@ -1,12 +1,15 @@
 import { type FC } from "react";
 import { styles } from "./styles";
 import { Avatar, Stack, Typography } from "@mui/material";
-import { type GroupedMessage } from "../main-chat-view";
+import { text as generalText } from "@/assets/text";
 import { text } from "../../text";
+import { type GroupedMessage } from "@/types";
 
 export const Message: FC<GroupedMessage> = ({ messages, isLocalSender }) => {
   const avatar = "../images/svg/alien.svg";
-  const username = isLocalSender ? text.usernameLocal : text.username;
+  const username = isLocalSender
+    ? text.usernameLocal
+    : general.general.username;
   const color = isLocalSender ? "#2196F3" : "#009688";
   const textAlign = isLocalSender ? "left" : undefined;
 

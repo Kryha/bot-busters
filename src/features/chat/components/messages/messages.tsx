@@ -1,9 +1,8 @@
-import { type GroupedMessage } from "../main-chat-view";
 import { type FC } from "react";
 import { Message } from "./message";
 import { Stack } from "@mui/material";
 import { styles } from "./styles";
-
+import { type GroupedMessage } from "@/types";
 interface Props {
   groupedMessages: GroupedMessage[];
 }

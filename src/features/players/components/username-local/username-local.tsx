@@ -4,10 +4,11 @@ import { User } from "../user";
 import { text } from "../../text";
 
 export const UsernameLocal = () => {
+  // TODO: Get username randomly
   return (
     <Stack sx={styles.container}>
       <Typography variant="body1">{text.inThisChatRoom}</Typography>
-      <User username="blue bird" />
+      <User username={text.blueBird} />
     </Stack>
   );
 };
