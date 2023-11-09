@@ -44,6 +44,8 @@ const makeMatch = () => {
       players: playerIds.map((id) => generatePlayer(id)),
       stage: "chat",
       createdAt: Date.now(),
+      countdown: CHAT_TIME_MS,
+      targetEndTime: Date.now() + CHAT_TIME_MS,
     });
 
     // TODO: update event
@@ -52,6 +54,7 @@ const makeMatch = () => {
       players: playerIds,
     } satisfies ReadyToPlayPayload);
     ee.emit("queueUpdate");
+    ee.emit(chatEvent(roomId, "stageChange"));
   } catch (error) {
     console.error("Match making error:", error);
   }
@@ -61,12 +64,22 @@ const updateRooms = () => {
   chatRooms.forEach((room, roomId) => {
     const roomAge = Date.now() - room.createdAt;
 
+    if (room.stage === "chat") {
+      if (roomAge < room.countdown) {
+        room.countdown = room.targetEndTime - Date.now();
+        ee.emit(chatEvent(roomId, "stageChange"));
+      }
+    }
+
     if (roomAge >= MATCH_TIME_MS) {
       chatRooms.delete(roomId);
       return;
     }
 
     if (room.stage === "chat" && roomAge >= CHAT_TIME_MS) {
+      room.stage = "voting";
+      room.countdown = MATCH_TIME_MS - CHAT_TIME_MS;
+
       // TODO: calculate score based on votes
       const players = room.players.map((player) => ({
         ...player,
@@ -114,4 +127,4 @@ setInterval(() => {
   updateRooms();
   void saveScore();
   makeMatch();
-}, 10000);
+}, 1000); // real time countdown

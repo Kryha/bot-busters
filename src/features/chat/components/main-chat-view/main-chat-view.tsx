@@ -12,9 +12,9 @@ import {
   Messages,
   InputField,
 } from "@/features/chat/components";
-import { CHAT_TIME_SEC } from "@/constants";
 import { styles } from "./styles";
 import { useRouter } from "next/router";
+import { useStore } from "@/store";
 
 export interface GroupedMessage {
   messages?: string[];
@@ -27,9 +27,10 @@ interface Props {
 export const MainChatView: FC<Props> = ({ roomId }) => {
   const router = useRouter();
   const { data: sessionData } = useSession();
-  const [isFinished, setIsFinished] = useState(false);
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState<ChatMessagePayload[]>([]);
+  const countdown = useStore((state) => state.countdown);
+  const setCountdown = useStore((state) => state.setCountdown);
 
   const groupedMessages: GroupedMessage[] = messages.map((message) => {
     const isLocalSender = message.sender === sessionData?.id;
@@ -89,6 +90,18 @@ export const MainChatView: FC<Props> = ({ roomId }) => {
     }
   );
 
+  api.chat.onStageChange.useSubscription(
+    { roomId },
+    {
+      onData(payload) {
+        setCountdown(payload.countdown);
+      },
+      onError(error) {
+        console.error("Error on countdown:", error);
+      },
+    }
+  );
+
   useEffect(() => {
     const listener = (event: KeyboardEvent) => {
       if (event.code === "Enter" || event.code === "NumpadEnter") {
@@ -108,6 +121,7 @@ export const MainChatView: FC<Props> = ({ roomId }) => {
   const parse = z.string().safeParse(query.gameState);
   const gameState = parse.success ? parse.data : "";
   const isResults = gameState === "Results";
+  const isFinished = gameState === "Results" || gameState == "Decision";
 
   return (
     <Stack component="section" sx={styles.section}>
@@ -116,10 +130,7 @@ export const MainChatView: FC<Props> = ({ roomId }) => {
       ) : (
         <>
           <Messages groupedMessages={groupedMessages} />
-          <Timer
-            matchDurationInSeconds={CHAT_TIME_SEC}
-            setIsFinished={setIsFinished}
-          />
+          <Timer countdown={countdown} />
           <InputField
             value={message}
             onChange={(e) => setMessage(e.target.value)}

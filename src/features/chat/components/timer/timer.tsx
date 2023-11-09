@@ -1,31 +1,22 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { useState, useEffect, type FC } from "react";
 import { Stack, Typography } from "@mui/material";
-
 import { text } from "@/assets/text";
 import { styles } from "./styles";
+import { CHAT_TIME_MS } from "@/constants/main";
 
 interface Props {
-  matchDurationInSeconds: number;
-  setIsFinished: (isFinished: boolean) => void;
+  countdown: number;
 }
 
-export const Timer: FC<Props> = ({
-  matchDurationInSeconds,
+export const Timer: FC<Props> = ({ countdown }) => {
+  const [remainingTime, setRemainingTime] = useState(countdown);
+  const updateAtInterval = 1000;
+  const alertTime = 30000;
 
-  setIsFinished,
-}) => {
-  // TODO: change to use backend timer
-  const [remainingSeconds, setRemainingSeconds] = useState(
-    matchDurationInSeconds
-  );
-  const updateAtInterval = 500;
-  const alertTimeInSeconds = remainingSeconds < 30;
   useEffect(() => {
-    if (remainingSeconds === 0) setIsFinished(true);
     const interval = setInterval(() => {
-      if (remainingSeconds > 0) {
-        setRemainingSeconds((prevRemainingSeconds) => prevRemainingSeconds - 1);
+      if (remainingTime > 0) {
+        setRemainingTime(remainingTime - 1000);
       } else {
         clearInterval(interval);
       }
@@ -34,16 +25,18 @@ export const Timer: FC<Props> = ({
     return () => {
       clearInterval(interval);
     };
-  }, [remainingSeconds, setIsFinished]);
+  }, [remainingTime]);
 
-  const progress = (remainingSeconds / matchDurationInSeconds) * 100;
-  const minutes = Math.floor(remainingSeconds / 60);
-  const seconds = remainingSeconds % 60;
-  const formattedCountdown = text.general.formattedCountdown(minutes, seconds);
+  const progress = (remainingTime / CHAT_TIME_MS) * 100;
+  const seconds = Math.floor(remainingTime / 1000);
+  const formattedCountdown = text.general.formattedCountdown(
+    Math.floor(seconds / 60),
+    seconds % 60
+  );
 
   return (
     <Stack sx={styles.wrapper}>
-      <Stack sx={styles.progress(progress, alertTimeInSeconds)}>
+      <Stack sx={styles.progress(progress, remainingTime < alertTime)}>
         <Stack sx={styles.countdownWrapper}>
           <Typography
             variant="caption"

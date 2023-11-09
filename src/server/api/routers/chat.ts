@@ -2,7 +2,10 @@ import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 import { chatEvent, chatRooms, ee } from "@/server/api/match-maker";
 import { observable } from "@trpc/server/observable";
-import type { ChatMessagePayload } from "@/server/api/match-types";
+import type {
+  ChatMessagePayload,
+  StagePayload,
+} from "@/server/api/match-types";
 
 const verifyUser = (userId: string, roomId: string) => {
   const room = chatRooms.get(roomId);
@@ -47,6 +50,25 @@ export const chatRouter = createTRPCRouter({
       const payload: ChatMessagePayload = { sender, message, sentAt };
       ee.emit(chatEvent(roomId), payload);
       return payload;
+    }),
+
+  onStageChange: protectedProcedure
+    .input(z.object({ roomId: z.string().uuid() }))
+    .subscription(({ ctx, input }) => {
+      verifyUser(ctx.session.id, input.roomId);
+      const room = chatRooms.get(input.roomId);
+      if (!room) throw new Error("Room not found");
+
+      return observable<StagePayload>((emit) => {
+        const handleEvent = () => {
+          emit.next({ countdown: room.countdown });
+        };
+
+        ee.on(chatEvent(input.roomId, "stageChange"), handleEvent);
+        return () => {
+          ee.off(chatEvent(input.roomId, "stageChange"), handleEvent);
+        };
+      });
     }),
 
   onTimeout: protectedProcedure
