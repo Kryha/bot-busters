@@ -27,7 +27,7 @@ const Match: FC = () => {
     }
   }, [roomId.success, push]);
 
-  if (!roomId.success) return null;
+  if (!roomId.success) return;
 
   return (
     <Layout>
