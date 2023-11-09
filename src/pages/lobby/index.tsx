@@ -6,7 +6,7 @@ import { LobbyLayout as Layout } from "@/layouts";
 import { api } from "@/utils/api";
 import { pages } from "@/utils/router";
 import { text } from "@/assets/text";
-import { SPLASH_SCREEN_DURATION } from "@/constants";
+import { LOBBY_SPLASH_SCREEN_DURATION } from "@/constants";
 
 const Lobby: FC = () => {
   const { push } = useRouter();
@@ -30,7 +30,7 @@ const Lobby: FC = () => {
       setIsStarting(true);
       setTimeout(() => {
         return void push({ pathname: pages.match, query: { roomId } });
-      }, SPLASH_SCREEN_DURATION);
+      }, LOBBY_SPLASH_SCREEN_DURATION);
     },
     onError(error) {
       console.error("Ready to play error:", error);
