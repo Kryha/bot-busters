@@ -64,6 +64,7 @@ const updateRooms = () => {
   chatRooms.forEach((room, roomId) => {
     const roomAge = Date.now() - room.createdAt;
 
+    // TODO: add other stageChanges
     if (room.stage === "chat") {
       if (roomAge < room.countdown) {
         room.countdown = room.targetEndTime - Date.now();
