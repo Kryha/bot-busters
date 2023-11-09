@@ -1,7 +1,7 @@
 import { type FC } from "react";
 import { styles } from "./styles";
 import { Avatar, Stack, Typography } from "@mui/material";
-import { text as general } from "@/assets/text";
+import { text as generalText } from "@/assets/text";
 import { text } from "../../text";
 import { type GroupedMessage } from "@/types";
 
