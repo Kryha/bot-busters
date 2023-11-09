@@ -11,7 +11,7 @@ import { LOBBY_SPLASH_SCREEN_DURATION } from "@/constants";
 const Lobby: FC = () => {
   const { push } = useRouter();
   const join = api.lobby.join.useMutation();
-  const [isStarting, setIsStarting] = useState(false);
+  const [showSplashScreen, setShowSplashScreen] = useState(false);
 
   api.lobby.onQueueUpdate.useSubscription(undefined, {
     onStarted() {
@@ -27,8 +27,9 @@ const Lobby: FC = () => {
 
   api.lobby.onReadyToPlay.useSubscription(undefined, {
     onData({ roomId }) {
-      setIsStarting(true);
+      setShowSplashScreen(true);
       setTimeout(() => {
+        setShowSplashScreen(false);
         return void push({ pathname: pages.match, query: { roomId } });
       }, LOBBY_SPLASH_SCREEN_DURATION);
     },
@@ -39,7 +40,7 @@ const Lobby: FC = () => {
 
   return (
     <Layout>
-      {isStarting ? (
+      {showSplashScreen ? (
         <Typography variant="h1">{text.lobby.start}</Typography>
       ) : (
         <>
