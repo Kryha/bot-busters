@@ -2,8 +2,8 @@ import { type MatchStateType } from "@/types";
 
 export interface MatchSlice {
   matchState: MatchStateType;
-  countdown: number;
+  createdAt: number | null;
 
   setMatchState: (newState: MatchStateType) => void;
-  setCountdown: (countdown: number) => void;
+  setCreatedAt: (createdAt: number) => void;
 }

@@ -61,7 +61,7 @@ export const chatRouter = createTRPCRouter({
 
       return observable<StagePayload>((emit) => {
         const handleEvent = () => {
-          emit.next({ countdown: room.countdown });
+          emit.next({ stage: room.stage });
         };
 
         ee.on(chatEvent(input.roomId, "stageChange"), handleEvent);

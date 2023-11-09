@@ -1,31 +1,32 @@
-import { useState, useEffect, type FC } from "react";
+import { useState, type FC, useEffect } from "react";
 import { Stack, Typography } from "@mui/material";
+
 import { text } from "@/assets/text";
 import { styles } from "./styles";
 import { CHAT_TIME_MS } from "@/constants/main";
+import { useStore } from "@/store";
 
-interface Props {
-  countdown: number;
-}
-
-export const Timer: FC<Props> = ({ countdown }) => {
-  const [remainingTime, setRemainingTime] = useState(countdown);
-  const updateAtInterval = 1000;
+export const Timer: FC = () => {
+  const [remainingTime, setRemainingTime] = useState<number | null>(
+    CHAT_TIME_MS
+  );
+  const createdAt = useStore((state) => state.createdAt);
   const alertTime = 30000;
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      if (remainingTime > 0) {
-        setRemainingTime(remainingTime - 1000);
-      } else {
-        clearInterval(interval);
-      }
-    }, updateAtInterval);
+    if (createdAt) {
+      const intervalId = setInterval(() => {
+        const elapsedTime = Date.now() - createdAt;
+        const newRemainingTime = Math.max(0, CHAT_TIME_MS - elapsedTime);
+        setRemainingTime(newRemainingTime);
+      }, 1000);
 
-    return () => {
-      clearInterval(interval);
-    };
-  }, [remainingTime]);
+      return () => clearInterval(intervalId);
+    }
+    setRemainingTime(null);
+  }, [createdAt]);
+
+  if (!createdAt || !remainingTime) return <></>;
 
   const progress = (remainingTime / CHAT_TIME_MS) * 100;
   const seconds = Math.floor(remainingTime / 1000);

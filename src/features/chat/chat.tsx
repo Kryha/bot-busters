@@ -5,12 +5,12 @@ import { useSession } from "next-auth/react";
 import { type ChatMessagePayload } from "@/server/api/match-types";
 import { api } from "@/utils/api";
 import { pages } from "@/utils/router";
-import { CHAT_TIME_SEC } from "@/constants";
 import { useRouter } from "next/router";
 import { styles } from "./styles";
 import { InputField, Messages, Timer } from "./components";
+import { type MatchStateType, type GroupedMessage } from "@/types";
 import { useStore } from "@/store";
-import { type GroupedMessage } from "@/types";
+
 interface Props {
   roomId: string;
 }
@@ -20,13 +20,9 @@ export const Chat: FC<Props> = ({ roomId }) => {
   const { data: sessionData } = useSession();
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState<ChatMessagePayload[]>([]);
-  const [matchState, setMatchState] = useStore((state) => [
-    state.matchState,
-    state.setMatchState,
-  ]);
+  const setCreatedAt = useStore((state) => state.setCreatedAt);
+  const [matchState, setMatchState] = useState<MatchStateType>("chat");
   const disabled = matchState !== "chat";
-  const [isFinished, setIsFinished] = useState(false);
-  const handleTimeout = () => setIsFinished(true);
 
   const groupedMessages: GroupedMessage[] = messages.map((message) => {
     const isLocalSender = message.sender === sessionData?.id;
@@ -75,6 +71,18 @@ export const Chat: FC<Props> = ({ roomId }) => {
     }
   );
 
+  api.chat.onStageChange.useSubscription(
+    { roomId },
+    {
+      onData(payload) {
+        setMatchState(payload.stage);
+      },
+      onError(error) {
+        console.error("Error on countdown:", error);
+      },
+    }
+  );
+
   useEffect(() => {
     const listener = (event: KeyboardEvent) => {
       if (event.code === "Enter" || event.code === "NumpadEnter") {
@@ -87,19 +95,18 @@ export const Chat: FC<Props> = ({ roomId }) => {
       document.removeEventListener("keydown", listener);
     };
   }, [sendMessage]);
+  const storedCreatedAt = localStorage.getItem("createdAt");
 
   useEffect(() => {
-    // TODO: Remove after timer feature
-    if (isFinished) setMatchState("voting");
-  }, [isFinished, setMatchState]);
+    if (storedCreatedAt) {
+      setCreatedAt(parseInt(storedCreatedAt, 10));
+    }
+  }, [setCreatedAt, storedCreatedAt]);
 
   return (
     <Stack component="section" sx={styles.section}>
       <Messages groupedMessages={groupedMessages} />
-      <Timer
-        matchDurationInSeconds={CHAT_TIME_SEC}
-        onTimeout={() => handleTimeout()}
-      />
+      <Timer />
       <InputField
         value={message}
         onChange={(e) => setMessage(e.target.value)}

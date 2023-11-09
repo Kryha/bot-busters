@@ -9,7 +9,7 @@ export const Message: FC<GroupedMessage> = ({ messages, isLocalSender }) => {
   const avatar = "../images/svg/alien.svg";
   const username = isLocalSender
     ? text.usernameLocal
-    : general.general.username;
+    : generalText.general.username;
   const color = isLocalSender ? "#2196F3" : "#009688";
   const textAlign = isLocalSender ? "left" : undefined;
 

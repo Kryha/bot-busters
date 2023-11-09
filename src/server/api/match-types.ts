@@ -1,6 +1,7 @@
 export interface ReadyToPlayPayload {
   players: string[];
   roomId: string;
+  createdAt: number;
 }
 
 export interface QueueUpdatePayload {
@@ -27,12 +28,10 @@ export interface ChatRoom {
   players: Player[];
   stage: "chat" | "voting" | "results";
   createdAt: number; // unix timestamp
-  countdown: number;
-  targetEndTime: number;
 }
 
 export type ChatEventType = "message" | "timeout" | "stageChange";
 
 export interface StagePayload {
-  countdown: number;
+  stage: "chat" | "voting" | "results";
 }

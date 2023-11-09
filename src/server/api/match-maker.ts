@@ -1,4 +1,4 @@
-import { CHAT_TIME_MS, MATCH_TIME_MS } from "@/constants";
+import { CHAT_TIME_MS, MATCH_TIME_MS } from "@/constants/main";
 import { env } from "@/env.cjs";
 import { EventEmitter } from "events";
 import { v4 as uuid } from "uuid";
@@ -44,17 +44,15 @@ const makeMatch = () => {
       players: playerIds.map((id) => generatePlayer(id)),
       stage: "chat",
       createdAt: Date.now(),
-      countdown: CHAT_TIME_MS,
-      targetEndTime: Date.now() + CHAT_TIME_MS,
     });
 
     // TODO: update event
     ee.emit("readyToPlay", {
       roomId,
       players: playerIds,
+      createdAt: Date.now(),
     } satisfies ReadyToPlayPayload);
     ee.emit("queueUpdate");
-    ee.emit(chatEvent(roomId, "stageChange"));
   } catch (error) {
     console.error("Match making error:", error);
   }
@@ -63,23 +61,16 @@ const makeMatch = () => {
 const updateRooms = () => {
   chatRooms.forEach((room, roomId) => {
     const roomAge = Date.now() - room.createdAt;
-
-    // TODO: add other stageChanges
-    if (room.stage === "chat") {
-      if (roomAge < room.countdown) {
-        room.countdown = room.targetEndTime - Date.now();
-        ee.emit(chatEvent(roomId, "stageChange"));
-      }
-    }
+    const chatEnded = Date.now() > room.createdAt + CHAT_TIME_MS;
 
     if (roomAge >= MATCH_TIME_MS) {
       chatRooms.delete(roomId);
       return;
     }
 
-    if (room.stage === "chat" && roomAge >= CHAT_TIME_MS) {
+    if (chatEnded) {
       room.stage = "voting";
-      room.countdown = MATCH_TIME_MS - CHAT_TIME_MS;
+      ee.emit(chatEvent(roomId, "stageChange"));
 
       // TODO: calculate score based on votes
       const players = room.players.map((player) => ({
@@ -128,4 +119,4 @@ setInterval(() => {
   updateRooms();
   void saveScore();
   makeMatch();
-}, 1000); // real time countdown
+}, 10000);

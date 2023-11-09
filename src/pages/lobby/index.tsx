@@ -6,12 +6,14 @@ import { Page } from "@/layouts";
 import { api } from "@/utils/api";
 import { pages } from "@/utils/router";
 import { text } from "@/assets/text";
+import { useStore } from "@/store";
 
 const Lobby: FC = () => {
   const router = useRouter();
 
   const [queueLength, setQueueLength] = useState(0);
   const [myPlaceInQueue, setMyPlaceInQueue] = useState(0);
+  const setCreatedAt = useStore((state) => state.setCreatedAt);
 
   const join = api.lobby.join.useMutation();
 
@@ -29,7 +31,11 @@ const Lobby: FC = () => {
   });
 
   api.lobby.onReadyToPlay.useSubscription(undefined, {
-    onData({ roomId }) {
+    onData({ roomId, createdAt }) {
+      localStorage.setItem("createdAt", `${createdAt}`);
+
+      setCreatedAt(createdAt);
+
       void router.push({ pathname: pages.match, query: { roomId } });
     },
     onError(error) {
