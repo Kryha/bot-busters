@@ -6,7 +6,7 @@ import { text } from "./text";
 export const Score = () => {
   const matchState = useStore((state) => state.matchState);
 
-  if (matchState !== "results") return null;
+  if (matchState !== "results") return;
 
   return (
     <Stack sx={styles.container}>
