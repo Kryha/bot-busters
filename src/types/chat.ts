@@ -23,3 +23,8 @@ export type GroupedMessage = {
   messages?: string[];
   isLocalSender?: boolean;
 };
+
+export type Player = {
+  username: string;
+  score: number;
+};
