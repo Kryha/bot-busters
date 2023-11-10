@@ -5,4 +5,7 @@ export const pages = {
   leaderboard: "/leaderboard",
   login: "/login",
   playerProfile: "/player-profile",
+  rules: "/rules",
+  support: "/support",
+  privacy: "/privacy",
 };

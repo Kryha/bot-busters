@@ -1,8 +1,6 @@
 import { type ReactElement, type Ref, forwardRef, type FC } from "react";
-import Dialog from "@mui/material/Dialog";
-import Slide from "@mui/material/Slide";
+import { Button, Dialog, Slide, Stack } from "@mui/material";
 import { type TransitionProps } from "@mui/material/transitions";
-import { Button, Stack } from "@mui/material";
 
 import { text } from "@/assets/text";
 import { styles } from "./styles";
@@ -15,7 +13,7 @@ const Transition = forwardRef(function Transition(
   },
   ref: Ref<unknown>
 ) {
-  return <Slide direction="up" ref={ref} {...props} />;
+  return <Slide direction="left" ref={ref} {...props} />;
 });
 
 interface Props {

@@ -54,7 +54,11 @@ export const MenuOptions: FC<Props> = ({ isAuthenticated }) => {
           </Typography>
         </Button>
         <Button variant="text" sx={styles.menuButton} color="customGrey">
-          <Typography variant="h1" color="common.black">
+          <Typography
+            variant="h1"
+            color="common.black"
+            onClick={() => void router.push(pages.rules)}
+          >
             {text.general.howToPlay}
           </Typography>
         </Button>

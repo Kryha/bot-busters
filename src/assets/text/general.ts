@@ -4,8 +4,8 @@ export const general = {
   menu: "menu",
   play: "Play",
   close: "close",
-
   home: "Home",
+  signOut: "sign out (disconnect wallet)",
   decision: "Decision",
   leaderboard: "Leaderboard",
   results: "Results",

@@ -12,5 +12,6 @@ export const styles = {
     p: "12px 13px",
     "&:hover, &.Mui-focusVisible": { backgroundColor: "darkBlue.main" },
   },
-  icon: { width: "0.8em", height: "0.8em" } satisfies SxProps,
+  icon: { width: "0.8em", height: "0.8em" },
+  button: { mr: 2 } satisfies SxProps,
 };

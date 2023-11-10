@@ -1,5 +1,6 @@
-import { Stack, Typography } from "@mui/material";
 import { type FC } from "react";
+import { Stack, Typography } from "@mui/material";
+
 import { styles } from "./styles";
 import { text } from "@/assets/text";
 
