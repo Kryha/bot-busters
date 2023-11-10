@@ -69,3 +69,20 @@ export const setUserScore = async (id: string, score: number) => {
 
   return updatedUsers.at(0);
 };
+
+export const mergeUserScore = async (sessionId: string, existingId: string) => {
+  const sessionUser = await selectUserById(sessionId);
+  const existingUser = await selectUserById(existingId);
+
+  if (!sessionUser || !existingUser) {
+    throw new Error("Invalid user id");
+  }
+
+  const updatedUsers = await db
+    .update(users)
+    .set({ score: sessionUser.score + existingUser.score })
+    .where(eq(users.id, existingId))
+    .returning();
+
+  return updatedUsers.at(0);
+};
