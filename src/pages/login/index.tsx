@@ -15,7 +15,12 @@ import { signIn, useSession } from "next-auth/react";
 import { AUTH_SIGN_MESSAGE } from "@/constants";
 import { Page } from "@/layouts";
 import { ConnectWallet } from "@/features/connect-wallet";
-import { isValidSession } from "@/utils/session";
+import {
+  isAnonymousSession,
+  isValidSession,
+  isVerifiedSession,
+} from "@/utils/session";
+import { is } from "drizzle-orm";
 
 const Login: FC = () => {
   const { data: sessionData } = useSession();
@@ -34,7 +39,7 @@ const Login: FC = () => {
 
   useEffect(() => {
     const connectWallet = async () => {
-      if (connecting || !wallet || !address || sessionData !== null) {
+      if (connecting || !wallet || !address || isVerifiedSession(sessionData)) {
         return;
       }
       try {
@@ -43,10 +48,12 @@ const Login: FC = () => {
         const bytes = new TextEncoder().encode(AUTH_SIGN_MESSAGE);
         const signatureMessageBytes = await adapter.signMessage(bytes);
         const signedMessage = new TextDecoder().decode(signatureMessageBytes);
-        await signIn("credentials", {
-          address,
-          signedMessage,
-        });
+
+        //TODO: Decide on usage of sessionStorage or localStorage
+        sessionStorage.setItem(
+          "signedMessage",
+          JSON.stringify({ signedMessage, address })
+        );
       } catch (error) {
         //TODO: handle unauthorized error
         console.error(error);
@@ -75,7 +82,7 @@ const Login: FC = () => {
 
   return (
     <Page>
-      <ConnectWallet isAuthenticated={isValidSession(sessionData)} />
+      <ConnectWallet />
     </Page>
   );
 };
