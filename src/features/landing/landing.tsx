@@ -12,14 +12,16 @@ export const Landing: FC = () => {
   const isAuthenticated = isValidSession(sessionData);
   const isWalledConnected = isVerifiedSession(sessionData);
   const isGamePlayed = true;
-  const { data } = api.user.getUserById.useQuery();
+  const { data, isSuccess } = api.user.getUserById.useQuery();
+
   const getInfo = () => {
-    return `Is Authenticated with this ID: ${sessionData?.id} with score ${data?.score} `;
+    return `Is Authenticated with this ID: ${sessionData?.id} `;
   };
 
   return (
     <>
       {isAuthenticated && <a>{getInfo()}</a>}
+      {isSuccess && <a>With score {data?.score}</a>}
       <UserStats
         isWalletConnected={isWalledConnected}
         isGamePlayed={isGamePlayed}
