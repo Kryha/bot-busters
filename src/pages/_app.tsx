@@ -11,6 +11,7 @@ import { ThemeProvider } from "@/features/mui";
 import "@/styles/globals.css";
 import { APP_NAME } from "@/constants";
 import Head from "next/head";
+import { Layout } from "@/layouts";
 
 const headTitle = "Bot Busters";
 
@@ -38,7 +39,9 @@ const MyApp: AppType<{ session: Session | null }> = ({
         <WalletModalProvider>
           <ThemeProvider>
             <SessionProvider session={session}>
-              <Component {...pageProps} />
+              <Layout>
+                <Component {...pageProps} />
+              </Layout>
             </SessionProvider>
           </ThemeProvider>
         </WalletModalProvider>

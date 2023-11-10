@@ -1,12 +1,10 @@
-import { Layout, Page } from "@/layouts";
+import { Page } from "@/layouts";
 import { Landing } from "@/features";
 
 export default function Home() {
   return (
-    <Layout>
-      <Page>
-        <Landing />
-      </Page>
-    </Layout>
+    <Page>
+      <Landing />
+    </Page>
   );
 }

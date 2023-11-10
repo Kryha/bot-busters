@@ -19,7 +19,7 @@ export const Layout: FC<StackProps> = (props) => {
   const isGamePlayed = true;
 
   return (
-    <Stack component="section" sx={styles.container}>
+    <Stack component="main" sx={styles.container}>
       <UserStats
         isAuthenticated={isAuthenticated}
         isGamePlayed={isGamePlayed}

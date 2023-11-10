@@ -6,7 +6,7 @@ export const Page: FC<StackProps> = (props) => {
   const { children } = props;
 
   return (
-    <Stack component="main" sx={styles.container}>
+    <Stack component="section" sx={styles.container}>
       {children}
     </Stack>
   );
