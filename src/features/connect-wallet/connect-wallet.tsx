@@ -1,15 +1,15 @@
 import { type FC } from "react";
 
 import { UsernameSelect, ConnectPlaceholder } from "./components";
+import { useSession } from "next-auth/react";
+import { isUnverifiedSession } from "@/utils/session";
 
-interface Props {
-  isAuthenticated: boolean;
-}
+export const ConnectWallet: FC = () => {
+  const { data: sessionData } = useSession();
 
-export const ConnectWallet: FC<Props> = ({ isAuthenticated }) => {
   // TODO: add check if the user already has a username & id
 
-  if (isAuthenticated) return <UsernameSelect />;
+  if (isUnverifiedSession(sessionData)) return <UsernameSelect />;
 
   return <ConnectPlaceholder />;
 };
