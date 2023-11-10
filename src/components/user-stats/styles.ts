@@ -9,12 +9,5 @@ export const styles = {
     flexDirection: "row",
     alignItems: "flex-start",
     mt: 2,
-  },
-  statsContainer: {
-    display: "flex",
-    gap: 1,
-  },
-  stack: { gap: 3 },
-  pointsWrapper: { flexDirection: "row", gap: 5 },
-  pointsContainer: { alignItems: "center" } satisfies SxProps,
+  } satisfies SxProps,
 };

@@ -4,4 +4,5 @@ export const pages = {
   match: "/match",
   leaderboard: "/leaderboard",
   login: "/login",
+  playerProfile: "/player-profile",
 };
