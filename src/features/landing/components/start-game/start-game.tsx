@@ -19,7 +19,7 @@ export const StartGame: FC = () => {
     if (!isValidSession(sessionData)) {
       await signIn("credentials", {});
     }
-    return router.push(pages.lobby);
+    await router.push(pages.lobby);
   };
 
   return (
