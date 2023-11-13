@@ -3,7 +3,7 @@ import { Stack, Typography } from "@mui/material";
 
 import { text } from "@/assets/text";
 import { styles } from "./styles";
-import { CHAT_TIME_MS } from "@/constants/main";
+import { ALERT_TIME_MS, CHAT_TIME_MS } from "@/constants/main";
 import { useStore } from "@/store";
 
 export const Timer: FC = () => {
@@ -11,7 +11,6 @@ export const Timer: FC = () => {
     CHAT_TIME_MS
   );
   const createdAt = useStore((state) => state.createdAt);
-  const alertTime = 30000;
 
   useEffect(() => {
     if (createdAt) {
@@ -37,7 +36,7 @@ export const Timer: FC = () => {
 
   return (
     <Stack sx={styles.wrapper}>
-      <Stack sx={styles.progress(progress, remainingTime < alertTime)}>
+      <Stack sx={styles.progress(progress, remainingTime < ALERT_TIME_MS)}>
         <Stack sx={styles.countdownWrapper}>
           <Typography
             variant="caption"
