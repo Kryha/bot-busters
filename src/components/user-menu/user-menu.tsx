@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/unbound-method */
+//TODO: delete when changing layout
 import { useState, type MouseEvent, type FC, useEffect } from "react";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { signOut } from "next-auth/react";

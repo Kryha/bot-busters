@@ -6,7 +6,7 @@ export const LobbyLayout: FC<StackProps> = (props) => {
   const { children } = props;
 
   return (
-    <Container component="main" sx={styles.container}>
+    <Container component="section" sx={styles.container}>
       {children}
     </Container>
   );

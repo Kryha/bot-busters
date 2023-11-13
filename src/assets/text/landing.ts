@@ -18,6 +18,7 @@ export const landing = {
     "You've won Aleo credits based on your leaderboard position yesterday. Check your wallet!",
   aleoCreditsPayout: "Aleo credits payouts",
   newCredits: "new",
+  dailyScore: "Daily score",
 
   countdown: (countdown: string | number) =>
     `${countdown} until today's payout`,
