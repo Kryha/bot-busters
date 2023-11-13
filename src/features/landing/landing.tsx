@@ -14,12 +14,14 @@ export const Landing: FC = () => {
   const isGamePlayed = true;
   const { data, isSuccess } = api.user.getUserById.useQuery();
 
+  //TODO: remove this when all authentication flows are implemented
   const getInfo = () => {
     return `Is Authenticated with this ID: ${sessionData?.id} `;
   };
 
   return (
     <>
+      {/* TODO: remove this when all authentication flows are implemented  */}
       {isAuthenticated && <a>{getInfo()}</a>}
       {isSuccess && <a>With score {data?.score}</a>}
       <UserStats
