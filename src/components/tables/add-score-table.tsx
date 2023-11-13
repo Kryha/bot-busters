@@ -55,7 +55,7 @@ export const AddScoreTable: FC<Props> = ({
           color="customGrey.main"
           sx={styles.countdown}
         >
-          {text.landing.countdown(countdown)}
+          {text.leaderboard.countdown(countdown)}
         </Typography>
       </Stack>
     </Stack>

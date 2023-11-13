@@ -36,7 +36,7 @@ export const AddScoreRow: FC<Props> = ({ leaderboard, isAuthenticated }) => {
             color="blueGrey"
             onClick={() => void router.push(pages.login)}
           >
-            {text.landing.addScoreToLeaderboard}
+            {text.leaderboard.addScoreToLeaderboard}
           </Button>
         ) : (
           <Stack sx={styles.container}>

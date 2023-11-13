@@ -28,7 +28,7 @@ export const UserStats: FC<Props> = ({
   points,
 }) => {
   const isLoggedInAndPlayed = isAuthenticated && isGamePlayed;
-  const title = isLoggedInAndPlayed ? username : text.landing.dailyScore;
+  const title = isLoggedInAndPlayed ? username : text.general.dailyScore;
 
   const logout = async () => {
     await signOut();
@@ -41,7 +41,7 @@ export const UserStats: FC<Props> = ({
         {isGamePlayed && (
           <StatsDisplay
             title={title}
-            info={text.landing.points(points)}
+            info={text.general.points(points)}
             isCentered
           />
         )}

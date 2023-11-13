@@ -21,12 +21,25 @@ export const general = {
   discord: "Discord",
   aleoOrg: "Aleo.org",
   zPass: "zPass",
-
+  dailyScore: "Daily score",
+  aleoCreditsPayout: "Aleo credits payouts",
   clickChat: "Click on the chat to open messages",
+  username: "username",
+  newCredits: "new",
+  todaysPosition: "Today's position",
+  allTimeScore: "All time score",
+  allTimePosition: "All time position",
+  todaysScore: "Today's score",
+  youWonCredits:
+    "You've won Aleo credits based on your leaderboard position yesterday. Check your wallet!",
+
   countdown: (val: string): string => `${val} left`,
   formattedCountdown: (minutes: number, seconds: number): string =>
     `${minutes.toString().padStart(2, "0")}:${seconds
       .toString()
       .padStart(2, "0")}`,
-  username: "username",
+  points: (val: number) => `${val} ${val === 1 ? "point" : "points"}`,
+  dateAndCredits: (date: string, credits: number) =>
+    `${date} - ${credits} Aleo credits`,
+  numberPosition: (val: number) => `#${val}`,
 };
