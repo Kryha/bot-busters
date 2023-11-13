@@ -6,7 +6,7 @@ import { TopRanked } from "@/components";
 import { useRouter } from "next/router";
 import { api } from "@/utils/api";
 import { pages } from "@/utils/router";
-import { TOP_RANKED_PLAYERS } from "./constants";
+import { TOP_RANKED_PLAYERS } from "@/constants";
 
 export const Homepage = () => {
   const { push } = useRouter();
