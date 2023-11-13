@@ -61,15 +61,15 @@ const makeMatch = () => {
 const updateRooms = () => {
   chatRooms.forEach((room, roomId) => {
     const roomAge = Date.now() - room.createdAt;
-    const chatEnded = Date.now() > room.createdAt + CHAT_TIME_MS;
 
     if (roomAge >= MATCH_TIME_MS) {
       chatRooms.delete(roomId);
       return;
     }
 
-    if (chatEnded) {
-      room.stage = "voting";
+    if (room.stage === "chat" && roomAge >= CHAT_TIME_MS) {
+      // TODO: set to voting after we have implemented voting
+      room.stage = "results";
       ee.emit(chatEvent(roomId, "stageChange"));
 
       // TODO: calculate score based on votes

@@ -3,7 +3,7 @@ import { type MatchSlice } from "./types";
 
 export const createMatchSlice: StateCreator<MatchSlice> = (set) => ({
   matchState: "chat",
-  createdAt: null,
+  createdAt: undefined,
 
   setMatchState: (value) => set(() => ({ matchState: value })),
   setCreatedAt: (value) => set(() => ({ createdAt: value })),
