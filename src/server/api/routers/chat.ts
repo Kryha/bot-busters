@@ -87,4 +87,14 @@ export const chatRouter = createTRPCRouter({
         };
       });
     }),
+
+  storedRoom: protectedProcedure
+    .input(z.object({ roomId: z.string().uuid() }))
+    .query(({ ctx, input }) => {
+      verifyUser(ctx.session.id, input.roomId);
+      const room = chatRooms.get(input.roomId);
+      if (!room) throw new Error("Room not found");
+
+      return room;
+    }),
 });

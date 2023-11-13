@@ -23,7 +23,8 @@ export const Chat: FC<Props> = ({ roomId }) => {
   const setCreatedAt = useStore((state) => state.setCreatedAt);
   const [matchState, setMatchState] = useState<MatchStateType>("chat");
   const disabled = matchState !== "chat";
-
+  const storedRoom = api.chat.storedRoom.useQuery({ roomId: roomId });
+  const roomData = storedRoom.data;
   const groupedMessages: GroupedMessage[] = messages.map((message) => {
     const isLocalSender = message.sender === sessionData?.id;
 
@@ -95,13 +96,12 @@ export const Chat: FC<Props> = ({ roomId }) => {
       document.removeEventListener("keydown", listener);
     };
   }, [sendMessage]);
-  const storedCreatedAt = localStorage.getItem("createdAt");
 
   useEffect(() => {
-    if (storedCreatedAt) {
-      setCreatedAt(parseInt(storedCreatedAt, 10));
+    if (roomData) {
+      setCreatedAt(roomData.createdAt);
     }
-  }, [setCreatedAt, storedCreatedAt]);
+  }, [roomData, setCreatedAt]);
 
   return (
     <Stack component="section" sx={styles.section}>

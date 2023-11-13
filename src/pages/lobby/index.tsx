@@ -32,8 +32,6 @@ const Lobby: FC = () => {
 
   api.lobby.onReadyToPlay.useSubscription(undefined, {
     onData({ roomId, createdAt }) {
-      localStorage.setItem("createdAt", `${createdAt}`);
-
       setCreatedAt(createdAt);
 
       void router.push({ pathname: pages.match, query: { roomId } });
