@@ -1,3 +1,4 @@
+//TODO: delete when changing layout
 import { type FC } from "react";
 import { Button, Stack, Typography } from "@mui/material";
 import { useRouter } from "next/router";

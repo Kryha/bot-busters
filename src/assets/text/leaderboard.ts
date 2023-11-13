@@ -10,6 +10,7 @@ export const leaderboard = {
   ],
   leaderboardRank: "#5",
   allTimeLeaderboard: "All time leaderboard",
+  dailyLeaderboard: "Daily leaderboard",
 
   rankNumber: (val: number) => `#${val}`,
   aleoCredits: (val: number) =>

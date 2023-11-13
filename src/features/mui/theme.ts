@@ -13,6 +13,7 @@ declare module "@mui/material/styles" {
     green: Palette["primary"];
     pink: Palette["primary"];
     blue: Palette["primary"];
+    darkBlue: Palette["primary"];
   }
 
   interface PaletteOptions {
@@ -23,6 +24,7 @@ declare module "@mui/material/styles" {
     green?: PaletteOptions["primary"];
     pink?: PaletteOptions["primary"];
     blue?: PaletteOptions["primary"];
+    darkBlue: Palette["primary"];
   }
 }
 declare module "@mui/material/Avatar" {
@@ -34,6 +36,7 @@ declare module "@mui/material/Avatar" {
     green: true;
     pink: true;
     blue: true;
+    darkBlue: true;
   }
 }
 
@@ -46,12 +49,22 @@ declare module "@mui/material/Typography" {
     green: true;
     pink: true;
     blue: true;
+    darkBlue: true;
   }
 }
 declare module "@mui/material/Button" {
   interface ButtonPropsColorOverrides {
     blueGrey: true;
     customGrey: true;
+    darkBlue: true;
+  }
+}
+
+declare module "@mui/material/IconButton" {
+  interface IconButtonPropsColorOverrides {
+    blueGrey: true;
+    customGrey: true;
+    darkBlue: true;
   }
 }
 

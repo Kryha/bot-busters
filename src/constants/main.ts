@@ -5,3 +5,5 @@ export const APP_NAME = "Bot Busters";
 
 export const CHAT_TIME_MS = 180000; // 3 minutes
 export const MATCH_TIME_MS = 600000; // 10 minutes
+
+export const LOBBY_SPLASH_SCREEN_DURATION = 3000; // 3 seconds

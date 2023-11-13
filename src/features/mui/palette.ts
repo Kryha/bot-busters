@@ -4,6 +4,10 @@ import { grey } from "@mui/material/colors";
 export const palette = (theme: Theme): Palette => {
   return {
     ...theme.palette,
+    common: {
+      black: "#424242",
+      white: "#FFFFFF",
+    },
     primary: {
       ...theme.palette.primary,
       contrastText: "#FFFFFF",
@@ -62,6 +66,12 @@ export const palette = (theme: Theme): Palette => {
         main: "#9E9E9E",
       },
       name: "customGrey",
+    }),
+    darkBlue: theme.palette.augmentColor({
+      color: {
+        main: "#1976D2",
+      },
+      name: "darkBlue",
     }),
   };
 };
