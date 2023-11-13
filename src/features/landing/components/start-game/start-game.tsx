@@ -16,7 +16,6 @@ export const StartGame: FC = () => {
   const join = api.lobby.join.useMutation();
 
   const handleStartGame = async () => {
-    console.log("handleStartGame triggered");
     if (!isValidSession(sessionData)) {
       await signIn("credentials", {});
     }
