@@ -2,7 +2,7 @@ import { type SxProps } from "@mui/material";
 
 export const styles = {
   textContainer: {
-    pt: "170px",
+    pt: "240px",
     alignItems: "center",
   },
   description: {
