@@ -61,13 +61,18 @@ export const setUsername = async (id: string, username: string) => {
 };
 
 export const setUserScore = async (id: string, score: number) => {
-  const updatedUsers = await db
-    .update(users)
-    .set({ score })
-    .where(eq(users.id, id))
-    .returning();
+  try {
+    const updatedUsers = await db
+      .update(users)
+      .set({ score })
+      .where(eq(users.id, id))
+      .returning();
 
-  return updatedUsers.at(0);
+    return updatedUsers.at(0);
+  } catch (e) {
+    if (!e) return;
+    throw new Error("Invalid user id", e);
+  }
 };
 
 export const mergeUserScore = async (sessionId: string, existingId: string) => {
@@ -83,6 +88,11 @@ export const mergeUserScore = async (sessionId: string, existingId: string) => {
     .set({ score: sessionUser.score + existingUser.score })
     .where(eq(users.id, existingId))
     .returning();
+
+  if (!updatedUsers[0]) {
+    throw new Error("Invalid user id");
+  }
+  await deleteUser(sessionId);
 
   return updatedUsers.at(0);
 };
