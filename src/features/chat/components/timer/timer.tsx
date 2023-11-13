@@ -7,14 +7,10 @@ import { styles } from "./styles";
 
 interface Props {
   matchDurationInSeconds: number;
-  setIsFinished: (isFinished: boolean) => void;
+  onTimeout: () => void;
 }
 
-export const Timer: FC<Props> = ({
-  matchDurationInSeconds,
-
-  setIsFinished,
-}) => {
+export const Timer: FC<Props> = ({ matchDurationInSeconds, onTimeout }) => {
   // TODO: change to use backend timer
   const [remainingSeconds, setRemainingSeconds] = useState(
     matchDurationInSeconds
@@ -22,7 +18,9 @@ export const Timer: FC<Props> = ({
   const updateAtInterval = 500;
   const alertTimeInSeconds = remainingSeconds < 30;
   useEffect(() => {
-    if (remainingSeconds === 0) setIsFinished(true);
+    if (remainingSeconds === 0) {
+      onTimeout();
+    }
     const interval = setInterval(() => {
       if (remainingSeconds > 0) {
         setRemainingSeconds((prevRemainingSeconds) => prevRemainingSeconds - 1);
@@ -34,7 +32,7 @@ export const Timer: FC<Props> = ({
     return () => {
       clearInterval(interval);
     };
-  }, [remainingSeconds, setIsFinished]);
+  }, [remainingSeconds, onTimeout]);
 
   const progress = (remainingSeconds / matchDurationInSeconds) * 100;
   const minutes = Math.floor(remainingSeconds / 60);

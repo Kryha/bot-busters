@@ -1,36 +1,10 @@
 import { type FC } from "react";
-import { useSession } from "next-auth/react";
-import { isValidSession, isVerifiedSession } from "@/utils/session";
-
-import { fakeUsername } from "@/constants";
-import { StartGame, UserStats } from "./components";
-import { LeaderBoard } from "@/features/leaderboard";
-import { api } from "@/utils/api";
+import { StartGame } from "./components";
 
 export const Landing: FC = () => {
-  const { data: sessionData } = useSession();
-  const isAuthenticated = isValidSession(sessionData);
-  const isWalledConnected = isVerifiedSession(sessionData);
-  const isGamePlayed = true;
-  const { data, isSuccess } = api.user.getUserById.useQuery();
-
-  //TODO: remove this when all authentication flows are implemented
-  const getInfo = () => {
-    return `Is Authenticated with this ID: ${sessionData?.id} `;
-  };
-
   return (
     <>
-      {/* TODO: remove this when all authentication flows are implemented  */}
-      {isAuthenticated && <a>{getInfo()}</a>}
-      {isSuccess && <a>With score {data?.score}</a>}
-      <UserStats
-        isWalletConnected={isWalledConnected}
-        isGamePlayed={isGamePlayed}
-        username={fakeUsername}
-      />
       <StartGame />
-      <LeaderBoard />
     </>
   );
 };

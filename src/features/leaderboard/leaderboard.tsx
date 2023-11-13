@@ -1,16 +1,15 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useSession } from "next-auth/react";
 
-import { type LeaderboardData, type LeaderboardType } from "@/types";
+import { type LeaderboardData } from "@/types";
 import { isValidSession } from "@/utils/session";
 import { AddScoreTable, LeaderboardTable } from "@/components/tables";
 import { fakeCountdown, leaderboardData } from "@/constants";
-import { LeaderboardSelect } from "./components";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
+import { text } from "@/assets/text";
+import { styles } from "./styles";
 
 export const LeaderBoard = () => {
-  const [leaderboardType, setLeaderboardType] =
-    useState<LeaderboardType>("today");
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [currentData, setCurrentData] = useState<LeaderboardData[]>([]);
   const itemsPerPage = 6;
@@ -58,10 +57,9 @@ export const LeaderBoard = () => {
 
   return (
     <>
-      <LeaderboardSelect
-        leaderboardType={leaderboardType}
-        setLeaderboardType={setLeaderboardType}
-      />
+      <Typography variant="h1" color="common.black" sx={styles.text}>
+        {text.leaderboard.dailyLeaderboard}
+      </Typography>
       <Box>
         <LeaderboardTable leaderboard={currentData} />
         <Box ref={intersectionRef} />

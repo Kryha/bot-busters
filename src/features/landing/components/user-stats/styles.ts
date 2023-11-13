@@ -2,11 +2,13 @@ import { type SxProps } from "@mui/material";
 
 export const styles = {
   statsWrapper: {
-    alignItems: "flex-end",
-    pt: 3,
+    justifyContent: "flex-end",
     pr: 3,
     width: "100vw",
     gap: 3,
+    flexDirection: "row",
+    alignItems: "flex-start",
+    mt: 2,
   },
   statsContainer: {
     display: "flex",
