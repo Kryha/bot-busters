@@ -41,7 +41,10 @@ export const MenuDialog: FC<Props> = ({ open, isAuthenticated, setOpen }) => {
           {text.general.close}
         </Button>
       </Stack>
-      <MenuOptions isAuthenticated={isAuthenticated} />
+      <MenuOptions
+        isAuthenticated={isAuthenticated}
+        handleClose={handleClose}
+      />
       <Footer />
     </Dialog>
   );
