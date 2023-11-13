@@ -70,8 +70,7 @@ export const setUserScore = async (id: string, score: number) => {
 
     return updatedUsers.at(0);
   } catch (e) {
-    if (!e) return;
-    throw new Error("Invalid user id", e);
+    throw new Error("Unable to set the score,");
   }
 };
 
