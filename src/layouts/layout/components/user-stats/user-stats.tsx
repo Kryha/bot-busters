@@ -36,7 +36,7 @@ export const UserStats: FC<Props> = ({
   };
 
   return (
-    <>
+    <Stack sx={styles.container}>
       <Stack sx={styles.statsWrapper}>
         {isGamePlayed && (
           <StatsDisplay
@@ -52,6 +52,6 @@ export const UserStats: FC<Props> = ({
         setOpen={setOpen}
         isAuthenticated={isAuthenticated}
       />
-    </>
+    </Stack>
   );
 };

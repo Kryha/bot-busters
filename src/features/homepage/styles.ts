@@ -2,11 +2,8 @@ import { type SxProps } from "@mui/material";
 
 export const styles = {
   textContainer: {
-    width: "100%",
+    pt: "240px",
     alignItems: "center",
-  },
-  title: {
-    mt: "152px",
   },
   description: {
     mt: 3,
@@ -14,9 +11,14 @@ export const styles = {
     textAlign: "center",
   },
   startGameButton: {
-    width: "fit-content",
-    p: "11px 60px",
-    mb: "180px",
+    p: "23px 60px",
+  },
+  openDailyButton: {
+    p: "12px 120px",
+  },
+  actions: {
+    gap: 2,
+    flexDirection: "column",
   },
   buttonText: { textTransform: "none" } satisfies SxProps,
 };
