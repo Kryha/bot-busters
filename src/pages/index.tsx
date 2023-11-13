@@ -1,10 +1,5 @@
-import { Page } from "@/layouts";
-import { StartGame } from "@/components";
+import { Homepage } from "@/features/homepage";
 
 export default function Home() {
-  return (
-    <Page>
-      <StartGame />
-    </Page>
-  );
+  return <Homepage />;
 }

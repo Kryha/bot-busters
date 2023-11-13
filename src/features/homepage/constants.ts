@@ -1,4 +1,4 @@
-import { TopRankedPlayer } from "@/types";
+import { type TopRankedPlayer } from "@/types";
 
 export const TOP_RANKED_PLAYERS: TopRankedPlayer[] = [
   { username: "Wallie Weltmeister", score: 895 },

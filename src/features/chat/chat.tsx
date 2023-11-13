@@ -24,7 +24,7 @@ export const Chat: FC<Props> = ({ roomId }) => {
     state.matchState,
     state.setMatchState,
   ]);
-  const disabled = matchState !== "chat";
+  const isChat = matchState === "chat";
   const [isFinished, setIsFinished] = useState(false);
   const handleTimeout = () => setIsFinished(true);
 
@@ -94,7 +94,7 @@ export const Chat: FC<Props> = ({ roomId }) => {
   }, [isFinished, setMatchState]);
 
   return (
-    <Stack component="section" sx={styles.section}>
+    <Stack component="section" sx={styles.section(isChat)}>
       <Messages groupedMessages={groupedMessages} />
       <Timer
         matchDurationInSeconds={CHAT_TIME_SEC}
@@ -104,7 +104,7 @@ export const Chat: FC<Props> = ({ roomId }) => {
         value={message}
         onChange={(e) => setMessage(e.target.value)}
         onClick={() => sendMessage()}
-        disabled={disabled}
+        disabled={!isChat}
       />
     </Stack>
   );
