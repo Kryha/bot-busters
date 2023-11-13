@@ -18,12 +18,12 @@ const Transition = forwardRef(function Transition(
 
 interface Props {
   open: boolean;
-  isAuthenticated: boolean;
+  isWalletConnected: boolean;
 
   setOpen: (open: boolean) => void;
 }
 
-export const MenuDialog: FC<Props> = ({ open, isAuthenticated, setOpen }) => {
+export const MenuDialog: FC<Props> = ({ open, isWalletConnected, setOpen }) => {
   const handleClose = () => {
     setOpen(false);
   };
@@ -42,7 +42,7 @@ export const MenuDialog: FC<Props> = ({ open, isAuthenticated, setOpen }) => {
         </Button>
       </Stack>
       <MenuOptions
-        isAuthenticated={isAuthenticated}
+        isAuthenticated={isWalletConnected}
         handleClose={handleClose}
       />
       <Footer />

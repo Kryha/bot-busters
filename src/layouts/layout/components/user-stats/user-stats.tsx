@@ -9,7 +9,7 @@ import { text } from "@/assets/text";
 import { styles } from "./styles";
 
 interface Props {
-  isAuthenticated: boolean;
+  isWalletConnected: boolean;
   isGamePlayed: boolean;
   username: string;
   open: boolean;
@@ -19,7 +19,7 @@ interface Props {
 }
 
 export const UserStats: FC<Props> = ({
-  isAuthenticated,
+  isWalletConnected,
   isGamePlayed,
   username,
   open,
@@ -27,8 +27,8 @@ export const UserStats: FC<Props> = ({
   disconnect,
   points,
 }) => {
-  const isLoggedInAndPlayed = isAuthenticated && isGamePlayed;
-  const title = isLoggedInAndPlayed ? username : text.landing.dailyScore;
+  const isWalletConnectedAndPlayed = isWalletConnected && isGamePlayed;
+  const title = isWalletConnectedAndPlayed ? username : text.landing.dailyScore;
 
   const logout = async () => {
     await signOut();
@@ -50,7 +50,7 @@ export const UserStats: FC<Props> = ({
       <MenuDialog
         open={open}
         setOpen={setOpen}
-        isAuthenticated={isAuthenticated}
+        isWalletConnected={isWalletConnected}
       />
     </>
   );
