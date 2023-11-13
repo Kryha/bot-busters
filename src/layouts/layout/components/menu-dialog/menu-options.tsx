@@ -9,11 +9,17 @@ import { styles } from "./styles";
 
 interface Props {
   isAuthenticated: boolean;
+  handleClose: () => void;
 }
 
-export const MenuOptions: FC<Props> = ({ isAuthenticated }) => {
+export const MenuOptions: FC<Props> = ({ isAuthenticated, handleClose }) => {
   const router = useRouter();
   const join = api.lobby.join.useMutation();
+
+  const handleNavigation = (path: string) => {
+    void router.push(path);
+    handleClose();
+  };
 
   return (
     <>
@@ -25,7 +31,7 @@ export const MenuOptions: FC<Props> = ({ isAuthenticated }) => {
             color="customGrey"
             disabled={join.status === "loading"}
             // TODO: LOGIN the user with anonymous account
-            onClick={() => void router.push(pages.lobby)}
+            onClick={() => handleNavigation(pages.lobby)}
           >
             <Typography variant="h1" color="common.black">
               {text.general.startNewGame}
@@ -37,7 +43,7 @@ export const MenuOptions: FC<Props> = ({ isAuthenticated }) => {
           sx={styles.menuButton}
           color="customGrey"
           disabled={!isAuthenticated}
-          onClick={() => void router.push(pages.playerProfile)}
+          onClick={() => handleNavigation(pages.playerProfile)}
         >
           <Typography variant="h1" color="common.black">
             {text.general.playerProfile}
@@ -47,7 +53,7 @@ export const MenuOptions: FC<Props> = ({ isAuthenticated }) => {
           variant="text"
           sx={styles.menuButton}
           color="customGrey"
-          onClick={() => void router.push(pages.leaderboard)}
+          onClick={() => handleNavigation(pages.leaderboard)}
         >
           <Typography variant="h1" color="common.black">
             {text.general.dailyLeaderboard}
@@ -57,7 +63,7 @@ export const MenuOptions: FC<Props> = ({ isAuthenticated }) => {
           <Typography
             variant="h1"
             color="common.black"
-            onClick={() => void router.push(pages.rules)}
+            onClick={() => handleNavigation(pages.rules)}
           >
             {text.general.howToPlay}
           </Typography>
@@ -66,7 +72,7 @@ export const MenuOptions: FC<Props> = ({ isAuthenticated }) => {
           variant="text"
           sx={styles.menuButton}
           color="customGrey"
-          onClick={() => void router.push(pages.login)}
+          onClick={() => handleNavigation(pages.login)}
         >
           <Typography variant="h1" color="common.black">
             {text.general.connectWallet}
