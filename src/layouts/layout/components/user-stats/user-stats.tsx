@@ -4,7 +4,7 @@ import { signOut } from "next-auth/react";
 
 import { UserMenu } from "@/layouts/layout/components/user-menu";
 import { MenuDialog } from "@/layouts/layout/components/menu-dialog";
-import { InfoDisplay } from "@/components/info-display";
+import { StatsDisplay } from "@/components/stats-display";
 import { text } from "@/assets/text";
 import { styles } from "./styles";
 
@@ -39,7 +39,7 @@ export const UserStats: FC<Props> = ({
     <>
       <Stack sx={styles.statsWrapper}>
         {isGamePlayed && (
-          <InfoDisplay
+          <StatsDisplay
             title={title}
             info={text.landing.points(points)}
             isCentered

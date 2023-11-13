@@ -9,7 +9,11 @@ interface Props {
   isCentered?: boolean;
 }
 
-export const InfoDisplay: FC<Props> = ({ title, info, isCentered = false }) => {
+export const StatsDisplay: FC<Props> = ({
+  title,
+  info,
+  isCentered = false,
+}) => {
   return (
     <Stack sx={styles.pointsContainer(isCentered)}>
       <Typography variant="overline" color="common.black">
