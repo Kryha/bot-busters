@@ -39,7 +39,7 @@ const Login: FC = () => {
 
   useEffect(() => {
     const connectWallet = async () => {
-      if (connecting || !wallet || !address || isVerifiedSession(sessionData)) {
+      if (connecting || !wallet || !address || sessionData !== null) {
         return;
       }
       try {
@@ -48,12 +48,10 @@ const Login: FC = () => {
         const bytes = new TextEncoder().encode(AUTH_SIGN_MESSAGE);
         const signatureMessageBytes = await adapter.signMessage(bytes);
         const signedMessage = new TextDecoder().decode(signatureMessageBytes);
-
-        //TODO: Decide on usage of sessionStorage or localStorage
-        sessionStorage.setItem(
-          "signedMessage",
-          JSON.stringify({ signedMessage, address })
-        );
+        await signIn("credentials", {
+          address,
+          signedMessage,
+        });
       } catch (error) {
         //TODO: handle unauthorized error
         console.error(error);
