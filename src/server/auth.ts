@@ -1,5 +1,5 @@
 import { verifySignature } from "@/utils/wallet";
-import { type DefaultSession, type NextAuthOptions } from "next-auth";
+import { Session, type NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { env } from "@/env.cjs";
 import {
@@ -7,20 +7,6 @@ import {
   insertUserWithAddress,
   selectUserByAddress,
 } from "@/server/service";
-
-/**
- * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
- * object and keep type safety.
- *
- * @see https://next-auth.js.org/getting-started/typescript#module-augmentation
- */
-declare module "next-auth" {
-  interface Session extends DefaultSession {
-    id: string;
-    username?: string;
-    address?: string;
-  }
-}
 
 const credentialsProvider = CredentialsProvider({
   credentials: {
@@ -36,11 +22,12 @@ const credentialsProvider = CredentialsProvider({
 
   async authorize(credentials) {
     try {
+      console.log("credentials", credentials);
       // unverified authentication
       if (!credentials?.signedMessage || !credentials?.address) {
         const newUser = await insertAnonymousUsers();
         if (!newUser) return null;
-
+        console.log("newUser added");
         return { id: newUser.id };
       }
 
@@ -56,11 +43,13 @@ const credentialsProvider = CredentialsProvider({
         if (!verifiedUser.address) return null;
         if (!verifiedUser.id) return null;
         if (!verifiedUser.username) {
+          console.log("user has no username");
           return {
             id: verifiedUser.id,
             address: verifiedUser.address,
           };
         }
+        console.log("user has username");
         return {
           id: verifiedUser.id,
           username: verifiedUser.username,
@@ -72,7 +61,7 @@ const credentialsProvider = CredentialsProvider({
       const newUserWithAddress = await insertUserWithAddress(address);
       if (!newUserWithAddress) return null;
       if (!newUserWithAddress.address) return null;
-
+      console.log("newUserWithAddress added");
       return {
         id: newUserWithAddress.id,
         address: newUserWithAddress.address,
@@ -93,10 +82,22 @@ const credentialsProvider = CredentialsProvider({
 export const authOptions: NextAuthOptions = {
   debug: env.NODE_ENV === "development",
   callbacks: {
-    session: ({ session, token }) => {
+    jwt({ token, user }) {
+      if (user) {
+        token.userID = user.id;
+        token.address = user.address;
+        token.username = user.username;
+      }
+      return token;
+    },
+    session: ({ session, token }): Session => {
       return {
-        ...session,
-        id: token.sub,
+        user: {
+          id: token.userID,
+          address: token.address,
+          username: token.username,
+        },
+        expires: session.expires,
       };
     },
   },
