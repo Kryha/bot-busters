@@ -8,11 +8,11 @@ import { pages } from "@/utils/router";
 import { styles } from "./styles";
 
 interface Props {
-  isAuthenticated: boolean;
+  isWalletConnected: boolean;
   handleClose: () => void;
 }
 
-export const MenuOptions: FC<Props> = ({ isAuthenticated, handleClose }) => {
+export const MenuOptions: FC<Props> = ({ isWalletConnected, handleClose }) => {
   const router = useRouter();
   const join = api.lobby.join.useMutation();
 
@@ -42,7 +42,7 @@ export const MenuOptions: FC<Props> = ({ isAuthenticated, handleClose }) => {
           variant="text"
           sx={styles.menuButton}
           color="customGrey"
-          disabled={!isAuthenticated}
+          disabled={!isWalletConnected}
           onClick={() => handleNavigation(pages.playerProfile)}
         >
           <Typography variant="h1" color="common.black">
