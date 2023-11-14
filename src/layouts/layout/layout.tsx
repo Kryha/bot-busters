@@ -17,12 +17,11 @@ export const Layout: FC<StackProps> = (props) => {
     isVerifiedSession(sessionData) || isUnverifiedSession(sessionData);
   const [open, setOpen] = useState(false);
   const { disconnect } = useWallet();
-  const isGamePlayed = true;
-
+  const isGamePlayed = false;
   return (
     <Stack component="main" sx={styles.container}>
       <UserStats
-        isAuthenticated={isWalletConnected}
+        isWalletConnected={isWalletConnected}
         isGamePlayed={isGamePlayed}
         username={fakeUsername}
         open={open}

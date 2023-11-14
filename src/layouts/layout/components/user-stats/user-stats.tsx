@@ -45,7 +45,11 @@ export const UserStats: FC<Props> = ({
             isCentered
           />
         )}
-        <UserMenu setOpen={setOpen} logout={logout} />
+        <UserMenu
+          isWalletConnected={isWalletConnected}
+          setOpen={setOpen}
+          logout={logout}
+        />
       </Stack>
       <MenuDialog
         open={open}
