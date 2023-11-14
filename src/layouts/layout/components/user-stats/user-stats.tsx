@@ -47,11 +47,7 @@ export const UserStats: FC<Props> = ({
         )}
         <UserMenu setOpen={setOpen} logout={logout} />
       </Stack>
-      <MenuDialog
-        open={open}
-        setOpen={setOpen}
-        isAuthenticated={isAuthenticated}
-      />
+      <MenuDialog open={open} setOpen={setOpen} />
     </Stack>
   );
 };
