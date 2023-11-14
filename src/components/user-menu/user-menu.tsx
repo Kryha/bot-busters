@@ -9,9 +9,9 @@ import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 
 import { text } from "@/assets/text";
 import { fakeStats } from "@/constants";
-import { CHIP_TIMEOUT } from "@/features/landing/constants";
 import { styles } from "./styles";
 import { MenuCard } from "./menu-card";
+import { CHIP_TIMEOUT } from "./constants";
 
 interface Props {
   isMenuVisible: boolean;

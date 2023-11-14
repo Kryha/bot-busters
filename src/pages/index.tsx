@@ -1,10 +1,5 @@
-import { Page } from "@/layouts";
-import { Landing } from "@/features";
+import { Homepage } from "@/features/homepage";
 
 export default function Home() {
-  return (
-    <Page>
-      <Landing />
-    </Page>
-  );
+  return <Homepage />;
 }

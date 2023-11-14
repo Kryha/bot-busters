@@ -1,10 +1,15 @@
 import { type SxProps } from "@mui/material";
 
 export const styles = {
+  container: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+  },
   statsWrapper: {
     justifyContent: "flex-end",
     pr: 3,
-    width: "100vw",
     gap: 3,
     flexDirection: "row",
     alignItems: "flex-start",
