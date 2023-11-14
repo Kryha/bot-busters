@@ -1,5 +1,5 @@
 import { verifySignature } from "@/utils/wallet";
-import { Session, type NextAuthOptions } from "next-auth";
+import { type Session, type NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { env } from "@/env.cjs";
 import {
