@@ -27,7 +27,6 @@ const credentialsProvider = CredentialsProvider({
       if (!credentials?.signedMessage || !credentials?.address) {
         const newUser = await insertAnonymousUsers();
         if (!newUser) return null;
-        console.log("newUser added");
         return { id: newUser.id };
       }
 
@@ -43,13 +42,11 @@ const credentialsProvider = CredentialsProvider({
         if (!verifiedUser.address) return null;
         if (!verifiedUser.id) return null;
         if (!verifiedUser.username) {
-          console.log("user has no username");
           return {
             id: verifiedUser.id,
             address: verifiedUser.address,
           };
         }
-        console.log("user has username");
         return {
           id: verifiedUser.id,
           username: verifiedUser.username,
