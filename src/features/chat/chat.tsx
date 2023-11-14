@@ -29,7 +29,7 @@ export const Chat: FC<Props> = ({ roomId }) => {
   const handleTimeout = () => setIsFinished(true);
 
   const groupedMessages: GroupedMessage[] = messages.map((message) => {
-    const isLocalSender = message.sender === sessionData?.id;
+    const isLocalSender = message.sender === sessionData?.user.id;
 
     // TODO: group properly, use `sentAt`
     return {

@@ -19,7 +19,7 @@ export const userRouter = createTRPCRouter({
     .input(z.object({ signature: z.string(), address: z.string() }))
     .output(z.object({ knownUser: z.boolean(), address: z.string() }))
     .mutation(async ({ ctx, input }) => {
-      const { id } = ctx.session;
+      const { id } = ctx.session.user;
       const { signature, address } = input;
 
       const isVerified = verifySignature(address, signature);
@@ -55,14 +55,14 @@ export const userRouter = createTRPCRouter({
         throw new Error("Invalid session");
       }
 
-      if (ctx.session.username) {
+      if (ctx.session.user.username) {
         throw new Error("User already verified");
       }
 
       const { username, address, signature } = input;
 
-      if (ctx.session.address) {
-        const updatedUser = await setUsername(ctx.session.id, username);
+      if (ctx.session.user.address) {
+        const updatedUser = await setUsername(ctx.session.user.id, username);
         if (!updatedUser) {
           throw new Error("Failed to update username");
         }
@@ -80,7 +80,7 @@ export const userRouter = createTRPCRouter({
         throw new Error("Invalid signature");
       }
 
-      const updatedUser = await setUsername(ctx.session.id, username);
+      const updatedUser = await setUsername(ctx.session.user.id, username);
       if (!updatedUser) {
         throw new Error("Failed to update username");
       }
@@ -88,7 +88,7 @@ export const userRouter = createTRPCRouter({
       return { isVerified: true };
     }),
   getUserById: protectedProcedure.query(async ({ ctx }) => {
-    const { id } = ctx.session;
+    const { id } = ctx.session.user;
 
     const selectedUser = await selectUserById(id);
     return selectedUser;
