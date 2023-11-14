@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { JWT } from "next-auth/jwt";
 import NextAuth, { type DefaultSession, type ISODateString } from "next-auth";
 
