@@ -9,7 +9,6 @@ declare module "next-auth" {
       address?: string;
       username?: string;
     };
-    expires: ISODateString;
   }
   interface User {
     id: string;
