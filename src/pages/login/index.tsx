@@ -15,12 +15,6 @@ import { signIn, useSession } from "next-auth/react";
 import { AUTH_SIGN_MESSAGE } from "@/constants";
 import { Page } from "@/layouts";
 import { ConnectWallet } from "@/features/connect-wallet";
-import {
-  isAnonymousSession,
-  isValidSession,
-  isVerifiedSession,
-} from "@/utils/session";
-import { is } from "drizzle-orm";
 
 const Login: FC = () => {
   const { data: sessionData } = useSession();
