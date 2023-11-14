@@ -42,7 +42,7 @@ export const MenuDialog: FC<Props> = ({ open, isWalletConnected, setOpen }) => {
         </Button>
       </Stack>
       <MenuOptions
-        isAuthenticated={isWalletConnected}
+        isWalletConnected={isWalletConnected}
         handleClose={handleClose}
       />
       <Footer />

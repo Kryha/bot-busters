@@ -9,11 +9,11 @@ import {
   Typography,
 } from "@mui/material";
 
-import { PointsDisplay } from "@/features/landing/components";
 import { text } from "@/assets/text";
 import { type UserStatsData } from "@/types";
 import { fakeDateAndCreditsOne, fakeDateAndCreditsTwo } from "@/constants";
 import { styles } from "./styles";
+import { PointsDisplay } from "../points-display";
 
 interface Props {
   open: boolean;

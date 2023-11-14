@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import { useState, type FC } from "react";
-import { Stack, type StackProps } from "@mui/material";
+import { Container, type StackProps } from "@mui/material";
 import { useWallet } from "@demox-labs/aleo-wallet-adapter-react";
 import { useSession } from "next-auth/react";
 
@@ -19,7 +19,7 @@ export const Layout: FC<StackProps> = (props) => {
   const { disconnect } = useWallet();
   const isGamePlayed = true;
   return (
-    <Stack component="main" sx={styles.container}>
+    <Container component="main" sx={styles.container}>
       <UserStats
         isWalletConnected={isWalletConnected}
         isGamePlayed={isGamePlayed}
@@ -32,6 +32,6 @@ export const Layout: FC<StackProps> = (props) => {
         points={fakeDateAndCreditsOne.credits}
       />
       {children}
-    </Stack>
+    </Container>
   );
 };

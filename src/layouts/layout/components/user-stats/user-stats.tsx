@@ -7,6 +7,7 @@ import { MenuDialog } from "@/layouts/layout/components/menu-dialog";
 import { StatsDisplay } from "@/components/stats-display";
 import { text } from "@/assets/text";
 import { styles } from "./styles";
+import { is } from "drizzle-orm";
 
 interface Props {
   isWalletConnected: boolean;
@@ -36,7 +37,7 @@ export const UserStats: FC<Props> = ({
   };
 
   return (
-    <>
+    <Stack sx={styles.container}>
       <Stack sx={styles.statsWrapper}>
         {isGamePlayed && (
           <StatsDisplay
@@ -56,6 +57,6 @@ export const UserStats: FC<Props> = ({
         setOpen={setOpen}
         isWalletConnected={isWalletConnected}
       />
-    </>
+    </Stack>
   );
 };
