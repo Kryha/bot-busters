@@ -10,7 +10,7 @@ import { text } from "@/assets/text";
 import { leaderboardData } from "@/constants";
 import { COLUMN_WIDTH } from "./constants";
 import { styles } from "./styles";
-import { AddScoreRow, Top100SVG } from "./components";
+import { RowAddScore, Top100SVG } from "./components";
 
 interface Props {
   isAuthenticated: boolean;
@@ -42,7 +42,7 @@ export const AddScoreTable: FC<Props> = ({
               <col width={COLUMN_WIDTH.md} />
             </colgroup>
             <TableBody sx={styles.addScoreBody(isNotLoggedInOrPlayed)}>
-              <AddScoreRow
+              <RowAddScore
                 leaderboard={leaderboardData[2]}
                 isGamePlayed={isGamePlayed}
                 isAuthenticated={isAuthenticated}

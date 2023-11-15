@@ -20,7 +20,7 @@ interface Props {
   isGamePlayed: boolean;
 }
 
-export const AddScoreRow: FC<Props> = ({ leaderboard, isAuthenticated }) => {
+export const RowAddScore: FC<Props> = ({ leaderboard, isAuthenticated }) => {
   const router = useRouter();
   return (
     <TableRow key={leaderboard.rank} sx={styles.tableRow()}>

@@ -18,7 +18,7 @@ import { useCreateRandomUsername } from "@/hooks/name-generator";
 import { pages } from "@/utils/router";
 import { styles } from "./styles";
 
-export const CreateUsernameRow: FC = ({}) => {
+export const RowCreateUsername: FC = ({}) => {
   const router = useRouter();
   const { username, setUsername } = useCreateRandomUsername();
 

@@ -3,9 +3,9 @@ import { Table, TableBody, TableContainer } from "@mui/material";
 
 import { type PlayerProfileData } from "@/types";
 import { text } from "@/assets/text";
-import { Header } from "./header";
+import { Header } from "./components/header";
 import { styles } from "./styles";
-import { PlayerProfileRow } from "./components";
+import { RowPlayerProfile } from "./components";
 
 interface Props {
   playerProfile: PlayerProfileData[];
@@ -20,7 +20,7 @@ export const PlayerTable: FC<Props> = ({ playerProfile }) => {
         <Header cells={text.playerProfile.profileColumns} />
         <TableBody>
           {playerProfile.map((profile, index) => {
-            return <PlayerProfileRow key={index} playerProfile={profile} />;
+            return <RowPlayerProfile key={index} playerProfile={profile} />;
           })}
         </TableBody>
       </Table>

@@ -11,9 +11,10 @@ interface Props {
   playerProfile: PlayerProfileData;
 }
 
-export const PlayerProfileRow: FC<Props> = ({ playerProfile }) => {
+export const RowPlayerProfile: FC<Props> = ({ playerProfile }) => {
   const isToday = formatDate(playerProfile.date) === "Today";
   const fontWeight = isToday ? "bold" : "light";
+  const date = longDateFormat(playerProfile.date);
 
   return (
     <TableRow key={playerProfile.ranking} sx={styles.tableRow}>
@@ -23,7 +24,7 @@ export const PlayerProfileRow: FC<Props> = ({ playerProfile }) => {
           color="customGrey.main"
           fontWeight={fontWeight}
         >
-          {longDateFormat(playerProfile.date)}
+          {date}
         </Typography>
       </TableCell>
       <TableCell>
