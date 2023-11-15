@@ -5,6 +5,7 @@ import { lobby } from "./lobby";
 import { leaderboard } from "./leaderboard";
 import { landing } from "./landing";
 import { homepage } from "./homepage";
+import { animationLab } from "@/assets/text/animationlab";
 
 export const text = {
   auth,
@@ -14,4 +15,5 @@ export const text = {
   leaderboard,
   landing,
   homepage,
+  animationLab,
 };
