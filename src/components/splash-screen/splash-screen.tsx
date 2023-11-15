@@ -8,18 +8,18 @@ interface Props extends StackProps {
 }
 
 export const SplashScreen: FC<Props> = ({ children, show }) => {
-  const [showSplash, setShowSplash] = useState(false);
+  const [showSplashScreen, setShowSplashScreen] = useState(false);
 
   useEffect(() => {
     if (show) {
-      setShowSplash(true);
+      setShowSplashScreen(true);
       setTimeout(() => {
-        setShowSplash(false);
+        setShowSplashScreen(false);
       }, SPLASH_SCREEN_DURATION);
     }
   }, [show]);
 
-  if (!showSplash) return;
+  if (!showSplashScreen) return;
 
   return <Stack sx={styles.container}>{children}</Stack>;
 };
