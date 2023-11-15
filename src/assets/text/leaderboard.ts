@@ -11,6 +11,9 @@ export const leaderboard = {
   leaderboardRank: "#5",
   allTimeLeaderboard: "All time leaderboard",
   dailyLeaderboard: "Daily leaderboard",
+  countdown: (countdown: string | number) =>
+    `${countdown} until today's payout`,
+  addScoreToLeaderboard: "Add your score to leaderboard",
 
   rankNumber: (val: number) => `#${val}`,
   aleoCredits: (val: number) =>

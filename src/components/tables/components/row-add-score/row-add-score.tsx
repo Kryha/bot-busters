@@ -20,7 +20,7 @@ interface Props {
   isGamePlayed: boolean;
 }
 
-export const AddScoreRow: FC<Props> = ({ leaderboard, isAuthenticated }) => {
+export const RowAddScore: FC<Props> = ({ leaderboard, isAuthenticated }) => {
   const router = useRouter();
   return (
     <TableRow key={leaderboard.rank} sx={styles.tableRow()}>
@@ -36,7 +36,7 @@ export const AddScoreRow: FC<Props> = ({ leaderboard, isAuthenticated }) => {
             color="blueGrey"
             onClick={() => void router.push(pages.login)}
           >
-            {text.landing.addScoreToLeaderboard}
+            {text.leaderboard.addScoreToLeaderboard}
           </Button>
         ) : (
           <Stack sx={styles.container}>

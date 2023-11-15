@@ -8,7 +8,10 @@ import { styles } from "./styles";
 import { UserStats } from "./components/user-stats";
 
 import { isValidSession } from "@/utils/session";
-import { fakeDateAndCreditsOne, fakeUsername } from "@/constants";
+import {
+  fakeDateAndCreditsOne,
+  fakeUsername,
+} from "@/constants/fake-data/landing";
 
 export const Layout: FC<StackProps> = (props) => {
   const { children } = props;

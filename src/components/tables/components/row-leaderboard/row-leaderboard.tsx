@@ -11,7 +11,7 @@ interface Props {
   isBlurred?: boolean;
 }
 
-export const LeaderboardRow: FC<Props> = ({ leaderboard, isBlurred }) => {
+export const RowLeaderboard: FC<Props> = ({ leaderboard, isBlurred }) => {
   return (
     <TableRow key={leaderboard.rank} sx={styles.tableRow(isBlurred)}>
       <TableCell component="th" scope="row">
