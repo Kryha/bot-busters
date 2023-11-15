@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 import {
+  insertUserWithAddress,
   mergeUserScore,
   selectUserByAddress,
   selectUserById,
@@ -17,7 +18,7 @@ const verifySignature = (address: string, signedMessage: string): boolean => {
 export const userRouter = createTRPCRouter({
   mergeScore: protectedProcedure
     .input(z.object({ signature: z.string(), address: z.string() }))
-    .output(z.object({ knownUser: z.boolean(), address: z.string() }))
+    .output(z.object({ isMerged: z.boolean() }))
     //TODO: Go over the function and make it more readable (separating the logic into smaller functions)
     .mutation(async ({ ctx, input }) => {
       const { id } = ctx.session.user;
@@ -32,7 +33,12 @@ export const userRouter = createTRPCRouter({
       const existingUser = await selectUserByAddress(address);
 
       if (!existingUser) {
-        return { knownUser: false, address };
+        const newUser = await insertUserWithAddress(address);
+        if (!newUser) {
+          throw new Error("Failed to insert user");
+        }
+        const isMerged = await mergeUserScore(id, newUser.id);
+        return { isMerged: Boolean(isMerged) };
       }
       // TODO: Check if there is a username attached to the given address
 
@@ -41,7 +47,7 @@ export const userRouter = createTRPCRouter({
       if (!isMerged) {
         throw new Error("Failed to merge user score");
       }
-      return { knownUser: true, address };
+      return { isMerged: Boolean(isMerged) };
     }),
   verify: protectedProcedure
     .input(
@@ -64,16 +70,16 @@ export const userRouter = createTRPCRouter({
       const { username, address, signature } = input;
 
       if (ctx.session.user.address) {
-        const updatedUser = await setUsername(ctx.session.user.id, username);
-        if (!updatedUser) {
-          throw new Error("Failed to update username");
+        try {
+          await setUsername(ctx.session.user.id, username);
+        } catch (e) {
+          throw new Error("Failed to update username try a different one");
         }
-
         return { isVerified: true };
       }
 
       if (!address || !signature) {
-        throw new Error("Invalid address or signature");
+        throw new Error("No address or signature provided");
       }
 
       const isVerified = verifySignature(address, signature);

@@ -15,16 +15,20 @@ import {
 
 import { text } from "@/assets/text";
 import { useCreateRandomUsername } from "@/hooks/name-generator";
-import { pages } from "@/utils/router";
 import { styles } from "./styles";
-
-export const CreateUsernameRow: FC = ({}) => {
-  const router = useRouter();
+import { error } from "console";
+interface CreateUsernameRowProps {
+  handleSetUsername: (username: string) => Promise<void>;
+  error?: string;
+}
+export const CreateUsernameRow: FC<CreateUsernameRowProps> = ({
+  handleSetUsername,
+  error,
+}) => {
   const { username, setUsername } = useCreateRandomUsername();
 
   const handleSaveUsername = () => {
-    setUsername(username);
-    void router.push(pages.home);
+    void handleSetUsername(username);
   };
 
   return (
@@ -40,6 +44,11 @@ export const CreateUsernameRow: FC = ({}) => {
             <Avatar alt="avatar" sx={styles.avatar}>
               {text.leaderboard.avatarEmoji}
             </Avatar>
+            {error && (
+              <Typography variant="body1" color="error">
+                {error}
+              </Typography>
+            )}
             <TextField
               id="outlined"
               value={username}
