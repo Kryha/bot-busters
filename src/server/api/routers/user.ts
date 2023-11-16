@@ -8,7 +8,7 @@ import {
 } from "@/server/service";
 import { isValidSession } from "@/utils/session";
 
-//TODO: Fix import issue with SDK and TRPC
+//TODO: Fix import issue with SDK and TRPC.
 // import { verifySignature } from "@/utils/wallet";
 const verifySignature = (address: string, signedMessage: string): boolean => {
   return true;
