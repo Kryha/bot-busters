@@ -42,6 +42,7 @@ const Login: FC = () => {
         const bytes = new TextEncoder().encode(AUTH_SIGN_MESSAGE);
         const signatureMessageBytes = await adapter.signMessage(bytes);
         const signedMessage = new TextDecoder().decode(signatureMessageBytes);
+        sessionStorage.setItem("signedMessage", signedMessage);
         await signIn("credentials", {
           address,
           signedMessage,
