@@ -1,18 +1,20 @@
-export const USERS_DATA = [
+import { type UserType } from "@/types";
+
+export const USERS_DATA: UserType[] = [
   {
     username: "orange orangutang",
-    isHuman: true,
+    isBot: false,
   },
   {
     username: "brown bear",
-    isHuman: false,
+    isBot: true,
   },
   {
     username: "green gator",
-    isHuman: false,
+    isBot: false,
   },
   {
     username: "pink panda",
-    isHuman: true,
+    isBot: false,
   },
 ];

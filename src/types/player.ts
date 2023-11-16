@@ -26,3 +26,9 @@ export const playerProfileDataSchema = z.object({
 });
 
 export type PlayerProfileData = z.infer<typeof playerProfileDataSchema>;
+
+// TODO: Fix type once voting system is implemented
+export type UserType = {
+  username: string;
+  isBot: boolean;
+};
