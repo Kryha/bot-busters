@@ -15,7 +15,7 @@ export const Homepage = () => {
   const join = api.lobby.join.useMutation();
   const { data: sessionData } = useSession();
 
-  const startGameHandler = async () => {
+  const handleGameStart = async () => {
     if (!isValidSession(sessionData)) {
       await signIn("credentials", {});
     }
@@ -35,7 +35,7 @@ export const Homepage = () => {
         <Button
           variant="contained"
           disabled={isDisabled}
-          onClick={() => void startGameHandler()}
+          onClick={() => void handleGameStart()}
           sx={styles.startGameButton}
         >
           <Typography variant="h3" sx={styles.buttonText}>
