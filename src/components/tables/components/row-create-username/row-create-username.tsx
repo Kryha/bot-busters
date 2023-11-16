@@ -2,7 +2,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { type FC } from "react";
-import { useRouter } from "next/router";
 import {
   Avatar,
   Button,
@@ -15,16 +14,19 @@ import {
 
 import { text } from "@/assets/text";
 import { useCreateRandomUsername } from "@/hooks/name-generator";
-import { pages } from "@/utils/router";
 import { styles } from "./styles";
-
-export const RowCreateUsername: FC = ({}) => {
-  const router = useRouter();
+interface RowCreateUsernameProps {
+  handleSetUsername: (username: string) => Promise<void>;
+  error?: string;
+}
+export const RowCreateUsername: FC<RowCreateUsernameProps> = ({
+  handleSetUsername,
+  error,
+}) => {
   const { username, setUsername } = useCreateRandomUsername();
 
   const handleSaveUsername = () => {
-    setUsername(username);
-    void router.push(pages.home);
+    void handleSetUsername(username);
   };
 
   return (
@@ -40,6 +42,11 @@ export const RowCreateUsername: FC = ({}) => {
             <Avatar alt="avatar" sx={styles.avatar}>
               {text.leaderboard.avatarEmoji}
             </Avatar>
+            {error && (
+              <Typography variant="body1" color="error">
+                {error}
+              </Typography>
+            )}
             <TextField
               id="outlined"
               value={username}

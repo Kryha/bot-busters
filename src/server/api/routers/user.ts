@@ -63,16 +63,16 @@ export const userRouter = createTRPCRouter({
       const { username, address, signature } = input;
 
       if (ctx.session.user.address) {
-        const updatedUser = await setUsername(ctx.session.user.id, username);
-        if (!updatedUser) {
-          throw new Error("Failed to update username");
+        try {
+          await setUsername(ctx.session.user.id, username);
+        } catch (e) {
+          throw new Error("Failed to update username try a different one");
         }
-
         return { isVerified: true };
       }
 
       if (!address || !signature) {
-        throw new Error("Invalid address or signature");
+        throw new Error("No address or signature provided");
       }
 
       const isVerified = verifySignature(address, signature);
