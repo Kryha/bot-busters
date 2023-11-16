@@ -10,7 +10,6 @@ import { styles } from "./styles";
 
 interface Props {
   isVerifiedUser: boolean;
-  isAuthenticated: boolean;
   isGamePlayed: boolean;
   username: string;
   open: boolean;
@@ -21,7 +20,6 @@ interface Props {
 
 export const UserStats: FC<Props> = ({
   isVerifiedUser,
-  isAuthenticated,
   isGamePlayed,
   username,
   open,
@@ -30,7 +28,7 @@ export const UserStats: FC<Props> = ({
   points,
 }) => {
   const isVerifiedUserAndPlayed = isVerifiedUser && isGamePlayed;
-  const title = isVerifiedUserAndPlayed ? username : text.landing.dailyScore;
+  const title = isVerifiedUserAndPlayed ? username : text.general.dailyScore;
 
   const logout = async () => {
     await signOut();
@@ -43,7 +41,7 @@ export const UserStats: FC<Props> = ({
         {isGamePlayed && (
           <StatsDisplay
             title={title}
-            info={text.landing.points(points)}
+            info={text.general.points(points)}
             isCentered
           />
         )}
@@ -53,11 +51,7 @@ export const UserStats: FC<Props> = ({
           logout={logout}
         />
       </Stack>
-      <MenuDialog
-        open={open}
-        setOpen={setOpen}
-        isAuthenticated={isAuthenticated}
-      />
+      <MenuDialog open={open} setOpen={setOpen} />
     </Stack>
   );
 };

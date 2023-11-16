@@ -8,11 +8,10 @@ import { pages } from "@/utils/router";
 import { styles } from "./styles";
 
 interface Props {
-  isAuthenticated: boolean;
   handleClose: () => void;
 }
 
-export const MenuOptions: FC<Props> = ({ isAuthenticated, handleClose }) => {
+export const MenuOptions: FC<Props> = ({ handleClose }) => {
   const router = useRouter();
   const join = api.lobby.join.useMutation();
 
@@ -42,7 +41,6 @@ export const MenuOptions: FC<Props> = ({ isAuthenticated, handleClose }) => {
           variant="text"
           sx={styles.menuButton}
           color="customGrey"
-          disabled={!isAuthenticated}
           onClick={() => handleNavigation(pages.playerProfile)}
         >
           <Typography variant="h1" color="common.black">

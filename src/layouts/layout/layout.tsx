@@ -7,14 +7,16 @@ import { useSession } from "next-auth/react";
 import { styles } from "./styles";
 import { UserStats } from "./components/user-stats";
 
-import { isValidSession, isVerifiedSession } from "@/utils/session";
-import { fakeDateAndCreditsOne, fakeUsername } from "@/constants";
+import { isVerifiedSession } from "@/utils/session";
+import {
+  fakeDateAndCreditsOne,
+  fakeUsername,
+} from "@/constants/fake-data/landing";
 
 export const Layout: FC<StackProps> = (props) => {
   const { children } = props;
   const { data: sessionData } = useSession();
   const isVerifiedUser = isVerifiedSession(sessionData);
-  const isAuthenticated = isValidSession(sessionData);
   const [open, setOpen] = useState(false);
   const { disconnect } = useWallet();
   const isGamePlayed = true;
@@ -23,7 +25,6 @@ export const Layout: FC<StackProps> = (props) => {
     <Container component="main" sx={styles.container}>
       <UserStats
         isVerifiedUser={isVerifiedUser}
-        isAuthenticated={isAuthenticated}
         isGamePlayed={isGamePlayed}
         username={fakeUsername}
         open={open}

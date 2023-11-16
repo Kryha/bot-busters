@@ -26,5 +26,6 @@ export const styles = {
     flexDirection: "row",
     justifyContent: "space-between",
   },
-  group: { flexDirection: "row", gap: 5 } satisfies SxProps,
+  group: { flexDirection: "row", gap: 5 },
+  textButton: { cursor: "pointer" } satisfies SxProps,
 };
