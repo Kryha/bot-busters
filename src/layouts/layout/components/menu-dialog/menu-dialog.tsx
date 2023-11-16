@@ -41,7 +41,7 @@ export const MenuDialog: FC<Props> = ({ open, setOpen }) => {
         </Button>
       </Stack>
       <MenuOptions handleClose={handleClose} />
-      <Footer />
+      <Footer handleClose={handleClose} />
     </Dialog>
   );
 };
