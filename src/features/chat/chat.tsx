@@ -22,9 +22,10 @@ export const Chat: FC<Props> = ({ roomId }) => {
   const [messages, setMessages] = useState<ChatMessagePayload[]>([]);
   const setCreatedAt = useStore((state) => state.setCreatedAt);
   const [matchState, setMatchState] = useState<MatchStateType>("chat");
-  const disabled = matchState !== "chat";
   const getRoom = api.chat.getRoom.useQuery({ roomId: roomId });
   const roomData = getRoom.data;
+  const isChat = matchState === "chat";
+
   const groupedMessages: GroupedMessage[] = messages.map((message) => {
     const isLocalSender = message.sender === sessionData?.id;
 
@@ -104,14 +105,14 @@ export const Chat: FC<Props> = ({ roomId }) => {
   }, [roomData, setCreatedAt]);
 
   return (
-    <Stack component="section" sx={styles.section}>
+    <Stack component="section" sx={styles.section(isChat)}>
       <Messages groupedMessages={groupedMessages} />
       <Timer />
       <InputField
         value={message}
         onChange={(e) => setMessage(e.target.value)}
         onClick={() => sendMessage()}
-        disabled={disabled}
+        disabled={!isChat}
       />
     </Stack>
   );

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import { useState, type FC } from "react";
-import { Stack, type StackProps } from "@mui/material";
+import { Container, type StackProps } from "@mui/material";
 import { useWallet } from "@demox-labs/aleo-wallet-adapter-react";
 import { useSession } from "next-auth/react";
 
@@ -8,7 +8,10 @@ import { styles } from "./styles";
 import { UserStats } from "./components/user-stats";
 
 import { isValidSession } from "@/utils/session";
-import { fakeDateAndCreditsOne, fakeUsername } from "@/constants";
+import {
+  fakeDateAndCreditsOne,
+  fakeUsername,
+} from "@/constants/fake-data/landing";
 
 export const Layout: FC<StackProps> = (props) => {
   const { children } = props;
@@ -19,7 +22,7 @@ export const Layout: FC<StackProps> = (props) => {
   const isGamePlayed = true;
 
   return (
-    <Stack component="main" sx={styles.container}>
+    <Container component="main" sx={styles.container}>
       <UserStats
         isAuthenticated={isAuthenticated}
         isGamePlayed={isGamePlayed}
@@ -30,6 +33,6 @@ export const Layout: FC<StackProps> = (props) => {
         points={fakeDateAndCreditsOne.credits}
       />
       {children}
-    </Stack>
+    </Container>
   );
 };

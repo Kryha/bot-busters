@@ -4,10 +4,11 @@ import { useSession } from "next-auth/react";
 import { type LeaderboardData } from "@/types";
 import { isValidSession } from "@/utils/session";
 import { AddScoreTable, LeaderboardTable } from "@/components/tables";
-import { fakeCountdown, leaderboardData } from "@/constants";
+import { leaderboardData } from "@/constants";
 import { Box, Typography } from "@mui/material";
 import { text } from "@/assets/text";
 import { styles } from "./styles";
+import { fakeCountdown } from "@/constants/fake-data/landing";
 
 export const LeaderBoard = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
