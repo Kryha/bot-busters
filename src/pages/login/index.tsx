@@ -15,6 +15,12 @@ import { signIn, useSession } from "next-auth/react";
 import { AUTH_SIGN_MESSAGE } from "@/constants";
 import { Page } from "@/layouts";
 import { ConnectWallet } from "@/features/connect-wallet";
+import {
+  isUnverifiedSession,
+  isValidSession,
+  isVerifiedSession,
+} from "@/utils/session";
+import { api } from "@/utils/api";
 
 const Login: FC = () => {
   const { data: sessionData } = useSession();
@@ -33,20 +39,26 @@ const Login: FC = () => {
 
   useEffect(() => {
     const connectWallet = async () => {
-      if (connecting || !wallet || !address || sessionData !== null) {
+      if (
+        connecting ||
+        !wallet ||
+        !address ||
+        isUnverifiedSession(sessionData) ||
+        isVerifiedSession(sessionData)
+      ) {
         return;
       }
+
       try {
         const adapter = wallet.adapter as LeoWalletAdapter;
 
         const bytes = new TextEncoder().encode(AUTH_SIGN_MESSAGE);
         const signatureMessageBytes = await adapter.signMessage(bytes);
         const signedMessage = new TextDecoder().decode(signatureMessageBytes);
+
+        // Storing the signature helps preventing a constant request for signing a message
         sessionStorage.setItem("signedMessage", signedMessage);
-        await signIn("credentials", {
-          address,
-          signedMessage,
-        });
+        sessionStorage.setItem("aleoAddress", address);
       } catch (error) {
         //TODO: handle unauthorized error
         console.error(error);
