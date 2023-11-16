@@ -5,10 +5,15 @@ export const isValidSession = (session: Session | null) =>
 
 export const isAnonymousSession = (session: Session | null) => {
   const validSession = isValidSession(session);
-  if (validSession && !session?.address && !session?.username) return true;
+  return Boolean(validSession && !session?.address && !session?.username);
+};
+
+export const isUnverifiedSession = (session: Session | null) => {
+  const validSession = isValidSession(session);
+  return Boolean(validSession && session?.address && !session?.username);
 };
 
 export const isVerifiedSession = (session: Session | null) => {
-  if (!isValidSession(session)) return false;
-  if (session?.address && session?.username) return true;
+  const validSession = isValidSession(session);
+  return Boolean(validSession && session?.address && session?.username);
 };

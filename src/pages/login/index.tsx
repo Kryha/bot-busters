@@ -15,7 +15,6 @@ import { signIn, useSession } from "next-auth/react";
 import { AUTH_SIGN_MESSAGE } from "@/constants";
 import { Page } from "@/layouts";
 import { ConnectWallet } from "@/features/connect-wallet";
-import { isValidSession } from "@/utils/session";
 
 const Login: FC = () => {
   const { data: sessionData } = useSession();
@@ -75,7 +74,7 @@ const Login: FC = () => {
 
   return (
     <Page>
-      <ConnectWallet isAuthenticated={isValidSession(sessionData)} />
+      <ConnectWallet />
     </Page>
   );
 };

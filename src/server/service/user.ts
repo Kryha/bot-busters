@@ -66,6 +66,29 @@ export const setUserScore = async (id: string, score: number) => {
     .set({ score })
     .where(eq(users.id, id))
     .returning();
+  if (!updatedUsers.at(0)) {
+    throw new Error("Failed to update user score");
+  }
+  return updatedUsers.at(0);
+};
 
+export const mergeUserScore = async (sessionId: string, existingId: string) => {
+  const sessionUser = await selectUserById(sessionId);
+  const existingUser = await selectUserById(existingId);
+
+  if (!sessionUser || !existingUser) {
+    throw new Error("Invalid user id");
+  }
+  const updatedUsers = await db.transaction(async (tx) => {
+    const updatedUsers = await tx
+      .update(users)
+      .set({ score: sessionUser.score + existingUser.score })
+      .where(eq(users.id, existingId))
+      .returning();
+
+    await tx.delete(users).where(eq(users.id, sessionUser.id)).returning();
+
+    return updatedUsers;
+  });
   return updatedUsers.at(0);
 };

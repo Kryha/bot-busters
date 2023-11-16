@@ -9,7 +9,7 @@ import { text } from "@/assets/text";
 import { styles } from "./styles";
 
 interface Props {
-  isAuthenticated: boolean;
+  isVerifiedUser: boolean;
   isGamePlayed: boolean;
   username: string;
   open: boolean;
@@ -19,7 +19,7 @@ interface Props {
 }
 
 export const UserStats: FC<Props> = ({
-  isAuthenticated,
+  isVerifiedUser,
   isGamePlayed,
   username,
   open,
@@ -27,8 +27,8 @@ export const UserStats: FC<Props> = ({
   disconnect,
   points,
 }) => {
-  const isLoggedInAndPlayed = isAuthenticated && isGamePlayed;
-  const title = isLoggedInAndPlayed ? username : text.general.dailyScore;
+  const isVerifiedUserAndPlayed = isVerifiedUser && isGamePlayed;
+  const title = isVerifiedUserAndPlayed ? username : text.general.dailyScore;
 
   const logout = async () => {
     await signOut();
@@ -45,7 +45,11 @@ export const UserStats: FC<Props> = ({
             isCentered
           />
         )}
-        <UserMenu setOpen={setOpen} logout={logout} />
+        <UserMenu
+          isVerifiedUser={isVerifiedUser}
+          setOpen={setOpen}
+          logout={logout}
+        />
       </Stack>
       <MenuDialog open={open} setOpen={setOpen} />
     </Stack>

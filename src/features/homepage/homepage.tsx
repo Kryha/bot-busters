@@ -7,11 +7,20 @@ import { useRouter } from "next/router";
 import { api } from "@/utils/api";
 import { pages } from "@/utils/router";
 import { TOP_RANKED_PLAYERS } from "@/constants";
+import { isValidSession } from "@/utils/session";
+import { signIn, useSession } from "next-auth/react";
 
 export const Homepage = () => {
   const { push } = useRouter();
   const join = api.lobby.join.useMutation();
-  const startGameHandler = () => void push(pages.lobby);
+  const { data: sessionData } = useSession();
+
+  const handleGameStart = async () => {
+    if (!isValidSession(sessionData)) {
+      await signIn("credentials", {});
+    }
+    void push(pages.lobby);
+  };
   const openDailyHandler = () => void push(pages.leaderboard);
   const isDisabled = join.status === "loading";
 
@@ -26,7 +35,7 @@ export const Homepage = () => {
         <Button
           variant="contained"
           disabled={isDisabled}
-          onClick={startGameHandler}
+          onClick={() => void handleGameStart()}
           sx={styles.startGameButton}
         >
           <Typography variant="h3" sx={styles.buttonText}>

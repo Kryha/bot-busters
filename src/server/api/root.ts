@@ -1,4 +1,4 @@
-import { chatRouter, lobbyRouter } from "@/server/api/routers";
+import { userRouter, chatRouter, lobbyRouter } from "@/server/api/routers";
 import { createTRPCRouter } from "@/server/api/trpc";
 
 /**
@@ -9,6 +9,7 @@ import { createTRPCRouter } from "@/server/api/trpc";
 export const appRouter = createTRPCRouter({
   lobby: lobbyRouter,
   chat: chatRouter,
+  user: userRouter,
 });
 
 // export type definition of API
