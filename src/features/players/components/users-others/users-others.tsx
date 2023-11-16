@@ -12,6 +12,7 @@ export const UsersOthers: FC = () => {
     state.matchState,
     state.setMatchState,
   ]);
+  const isVoting = matchState === "voting";
   const isResults = matchState === "results";
   const intro = isResults ? text.match.whosBot : text.match.otherParticipants;
 
@@ -42,7 +43,11 @@ export const UsersOthers: FC = () => {
             <Player key={index} color={color} user={user} onVote={handleVote} />
           );
         })}
-        <Button onClick={handleConfirm}>{text.general.confirm}</Button>
+        {isVoting && (
+          <Button variant="contained" onClick={handleConfirm}>
+            {text.general.confirm}
+          </Button>
+        )}
       </Stack>
     </Stack>
   );
