@@ -18,12 +18,11 @@ const Transition = forwardRef(function Transition(
 
 interface Props {
   open: boolean;
-  isWalletConnected: boolean;
 
   setOpen: (open: boolean) => void;
 }
 
-export const MenuDialog: FC<Props> = ({ open, isWalletConnected, setOpen }) => {
+export const MenuDialog: FC<Props> = ({ open, setOpen }) => {
   const handleClose = () => {
     setOpen(false);
   };
@@ -41,11 +40,8 @@ export const MenuDialog: FC<Props> = ({ open, isWalletConnected, setOpen }) => {
           {text.general.close}
         </Button>
       </Stack>
-      <MenuOptions
-        isWalletConnected={isWalletConnected}
-        handleClose={handleClose}
-      />
-      <Footer />
+      <MenuOptions handleClose={handleClose} />
+      <Footer handleClose={handleClose} />
     </Dialog>
   );
 };

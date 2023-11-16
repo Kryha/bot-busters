@@ -6,15 +6,15 @@ import { SoundIcon } from "./sound-icon";
 import { styles } from "./styles";
 
 interface Props {
-  isWalletConnected: boolean;
+  isVerifiedUser: boolean;
   setOpen: (open: boolean) => void;
   logout: () => Promise<void>;
 }
 
-export const UserMenu: FC<Props> = ({ isWalletConnected, setOpen, logout }) => {
+export const UserMenu: FC<Props> = ({ isVerifiedUser, setOpen, logout }) => {
   return (
     <Stack sx={styles.wrapper}>
-      {isWalletConnected && (
+      {isVerifiedUser && (
         <Button
           variant="contained"
           color="blueGrey"

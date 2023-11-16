@@ -1,4 +1,4 @@
-import { useState, type FC } from "react";
+import { type FC } from "react";
 import { useRouter } from "next/router";
 import { Typography, CircularProgress } from "@mui/material";
 
@@ -6,12 +6,12 @@ import { LobbyLayout as Layout } from "@/layouts";
 import { api } from "@/utils/api";
 import { pages } from "@/utils/router";
 import { text } from "@/assets/text";
-import { LOBBY_SPLASH_SCREEN_DURATION } from "@/constants";
+import { useStore } from "@/store";
 
 const Lobby: FC = () => {
   const { push } = useRouter();
   const join = api.lobby.join.useMutation();
-  const [showSplashScreen, setShowSplashScreen] = useState(false);
+  const setCreatedAt = useStore((state) => state.setCreatedAt);
 
   api.lobby.onQueueUpdate.useSubscription(undefined, {
     onStarted() {
@@ -26,12 +26,9 @@ const Lobby: FC = () => {
   });
 
   api.lobby.onReadyToPlay.useSubscription(undefined, {
-    onData({ roomId }) {
-      setShowSplashScreen(true);
-      setTimeout(() => {
-        setShowSplashScreen(false);
-        return void push({ pathname: pages.match, query: { roomId } });
-      }, LOBBY_SPLASH_SCREEN_DURATION);
+    onData({ roomId, createdAt }) {
+      void push({ pathname: pages.match, query: { roomId } });
+      setCreatedAt(createdAt);
     },
     onError(error) {
       console.error("Ready to play error:", error);
@@ -40,14 +37,8 @@ const Lobby: FC = () => {
 
   return (
     <Layout>
-      {showSplashScreen ? (
-        <Typography variant="h1">{text.lobby.start}</Typography>
-      ) : (
-        <>
-          <Typography variant="h5">{text.lobby.waiting}</Typography>
-          <CircularProgress />
-        </>
-      )}
+      <Typography variant="h5">{text.lobby.waiting}</Typography>
+      <CircularProgress />
     </Layout>
   );
 };

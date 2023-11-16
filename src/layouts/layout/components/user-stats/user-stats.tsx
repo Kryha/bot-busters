@@ -7,10 +7,9 @@ import { MenuDialog } from "@/layouts/layout/components/menu-dialog";
 import { StatsDisplay } from "@/components/stats-display";
 import { text } from "@/assets/text";
 import { styles } from "./styles";
-import { is } from "drizzle-orm";
 
 interface Props {
-  isWalletConnected: boolean;
+  isVerifiedUser: boolean;
   isGamePlayed: boolean;
   username: string;
   open: boolean;
@@ -20,7 +19,7 @@ interface Props {
 }
 
 export const UserStats: FC<Props> = ({
-  isWalletConnected,
+  isVerifiedUser,
   isGamePlayed,
   username,
   open,
@@ -28,8 +27,8 @@ export const UserStats: FC<Props> = ({
   disconnect,
   points,
 }) => {
-  const isWalletConnectedAndPlayed = isWalletConnected && isGamePlayed;
-  const title = isWalletConnectedAndPlayed ? username : text.landing.dailyScore;
+  const isVerifiedUserAndPlayed = isVerifiedUser && isGamePlayed;
+  const title = isVerifiedUserAndPlayed ? username : text.general.dailyScore;
 
   const logout = async () => {
     await signOut();
@@ -42,21 +41,17 @@ export const UserStats: FC<Props> = ({
         {isGamePlayed && (
           <StatsDisplay
             title={title}
-            info={text.landing.points(points)}
+            info={text.general.points(points)}
             isCentered
           />
         )}
         <UserMenu
-          isWalletConnected={isWalletConnected}
+          isVerifiedUser={isVerifiedUser}
           setOpen={setOpen}
           logout={logout}
         />
       </Stack>
-      <MenuDialog
-        open={open}
-        setOpen={setOpen}
-        isWalletConnected={isWalletConnected}
-      />
+      <MenuDialog open={open} setOpen={setOpen} />
     </Stack>
   );
 };

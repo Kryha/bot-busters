@@ -1,13 +1,11 @@
-import { Stack, Typography } from "@mui/material";
+import { Button, Stack, Typography } from "@mui/material";
 import { styles } from "./styles";
 import { USERS_DATA } from "@/constants";
-import { text } from "../../text";
-import { useState, type FC, useEffect } from "react";
-import { VoteUser } from "../vote-user";
-import { User } from "../user";
-import { UserResult } from "../user-results";
+import { useState, type FC } from "react";
 import { COLORS } from "../../constants";
 import { useStore } from "@/store";
+import { Player } from "../player";
+import { text } from "@/assets/text";
 
 export const UsersOthers: FC = () => {
   const [matchState, setMatchState] = useStore((state) => [
@@ -16,49 +14,40 @@ export const UsersOthers: FC = () => {
   ]);
   const isVoting = matchState === "voting";
   const isResults = matchState === "results";
+  const intro = isResults ? text.match.whosBot : text.match.otherParticipants;
 
   const [users, setUsers] = useState(
-    USERS_DATA.map((user) => ({ ...user, voted: false }))
+    USERS_DATA.map((user) => ({ ...user, isBot: false }))
   );
 
-  useEffect(() => {
-    const allVoted = users.every((user) => user.voted);
+  const handleVote = (username: string) => {
+    setUsers((prevUsers) =>
+      prevUsers.map((user) => {
+        const isUser = user.username === username;
 
-    if (allVoted) {
-      setMatchState("results");
-    }
-  }, [users, setMatchState]);
+        if (isUser) return { ...user, isBot: !user.isBot };
+        return user;
+      })
+    );
+  };
 
-  const intro = isResults ? text.whosBotAnd : text.otherParticipants;
+  const handleConfirm = () => setMatchState("results");
 
   return (
     <Stack sx={styles.container}>
       <Typography variant="body1">{intro}</Typography>
       <Stack sx={styles.list(isResults)}>
-        {users.map(({ username, voted }, index) => {
+        {users.map((user, index) => {
           const color = COLORS[index];
-
-          const handleVote = (index: number) =>
-            setUsers(
-              users.map((user, i) =>
-                i === index ? { ...user, voted: true } : user
-              )
-            );
-          if (voted || isResults)
-            return <UserResult key={index} id={String(index)} />;
-
-          if (isVoting)
-            return (
-              <VoteUser
-                key={index}
-                id={String(index)}
-                color={color}
-                onVote={() => handleVote(index)}
-              />
-            );
-
-          return <User key={index} color={color} username={username} />;
+          return (
+            <Player key={index} color={color} user={user} onVote={handleVote} />
+          );
         })}
+        {isVoting && (
+          <Button variant="contained" onClick={handleConfirm}>
+            {text.general.confirm}
+          </Button>
+        )}
       </Stack>
     </Stack>
   );
