@@ -32,6 +32,8 @@ export const general = {
   todaysScore: "Today's score",
   youWonCredits:
     "You've won Aleo credits based on your leaderboard position yesterday. Check your wallet!",
+  bot: "bot",
+  confirm: "Confirm",
 
   countdown: (val: string): string => `${val} left`,
   formattedCountdown: (minutes: number, seconds: number): string =>
