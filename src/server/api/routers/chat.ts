@@ -55,7 +55,7 @@ export const chatRouter = createTRPCRouter({
   onStageChange: protectedProcedure
     .input(z.object({ roomId: z.string().uuid() }))
     .subscription(({ ctx, input }) => {
-      verifyUser(ctx.session.id, input.roomId);
+      verifyUser(ctx.session.user.id, input.roomId);
       const room = chatRooms.get(input.roomId);
       if (!room) throw new Error("Room not found");
 
@@ -91,7 +91,7 @@ export const chatRouter = createTRPCRouter({
   getRoom: protectedProcedure
     .input(z.object({ roomId: z.string().uuid() }))
     .query(({ ctx, input }) => {
-      verifyUser(ctx.session.id, input.roomId);
+      verifyUser(ctx.session.user.id, input.roomId);
       const room = chatRooms.get(input.roomId);
       if (!room) throw new Error("Room not found");
 
