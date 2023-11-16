@@ -17,7 +17,7 @@ const verifySignature = (address: string, signedMessage: string): boolean => {
 export const userRouter = createTRPCRouter({
   mergeScore: protectedProcedure
     .input(z.object({ signature: z.string(), address: z.string() }))
-    .output(z.object({ knownUser: z.boolean(), address: z.string() }))
+    .output(z.object({ isKnownUser: z.boolean(), address: z.string() }))
     //TODO: Go over the function and make it more readable (separating the logic into smaller functions)
     .mutation(async ({ ctx, input }) => {
       const { id } = ctx.session;
@@ -32,7 +32,7 @@ export const userRouter = createTRPCRouter({
       const existingUser = await selectUserByAddress(address);
 
       if (!existingUser) {
-        return { knownUser: false, address };
+        return { isKnownUser: false, address };
       }
       // TODO: Check if there is a username attached to the given address
 
@@ -41,7 +41,7 @@ export const userRouter = createTRPCRouter({
       if (!isMerged) {
         throw new Error("Failed to merge user score");
       }
-      return { knownUser: true, address };
+      return { isKnownUser: true, address };
     }),
   verify: protectedProcedure
     .input(
@@ -51,7 +51,6 @@ export const userRouter = createTRPCRouter({
         signature: z.string().optional(),
       })
     )
-    //TODO: Go over the function and make it more readable (separating the logic into smaller functions)
     .mutation(async ({ ctx, input }) => {
       if (!isValidSession(ctx.session)) {
         throw new Error("Invalid session");
