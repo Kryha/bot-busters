@@ -88,7 +88,7 @@ export const chatRouter = createTRPCRouter({
       });
     }),
 
-  storedRoom: protectedProcedure
+  getRoom: protectedProcedure
     .input(z.object({ roomId: z.string().uuid() }))
     .query(({ ctx, input }) => {
       verifyUser(ctx.session.id, input.roomId);

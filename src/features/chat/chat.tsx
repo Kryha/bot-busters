@@ -23,8 +23,8 @@ export const Chat: FC<Props> = ({ roomId }) => {
   const setCreatedAt = useStore((state) => state.setCreatedAt);
   const [matchState, setMatchState] = useState<MatchStateType>("chat");
   const disabled = matchState !== "chat";
-  const storedRoom = api.chat.storedRoom.useQuery({ roomId: roomId });
-  const roomData = storedRoom.data;
+  const getRoom = api.chat.getRoom.useQuery({ roomId: roomId });
+  const roomData = getRoom.data;
   const groupedMessages: GroupedMessage[] = messages.map((message) => {
     const isLocalSender = message.sender === sessionData?.id;
 

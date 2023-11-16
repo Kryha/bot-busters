@@ -32,9 +32,9 @@ const Lobby: FC = () => {
       setShowSplashScreen(true);
       setTimeout(() => {
         setShowSplashScreen(false);
-        setCreatedAt(createdAt);
         return void push({ pathname: pages.match, query: { roomId } });
       }, LOBBY_SPLASH_SCREEN_DURATION);
+      setCreatedAt(createdAt);
     },
     onError(error) {
       console.error("Ready to play error:", error);
