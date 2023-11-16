@@ -1,4 +1,4 @@
-import { CHAT_TIME_MS, MATCH_TIME_MS } from "@/constants";
+import { CHAT_TIME_MS, MATCH_TIME_MS } from "@/constants/main";
 import { env } from "@/env.cjs";
 import { EventEmitter } from "events";
 import { v4 as uuid } from "uuid";
@@ -50,6 +50,7 @@ const makeMatch = () => {
     ee.emit("readyToPlay", {
       roomId,
       players: playerIds,
+      createdAt: Date.now(),
     } satisfies ReadyToPlayPayload);
     ee.emit("queueUpdate");
   } catch (error) {
@@ -67,6 +68,10 @@ const updateRooms = () => {
     }
 
     if (room.stage === "chat" && roomAge >= CHAT_TIME_MS) {
+      // TODO: set to voting after we have implemented voting
+      room.stage = "results";
+      ee.emit(chatEvent(roomId, "stageChange"));
+
       // TODO: calculate score based on votes
       const players = room.players.map((player) => ({
         ...player,

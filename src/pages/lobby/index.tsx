@@ -6,10 +6,12 @@ import { LobbyLayout as Layout } from "@/layouts";
 import { api } from "@/utils/api";
 import { pages } from "@/utils/router";
 import { text } from "@/assets/text";
+import { useStore } from "@/store";
 
 const Lobby: FC = () => {
   const { push } = useRouter();
   const join = api.lobby.join.useMutation();
+  const setCreatedAt = useStore((state) => state.setCreatedAt);
 
   api.lobby.onQueueUpdate.useSubscription(undefined, {
     onStarted() {
@@ -24,8 +26,9 @@ const Lobby: FC = () => {
   });
 
   api.lobby.onReadyToPlay.useSubscription(undefined, {
-    onData({ roomId }) {
+    onData({ roomId, createdAt }) {
       void push({ pathname: pages.match, query: { roomId } });
+      setCreatedAt(createdAt);
     },
     onError(error) {
       console.error("Ready to play error:", error);

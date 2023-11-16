@@ -1,47 +1,42 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { useState, useEffect, type FC } from "react";
+import { useState, type FC, useEffect } from "react";
 import { Stack, Typography } from "@mui/material";
 
 import { text } from "@/assets/text";
 import { styles } from "./styles";
+import { ALERT_TIME_MS, CHAT_TIME_MS } from "@/constants/main";
+import { useStore } from "@/store";
 
-interface Props {
-  matchDurationInSeconds: number;
-  onTimeout: () => void;
-}
-
-export const Timer: FC<Props> = ({ matchDurationInSeconds, onTimeout }) => {
-  // TODO: change to use backend timer
-  const [remainingSeconds, setRemainingSeconds] = useState(
-    matchDurationInSeconds
+export const Timer: FC = () => {
+  const [remainingTime, setRemainingTime] = useState<number | null>(
+    CHAT_TIME_MS
   );
-  const updateAtInterval = 500;
-  const alertTimeInSeconds = remainingSeconds < 30;
+  const createdAt = useStore((state) => state.createdAt);
+
   useEffect(() => {
-    if (remainingSeconds === 0) {
-      onTimeout();
+    if (createdAt) {
+      const intervalId = setInterval(() => {
+        const elapsedTime = Date.now() - createdAt;
+        const newRemainingTime = Math.max(0, CHAT_TIME_MS - elapsedTime);
+        setRemainingTime(newRemainingTime);
+      }, 1000);
+
+      return () => clearInterval(intervalId);
     }
-    const interval = setInterval(() => {
-      if (remainingSeconds > 0) {
-        setRemainingSeconds((prevRemainingSeconds) => prevRemainingSeconds - 1);
-      } else {
-        clearInterval(interval);
-      }
-    }, updateAtInterval);
+    setRemainingTime(null);
+  }, [createdAt]);
 
-    return () => {
-      clearInterval(interval);
-    };
-  }, [remainingSeconds, onTimeout]);
+  if (!createdAt || !remainingTime) return <></>;
 
-  const progress = (remainingSeconds / matchDurationInSeconds) * 100;
-  const minutes = Math.floor(remainingSeconds / 60);
-  const seconds = remainingSeconds % 60;
-  const formattedCountdown = text.general.formattedCountdown(minutes, seconds);
+  const progress = (remainingTime / CHAT_TIME_MS) * 100;
+  const seconds = Math.floor(remainingTime / 1000);
+  const formattedCountdown = text.general.formattedCountdown(
+    Math.floor(seconds / 60),
+    seconds % 60
+  );
 
   return (
     <Stack sx={styles.wrapper}>
-      <Stack sx={styles.progress(progress, alertTimeInSeconds)}>
+      <Stack sx={styles.progress(progress, remainingTime < ALERT_TIME_MS)}>
         <Stack sx={styles.countdownWrapper}>
           <Typography
             variant="caption"
