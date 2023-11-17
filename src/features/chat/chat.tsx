@@ -41,18 +41,6 @@ export const Chat: FC<Props> = ({ roomId }) => {
     }
   );
 
-  api.chat.onStageChange.useSubscription(
-    { roomId },
-    {
-      onData(payload) {
-        setMatchState(payload.stage);
-      },
-      onError(error) {
-        console.error("Error on countdown:", error);
-      },
-    }
-  );
-
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     const isEnter = event.code === "Enter" || event.code === "NumpadEnter";
 
