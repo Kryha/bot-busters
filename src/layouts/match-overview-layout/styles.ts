@@ -7,7 +7,8 @@ export const styles = {
     maxWidth: 326,
     pt: 3,
     pr: 3,
-    justifyContent: "space-between",
+    gap: "80px",
+    justifyContent: "flex-start",
   },
   voting: {
     alignItems: "center",
@@ -15,14 +16,16 @@ export const styles = {
     maxWidth: 660,
     pt: 3,
     pr: 3,
-    justifyContent: "space-between",
+    gap: "80px",
+    justifyContent: "flex-start",
   },
   results: {
     width: 1,
     maxWidth: 437,
     pt: 3,
     pr: 3,
-    justifyContent: "space-between",
+    gap: "80px",
+    justifyContent: "flex-start",
     paddingBottom: 3,
   } satisfies SxProps,
 };
