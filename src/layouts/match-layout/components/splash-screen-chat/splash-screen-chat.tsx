@@ -1,10 +1,11 @@
-import { text } from "@/assets/text";
-import { SplashScreen } from "@/components";
-import { useStore } from "@/store";
 import { Typography } from "@mui/material";
 
+import { text } from "@/assets/text";
+import { SplashScreen } from "@/components";
+import { useMatchState } from "@/service";
+
 export const SplashScreenChat = () => {
-  const matchState = useStore((state) => state.matchState);
+  const matchState = useMatchState();
   const isChat = matchState === "chat";
 
   return (

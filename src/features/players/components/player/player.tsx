@@ -1,18 +1,22 @@
 import { type FC } from "react";
-import { useStore } from "@/store";
+
 import { User, UserResult, UserVote } from "@/components";
-import { type UserType } from "@/types";
+import { type MatchStateType, type UserType } from "@/types";
 
 export interface PlayerProps {
+  matchState?: MatchStateType;
   user: UserType;
   color?: string;
   onVote: (username: string) => void;
 }
 
-export const Player: FC<PlayerProps> = ({ user, color, onVote }) => {
-  const matchState = useStore((state) => state.matchState);
+export const Player: FC<PlayerProps> = ({
+  user,
+  color,
+  onVote,
+  matchState,
+}) => {
   const { username } = user;
-
   switch (matchState) {
     case "chat":
       return <User username={username} color={color} />;

@@ -1,4 +1,4 @@
-import { CHAT_TIME_MS, MATCH_TIME_MS } from "@/constants/main";
+import { CHAT_TIME_MS, MATCH_TIME_MS, VOTING_TIME_MS } from "@/constants/main";
 import { env } from "@/env.cjs";
 import { EventEmitter } from "events";
 import { v4 as uuid } from "uuid";
@@ -44,6 +44,7 @@ const makeMatch = () => {
       players: playerIds.map((id) => generatePlayer(id)),
       stage: "chat",
       createdAt: Date.now(),
+      votingAt: Date.now() + CHAT_TIME_MS + VOTING_TIME_MS,
     });
 
     // TODO: update event
@@ -68,10 +69,13 @@ const updateRooms = () => {
     }
 
     if (room.stage === "chat" && roomAge >= CHAT_TIME_MS) {
-      // TODO: set to voting after we have implemented voting
+      room.stage = "voting";
+      ee.emit(chatEvent(roomId, "stageChange"));
+      // TODO: get scores
+    }
+    if (room.stage === "voting" && roomAge >= CHAT_TIME_MS + VOTING_TIME_MS) {
       room.stage = "results";
       ee.emit(chatEvent(roomId, "stageChange"));
-
       // TODO: calculate score based on votes
       const players = room.players.map((player) => ({
         ...player,
@@ -79,7 +83,6 @@ const updateRooms = () => {
       }));
 
       ee.emit(chatEvent(roomId, "timeout"));
-      // TODO: set stage to `voting`, set it to `results` after voting is complete and delete after score has been calculated
       chatRooms.set(roomId, { ...room, players, stage: "results" });
     }
   });

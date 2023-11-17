@@ -13,15 +13,15 @@ import { useStore } from "@/store";
 
 interface Props {
   roomId: string;
+  matchState: MatchStateType;
 }
 
-export const Chat: FC<Props> = ({ roomId }) => {
+export const Chat: FC<Props> = ({ roomId, matchState }) => {
   const router = useRouter();
   const { data: sessionData } = useSession();
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState<ChatMessagePayload[]>([]);
   const setCreatedAt = useStore((state) => state.setCreatedAt);
-  const [matchState, setMatchState] = useState<MatchStateType>("chat");
   const getRoom = api.chat.getRoom.useQuery({ roomId: roomId });
   const roomData = getRoom.data;
   const isChat = matchState === "chat";
@@ -69,18 +69,6 @@ export const Chat: FC<Props> = ({ roomId }) => {
       },
       onError(error) {
         console.error("Error on timeout:", error);
-      },
-    }
-  );
-
-  api.chat.onStageChange.useSubscription(
-    { roomId },
-    {
-      onData(payload) {
-        setMatchState(payload.stage);
-      },
-      onError(error) {
-        console.error("Error on countdown:", error);
       },
     }
   );

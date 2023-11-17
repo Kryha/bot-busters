@@ -1,11 +1,14 @@
-import { useStore } from "@/store";
+import { type FC } from "react";
 import { Divider, Stack, Typography } from "@mui/material";
 import { styles } from "./styles";
 import { text } from "./text";
+import { type MatchStateType } from "@/types";
 
-export const Score = () => {
-  const matchState = useStore((state) => state.matchState);
+interface Props {
+  matchState: MatchStateType;
+}
 
+export const Score: FC<Props> = ({ matchState }) => {
   if (matchState !== "results") return;
 
   return (
