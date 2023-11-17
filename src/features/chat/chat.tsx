@@ -2,28 +2,30 @@
 import { useState, type FC, useCallback, useEffect } from "react";
 import { Stack } from "@mui/material";
 import { useSession } from "next-auth/react";
-import { type ChatMessagePayload } from "@/server/api/match-types";
+import {
+  type ChatRoom,
+  type ChatMessagePayload,
+} from "@/server/api/match-types";
 import { api } from "@/utils/api";
 import { pages } from "@/utils/router";
 import { useRouter } from "next/router";
 import { styles } from "./styles";
 import { InputField, Messages, Timer } from "./components";
 import { type MatchStateType, type GroupedMessage } from "@/types";
-import { useStore } from "@/store";
+import { CHAT_TIME_MS } from "@/constants";
 
 interface Props {
   roomId: string;
   matchState: MatchStateType;
+  room: ChatRoom;
 }
 
-export const Chat: FC<Props> = ({ roomId, matchState }) => {
+export const Chat: FC<Props> = ({ roomId, matchState, room }) => {
   const router = useRouter();
   const { data: sessionData } = useSession();
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState<ChatMessagePayload[]>([]);
-  const setCreatedAt = useStore((state) => state.setCreatedAt);
-  const getRoom = api.chat.getRoom.useQuery({ roomId: roomId });
-  const roomData = getRoom.data;
+
   const isChat = matchState === "chat";
 
   const groupedMessages: GroupedMessage[] = messages.map((message) => {
@@ -86,16 +88,10 @@ export const Chat: FC<Props> = ({ roomId, matchState }) => {
     };
   }, [sendMessage]);
 
-  useEffect(() => {
-    if (roomData) {
-      setCreatedAt(roomData.createdAt);
-    }
-  }, [roomData, setCreatedAt]);
-
   return (
     <Stack component="section" sx={styles.section(isChat)}>
       <Messages groupedMessages={groupedMessages} />
-      <Timer />
+      <Timer time={room.createdAt} duration={CHAT_TIME_MS} />
       <InputField
         value={message}
         onChange={(e) => setMessage(e.target.value)}

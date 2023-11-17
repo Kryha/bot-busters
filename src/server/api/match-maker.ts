@@ -44,14 +44,13 @@ const makeMatch = () => {
       players: playerIds.map((id) => generatePlayer(id)),
       stage: "chat",
       createdAt: Date.now(),
-      votingAt: Date.now() + CHAT_TIME_MS + VOTING_TIME_MS,
+      votingAt: Date.now() + CHAT_TIME_MS,
     });
 
     // TODO: update event
     ee.emit("readyToPlay", {
       roomId,
       players: playerIds,
-      createdAt: Date.now(),
     } satisfies ReadyToPlayPayload);
     ee.emit("queueUpdate");
   } catch (error) {

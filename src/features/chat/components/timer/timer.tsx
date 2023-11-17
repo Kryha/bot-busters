@@ -3,31 +3,37 @@ import { Stack, Typography } from "@mui/material";
 
 import { text } from "@/assets/text";
 import { styles } from "./styles";
-import { ALERT_TIME_MS, CHAT_TIME_MS } from "@/constants/main";
-import { useStore } from "@/store";
+import { ALERT_TIME_MS } from "@/constants/main";
 
-export const Timer: FC = () => {
-  const [remainingTime, setRemainingTime] = useState<number | null>(
-    CHAT_TIME_MS
-  );
-  const createdAt = useStore((state) => state.createdAt);
+interface Props {
+  time: number;
+  duration: number;
+  alertTime?: number;
+}
+
+export const Timer: FC<Props> = ({
+  time,
+  duration,
+  alertTime = ALERT_TIME_MS,
+}) => {
+  const [remainingTime, setRemainingTime] = useState<number | null>(duration);
 
   useEffect(() => {
-    if (createdAt) {
+    if (time) {
       const intervalId = setInterval(() => {
-        const elapsedTime = Date.now() - createdAt;
-        const newRemainingTime = Math.max(0, CHAT_TIME_MS - elapsedTime);
+        const elapsedTime = Date.now() - time;
+        const newRemainingTime = Math.max(0, duration - elapsedTime);
         setRemainingTime(newRemainingTime);
       }, 1000);
 
       return () => clearInterval(intervalId);
     }
     setRemainingTime(null);
-  }, [createdAt]);
+  }, [duration, time]);
 
-  if (!createdAt || !remainingTime) return <></>;
+  if (!time || !remainingTime) return <></>;
 
-  const progress = (remainingTime / CHAT_TIME_MS) * 100;
+  const progress = (remainingTime / duration) * 100;
   const seconds = Math.floor(remainingTime / 1000);
   const formattedCountdown = text.general.formattedCountdown(
     Math.floor(seconds / 60),
@@ -36,7 +42,7 @@ export const Timer: FC = () => {
 
   return (
     <Stack sx={styles.wrapper}>
-      <Stack sx={styles.progress(progress, remainingTime < ALERT_TIME_MS)}>
+      <Stack sx={styles.progress(progress, remainingTime < alertTime)}>
         <Stack sx={styles.countdownWrapper}>
           <Typography
             variant="caption"
