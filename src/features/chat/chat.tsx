@@ -1,65 +1,32 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
-import { useState, type FC, useCallback, useEffect } from "react";
+import { useState, type FC, useEffect, KeyboardEvent } from "react";
 import { Stack } from "@mui/material";
-import { useSession } from "next-auth/react";
-import { type ChatMessagePayload } from "@/server/api/match-types";
 import { api } from "@/utils/api";
-import { pages } from "@/utils/router";
-import { useRouter } from "next/router";
 import { styles } from "./styles";
 import { InputField, Messages, Timer } from "./components";
-import { type MatchStateType, type GroupedMessage } from "@/types";
+import { type MatchStateType } from "@/types";
 import { useStore } from "@/store";
+import { useMessages } from "./service";
 
 interface Props {
   roomId: string;
 }
 
 export const Chat: FC<Props> = ({ roomId }) => {
-  const router = useRouter();
-  const { data: sessionData } = useSession();
   const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState<ChatMessagePayload[]>([]);
   const setCreatedAt = useStore((state) => state.setCreatedAt);
   const [matchState, setMatchState] = useState<MatchStateType>("chat");
-  const getRoom = api.chat.getRoom.useQuery({ roomId: roomId });
-  const roomData = getRoom.data;
+  const { data: room } = api.chat.getRoom.useQuery({ roomId });
   const isChat = matchState === "chat";
+  const messages = useMessages({ roomId });
+  const { mutate: send } = api.chat.sendMessage.useMutation();
 
-  const groupedMessages: GroupedMessage[] = messages.map((message) => {
-    const isLocalSender = message.sender === sessionData?.id;
-
-    // TODO: group properly, use `sentAt`
-    return {
-      isLocalSender,
-      messages: [message.message],
-    };
-  });
-
-  const appendMessage = (newMessage: ChatMessagePayload) =>
-    setMessages((prev) => [newMessage, ...prev]);
-
-  const sendChatMessage = api.chat.sendMessage.useMutation();
-
-  const sendMessage = useCallback(() => {
-    if (!message) return;
-    sendChatMessage.mutate({ message, sentAt: Date.now(), roomId });
-    // TODO: append message immediately and show progress
-    setMessage("");
-  }, [message, roomId, sendChatMessage]);
-
-  api.chat.onMessage.useSubscription(
-    { roomId },
-    {
-      onData(payload) {
-        appendMessage(payload);
-      },
-      onError(error) {
-        console.error("Chat message error:", error);
-        void router.push(pages.home);
-      },
+  const handleSend = (value: string) => {
+    if (message) {
+      send({ message: value, sentAt: Date.now(), roomId });
+      setMessage("");
     }
-  );
+  };
 
   api.chat.onTimeout.useSubscription(
     { roomId },
@@ -85,34 +52,31 @@ export const Chat: FC<Props> = ({ roomId }) => {
     }
   );
 
-  useEffect(() => {
-    const listener = (event: KeyboardEvent) => {
-      if (event.code === "Enter" || event.code === "NumpadEnter") {
-        event.preventDefault();
-        sendMessage();
-      }
-    };
-    document.addEventListener("keydown", listener);
-    return () => {
-      document.removeEventListener("keydown", listener);
-    };
-  }, [sendMessage]);
+  const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    const isEnter = event.code === "Enter" || event.code === "NumpadEnter";
+
+    if (isEnter) {
+      event.preventDefault();
+      handleSend(message);
+    }
+  };
 
   useEffect(() => {
-    if (roomData) {
-      setCreatedAt(roomData.createdAt);
+    if (room) {
+      setCreatedAt(room.createdAt);
     }
-  }, [roomData, setCreatedAt]);
+  }, [room, setCreatedAt]);
 
   return (
     <Stack component="section" sx={styles.section(isChat)}>
-      <Messages groupedMessages={groupedMessages} />
+      <Messages messages={messages} />
       <Timer />
       <InputField
         value={message}
         onChange={(e) => setMessage(e.target.value)}
-        onClick={() => sendMessage()}
+        onClick={() => handleSend(message)}
         disabled={!isChat}
+        onKeyDown={(e) => handleKeyDown(e)}
       />
     </Stack>
   );
