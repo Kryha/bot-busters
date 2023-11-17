@@ -12,11 +12,12 @@ import { Score } from "@/features/score";
 import { pages } from "@/utils/router";
 import { Results } from "@/features/score/components";
 import { useMatchState } from "@/service";
-import { useGetRoom } from "@/service/match";
+import { useRoom } from "@/service/match";
 
 const Match: FC = () => {
   const matchState = useMatchState();
-  const room = useGetRoom();
+  const roomData = useRoom();
+
   const isResults = matchState === "results";
 
   // TODO: Clean up the error routing handler into a hook
@@ -29,7 +30,10 @@ const Match: FC = () => {
     }
   }, [roomId.success, push]);
 
-  if (!roomId.success || !matchState || !room) return;
+  if (!roomId.success || !matchState) return;
+  if (!roomData?.error || !roomData.data) return;
+
+  const room = roomData.data;
 
   return (
     <Layout>
