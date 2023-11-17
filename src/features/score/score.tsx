@@ -1,10 +1,10 @@
-import { useStore } from "@/store";
 import { Divider, Stack, Typography } from "@mui/material";
 import { styles } from "./styles";
 import { text } from "./text";
+import { useMatchState } from "@/service";
 
 export const Score = () => {
-  const matchState = useStore((state) => state.matchState);
+  const matchState = useMatchState();
 
   if (matchState !== "results") return;
 

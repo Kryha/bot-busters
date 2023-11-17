@@ -10,11 +10,11 @@ import { Chat } from "@/features/chat";
 import { Players } from "@/features/players";
 import { Score } from "@/features/score";
 import { pages } from "@/utils/router";
-import { useStore } from "@/store";
 import { Results } from "@/features/score/components";
+import { useMatchState } from "@/service";
 
 const Match: FC = () => {
-  const matchState = useStore((state) => state.matchState);
+  const matchState = useMatchState();
   const isResults = matchState === "results";
 
   // TODO: Clean up the error routing handler into a hook

@@ -8,8 +8,9 @@ import { pages } from "@/utils/router";
 import { useRouter } from "next/router";
 import { styles } from "./styles";
 import { InputField, Messages, Timer } from "./components";
-import { type MatchStateType, type GroupedMessage } from "@/types";
+import { type GroupedMessage } from "@/types";
 import { useStore } from "@/store";
+import { useMatchState } from "@/service";
 
 interface Props {
   roomId: string;
@@ -21,8 +22,8 @@ export const Chat: FC<Props> = ({ roomId }) => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState<ChatMessagePayload[]>([]);
   const setCreatedAt = useStore((state) => state.setCreatedAt);
-  const [matchState, setMatchState] = useState<MatchStateType>("chat");
   const getRoom = api.chat.getRoom.useQuery({ roomId: roomId });
+  const matchState = useMatchState();
   const roomData = getRoom.data;
   const isChat = matchState === "chat";
 
@@ -69,18 +70,6 @@ export const Chat: FC<Props> = ({ roomId }) => {
       },
       onError(error) {
         console.error("Error on timeout:", error);
-      },
-    }
-  );
-
-  api.chat.onStageChange.useSubscription(
-    { roomId },
-    {
-      onData(payload) {
-        setMatchState(payload.stage);
-      },
-      onError(error) {
-        console.error("Error on countdown:", error);
       },
     }
   );
