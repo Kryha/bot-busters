@@ -1,7 +1,6 @@
 export interface ReadyToPlayPayload {
   players: string[];
   roomId: string;
-  createdAt: number;
 }
 
 export interface QueueUpdatePayload {
