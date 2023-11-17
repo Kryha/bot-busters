@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
-import { useState, type FC, useEffect, KeyboardEvent } from "react";
+import { useState, type FC, useEffect, type KeyboardEvent } from "react";
 import { Stack } from "@mui/material";
 import { api } from "@/utils/api";
 import { styles } from "./styles";
@@ -13,10 +13,9 @@ interface Props {
   matchState: MatchStateType;
 }
 
-export const Chat: FC<Props> = ({ roomId }) => {
+export const Chat: FC<Props> = ({ roomId, matchState }) => {
   const [message, setMessage] = useState("");
   const setCreatedAt = useStore((state) => state.setCreatedAt);
-  const [matchState, setMatchState] = useState<MatchStateType>("chat");
   const { data: room } = api.chat.getRoom.useQuery({ roomId });
   const isChat = matchState === "chat";
   const messages = useMessages({ roomId });
