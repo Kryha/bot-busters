@@ -5,10 +5,13 @@ import { useState, type FC } from "react";
 import { COLORS } from "../../constants";
 import { Player } from "../player";
 import { text } from "@/assets/text";
-import { useMatchState } from "@/service";
+import { type MatchStateType } from "@/types";
 
-export const UsersOthers: FC = () => {
-  const matchState = useMatchState();
+interface Props {
+  matchState: MatchStateType;
+}
+
+export const UsersOthers: FC<Props> = ({ matchState }) => {
   const isVoting = matchState === "voting";
   const isResults = matchState === "results";
   const intro = isResults ? text.match.whosBot : text.match.otherParticipants;

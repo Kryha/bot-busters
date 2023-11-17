@@ -71,7 +71,6 @@ const updateRooms = () => {
     if (room.stage === "chat" && roomAge >= CHAT_TIME_MS) {
       room.stage = "voting";
       ee.emit(chatEvent(roomId, "stageChange"));
-      chatRooms.set(roomId, { ...room, stage: "voting" });
       // TODO: get scores
     }
     if (room.stage === "voting" && roomAge >= CHAT_TIME_MS + VOTING_TIME_MS) {

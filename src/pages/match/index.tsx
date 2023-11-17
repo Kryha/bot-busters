@@ -27,15 +27,19 @@ const Match: FC = () => {
     }
   }, [roomId.success, push]);
 
-  if (!roomId.success) return;
+  if (!roomId.success || !matchState) return;
 
   return (
     <Layout>
       <OverviewLayout>
-        <Players />
-        <Score />
+        <Players matchState={matchState} />
+        <Score matchState={matchState} />
       </OverviewLayout>
-      {isResults ? <Results /> : <Chat roomId={roomId.data} />}
+      {isResults ? (
+        <Results />
+      ) : (
+        <Chat roomId={roomId.data} matchState={matchState} />
+      )}
     </Layout>
   );
 };
