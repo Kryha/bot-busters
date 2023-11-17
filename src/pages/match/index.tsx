@@ -30,8 +30,7 @@ const Match: FC = () => {
     }
   }, [roomId.success, push]);
 
-  if (!roomId.success || !matchState) return;
-  if (!roomData?.error || !roomData.data) return;
+  if (!roomId.success || !matchState || !roomData?.data) return;
 
   const room = roomData.data;
 
