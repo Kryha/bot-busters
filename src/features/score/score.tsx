@@ -16,19 +16,6 @@ export const Score = () => {
         <Typography variant="body1">{text.points1}</Typography>
       </Stack>
       <Divider />
-      <Stack>
-        <Typography variant="overline">{text.bonusPoints}</Typography>
-        <Stack sx={styles.points}>
-          <Stack sx={styles.point}>
-            <Typography variant="body1">{text.votesOn}</Typography>
-            <Typography variant="body1">{text.points2}</Typography>
-          </Stack>
-          <Stack sx={styles.point}>
-            <Typography variant="body1">{text.madeOther}</Typography>
-            <Typography variant="body1">{text.points3}</Typography>
-          </Stack>
-        </Stack>
-      </Stack>
     </Stack>
   );
 };

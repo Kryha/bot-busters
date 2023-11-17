@@ -7,20 +7,15 @@ import { text } from "../../../chat/text";
 
 export const Results = () => {
   const router = useRouter();
-  // TODO: get actual values
-  const totalPlayers = 2;
-  const botsBusted = 1;
-  const pointsWon = 90;
+  // TODO: get real values
+  const pointsWon = 30;
 
   return (
     <Stack sx={styles.wrapper}>
       <Stack sx={styles.textContainer}>
-        <Typography variant="h2">
-          {text.amountBotsBusted(botsBusted, totalPlayers)}
-        </Typography>
+        <Typography variant="h2">{text.amountBotsBusted}</Typography>
         <Typography variant="h1">{text.pointsWon(pointsWon)}</Typography>
       </Stack>
-
       <Stack sx={styles.textWrapper}>
         <Typography variant="body1">{text.addScoreToLeaderboard}</Typography>
         <Stack sx={styles.buttonContainer}>
@@ -31,16 +26,15 @@ export const Results = () => {
             color="blueGrey"
             onClick={() => void router.push(pages.login)}
           >
-            {text.addScoreNow}
+            {text.addScore}
           </Button>
-
           <Button
             variant="contained"
             size="large"
             sx={styles.button}
             onClick={() => void router.push(pages.home)}
           >
-            {text.continueWith}
+            {text.playNewGame}
           </Button>
         </Stack>
       </Stack>
