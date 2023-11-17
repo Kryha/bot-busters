@@ -10,6 +10,7 @@ import { useMessages } from "./service";
 
 interface Props {
   roomId: string;
+  matchState: MatchStateType;
 }
 
 export const Chat: FC<Props> = ({ roomId }) => {
