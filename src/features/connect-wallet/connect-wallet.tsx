@@ -1,55 +1,54 @@
 import { useEffect, type FC } from "react";
 
 import { UsernameSelect, ConnectPlaceholder } from "./components";
-import { signIn, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import {
   isAnonymousSession,
   isUnverifiedSession,
-  isValidSession,
   isVerifiedSession,
 } from "@/utils/session";
 import router from "next/router";
 import { pages } from "@/utils/router";
-import { api } from "@/utils/api";
+import { useMergeUser } from "@/service";
+import { useVerifyUser } from "@/service/user/use-verify-user";
+interface ConnectWalletProps {
+  signedMessage?: string;
+  address?: string;
+}
 
-export const ConnectWallet: FC = () => {
+export const ConnectWallet: FC<ConnectWalletProps> = ({
+  signedMessage,
+  address,
+}) => {
   const { data: sessionData } = useSession();
 
-  const { mutate, isSuccess } = api.user.mergeScore.useMutation();
+  const mergeUsers = useMergeUser(address, signedMessage);
+  const verifyUser = useVerifyUser(address, signedMessage);
 
   useEffect(() => {
-    const signedMessage = sessionStorage.getItem("signedMessage");
-    const aleoAddress = sessionStorage.getItem("aleoAddress");
+    if (isAnonymousSession(sessionData)) {
+      if (!address || !signedMessage) return;
+      mergeUsers.mutate({ address, signature: signedMessage });
+    }
+  }, [sessionData]);
 
-    console.log("session data", sessionData);
-
-    if (aleoAddress == null || signedMessage == null) return;
-    if (isUnverifiedSession(sessionData) || isVerifiedSession(sessionData))
-      return;
-
-    const login = async () => {
-      const loginCredentials = {
-        address: aleoAddress,
-        signature: signedMessage,
-      };
-      //TODO:FIX rerender and creating new users
-      if (!isValidSession(sessionData)) {
-        console.log("Is signing in ");
-        console.log("login credentials", loginCredentials);
-        console.log("Session data", sessionData);
-        // await signIn("credentials", loginCredentials);
-      }
-      if (isAnonymousSession(sessionData)) {
-        console.log("is merging account");
-        mutate(loginCredentials);
-        if (isSuccess) await signIn("credentials", loginCredentials);
-      }
-    };
-    void login();
-  }, [isSuccess, mutate]);
+  const handleSetUsername = (username: string) => {
+    try {
+      verifyUser.mutate({ username, address, signature: signedMessage });
+    } catch (error) {
+      console.log(error);
+    }
+  };
   // TODO: add check if the user already has a username & id
 
-  if (isUnverifiedSession(sessionData)) return <UsernameSelect />;
+  if (isUnverifiedSession(sessionData))
+    return (
+      <UsernameSelect
+        handleSetUsername={handleSetUsername}
+        // TODO: add error message from the hook
+        error="Not working"
+      />
+    );
   if (isVerifiedSession(sessionData)) void router.push(pages.home);
   return <ConnectPlaceholder />;
 };
