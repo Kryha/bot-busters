@@ -11,6 +11,7 @@ import router from "next/router";
 import { pages } from "@/utils/router";
 import { useMergeUser } from "@/service";
 import { useVerifyUser } from "@/service/user/use-verify-user";
+
 interface ConnectWalletProps {
   signedMessage?: string;
   address?: string;
