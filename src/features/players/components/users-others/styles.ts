@@ -9,5 +9,6 @@ export const styles = {
   },
   container: {
     gap: 4,
-  } satisfies SxProps,
+  },
+  timeSection: { gap: 0.5 } satisfies SxProps,
 };

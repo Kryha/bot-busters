@@ -10,11 +10,14 @@ import { Chat } from "@/features/chat";
 import { Players } from "@/features/players";
 import { Score } from "@/features/score";
 import { pages } from "@/utils/router";
-import { useStore } from "@/store";
 import { Results } from "@/features/score/components";
+import { useMatchState } from "@/service";
+import { useRoom } from "@/service/match";
 
 const Match: FC = () => {
-  const matchState = useStore((state) => state.matchState);
+  const matchState = useMatchState();
+  const roomData = useRoom();
+
   const isResults = matchState === "results";
 
   // TODO: Clean up the error routing handler into a hook
@@ -27,15 +30,21 @@ const Match: FC = () => {
     }
   }, [roomId.success, push]);
 
-  if (!roomId.success) return;
+  if (!roomId.success || !matchState || !roomData?.data) return;
+
+  const room = roomData.data;
 
   return (
     <Layout>
       <OverviewLayout>
-        <Players />
-        <Score />
+        <Players matchState={matchState} room={room} />
+        <Score matchState={matchState} />
       </OverviewLayout>
-      {isResults ? <Results /> : <Chat roomId={roomId.data} />}
+      {isResults ? (
+        <Results />
+      ) : (
+        <Chat roomId={roomId.data} matchState={matchState} room={room} />
+      )}
     </Layout>
   );
 };
