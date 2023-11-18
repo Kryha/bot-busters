@@ -16,9 +16,8 @@ import {
 import { text } from "@/assets/text";
 import { useCreateRandomUsername } from "@/hooks/name-generator";
 import { styles } from "./styles";
-import { error } from "console";
 interface CreateUsernameRowProps {
-  handleSetUsername: (username: string) => Promise<void>;
+  handleSetUsername: (username: string) => void;
   error?: string;
 }
 export const CreateUsernameRow: FC<CreateUsernameRowProps> = ({
