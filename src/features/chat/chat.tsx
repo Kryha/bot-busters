@@ -2,31 +2,31 @@
 import { useState, type FC, useCallback, useEffect } from "react";
 import { Stack } from "@mui/material";
 import { useSession } from "next-auth/react";
-import { type ChatMessagePayload } from "@/server/api/match-types";
+import {
+  type ChatRoom,
+  type ChatMessagePayload,
+} from "@/server/api/match-types";
 import { api } from "@/utils/api";
 import { pages } from "@/utils/router";
-import { CHAT_TIME_SEC } from "@/constants";
 import { useRouter } from "next/router";
 import { styles } from "./styles";
 import { InputField, Messages, Timer } from "./components";
-import { useStore } from "@/store";
-import { type GroupedMessage } from "@/types";
+import { type MatchStateType, type GroupedMessage } from "@/types";
+import { CHAT_TIME_MS } from "@/constants";
+
 interface Props {
   roomId: string;
+  matchState: MatchStateType;
+  room: ChatRoom;
 }
 
-export const Chat: FC<Props> = ({ roomId }) => {
+export const Chat: FC<Props> = ({ roomId, matchState, room }) => {
   const router = useRouter();
   const { data: sessionData } = useSession();
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState<ChatMessagePayload[]>([]);
-  const [matchState, setMatchState] = useStore((state) => [
-    state.matchState,
-    state.setMatchState,
-  ]);
+
   const isChat = matchState === "chat";
-  const [isFinished, setIsFinished] = useState(false);
-  const handleTimeout = () => setIsFinished(true);
 
   const groupedMessages: GroupedMessage[] = messages.map((message) => {
     const isLocalSender = message.sender === sessionData?.user.id;
@@ -88,18 +88,10 @@ export const Chat: FC<Props> = ({ roomId }) => {
     };
   }, [sendMessage]);
 
-  useEffect(() => {
-    // TODO: Remove after timer feature
-    if (isFinished) setMatchState("voting");
-  }, [isFinished, setMatchState]);
-
   return (
     <Stack component="section" sx={styles.section(isChat)}>
       <Messages groupedMessages={groupedMessages} />
-      <Timer
-        matchDurationInSeconds={CHAT_TIME_SEC}
-        onTimeout={() => handleTimeout()}
-      />
+      <Timer time={room.createdAt} duration={CHAT_TIME_MS} />
       <InputField
         value={message}
         onChange={(e) => setMessage(e.target.value)}

@@ -27,6 +27,11 @@ export interface ChatRoom {
   players: Player[];
   stage: "chat" | "voting" | "results";
   createdAt: number; // unix timestamp
+  votingAt: number; // unix timestamp
 }
 
-export type ChatEventType = "message" | "timeout";
+export type ChatEventType = "message" | "timeout" | "stageChange";
+
+export interface StagePayload {
+  stage: "chat" | "voting" | "results";
+}

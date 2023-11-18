@@ -8,7 +8,7 @@ export const isToday = (date: Date, currentDate: Date): boolean => {
   return date.toDateString() === currentDate.toDateString();
 };
 
-const formatTimeIn24Hours = (date: Date): string => {
+export const formatTimeIn24Hours = (date: Date): string => {
   const hours = date.getHours().toString().padStart(2, "0");
   const minutes = date.getMinutes().toString().padStart(2, "0");
   return `${hours}:${minutes}`;
@@ -40,7 +40,7 @@ export const formatDate = (date: string | number): string => {
   if (isYesterday(inputDate, currentDate)) {
     return "Yesterday";
   } else if (isToday(inputDate, currentDate)) {
-    return formatTimeIn24Hours(inputDate);
+    return "Today";
   } else if (isMoreThanAWeekAgo(inputDate, currentDate)) {
     const dayOfWeek = getDayOfWeek(inputDate);
     return dayOfWeek;
@@ -51,4 +51,17 @@ export const formatDate = (date: string | number): string => {
 
     return `${day}/${month}/${year}`;
   }
+};
+
+export const longDateFormat = (timestamp: number) => {
+  const inputDate = new Date(timestamp);
+
+  const options: Intl.DateTimeFormatOptions = {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  };
+  const date = inputDate.toLocaleDateString("en-US", options);
+
+  return `${formatDate(timestamp)}, ${date}`;
 };

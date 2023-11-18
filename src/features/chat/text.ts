@@ -4,11 +4,15 @@ export const text = {
   inputFieldPlaceholder: "Type your message",
   chatEnded: "chat ended - voting time!",
   addScoreToLeaderboard:
-    "Add your score to a leaderboard account and win Aleo credits",
-  addScoreNow: "add score now",
-  continueWith: "continue with new game",
-  amountBotsBusted: (botBusted: number, total: number) =>
-    `${botBusted} out of ${total} bots busted!`,
+    "Add your score to the leaderboard. The daily top 100 gets Aleo credits!",
+  addScore: "add score to leaderboard",
+  playNewGame: "Play new game",
+  firstPrompt: {
+    title: "25 bonus points for every vote on you as a bot",
+    info: "Try and convince the other participants you are a bot",
+  },
+  amountBotsBusted: "One out of two bots busted!",
+
   pointsWon: (val: number) =>
     `You won ${val} ${val === 1 ? "point" : "points!"}`,
 };

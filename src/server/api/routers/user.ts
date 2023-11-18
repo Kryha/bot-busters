@@ -9,7 +9,7 @@ import {
 } from "@/server/service";
 import { isValidSession } from "@/utils/session";
 
-//TODO: Fix import issue with SDK and TRPC
+//TODO: Fix import issue with SDK and TRPC.
 // import { verifySignature } from "@/utils/wallet";
 const verifySignature = (address: string, signedMessage: string): boolean => {
   return true;
@@ -18,7 +18,7 @@ const verifySignature = (address: string, signedMessage: string): boolean => {
 export const userRouter = createTRPCRouter({
   mergeScore: protectedProcedure
     .input(z.object({ signature: z.string(), address: z.string() }))
-    .output(z.object({ isMerged: z.boolean() }))
+    .output(z.object({ isKnownUser: z.boolean(), address: z.string() }))
     //TODO: Go over the function and make it more readable (separating the logic into smaller functions)
     .mutation(async ({ ctx, input }) => {
       const { id } = ctx.session.user;
@@ -37,8 +37,8 @@ export const userRouter = createTRPCRouter({
         if (!newUser) {
           throw new Error("Failed to insert user");
         }
-        const isMerged = await mergeUserScore(id, newUser.id);
-        return { isMerged: Boolean(isMerged) };
+        await mergeUserScore(id, newUser.id);
+        return { isKnownUser: false, address };
       }
       // TODO: Check if there is a username attached to the given address
 
@@ -47,7 +47,7 @@ export const userRouter = createTRPCRouter({
       if (!isMerged) {
         throw new Error("Failed to merge user score");
       }
-      return { isMerged: Boolean(isMerged) };
+      return { isKnownUser: true, address };
     }),
   verify: protectedProcedure
     .input(
@@ -57,7 +57,6 @@ export const userRouter = createTRPCRouter({
         signature: z.string().optional(),
       })
     )
-    //TODO: Go over the function and make it more readable (separating the logic into smaller functions)
     .mutation(async ({ ctx, input }) => {
       if (!isValidSession(ctx.session)) {
         throw new Error("Invalid session");

@@ -8,10 +8,11 @@ import { useWallet } from "@demox-labs/aleo-wallet-adapter-react";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 
 import { text } from "@/assets/text";
-import { fakeStats } from "@/constants";
+
 import { styles } from "./styles";
 import { MenuCard } from "./menu-card";
 import { CHIP_TIMEOUT } from "./constants";
+import { fakeStats } from "@/constants/fake-data/landing";
 
 interface Props {
   isMenuVisible: boolean;
@@ -56,7 +57,7 @@ export const UserMenu: FC<Props> = ({ isMenuVisible, username }) => {
     <Stack sx={styles.userMenuWrapper}>
       {isChipVisible && (
         <Chip
-          label={text.landing.youWonCredits}
+          label={text.general.youWonCredits}
           color="warning"
           sx={styles.creditsWonChip}
         />
