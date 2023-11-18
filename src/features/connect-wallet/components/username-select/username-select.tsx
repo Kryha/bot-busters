@@ -3,31 +3,15 @@ import { Stack } from "@mui/material";
 
 import { AddUsernameTable, CreateUsernameRow } from "@/components/tables";
 import { styles } from "./styles";
-import { api } from "@/utils/api";
-import { signIn, useSession } from "next-auth/react";
+interface UsernameSelectProps {
+  handleSetUsername: (username: string) => void;
+  error: string;
+}
 
-export const UsernameSelect: FC = () => {
-  const { data: sessionData } = useSession();
-  const signdMessage = sessionStorage.getItem("signedMessage");
-  const verifyUser = api.user.verify.useMutation();
-  const handleSetUsername = async (username: string) => {
-    try {
-      verifyUser.mutate({
-        address: sessionData?.user.address,
-        username,
-        signature: signdMessage ?? undefined,
-      });
-      if (verifyUser.isSuccess) {
-        await signIn("credentials", {
-          address: sessionData?.user.address,
-          signedMessage: signdMessage,
-        });
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
+export const UsernameSelect: FC<UsernameSelectProps> = ({
+  handleSetUsername,
+  error,
+}) => {
   // TODO: finish component
 
   return (
@@ -36,7 +20,7 @@ export const UsernameSelect: FC = () => {
         <AddUsernameTable />
         <CreateUsernameRow
           handleSetUsername={handleSetUsername}
-          error={verifyUser.error?.message}
+          error={error}
         />
       </Stack>
     </Stack>
