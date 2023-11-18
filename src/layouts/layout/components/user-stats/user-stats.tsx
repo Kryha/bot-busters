@@ -7,7 +7,6 @@ import { MenuDialog } from "@/layouts/layout/components/menu-dialog";
 import { StatsDisplay } from "@/components/stats-display";
 import { text } from "@/assets/text";
 import { styles } from "./styles";
-import { is } from "drizzle-orm";
 
 interface Props {
   isWalletConnected: boolean;
@@ -34,6 +33,7 @@ export const UserStats: FC<Props> = ({
   const logout = async () => {
     await signOut();
     await disconnect();
+    sessionStorage.clear();
   };
 
   return (
