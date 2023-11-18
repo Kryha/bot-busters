@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/unbound-method */
-import { useEffect, type FC } from "react";
+import { useEffect, type FC, useState } from "react";
 import {
   LeoWalletName,
   type LeoWalletAdapter,
@@ -10,17 +10,11 @@ import {
   type WalletAdapterNetwork,
 } from "@demox-labs/aleo-wallet-adapter-base";
 import { env } from "@/env.cjs";
-import { signIn, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 
 import { AUTH_SIGN_MESSAGE } from "@/constants";
 import { Page } from "@/layouts";
 import { ConnectWallet } from "@/features/connect-wallet";
-import {
-  isUnverifiedSession,
-  isValidSession,
-  isVerifiedSession,
-} from "@/utils/session";
-import { api } from "@/utils/api";
 
 const Login: FC = () => {
   const { data: sessionData } = useSession();
@@ -32,7 +26,8 @@ const Login: FC = () => {
     connected,
     connecting,
   } = useWallet();
-
+  const [signedMessage, setSignedMessage] = useState<string>();
+  const [aleoAddress, setaleoAddress] = useState<string>();
   useEffect(() => {
     select(LeoWalletName);
   }, [select]);
@@ -43,8 +38,8 @@ const Login: FC = () => {
         connecting ||
         !wallet ||
         !address ||
-        isUnverifiedSession(sessionData) ||
-        isVerifiedSession(sessionData)
+        sessionStorage.getItem("address") !== null ||
+        sessionStorage.getItem("signedMessage") !== null
       ) {
         return;
       }
@@ -58,7 +53,10 @@ const Login: FC = () => {
 
         // Storing the signature helps preventing a constant request for signing a message
         sessionStorage.setItem("signedMessage", signedMessage);
-        sessionStorage.setItem("aleoAddress", address);
+        sessionStorage.setItem("address", address);
+
+        setSignedMessage(signedMessage);
+        setaleoAddress(address);
       } catch (error) {
         //TODO: handle unauthorized error
         console.error(error);
@@ -87,7 +85,7 @@ const Login: FC = () => {
 
   return (
     <Page>
-      <ConnectWallet />
+      <ConnectWallet signedMessage={signedMessage} address={aleoAddress} />
     </Page>
   );
 };
