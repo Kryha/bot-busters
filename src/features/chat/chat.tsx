@@ -1,20 +1,30 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { useState, type FC, useEffect, type KeyboardEvent } from "react";
 import { Stack } from "@mui/material";
+import { useSession } from "next-auth/react";
+import {
+  type ChatRoom,
+  type ChatMessagePayload,
+} from "@/server/api/match-types";
 import { api } from "@/utils/api";
 import { styles } from "./styles";
 import { InputField, Messages, Timer } from "./components";
 import { type MatchStateType } from "@/types";
-import { useStore } from "@/store";
+import { CHAT_TIME_MS } from "@/constants";
 import { useMessages } from "./service";
 
 interface Props {
   roomId: string;
   matchState: MatchStateType;
+  room: ChatRoom;
 }
 
-export const Chat: FC<Props> = ({ roomId, matchState }) => {
+export const Chat: FC<Props> = ({ roomId, matchState, room }) => {
+  const router = useRouter();
+  const { data: sessionData } = useSession();
   const [message, setMessage] = useState("");
+  const [messages, setMessages] = useState<ChatMessagePayload[]>([]);
+
   const setCreatedAt = useStore((state) => state.setCreatedAt);
   const { data: room } = api.chat.getRoom.useQuery({ roomId });
   const isChat = matchState === "chat";
@@ -40,6 +50,18 @@ export const Chat: FC<Props> = ({ roomId, matchState }) => {
     }
   );
 
+  useEffect(() => {
+    const listener = (event: KeyboardEvent) => {
+      if (event.code === "Enter" || event.code === "NumpadEnter") {
+        event.preventDefault();
+        sendMessage();
+      }
+    };
+    document.addEventListener("keydown", listener);
+    return () => {
+      document.removeEventListener("keydown", listener);
+    };
+  }, [sendMessage]);
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     const isEnter = event.code === "Enter" || event.code === "NumpadEnter";
 
@@ -58,7 +80,7 @@ export const Chat: FC<Props> = ({ roomId, matchState }) => {
   return (
     <Stack component="section" sx={styles.section(isChat)}>
       <Messages messages={messages} />
-      <Timer />
+      <Timer time={room.createdAt} duration={CHAT_TIME_MS} />
       <InputField
         value={message}
         onChange={(e) => setMessage(e.target.value)}
