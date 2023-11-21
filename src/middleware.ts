@@ -1,6 +1,7 @@
 export { default } from "next-auth/middleware";
 
-// TODO: try using vars instead of hardcoded strings
+import { pages } from "@/utils/router";
+
 export const config = {
-  matcher: ["/lobby", "/match", "/decision", "/results"],
+  matcher: [pages.lobby, pages.match, pages.playerProfile],
 };
