@@ -1,10 +1,14 @@
 import { z } from "zod";
-import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
-import { selectUserById, setUsername } from "@/server/service";
+import { eq } from "drizzle-orm";
+
+import {
+  createTRPCRouter,
+  protectedProcedure,
+  publicProcedure,
+} from "@/server/api/trpc";
 import { isValidSession } from "@/utils/session";
 import { db } from "@/server/db";
 import { users } from "@/server/db/schema";
-import { eq } from "drizzle-orm";
 
 //TODO: Fix import issue with SDK and TRPC and use verifySignature from utils
 // import { verifySignature } from "@/utils/wallet";
@@ -70,47 +74,35 @@ export const userRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      if (!isValidSession(ctx.session)) {
-        throw new Error("Invalid session");
+      const { session } = ctx;
+      const { address, signature, username } = input;
+
+      if (!isValidSession(session)) throw new Error("Invalid session");
+      if (session.user.username) throw new Error("User already verified");
+
+      if (session.user.address) {
+        await db
+          .update(users)
+          .set({ username })
+          .where(eq(users.id, session.user.id));
+        return;
       }
 
-      if (ctx.session.user.username) {
-        throw new Error("User already verified");
-      }
-
-      const { username, address, signature } = input;
-
-      if (ctx.session.user.address) {
-        try {
-          await setUsername(ctx.session.user.id, username);
-        } catch (e) {
-          throw new Error("Failed to update username try a different one");
-        }
-        return { isVerified: true };
-      }
-
-      if (!address || !signature) {
-        throw new Error("No address or signature provided");
-      }
+      if (!address || !signature) throw new Error("Missing required inputs");
 
       const isVerified = verifySignature(address, signature);
+      if (!isVerified) throw new Error("Invalid signature");
 
-      if (!isVerified) {
-        throw new Error("Invalid signature");
-      }
-
-      const updatedUser = await setUsername(ctx.session.user.id, username);
-      if (!updatedUser) {
-        throw new Error("Failed to update username");
-      }
-
-      return { isVerified: true };
+      await db
+        .update(users)
+        .set({ username, address })
+        .where(eq(users.id, session.user.id));
     }),
 
   getUserById: protectedProcedure.query(async ({ ctx }) => {
     const { id } = ctx.session.user;
 
-    const selectedUser = await selectUserById(id);
+    const selectedUser = await db.select().from(users).where(eq(users.id, id));
     return selectedUser;
   }),
 });

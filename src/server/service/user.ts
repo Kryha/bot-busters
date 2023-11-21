@@ -33,35 +33,12 @@ export const insertVerifiedUser = async (address: string, username: string) => {
   return newVerifiedUser.at(0);
 };
 
-export const selectUserById = async (id: string) => {
-  const selectedUsers = await db.select().from(users).where(eq(users.id, id));
-  return selectedUsers.at(0);
-};
-
 export const selectUserByAddress = async (address: string) => {
   const selectedUsers = await db
     .select()
     .from(users)
     .where(eq(users.address, address));
   return selectedUsers.at(0);
-};
-
-export const deleteUser = async (id: string) => {
-  const deletedUser = await db
-    .delete(users)
-    .where(eq(users.id, id))
-    .returning();
-  return deletedUser.at(0);
-};
-
-export const setUsername = async (id: string, username: string) => {
-  const updatedUsers = await db
-    .update(users)
-    .set({ username })
-    .where(eq(users.id, id))
-    .returning();
-
-  return updatedUsers.at(0);
 };
 
 export const setUserScore = async (id: string, score: number) => {

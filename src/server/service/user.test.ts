@@ -3,14 +3,10 @@
  */
 import { closeDbConnection } from "@/server/db";
 import {
-  insertAnonymousUsers,
-  deleteUser,
-  setUsername,
+  insertAnonymousUser,
   setUserScore,
-  selectUserById,
   deleteAllUsers,
   insertVerifiedUser,
-  mergeUserScore,
 } from "./user";
 
 describe("Users CRUD API", () => {
@@ -23,25 +19,14 @@ describe("Users CRUD API", () => {
   });
 
   it("Should insert a anonymous user", async () => {
-    const newAnonymousUser = await insertAnonymousUsers();
+    const newAnonymousUser = await insertAnonymousUser();
     if (!newAnonymousUser) return;
 
     expect(newAnonymousUser).toBeDefined();
   });
 
-  it("Should update the username ", async () => {
-    const newAnonymousUser = await insertAnonymousUsers();
-    if (!newAnonymousUser?.id) return;
-
-    const updatedUser = await setUsername(newAnonymousUser.id, "testUserName");
-
-    expect(updatedUser).toBeDefined();
-    if (!updatedUser) return;
-    expect(updatedUser.username).toBe("testUserName");
-  });
-
   it("Should update the score ", async () => {
-    const newAnonymousUser = await insertAnonymousUsers();
+    const newAnonymousUser = await insertAnonymousUser();
     if (!newAnonymousUser?.id) return;
 
     const updatedUser = await setUserScore(newAnonymousUser.id, 1);
@@ -50,17 +35,6 @@ describe("Users CRUD API", () => {
     if (!updatedUser) return;
 
     expect(updatedUser.score).toBe(1);
-  });
-
-  it("Should delete the user", async () => {
-    const newAnonymousUser = await insertAnonymousUsers();
-    if (!newAnonymousUser?.id) return;
-
-    await deleteUser(newAnonymousUser.id);
-
-    const deletedUser = await selectUserById(newAnonymousUser.id);
-
-    expect(deletedUser).toBeUndefined();
   });
 
   it("Should insert a verified user", async () => {
@@ -106,21 +80,5 @@ describe("Users CRUD API", () => {
     };
 
     await expect(newUser()).rejects.toThrow();
-  });
-
-  it("Should not merge the anonymous user with the verified user if the verified user does not exist", async () => {
-    const newAnonymousUser = await insertAnonymousUsers();
-    if (!newAnonymousUser?.id) return;
-
-    const newVerifiedUser =
-      "aleo1rhgdu77hgyqd3xjj8ucu3jj9r2krwz6mnzyd80gncr5fxcwlh5rsvzp9px";
-
-    await setUserScore(newAnonymousUser.id, 5);
-
-    const mergeUser = async () => {
-      await mergeUserScore(newAnonymousUser.id, newVerifiedUser);
-    };
-
-    await expect(mergeUser()).rejects.toThrow();
   });
 });
