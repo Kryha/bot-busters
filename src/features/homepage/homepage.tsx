@@ -17,10 +17,12 @@ export const Homepage = () => {
 
   const handleGameStart = async () => {
     if (!isValidSession(sessionData)) {
-      await signIn("credentials", {});
+      await signIn("credentials", { callbackUrl: pages.lobby });
+    } else {
+      await push(pages.lobby);
     }
-    void push(pages.lobby);
   };
+
   const openDailyHandler = () => void push(pages.leaderboard);
   const isDisabled = join.status === "loading";
 
