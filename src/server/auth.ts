@@ -1,12 +1,36 @@
 import { verifySignature } from "@/utils/wallet";
-import { type Session, type NextAuthOptions } from "next-auth";
+import {
+  type Session,
+  type NextAuthOptions,
+  type DefaultSession,
+} from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { env } from "@/env.cjs";
 import {
-  insertAnonymousUsers,
+  insertAnonymousUser,
   insertUserWithAddress,
   selectUserByAddress,
 } from "@/server/service";
+
+declare module "next-auth" {
+  interface User {
+    id: string;
+    username?: string;
+    address?: string;
+  }
+
+  interface Session extends DefaultSession {
+    user: User;
+  }
+}
+
+declare module "next-auth/jwt" {
+  interface JWT {
+    userId: string;
+    address?: string;
+    username?: string;
+  }
+}
 
 const credentialsProvider = CredentialsProvider({
   credentials: {
@@ -22,46 +46,34 @@ const credentialsProvider = CredentialsProvider({
 
   async authorize(credentials) {
     try {
-      console.log("credentials", credentials);
-      // unverified authentication
+      // anonymous authentication
       if (!credentials?.signedMessage || !credentials?.address) {
-        const newUser = await insertAnonymousUsers();
-        if (!newUser) return null;
-        return { id: newUser.id };
+        const { id } = await insertAnonymousUser();
+        return { id };
       }
 
-      // verified authentication
       const { address, signedMessage } = credentials;
       const isVerified = verifySignature(address, signedMessage);
 
-      if (!isVerified) return null;
+      if (!isVerified) throw new Error("Signature verification failed");
 
-      const verifiedUser = await selectUserByAddress(address);
+      const user = await selectUserByAddress(address);
 
-      if (verifiedUser) {
-        if (!verifiedUser.address) return null;
-        if (!verifiedUser.id) return null;
-        if (!verifiedUser.username) {
-          return {
-            id: verifiedUser.id,
-            address: verifiedUser.address,
-          };
-        }
+      // user has already been created
+      if (user) {
         return {
-          id: verifiedUser.id,
-          username: verifiedUser.username,
-          address: verifiedUser.address,
+          id: user.id,
+          username: user.username ?? undefined,
+          address: user.address ?? undefined,
         };
       }
 
       // user authenticating with wallet for the first time
-      const newUserWithAddress = await insertUserWithAddress(address);
-      if (!newUserWithAddress) return null;
-      if (!newUserWithAddress.address) return null;
-      console.log("newUserWithAddress added");
+      const newUser = await insertUserWithAddress(address);
+
       return {
-        id: newUserWithAddress.id,
-        address: newUserWithAddress.address,
+        id: newUser.id,
+        address: newUser.address ?? undefined,
       };
     } catch (e) {
       console.error(e);
@@ -81,7 +93,7 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     jwt({ token, user }) {
       if (user) {
-        token.userID = user.id;
+        token.userId = user.id;
         token.address = user.address;
         token.username = user.username;
       }
@@ -90,7 +102,7 @@ export const authOptions: NextAuthOptions = {
     session: ({ session, token }): Session => {
       return {
         user: {
-          id: token.userID,
+          id: token.userId,
           address: token.address,
           username: token.username,
         },

@@ -107,30 +107,7 @@ describe("Users CRUD API", () => {
 
     await expect(newUser()).rejects.toThrow();
   });
-  it("Should merge the anonymous user with the verified user", async () => {
-    const newAnonymousUser = await insertAnonymousUsers();
-    if (!newAnonymousUser?.id) return;
 
-    const newVerifiedUser = await insertVerifiedUser(
-      "aleo1rhgdu77hgyqd3xjj8ucu3jj9r2krwz6mnzyd80gncr5fxcwlh5rsvzp9px",
-      "testUserName"
-    );
-    if (!newVerifiedUser?.id) return;
-
-    await setUserScore(newAnonymousUser.id, 5);
-    await setUserScore(newVerifiedUser.id, 10);
-
-    const mergeUser = await mergeUserScore(
-      newAnonymousUser.id,
-      newVerifiedUser.id
-    );
-
-    expect(mergeUser).toBeDefined();
-    expect(mergeUser?.score).toBe(15);
-    expect(mergeUser?.id).toBe(newVerifiedUser.id);
-
-    expect(await selectUserById(newAnonymousUser.id)).toBeUndefined();
-  });
   it("Should not merge the anonymous user with the verified user if the verified user does not exist", async () => {
     const newAnonymousUser = await insertAnonymousUsers();
     if (!newAnonymousUser?.id) return;

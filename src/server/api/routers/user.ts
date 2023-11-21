@@ -1,54 +1,66 @@
 import { z } from "zod";
-import { createTRPCRouter, protectedProcedure } from "../trpc";
-import {
-  insertUserWithAddress,
-  mergeUserScore,
-  selectUserByAddress,
-  selectUserById,
-  setUsername,
-} from "@/server/service";
+import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
+import { selectUserById, setUsername } from "@/server/service";
 import { isValidSession } from "@/utils/session";
+import { db } from "@/server/db";
+import { users } from "@/server/db/schema";
+import { eq } from "drizzle-orm";
 
-//TODO: Fix import issue with SDK and TRPC.
+//TODO: Fix import issue with SDK and TRPC and use verifySignature from utils
 // import { verifySignature } from "@/utils/wallet";
-const verifySignature = (address: string, signedMessage: string): boolean => {
+const verifySignature = (_address: string, _signedMessage: string): boolean => {
   return true;
 };
 
 export const userRouter = createTRPCRouter({
-  mergeScore: protectedProcedure
+  mergeScore: publicProcedure
     .input(z.object({ signature: z.string(), address: z.string() }))
-    .output(z.object({ isKnownUser: z.boolean(), address: z.string() }))
-    //TODO: Go over the function and make it more readable (separating the logic into smaller functions)
-    .mutation(async ({ ctx, input }) => {
-      const { id } = ctx.session.user;
+    .mutation(async ({ input }) => {
       const { signature, address } = input;
 
       const isVerified = verifySignature(address, signature);
+      if (!isVerified) throw new Error("Invalid signature");
 
-      if (!isVerified) {
-        throw new Error("Invalid signature");
-      }
+      const txRes = await db.transaction(async (tx) => {
+        const selectedUsers = await tx
+          .select()
+          .from(users)
+          .where(eq(users.address, address))
+          .orderBy(users.createdAt);
 
-      const existingUser = await selectUserByAddress(address);
+        switch (selectedUsers.length) {
+          case 0: // no user found
+            throw new Error("Users not found");
+          case 1: // no duplicate user found
+            return { isUsernameSet: !!selectedUsers.at(0)?.username };
+          default: {
+            // duplicate user found
+            const [firstUser, ...duplicates] = selectedUsers;
 
-      if (!existingUser) {
-        const newUser = await insertUserWithAddress(address);
-        if (!newUser) {
-          throw new Error("Failed to insert user");
+            const score = selectedUsers.reduce(
+              (acc, user) => acc + user.score,
+              0
+            );
+
+            await tx
+              .update(users)
+              .set({ score })
+              .where(eq(users.id, firstUser!.id));
+
+            await Promise.all(
+              duplicates.map((user) =>
+                tx.delete(users).where(eq(users.id, user.id))
+              )
+            );
+
+            return { isUsernameSet: !!firstUser?.username };
+          }
         }
-        await mergeUserScore(id, newUser.id);
-        return { isKnownUser: false, address };
-      }
-      // TODO: Check if there is a username attached to the given address
+      });
 
-      const isMerged = await mergeUserScore(id, existingUser.id);
-
-      if (!isMerged) {
-        throw new Error("Failed to merge user score");
-      }
-      return { isKnownUser: true, address };
+      return txRes;
     }),
+
   verify: protectedProcedure
     .input(
       z.object({
@@ -94,6 +106,7 @@ export const userRouter = createTRPCRouter({
 
       return { isVerified: true };
     }),
+
   getUserById: protectedProcedure.query(async ({ ctx }) => {
     const { id } = ctx.session.user;
 

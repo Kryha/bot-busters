@@ -1,5 +1,6 @@
 export { default } from "next-auth/middleware";
 
+// TODO: try using vars instead of hardcoded strings
 export const config = {
-  matcher: ["/lobby", "/chat", "/decision", "/results"],
+  matcher: ["/lobby", "/match", "/decision", "/results"],
 };
