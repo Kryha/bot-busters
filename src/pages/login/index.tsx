@@ -1,91 +1,102 @@
-/* eslint-disable @typescript-eslint/unbound-method */
-import { useEffect, type FC, useState } from "react";
-import {
-  LeoWalletName,
-  type LeoWalletAdapter,
-} from "@demox-labs/aleo-wallet-adapter-leo";
-import { useWallet } from "@demox-labs/aleo-wallet-adapter-react";
-import {
-  DecryptPermission,
-  type WalletAdapterNetwork,
-} from "@demox-labs/aleo-wallet-adapter-base";
-import { env } from "@/env.cjs";
-import { useSession } from "next-auth/react";
+import { useEffect, type FC } from "react";
+import { signIn, useSession } from "next-auth/react";
+import Image from "next/image";
+import { Stack, type SxProps, Typography } from "@mui/material";
 
-import { AUTH_SIGN_MESSAGE } from "@/constants";
+import spinner from "@/assets/images/spinner.gif";
 import { Page } from "@/layouts";
-import { ConnectWallet } from "@/features/connect-wallet";
+import { useBBWallet } from "@/hooks/bb-wallet";
+import { text } from "@/assets/text";
+
+import { isValidSession } from "@/utils/session";
+import { useRouter } from "next/router";
+import { pages } from "@/utils/router";
+
+const styles = {
+  wrapper: {
+    alignItems: "center",
+    justifyContent: "flex-end",
+    height: "100vh",
+  },
+  container: {
+    justifyContent: "space-between",
+    height: "62.4%",
+    "@media (max-width:600px)": {
+      pl: 4,
+      pr: 4,
+    },
+  },
+  progress: {
+    gap: 10,
+    alignItems: "center",
+  },
+  text: { alignItems: "center", mb: 10 } satisfies SxProps,
+};
+
+const SPINNER_SIZE = 34;
 
 const Login: FC = () => {
-  const { data: sessionData } = useSession();
-  const {
-    publicKey: address,
-    wallet,
-    select,
-    connect,
-    connected,
-    connecting,
-  } = useWallet();
-  const [signedMessage, setSignedMessage] = useState<string>();
-  const [aleoAddress, setaleoAddress] = useState<string>();
-  useEffect(() => {
-    select(LeoWalletName);
-  }, [select]);
+  const { data: session } = useSession();
+  const router = useRouter();
+  const { address, connect, isConnected, isConnecting, getSignature } =
+    useBBWallet();
 
   useEffect(() => {
-    const connectWallet = async () => {
-      if (
-        connecting ||
-        !wallet ||
-        !address ||
-        sessionStorage.getItem("address") !== null ||
-        sessionStorage.getItem("signedMessage") !== null
-      ) {
-        return;
-      }
-
+    const authenticate = async () => {
       try {
-        const adapter = wallet.adapter as LeoWalletAdapter;
+        if (isValidSession(session)) {
+          await router.push(pages.home);
+          return;
+        }
 
-        const bytes = new TextEncoder().encode(AUTH_SIGN_MESSAGE);
-        const signatureMessageBytes = await adapter.signMessage(bytes);
-        const signedMessage = new TextDecoder().decode(signatureMessageBytes);
+        if (isConnecting) return;
 
-        // Storing the signature helps preventing a constant request for signing a message
-        sessionStorage.setItem("signedMessage", signedMessage);
-        sessionStorage.setItem("address", address);
-
-        setSignedMessage(signedMessage);
-        setaleoAddress(address);
+        if (!isConnected) {
+          await connect();
+        } else {
+          const signature = await getSignature();
+          await signIn("credentials", {
+            signature,
+            address,
+            callbackUrl: pages.home,
+          });
+        }
       } catch (error) {
-        //TODO: handle unauthorized error
         console.error(error);
       }
     };
-    void connectWallet();
-  }, [wallet, address, connecting, sessionData, connected]);
-
-  const authenticatePlayer = async () => {
-    try {
-      if (!connected) {
-        await connect(
-          DecryptPermission.UponRequest,
-          // leave the following as an env variable
-          env.NEXT_PUBLIC_ALEO_NETWORK as WalletAdapterNetwork
-        );
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  useEffect(() => {
-    void authenticatePlayer();
-  });
+    void authenticate();
+  }, [
+    address,
+    connect,
+    getSignature,
+    isConnected,
+    isConnecting,
+    router,
+    session,
+  ]);
 
   return (
     <Page>
-      <ConnectWallet signedMessage={signedMessage} address={aleoAddress} />
+      <Stack sx={styles.wrapper}>
+        <Stack sx={styles.container}>
+          <Stack sx={styles.progress}>
+            <Typography variant="h5">{text.auth.connectYourWallet}</Typography>
+            <Image
+              src={spinner}
+              alt="spinner"
+              width={SPINNER_SIZE}
+              height={SPINNER_SIZE}
+            />
+          </Stack>
+          <Stack sx={styles.text}>
+            <Typography variant="h5">{text.auth.weUseYourWallet}</Typography>
+            <Typography variant="h5">
+              {text.auth.weTransferToYourWallet}
+            </Typography>
+          </Stack>
+        </Stack>
+      </Stack>
     </Page>
   );
 };

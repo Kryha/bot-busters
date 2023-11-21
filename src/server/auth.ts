@@ -38,8 +38,8 @@ const credentialsProvider = CredentialsProvider({
       label: "Address",
       type: "text",
     },
-    signedMessage: {
-      label: "Signed Message",
+    signature: {
+      label: "Signature",
       type: "text",
     },
   },
@@ -47,14 +47,14 @@ const credentialsProvider = CredentialsProvider({
   async authorize(credentials) {
     try {
       // anonymous authentication
-      if (!credentials?.signedMessage || !credentials?.address) {
+      if (!credentials?.signature || !credentials?.address) {
         const { id } = await insertAnonymousUser();
         return { id };
       }
 
-      const { address, signedMessage } = credentials;
+      const { address, signature } = credentials;
 
-      const isVerified = verifySignature(address, signedMessage);
+      const isVerified = verifySignature(address, signature);
       if (!isVerified) throw new Error("Invalid signature");
 
       const user = await selectUserByAddress(address);

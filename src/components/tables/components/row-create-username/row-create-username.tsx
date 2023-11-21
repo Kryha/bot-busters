@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { type FC } from "react";
 import {
   Avatar,
@@ -15,19 +12,17 @@ import {
 import { text } from "@/assets/text";
 import { useCreateRandomUsername } from "@/hooks/name-generator";
 import { styles } from "./styles";
+
 interface RowCreateUsernameProps {
-  handleSetUsername: (username: string) => void;
+  onSetUsername: (username: string) => Promise<void>;
   error?: string;
 }
+
 export const RowCreateUsername: FC<RowCreateUsernameProps> = ({
-  handleSetUsername,
+  onSetUsername,
   error,
 }) => {
   const { username, setUsername } = useCreateRandomUsername();
-
-  const handleSaveUsername = () => {
-    void handleSetUsername(username);
-  };
 
   return (
     <>
@@ -57,7 +52,7 @@ export const RowCreateUsername: FC<RowCreateUsernameProps> = ({
               variant="contained"
               sx={styles.button}
               color="info"
-              onClick={handleSaveUsername}
+              onClick={() => void onSetUsername(username)}
             >
               <Typography variant="button" sx={styles.buttonText}>
                 {text.leaderboard.useNickname}
