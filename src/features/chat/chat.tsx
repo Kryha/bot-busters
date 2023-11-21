@@ -1,11 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
-import { useState, type FC, useEffect, type KeyboardEvent } from "react";
+import { useState, type FC, type KeyboardEvent } from "react";
 import { Stack } from "@mui/material";
-import { useSession } from "next-auth/react";
-import {
-  type ChatRoom,
-  type ChatMessagePayload,
-} from "@/server/api/match-types";
+import { type ChatRoom } from "@/server/api/match-types";
 import { api } from "@/utils/api";
 import { styles } from "./styles";
 import { InputField, Messages, Timer } from "./components";
@@ -20,14 +16,9 @@ interface Props {
 }
 
 export const Chat: FC<Props> = ({ roomId, matchState, room }) => {
-  const router = useRouter();
-  const { data: sessionData } = useSession();
   const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState<ChatMessagePayload[]>([]);
-
-  const setCreatedAt = useStore((state) => state.setCreatedAt);
-  const { data: room } = api.chat.getRoom.useQuery({ roomId });
   const isChat = matchState === "chat";
+  const isResults = matchState === "results";
   const messages = useMessages({ roomId });
   const { mutate: send } = api.chat.sendMessage.useMutation();
 
@@ -50,18 +41,6 @@ export const Chat: FC<Props> = ({ roomId, matchState, room }) => {
     }
   );
 
-  useEffect(() => {
-    const listener = (event: KeyboardEvent) => {
-      if (event.code === "Enter" || event.code === "NumpadEnter") {
-        event.preventDefault();
-        sendMessage();
-      }
-    };
-    document.addEventListener("keydown", listener);
-    return () => {
-      document.removeEventListener("keydown", listener);
-    };
-  }, [sendMessage]);
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     const isEnter = event.code === "Enter" || event.code === "NumpadEnter";
 
@@ -71,11 +50,7 @@ export const Chat: FC<Props> = ({ roomId, matchState, room }) => {
     }
   };
 
-  useEffect(() => {
-    if (room) {
-      setCreatedAt(room.createdAt);
-    }
-  }, [room, setCreatedAt]);
+  if (isResults) return;
 
   return (
     <Stack component="section" sx={styles.section(isChat)}>
