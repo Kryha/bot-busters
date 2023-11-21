@@ -102,7 +102,13 @@ export const userRouter = createTRPCRouter({
   getUserById: protectedProcedure.query(async ({ ctx }) => {
     const { id } = ctx.session.user;
 
-    const selectedUser = await db.select().from(users).where(eq(users.id, id));
+    const [selectedUser] = await db
+      .select()
+      .from(users)
+      .where(eq(users.id, id));
+
+    if (!selectedUser) throw new Error("User not found");
+
     return selectedUser;
   }),
 });

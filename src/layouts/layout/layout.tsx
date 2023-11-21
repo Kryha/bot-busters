@@ -18,7 +18,7 @@ export const Layout: FC<StackProps> = (props) => {
   const [open, setOpen] = useState(false);
   const { disconnect } = useWallet();
   const { data } = api.user.getUserById.useQuery();
-  const PlayerPoints = data?.score ? data.score : 0;
+  const playerPoints = data?.score ? data.score : 0;
   const isGamePlayed = true;
 
   return (
@@ -32,7 +32,7 @@ export const Layout: FC<StackProps> = (props) => {
         open={open}
         setOpen={setOpen}
         disconnect={disconnect}
-        points={PlayerPoints}
+        points={playerPoints}
       />
       {children}
     </Container>

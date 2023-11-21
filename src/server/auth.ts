@@ -53,9 +53,9 @@ const credentialsProvider = CredentialsProvider({
       }
 
       const { address, signedMessage } = credentials;
-      const isVerified = verifySignature(address, signedMessage);
 
-      if (!isVerified) throw new Error("Signature verification failed");
+      const isVerified = verifySignature(address, signedMessage);
+      if (!isVerified) throw new Error("Invalid signature");
 
       const user = await selectUserByAddress(address);
 
