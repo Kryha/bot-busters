@@ -4,11 +4,20 @@ import { styles } from "./styles";
 import { pages } from "@/utils/router";
 import { useRouter } from "next/router";
 import { text } from "../../../chat/text";
+import { type MatchStateType } from "@/types";
+import { type FC } from "react";
 
-export const Results = () => {
+interface Props {
+  matchState: MatchStateType;
+}
+
+export const Results: FC<Props> = ({ matchState }) => {
   const router = useRouter();
   // TODO: get real values
   const pointsWon = 30;
+  const isResults = matchState === "results";
+
+  if (!isResults) return;
 
   return (
     <Stack sx={styles.wrapper}>

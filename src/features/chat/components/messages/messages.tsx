@@ -7,13 +7,13 @@ import { Prompt } from "@/features/chat/components";
 import { text } from "@/features/chat/text";
 
 interface Props {
-  groupedMessages: GroupedMessage[];
+  messages: GroupedMessage[];
 }
 
-export const Messages: FC<Props> = ({ groupedMessages }) => {
+export const Messages: FC<Props> = ({ messages }) => {
   return (
     <Stack sx={styles.messagesContainer}>
-      {groupedMessages.map(({ isLocalSender, messages }, index) => (
+      {messages.map(({ isLocalSender, messages }, index) => (
         <Message
           key={index}
           isLocalSender={isLocalSender}
