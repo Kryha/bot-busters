@@ -12,6 +12,7 @@ import { isValidSession } from "@/utils/session";
 import { useRouter } from "next/router";
 import { pages } from "@/utils/router";
 
+// TODO: move styles to another file
 const styles = {
   wrapper: {
     alignItems: "center",

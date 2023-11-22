@@ -12,6 +12,7 @@ import { pages } from "@/utils/router";
 import { api } from "@/utils/api";
 import { useBBWallet } from "@/hooks/bb-wallet";
 
+// TODO: move styles to another file
 const styles = {
   wrapper: {
     // TODO: add color to theme
