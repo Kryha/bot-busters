@@ -1,11 +1,7 @@
 import { z } from "zod";
 import { eq } from "drizzle-orm";
 
-import {
-  createTRPCRouter,
-  protectedProcedure,
-  publicProcedure,
-} from "@/server/api/trpc";
+import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 import { isValidSession } from "@/utils/session";
 import { db } from "@/server/db";
 import { users } from "@/server/db/schema";
@@ -17,34 +13,41 @@ const verifySignature = (_address: string, _signedMessage: string): boolean => {
 };
 
 export const userRouter = createTRPCRouter({
-  mergeScore: publicProcedure
+  mergeScore: protectedProcedure
     .input(z.object({ signature: z.string(), address: z.string() }))
-    .mutation(async ({ input }) => {
+    .mutation(async ({ ctx, input }) => {
+      const { session } = ctx;
       const { signature, address } = input;
 
       const isVerified = verifySignature(address, signature);
       if (!isVerified) throw new Error("Invalid signature");
 
       const txRes = await db.transaction(async (tx) => {
-        const selectedUsers = await tx
+        const [loggedUser] = await tx
+          .select()
+          .from(users)
+          .where(eq(users.id, session.user.id));
+
+        if (!loggedUser) throw new Error("User not found");
+
+        const duplicateUsers = await tx
           .select()
           .from(users)
           .where(eq(users.address, address))
           .orderBy(users.createdAt);
 
-        switch (selectedUsers.length) {
+        switch (duplicateUsers.length) {
           case 0: // no user found
-            throw new Error("Users not found");
-          case 1: // no duplicate user found
-            return { isUsernameSet: !!selectedUsers.at(0)?.username };
+            return { isUsernameSet: !!duplicateUsers.at(0)?.username };
           default: {
-            // duplicate user found
-            const [firstUser, ...duplicates] = selectedUsers;
+            // duplicate users found
+            const score =
+              duplicateUsers.reduce((acc, user) => acc + user.score, 0) +
+              loggedUser.score;
 
-            const score = selectedUsers.reduce(
-              (acc, user) => acc + user.score,
-              0
-            );
+            const [firstUser, ...usersToDelete] = duplicateUsers;
+
+            usersToDelete.push(loggedUser);
 
             await tx
               .update(users)
@@ -52,7 +55,7 @@ export const userRouter = createTRPCRouter({
               .where(eq(users.id, firstUser!.id));
 
             await Promise.all(
-              duplicates.map((user) =>
+              usersToDelete.map((user) =>
                 tx.delete(users).where(eq(users.id, user.id))
               )
             );

@@ -1,15 +1,15 @@
 import { Button, Stack, Typography } from "@mui/material";
 import { useRouter } from "next/router";
+import { useEffect, useRef } from "react";
+import { signIn, useSession } from "next-auth/react";
 
 import { pages } from "@/utils/router";
 import { useBBWallet } from "@/hooks/bb-wallet";
+import { api } from "@/utils/api";
+import { isAnonymousSession, isUnverifiedSession } from "@/utils/session";
 
 import { styles } from "./styles";
 import { text } from "../../../chat/text";
-import { api } from "@/utils/api";
-import { useEffect, useState } from "react";
-import { signIn, useSession } from "next-auth/react";
-import { isAnonymousSession, isUnverifiedSession } from "@/utils/session";
 
 export const Results = () => {
   const { data: session } = useSession();
@@ -17,7 +17,7 @@ export const Results = () => {
   // TODO: get points from server
   const pointsWon = 30;
 
-  const [mergeRequested, setMergeRequested] = useState(false);
+  const mergeRequested = useRef(false);
 
   const { isConnecting, isConnected, connect, address, getSignature } =
     useBBWallet();
@@ -25,8 +25,10 @@ export const Results = () => {
 
   useEffect(() => {
     const merge = async () => {
-      if (isConnecting || !address || !isConnected || !mergeRequested) return;
+      if (isConnecting || !address || !isConnected || !mergeRequested.current)
+        return;
 
+      mergeRequested.current = false;
       try {
         const signature = await getSignature();
         if (!signature) return;
@@ -50,19 +52,11 @@ export const Results = () => {
       }
     };
     void merge();
-  }, [
-    address,
-    mergeScore,
-    getSignature,
-    isConnecting,
-    isConnected,
-    router,
-    mergeRequested,
-  ]);
+  }, [address, mergeScore, getSignature, isConnecting, isConnected, router]);
 
   const handleConnect = async () => {
+    mergeRequested.current = true;
     await connect();
-    setMergeRequested(true);
   };
 
   return (
