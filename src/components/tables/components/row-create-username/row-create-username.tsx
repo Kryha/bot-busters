@@ -20,7 +20,7 @@ interface RowCreateUsernameProps {
 
 export const RowCreateUsername: FC<RowCreateUsernameProps> = ({
   onSetUsername,
-  error,
+  error: _,
 }) => {
   const { username, setUsername } = useCreateRandomUsername();
 
@@ -37,11 +37,12 @@ export const RowCreateUsername: FC<RowCreateUsernameProps> = ({
             <Avatar alt="avatar" sx={styles.avatar}>
               {text.leaderboard.avatarEmoji}
             </Avatar>
-            {error && (
+            {/* TODO: uncomment after fixing styling */}
+            {/* {error && (
               <Typography variant="body1" color="error">
                 {error}
               </Typography>
-            )}
+            )} */}
             <TextField
               id="outlined"
               value={username}
