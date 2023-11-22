@@ -1,3 +1,3 @@
 export const animationLab = {
-  welcome: "Welcome to the animation lab!",
+  welcome: "Welcome to the Animation Lab!",
 };

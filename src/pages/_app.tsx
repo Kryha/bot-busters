@@ -12,6 +12,7 @@ import "@/styles/globals.css";
 import { APP_NAME } from "@/constants";
 import Head from "next/head";
 import { Layout } from "@/layouts";
+import { useRouter } from "next/router";
 
 const headTitle = "Bot Busters";
 
@@ -25,8 +26,11 @@ const MyApp: AppType<{ session: Session | null }> = ({
         appName: APP_NAME,
       }),
     ],
-    []
+    [],
   );
+
+  const router = useRouter();
+  const animationLab = router.pathname === "/animationlab";
 
   return (
     <>
@@ -39,9 +43,13 @@ const MyApp: AppType<{ session: Session | null }> = ({
         <WalletModalProvider>
           <ThemeProvider>
             <SessionProvider session={session}>
-              <Layout>
+              {animationLab ? (
                 <Component {...pageProps} />
-              </Layout>
+              ) : (
+                <Layout>
+                  <Component {...pageProps} />
+                </Layout>
+              )}
             </SessionProvider>
           </ThemeProvider>
         </WalletModalProvider>
