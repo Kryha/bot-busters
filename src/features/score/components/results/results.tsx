@@ -10,8 +10,14 @@ import { isAnonymousSession, isUnverifiedSession } from "@/utils/session";
 
 import { styles } from "./styles";
 import { text } from "../../../chat/text";
+import { type MatchStateType } from "@/types";
+import { type FC } from "react";
 
-export const Results = () => {
+interface Props {
+  matchState: MatchStateType;
+}
+
+export const Results: FC<Props> = ({ matchState }) => {
   const { data: session } = useSession();
   const router = useRouter();
   // TODO: get points from server
@@ -65,6 +71,8 @@ export const Results = () => {
     setMergeRequested(true);
     await connect();
   };
+
+  if (matchState !== "results") return;
 
   return (
     <Stack sx={styles.wrapper}>
