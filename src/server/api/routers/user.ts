@@ -37,33 +37,30 @@ export const userRouter = createTRPCRouter({
           .orderBy(users.createdAt)
           .then((users) => users.filter((user) => user.id !== loggedUser.id));
 
-        switch (duplicateUsers.length) {
-          case 0: // no user found
-            return { isUsernameSet: !!duplicateUsers.at(0)?.username };
-          default: {
-            // duplicate users found
-            const score =
-              duplicateUsers.reduce((acc, user) => acc + user.score, 0) +
-              loggedUser.score;
-
-            const [firstUser, ...usersToDelete] = duplicateUsers;
-
-            usersToDelete.push(loggedUser);
-
-            await tx
-              .update(users)
-              .set({ score })
-              .where(eq(users.id, firstUser!.id));
-
-            await Promise.all(
-              usersToDelete.map((user) =>
-                tx.delete(users).where(eq(users.id, user.id))
-              )
-            );
-
-            return { isUsernameSet: !!firstUser?.username };
-          }
+        if (duplicateUsers.length === 0) {
+          return { isUsernameSet: !!duplicateUsers.at(0)?.username };
         }
+
+        const score =
+          duplicateUsers.reduce((acc, user) => acc + user.score, 0) +
+          loggedUser.score;
+
+        const [firstUser, ...usersToDelete] = duplicateUsers;
+
+        usersToDelete.push(loggedUser);
+
+        await tx
+          .update(users)
+          .set({ score })
+          .where(eq(users.id, firstUser!.id));
+
+        await Promise.all(
+          usersToDelete.map((user) =>
+            tx.delete(users).where(eq(users.id, user.id))
+          )
+        );
+
+        return { isUsernameSet: !!firstUser?.username };
       });
 
       return txRes;
