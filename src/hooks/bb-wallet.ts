@@ -1,11 +1,14 @@
 /* eslint-disable @typescript-eslint/unbound-method */
-import { type LeoWalletAdapter } from "@demox-labs/aleo-wallet-adapter-leo";
+import {
+  LeoWalletName,
+  type LeoWalletAdapter,
+} from "@demox-labs/aleo-wallet-adapter-leo";
 import { useWallet } from "@demox-labs/aleo-wallet-adapter-react";
 import {
   DecryptPermission,
   type WalletAdapterNetwork,
 } from "@demox-labs/aleo-wallet-adapter-base";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { AUTH_SIGN_MESSAGE } from "@/constants";
 import { env } from "@/env.cjs";
@@ -24,6 +27,10 @@ export const useBBWallet = () => {
     disconnecting,
     select,
   } = useWallet();
+
+  useEffect(() => {
+    select(LeoWalletName);
+  }, [select]);
 
   const [signature, setSignature] = useState(
     ls?.getItem("signature") ?? undefined
@@ -80,6 +87,5 @@ export const useBBWallet = () => {
     connect: connectWallet,
     disconnect: disconnectWallet,
     getSignature,
-    select,
   };
 };
