@@ -16,10 +16,14 @@ export const Homepage = () => {
   const { data: sessionData } = useSession();
 
   const handleGameStart = async () => {
-    if (!isValidSession(sessionData)) {
-      await signIn("credentials", { callbackUrl: pages.lobby });
-    } else {
-      await push(pages.lobby);
+    try {
+      if (!isValidSession(sessionData)) {
+        await signIn("credentials", { callbackUrl: pages.lobby });
+      } else {
+        await push(pages.lobby);
+      }
+    } catch (error) {
+      console.error(error);
     }
   };
 
