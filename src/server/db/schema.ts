@@ -1,14 +1,15 @@
-import { PUBLIC_KEY_LENGTH } from "@/constants";
-import { relations } from "drizzle-orm";
+import { relations, sql } from "drizzle-orm";
 import {
-  date,
   integer,
   varchar,
   uuid,
   pgTableCreator,
+  timestamp,
 } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { type z } from "zod";
+
+import { PUBLIC_KEY_LENGTH } from "@/constants";
 
 export const bbPgTable = pgTableCreator((name) => `bot_busters_${name}`);
 
@@ -21,7 +22,7 @@ export const users = bbPgTable("user", {
   // TODO: add zPass
   // zPass: json("zPass"),
 
-  createdAt: date("createdAt").defaultNow(),
+  createdAt: timestamp("createdAt").default(sql`CURRENT_TIMESTAMP`),
 });
 
 export const usersRelations = relations(users, ({ one }) => ({
