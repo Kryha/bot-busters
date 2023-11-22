@@ -13,7 +13,7 @@ export const useAnimatedSprite = ({
       label: "Scale",
       value: 1,
       min: 1,
-      max: 10,
+      max: 20,
       step: 1,
     },
     fps: {
@@ -24,7 +24,7 @@ export const useAnimatedSprite = ({
       label: "Speed",
       value: 1,
       min: 1,
-      max: 10,
+      max: 20,
       step: 1,
     },
     currentFrame: {
