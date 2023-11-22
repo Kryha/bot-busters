@@ -20,7 +20,7 @@ export const useMessages = ({ roomId }: Params) => {
   };
 
   const groupedMessages: GroupedMessage[] = messages.map((message) => {
-    const isLocalSender = message.sender === session?.id;
+    const isLocalSender = message.sender === session?.user.id;
 
     // TODO: group properly, use `sentAt`
     return {

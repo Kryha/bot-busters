@@ -33,6 +33,7 @@ export const UserStats: FC<Props> = ({
   const logout = async () => {
     await signOut();
     await disconnect();
+    sessionStorage.clear();
   };
 
   return (

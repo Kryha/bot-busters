@@ -1,5 +1,5 @@
 export { default } from "next-auth/middleware";
 
 export const config = {
-  matcher: ["/lobby", "/chat", "/decision", "/results"],
+  matcher: ["/lobby", "/match", "/player-profile", "/username-select"],
 };

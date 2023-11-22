@@ -1,8 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { type FC } from "react";
-import { useRouter } from "next/router";
 import {
   Avatar,
   Button,
@@ -15,17 +11,18 @@ import {
 
 import { text } from "@/assets/text";
 import { useCreateRandomUsername } from "@/hooks/name-generator";
-import { pages } from "@/utils/router";
 import { styles } from "./styles";
 
-export const RowCreateUsername: FC = ({}) => {
-  const router = useRouter();
-  const { username, setUsername } = useCreateRandomUsername();
+interface RowCreateUsernameProps {
+  onSetUsername: (username: string) => Promise<void>;
+  error?: string;
+}
 
-  const handleSaveUsername = () => {
-    setUsername(username);
-    void router.push(pages.home);
-  };
+export const RowCreateUsername: FC<RowCreateUsernameProps> = ({
+  onSetUsername,
+  error: _,
+}) => {
+  const { username, setUsername } = useCreateRandomUsername();
 
   return (
     <>
@@ -40,6 +37,12 @@ export const RowCreateUsername: FC = ({}) => {
             <Avatar alt="avatar" sx={styles.avatar}>
               {text.leaderboard.avatarEmoji}
             </Avatar>
+            {/* TODO: uncomment after fixing styling */}
+            {/* {error && (
+              <Typography variant="body1" color="error">
+                {error}
+              </Typography>
+            )} */}
             <TextField
               id="outlined"
               value={username}
@@ -50,7 +53,7 @@ export const RowCreateUsername: FC = ({}) => {
               variant="contained"
               sx={styles.button}
               color="info"
-              onClick={handleSaveUsername}
+              onClick={() => void onSetUsername(username)}
             >
               <Typography variant="button" sx={styles.buttonText}>
                 {text.leaderboard.useNickname}

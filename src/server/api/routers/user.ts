@@ -1,48 +1,71 @@
 import { z } from "zod";
-import { createTRPCRouter, protectedProcedure } from "../trpc";
-import {
-  mergeUserScore,
-  selectUserByAddress,
-  selectUserById,
-  setUsername,
-} from "@/server/service";
-import { isValidSession } from "@/utils/session";
+import { eq } from "drizzle-orm";
 
-//TODO: Fix import issue with SDK and TRPC
+import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
+import { isValidSession } from "@/utils/session";
+import { db } from "@/server/db";
+import { users } from "@/server/db/schema";
+
+//TODO: Fix import issue with SDK and TRPC and use verifySignature from utils
 // import { verifySignature } from "@/utils/wallet";
-const verifySignature = (address: string, signedMessage: string): boolean => {
+const verifySignature = (_address: string, _signedMessage: string): boolean => {
   return true;
 };
 
 export const userRouter = createTRPCRouter({
   mergeScore: protectedProcedure
     .input(z.object({ signature: z.string(), address: z.string() }))
-    .output(z.object({ isKnownUser: z.boolean(), address: z.string() }))
-    //TODO: Go over the function and make it more readable (separating the logic into smaller functions)
     .mutation(async ({ ctx, input }) => {
-      const { id } = ctx.session;
+      const { session } = ctx;
       const { signature, address } = input;
 
       const isVerified = verifySignature(address, signature);
+      if (!isVerified) throw new Error("Invalid signature");
 
-      if (!isVerified) {
-        throw new Error("Invalid signature");
-      }
+      const txRes = await db.transaction(async (tx) => {
+        const [loggedUser] = await tx
+          .select()
+          .from(users)
+          .where(eq(users.id, session.user.id));
 
-      const existingUser = await selectUserByAddress(address);
+        if (!loggedUser) throw new Error("User not found");
 
-      if (!existingUser) {
-        return { isKnownUser: false, address };
-      }
-      // TODO: Check if there is a username attached to the given address
+        const duplicateUsers = await tx
+          .select()
+          .from(users)
+          .where(eq(users.address, address))
+          .orderBy(users.createdAt)
+          .then((users) => users.filter((user) => user.id !== loggedUser.id));
 
-      const isMerged = await mergeUserScore(id, existingUser.id);
+        if (duplicateUsers.length === 0) {
+          return { isUsernameSet: !!duplicateUsers.at(0)?.username };
+        }
 
-      if (!isMerged) {
-        throw new Error("Failed to merge user score");
-      }
-      return { isKnownUser: true, address };
+        const score =
+          duplicateUsers.reduce((acc, user) => acc + user.score, 0) +
+          loggedUser.score;
+
+        const [firstUser, ...usersToDelete] = duplicateUsers;
+
+        usersToDelete.push(loggedUser);
+
+        await tx
+          .update(users)
+          .set({ score })
+          .where(eq(users.id, firstUser!.id));
+
+        await Promise.all(
+          usersToDelete.map((user) =>
+            tx.delete(users).where(eq(users.id, user.id))
+          )
+        );
+
+        return { isUsernameSet: !!firstUser?.username };
+      });
+
+      return txRes;
     }),
+
   verify: protectedProcedure
     .input(
       z.object({
@@ -52,46 +75,41 @@ export const userRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      if (!isValidSession(ctx.session)) {
-        throw new Error("Invalid session");
+      const { session } = ctx;
+      const { address, signature, username } = input;
+
+      if (!isValidSession(session)) throw new Error("Invalid session");
+      if (session.user.username) throw new Error("User already verified");
+
+      if (session.user.address) {
+        await db
+          .update(users)
+          .set({ username })
+          .where(eq(users.id, session.user.id));
+        return;
       }
 
-      if (ctx.session.username) {
-        throw new Error("User already verified");
-      }
-
-      const { username, address, signature } = input;
-
-      if (ctx.session.address) {
-        const updatedUser = await setUsername(ctx.session.id, username);
-        if (!updatedUser) {
-          throw new Error("Failed to update username");
-        }
-
-        return { isVerified: true };
-      }
-
-      if (!address || !signature) {
-        throw new Error("Invalid address or signature");
-      }
+      if (!address || !signature) throw new Error("Missing required inputs");
 
       const isVerified = verifySignature(address, signature);
+      if (!isVerified) throw new Error("Invalid signature");
 
-      if (!isVerified) {
-        throw new Error("Invalid signature");
-      }
-
-      const updatedUser = await setUsername(ctx.session.id, username);
-      if (!updatedUser) {
-        throw new Error("Failed to update username");
-      }
-
-      return { isVerified: true };
+      await db
+        .update(users)
+        .set({ username, address })
+        .where(eq(users.id, session.user.id));
     }),
-  getUserById: protectedProcedure.query(async ({ ctx }) => {
-    const { id } = ctx.session;
 
-    const selectedUser = await selectUserById(id);
+  getUserById: protectedProcedure.query(async ({ ctx }) => {
+    const { id } = ctx.session.user;
+
+    const [selectedUser] = await db
+      .select()
+      .from(users)
+      .where(eq(users.id, id));
+
+    if (!selectedUser) throw new Error("User not found");
+
     return selectedUser;
   }),
 });

@@ -1,24 +1,34 @@
 import { verifySignature } from "@/utils/wallet";
-import { type DefaultSession, type NextAuthOptions } from "next-auth";
+import {
+  type Session,
+  type NextAuthOptions,
+  type DefaultSession,
+} from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { env } from "@/env.cjs";
 import {
-  insertAnonymousUsers,
+  insertAnonymousUser,
   insertUserWithAddress,
   selectUserByAddress,
 } from "@/server/service";
 
-/**
- * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
- * object and keep type safety.
- *
- * @see https://next-auth.js.org/getting-started/typescript#module-augmentation
- */
 declare module "next-auth" {
-  interface Session extends DefaultSession {
+  interface User {
     id: string;
     username?: string;
     address?: string;
+  }
+
+  interface Session extends DefaultSession {
+    user: User;
+  }
+}
+
+declare module "next-auth/jwt" {
+  interface JWT {
+    userId: string;
+    address?: string;
+    username?: string;
   }
 }
 
@@ -28,54 +38,42 @@ const credentialsProvider = CredentialsProvider({
       label: "Address",
       type: "text",
     },
-    signedMessage: {
-      label: "Signed Message",
+    signature: {
+      label: "Signature",
       type: "text",
     },
   },
 
   async authorize(credentials) {
     try {
-      // unverified authentication
-      if (!credentials?.signedMessage || !credentials?.address) {
-        const newUser = await insertAnonymousUsers();
-        if (!newUser) return null;
-
-        return { id: newUser.id };
+      // anonymous authentication
+      if (!credentials?.signature || !credentials?.address) {
+        const { id } = await insertAnonymousUser();
+        return { id };
       }
 
-      // verified authentication
-      const { address, signedMessage } = credentials;
-      const isVerified = verifySignature(address, signedMessage);
+      const { address, signature } = credentials;
 
-      if (!isVerified) return null;
+      const isVerified = verifySignature(address, signature);
+      if (!isVerified) throw new Error("Invalid signature");
 
-      const verifiedUser = await selectUserByAddress(address);
+      const user = await selectUserByAddress(address);
 
-      if (verifiedUser) {
-        if (!verifiedUser.address) return null;
-        if (!verifiedUser.id) return null;
-        if (!verifiedUser.username) {
-          return {
-            id: verifiedUser.id,
-            address: verifiedUser.address,
-          };
-        }
+      // user has already been created
+      if (user) {
         return {
-          id: verifiedUser.id,
-          username: verifiedUser.username,
-          address: verifiedUser.address,
+          id: user.id,
+          username: user.username ?? undefined,
+          address: user.address ?? undefined,
         };
       }
 
       // user authenticating with wallet for the first time
-      const newUserWithAddress = await insertUserWithAddress(address);
-      if (!newUserWithAddress) return null;
-      if (!newUserWithAddress.address) return null;
+      const newUser = await insertUserWithAddress(address);
 
       return {
-        id: newUserWithAddress.id,
-        address: newUserWithAddress.address,
+        id: newUser.id,
+        address: newUser.address ?? undefined,
       };
     } catch (e) {
       console.error(e);
@@ -93,10 +91,22 @@ const credentialsProvider = CredentialsProvider({
 export const authOptions: NextAuthOptions = {
   debug: env.NODE_ENV === "development",
   callbacks: {
-    session: ({ session, token }) => {
+    jwt({ token, user }) {
+      if (user) {
+        token.userId = user.id;
+        token.address = user.address;
+        token.username = user.username;
+      }
+      return token;
+    },
+    session: ({ session, token }): Session => {
       return {
-        ...session,
-        id: token.sub,
+        user: {
+          id: token.userId,
+          address: token.address,
+          username: token.username,
+        },
+        expires: session.expires,
       };
     },
   },
