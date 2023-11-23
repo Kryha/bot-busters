@@ -11,9 +11,12 @@ import {
 
 import { text } from "@/assets/text";
 import { type UserStatsData } from "@/types";
-import { fakeDateAndCreditsOne, fakeDateAndCreditsTwo } from "@/constants";
 import { styles } from "./styles";
 import { PointsDisplay } from "../points-display";
+import {
+  fakeDateAndCreditsOne,
+  fakeDateAndCreditsTwo,
+} from "@/constants/fake-data/landing";
 
 interface Props {
   open: boolean;
@@ -46,46 +49,46 @@ export const MenuCard: FC<Props> = ({
           <Stack sx={styles.menuItemContainer}>
             <Stack sx={styles.pointsContainer}>
               <PointsDisplay
-                title={text.landing.todaysScore}
-                info={text.landing.points(stats.todaysPoints)}
+                title={text.general.todaysScore}
+                info={text.general.points(stats.todaysPoints)}
               />
               <PointsDisplay
-                title={text.landing.todaysPosition}
-                info={text.landing.numberPosition(stats.todaysPosition)}
+                title={text.general.todaysPosition}
+                info={text.general.numberPosition(stats.todaysPosition)}
               />
             </Stack>
             <Stack sx={styles.pointsContainer}>
               <PointsDisplay
-                title={text.landing.allTimeScore}
-                info={text.landing.points(stats.allTimePoints)}
+                title={text.general.allTimeScore}
+                info={text.general.points(stats.allTimePoints)}
               />
               <PointsDisplay
-                title={text.landing.allTimePosition}
-                info={text.landing.numberPosition(stats.allTimePosition)}
+                title={text.general.allTimePosition}
+                info={text.general.numberPosition(stats.allTimePosition)}
               />
             </Stack>
           </Stack>
           <Divider />
           <Stack>
             <Typography variant="overline">
-              {text.landing.aleoCreditsPayout}
+              {text.general.aleoCreditsPayout}
             </Typography>
             <Stack sx={styles.statsContainer}>
               <Typography variant="body1">
-                {text.landing.dateAndCredits(
+                {text.general.dateAndCredits(
                   fakeDateAndCreditsOne.date,
                   fakeDateAndCreditsOne.credits
                 )}
               </Typography>
               <Chip
                 size="small"
-                label={text.landing.newCredits}
+                label={text.general.newCredits}
                 color="warning"
                 sx={styles.chip}
               />
             </Stack>
             <Typography variant="body1">
-              {text.landing.dateAndCredits(
+              {text.general.dateAndCredits(
                 fakeDateAndCreditsTwo.date,
                 fakeDateAndCreditsTwo.credits
               )}
@@ -97,7 +100,7 @@ export const MenuCard: FC<Props> = ({
             color="blueGrey"
             onClick={() => void logout()}
           >
-            {text.landing.signOut}
+            {text.general.signOut}
           </Button>
         </Stack>
       </MenuItem>

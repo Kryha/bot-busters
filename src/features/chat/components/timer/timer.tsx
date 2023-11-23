@@ -1,47 +1,48 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { useState, useEffect, type FC } from "react";
+import { useState, type FC, useEffect } from "react";
 import { Stack, Typography } from "@mui/material";
 
 import { text } from "@/assets/text";
 import { styles } from "./styles";
+import { ALERT_TIME_MS } from "@/constants/main";
 
 interface Props {
-  matchDurationInSeconds: number;
-  onTimeout: () => void;
+  time: number;
+  duration: number;
+  alertTime?: number;
 }
 
-export const Timer: FC<Props> = ({ matchDurationInSeconds, onTimeout }) => {
-  // TODO: change to use backend timer
-  const [remainingSeconds, setRemainingSeconds] = useState(
-    matchDurationInSeconds
-  );
-  const updateAtInterval = 500;
-  const alertTimeInSeconds = remainingSeconds < 30;
+export const Timer: FC<Props> = ({
+  time,
+  duration,
+  alertTime = ALERT_TIME_MS,
+}) => {
+  const [remainingTime, setRemainingTime] = useState<number | null>(duration);
+
   useEffect(() => {
-    if (remainingSeconds === 0) {
-      onTimeout();
+    if (time) {
+      const intervalId = setInterval(() => {
+        const elapsedTime = Date.now() - time;
+        const newRemainingTime = Math.max(0, duration - elapsedTime);
+        setRemainingTime(newRemainingTime);
+      }, 1000);
+
+      return () => clearInterval(intervalId);
     }
-    const interval = setInterval(() => {
-      if (remainingSeconds > 0) {
-        setRemainingSeconds((prevRemainingSeconds) => prevRemainingSeconds - 1);
-      } else {
-        clearInterval(interval);
-      }
-    }, updateAtInterval);
+    setRemainingTime(null);
+  }, [duration, time]);
 
-    return () => {
-      clearInterval(interval);
-    };
-  }, [remainingSeconds, onTimeout]);
+  if (!time || !remainingTime) return <></>;
 
-  const progress = (remainingSeconds / matchDurationInSeconds) * 100;
-  const minutes = Math.floor(remainingSeconds / 60);
-  const seconds = remainingSeconds % 60;
-  const formattedCountdown = text.general.formattedCountdown(minutes, seconds);
+  const progress = (remainingTime / duration) * 100;
+  const seconds = Math.floor(remainingTime / 1000);
+  const formattedCountdown = text.general.formattedCountdown(
+    Math.floor(seconds / 60),
+    seconds % 60
+  );
 
   return (
     <Stack sx={styles.wrapper}>
-      <Stack sx={styles.progress(progress, alertTimeInSeconds)}>
+      <Stack sx={styles.progress(progress, remainingTime < alertTime)}>
         <Stack sx={styles.countdownWrapper}>
           <Typography
             variant="caption"

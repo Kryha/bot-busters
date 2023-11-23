@@ -4,3 +4,7 @@ export * from "./tables";
 export * from "./user-menu";
 export * from "./points-display";
 export * from "./top-ranked";
+export * from "./user";
+export * from "./user-voting";
+export * from "./user-result";
+export * from "./splash-screen";

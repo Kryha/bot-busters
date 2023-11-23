@@ -4,11 +4,12 @@ import { useState, type MouseEvent, type FC, useEffect } from "react";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { signOut } from "next-auth/react";
 import { Avatar, Button, Chip, Stack, Typography } from "@mui/material";
-import { useWallet } from "@demox-labs/aleo-wallet-adapter-react";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 
 import { text } from "@/assets/text";
-import { fakeStats } from "@/constants";
+import { fakeStats } from "@/constants/fake-data/landing";
+import { useBBWallet } from "@/hooks/bb-wallet";
+
 import { styles } from "./styles";
 import { MenuCard } from "./menu-card";
 import { CHIP_TIMEOUT } from "./constants";
@@ -21,7 +22,7 @@ interface Props {
 export const UserMenu: FC<Props> = ({ isMenuVisible, username }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [isChipVisible, setIsChipVisible] = useState(true);
-  const { disconnect } = useWallet();
+  const { disconnect } = useBBWallet();
   const open = !!anchorEl;
   const endIcon = open ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />;
   const expanded = open ? "true" : undefined;
@@ -56,7 +57,7 @@ export const UserMenu: FC<Props> = ({ isMenuVisible, username }) => {
     <Stack sx={styles.userMenuWrapper}>
       {isChipVisible && (
         <Chip
-          label={text.landing.youWonCredits}
+          label={text.general.youWonCredits}
           color="warning"
           sx={styles.creditsWonChip}
         />

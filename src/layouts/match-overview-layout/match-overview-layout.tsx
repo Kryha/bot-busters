@@ -1,11 +1,16 @@
-import { Stack, type StackProps } from "@mui/material";
 import { type FC } from "react";
+import { Stack, type StackProps } from "@mui/material";
+
 import { styles } from "./styles";
-import { useStore } from "@/store";
+
+import { useMatchState } from "@/service";
 
 export const MatchOverviewLayout: FC<StackProps> = (props) => {
   const { children } = props;
-  const matchState = useStore((state) => state.matchState);
+  const matchState = useMatchState();
+
+  if (!matchState) return;
+
   const sx = styles[matchState];
 
   return (

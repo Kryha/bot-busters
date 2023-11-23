@@ -2,9 +2,10 @@ import { auth } from "./auth";
 import { general } from "./general";
 import { navigation } from "./navigation";
 import { lobby } from "./lobby";
+import { match } from "./match";
 import { leaderboard } from "./leaderboard";
-import { landing } from "./landing";
 import { homepage } from "./homepage";
+import { playerProfile } from "./player-profile";
 import { animationLab } from "@/assets/text/animationlab";
 
 export const text = {
@@ -12,8 +13,9 @@ export const text = {
   general,
   navigation,
   lobby,
+  match,
   leaderboard,
-  landing,
   homepage,
   animationLab,
+  playerProfile,
 };

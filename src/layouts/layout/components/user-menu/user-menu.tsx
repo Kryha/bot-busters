@@ -6,21 +6,24 @@ import { SoundIcon } from "./sound-icon";
 import { styles } from "./styles";
 
 interface Props {
+  isVerifiedUser: boolean;
   setOpen: (open: boolean) => void;
   logout: () => Promise<void>;
 }
 
-export const UserMenu: FC<Props> = ({ setOpen, logout }) => {
+export const UserMenu: FC<Props> = ({ isVerifiedUser, setOpen, logout }) => {
   return (
     <Stack sx={styles.wrapper}>
-      <Button
-        variant="contained"
-        color="blueGrey"
-        onClick={() => void logout()}
-        sx={styles.button}
-      >
-        {text.general.signOut}
-      </Button>
+      {isVerifiedUser && (
+        <Button
+          variant="contained"
+          color="blueGrey"
+          onClick={() => void logout()}
+          sx={styles.button}
+        >
+          {text.general.signOut}
+        </Button>
+      )}
       <IconButton sx={styles.iconButton}>
         <SoundIcon />
       </IconButton>
