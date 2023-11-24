@@ -2,8 +2,9 @@ import { type ReactElement, type Ref, forwardRef, type FC } from "react";
 import { Button, Dialog, Slide, Stack } from "@mui/material";
 import { type TransitionProps } from "@mui/material/transitions";
 
-import { text } from "@/assets/text";
-import { styles } from "./styles";
+import { text } from "~/assets/text/index.js";
+
+import { styles } from "./styles.js";
 import { Footer } from "./footer";
 import { MenuOptions } from "./menu-options";
 

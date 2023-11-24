@@ -1,2 +1,2 @@
-export * from "./use-match-state";
-export * from "./use-room";
+export * from "./use-match-state.js";
+export * from "./use-room.js";

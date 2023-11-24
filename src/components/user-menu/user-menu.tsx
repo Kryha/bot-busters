@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/unbound-method */
 //TODO: delete when changing layout
 import { useState, type MouseEvent, type FC, useEffect } from "react";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
@@ -6,13 +5,13 @@ import { signOut } from "next-auth/react";
 import { Avatar, Button, Chip, Stack, Typography } from "@mui/material";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 
-import { text } from "@/assets/text";
-import { fakeStats } from "@/constants/fake-data/landing";
-import { useBBWallet } from "@/hooks/bb-wallet";
+import { text } from "~/assets/text/index.js";
+import { fakeStats } from "~/constants/fake-data/landing.js";
+import { useBBWallet } from "~/hooks/bb-wallet.js";
 
-import { styles } from "./styles";
+import { styles } from "./styles.js";
 import { MenuCard } from "./menu-card";
-import { CHIP_TIMEOUT } from "./constants";
+import { CHIP_TIMEOUT } from "./constants.js";
 
 interface Props {
   isMenuVisible: boolean;

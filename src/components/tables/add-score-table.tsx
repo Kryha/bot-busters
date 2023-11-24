@@ -6,11 +6,13 @@ import {
   TableContainer,
   Typography,
 } from "@mui/material";
-import { text } from "@/assets/text";
-import { leaderboardData } from "@/constants";
-import { COLUMN_WIDTH } from "./constants";
-import { styles } from "./styles";
-import { RowAddScore, Top100SVG } from "./components";
+
+import { text } from "~/assets/text/index.js";
+import { leaderboardData } from "~/constants/index.js";
+
+import { COLUMN_WIDTH } from "./constants.js";
+import { styles } from "./styles.js";
+import { RowAddScore, Top100SVG } from "./components/index.js";
 
 interface Props {
   isAuthenticated: boolean;

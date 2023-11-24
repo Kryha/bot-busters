@@ -1,14 +1,16 @@
 import { Button, Stack, Typography } from "@mui/material";
 import React from "react";
-import { styles } from "./styles";
-import { text } from "@/assets/text";
-import { TopRanked } from "@/components";
-import { useRouter } from "next/router";
-import { api } from "@/utils/api";
-import { pages } from "@/utils/router";
-import { TOP_RANKED_PLAYERS } from "@/constants";
-import { isValidSession } from "@/utils/session";
 import { signIn, useSession } from "next-auth/react";
+import { useRouter } from "next/router";
+
+import { text } from "~/assets/text/index.js";
+import { TopRanked } from "~/components/index.js";
+import { api } from "~/utils/api.js";
+import { pages } from "~/utils/router.js";
+import { TOP_RANKED_PLAYERS } from "~/constants/index.js";
+import { isValidSession } from "~/utils/session.js";
+
+import { styles } from "./styles.js";
 
 export const Homepage = () => {
   const { push } = useRouter();

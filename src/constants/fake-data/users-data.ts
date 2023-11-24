@@ -1,4 +1,4 @@
-import { type UserType } from "@/types";
+import { type UserType } from "~/types/index.js";
 
 export const USERS_DATA: UserType[] = [
   {

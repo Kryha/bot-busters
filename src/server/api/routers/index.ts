@@ -1,3 +1,3 @@
-export * from "./lobby";
-export * from "./chat";
-export * from "./user";
+export * from "./lobby.js";
+export * from "./chat.js";
+export * from "./user.js";

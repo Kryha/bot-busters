@@ -1,9 +1,10 @@
 import { type FC } from "react";
 import { Button, IconButton, Stack } from "@mui/material";
 
-import { text } from "@/assets/text";
+import { text } from "~/assets/text/index.js";
+
 import { SoundIcon } from "./sound-icon";
-import { styles } from "./styles";
+import { styles } from "./styles.js";
 
 interface Props {
   isVerifiedUser: boolean;

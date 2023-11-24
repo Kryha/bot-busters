@@ -1,9 +1,9 @@
 import { type Components, type Theme } from "@mui/material";
 
-import { MuiButton } from "./mui-button";
-import { MuiCard } from "./mui-card";
-import { MuiAvatar } from "./mui-avatar";
-import { MuiToggleButton } from "./mui-toggle-button";
+import { MuiButton } from "./mui-button.js";
+import { MuiCard } from "./mui-card.js";
+import { MuiAvatar } from "./mui-avatar.js";
+import { MuiToggleButton } from "./mui-toggle-button.js";
 
 export const components = (theme: Theme): Components => {
   return {

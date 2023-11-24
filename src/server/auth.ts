@@ -1,16 +1,18 @@
-import { verifySignature } from "@/utils/wallet";
 import {
   type Session,
   type NextAuthOptions,
   type DefaultSession,
 } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { env } from "@/env.mjs";
+
+import { verifySignature } from "~/utils/wallet.js";
+import { env } from "~/env.mjs";
+
 import {
   insertAnonymousUser,
   insertUserWithAddress,
   selectUserByAddress,
-} from "@/server/service";
+} from "./service/index.js";
 
 declare module "next-auth" {
   interface User {

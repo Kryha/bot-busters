@@ -1,7 +1,7 @@
 import { type FC } from "react";
 import { Stack, Typography } from "@mui/material";
 
-import { styles } from "./styles";
+import { styles } from "./styles.js";
 
 interface Props {
   title: string;

@@ -10,9 +10,9 @@ import {
 } from "@demox-labs/aleo-wallet-adapter-base";
 import { useCallback, useEffect, useState } from "react";
 
-import { AUTH_SIGN_MESSAGE } from "@/constants";
-import { env } from "@/env.mjs";
-import { isClient } from "@/utils/client";
+import { AUTH_SIGN_MESSAGE } from "~/constants/index.js";
+import { env } from "~/env.mjs";
+import { isClient } from "~/utils/client.js";
 
 const ls = isClient() ? localStorage : undefined;
 

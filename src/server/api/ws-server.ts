@@ -1,10 +1,12 @@
-import { createTRPCContext } from "./trpc";
-import { appRouter } from "./root";
+import { WebSocketServer } from "ws";
 import { applyWSSHandler } from "@trpc/server/adapters/ws";
-import ws from "ws";
-import { env } from "@/env.mjs";
 
-const wss = new ws.Server({ port: 3001 });
+import { env } from "~/env.mjs";
+
+import { createTRPCContext } from "./trpc.js";
+import { appRouter } from "./root.js";
+
+const wss = new WebSocketServer({ port: 3001 });
 
 const handler = applyWSSHandler({
   wss,

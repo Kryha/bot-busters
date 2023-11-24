@@ -1,9 +1,10 @@
 import { type FC } from "react";
 import { Chip, Stack, Typography } from "@mui/material";
 
-import { text } from "@/assets/text";
-import { type PayoutData } from "@/types";
-import { styles } from "./styles";
+import { text } from "~/assets/text/index.js";
+import { type PayoutData } from "~/types/index.js";
+
+import { styles } from "./styles.js";
 
 interface Props {
   payout: PayoutData;

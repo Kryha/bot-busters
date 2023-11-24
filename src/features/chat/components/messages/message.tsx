@@ -1,9 +1,11 @@
 import { type FC } from "react";
-import { styles } from "./styles";
 import { Avatar, Stack, Typography } from "@mui/material";
-import { text as generalText } from "@/assets/text";
-import { text } from "../../text";
-import { type GroupedMessage } from "@/types";
+
+import { text as generalText } from "~/assets/text/index.js";
+import { type GroupedMessage } from "~/types/index.js";
+
+import { styles } from "./styles.js";
+import { text } from "../../text.js";
 
 export const Message: FC<GroupedMessage> = ({ messages, isLocalSender }) => {
   const avatar = "../images/svg/alien.svg";

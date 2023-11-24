@@ -1,8 +1,10 @@
 import { type FC } from "react";
 import { Divider, Stack, Typography } from "@mui/material";
-import { styles } from "./styles";
-import { text } from "./text";
-import { type MatchStateType } from "@/types";
+
+import { type MatchStateType } from "~/types/index.js";
+
+import { styles } from "./styles.js";
+import { text } from "./text.js";
 
 interface Props {
   matchState: MatchStateType;

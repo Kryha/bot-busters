@@ -1,10 +1,10 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { type FC } from "react";
 import { Avatar, Stack, TableCell, TableRow, Typography } from "@mui/material";
 
-import { type LeaderboardData } from "@/types";
-import { text } from "@/assets/text";
-import { styles } from "./styles";
+import { type LeaderboardData } from "~/types/index.js";
+import { text } from "~/assets/text/index.js";
+
+import { styles } from "./styles.js";
 
 interface Props {
   leaderboard: LeaderboardData;

@@ -1,17 +1,23 @@
-import { CHAT_TIME_MS, MATCH_TIME_MS, VOTING_TIME_MS } from "@/constants/main";
-import { env } from "@/env.mjs";
 import { EventEmitter } from "events";
 import { v4 as uuid } from "uuid";
+import { sql } from "drizzle-orm";
+
+import {
+  CHAT_TIME_MS,
+  MATCH_TIME_MS,
+  VOTING_TIME_MS,
+} from "~/constants/main.js";
+import { env } from "~/env.mjs";
+import { getRandomInt } from "~/utils/math.js";
+import { db } from "~/server/db/index.js";
+import { users } from "~/server/db/schema.js";
+
 import type {
   ChatEventType,
   ChatRoom,
   Player,
   ReadyToPlayPayload,
-} from "@/server/api/match-types";
-import { getRandomInt } from "@/utils/math";
-import { db } from "@/server/db";
-import { users } from "@/server/db/schema";
-import { sql } from "drizzle-orm";
+} from "./match-types.js";
 
 export const ee = new EventEmitter();
 export const lobbyQueue: string[] = [];

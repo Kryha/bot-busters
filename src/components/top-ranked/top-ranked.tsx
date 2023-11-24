@@ -1,8 +1,10 @@
-import { Stack, Typography } from "@mui/material";
-import { styles } from "./styles";
 import { type FC } from "react";
-import { text } from "@/assets/text";
-import { type TopRankedPlayer } from "@/types";
+import { Stack, Typography } from "@mui/material";
+
+import { text } from "~/assets/text/index.js";
+import { type TopRankedPlayer } from "~/types/index.js";
+
+import { styles } from "./styles.js";
 
 interface Props {
   players: TopRankedPlayer[];

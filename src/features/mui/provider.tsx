@@ -1,7 +1,7 @@
 import { type FC, type ReactNode } from "react";
 import { CssBaseline, ThemeProvider as Provider } from "@mui/material";
 
-import { theme } from "./theme";
+import { theme } from "./theme.js";
 
 interface Props {
   children: ReactNode;

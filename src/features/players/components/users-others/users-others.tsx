@@ -1,13 +1,15 @@
 import { Button, Stack, Typography } from "@mui/material";
-import { styles } from "./styles";
-import { USERS_DATA, VOTING_TIME_MS } from "@/constants";
 import { useState, type FC } from "react";
-import { COLORS } from "../../constants";
-import { Player } from "../player";
-import { text } from "@/assets/text";
-import { type MatchStateType } from "@/types";
-import { Timer } from "@/features/chat/components";
-import { type ChatRoom } from "@/server/api/match-types";
+
+import { USERS_DATA, VOTING_TIME_MS } from "~/constants/index.js";
+import { text } from "~/assets/text/index.js";
+import { type MatchStateType } from "~/types/index.js";
+import { type ChatRoom } from "~/server/api/match-types.js";
+import { Timer } from "~/features/chat/components/index.js";
+
+import { styles } from "./styles.js";
+import { COLORS } from "../../constants.js";
+import { Player } from "../player/index.js";
 
 interface Props {
   matchState: MatchStateType;

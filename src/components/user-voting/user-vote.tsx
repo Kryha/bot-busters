@@ -1,8 +1,10 @@
-import { Divider, Stack, ToggleButton, Typography } from "@mui/material";
-import { styles } from "./styles";
 import { useState, type FC } from "react";
-import { User, type UserProps } from "../user";
-import { text } from "@/assets/text";
+import { Divider, Stack, ToggleButton, Typography } from "@mui/material";
+
+import { text } from "~/assets/text/index.js";
+
+import { User, type UserProps } from "../user/index.js";
+import { styles } from "./styles.js";
 
 interface Props extends UserProps {
   onVote: (username: string) => void;

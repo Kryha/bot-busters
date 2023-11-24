@@ -10,12 +10,6 @@ Before running the app in dev mode, make sure you have a running instance of [Do
 yarn db:run
 ```
 
-Create all the necessary DB tables:
-
-```sh
-yarn db:push
-```
-
 Create a `.env` file from `.env.example`:
 
 ```sh

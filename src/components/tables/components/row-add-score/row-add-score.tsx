@@ -7,12 +7,13 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-
-import { type LeaderboardData } from "@/types";
-import { text } from "@/assets/text";
-import { styles } from "./styles";
 import { useRouter } from "next/router";
-import { pages } from "@/utils/router";
+
+import { type LeaderboardData } from "~/types/index.js";
+import { text } from "~/assets/text/index.js";
+import { pages } from "~/utils/router.js";
+
+import { styles } from "./styles.js";
 
 interface Props {
   leaderboard: LeaderboardData;

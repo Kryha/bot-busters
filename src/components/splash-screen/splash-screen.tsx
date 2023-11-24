@@ -1,7 +1,9 @@
 import { Stack, type StackProps } from "@mui/material";
 import { useState, type FC, useEffect } from "react";
-import { styles } from "./styles";
-import { SPLASH_SCREEN_DURATION } from "@/constants";
+
+import { SPLASH_SCREEN_DURATION } from "~/constants/index.js";
+
+import { styles } from "./styles.js";
 
 interface Props extends StackProps {
   show: boolean;

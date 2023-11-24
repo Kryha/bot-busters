@@ -1,10 +1,12 @@
-import { Divider, Stack, Typography } from "@mui/material";
 import { type FC } from "react";
-import { User } from "../user";
-import { styles } from "./styles";
-import { USERS_DATA } from "@/constants";
-import { type UserType } from "@/types";
-import { text } from "@/assets/text";
+import { Divider, Stack, Typography } from "@mui/material";
+
+import { USERS_DATA } from "~/constants/index.js";
+import { type UserType } from "~/types/index.js";
+import { text } from "~/assets/text/index.js";
+
+import { User } from "../user/index.js";
+import { styles } from "./styles.js";
 
 interface Props {
   user: UserType;
