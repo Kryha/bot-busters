@@ -2,7 +2,7 @@ import { createTRPCContext } from "./trpc";
 import { appRouter } from "./root";
 import { applyWSSHandler } from "@trpc/server/adapters/ws";
 import ws from "ws";
-import { env } from "@/env.cjs";
+import { env } from "@/env.mjs";
 
 const wss = new ws.Server({ port: 3001 });
 

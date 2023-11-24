@@ -11,7 +11,7 @@ import {
 import { useCallback, useEffect, useState } from "react";
 
 import { AUTH_SIGN_MESSAGE } from "@/constants";
-import { env } from "@/env.cjs";
+import { env } from "@/env.mjs";
 import { isClient } from "@/utils/client";
 
 const ls = isClient() ? localStorage : undefined;

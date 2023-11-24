@@ -5,7 +5,7 @@ import http from "http";
 import next from "next";
 import { parse } from "url";
 import ws from "ws";
-import { env } from "@/env.cjs";
+import { env } from "@/env.mjs";
 
 const port = 3000;
 const app = next({ dev: env.NODE_ENV !== "production" });

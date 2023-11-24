@@ -1,5 +1,5 @@
 import { CHAT_TIME_MS, MATCH_TIME_MS, VOTING_TIME_MS } from "@/constants/main";
-import { env } from "@/env.cjs";
+import { env } from "@/env.mjs";
 import { EventEmitter } from "events";
 import { v4 as uuid } from "uuid";
 import type {

@@ -15,7 +15,7 @@ import { type inferRouterInputs, type inferRouterOutputs } from "@trpc/server";
 import superjson from "superjson";
 import { type AppRouter } from "@/server/api/root";
 import { type NextPageContext } from "next";
-import { env } from "@/env.cjs";
+import { env } from "@/env.mjs";
 import { isClient } from "./client";
 
 const getEndingLink = (ctx: NextPageContext | undefined) => {
