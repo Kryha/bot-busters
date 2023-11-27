@@ -11,7 +11,7 @@ import { useRouter } from "next/router";
 
 import { type LeaderboardData } from "~/types/index.js";
 import { text } from "~/assets/text/index.js";
-import { pages } from "~/utils/router.js";
+import { pages } from "~/router.js";
 
 import { styles } from "./styles.js";
 
