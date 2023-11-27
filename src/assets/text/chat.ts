@@ -1,4 +1,4 @@
-export const text = {
+export const chat = {
   usernameLocal: "you - username",
   send: "SEND",
   inputFieldPlaceholder: "Type your message",
