@@ -1,19 +1,16 @@
 import dynamic from "next/dynamic";
-import { useEffect, type FC } from "react";
+import { type FC, useEffect } from "react";
 import { useRouter } from "next/router";
 import { z } from "zod";
-
-import {
-  MatchLayout as Layout,
-  MatchOverviewLayout as OverviewLayout,
-} from "../../layouts/index.js";
-import { Chat } from "../../features/chat/index.js";
-import { Players } from "../../features/players/index.js";
-import { Score } from "../../features/score/index.js";
-import { Results } from "../../features/score/components/index.js";
-import { useMatchState } from "../../service/index.js";
-import { pages } from "../../utils/router.js";
-import { api } from "../../utils/api.js";
+import { MatchLayout as Layout } from "~/components/match-layout/index.js";
+import { MatchOverviewLayout as OverviewLayout } from "~/components/match-overview-layout/index.js";
+import { Players } from "src/components/players";
+import { Score } from "~/components/score";
+import { useMatchState } from "~/service";
+import { pages } from "~/router";
+import { api } from "~/utils/api";
+import { Chat } from "~/containers/chat/chat";
+import { Results } from "~/containers/results";
 
 const Match: FC = () => {
   const matchState = useMatchState();

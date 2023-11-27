@@ -1,9 +1,8 @@
-import { type FC } from "react";
+import React, { type FC } from "react";
+import { LeaderBoard as Board } from "~/containers/leaderboard";
 
-import { LeaderBoard as Board } from "~/features/index.js";
-
-const LeaderBoard: FC = () => {
+const LeadersBoard: FC = () => {
   return <Board />;
 };
 
-export default LeaderBoard;
+export default LeadersBoard;
