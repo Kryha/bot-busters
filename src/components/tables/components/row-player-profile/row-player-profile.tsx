@@ -1,11 +1,12 @@
 import { type FC } from "react";
 import { TableCell, TableRow, Typography } from "@mui/material";
 
-import { type PlayerProfileData } from "@/types";
-import { text } from "@/assets/text";
-import { formatDate, longDateFormat } from "@/utils/date";
+import { type PlayerProfileData } from "~/types/index.js";
+import { text } from "~/assets/text/index.js";
+import { formatDate, longDateFormat } from "~/utils/date.js";
+
 import { Payout } from "./payout";
-import { styles } from "./styles";
+import { styles } from "./styles.js";
 
 interface Props {
   playerProfile: PlayerProfileData;

@@ -2,8 +2,8 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import { z } from "zod";
 
-import { type MatchStateType } from "@/types";
-import { api } from "@/utils/api";
+import { type MatchStateType } from "~/types/index.js";
+import { api } from "~/utils/api.js";
 
 export const useMatchState = (): MatchStateType | undefined => {
   const [matchState, setMatchState] = useState<MatchStateType>("chat");

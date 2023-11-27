@@ -1,4 +1,4 @@
-import { type PlayerProfileData } from "@/types";
+import { type PlayerProfileData } from "~/types/index.js";
 
 const todayTimestamp = Date.now();
 const oneDay = 24 * 60 * 60 * 1000;

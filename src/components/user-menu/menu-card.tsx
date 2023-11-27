@@ -9,14 +9,15 @@ import {
   Typography,
 } from "@mui/material";
 
-import { text } from "@/assets/text";
-import { type UserStatsData } from "@/types";
-import { styles } from "./styles";
-import { PointsDisplay } from "../points-display";
+import { text } from "~/assets/text/index.js";
+import { type UserStatsData } from "~/types/index.js";
 import {
   fakeDateAndCreditsOne,
   fakeDateAndCreditsTwo,
-} from "@/constants/fake-data/landing";
+} from "~/constants/fake-data/landing.js";
+
+import { styles } from "./styles.js";
+import { PointsDisplay } from "../points-display/index.js";
 
 interface Props {
   open: boolean;

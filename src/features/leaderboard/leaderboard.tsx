@@ -1,14 +1,15 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useSession } from "next-auth/react";
-
-import { type LeaderboardData } from "@/types";
-import { isValidSession } from "@/utils/session";
-import { AddScoreTable, LeaderboardTable } from "@/components/tables";
-import { leaderboardData } from "@/constants";
 import { Box, Typography } from "@mui/material";
-import { text } from "@/assets/text";
-import { styles } from "./styles";
-import { fakeCountdown } from "@/constants/fake-data/landing";
+
+import { type LeaderboardData } from "~/types/index.js";
+import { isValidSession } from "~/utils/session.js";
+import { AddScoreTable, LeaderboardTable } from "~/components/tables/index.js";
+import { leaderboardData } from "~/constants/index.js";
+import { text } from "~/assets/text/index.js";
+import { fakeCountdown } from "~/constants/fake-data/landing.js";
+
+import { styles } from "./styles.js";
 
 export const LeaderBoard = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);

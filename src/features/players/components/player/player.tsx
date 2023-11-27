@@ -1,7 +1,7 @@
 import { type FC } from "react";
 
-import { User, UserResult, UserVote } from "@/components";
-import { type MatchStateType, type UserType } from "@/types";
+import { User, UserResult, UserVote } from "~/components/index.js";
+import { type MatchStateType, type UserType } from "~/types/index.js";
 
 export interface PlayerProps {
   matchState?: MatchStateType;

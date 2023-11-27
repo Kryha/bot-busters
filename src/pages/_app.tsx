@@ -5,14 +5,15 @@ import { useMemo } from "react";
 import { LeoWalletAdapter } from "@demox-labs/aleo-wallet-adapter-leo";
 import { WalletModalProvider } from "@demox-labs/aleo-wallet-adapter-reactui";
 import { WalletProvider } from "@demox-labs/aleo-wallet-adapter-react";
-import { api } from "@/utils/api";
-import { ThemeProvider } from "@/features/mui";
-import "@/styles/globals.css";
-import { APP_NAME } from "@/constants";
 import Head from "next/head";
-import { Layout } from "@/layouts";
+
+import "~/styles/globals.css";
+import { api } from "~/utils/api.js";
+import { ThemeProvider } from "~/features/mui/index.js";
+import { APP_NAME } from "~/constants/index.js";
+import { Layout } from "~/layouts/index.js";
 import { useRouter } from "next/router";
-import { pages } from "@/utils/router";
+import { pages } from "~/utils/router";
 
 const headTitle = "Bot Busters";
 
@@ -43,13 +44,9 @@ const MyApp: AppType<{ session: Session | null }> = ({
         <WalletModalProvider>
           <ThemeProvider>
             <SessionProvider session={session}>
-              {animationLab ? (
+              <Layout>
                 <Component {...pageProps} />
-              ) : (
-                <Layout>
-                  <Component {...pageProps} />
-                </Layout>
-              )}
+              </Layout>
             </SessionProvider>
           </ThemeProvider>
         </WalletModalProvider>

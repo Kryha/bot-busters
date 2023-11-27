@@ -2,10 +2,10 @@ import { type FC } from "react";
 import { useRouter } from "next/router";
 import { Typography, CircularProgress } from "@mui/material";
 
-import { LobbyLayout as Layout } from "@/layouts";
-import { api } from "@/utils/api";
-import { pages } from "@/utils/router";
-import { text } from "@/assets/text";
+import { LobbyLayout as Layout } from "~/layouts/index.js";
+import { api } from "~/utils/api.js";
+import { pages } from "~/utils/router.js";
+import { text } from "~/assets/text/index.js";
 
 const Lobby: FC = () => {
   const { push } = useRouter();

@@ -1,9 +1,10 @@
 import { useState, type FC, useEffect } from "react";
 import { Stack, Typography } from "@mui/material";
 
-import { text } from "@/assets/text";
-import { styles } from "./styles";
-import { ALERT_TIME_MS } from "@/constants/main";
+import { text } from "~/assets/text/index.js";
+import { ALERT_TIME_MS } from "~/constants/main.js";
+
+import { styles } from "./styles.js";
 
 interface Props {
   time: number;

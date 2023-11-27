@@ -1,17 +1,17 @@
+import { type FC } from "react";
 import { Button, Stack, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { signIn, useSession } from "next-auth/react";
 
-import { pages } from "@/utils/router";
-import { useBBWallet } from "@/hooks/bb-wallet";
-import { api } from "@/utils/api";
-import { isAnonymousSession, isUnverifiedSession } from "@/utils/session";
+import { pages } from "~/utils/router.js";
+import { useBBWallet } from "~/hooks/bb-wallet.js";
+import { api } from "~/utils/api.js";
+import { isAnonymousSession, isUnverifiedSession } from "~/utils/session.js";
+import { type MatchStateType } from "~/types/index.js";
 
-import { styles } from "./styles";
-import { text } from "../../../chat/text";
-import { type MatchStateType } from "@/types";
-import { type FC } from "react";
+import { styles } from "./styles.js";
+import { text } from "../../../chat/text.js";
 
 interface Props {
   matchState: MatchStateType;

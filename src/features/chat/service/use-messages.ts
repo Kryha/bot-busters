@@ -1,10 +1,11 @@
-import { type ChatMessagePayload } from "@/server/api/match-types";
-import { type GroupedMessage } from "@/types";
-import { api } from "@/utils/api";
-import { pages } from "@/utils/router";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useState } from "react";
+
+import { type ChatMessagePayload } from "~/server/api/match-types.js";
+import { type GroupedMessage } from "~/types/index.js";
+import { api } from "~/utils/api.js";
+import { pages } from "~/utils/router.js";
 
 interface Params {
   roomId: string;

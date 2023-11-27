@@ -2,7 +2,7 @@
  * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially useful
  * for Docker builds.
  */
-await import("./src/env.cjs");
+await import("./src/env.mjs");
 
 /** @type {import("next").NextConfig} */
 const config = {
@@ -20,6 +20,17 @@ const config = {
 
   experimental: {
     instrumentationHook: true,
+  },
+
+  webpack: (webpackConfig) => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    webpackConfig.resolve.extensionAlias = {
+      ".js": [".ts", ".tsx", ".js", ".jsx"],
+      ".mjs": [".mts", ".mjs"],
+      ".cjs": [".cts", ".cjs"],
+    };
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return webpackConfig;
   },
 };
 

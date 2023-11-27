@@ -2,15 +2,14 @@ import { useEffect, type FC } from "react";
 import { signIn, useSession } from "next-auth/react";
 import Image from "next/image";
 import { Stack, type SxProps, Typography } from "@mui/material";
-
-import spinner from "@/assets/images/spinner.gif";
-import { Page } from "@/layouts";
-import { useBBWallet } from "@/hooks/bb-wallet";
-import { text } from "@/assets/text";
-
-import { isValidSession } from "@/utils/session";
 import { useRouter } from "next/router";
-import { pages } from "@/utils/router";
+
+import spinner from "~/assets/images/spinner.gif";
+import { Page } from "~/layouts/index.js";
+import { useBBWallet } from "~/hooks/bb-wallet.js";
+import { text } from "~/assets/text/index.js";
+import { isValidSession } from "~/utils/session.js";
+import { pages } from "~/utils/router.js";
 
 // TODO: move styles to another file
 const styles = {

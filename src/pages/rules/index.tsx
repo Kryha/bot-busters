@@ -1,6 +1,6 @@
 import { Typography } from "@mui/material";
 
-import { text } from "@/assets/text";
+import { text } from "~/assets/text/index.js";
 
 function Rules() {
   // TODO: update page

@@ -1,16 +1,15 @@
 import { Stack, type SxProps } from "@mui/material";
-
-import { AddUsernameTable } from "@/components/tables";
-import { RowCreateUsername } from "@/components/tables/components";
-import { Page } from "@/layouts";
-
 import { type FC, useEffect } from "react";
 import { useRouter } from "next/router";
-import { isVerifiedSession } from "@/utils/session";
 import { signIn, useSession } from "next-auth/react";
-import { pages } from "@/utils/router";
-import { api } from "@/utils/api";
-import { useBBWallet } from "@/hooks/bb-wallet";
+
+import { AddUsernameTable } from "~/components/tables/index.js";
+import { RowCreateUsername } from "~/components/tables/components/index.js";
+import { Page } from "~/layouts/index.js";
+import { isVerifiedSession } from "~/utils/session.js";
+import { pages } from "~/utils/router.js";
+import { api } from "~/utils/api.js";
+import { useBBWallet } from "~/hooks/bb-wallet.js";
 
 // TODO: move styles to another file
 const styles = {

@@ -1,7 +1,7 @@
 import { type FC } from "react";
 import { TableCell, TableHead, TableRow, Typography } from "@mui/material";
 
-import { styles } from "./styles";
+import { styles } from "./styles.js";
 
 interface Props {
   cells: string[];

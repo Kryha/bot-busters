@@ -1,8 +1,10 @@
-import { Avatar, Stack, type StackProps, Typography } from "@mui/material";
-import { styles } from "./styles";
 import { type FC } from "react";
+import { Avatar, Stack, type StackProps, Typography } from "@mui/material";
+
+import { type UserType } from "~/types/index.js";
+
+import { styles } from "./styles.js";
 import { Skeleton } from "./skeleton";
-import { type UserType } from "@/types";
 
 export interface UserProps extends StackProps, Pick<UserType, "username"> {
   color?: string;

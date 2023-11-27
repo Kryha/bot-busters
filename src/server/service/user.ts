@@ -1,5 +1,6 @@
 import { eq } from "drizzle-orm";
-import { db, dbSchema } from "../db/";
+
+import { db, dbSchema } from "~/server/db/index.js";
 
 const { users } = dbSchema;
 

@@ -1,4 +1,4 @@
-import { type TopRankedPlayer } from "@/types";
+import { type TopRankedPlayer } from "~/types/index.js";
 
 export const TOP_RANKED_PLAYERS: TopRankedPlayer[] = [
   { username: "Wallie Weltmeister", score: 895 },

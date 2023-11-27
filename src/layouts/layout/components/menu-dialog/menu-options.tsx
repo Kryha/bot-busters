@@ -2,10 +2,11 @@ import { type FC } from "react";
 import { useRouter } from "next/router";
 import { Button, Stack, Typography } from "@mui/material";
 
-import { text } from "@/assets/text";
-import { api } from "@/utils/api";
-import { pages } from "@/utils/router";
-import { styles } from "./styles";
+import { text } from "~/assets/text/index.js";
+import { api } from "~/utils/api.js";
+import { pages } from "~/utils/router.js";
+
+import { styles } from "./styles.js";
 
 interface Props {
   handleClose: () => void;

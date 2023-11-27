@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { z } from "zod";
 
-import { api } from "@/utils/api";
+import { api } from "~/utils/api.js";
 
 export const useRoom = () => {
   const { query } = useRouter();

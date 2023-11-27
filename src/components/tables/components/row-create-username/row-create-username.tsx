@@ -9,9 +9,10 @@ import {
   Typography,
 } from "@mui/material";
 
-import { text } from "@/assets/text";
-import { useCreateRandomUsername } from "@/hooks/name-generator";
-import { styles } from "./styles";
+import { text } from "~/assets/text/index.js";
+import { useCreateRandomUsername } from "~/hooks/name-generator.js";
+
+import { styles } from "./styles.js";
 
 interface RowCreateUsernameProps {
   onSetUsername: (username: string) => Promise<void>;

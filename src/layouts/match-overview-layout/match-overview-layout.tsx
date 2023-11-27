@@ -1,9 +1,9 @@
 import { type FC } from "react";
 import { Stack, type StackProps } from "@mui/material";
 
-import { styles } from "./styles";
+import { useMatchState } from "~/service/index.js";
 
-import { useMatchState } from "@/service";
+import { styles } from "./styles.js";
 
 export const MatchOverviewLayout: FC<StackProps> = (props) => {
   const { children } = props;

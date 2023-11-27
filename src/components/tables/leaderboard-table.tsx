@@ -1,12 +1,12 @@
 import { type FC } from "react";
 import { Table, TableBody, TableContainer } from "@mui/material";
 
-import { type LeaderboardData } from "@/types";
-import { text } from "@/assets/text";
-import { Header, RowLeaderboard } from "./components";
+import { type LeaderboardData } from "~/types/index.js";
+import { text } from "~/assets/text/index.js";
 
-import { COLUMN_WIDTH } from "./constants";
-import { styles } from "./styles";
+import { Header, RowLeaderboard } from "./components/index.js";
+import { COLUMN_WIDTH } from "./constants.js";
+import { styles } from "./styles.js";
 
 interface Props {
   leaderboard: LeaderboardData[];

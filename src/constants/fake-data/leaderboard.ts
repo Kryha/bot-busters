@@ -1,6 +1,6 @@
 // TODO: delete
 
-import { type LeaderboardData } from "@/types";
+import { type LeaderboardData } from "~/types/index.js";
 
 export const leaderboardData: LeaderboardData[] = [
   {

@@ -1,10 +1,12 @@
-import { type FC } from "react";
-import { Message } from "./message";
 import { Stack } from "@mui/material";
-import { styles } from "./styles";
-import { type GroupedMessage } from "@/types";
-import { Prompt } from "@/features/chat/components";
-import { text } from "@/features/chat/text";
+import { type FC } from "react";
+
+import { type GroupedMessage } from "~/types/index.js";
+
+import { text } from "../../text.js";
+import { Prompt } from "../prompt/index.js";
+import { Message } from "./message";
+import { styles } from "./styles.js";
 
 interface Props {
   messages: GroupedMessage[];
