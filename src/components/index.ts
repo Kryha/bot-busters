@@ -8,3 +8,7 @@ export * from "./user/index.js";
 export * from "./user-voting/index.js";
 export * from "./user-result/index.js";
 export * from "./splash-screen/index.js";
+export * from "./score/index.js";
+export * from "./user-stats/index.js";
+export * from "./username-local/index.js";
+export * from "./animation/index.js";

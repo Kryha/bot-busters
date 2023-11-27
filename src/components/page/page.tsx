@@ -3,7 +3,7 @@ import { type FC } from "react";
 
 import { styles } from "./styles.js";
 
-export const Page: FC<StackProps> = (props) => {
+const Page: FC<StackProps> = (props) => {
   const { children } = props;
 
   return (
@@ -12,3 +12,5 @@ export const Page: FC<StackProps> = (props) => {
     </Stack>
   );
 };
+
+export default Page;
