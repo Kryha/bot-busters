@@ -1,13 +1,14 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { useState, type FC, type KeyboardEvent } from "react";
 import { Stack } from "@mui/material";
-import { type ChatRoom } from "@/server/api/match-types";
-import { api } from "@/utils/api";
-import { styles } from "./styles";
-import { InputField, Messages, Timer } from "./components";
-import { type MatchStateType } from "@/types";
-import { CHAT_TIME_MS } from "@/constants";
-import { useMessages } from "./service";
+
+import { type ChatRoom } from "~/server/api/match-types.js";
+import { api } from "~/utils/api.js";
+import { type MatchStateType } from "~/types/index.js";
+import { CHAT_TIME_MS } from "~/constants/index.js";
+
+import { InputField, Messages, Timer } from "./components/index.js";
+import { styles } from "./styles.js";
+import { useMessages } from "./service/index.js";
 
 interface Props {
   roomId: string;

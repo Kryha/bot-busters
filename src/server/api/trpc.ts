@@ -8,15 +8,15 @@
  */
 import { initTRPC, TRPCError } from "@trpc/server";
 import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
+import { type NodeHTTPCreateContextFnOptions } from "@trpc/server/dist/adapters/node-http";
 import { type Session } from "next-auth";
 import superjson from "superjson";
 import { ZodError } from "zod";
 import { getSession } from "next-auth/react";
-
-import { db } from "@/server/db";
-import { type NodeHTTPCreateContextFnOptions } from "@trpc/server/dist/adapters/node-http";
 import { type IncomingMessage } from "http";
 import type ws from "ws";
+
+import { db } from "~/server/db/index.js";
 
 /**
  * 1. CONTEXT

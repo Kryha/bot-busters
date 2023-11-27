@@ -1,10 +1,10 @@
 import { Table, TableBody, TableContainer } from "@mui/material";
 
-import { leaderboardData } from "@/constants";
-import { RowLeaderboard } from "./components";
+import { leaderboardData } from "~/constants/index.js";
 
-import { styles } from "./styles";
-import { COLUMN_WIDTH } from "./constants";
+import { RowLeaderboard } from "./components/index.js";
+import { styles } from "./styles.js";
+import { COLUMN_WIDTH } from "./constants.js";
 
 export const AddUsernameTable = () => {
   return (

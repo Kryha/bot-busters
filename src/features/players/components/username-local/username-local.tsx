@@ -1,7 +1,9 @@
 import { Stack, Typography } from "@mui/material";
-import { styles } from "./styles";
-import { User } from "@/components";
-import { text } from "@/assets/text";
+
+import { User } from "~/components/index.js";
+import { text } from "~/assets/text/index.js";
+
+import { styles } from "./styles.js";
 
 export const UsernameLocal = () => {
   // TODO: Get username randomly

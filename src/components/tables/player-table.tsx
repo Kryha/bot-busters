@@ -1,11 +1,12 @@
 import { type FC } from "react";
 import { Table, TableBody, TableContainer } from "@mui/material";
 
-import { type PlayerProfileData } from "@/types";
-import { text } from "@/assets/text";
-import { Header } from "./components/header";
-import { styles } from "./styles";
-import { RowPlayerProfile } from "./components";
+import { type PlayerProfileData } from "~/types/index.js";
+import { text } from "~/assets/text/index.js";
+
+import { Header } from "./components/header/index.js";
+import { styles } from "./styles.js";
+import { RowPlayerProfile } from "./components/index.js";
 
 interface Props {
   playerProfile: PlayerProfileData[];

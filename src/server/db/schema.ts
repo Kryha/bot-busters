@@ -9,7 +9,7 @@ import {
 import { createInsertSchema } from "drizzle-zod";
 import { type z } from "zod";
 
-import { PUBLIC_KEY_LENGTH } from "@/constants";
+import { PUBLIC_KEY_LENGTH } from "~/constants/index.js";
 
 export const bbPgTable = pgTableCreator((name) => `bot_busters_${name}`);
 

@@ -1,5 +1,5 @@
-import { userRouter, chatRouter, lobbyRouter } from "@/server/api/routers";
-import { createTRPCRouter } from "@/server/api/trpc";
+import { userRouter, chatRouter, lobbyRouter } from "./routers/index.js";
+import { createTRPCRouter } from "./trpc.js";
 
 /**
  * This is the primary router for your server.

@@ -1,7 +1,7 @@
 import { type Typography } from "@mui/material/styles/createTypography";
 import { Roboto } from "next/font/google";
 
-import { COEFFICIENT, FONT_SIZE } from "./constants";
+import { COEFFICIENT, FONT_SIZE } from "./constants.js";
 
 const font = Roboto({
   weight: ["100", "300", "400", "500", "700", "900"],

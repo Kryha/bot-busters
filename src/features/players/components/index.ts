@@ -1,2 +1,2 @@
-export * from "./username-local";
-export * from "./users-others";
+export * from "./username-local/index.js";
+export * from "./users-others/index.js";

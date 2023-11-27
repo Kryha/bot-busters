@@ -1,4 +1,4 @@
-import { type ContactListData } from "@/types";
+import { type ContactListData } from "~/types/index.js";
 
 export const contactListData: ContactListData[] = [
   {

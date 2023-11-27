@@ -2,6 +2,7 @@
   "name": "bot-busters",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "clean": "rimraf dist/ && rimraf .next/",
     "copy-files": "copyfiles -u 1 src/**/*.gif src/**/*.png dist/",

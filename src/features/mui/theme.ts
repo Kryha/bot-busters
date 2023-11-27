@@ -1,8 +1,8 @@
 import { createTheme } from "@mui/material/styles";
 
-import { typography } from "./typography";
-import { components } from "./components";
-import { palette } from "./palette";
+import { typography } from "./typography.js";
+import { components } from "./components/index.js";
+import { palette } from "./palette.js";
 
 declare module "@mui/material/styles" {
   interface Palette {

@@ -1,6 +1,7 @@
 // TODO: change when we add the svg import
 import { SvgIcon } from "@mui/material";
-import { styles } from "./styles";
+
+import { styles } from "./styles.js";
 
 export const SoundIcon = () => {
   return (

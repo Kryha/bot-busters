@@ -1,9 +1,11 @@
 import { type FC } from "react";
 import { Divider, Stack } from "@mui/material";
-import { styles } from "./styles";
-import { UsernameLocal, UsersOthers } from "./components";
-import { type MatchStateType } from "@/types";
-import { type ChatRoom } from "@/server/api/match-types";
+
+import { type MatchStateType } from "~/types/index.js";
+import { type ChatRoom } from "~/server/api/match-types.js";
+
+import { styles } from "./styles.js";
+import { UsernameLocal, UsersOthers } from "./components/index.js";
 
 interface Props {
   matchState: MatchStateType;

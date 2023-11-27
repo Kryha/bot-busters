@@ -1,11 +1,9 @@
 import { z } from "zod";
-import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
-import { chatEvent, chatRooms, ee } from "@/server/api/match-maker";
 import { observable } from "@trpc/server/observable";
-import type {
-  ChatMessagePayload,
-  StagePayload,
-} from "@/server/api/match-types";
+
+import { createTRPCRouter, protectedProcedure } from "../trpc.js";
+import { chatEvent, chatRooms, ee } from "../match-maker.js";
+import type { ChatMessagePayload, StagePayload } from "../match-types.js";
 
 const verifyUser = (userId: string, roomId: string) => {
   const room = chatRooms.get(roomId);

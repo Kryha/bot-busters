@@ -1,16 +1,11 @@
 import { z } from "zod";
 import { eq } from "drizzle-orm";
 
-import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
-import { isValidSession } from "@/utils/session";
-import { db } from "@/server/db";
-import { users } from "@/server/db/schema";
-
-//TODO: Fix import issue with SDK and TRPC and use verifySignature from utils
-// import { verifySignature } from "@/utils/wallet";
-const verifySignature = (_address: string, _signedMessage: string): boolean => {
-  return true;
-};
+import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc.js";
+import { db } from "~/server/db/index.js";
+import { users } from "~/server/db/schema.js";
+import { isValidSession } from "~/utils/session.js";
+import { verifySignature } from "~/utils/wallet.js";
 
 export const userRouter = createTRPCRouter({
   mergeScore: protectedProcedure

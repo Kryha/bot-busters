@@ -2,13 +2,13 @@ import { useState, type FC } from "react";
 import { Container, type StackProps } from "@mui/material";
 import { useSession } from "next-auth/react";
 
-import { styles } from "./styles";
-import { UserStats } from "./components/user-stats";
+import { isVerifiedSession } from "~/utils/session.js";
+import { api } from "~/utils/api.js";
+import { fakeUsername } from "~/constants/fake-data/landing.js";
+import { useBBWallet } from "~/hooks/bb-wallet.js";
 
-import { isVerifiedSession } from "@/utils/session";
-import { api } from "@/utils/api";
-import { fakeUsername } from "@/constants/fake-data/landing";
-import { useBBWallet } from "@/hooks/bb-wallet";
+import { styles } from "./styles.js";
+import { UserStats } from "./components/user-stats/index.js";
 
 export const Layout: FC<StackProps> = ({ children }) => {
   const { data: sessionData } = useSession();

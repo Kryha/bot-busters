@@ -2,11 +2,12 @@ import { type FC } from "react";
 import { Stack } from "@mui/material";
 import { signOut } from "next-auth/react";
 
-import { UserMenu } from "@/layouts/layout/components/user-menu";
-import { MenuDialog } from "@/layouts/layout/components/menu-dialog";
-import { StatsDisplay } from "@/components/stats-display";
-import { text } from "@/assets/text";
-import { styles } from "./styles";
+import { StatsDisplay } from "~/components/stats-display/index.js";
+import { text } from "~/assets/text/index.js";
+
+import { UserMenu } from "../user-menu/index.js";
+import { MenuDialog } from "../menu-dialog/index.js";
+import { styles } from "./styles.js";
 
 interface Props {
   isVerifiedUser: boolean;

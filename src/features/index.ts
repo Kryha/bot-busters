@@ -1,2 +1,2 @@
-export * from "./leaderboard";
-export * from "./mui";
+export * from "./leaderboard/index.js";
+export * from "./mui/index.js";

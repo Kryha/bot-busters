@@ -1,1 +1,1 @@
-export * from "./leaderboard-select";
+export * from "./leaderboard-select/index.js";
