@@ -1,13 +1,12 @@
 import React, { type FC, useState } from "react";
 import Box from "@mui/material/Box";
-
-import { useAnimatedSprite } from "@/hooks/use-animated-sprite";
-import { DEFAULT_SPRITE_SCALE } from "@/features/animation/constants";
-import { DancingGirlHips } from "@/features/animation/dancing-girl/dancing-girl-hips";
-import { DancingGirlBalancing } from "@/features/animation/dancing-girl/dancing-girl-balancing";
-import { DancingGirlSlides } from "@/features/animation/dancing-girl/dancing-girl-slides";
-import { DancingGirlSkips } from "@/features/animation/dancing-girl/dancing-girl-skips";
-import { DancingGirlSnaps } from "@/features/animation/dancing-girl/dancing-girl-snaps";
+import { useAnimatedSprite } from "~/hooks/use-animated-sprite";
+import { DEFAULT_SPRITE_SCALE } from "~/features/animation/constants";
+import { DancingGirlHips } from "~/features/animation/dancing-girl/dancing-girl-hips";
+import { DancingGirlBalancing } from "~/features/animation/dancing-girl/dancing-girl-balancing";
+import { DancingGirlSlides } from "~/features/animation/dancing-girl/dancing-girl-slides";
+import { DancingGirlSkips } from "~/features/animation/dancing-girl/dancing-girl-skips";
+import { DancingGirlSnaps } from "~/features/animation/dancing-girl/dancing-girl-snaps";
 
 export const styles = {
   spriteRow: {

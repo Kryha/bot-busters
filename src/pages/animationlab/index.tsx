@@ -2,9 +2,9 @@ import { Box, Typography } from "@mui/material";
 import { type FC, useMemo } from "react";
 import { common } from "@mui/material/colors";
 import { useControls } from "leva";
-import { DancingGirlSpriteSheet } from "@/features/animation/dancing-girl/dancing-girl-spritesheet";
-import { SpriteController } from "@/features/animation/controller/sprite-controller";
-import { animationLab } from "@/features/animation/constants";
+import { SpriteController } from "~/features/animation/controller/sprite-controller";
+import { DancingGirlSpriteSheet } from "~/features/animation/dancing-girl/dancing-girl-spritesheet";
+import { animationLab } from "~/features/animation/constants";
 
 const styles = {
   title: {
