@@ -11,13 +11,13 @@ import { useBBWallet } from "~/service/bb-wallet.js";
 
 import { styles } from "./styles.js";
 import { MenuCard } from "./menu-card";
-import { CHIP_TIMEOUT } from "./constants.js";
+import { CHIP_TIMEOUT } from "~/constants";
 
 interface Props {
   isMenuVisible: boolean;
   username: string;
 }
-export const UserMenuTO_DELETE: FC<Props> = ({ isMenuVisible, username }) => {
+export const UserMenu: FC<Props> = ({ isMenuVisible, username }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [isChipVisible, setIsChipVisible] = useState(true);
   const { disconnect } = useBBWallet();

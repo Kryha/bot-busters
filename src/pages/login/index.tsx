@@ -5,11 +5,11 @@ import { Stack, type SxProps, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 
 import spinner from "~/assets/images/spinner.gif";
-import { Page } from "~/layouts/index.js";
 import { useBBWallet } from "~/service/bb-wallet.js";
 import { text } from "~/assets/text/index.js";
 import { isValidSession } from "~/utils/session.js";
 import { pages } from "~/router.js";
+import Page from "~/components/page/page";
 
 // TODO: move styles to another file
 const styles = {

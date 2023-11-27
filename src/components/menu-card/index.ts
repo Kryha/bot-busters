@@ -1,1 +1,1 @@
-export * from "./user-menu(TO_DELETE)";
+export * from "./user-menu";
