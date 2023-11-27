@@ -87,7 +87,6 @@ const updateRooms = () => {
         score: getRandomInt(25),
       }));
 
-      ee.emit(chatEvent(roomId, "timeout"));
       chatRooms.set(roomId, { ...room, players, stage: "results" });
     }
   });

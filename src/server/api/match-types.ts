@@ -30,7 +30,7 @@ export interface ChatRoom {
   votingAt: number; // unix timestamp
 }
 
-export type ChatEventType = "message" | "timeout" | "stageChange";
+export type ChatEventType = "message" | "stageChange";
 
 export interface StagePayload {
   stage: "chat" | "voting" | "results";

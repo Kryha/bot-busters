@@ -69,23 +69,6 @@ export const chatRouter = createTRPCRouter({
       });
     }),
 
-  onTimeout: protectedProcedure
-    .input(z.object({ roomId: z.string().uuid() }))
-    .subscription(({ ctx, input }) => {
-      verifyUser(ctx.session.user.id, input.roomId);
-
-      return observable<void>((emit) => {
-        const handleEvent = () => {
-          emit.next();
-        };
-
-        ee.on(chatEvent(input.roomId, "timeout"), handleEvent);
-        return () => {
-          ee.off(chatEvent(input.roomId, "timeout"), handleEvent);
-        };
-      });
-    }),
-
   getRoom: protectedProcedure
     .input(z.object({ roomId: z.string().uuid() }))
     .query(({ ctx, input }) => {

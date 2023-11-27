@@ -30,18 +30,6 @@ export const Chat: FC<Props> = ({ roomId, matchState, room }) => {
     }
   };
 
-  api.chat.onTimeout.useSubscription(
-    { roomId },
-    {
-      onData() {
-        // TODO: Add onTimeout handler
-      },
-      onError(error) {
-        console.error("Error on timeout:", error);
-      },
-    }
-  );
-
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     const isEnter = event.code === "Enter" || event.code === "NumpadEnter";
 
