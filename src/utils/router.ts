@@ -10,4 +10,5 @@ export const pages = {
   rules: "/rules",
   support: "/support",
   privacy: "/privacy",
+  animationLab: "/animation-lab",
 };

@@ -12,6 +12,7 @@ import { APP_NAME } from "@/constants";
 import Head from "next/head";
 import { Layout } from "@/layouts";
 import { useRouter } from "next/router";
+import { pages } from "@/utils/router";
 
 const headTitle = "Bot Busters";
 
@@ -29,7 +30,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
   );
 
   const router = useRouter();
-  const animationLab = router.pathname === "/animationlab";
+  const animationLab = router.pathname === pages.animationLab;
 
   return (
     <>
