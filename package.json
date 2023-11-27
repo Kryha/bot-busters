@@ -62,6 +62,7 @@
     "@types/node": "^18.16.0",
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
+    "@types/stats": "^0.16.30",
     "@types/uuid": "^9.0.6",
     "@types/ws": "^8.5.6",
     "@typescript-eslint/eslint-plugin": "^6.3.0",
@@ -75,7 +76,9 @@
     "eslint-plugin-jest": "^27.6.0",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
+    "leva": "^0.9.35",
     "pg": "^8.11.3",
+    "react-fps": "^1.0.6",
     "rimraf": "^5.0.5",
     "tsc-alias": "^1.8.8",
     "typescript": "^5.1.6"
