@@ -5,7 +5,6 @@ import { useMemo } from "react";
 import { LeoWalletAdapter } from "@demox-labs/aleo-wallet-adapter-leo";
 import { WalletModalProvider } from "@demox-labs/aleo-wallet-adapter-reactui";
 import { WalletProvider } from "@demox-labs/aleo-wallet-adapter-react";
-
 import { api } from "@/utils/api";
 import { ThemeProvider } from "@/features/mui";
 import "@/styles/globals.css";

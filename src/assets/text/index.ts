@@ -6,7 +6,6 @@ import { match } from "./match";
 import { leaderboard } from "./leaderboard";
 import { homepage } from "./homepage";
 import { playerProfile } from "./player-profile";
-import { animationLab } from "@/assets/text/animationlab";
 
 export const text = {
   auth,
@@ -16,6 +15,5 @@ export const text = {
   match,
   leaderboard,
   homepage,
-  animationLab,
   playerProfile,
 };

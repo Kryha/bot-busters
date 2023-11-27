@@ -1,14 +1,13 @@
 import React, { type FC, useState } from "react";
 import Box from "@mui/material/Box";
 
-import {
-  DancingGirlBalancing,
-  DancingGirlHips,
-  DancingGirlSkips,
-  DancingGirlSlides,
-  DancingGirlSnaps,
-} from "./dancing-girl";
 import { useAnimatedSprite } from "@/hooks/use-animated-sprite";
+import { DEFAULT_SPRITE_SCALE } from "@/features/animation/constants";
+import { DancingGirlHips } from "@/features/animation/dancing-girl/dancing-girl-hips";
+import { DancingGirlBalancing } from "@/features/animation/dancing-girl/dancing-girl-balancing";
+import { DancingGirlSlides } from "@/features/animation/dancing-girl/dancing-girl-slides";
+import { DancingGirlSkips } from "@/features/animation/dancing-girl/dancing-girl-skips";
+import { DancingGirlSnaps } from "@/features/animation/dancing-girl/dancing-girl-snaps";
 
 export const styles = {
   spriteRow: {
@@ -42,7 +41,7 @@ interface AnimatedDanceMoveProps {
   height?: number;
   scale: number;
 }
-export const AnimatedSprite: FC<AnimatedDanceMoveProps> = ({
+const AnimatedSprite: FC<AnimatedDanceMoveProps> = ({
   id,
   xlinkHref,
   animatedSymbolRef,
@@ -61,7 +60,7 @@ export const AnimatedSprite: FC<AnimatedDanceMoveProps> = ({
     setHovered(false);
   };
 
-  const hoverScale = 1.5 * scale;
+  const hoverScale = DEFAULT_SPRITE_SCALE * scale;
 
   return (
     <svg

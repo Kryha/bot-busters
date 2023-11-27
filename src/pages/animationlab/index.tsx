@@ -1,10 +1,10 @@
 import { Box, Typography } from "@mui/material";
-import { type FC } from "react";
-import { text } from "@/assets/text";
+import { type FC, useMemo } from "react";
 import { common } from "@mui/material/colors";
 import { useControls } from "leva";
 import { DancingGirlSpriteSheet } from "@/features/animation/dancing-girl/dancing-girl-spritesheet";
 import { SpriteController } from "@/features/animation/controller/sprite-controller";
+import { animationLab } from "@/features/animation/constants";
 
 const styles = {
   title: {
@@ -26,6 +26,7 @@ const styles = {
     transform: "translate(-50%, -50%)",
   },
 };
+
 const AnimationLab: FC = () => {
   const [{ rowCount }, set] = useControls(() => ({
     rowCount: {
@@ -42,21 +43,21 @@ const AnimationLab: FC = () => {
     },
   }));
 
-  const renderSprites = () => {
+  const renderSprites = useMemo(() => {
     const sprites = [];
     for (let i = 0; i < rowCount; i++) {
       sprites.push(<DancingGirlSpriteSheet key={i} />);
       set({ totalSprites: rowCount * 14 });
     }
     return sprites;
-  };
+  }, [rowCount, set]);
 
   return (
     <Box component="div" sx={styles.lab}>
       <Typography sx={styles.title} color={common.white} variant="h5">
-        {text.animationLab.welcome}
+        {animationLab.welcome}
       </Typography>
-      <Box sx={styles.spriteRow}>{renderSprites()}</Box>
+      <Box sx={styles.spriteRow}>{renderSprites}</Box>
       <SpriteController />
     </Box>
   );
