@@ -1,17 +1,16 @@
-import { type FC } from "react";
+import { type FC, useEffect, useState } from "react";
 import { Button, Stack, Typography } from "@mui/material";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
 import { signIn, useSession } from "next-auth/react";
 
-import { pages } from "~/utils/router.js";
-import { useBBWallet } from "~/hooks/bb-wallet.js";
+import { pages } from "~/router.js";
+import { useBBWallet } from "~/service/bb-wallet.js";
 import { api } from "~/utils/api.js";
 import { isAnonymousSession, isUnverifiedSession } from "~/utils/session.js";
-import { type MatchStateType } from "~/types/index.js";
+import { type MatchStateType } from "~/types";
 
 import { styles } from "./styles.js";
-import { text } from "../../../chat/text.js";
+import { text } from "~/assets/text";
 
 interface Props {
   matchState: MatchStateType;
@@ -77,11 +76,13 @@ export const Results: FC<Props> = ({ matchState }) => {
   return (
     <Stack sx={styles.wrapper}>
       <Stack sx={styles.textContainer}>
-        <Typography variant="h2">{text.amountBotsBusted}</Typography>
-        <Typography variant="h1">{text.pointsWon(pointsWon)}</Typography>
+        <Typography variant="h2">{text.chat.amountBotsBusted}</Typography>
+        <Typography variant="h1">{text.chat.pointsWon(pointsWon)}</Typography>
       </Stack>
       <Stack sx={styles.textWrapper}>
-        <Typography variant="body1">{text.addScoreToLeaderboard}</Typography>
+        <Typography variant="body1">
+          {text.chat.addScoreToLeaderboard}
+        </Typography>
         <Stack sx={styles.buttonContainer}>
           {(isAnonymousSession(session) || isUnverifiedSession(session)) && (
             <Button
@@ -92,7 +93,7 @@ export const Results: FC<Props> = ({ matchState }) => {
               onClick={() => void handleConnect()}
               disabled={isConnecting}
             >
-              {text.addScore}
+              {text.chat.addScore}
             </Button>
           )}
           <Button
@@ -102,7 +103,7 @@ export const Results: FC<Props> = ({ matchState }) => {
             onClick={() => void router.push(pages.home)}
             disabled={isConnecting}
           >
-            {text.playNewGame}
+            {text.chat.playNewGame}
           </Button>
         </Stack>
       </Stack>

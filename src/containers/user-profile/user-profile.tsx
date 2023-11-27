@@ -3,14 +3,13 @@ import React from "react";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 
-import { text } from "~/assets/text/index.js";
+import { text } from "~/assets/text";
 import { api } from "~/utils/api.js";
-import { pages } from "~/utils/router.js";
+import { pages } from "~/router.js";
 import { fakeUsername } from "~/constants/fake-data/landing.js";
 import { isValidSession } from "~/utils/session.js";
-import { PlayerTable } from "~/components/index.js";
+import { PlayerTable } from "~/components";
 import { fakePlayerProfile } from "~/constants/fake-data/player-profile";
-
 import { styles } from "./styles.js";
 
 export const UserProfile = () => {

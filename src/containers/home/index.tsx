@@ -3,11 +3,11 @@ import React from "react";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 
-import { text } from "~/assets/text/index.js";
-import { TopRanked } from "~/components/index.js";
+import { text } from "~/assets/text";
+import { TopRanked } from "~/components";
 import { api } from "~/utils/api.js";
-import { pages } from "~/utils/router.js";
-import { TOP_RANKED_PLAYERS } from "~/constants/index.js";
+import { pages } from "~/router.js";
+import { TOP_RANKED_PLAYERS } from "~/constants";
 import { isValidSession } from "~/utils/session.js";
 
 import { styles } from "./styles.js";
