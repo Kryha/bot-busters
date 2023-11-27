@@ -1,7 +1,7 @@
 import { createTheme } from "@mui/material/styles";
 
 import { typography } from "./typography.js";
-import { components } from "./components/index.js";
+import { components } from "~/components/mui-custom";
 import { palette } from "./palette.js";
 
 declare module "@mui/material/styles" {
