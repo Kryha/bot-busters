@@ -19,19 +19,20 @@ export interface Player {
   score: number;
   isBot: boolean;
   isScoreSaved: boolean;
-  // TODO: add `votes` and `chatNickname` fields
+  botsBusted: number;
+  votes: string[]; // array of voted ids
+  chatNickname: string;
 }
 
-// TODO: add record of votes after implementing voting mechanism and distinguishing between bots and humans
-export interface ChatRoom {
+export type MatchStage = "chat" | "voting" | "results";
+
+// TODO: don't send private data to client
+export interface MatchRoom {
   players: Player[];
-  stage: "chat" | "voting" | "results";
+  stage: MatchStage;
+  arePointsCalculated: boolean;
   createdAt: number; // unix timestamp
   votingAt: number; // unix timestamp
 }
 
-export type ChatEventType = "message" | "stageChange";
-
-export interface StagePayload {
-  stage: "chat" | "voting" | "results";
-}
+export type MatchEventType = "message" | "stageChange";

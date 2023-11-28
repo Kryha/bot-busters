@@ -8,20 +8,19 @@ import { pages } from "~/utils/router.js";
 import { useBBWallet } from "~/hooks/bb-wallet.js";
 import { api } from "~/utils/api.js";
 import { isAnonymousSession, isUnverifiedSession } from "~/utils/session.js";
-import { type MatchStateType } from "~/types/index.js";
 
 import { styles } from "./styles.js";
 import { text } from "../../../chat/text.js";
 
 interface Props {
-  matchState: MatchStateType;
+  gainedScore: number;
+  botsBusted: number;
+  totalBots: number;
 }
 
-export const Results: FC<Props> = ({ matchState }) => {
+export const Results: FC<Props> = ({ gainedScore, botsBusted, totalBots }) => {
   const { data: session } = useSession();
   const router = useRouter();
-  // TODO: get points from server
-  const pointsWon = 30;
 
   const [mergeRequested, setMergeRequested] = useState(false);
 
@@ -72,14 +71,15 @@ export const Results: FC<Props> = ({ matchState }) => {
     await connect();
   };
 
-  if (matchState !== "results") return;
-
   return (
     <Stack sx={styles.wrapper}>
       <Stack sx={styles.textContainer}>
-        <Typography variant="h2">{text.amountBotsBusted}</Typography>
-        <Typography variant="h1">{text.pointsWon(pointsWon)}</Typography>
+        <Typography variant="h2">
+          {text.amountBotsBusted(botsBusted, totalBots)}
+        </Typography>
+        <Typography variant="h1">{text.pointsWon(gainedScore)}</Typography>
       </Stack>
+
       <Stack sx={styles.textWrapper}>
         <Typography variant="body1">{text.addScoreToLeaderboard}</Typography>
         <Stack sx={styles.buttonContainer}>
@@ -95,6 +95,7 @@ export const Results: FC<Props> = ({ matchState }) => {
               {text.addScore}
             </Button>
           )}
+
           <Button
             variant="contained"
             size="large"

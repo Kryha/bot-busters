@@ -1,23 +1,23 @@
 import { type FC } from "react";
 import { Divider, Stack } from "@mui/material";
 
-import { type MatchStateType } from "~/types/index.js";
-import { type ChatRoom } from "~/server/api/match-types.js";
+import { type Player, type MatchRoom } from "~/server/api/match-types.js";
 
 import { styles } from "./styles.js";
 import { UsernameLocal, UsersOthers } from "./components/index.js";
 
 interface Props {
-  matchState: MatchStateType;
-  room: ChatRoom;
+  room: MatchRoom;
+  localPlayer: Player;
+  onVote: (selectedUserIds: string[]) => void;
 }
 
-export const Players: FC<Props> = ({ matchState, room }) => {
+export const Players: FC<Props> = ({ room, localPlayer, onVote }) => {
   return (
     <Stack sx={styles.container}>
       <UsernameLocal />
       <Divider sx={styles.divider} />
-      <UsersOthers matchState={matchState} room={room} />
+      <UsersOthers room={room} localPlayer={localPlayer} onVote={onVote} />
     </Stack>
   );
 };

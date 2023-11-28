@@ -1,64 +1,80 @@
 import { Button, Stack, Typography } from "@mui/material";
 import { useState, type FC } from "react";
 
-import { USERS_DATA, VOTING_TIME_MS } from "~/constants/index.js";
+import { VOTING_TIME_MS } from "~/constants/index.js";
 import { text } from "~/assets/text/index.js";
-import { type MatchStateType } from "~/types/index.js";
-import { type ChatRoom } from "~/server/api/match-types.js";
+import { type Player, type MatchRoom } from "~/server/api/match-types.js";
 import { Timer } from "~/features/chat/components/index.js";
 
 import { styles } from "./styles.js";
 import { COLORS } from "../../constants.js";
-import { Player } from "../player/index.js";
+import { PlayerData } from "../player/index.js";
 
 interface Props {
-  matchState: MatchStateType;
-  room: ChatRoom;
+  room: MatchRoom;
+  localPlayer: Player;
+  onVote: (selectedUserIds: string[]) => void;
 }
 
-export const UsersOthers: FC<Props> = ({ matchState, room }) => {
-  const isVoting = matchState === "voting";
-  const isResults = matchState === "results";
-  const intro = isResults ? text.match.whosBot : text.match.otherParticipants;
+export const UsersOthers: FC<Props> = ({ room, localPlayer, onVote }) => {
   const [disable, setDisabled] = useState(false);
-  const [users, setUsers] = useState(
-    USERS_DATA.map((user) => ({ ...user, isBot: false }))
-  );
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
 
-  const handleVote = (username: string) => {
-    setUsers((prevUsers) =>
-      prevUsers.map((user) => {
-        const isUser = user.username === username;
+  const selectUser = (userId: string) => {
+    setSelectedIds((prevIds) => {
+      const idsSet = new Set(prevIds);
 
-        if (isUser) return { ...user, isBot: !user.isBot };
-        return user;
-      })
-    );
+      if (idsSet.has(userId)) {
+        idsSet.delete(userId);
+      } else {
+        idsSet.add(userId);
+      }
+
+      return Array.from(idsSet);
+    });
   };
+
+  const handleVote = () => {
+    setDisabled(true);
+    onVote(selectedIds);
+  };
+
+  const intro =
+    room.stage === "results"
+      ? text.match.whosBot
+      : text.match.otherParticipants;
+
+  const otherPlayers = room.players.filter(
+    (player) => player.userId !== localPlayer.userId
+  );
 
   return (
     <Stack sx={styles.container}>
       <Typography variant="body1">{intro}</Typography>
-      <Stack sx={styles.list(isResults)}>
-        {users.map((user, index) => {
+
+      <Stack sx={styles.list(room.stage === "results")}>
+        {otherPlayers.map((user, index) => {
           const color = COLORS[index];
           return (
-            <Player
+            <PlayerData
               key={index}
               color={color}
               user={user}
-              onVote={handleVote}
-              matchState={matchState}
+              isSelected={selectedIds.includes(user.userId)}
+              onSelectUser={() => selectUser(user.userId)}
+              room={room}
+              localPlayer={localPlayer}
             />
           );
         })}
-        {isVoting && (
+
+        {room.stage === "voting" && (
           <Stack sx={styles.timeSection}>
             <Timer time={room.votingAt} duration={VOTING_TIME_MS} />
             <Button
               variant="contained"
               disabled={disable}
-              onClick={() => setDisabled(true)}
+              onClick={() => handleVote()}
             >
               {text.general.confirm}
             </Button>

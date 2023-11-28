@@ -1,14 +1,29 @@
-import { Container, type StackProps } from "@mui/material";
-import { type FC } from "react";
+import { Container } from "@mui/material";
+import { type ReactNode, type FC } from "react";
 
 import { styles } from "./styles.js";
 import { SplashScreenChat, SplashScreenVoting } from "./components/index.js";
 
-export const MatchLayout: FC<StackProps> = ({ children }) => {
+interface Props {
+  splashScreenVariant?: "chat" | "voting";
+  children: ReactNode;
+}
+
+export const MatchLayout: FC<Props> = ({ children, splashScreenVariant }) => {
+  const splash = () => {
+    switch (splashScreenVariant) {
+      case "chat":
+        return <SplashScreenChat />;
+      case "voting":
+        return <SplashScreenVoting />;
+      default:
+        return <></>;
+    }
+  };
+
   return (
     <Container component="section" sx={styles.container}>
-      <SplashScreenChat />
-      <SplashScreenVoting />
+      {splash()}
       {children}
     </Container>
   );

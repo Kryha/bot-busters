@@ -1,4 +1,4 @@
-import { type FC } from "react";
+import { useState, type FC, useEffect } from "react";
 import {
   Avatar,
   Button,
@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 
 import { text } from "~/assets/text/index.js";
-import { useCreateRandomUsername } from "~/hooks/name-generator.js";
+import { getRandomUsername } from "~/utils/username.js";
 
 import { styles } from "./styles.js";
 
@@ -23,7 +23,12 @@ export const RowCreateUsername: FC<RowCreateUsernameProps> = ({
   onSetUsername,
   error: _,
 }) => {
-  const { username, setUsername } = useCreateRandomUsername();
+  const [username, setUsername] = useState("");
+
+  useEffect(() => {
+    const name = getRandomUsername();
+    setUsername(name.replace(/[0-9]/g, ""));
+  }, []);
 
   return (
     <>

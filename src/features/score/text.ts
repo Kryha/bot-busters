@@ -1,4 +1,5 @@
 export const text = {
-  yourScore: "Your score: 3 correct answers",
-  points1: "+30",
+  yourScore: (correctGuesses: number) =>
+    `Your score: ${correctGuesses} correct answers`,
+  points: (score: number) => `+${score}`,
 };
