@@ -8,7 +8,6 @@ import {
   VOTING_TIME_MS,
 } from "~/constants/main.js";
 import { env } from "~/env.mjs";
-import { getRandomInt } from "~/utils/math.js";
 import { db } from "~/server/db/index.js";
 import { users } from "~/server/db/schema.js";
 import { getRandomUsername } from "~/utils/username.js";
@@ -86,11 +85,26 @@ const updateRooms = () => {
     if (room.stage === "voting" && roomAge >= CHAT_TIME_MS + VOTING_TIME_MS) {
       room.stage = "results";
 
-      // TODO: calculate score based on votes
-      const players = room.players.map((player) => ({
-        ...player,
-        score: getRandomInt(25),
-      }));
+      // score calculation
+      const players = room.players.map((player) => {
+        let score = 0;
+
+        const otherPlayers = room.players.filter(
+          (p) => p.userId !== player.userId
+        );
+
+        otherPlayers.forEach((p) => {
+          const isVoted = player.votes.includes(p.userId);
+          const hasGuessed = p.isBot ? isVoted : !isVoted;
+
+          // TODO: update score calculation based on final ruleset
+          if (hasGuessed) {
+            score += 5;
+          }
+        });
+
+        return { ...player, score };
+      });
 
       matches.set(roomId, {
         ...room,

@@ -59,7 +59,6 @@ const MatchInternal: FC<Props> = ({ roomId, session }) => {
 
   if (!localPlayer) return <ErrorView />;
 
-  // TODO: perform this calculation on the server
   const totalBots = room.players.reduce(
     (acc, player) => (player.isBot ? acc + 1 : acc),
     0
