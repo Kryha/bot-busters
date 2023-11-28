@@ -21,8 +21,9 @@ export type ContactListData = z.infer<typeof contactListDataSchema>;
 
 export type GroupedMessage = {
   message: string;
-  sender: string;
   isLocalSender: boolean;
+  color: string;
+  username: string;
   sentAt: number;
 };
 

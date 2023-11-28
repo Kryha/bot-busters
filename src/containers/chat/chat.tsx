@@ -7,7 +7,7 @@ import {
 } from "~/server/api/match-types.js";
 import { api } from "~/utils/api.js";
 import { type GroupedMessage, type MatchStateType } from "~/types";
-import { CHAT_TIME_MS } from "~/constants";
+import { CHARACTERS, CHAT_TIME_MS } from "~/constants";
 import { styles } from "./styles.js";
 import { useRouter } from "next/router";
 import { pages } from "~/router";
@@ -15,6 +15,7 @@ import { useSession } from "next-auth/react";
 import { InputField } from "~/components/input-field";
 import { Messages } from "~/components/messages";
 import { Timer } from "~/components/timer";
+import { text } from "~/assets/text";
 
 interface Props {
   roomId: string;
@@ -30,6 +31,7 @@ export const Chat: FC<Props> = ({ roomId, matchState, room }) => {
   const isResults = matchState === "results";
   const [messages, setMessages] = useState<ChatMessagePayload[]>([]);
   const { mutate: send } = api.chat.sendMessage.useMutation();
+  const players = room.players;
 
   const appendMessage = (newMessage: ChatMessagePayload) => {
     setMessages((prev) => [newMessage, ...prev]);
@@ -48,12 +50,29 @@ export const Chat: FC<Props> = ({ roomId, matchState, room }) => {
     },
   );
 
-  const groupedMessages: GroupedMessage[] = messages.map((message) => ({
-    isLocalSender: message.sender === session?.user?.id,
-    message: message.message,
-    sentAt: message.sentAt,
-    sender: message.sender,
-  }));
+  const groupedMessages: GroupedMessage[] = messages.map((message) => {
+    const isLocalSender = message.sender === session?.user?.id;
+
+    // Find the player associated with the message sender
+    const player = players.find((player) => player.userId === message.sender);
+
+    // Find the character associated with the player
+    const character = CHARACTERS.find(
+      (character) => character.id === player?.characterId,
+    );
+
+    // Extract username and color from the character
+    const username = character?.characterName ?? text.general.username;
+    const color = character?.color ?? "#2196F3";
+
+    return {
+      isLocalSender,
+      message: message.message,
+      sentAt: message.sentAt,
+      username,
+      color,
+    };
+  });
 
   const handleSend = (value: string) => {
     if (message) {

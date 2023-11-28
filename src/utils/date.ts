@@ -76,3 +76,39 @@ export const getRelativeDate = (daysAgo: number) => {
 
   return formattedDate(date);
 };
+
+export const getTimeStamp = (time: number) => {
+  const date = new Date(time);
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+  const formattedHours = hours.toString().padStart(2, "0");
+  const formattedMinutes = minutes.toString().padStart(2, "0");
+  return `${formattedHours}:${formattedMinutes}`;
+};
+
+export const getTimeStamp = (time: number) => {
+  const date = new Date(time);
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+  const formattedHours = hours.toString().padStart(2, "0");
+  const formattedMinutes = minutes.toString().padStart(2, "0");
+  return `${formattedHours}:${formattedMinutes}`;
+};
+
+export const getTimeStamp = (time: number) => {
+  const date = new Date(time);
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+  const formattedHours = hours.toString().padStart(2, "0");
+  const formattedMinutes = minutes.toString().padStart(2, "0");
+  return `${formattedHours}:${formattedMinutes}`;
+};
+
+export const getTimeStamp = (time: number) => {
+  const date = new Date(time);
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+  const formattedHours = hours.toString().padStart(2, "0");
+  const formattedMinutes = minutes.toString().padStart(2, "0");
+  return `${formattedHours}:${formattedMinutes}`;
+};
