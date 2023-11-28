@@ -42,7 +42,7 @@ const MatchInternal: FC<Props> = ({ roomId, session }) => {
         void roomData.refetch();
       },
       onError(error) {
-        console.error("Error on countdown:", error);
+        console.error(error);
       },
       enabled: !roomData.data?.arePointsCalculated,
     }
