@@ -15,7 +15,7 @@ interface Props {
 export const Players: FC<Props> = ({ room, localPlayer, onVote }) => {
   return (
     <Stack sx={styles.container}>
-      <UsernameLocal />
+      <UsernameLocal localPlayer={localPlayer} />
       <Divider sx={styles.divider} />
       <UsersOthers room={room} localPlayer={localPlayer} onVote={onVote} />
     </Stack>
