@@ -29,7 +29,12 @@ export const InputField: FC<Props> = ({ onClick, disabled, ...rest }) => {
             disabled={disabled}
             {...rest}
           />
-          <Button variant="contained" onClick={onClick} disabled={disabled}>
+          <Button
+            variant="contained"
+            onClick={onClick}
+            aria-label={"send-button"}
+            disabled={disabled}
+          >
             {text.chat.send}
           </Button>
         </>
