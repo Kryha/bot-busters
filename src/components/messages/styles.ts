@@ -2,7 +2,6 @@ import { type SxProps } from "@mui/material";
 
 export const styles = {
   avatar: {
-    backgroundColor: "#80CBC4",
     borderRadius: "4px",
     "> img": {
       height: "32px",

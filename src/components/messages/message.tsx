@@ -20,7 +20,9 @@ export const Message: FC<Props> = ({ message }) => {
 
   return (
     <Stack sx={styles.messageContainer(isLocalSender)}>
-      {!isLocalSender && <Avatar src={avatar} sx={styles.avatar} />}
+      {!isLocalSender && (
+        <Avatar src={avatar} sx={styles.avatar} color={message.color} />
+      )}
       <Stack sx={styles.message(isLocalSender)}>
         <Stack sx={styles.messageSingle(backgroundColor, isLocalSender)}>
           <Typography variant="body1" color={textColor} sx={styles.username}>
