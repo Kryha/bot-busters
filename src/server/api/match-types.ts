@@ -20,17 +20,18 @@ export interface Player {
   isBot: boolean;
   isScoreSaved: boolean;
   botsBusted: number;
+  correctGuesses: number;
   votes: string[]; // array of voted ids
   chatNickname: string;
 }
 
 export type MatchStage = "chat" | "voting" | "results";
 
-// TODO: don't send private data to client
 export interface MatchRoom {
   players: Player[];
   stage: MatchStage;
   arePointsCalculated: boolean;
+  arePointsSaved: boolean;
   createdAt: number; // unix timestamp
   votingAt: number; // unix timestamp
 }

@@ -78,7 +78,7 @@ const MatchInternal: FC<Props> = ({ roomId, session }) => {
         {room.stage === "results" && (
           <Score
             gainedScore={localPlayer.score}
-            botsBusted={localPlayer.botsBusted}
+            correctGuesses={localPlayer.correctGuesses}
           />
         )}
       </OverviewLayout>
@@ -91,7 +91,7 @@ const MatchInternal: FC<Props> = ({ roomId, session }) => {
         />
       )}
 
-      {room && <Chat roomId={roomId} room={room} />}
+      {room && room.stage !== "results" && <Chat roomId={roomId} room={room} />}
     </Layout>
   );
 };

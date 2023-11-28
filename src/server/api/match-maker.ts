@@ -37,6 +37,7 @@ const generatePlayer = (userId: string): Player => ({
   isBot: false, // TODO: set to correct value
   isScoreSaved: false,
   botsBusted: 0,
+  correctGuesses: 0,
   votes: [],
   // TODO: use `getRandomChatUsername` after colour assign logic is in
   chatNickname: getRandomUsername(),
@@ -54,6 +55,7 @@ const makeMatch = () => {
       players: playerIds.map((id) => generatePlayer(id)),
       stage: "chat",
       arePointsCalculated: false,
+      arePointsSaved: false,
       createdAt: Date.now(),
       votingAt: Date.now() + CHAT_TIME_MS,
     });
@@ -88,6 +90,8 @@ const updateRooms = () => {
       // score calculation
       const players = room.players.map((player) => {
         let score = 0;
+        let correctGuesses = 0;
+        let botsBusted = 0;
 
         const otherPlayers = room.players.filter(
           (p) => p.userId !== player.userId
@@ -97,13 +101,18 @@ const updateRooms = () => {
           const isVoted = player.votes.includes(p.userId);
           const hasGuessed = p.isBot ? isVoted : !isVoted;
 
-          // TODO: update score calculation based on final ruleset
           if (hasGuessed) {
+            if (p.isBot) {
+              botsBusted += 1;
+            }
+
+            correctGuesses += 1;
+            // TODO: update score calculation based on final ruleset
             score += 5;
           }
         });
 
-        return { ...player, score };
+        return { ...player, score, correctGuesses, botsBusted };
       });
 
       matches.set(roomId, {
@@ -120,8 +129,14 @@ const updateRooms = () => {
 // TODO: also store match details in the db
 const saveScore = async () => {
   const promises = Array.from(matches.entries()).flatMap(([_roomId, room]) => {
-    if (room.stage !== "results" || room.arePointsCalculated) return;
-    room.arePointsCalculated = true;
+    if (
+      room.stage !== "results" ||
+      !room.arePointsCalculated ||
+      room.arePointsSaved
+    )
+      return;
+
+    room.arePointsSaved = true;
 
     return room.players.map(async (player) => {
       try {
@@ -132,7 +147,7 @@ const saveScore = async () => {
         );
       } catch (error) {
         player.isScoreSaved = false;
-        room.arePointsCalculated = false;
+        room.arePointsSaved = false;
         console.error("Score update error:", error);
       }
     });
