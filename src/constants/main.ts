@@ -9,3 +9,12 @@ export const ALERT_TIME_MS = 30000;
 export const VOTING_TIME_MS = 60000;
 
 export const SPLASH_SCREEN_DURATION = 3000; // 3 seconds
+
+/* MATERIAL UI  */
+export const FONT_SIZE = 16;
+export const COEFFICIENT = 14;
+
+/* CHAT */
+export const COLORS = ["orange", "brown", "green", "pink"];
+
+export const CHIP_TIMEOUT = 4000;

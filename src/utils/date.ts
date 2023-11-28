@@ -42,8 +42,7 @@ export const formatDate = (date: string | number): string => {
   } else if (isToday(inputDate, currentDate)) {
     return "Today";
   } else if (isMoreThanAWeekAgo(inputDate, currentDate)) {
-    const dayOfWeek = getDayOfWeek(inputDate);
-    return dayOfWeek;
+    return getDayOfWeek(inputDate);
   } else {
     const day = inputDate.getDate().toString().padStart(2, "0");
     const month = (inputDate.getMonth() + 1).toString().padStart(2, "0");
@@ -64,4 +63,16 @@ export const longDateFormat = (timestamp: number) => {
   const date = inputDate.toLocaleDateString("en-US", options);
 
   return `${formatDate(timestamp)}, ${date}`;
+};
+
+const formattedDate = (date: Date) => {
+  const options: Intl.DateTimeFormatOptions = { day: "numeric", month: "long" };
+  return date.toLocaleDateString("en-US", options);
+};
+export const getRelativeDate = (daysAgo: number) => {
+  const today = new Date();
+  const date = new Date(today);
+  date.setDate(today.getDate() - daysAgo);
+
+  return formattedDate(date);
 };

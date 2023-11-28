@@ -9,9 +9,11 @@ import Head from "next/head";
 
 import "~/styles/globals.css";
 import { api } from "~/utils/api.js";
-import { ThemeProvider } from "~/features/mui/index.js";
+import { ThemeProvider } from "~/styles";
 import { APP_NAME } from "~/constants/index.js";
-import { Layout } from "~/layouts/index.js";
+import { useRouter } from "next/router";
+import { pages } from "~/router";
+import { Layout } from "~/containers/layout";
 
 const headTitle = "Bot Busters";
 
@@ -25,8 +27,11 @@ const MyApp: AppType<{ session: Session | null }> = ({
         appName: APP_NAME,
       }),
     ],
-    []
+    [],
   );
+
+  const router = useRouter();
+  const animationLab = router.pathname === pages.animationLab;
 
   return (
     <>
@@ -39,9 +44,13 @@ const MyApp: AppType<{ session: Session | null }> = ({
         <WalletModalProvider>
           <ThemeProvider>
             <SessionProvider session={session}>
-              <Layout>
+              {animationLab ? (
                 <Component {...pageProps} />
-              </Layout>
+              ) : (
+                <Layout>
+                  <Component {...pageProps} />
+                </Layout>
+              )}
             </SessionProvider>
           </ThemeProvider>
         </WalletModalProvider>
