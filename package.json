@@ -45,6 +45,7 @@
     "next": "13.4.12",
     "next-auth": "^4.23.0",
     "postgres": "^3.3.5",
+    "puppeteer": "^21.5.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "sharp": "^0.32.6",
