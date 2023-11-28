@@ -4,6 +4,7 @@ import { text } from "~/assets/text";
 import { SplashScreen } from "~/components";
 import { useMatchState } from "~/service";
 
+// TODO: find a way to combine this with SplashScreenVoting
 export const SplashScreenChat = () => {
   const matchState = useMatchState();
   const isChat = matchState === "chat";
