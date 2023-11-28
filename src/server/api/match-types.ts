@@ -23,21 +23,23 @@ export interface Player {
   userId: string;
   characterId: number;
   score: number;
-  isBot: boolean;
+  isBot?: boolean;
   isScoreSaved: boolean;
-  // TODO: add `votes` and `chatNickname` fields
+  botsBusted: number;
+  correctGuesses: number;
+  votes: string[]; // array of voted ids
+  chatNickname: string;
 }
 
-// TODO: add record of votes after implementing voting mechanism and distinguishing between bots and humans
-export interface ChatRoom {
+export type MatchStage = "chat" | "voting" | "results";
+
+export interface MatchRoom {
   players: Player[];
-  stage: "chat" | "voting" | "results";
+  stage: MatchStage;
+  arePointsCalculated: boolean;
+  arePointsSaved: boolean;
   createdAt: number; // unix timestamp
   votingAt: number; // unix timestamp
 }
 
-export type ChatEventType = "message" | "timeout" | "stageChange";
-
-export interface StagePayload {
-  stage: "chat" | "voting" | "results";
-}
+export type MatchEventType = "message" | "stageChange";

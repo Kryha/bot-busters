@@ -1,4 +1,4 @@
-import { userRouter, chatRouter, lobbyRouter } from "./routers/index.js";
+import { userRouter, matchRouter, lobbyRouter } from "./routers/index.js";
 import { createTRPCRouter } from "./trpc.js";
 
 /**
@@ -8,7 +8,7 @@ import { createTRPCRouter } from "./trpc.js";
  */
 export const appRouter = createTRPCRouter({
   lobby: lobbyRouter,
-  chat: chatRouter,
+  match: matchRouter,
   user: userRouter,
 });
 

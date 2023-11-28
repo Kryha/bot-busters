@@ -1,11 +1,12 @@
 import { type FC } from "react";
 import { Avatar, Stack, Typography } from "@mui/material";
-import { type GroupedMessage } from "~/types";
+import { type ChatMessage } from "~/types";
+
 import { styles } from "./styles.js";
 import { getTimeStamp } from "~/utils/date";
 
 interface Props {
-  message: GroupedMessage;
+  message: ChatMessage;
 }
 
 // TODO: quick test: will continue to fix in background bug update
@@ -19,9 +20,7 @@ export const Message: FC<Props> = ({ message }) => {
 
   return (
     <Stack sx={styles.messageContainer(isLocalSender)}>
-      {!isLocalSender && (
-        <Avatar src={avatar} color={message.color} sx={styles.avatar} />
-      )}
+      {!isLocalSender && <Avatar src={avatar} sx={styles.avatar} />}
       <Stack sx={styles.message(isLocalSender)}>
         <Stack sx={styles.messageSingle(backgroundColor, isLocalSender)}>
           <Typography variant="body1" color={textColor} sx={styles.username}>
