@@ -3,6 +3,7 @@ import { v4 as uuid } from "uuid";
 import { sql } from "drizzle-orm";
 
 import {
+  CHARACTERS,
   CHAT_TIME_MS,
   MATCH_TIME_MS,
   VOTING_TIME_MS,
@@ -10,7 +11,6 @@ import {
 import { env } from "~/env.mjs";
 import { db } from "~/server/db/index.js";
 import { users } from "~/server/db/schema.js";
-import { getRandomUsername } from "~/utils/username.js";
 
 import type {
   MatchEventType,
@@ -18,30 +18,57 @@ import type {
   Player,
   ReadyToPlayPayload,
 } from "./match-types.js";
+import { type Character } from "./match-types.js";
 
 export const ee = new EventEmitter();
 export const lobbyQueue: string[] = [];
 
 export const matchEvent = (
   roomId: string,
-  eventType: MatchEventType = "message"
+  eventType: MatchEventType = "message",
 ) => {
   return `chat_${roomId}_${eventType}`;
 };
 
 export const matches = new Map<string, MatchRoom>();
+const assignedCharacters = new Set<Character>();
+const generatePlayer = (userId: string): Player => {
+  const assignedCharacter = assignCharacterId();
+  return {
+    userId,
+    color: assignedCharacter.color,
+    score: 0,
+    isBot: false, // TODO: set to correct value
+    isScoreSaved: false,
+    botsBusted: 0,
+    correctGuesses: 0,
+    votes: [],
+    // TODO: use `getRandomChatUsername` after colour assign logic is in
+    // TODO: Are the chat nicknames supposed to be universally random or based on the available characters?
+    chatNickname: assignedCharacter.characterName,
+  };
+};
 
-const generatePlayer = (userId: string): Player => ({
-  userId,
-  score: 0,
-  isBot: false, // TODO: set to correct value
-  isScoreSaved: false,
-  botsBusted: 0,
-  correctGuesses: 0,
-  votes: [],
-  // TODO: use `getRandomChatUsername` after colour assign logic is in
-  chatNickname: getRandomUsername(),
-});
+const assignCharacterId = (): Character => {
+  if (assignedCharacters.size === CHARACTERS.length) {
+    throw new Error("No available characters.");
+  }
+
+  let character: Character | undefined;
+  for (const char of CHARACTERS) {
+    if (!assignedCharacters.has(char)) {
+      character = char;
+      assignedCharacters.add(char);
+      break;
+    }
+  }
+
+  if (!character) {
+    throw new Error("No available characters.");
+  }
+
+  return character;
+};
 
 const makeMatch = () => {
   try {
@@ -94,7 +121,7 @@ const updateRooms = () => {
         let botsBusted = 0;
 
         const otherPlayers = room.players.filter(
-          (p) => p.userId !== player.userId
+          (p) => p.userId !== player.userId,
         );
 
         otherPlayers.forEach((p) => {
@@ -143,7 +170,7 @@ const saveScore = async () => {
         if (player.isScoreSaved) return;
         player.isScoreSaved = true;
         await db.execute(
-          sql`UPDATE ${users} SET score = score + ${player.score} WHERE ${users.id} = ${player.userId}`
+          sql`UPDATE ${users} SET score = score + ${player.score} WHERE ${users.id} = ${player.userId}`,
         );
       } catch (error) {
         player.isScoreSaved = false;

@@ -21,14 +21,14 @@ export interface Character {
 }
 export interface Player {
   userId: string;
-  characterId: number;
+  chatNickname: string;
+  color: string;
   score: number;
   isBot?: boolean;
   isScoreSaved: boolean;
   botsBusted: number;
   correctGuesses: number;
   votes: string[]; // array of voted ids
-  chatNickname: string;
 }
 
 export type MatchStage = "chat" | "voting" | "results";
