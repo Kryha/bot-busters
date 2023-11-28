@@ -1,3 +1,5 @@
+import { z } from "zod";
+
 export interface ReadyToPlayPayload {
   players: string[];
   roomId: string;
@@ -14,26 +16,28 @@ export interface ChatMessagePayload {
   sentAt: number; // unix time
 }
 
-export interface Player {
-  userId: string;
-  score: number;
-  isBot?: boolean;
-  isScoreSaved: boolean;
-  botsBusted: number;
-  correctGuesses: number;
-  votes: string[]; // array of voted ids
-  chatNickname: string;
-}
+export const playerSchema = z.object({
+  userId: z.string().uuid(),
+  score: z.number(),
+  isBot: z.boolean().optional(),
+  isScoreSaved: z.boolean(),
+  botsBusted: z.number(),
+  correctGuesses: z.number(),
+  votes: z.array(z.string().uuid()), // array of voted ids
+  chatNickname: z.string(),
+});
+export type Player = z.infer<typeof playerSchema>;
 
-export type MatchStage = "chat" | "voting" | "results";
+export const matchStageSchema = z.enum(["chat", "voting", "results"]);
+export type MatchStage = z.infer<typeof matchStageSchema>;
 
-export interface MatchRoom {
-  players: Player[];
-  stage: MatchStage;
-  arePointsCalculated: boolean;
-  arePointsSaved: boolean;
-  createdAt: number; // unix timestamp
-  votingAt: number; // unix timestamp
-}
+export const matchRoomSchema = z.object({
+  players: z.array(playerSchema),
+  stage: matchStageSchema,
+  arePointsCalculated: z.boolean(),
+  createdAt: z.number(), // unix timestamp
+  votingAt: z.number(), // unix timestamp
+});
+export type MatchRoom = z.infer<typeof matchRoomSchema>;
 
 export type MatchEventType = "message" | "stageChange";
