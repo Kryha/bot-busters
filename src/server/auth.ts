@@ -1,7 +1,7 @@
 import {
-  type Session,
-  type NextAuthOptions,
   type DefaultSession,
+  type NextAuthOptions,
+  type Session,
 } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
@@ -12,7 +12,7 @@ import {
   insertAnonymousUser,
   insertUserWithAddress,
   selectUserByAddress,
-} from "./service/index.js";
+} from "~/server/db/user";
 
 declare module "next-auth" {
   interface User {

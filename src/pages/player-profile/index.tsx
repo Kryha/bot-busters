@@ -1,4 +1,4 @@
-import { UserProfile } from "~/features/user-profile/index.js";
+import { UserProfile } from "~/containers/user-profile/index.js";
 
 const PlayerProfile = () => {
   return <UserProfile />;

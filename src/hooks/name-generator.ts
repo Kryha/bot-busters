@@ -1,6 +1,7 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { faker } from "@faker-js/faker";
 
+// TODO: Soon to be obsolete
 export const useCreateRandomUsername = () => {
   const [username, setUsername] = useState("");
 

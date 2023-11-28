@@ -5,11 +5,11 @@ import { signIn, useSession } from "next-auth/react";
 
 import { AddUsernameTable } from "~/components/tables/index.js";
 import { RowCreateUsername } from "~/components/tables/components/index.js";
-import { Page } from "~/layouts/index.js";
 import { isVerifiedSession } from "~/utils/session.js";
-import { pages } from "~/utils/router.js";
+import { pages } from "~/router.js";
 import { api } from "~/utils/api.js";
-import { useBBWallet } from "~/hooks/bb-wallet.js";
+import { useBBWallet } from "~/service/bb-wallet.js";
+import Page from "~/components/page/page";
 
 // TODO: move styles to another file
 const styles = {

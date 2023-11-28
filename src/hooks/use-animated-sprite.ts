@@ -5,6 +5,7 @@ interface AnimatedSpriteHookOptions {
   spriteSheetFrames: number;
 }
 
+// TODO: incorporate this into the Animation component
 export const useAnimatedSprite = ({
   spriteSheetFrames,
 }: AnimatedSpriteHookOptions) => {

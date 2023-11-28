@@ -1,10 +1,10 @@
 import { type FC } from "react";
 import { useRouter } from "next/router";
-import { Typography, CircularProgress } from "@mui/material";
+import { CircularProgress, Typography } from "@mui/material";
 
-import { LobbyLayout as Layout } from "~/layouts/index.js";
+import { LobbyLayout as Layout } from "~/components/lobby-layout/index.js";
 import { api } from "~/utils/api.js";
-import { pages } from "~/utils/router.js";
+import { pages } from "~/router.js";
 import { text } from "~/assets/text/index.js";
 
 const Lobby: FC = () => {

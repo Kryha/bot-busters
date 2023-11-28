@@ -2,9 +2,9 @@ import { Box, Typography } from "@mui/material";
 import { type FC, useMemo } from "react";
 import { common } from "@mui/material/colors";
 import { useControls } from "leva";
-import { SpriteController } from "~/features/animation/controller/sprite-controller";
-import { DancingGirlSpriteSheet } from "~/features/animation/dancing-girl/dancing-girl-spritesheet";
-import { animationLab } from "~/features/animation/constants";
+import { AnimationController } from "~/components/animation-controller/animation-controller";
+import { DancingGirlSpriteSheet } from "~/components/animation/dancing-girl/dancing-girl-spritesheet";
+import { animationLab } from "~/components/animation/animation-constants";
 
 const styles = {
   title: {
@@ -58,7 +58,7 @@ const AnimationLab: FC = () => {
         {animationLab.welcome}
       </Typography>
       <Box sx={styles.spriteRow}>{renderSprites}</Box>
-      <SpriteController />
+      <AnimationController />
     </Box>
   );
 };

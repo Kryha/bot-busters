@@ -2,7 +2,7 @@ import { Button, Stack, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import { type FC } from "react";
 
-import { pages } from "~/utils/router.js";
+import { pages } from "~/router.js";
 
 type ErrorType = "unauthenticated" | "notFound" | "general";
 
