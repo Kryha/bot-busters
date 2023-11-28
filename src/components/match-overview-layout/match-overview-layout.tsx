@@ -1,17 +1,17 @@
-import { type FC } from "react";
-import { Stack, type StackProps } from "@mui/material";
+import { type ReactNode, type FC } from "react";
+import { Stack } from "@mui/material";
 
-import { useMatchState } from "~/service";
+import { type MatchStage } from "~/server/api/match-types.js";
 
 import { styles } from "./styles.js";
 
-export const MatchOverviewLayout: FC<StackProps> = (props) => {
-  const { children } = props;
-  const matchState = useMatchState();
+interface Props {
+  children: ReactNode;
+  matchStage: MatchStage;
+}
 
-  if (!matchState) return;
-
-  const sx = styles[matchState];
+export const MatchOverviewLayout: FC<Props> = ({ children, matchStage }) => {
+  const sx = styles[matchStage];
 
   return (
     <Stack component="section" sx={sx}>

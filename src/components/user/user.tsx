@@ -1,16 +1,15 @@
 import { type FC } from "react";
-import { Avatar, Stack, type StackProps, Typography } from "@mui/material";
-
-import { type UserType } from "~/types/index.js";
+import { Avatar, Stack, Typography } from "@mui/material";
 
 import { styles } from "./styles.js";
 import { Skeleton } from "./skeleton";
 
-export interface UserProps extends StackProps, Pick<UserType, "username"> {
+interface Props {
   color?: string;
+  username: string;
 }
 
-export const User: FC<UserProps> = ({ color = "blue", username }) => {
+export const User: FC<Props> = ({ color = "blue", username }) => {
   // TODO: Fix "src" after svg's set up
   const src = "../images/svg/alien.svg";
   const textColor = `${color}.dark`;

@@ -1,41 +1,41 @@
 import { type FC, type KeyboardEvent, useState } from "react";
 import { Stack } from "@mui/material";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 import {
   type ChatMessagePayload,
-  type ChatRoom,
+  type MatchRoom,
 } from "~/server/api/match-types.js";
 import { api } from "~/utils/api.js";
-import { type GroupedMessage, type MatchStateType } from "~/types";
-import { CHAT_TIME_MS } from "~/constants";
+import { CHAT_TIME_MS } from "~/constants/index.js";
+import { pages } from "~/router.js";
+import { type ChatMessage } from "~/types/index.js";
+import { Messages } from "~/components/messages/index.js";
+import { InputField } from "~/components/input-field/index.js";
+import { Timer } from "~/components/timer/index.js";
+
 import { styles } from "./styles.js";
-import { useRouter } from "next/router";
-import { pages } from "~/router";
-import { useSession } from "next-auth/react";
-import { InputField } from "~/components/input-field";
-import { Messages } from "~/components/messages";
-import { Timer } from "~/components/timer";
 
 interface Props {
   roomId: string;
-  matchState: MatchStateType;
-  room: ChatRoom;
+  room: MatchRoom;
 }
 
-export const Chat: FC<Props> = ({ roomId, matchState, room }) => {
+export const Chat: FC<Props> = ({ roomId, room }) => {
   const { data: session } = useSession();
-  const [message, setMessage] = useState("");
   const { push } = useRouter();
-  const isChat = matchState === "chat";
-  const isResults = matchState === "results";
+
+  const sendMessage = api.match.sendMessage.useMutation();
+
+  const [message, setMessage] = useState("");
   const [messages, setMessages] = useState<ChatMessagePayload[]>([]);
-  const { mutate: send } = api.chat.sendMessage.useMutation();
 
   const appendMessage = (newMessage: ChatMessagePayload) => {
     setMessages((prev) => [newMessage, ...prev]);
   };
 
-  api.chat.onMessage.useSubscription(
+  api.match.onMessage.useSubscription(
     { roomId },
     {
       onData(payload) {
@@ -45,19 +45,21 @@ export const Chat: FC<Props> = ({ roomId, matchState, room }) => {
         console.error("Chat message error:", error);
         void push(pages.home);
       },
-    },
+    }
   );
 
-  const groupedMessages: GroupedMessage[] = messages.map((message) => ({
-    isLocalSender: message.sender === session?.user?.id,
-    message: message.message,
-    sentAt: message.sentAt,
-    sender: message.sender,
-  }));
+  const chatMessages: ChatMessage[] = messages.map((message) => {
+    const isLocalSender = message.sender === session?.user.id;
+
+    return {
+      isLocalSender,
+      ...message,
+    };
+  });
 
   const handleSend = (value: string) => {
     if (message) {
-      send({ message: value, sentAt: Date.now(), roomId });
+      sendMessage.mutate({ message: value, sentAt: Date.now(), roomId });
       setMessage("");
     }
   };
@@ -71,17 +73,17 @@ export const Chat: FC<Props> = ({ roomId, matchState, room }) => {
     }
   };
 
-  if (isResults) return null;
+  const isDisabled = room.stage !== "chat";
 
   return (
-    <Stack component="section" sx={styles.section(isChat)}>
-      <Messages messages={groupedMessages} />
+    <Stack component="section" sx={styles.section(isDisabled)}>
+      <Messages messages={chatMessages} />
       <Timer time={room.createdAt} duration={CHAT_TIME_MS} />
       <InputField
         value={message}
         onChange={(e) => setMessage(e.target.value)}
         onClick={() => handleSend(message)}
-        disabled={!isChat}
+        disabled={isDisabled}
         onKeyDown={(e) => handleKeyDown(e)}
       />
     </Stack>

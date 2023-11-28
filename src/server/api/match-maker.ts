@@ -8,13 +8,13 @@ import {
   VOTING_TIME_MS,
 } from "~/constants/main.js";
 import { env } from "~/env.mjs";
-import { getRandomInt } from "~/utils/math.js";
 import { db } from "~/server/db/index.js";
 import { users } from "~/server/db/schema.js";
+import { getRandomUsername } from "~/utils/username.js";
 
 import type {
-  ChatEventType,
-  ChatRoom,
+  MatchEventType,
+  MatchRoom,
   Player,
   ReadyToPlayPayload,
 } from "./match-types.js";
@@ -22,20 +22,25 @@ import type {
 export const ee = new EventEmitter();
 export const lobbyQueue: string[] = [];
 
-export const chatEvent = (
+export const matchEvent = (
   roomId: string,
-  eventType: ChatEventType = "message"
+  eventType: MatchEventType = "message"
 ) => {
   return `chat_${roomId}_${eventType}`;
 };
 
-export const chatRooms = new Map<string, ChatRoom>();
+export const matches = new Map<string, MatchRoom>();
 
 const generatePlayer = (userId: string): Player => ({
   userId,
   score: 0,
   isBot: false, // TODO: set to correct value
   isScoreSaved: false,
+  botsBusted: 0,
+  correctGuesses: 0,
+  votes: [],
+  // TODO: use `getRandomChatUsername` after colour assign logic is in
+  chatNickname: getRandomUsername(),
 });
 
 const makeMatch = () => {
@@ -46,14 +51,15 @@ const makeMatch = () => {
 
     const roomId = uuid();
 
-    chatRooms.set(roomId, {
+    matches.set(roomId, {
       players: playerIds.map((id) => generatePlayer(id)),
       stage: "chat",
+      arePointsCalculated: false,
+      arePointsSaved: false,
       createdAt: Date.now(),
       votingAt: Date.now() + CHAT_TIME_MS,
     });
 
-    // TODO: update event
     ee.emit("readyToPlay", {
       roomId,
       players: playerIds,
@@ -65,41 +71,72 @@ const makeMatch = () => {
 };
 
 const updateRooms = () => {
-  chatRooms.forEach((room, roomId) => {
+  matches.forEach((room, roomId) => {
     const roomAge = Date.now() - room.createdAt;
 
     if (roomAge >= MATCH_TIME_MS) {
-      chatRooms.delete(roomId);
+      matches.delete(roomId);
       return;
     }
 
     if (room.stage === "chat" && roomAge >= CHAT_TIME_MS) {
       room.stage = "voting";
-      ee.emit(chatEvent(roomId, "stageChange"));
+      ee.emit(matchEvent(roomId, "stageChange"));
       // TODO: get scores
     }
     if (room.stage === "voting" && roomAge >= CHAT_TIME_MS + VOTING_TIME_MS) {
       room.stage = "results";
-      ee.emit(chatEvent(roomId, "stageChange"));
-      // TODO: calculate score based on votes
-      const players = room.players.map((player) => ({
-        ...player,
-        score: getRandomInt(25),
-      }));
 
-      ee.emit(chatEvent(roomId, "timeout"));
-      chatRooms.set(roomId, { ...room, players, stage: "results" });
+      // score calculation
+      const players = room.players.map((player) => {
+        let score = 0;
+        let correctGuesses = 0;
+        let botsBusted = 0;
+
+        const otherPlayers = room.players.filter(
+          (p) => p.userId !== player.userId
+        );
+
+        otherPlayers.forEach((p) => {
+          const isVoted = player.votes.includes(p.userId);
+          const hasGuessed = p.isBot ? isVoted : !isVoted;
+
+          if (hasGuessed) {
+            if (p.isBot) {
+              botsBusted += 1;
+            }
+
+            correctGuesses += 1;
+            // TODO: update score calculation based on final ruleset
+            score += 5;
+          }
+        });
+
+        return { ...player, score, correctGuesses, botsBusted };
+      });
+
+      matches.set(roomId, {
+        ...room,
+        players,
+        stage: "results",
+        arePointsCalculated: true,
+      });
+      ee.emit(matchEvent(roomId, "stageChange"));
     }
   });
 };
 
 // TODO: also store match details in the db
 const saveScore = async () => {
-  const roomsToDelete = new Set<string>();
+  const promises = Array.from(matches.entries()).flatMap(([_roomId, room]) => {
+    if (
+      room.stage !== "results" ||
+      !room.arePointsCalculated ||
+      room.arePointsSaved
+    )
+      return;
 
-  const promises = Array.from(chatRooms.entries()).flatMap(([roomId, room]) => {
-    if (room.stage !== "results") return;
-    roomsToDelete.add(roomId);
+    room.arePointsSaved = true;
 
     return room.players.map(async (player) => {
       try {
@@ -110,17 +147,13 @@ const saveScore = async () => {
         );
       } catch (error) {
         player.isScoreSaved = false;
+        room.arePointsSaved = false;
         console.error("Score update error:", error);
-        roomsToDelete.delete(roomId);
       }
     });
   });
 
   await Promise.all(promises);
-
-  roomsToDelete.forEach((roomId) => {
-    chatRooms.delete(roomId);
-  });
 };
 
 setInterval(() => {

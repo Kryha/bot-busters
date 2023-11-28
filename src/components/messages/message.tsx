@@ -2,11 +2,12 @@ import { type FC } from "react";
 import { Avatar, Stack, Typography } from "@mui/material";
 
 import { text } from "~/assets/text";
-import { type GroupedMessage } from "~/types";
+import { type ChatMessage } from "~/types";
+
 import { styles } from "./styles.js";
 
 interface Props {
-  message: GroupedMessage;
+  message: ChatMessage;
 }
 
 // TODO: quick test: will continue to fix in background bug update
