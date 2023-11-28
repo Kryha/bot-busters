@@ -15,7 +15,7 @@ export const UsernameLocal: FC<Props> = ({ localPlayer }) => {
   return (
     <Stack sx={styles.container}>
       <Typography variant="body1">{text.match.inThisChat}</Typography>
-      <User username={localPlayer.chatNickname} />
+      <User username={localPlayer.chatNickname} color={localPlayer.color} />
     </Stack>
   );
 };
