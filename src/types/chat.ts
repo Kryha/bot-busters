@@ -1,5 +1,5 @@
 import { type ChatMessagePayload } from "~/server/api/match-types";
 
-export interface LocalMessage extends ChatMessagePayload {
+export interface ChatMessage extends ChatMessagePayload {
   isLocalSender: boolean;
 }

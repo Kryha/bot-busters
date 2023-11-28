@@ -10,7 +10,7 @@ import {
 import { api } from "~/utils/api.js";
 import { CHAT_TIME_MS } from "~/constants/index.js";
 import { pages } from "~/router.js";
-import { type LocalMessage } from "~/types/index.js";
+import { type ChatMessage } from "~/types/index.js";
 import { Messages } from "~/components/messages/index.js";
 import { InputField } from "~/components/input-field/index.js";
 import { Timer } from "~/components/timer/index.js";
@@ -48,7 +48,7 @@ export const Chat: FC<Props> = ({ roomId, room }) => {
     }
   );
 
-  const localMessages: LocalMessage[] = messages.map((message) => {
+  const chatMessages: ChatMessage[] = messages.map((message) => {
     const isLocalSender = message.sender === session?.user.id;
 
     return {
@@ -77,7 +77,7 @@ export const Chat: FC<Props> = ({ roomId, room }) => {
 
   return (
     <Stack component="section" sx={styles.section(isDisabled)}>
-      <Messages messages={localMessages} />
+      <Messages messages={chatMessages} />
       <Timer time={room.createdAt} duration={CHAT_TIME_MS} />
       <InputField
         value={message}
