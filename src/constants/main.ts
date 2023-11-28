@@ -1,3 +1,5 @@
+import { type Character } from "~/server/api/match-types";
+
 export const PUBLIC_KEY_LENGTH = 63;
 export const PLACEHOLDER_TEXT = "botBusters";
 export const AUTH_SIGN_MESSAGE = "Sign in to Bot Busters";
@@ -18,3 +20,15 @@ export const COEFFICIENT = 14;
 export const COLORS = ["orange", "brown", "green", "pink"];
 
 export const CHIP_TIMEOUT = 4000;
+
+export const CHARACTERS: Character[] = [
+  {
+    id: 1,
+    characterName: "orange orangutan",
+    color: "orange",
+  },
+  { id: 2, characterName: "brown bear", color: "brown" },
+  { id: 3, characterName: "green gator", color: "green" },
+  { id: 4, characterName: "pink panda", color: "pink" },
+  { id: 5, characterName: "blue bird", color: "blue" },
+];
