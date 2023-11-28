@@ -48,21 +48,12 @@ export const Chat: FC<Props> = ({ roomId, matchState, room }) => {
     },
   );
 
-  // Group messages by sender
-  const groupedMessages: GroupedMessage[] = messages.reduce((acc, message) => {
-    const lastGroup = acc[0];
-    const isLocalSender = message.sender === session?.user.id;
-
-    if (!lastGroup || lastGroup.isLocalSender !== isLocalSender) {
-      acc.unshift({ isLocalSender, messages: [message.message] });
-    } else {
-      const groupMessages = lastGroup.messages ?? [];
-      groupMessages.unshift(message.message);
-      lastGroup.messages = groupMessages;
-    }
-
-    return acc;
-  }, [] as GroupedMessage[]);
+  const groupedMessages: GroupedMessage[] = messages.map((message) => ({
+    isLocalSender: message.sender === session?.user?.id,
+    message: message.message,
+    sentAt: message.sentAt,
+    sender: message.sender,
+  }));
 
   const handleSend = (value: string) => {
     if (message) {

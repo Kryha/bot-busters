@@ -13,12 +13,8 @@ interface Props {
 export const Messages: FC<Props> = ({ messages }) => {
   return (
     <Stack sx={styles.messagesContainer}>
-      {messages.map(({ isLocalSender, messages }, index) => (
-        <Message
-          key={index}
-          isLocalSender={isLocalSender}
-          messages={messages}
-        />
+      {messages.map((message, index) => (
+        <Message key={index} message={message} />
       ))}
       <Prompt
         title={text.chat.firstPrompt.title}

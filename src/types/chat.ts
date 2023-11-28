@@ -20,8 +20,10 @@ export const contactListDataSchema = z.object({
 export type ContactListData = z.infer<typeof contactListDataSchema>;
 
 export type GroupedMessage = {
-  messages?: string[];
-  isLocalSender?: boolean;
+  message: string;
+  sender: string;
+  isLocalSender: boolean;
+  sentAt: number;
 };
 
 export type Player = {
