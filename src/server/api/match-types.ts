@@ -17,7 +17,7 @@ export interface ChatMessagePayload {
 export interface Player {
   userId: string;
   score: number;
-  isBot: boolean;
+  isBot?: boolean;
   isScoreSaved: boolean;
   botsBusted: number;
   correctGuesses: number;

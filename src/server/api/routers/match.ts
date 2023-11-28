@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { observable } from "@trpc/server/observable";
+import lodash from "lodash";
 
 import { createTRPCRouter, protectedProcedure } from "../trpc.js";
 import { matchEvent, matches, ee } from "../match-maker.js";
@@ -77,13 +78,20 @@ export const matchRouter = createTRPCRouter({
       });
     }),
 
-  // TODO: don't send private data to client
   getRoom: protectedProcedure
     .input(z.object({ roomId: z.string().uuid() }))
     .query(({ ctx, input }) => {
       verifyPlayer(ctx.session.user.id, input.roomId);
       const room = matches.get(input.roomId);
       if (!room) throw new Error("Room not found");
+
+      if (room.stage !== "results") {
+        const clonedRoom = lodash.cloneDeep(room);
+        clonedRoom.players.forEach((player) => {
+          player.isBot = undefined;
+        });
+        return clonedRoom;
+      }
 
       return room;
     }),
