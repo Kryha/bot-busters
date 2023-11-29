@@ -14,15 +14,9 @@ export interface ChatMessagePayload {
   sentAt: number; // unix time
 }
 
-export interface Character {
-  id: number;
-  characterName: string;
-  color: string;
-}
 export interface Player {
   userId: string;
-  chatNickname: string;
-  color: string;
+  characterId: number;
   score: number;
   isBot?: boolean;
   isScoreSaved: boolean;

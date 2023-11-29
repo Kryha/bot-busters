@@ -2,6 +2,7 @@ import { type FC } from "react";
 
 import { User, UserResult, UserVote } from "~/components/index.js";
 import { type MatchStage, type Player } from "~/server/api/match-types";
+import { CHARACTERS } from "~/constants";
 
 export interface Props {
   stage: MatchStage;
@@ -19,19 +20,20 @@ export const PlayerData: FC<Props> = ({
   isSelected,
   onSelectUser,
 }) => {
-  const { chatNickname, color } = user;
+  const character = CHARACTERS[user.characterId]!;
+  const { name, color } = character;
 
   const isVoted = localPlayer.votes.includes(user.userId);
   const hasGuessed = user.isBot ? isVoted : !isVoted;
 
   switch (stage) {
     case "chat":
-      return <User username={chatNickname} color={color} />;
+      return <User username={name} color={color} />;
 
     case "voting":
       return (
         <UserVote
-          username={chatNickname}
+          username={name}
           color={color}
           onSelectUser={onSelectUser}
           isSelected={isSelected}
@@ -42,6 +44,6 @@ export const PlayerData: FC<Props> = ({
       return <UserResult user={user} hasGuessed={hasGuessed} />;
 
     default:
-      return <User username={chatNickname} color={color} />;
+      return <User username={name} color={color} />;
   }
 };

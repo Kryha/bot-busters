@@ -7,7 +7,7 @@ import {
   type MatchRoom,
 } from "~/server/api/match-types";
 
-import { CHAT_TIME_MS } from "~/constants";
+import { CHARACTERS, CHAT_TIME_MS } from "~/constants";
 import { pages } from "~/router.js";
 import { type ChatMessage } from "~/types";
 import { Messages } from "~/components/messages";
@@ -51,14 +51,16 @@ export const Chat: FC<Props> = ({ roomId, room }) => {
 
   const chatMessages: ChatMessage[] = messages.map((message) => {
     const isLocalSender = message.sender === session?.user?.id;
-    const player = players.find((player) => player.userId === message.sender);
-
-    if (player) {
+    const characterId =
+      players.find((player) => player.userId === message.sender)?.characterId ??
+      null;
+    if (characterId) {
+      const character = CHARACTERS[characterId]!;
       return {
         isLocalSender,
         ...message,
-        username: player.chatNickname,
-        color: player.color,
+        username: character.name,
+        color: character.color,
       };
     } else {
       throw new Error(`Player not found for user ID: ${message.sender}`);

@@ -3,7 +3,6 @@ import { v4 as uuid } from "uuid";
 import { sql } from "drizzle-orm";
 
 import {
-  CHARACTERS,
   CHAT_TIME_MS,
   MATCH_TIME_MS,
   VOTING_TIME_MS,
@@ -18,7 +17,7 @@ import type {
   Player,
   ReadyToPlayPayload,
 } from "./match-types.js";
-import { type Character } from "./match-types.js";
+import { CHARACTERS } from "~/constants/index.js";
 
 export const ee = new EventEmitter();
 export const lobbyQueue: string[] = [];
@@ -31,43 +30,38 @@ export const matchEvent = (
 };
 
 export const matches = new Map<string, MatchRoom>();
-const assignedCharacters = new Set<Character>();
+const assignedCharacterIds = new Set<number>();
 const generatePlayer = (userId: string): Player => {
-  const assignedCharacter = assignCharacterId();
+  const characterId = assignCharacterId();
   return {
     userId,
-    color: assignedCharacter.color,
+    characterId: characterId,
     score: 0,
     isBot: false, // TODO: set to correct value
     isScoreSaved: false,
     botsBusted: 0,
     correctGuesses: 0,
     votes: [],
-    // TODO: use `getRandomChatUsername` after colour assign logic is in
-    // TODO: Are the chat nicknames supposed to be universally random or based on the available characters?
-    chatNickname: assignedCharacter.characterName,
   };
 };
 
-const assignCharacterId = (): Character => {
-  if (assignedCharacters.size === CHARACTERS.length) {
+const assignCharacterId = (): number => {
+  const availableCharacterIds = Object.keys(CHARACTERS).filter(
+    (id) => !assignedCharacterIds.has(Number(id)),
+  );
+
+  if (availableCharacterIds.length === 0) {
     throw new Error("No available characters.");
   }
 
-  let character: Character | undefined;
-  for (const char of CHARACTERS) {
-    if (!assignedCharacters.has(char)) {
-      character = char;
-      assignedCharacters.add(char);
-      break;
-    }
-  }
+  const randomCharacterId =
+    availableCharacterIds[
+      Math.floor(Math.random() * availableCharacterIds.length)
+    ];
 
-  if (!character) {
-    throw new Error("No available characters.");
-  }
+  assignedCharacterIds.add(Number(randomCharacterId));
 
-  return character;
+  return Number(randomCharacterId);
 };
 
 const makeMatch = () => {

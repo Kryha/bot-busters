@@ -6,6 +6,7 @@ import { type Player } from "~/server/api/match-types.js";
 
 import { User } from "~/components";
 import { styles } from "./styles.js";
+import { CHARACTERS } from "~/constants";
 
 interface Props {
   user: Player;
@@ -17,12 +18,14 @@ export const UserResult: FC<Props> = ({ user, hasGuessed }) => {
 
   // TODO: Add colors to theme
   const textColor = hasGuessed ? "#4CAF50" : "#F44336";
+  const character = CHARACTERS[user.characterId]!;
+  const { name, color } = character;
 
   return (
     <Stack sx={styles.container}>
       <Divider />
       <Stack sx={styles.user}>
-        <User username={user.chatNickname} color={user.color} />
+        <User username={name} color={color} />
         <Typography variant="body1" color={textColor} sx={styles.text}>
           {textResult}
         </Typography>
