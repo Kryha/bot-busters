@@ -1,4 +1,4 @@
-import { type FC, type KeyboardEvent, useState } from "react";
+import { type FC, type KeyboardEvent, useMemo, useState } from "react";
 import { Stack } from "@mui/material";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
@@ -9,13 +9,13 @@ import {
 
 import { CHARACTERS, CHAT_TIME_MS } from "~/constants";
 import { pages } from "~/router.js";
-import { type ChatMessage } from "~/types";
 import { Messages } from "~/components/messages";
 import { InputField } from "~/components/input-field";
 import { Timer } from "~/components/timer";
 
 import { styles } from "./styles";
 import { api } from "~/utils/api";
+import { type MessageData } from "~/types";
 
 interface Props {
   roomId: string;
@@ -49,23 +49,26 @@ export const Chat: FC<Props> = ({ roomId, room }) => {
     },
   );
 
-  const chatMessages: ChatMessage[] = messages.map((message) => {
-    const isLocalSender = message.sender === session?.user?.id;
-    const characterId =
-      players.find((player) => player.userId === message.sender)?.characterId ??
-      null;
-    if (characterId) {
+  const messageData: MessageData[] = useMemo(() => {
+    return messages.map((message) => {
+      const isLocalSender = message.sender === session?.user?.id;
+      const characterId = players.find(
+        (player) => player.userId === message.sender,
+      )!.characterId;
+
       const character = CHARACTERS[characterId]!;
       return {
-        isLocalSender,
-        ...message,
-        username: character.name,
-        color: character.color,
+        message: {
+          isLocalSender,
+          ...message,
+        },
+        character: {
+          name: character.name,
+          color: character.color,
+        },
       };
-    } else {
-      throw new Error(`Player not found for user ID: ${message.sender}`);
-    }
-  });
+    });
+  }, [messages, session, players]);
 
   const handleSend = (value: string) => {
     if (message) {
@@ -87,7 +90,7 @@ export const Chat: FC<Props> = ({ roomId, room }) => {
 
   return (
     <Stack component="section" sx={styles.section(isDisabled)}>
-      <Messages messages={chatMessages} />
+      <Messages messageData={messageData} />
       <Timer time={room.createdAt} duration={CHAT_TIME_MS} />
       <InputField
         value={message}
