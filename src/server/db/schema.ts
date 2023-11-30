@@ -5,6 +5,7 @@ import {
   uuid,
   pgTableCreator,
   timestamp,
+  json,
 } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { type z } from "zod";
@@ -13,7 +14,6 @@ import { PUBLIC_KEY_LENGTH } from "~/constants/index.js";
 
 export const bbPgTable = pgTableCreator((name) => `bot_busters_${name}`);
 
-// User table
 export const users = bbPgTable("user", {
   id: uuid("id").defaultRandom().primaryKey(),
   username: varchar("username", { length: 32 }).unique(),
@@ -35,7 +35,6 @@ export const usersRelations = relations(users, ({ one }) => ({
 export const userSchema = createInsertSchema(users);
 export type User = z.infer<typeof userSchema>;
 
-// Rank table
 export const ranks = bbPgTable("rank", {
   userId: uuid("userId")
     .references(() => users.id)
@@ -46,4 +45,7 @@ export const ranks = bbPgTable("rank", {
 export const rankSchema = createInsertSchema(ranks);
 export type Rank = z.infer<typeof rankSchema>;
 
-// TODO: define `match` table for storing old matches
+export const matches = bbPgTable("match", {
+  id: uuid("id").primaryKey(),
+  room: json("room").notNull(),
+});
