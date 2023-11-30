@@ -65,6 +65,7 @@ export const longDateFormat = (timestamp: number) => {
   return `${formatDate(timestamp)}, ${date}`;
 };
 
+// TODO: optimize these functions
 const formattedDate = (date: Date) => {
   const options: Intl.DateTimeFormatOptions = { day: "numeric", month: "long" };
   return date.toLocaleDateString("en-US", options);
@@ -75,4 +76,13 @@ export const getRelativeDate = (daysAgo: number) => {
   date.setDate(today.getDate() - daysAgo);
 
   return formattedDate(date);
+};
+
+export const getTimeStamp = (time: number) => {
+  const date = new Date(time);
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+  const formattedHours = hours.toString().padStart(2, "0");
+  const formattedMinutes = minutes.toString().padStart(2, "0");
+  return `${formattedHours}:${formattedMinutes}`;
 };

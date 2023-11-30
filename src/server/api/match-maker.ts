@@ -9,39 +9,60 @@ import {
 } from "~/constants/main.js";
 import { env } from "~/env.mjs";
 import { db } from "~/server/db/index.js";
-import { users, matches as matchesTable } from "~/server/db/schema.js";
-import { getRandomUsername } from "~/utils/username.js";
+import { matches as matchesTable, users } from "~/server/db/schema.js";
 
 import type {
   MatchEventType,
   MatchRoom,
-  Player,
+  PlayerType as Player,
   ReadyToPlayPayload,
 } from "./match-types.js";
+import { CHARACTERS } from "~/constants/index.js";
 
 export const ee = new EventEmitter();
 export const lobbyQueue: string[] = [];
 
 export const matchEvent = (
   roomId: string,
-  eventType: MatchEventType = "message"
+  eventType: MatchEventType = "message",
 ) => {
   return `chat_${roomId}_${eventType}`;
 };
 
 export const matches = new Map<string, MatchRoom>();
+const assignedCharacterIds = new Set<number>();
+const generatePlayer = (userId: string): Player => {
+  const characterId = assignCharacterId();
+  return {
+    userId,
+    characterId: characterId,
+    score: 0,
+    isBot: false, // TODO: set to correct value
+    isScoreSaved: false,
+    botsBusted: 0,
+    correctGuesses: 0,
+    votes: [],
+  };
+};
 
-const generatePlayer = (userId: string): Player => ({
-  userId,
-  score: 0,
-  isBot: false, // TODO: set to correct value
-  isScoreSaved: false,
-  botsBusted: 0,
-  correctGuesses: 0,
-  votes: [],
-  // TODO: use `getRandomChatUsername` after colour assign logic is in
-  chatNickname: getRandomUsername(),
-});
+const assignCharacterId = (): number => {
+  const availableCharacterIds = Object.keys(CHARACTERS).filter(
+    (id) => !assignedCharacterIds.has(Number(id)),
+  );
+
+  if (availableCharacterIds.length === 0) {
+    throw new Error("No available characters.");
+  }
+
+  const randomCharacterId =
+    availableCharacterIds[
+      Math.floor(Math.random() * availableCharacterIds.length)
+    ];
+
+  assignedCharacterIds.add(Number(randomCharacterId));
+
+  return Number(randomCharacterId);
+};
 
 const makeMatch = () => {
   try {
@@ -93,7 +114,7 @@ const updateRooms = () => {
         let botsBusted = 0;
 
         const otherPlayers = room.players.filter(
-          (p) => p.userId !== player.userId
+          (p) => p.userId !== player.userId,
         );
 
         otherPlayers.forEach((p) => {
@@ -137,7 +158,7 @@ const saveScore = async () => {
         if (player.isScoreSaved) return;
         player.isScoreSaved = true;
         await db.execute(
-          sql`UPDATE ${users} SET score = score + ${player.score} WHERE ${users.id} = ${player.userId}`
+          sql`UPDATE ${users} SET score = score + ${player.score} WHERE ${users.id} = ${player.userId}`,
         );
       } catch (error) {
         player.isScoreSaved = false;
@@ -154,7 +175,7 @@ const saveScore = async () => {
       (acc, [roomId, room]) => {
         return [...acc, { id: roomId, room }];
       },
-      [] as { id: string; room: MatchRoom }[]
+      [] as { id: string; room: MatchRoom }[],
     );
 
     if (roomsToStore.length) {

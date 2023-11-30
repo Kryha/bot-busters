@@ -2,7 +2,6 @@ import { type SxProps } from "@mui/material";
 
 export const styles = {
   avatar: {
-    backgroundColor: "#80CBC4",
     borderRadius: "4px",
     "> img": {
       height: "32px",
@@ -27,7 +26,7 @@ export const styles = {
       maxWidth: "652px",
     };
   },
-  messageSingle: (isLocal?: boolean) => {
+  messageSingle: (backgroundColor: string, isLocal?: boolean) => {
     return {
       padding: 1.5,
       borderRadius: 1,
@@ -37,7 +36,7 @@ export const styles = {
       color: "common.black",
       textAlign: "left",
       position: "relative",
-      backgroundColor: isLocal ? "#E3F2FD" : "#E0F2F1",
+      backgroundColor: backgroundColor,
       "&:first-of-type": {
         marginBottom: 0.1,
         borderTopRightRadius: isLocal ? 0 : "4px",
@@ -47,7 +46,7 @@ export const styles = {
           position: "absolute",
           inset: isLocal ? "0px 0px 0px 100%" : "0 0 0 0",
           transform: isLocal ? "" : "translateX(-20px)",
-          backgroundColor: isLocal ? "#E3F2FD" : "#E0F2F1",
+          backgroundColor: backgroundColor,
           width: "20px",
           height: "20px",
           clipPath: isLocal

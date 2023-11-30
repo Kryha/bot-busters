@@ -14,7 +14,4 @@ export const SPLASH_SCREEN_DURATION = 3000; // 3 seconds
 export const FONT_SIZE = 16;
 export const COEFFICIENT = 14;
 
-/* CHAT */
-export const COLORS = ["orange", "brown", "green", "pink"];
-
 export const CHIP_TIMEOUT = 4000;

@@ -1,26 +1,26 @@
 import { Button, Stack, Typography } from "@mui/material";
-import { useState, type FC } from "react";
+import { type FC, useState } from "react";
 
-import { VOTING_TIME_MS } from "~/constants/index.js";
-import { text } from "~/assets/text/index.js";
-import { type Player, type MatchRoom } from "~/server/api/match-types.js";
-import { Timer } from "~/components/timer/index.js";
-import { COLORS } from "~/constants/index.js";
+import { VOTING_TIME_MS } from "~/constants";
+import { text } from "~/assets/text";
+import { type MatchRoom, type PlayerType } from "~/server/api/match-types.js";
+import { Timer } from "~/components/timer";
 
 import { styles } from "./styles.js";
-import { PlayerData } from "../player/index.js";
+import { PlayerData } from "~/components/players/player-data";
 
 interface Props {
   room: MatchRoom;
-  localPlayer: Player;
+  localPlayer: PlayerType;
   onVote: (selectedUserIds: string[]) => void;
 }
 
-export const UsersOthers: FC<Props> = ({ room, localPlayer, onVote }) => {
+export const PlayersOthers: FC<Props> = ({ room, localPlayer, onVote }) => {
   const [disable, setDisabled] = useState(false);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const { stage, players, votingAt } = room;
 
-  const selectUser = (userId: string) => {
+  const selectPlayer = (userId: string) => {
     setSelectedIds((prevIds) => {
       const idsSet = new Set(prevIds);
 
@@ -40,37 +40,33 @@ export const UsersOthers: FC<Props> = ({ room, localPlayer, onVote }) => {
   };
 
   const intro =
-    room.stage === "results"
-      ? text.match.whosBot
-      : text.match.otherParticipants;
+    stage === "results" ? text.match.whosBot : text.match.otherParticipants;
 
-  const otherPlayers = room.players.filter(
-    (player) => player.userId !== localPlayer.userId
+  const otherPlayers = players.filter(
+    (player) => player.userId !== localPlayer.userId,
   );
 
   return (
     <Stack sx={styles.container}>
       <Typography variant="body1">{intro}</Typography>
 
-      <Stack sx={styles.list(room.stage === "results")}>
-        {otherPlayers.map((user, index) => {
-          const color = COLORS[index];
+      <Stack sx={styles.list(stage === "results")}>
+        {otherPlayers.map((player, index) => {
           return (
             <PlayerData
               key={index}
-              color={color}
-              user={user}
-              isSelected={selectedIds.includes(user.userId)}
-              onSelectUser={() => selectUser(user.userId)}
-              room={room}
+              player={player}
+              isSelected={selectedIds.includes(player.userId)}
+              onSelectPlayer={() => selectPlayer(player.userId)}
+              stage={stage}
               localPlayer={localPlayer}
             />
           );
         })}
 
-        {room.stage === "voting" && (
+        {stage === "voting" && (
           <Stack sx={styles.timeSection}>
-            <Timer time={room.votingAt} duration={VOTING_TIME_MS} />
+            <Timer time={votingAt} duration={VOTING_TIME_MS} />
             <Button
               variant="contained"
               disabled={disable}
