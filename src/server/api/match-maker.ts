@@ -17,7 +17,7 @@ import type {
   PlayerType as Player,
   ReadyToPlayPayload,
 } from "./match-types.js";
-import { CHARACTERS } from "~/constants";
+import { CHARACTERS } from "~/constants/index.js";
 
 export const ee = new EventEmitter();
 export const lobbyQueue: string[] = [];
