@@ -41,7 +41,7 @@ const MatchInternal: FC<Props> = ({ roomId, session }) => {
       onError(error) {
         console.error(error);
       },
-      enabled: !roomData.data?.arePointsCalculated,
+      enabled: roomData.data && !roomData.data.arePointsCalculated,
     }
   );
 

@@ -1,11 +1,15 @@
 import { z } from "zod";
 import { observable } from "@trpc/server/observable";
+import { TRPCError } from "@trpc/server";
 import lodash from "lodash";
+
+import { db } from "~/server/db/index.js";
+import { matches as matchesTable } from "~/server/db/schema.js";
 
 import { createTRPCRouter, protectedProcedure } from "../trpc.js";
 import { matchEvent, matches, ee } from "../match-maker.js";
-import type { ChatMessagePayload } from "../match-types.js";
-import { TRPCError } from "@trpc/server";
+import { matchRoomSchema, type ChatMessagePayload } from "../match-types.js";
+import { eq } from "drizzle-orm";
 
 const verifyPlayer = (userId: string, roomId: string) => {
   const room = matches.get(roomId);
@@ -80,10 +84,32 @@ export const matchRouter = createTRPCRouter({
 
   getRoom: protectedProcedure
     .input(z.object({ roomId: z.string().uuid() }))
-    .query(({ ctx, input }) => {
-      verifyPlayer(ctx.session.user.id, input.roomId);
-      const room = matches.get(input.roomId);
-      if (!room) throw new Error("Room not found");
+    .query(async ({ ctx, input }) => {
+      let room = matches.get(input.roomId);
+
+      if (!room) {
+        const [dbRes] = await db
+          .select()
+          .from(matchesTable)
+          .where(eq(matchesTable.id, input.roomId));
+
+        const parsed = await matchRoomSchema.spa(dbRes?.room);
+
+        if (!parsed.success)
+          throw new TRPCError({ code: "NOT_FOUND", message: "Room not found" });
+
+        room = parsed.data;
+      }
+
+      const player = room.players.find(
+        (player) => player.userId === ctx.session.user.id
+      );
+
+      if (!player)
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: "User is not part of this room",
+        });
 
       if (room.stage !== "results") {
         const clonedRoom = lodash.cloneDeep(room);

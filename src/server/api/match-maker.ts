@@ -9,7 +9,7 @@ import {
 } from "~/constants/main.js";
 import { env } from "~/env.mjs";
 import { db } from "~/server/db/index.js";
-import { users } from "~/server/db/schema.js";
+import { users, matches as matchesTable } from "~/server/db/schema.js";
 import { getRandomUsername } from "~/utils/username.js";
 
 import type {
@@ -55,7 +55,6 @@ const makeMatch = () => {
       players: playerIds.map((id) => generatePlayer(id)),
       stage: "chat",
       arePointsCalculated: false,
-      arePointsSaved: false,
       createdAt: Date.now(),
       votingAt: Date.now() + CHAT_TIME_MS,
     });
@@ -126,17 +125,12 @@ const updateRooms = () => {
   });
 };
 
-// TODO: also store match details in the db
 const saveScore = async () => {
-  const promises = Array.from(matches.entries()).flatMap(([_roomId, room]) => {
-    if (
-      room.stage !== "results" ||
-      !room.arePointsCalculated ||
-      room.arePointsSaved
-    )
-      return;
+  const roomsToArchive = new Map<string, MatchRoom>();
 
-    room.arePointsSaved = true;
+  const promises = Array.from(matches.entries()).flatMap(([roomId, room]) => {
+    if (room.stage !== "results" || !room.arePointsCalculated) return;
+    roomsToArchive.set(roomId, room);
 
     return room.players.map(async (player) => {
       try {
@@ -147,13 +141,32 @@ const saveScore = async () => {
         );
       } catch (error) {
         player.isScoreSaved = false;
-        room.arePointsSaved = false;
+        roomsToArchive.delete(roomId);
         console.error("Score update error:", error);
       }
     });
   });
 
-  await Promise.all(promises);
+  try {
+    await Promise.all(promises);
+
+    const roomsToStore = Array.from(roomsToArchive.entries()).reduce(
+      (acc, [roomId, room]) => {
+        return [...acc, { id: roomId, room }];
+      },
+      [] as { id: string; room: MatchRoom }[]
+    );
+
+    if (roomsToStore.length) {
+      await db.insert(matchesTable).values(roomsToStore);
+    }
+
+    roomsToArchive.forEach((_room, roomId) => {
+      matches.delete(roomId);
+    });
+  } catch (error) {
+    console.error("Room archive error:", error);
+  }
 };
 
 setInterval(() => {
@@ -161,3 +174,5 @@ setInterval(() => {
   void saveScore();
   makeMatch();
 }, 10000);
+
+// TODO: add anonymous user cleanup
