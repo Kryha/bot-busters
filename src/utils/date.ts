@@ -65,6 +65,7 @@ export const longDateFormat = (timestamp: number) => {
   return `${formatDate(timestamp)}, ${date}`;
 };
 
+// TODO: optimize these functions
 const formattedDate = (date: Date) => {
   const options: Intl.DateTimeFormatOptions = { day: "numeric", month: "long" };
   return date.toLocaleDateString("en-US", options);
