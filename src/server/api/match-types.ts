@@ -26,7 +26,6 @@ export const playerSchema = z.object({
   botsBusted: z.number(),
   correctGuesses: z.number(),
   votes: z.array(z.string().uuid()), // array of voted ids
-  chatNickname: z.string(),
 });
 export type PlayerType = z.infer<typeof playerSchema>;
 

@@ -9,8 +9,7 @@ import {
 } from "~/constants/main.js";
 import { env } from "~/env.mjs";
 import { db } from "~/server/db/index.js";
-import { users, matches as matchesTable } from "~/server/db/schema.js";
-import { getRandomUsername } from "~/utils/username.js";
+import { matches as matchesTable, users } from "~/server/db/schema.js";
 
 import type {
   MatchEventType,
@@ -25,7 +24,7 @@ export const lobbyQueue: string[] = [];
 
 export const matchEvent = (
   roomId: string,
-  eventType: MatchEventType = "message"
+  eventType: MatchEventType = "message",
 ) => {
   return `chat_${roomId}_${eventType}`;
 };
@@ -115,7 +114,7 @@ const updateRooms = () => {
         let botsBusted = 0;
 
         const otherPlayers = room.players.filter(
-          (p) => p.userId !== player.userId
+          (p) => p.userId !== player.userId,
         );
 
         otherPlayers.forEach((p) => {
@@ -159,7 +158,7 @@ const saveScore = async () => {
         if (player.isScoreSaved) return;
         player.isScoreSaved = true;
         await db.execute(
-          sql`UPDATE ${users} SET score = score + ${player.score} WHERE ${users.id} = ${player.userId}`
+          sql`UPDATE ${users} SET score = score + ${player.score} WHERE ${users.id} = ${player.userId}`,
         );
       } catch (error) {
         player.isScoreSaved = false;
@@ -176,7 +175,7 @@ const saveScore = async () => {
       (acc, [roomId, room]) => {
         return [...acc, { id: roomId, room }];
       },
-      [] as { id: string; room: MatchRoom }[]
+      [] as { id: string; room: MatchRoom }[],
     );
 
     if (roomsToStore.length) {
