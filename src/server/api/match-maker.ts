@@ -18,6 +18,7 @@ import type {
   Player,
   ReadyToPlayPayload,
 } from "./match-types.js";
+import { generateAgent } from "../service/agent.js";
 
 export const ee = new EventEmitter();
 export const lobbyQueue: string[] = [];
@@ -46,8 +47,16 @@ const makeMatch = () => {
 
     const roomId = uuid();
 
+    const players = playerIds.map((id) => generatePlayer(id));
+
+    // TODO: add correct amount of agents based on amount of human players
+    // Add agents to list of players
+    // TODO: Bootstrap Agent & Connect to room WS
+    const { agent } = generateAgent(uuid(), roomId);
+    players.push(agent);
+
     chatRooms.set(roomId, {
-      players: playerIds.map((id) => generatePlayer(id)),
+      players,
       stage: "chat",
       createdAt: Date.now(),
       votingAt: Date.now() + CHAT_TIME_MS,
@@ -81,7 +90,7 @@ const updateRooms = () => {
     if (room.stage === "voting" && roomAge >= CHAT_TIME_MS + VOTING_TIME_MS) {
       room.stage = "results";
       ee.emit(chatEvent(roomId, "stageChange"));
-      // TODO: calculate score based on votes
+      // TODO: calculate score based on votes & Filter out Agents
       const players = room.players.map((player) => ({
         ...player,
         score: getRandomInt(25),
