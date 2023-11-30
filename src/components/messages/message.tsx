@@ -7,26 +7,27 @@ import { getTimeStamp } from "~/utils/date";
 
 interface Props {
   message: ChatMessage;
+  characterName: string;
+  color: string;
 }
 
-// TODO: quick test: will continue to fix in background bug update
-export const Message: FC<Props> = ({ message }) => {
+export const Message: FC<Props> = ({ message, color, characterName }) => {
   const avatar = "../images/svg/alien.svg";
   const isLocalSender = message.isLocalSender;
-  const textColor = `${message.color}.dark`;
-  const backgroundColor = `${message.color}.light`;
+  const textColor = `${color}.dark`;
+  const backgroundColor = `${color}.light`;
   const textAlign = isLocalSender ? "left" : undefined;
   const timeStamp = getTimeStamp(message.sentAt);
 
   return (
     <Stack sx={styles.messageContainer(isLocalSender)}>
       {!isLocalSender && (
-        <Avatar src={avatar} sx={styles.avatar} color={message.color} />
+        <Avatar src={avatar} sx={styles.avatar} color={color} />
       )}
       <Stack sx={styles.message(isLocalSender)}>
         <Stack sx={styles.messageSingle(backgroundColor, isLocalSender)}>
           <Typography variant="body1" color={textColor} sx={styles.username}>
-            {message.username}
+            {characterName}
           </Typography>
           <Typography variant="body1" textAlign={textAlign}>
             {message.message}

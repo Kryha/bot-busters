@@ -1,26 +1,26 @@
 import { Button, Stack, Typography } from "@mui/material";
 import { type FC, useState } from "react";
 
-import { VOTING_TIME_MS } from "~/constants/index.js";
-import { text } from "~/assets/text/index.js";
-import { type MatchRoom, type Player } from "~/server/api/match-types.js";
-import { Timer } from "~/components/timer/index.js";
+import { VOTING_TIME_MS } from "~/constants";
+import { text } from "~/assets/text";
+import { type MatchRoom, type PlayerType } from "~/server/api/match-types.js";
+import { Timer } from "~/components/timer";
 
 import { styles } from "./styles.js";
-import { PlayerData } from "../player/index.js";
+import { PlayerData } from "~/components/players/player-data";
 
 interface Props {
   room: MatchRoom;
-  localPlayer: Player;
+  localPlayer: PlayerType;
   onVote: (selectedUserIds: string[]) => void;
 }
 
-export const UsersOthers: FC<Props> = ({ room, localPlayer, onVote }) => {
+export const PlayersOthers: FC<Props> = ({ room, localPlayer, onVote }) => {
   const [disable, setDisabled] = useState(false);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const { stage, players, votingAt } = room;
 
-  const selectUser = (userId: string) => {
+  const selectPlayer = (userId: string) => {
     setSelectedIds((prevIds) => {
       const idsSet = new Set(prevIds);
 
@@ -51,13 +51,13 @@ export const UsersOthers: FC<Props> = ({ room, localPlayer, onVote }) => {
       <Typography variant="body1">{intro}</Typography>
 
       <Stack sx={styles.list(stage === "results")}>
-        {otherPlayers.map((user, index) => {
+        {otherPlayers.map((player, index) => {
           return (
             <PlayerData
               key={index}
-              user={user}
-              isSelected={selectedIds.includes(user.userId)}
-              onSelectUser={() => selectUser(user.userId)}
+              player={player}
+              isSelected={selectedIds.includes(player.userId)}
+              onSelectPlayer={() => selectPlayer(player.userId)}
               stage={stage}
               localPlayer={localPlayer}
             />

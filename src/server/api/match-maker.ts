@@ -14,7 +14,7 @@ import { users } from "~/server/db/schema.js";
 import type {
   MatchEventType,
   MatchRoom,
-  Player,
+  PlayerType as Player,
   ReadyToPlayPayload,
 } from "./match-types.js";
 import { CHARACTERS } from "~/constants/index.js";

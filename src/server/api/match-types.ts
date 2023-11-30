@@ -14,7 +14,7 @@ export interface ChatMessagePayload {
   sentAt: number; // unix time
 }
 
-export interface Player {
+export interface PlayerType {
   userId: string;
   characterId: number;
   score: number;
@@ -28,7 +28,7 @@ export interface Player {
 export type MatchStage = "chat" | "voting" | "results";
 
 export interface MatchRoom {
-  players: Player[];
+  players: PlayerType[];
   stage: MatchStage;
   arePointsCalculated: boolean;
   arePointsSaved: boolean;

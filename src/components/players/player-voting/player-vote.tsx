@@ -1,34 +1,38 @@
 import { type FC } from "react";
 import { Divider, Stack, ToggleButton, Typography } from "@mui/material";
 
-import { text } from "~/assets/text/index.js";
+import { text } from "~/assets/text";
 
-import { User } from "../user/index.js";
+import { Player } from "~/components";
 import { styles } from "./styles.js";
 
 interface Props {
-  username: string;
+  characterName: string;
   color?: string;
   isSelected: boolean;
-  onSelectUser: () => void;
+  onSelectPlayer: () => void;
 }
 
-export const UserVote: FC<Props> = ({
-  username,
+export const PlayerVote: FC<Props> = ({
+  characterName,
   color,
   isSelected,
-  onSelectUser,
+  onSelectPlayer,
 }) => {
   return (
     <Stack sx={styles.container}>
       <Stack sx={styles.usernameContainer}>
         <Divider />
         <Stack sx={styles.username}>
-          <User username={username} color={color} />
+          <Player characterName={characterName} color={color} />
         </Stack>
         <Divider />
       </Stack>
-      <ToggleButton value="check" selected={isSelected} onClick={onSelectUser}>
+      <ToggleButton
+        value="check"
+        selected={isSelected}
+        onClick={onSelectPlayer}
+      >
         <Typography>{text.general.bot}</Typography>
       </ToggleButton>
     </Stack>
