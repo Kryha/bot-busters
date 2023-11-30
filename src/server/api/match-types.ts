@@ -14,6 +14,7 @@ export interface ChatMessagePayload {
   sentAt: number; // unix time
 }
 
+// TODO: there might be leakage, Someone could just read the Component state and infer who's a bot directly.
 export interface PlayerType {
   userId: string;
   characterId: number;

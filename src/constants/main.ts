@@ -15,11 +15,3 @@ export const FONT_SIZE = 16;
 export const COEFFICIENT = 14;
 
 export const CHIP_TIMEOUT = 4000;
-
-// export const Characters: Record<number, Character> = {
-//   1: { id: 1, name: "orange orangutan", color: "orange" },
-//   2: { id: 2, name: "brown bear", color: "brown" },
-//   3: { id: 3, name: "green gator", color: "green" },
-//   4: { id: 4, name: "pink panda", color: "pink" },
-//   5: { id: 5, name: "blue bird", color: "blue" },
-// };

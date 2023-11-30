@@ -10,8 +10,3 @@ export interface MessageData {
   message: ChatMessage;
   character: { name: string; color: string };
 }
-
-// export type Player = {
-//   username: string;
-//   score: number;
-// };
