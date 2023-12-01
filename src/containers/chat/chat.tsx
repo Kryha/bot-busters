@@ -31,7 +31,7 @@ export const Chat: FC<Props> = ({ roomId, room }) => {
   const sendMessage = api.match.sendMessage.useMutation();
 
   const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState<ChatMessagePayload[]>([]);
+  const [messages, setMessages] = useState<ChatMessagePayload[]>(room.messages);
 
   const appendMessage = (newMessage: ChatMessagePayload) => {
     setMessages((prev) => [newMessage, ...prev]);

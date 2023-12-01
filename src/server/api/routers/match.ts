@@ -56,10 +56,13 @@ export const matchRouter = createTRPCRouter({
       const { message, sentAt, roomId } = input;
       const sender = ctx.session.user.id;
 
-      verifyPlayer(sender, input.roomId);
+      const { room } = verifyPlayer(sender, input.roomId);
 
       const payload: ChatMessagePayload = { sender, message, sentAt };
+
+      room.messages.push(payload);
       ee.emit(matchEvent(roomId), payload);
+
       return payload;
     }),
 

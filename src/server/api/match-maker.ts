@@ -170,7 +170,7 @@ const saveScore = async () => {
 
     const roomsToStore = Array.from(roomsToArchive.entries()).reduce(
       (acc, [roomId, room]) => {
-        return [...acc, { id: roomId, room }];
+        return [...acc, { id: roomId, room: { ...room, messages: [] } }];
       },
       [] as { id: string; room: MatchRoom }[]
     );
