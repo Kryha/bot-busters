@@ -12,11 +12,17 @@ import { styles } from "./styles.js";
 interface Props {
   room: MatchRoom;
   localPlayer: PlayerType;
-  onVote: (selectedUserIds: string[]) => void;
+  isVoteEnabled: boolean;
+  onVote: (selectedUserIds: string[]) => Promise<void>;
 }
 
-export const PlayersOthers: FC<Props> = ({ room, localPlayer, onVote }) => {
-  const [disable, setDisabled] = useState(false);
+export const PlayersOthers: FC<Props> = ({
+  room,
+  localPlayer,
+  isVoteEnabled,
+  onVote,
+}) => {
+  const [disable, setDisabled] = useState(!isVoteEnabled);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const { stage, players, votingAt } = room;
 
@@ -34,10 +40,13 @@ export const PlayersOthers: FC<Props> = ({ room, localPlayer, onVote }) => {
     });
   };
 
-  const handleVote = () => {
-    // TODO: should be disabled also if user already voted or user never sent a message
-    setDisabled(true);
-    onVote(selectedIds);
+  const handleVote = async () => {
+    try {
+      setDisabled(true);
+      await onVote(selectedIds);
+    } catch (error) {
+      setDisabled(false);
+    }
   };
 
   const intro =
@@ -71,7 +80,7 @@ export const PlayersOthers: FC<Props> = ({ room, localPlayer, onVote }) => {
             <Button
               variant="contained"
               disabled={disable}
-              onClick={() => handleVote()}
+              onClick={() => void handleVote()}
             >
               {text.general.confirm}
             </Button>

@@ -61,9 +61,13 @@ const MatchInternal: FC<Props> = ({ roomId, session }) => {
     0
   );
 
-  const handleVote = (selectedUserIds: string[]) => {
-    // TODO: don't allow calling if user never sent a message
-    vote.mutate({ selectedUserIds, roomId });
+  const isVoteEnabled = !!room.messages.find(
+    (message) => message.sender === localPlayer.userId
+  );
+
+  const handleVote = async (selectedUserIds: string[]) => {
+    if (!isVoteEnabled) return;
+    await vote.mutateAsync({ selectedUserIds, roomId });
   };
 
   const splashVariant = room.stage === "results" ? undefined : room.stage;
@@ -71,7 +75,12 @@ const MatchInternal: FC<Props> = ({ roomId, session }) => {
   return (
     <Layout splashScreenVariant={splashVariant}>
       <OverviewLayout matchStage={room.stage}>
-        <Players room={room} localPlayer={localPlayer} onVote={handleVote} />
+        <Players
+          room={room}
+          localPlayer={localPlayer}
+          isVoteEnabled={isVoteEnabled}
+          onVote={handleVote}
+        />
 
         {room.stage === "results" && (
           <Score

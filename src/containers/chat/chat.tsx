@@ -80,17 +80,17 @@ export const Chat: FC<Props> = ({ roomId, room }) => {
     }
   };
 
-  const isDisabled = stage !== "chat";
+  const isChatDisabled = stage !== "chat";
 
   return (
-    <Stack component="section" sx={styles.section(isDisabled)}>
+    <Stack component="section" sx={styles.section(isChatDisabled)}>
       <Messages messageData={messageData} />
       <Timer time={room.createdAt} duration={CHAT_TIME_MS} />
       <InputField
         value={message}
         onChange={(e) => setMessage(e.target.value)}
         onClick={() => handleSend(message)}
-        disabled={isDisabled}
+        disabled={isChatDisabled}
         onKeyDown={(e) => handleKeyDown(e)}
       />
     </Stack>

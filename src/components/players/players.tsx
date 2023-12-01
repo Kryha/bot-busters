@@ -10,15 +10,26 @@ import { styles } from "./styles.js";
 interface Props {
   room: MatchRoom;
   localPlayer: PlayerType;
-  onVote: (selectedUserIds: string[]) => void;
+  isVoteEnabled: boolean;
+  onVote: (selectedUserIds: string[]) => Promise<void>;
 }
 
-export const Players: FC<Props> = ({ room, localPlayer, onVote }) => {
+export const Players: FC<Props> = ({
+  room,
+  localPlayer,
+  isVoteEnabled,
+  onVote,
+}) => {
   return (
     <Stack sx={styles.container}>
       <PlayerLocal localPlayer={localPlayer} />
       <Divider sx={styles.divider} />
-      <PlayersOthers room={room} localPlayer={localPlayer} onVote={onVote} />
+      <PlayersOthers
+        room={room}
+        localPlayer={localPlayer}
+        isVoteEnabled={isVoteEnabled}
+        onVote={onVote}
+      />
     </Stack>
   );
 };
