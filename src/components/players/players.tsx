@@ -2,10 +2,10 @@ import { type FC } from "react";
 import { Divider, Stack } from "@mui/material";
 
 import { type MatchRoom, type PlayerType } from "~/server/api/match-types.js";
+import { PlayerLocal } from "~/components/players/player-local/index.js";
+import { PlayersOthers } from "~/components/players/players-others/index.js";
 
 import { styles } from "./styles.js";
-import { PlayerLocal } from "src/components/players/player-local";
-import { PlayersOthers } from "src/components/players/players-others";
 
 interface Props {
   room: MatchRoom;

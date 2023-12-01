@@ -14,15 +14,18 @@ import { db } from "~/server/db/index.js";
 import { matches as matchesTable, users } from "~/server/db/schema.js";
 
 import type {
+  CharacterId,
   MatchEventType,
   MatchRoom,
   PlayerType as Player,
   ReadyToPlayPayload,
 } from "./match-types.js";
-import { CHARACTERS } from "~/constants/index.js";
 
 export const ee = new EventEmitter();
+
 export const lobbyQueue: string[] = [];
+
+export const matches = new Map<string, MatchRoom>();
 
 export const matchEvent = (
   roomId: string,
@@ -31,65 +34,54 @@ export const matchEvent = (
   return `chat_${roomId}_${eventType}`;
 };
 
-export const matches = new Map<string, MatchRoom>();
-const assignedCharacterIds = new Set<number>();
-const generatePlayer = (userId: string): Player => {
-  const characterId = assignCharacterId();
+const generatePlayer = (
+  userId: string,
+  availableIds: CharacterId[]
+): Player => {
+  const characterId = availableIds.pop();
+
+  if (!characterId) throw new Error("User generation failed: too many players");
+
   return {
     userId,
-    characterId: characterId,
+    characterId,
     score: 0,
     isBot: false, // TODO: set to correct value
     isScoreSaved: false,
     botsBusted: 0,
     correctGuesses: 0,
-    votes: [],
   };
 };
 
-const assignCharacterId = (): number => {
-  const availableCharacterIds = Object.keys(CHARACTERS).filter(
-    (id) => !assignedCharacterIds.has(Number(id))
-  );
-
-  if (availableCharacterIds.length === 0) {
-    throw new Error("No available characters.");
-  }
-
-  const randomCharacterId =
-    availableCharacterIds[
-      Math.floor(Math.random() * availableCharacterIds.length)
-    ];
-
-  assignedCharacterIds.add(Number(randomCharacterId));
-
-  return Number(randomCharacterId);
-};
-
 const makeMatch = () => {
-  try {
-    if (lobbyQueue.length < env.PLAYERS_PER_MATCH) return;
+  if (lobbyQueue.length < env.PLAYERS_PER_MATCH) return;
 
-    const playerIds = lobbyQueue.splice(0, env.PLAYERS_PER_MATCH);
+  const availableCharacterIds: CharacterId[] = ["1", "2", "3", "4", "5"];
 
-    const roomId = uuid();
-
-    matches.set(roomId, {
-      players: playerIds.map((id) => generatePlayer(id)),
-      stage: "chat",
-      arePointsCalculated: false,
-      createdAt: Date.now(),
-      votingAt: Date.now() + CHAT_TIME_MS,
-    });
-
-    ee.emit("readyToPlay", {
-      roomId,
-      players: playerIds,
-    } satisfies ReadyToPlayPayload);
-    ee.emit("queueUpdate");
-  } catch (error) {
-    console.error("Match making error:", error);
+  if (availableCharacterIds.length < env.PLAYERS_PER_MATCH) {
+    throw new Error(
+      "Match making error: characters amount is lower than the amount of players per match"
+    );
   }
+
+  const playerIds = lobbyQueue.splice(0, env.PLAYERS_PER_MATCH);
+
+  const roomId = uuid();
+
+  matches.set(roomId, {
+    players: playerIds.map((id) => generatePlayer(id, availableCharacterIds)),
+    messages: [],
+    stage: "chat",
+    arePointsCalculated: false,
+    createdAt: Date.now(),
+    votingAt: Date.now() + CHAT_TIME_MS,
+  });
+
+  ee.emit("readyToPlay", {
+    roomId,
+    players: playerIds,
+  } satisfies ReadyToPlayPayload);
+  ee.emit("queueUpdate");
 };
 
 const updateRooms = () => {

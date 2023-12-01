@@ -10,15 +10,19 @@ export interface QueueUpdatePayload {
   queueLength: number;
 }
 
-export interface ChatMessagePayload {
-  sender: string;
-  message: string;
-  sentAt: number; // unix time
-}
+export const chatMessagePayloadSchema = z.object({
+  sender: z.string().uuid(),
+  message: z.string(),
+  sentAt: z.number(), // unix time
+});
+export type ChatMessagePayload = z.infer<typeof chatMessagePayloadSchema>;
+
+export const characterIdSchema = z.enum(["1", "2", "3", "4", "5"]);
+export type CharacterId = z.infer<typeof characterIdSchema>;
 
 export const playerSchema = z.object({
   userId: z.string().uuid(),
-  characterId: z.number(),
+  characterId: characterIdSchema,
   score: z.number(),
   isBot: z.boolean().optional(), // `optional` makes sure we can hide this value when not in `results` stage
   isScoreSaved: z.boolean(),
@@ -33,6 +37,7 @@ export type MatchStage = z.infer<typeof matchStageSchema>;
 
 export const matchRoomSchema = z.object({
   players: z.array(playerSchema),
+  messages: z.array(chatMessagePayloadSchema),
   stage: matchStageSchema,
   arePointsCalculated: z.boolean(),
   createdAt: z.number(), // unix timestamp

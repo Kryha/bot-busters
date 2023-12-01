@@ -1,13 +1,13 @@
 import { Button, Stack, Typography } from "@mui/material";
 import { type FC, useState } from "react";
 
-import { VOTING_TIME_MS } from "~/constants";
-import { text } from "~/assets/text";
+import { VOTING_TIME_MS } from "~/constants/index.js";
+import { text } from "~/assets/text/index.js";
 import { type MatchRoom, type PlayerType } from "~/server/api/match-types.js";
-import { Timer } from "~/components/timer";
+import { Timer } from "~/components/timer/index.js";
+import { PlayerData } from "~/components/players/player-data/index.js";
 
 import { styles } from "./styles.js";
-import { PlayerData } from "~/components/players/player-data";
 
 interface Props {
   room: MatchRoom;
@@ -35,6 +35,7 @@ export const PlayersOthers: FC<Props> = ({ room, localPlayer, onVote }) => {
   };
 
   const handleVote = () => {
+    // TODO: should be disabled also if user already voted or user never sent a message
     setDisabled(true);
     onVote(selectedIds);
   };
@@ -43,7 +44,7 @@ export const PlayersOthers: FC<Props> = ({ room, localPlayer, onVote }) => {
     stage === "results" ? text.match.whosBot : text.match.otherParticipants;
 
   const otherPlayers = players.filter(
-    (player) => player.userId !== localPlayer.userId,
+    (player) => player.userId !== localPlayer.userId
   );
 
   return (
