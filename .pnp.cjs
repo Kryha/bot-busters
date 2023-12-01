@@ -28,7 +28,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         [null, {\
           "packageLocation": "./",\
           "packageDependencies": [\
-            ["@aleohq/sdk", "npm:0.6.5"],\
+            ["@aleohq/sdk", "npm:0.6.9"],\
             ["@demox-labs/aleo-wallet-adapter-base", "npm:0.0.19"],\
             ["@demox-labs/aleo-wallet-adapter-leo", "npm:0.0.18"],\
             ["@demox-labs/aleo-wallet-adapter-react", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:0.0.18"],\
@@ -110,10 +110,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@aleohq/sdk", [\
-        ["npm:0.6.5", {\
-          "packageLocation": "./.yarn/cache/@aleohq-sdk-npm-0.6.5-847348dfb5-cdad5233dd.zip/node_modules/@aleohq/sdk/",\
+        ["npm:0.6.9", {\
+          "packageLocation": "./.yarn/cache/@aleohq-sdk-npm-0.6.9-b0368597eb-df4246c5f0.zip/node_modules/@aleohq/sdk/",\
           "packageDependencies": [\
-            ["@aleohq/sdk", "npm:0.6.5"],\
+            ["@aleohq/sdk", "npm:0.6.9"],\
             ["@aleohq/wasm", "npm:0.6.6"],\
             ["comlink", "npm:4.4.1"],\
             ["mime", "npm:3.0.0"],\
@@ -4662,7 +4662,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./",\
           "packageDependencies": [\
             ["bot-busters", "workspace:."],\
-            ["@aleohq/sdk", "npm:0.6.5"],\
+            ["@aleohq/sdk", "npm:0.6.9"],\
             ["@demox-labs/aleo-wallet-adapter-base", "npm:0.0.19"],\
             ["@demox-labs/aleo-wallet-adapter-leo", "npm:0.0.18"],\
             ["@demox-labs/aleo-wallet-adapter-react", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:0.0.18"],\

@@ -19,15 +19,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aleohq/sdk@npm:0.6.5":
-  version: 0.6.5
-  resolution: "@aleohq/sdk@npm:0.6.5"
+"@aleohq/sdk@npm:^0.6.9":
+  version: 0.6.9
+  resolution: "@aleohq/sdk@npm:0.6.9"
   dependencies:
     "@aleohq/wasm": ^0.6.0
     comlink: ^4.4.1
     mime: ^3.0.0
     sync-request: ^6.1.0
-  checksum: cdad5233dd5e9261690ea843da4e39ae30c3a46e5b8ae17abbb0a10e15feaf511b711259709efb702ac32411ab656ac637a718e1df276506aa32cc4174cbc437
+  checksum: df4246c5f0906f039d2825380c7758589b89dfcabf56bf8da72e946ddd66c027e0cf372aecefc77792e8d9a981ec1185a5b489728741b1a45309dffa4079bd05
   languageName: node
   linkType: hard
 
@@ -3232,7 +3232,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "bot-busters@workspace:."
   dependencies:
-    "@aleohq/sdk": 0.6.5
+    "@aleohq/sdk": ^0.6.9
     "@demox-labs/aleo-wallet-adapter-base": ^0.0.19
     "@demox-labs/aleo-wallet-adapter-leo": ^0.0.18
     "@demox-labs/aleo-wallet-adapter-react": ^0.0.18

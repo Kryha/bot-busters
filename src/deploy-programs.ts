@@ -9,10 +9,11 @@ import {
 
 const deploy = async () => {
   try {
-    const ALEO_NETWORK_URL = process.env.ALEO_NETWORK_URL;
-    const ALEO_PRIVATE_KEY = process.env.ALEO_PRIVATE_KEY;
+    const ALEO_NETWORK_URL = process.env.VITE_NETWORK_URL;
+    const ALEO_PRIVATE_KEY = process.env.VITE_PRIVATE_KEY;
+    const ALEO_PROGRAM_NAME = process.env.VITE_PROGRAM_NAME;
 
-    if (!ALEO_NETWORK_URL || !ALEO_PRIVATE_KEY) {
+    if (!ALEO_NETWORK_URL || !ALEO_PRIVATE_KEY || !ALEO_PROGRAM_NAME) {
       throw new Error("Missing env variables");
     }
 
@@ -39,31 +40,30 @@ const deploy = async () => {
     const program = await readFile(
       "./programs/leaderboard/build/main.aleo",
       "utf-8"
-    );
+    ).then((p) => p.replaceAll("leaderboard.aleo", ALEO_PROGRAM_NAME));
 
     const txId = await programManager.deploy(program, fee, false);
 
-    if (txId instanceof Error) {
-      console.error(txId);
-      return;
-    }
-
-    console.log("Deployment successful!");
+    if (txId instanceof Error) throw txId;
 
     // Verify the transaction was successful
-    const transaction = await programManager.networkClient.getTransaction(txId);
+    // const transaction = await programManager.networkClient.getTransaction(txId);
 
-    if (transaction instanceof Error) {
-      console.error(transaction);
-      return;
-    }
+    // if (transaction instanceof Error) {
+    //   console.error(transaction);
+    //   return;
+    // }
 
-    console.log(transaction);
-    console.log("Deployment successful!");
+    // console.log(transaction);
+
+    console.log(
+      "Deployment successful! Check your wallet and wait a couple of seconds for your transaction to complete."
+    );
   } catch (error) {
     console.error(error);
     return;
   }
 };
 
-void deploy().then(() => process.exit());
+await deploy();
+process.exit();
