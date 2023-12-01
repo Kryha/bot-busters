@@ -1,5 +1,5 @@
-import { chatRouter, lobbyRouter } from "@/server/api/routers";
-import { createTRPCRouter } from "@/server/api/trpc";
+import { userRouter, matchRouter, lobbyRouter } from "./routers/index.js";
+import { createTRPCRouter } from "./trpc.js";
 
 /**
  * This is the primary router for your server.
@@ -8,7 +8,8 @@ import { createTRPCRouter } from "@/server/api/trpc";
  */
 export const appRouter = createTRPCRouter({
   lobby: lobbyRouter,
-  chat: chatRouter,
+  match: matchRouter,
+  user: userRouter,
 });
 
 // export type definition of API

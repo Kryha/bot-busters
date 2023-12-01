@@ -1,11 +1,11 @@
-/* eslint-disable @typescript-eslint/unbound-method */
 import { Button } from "@mui/material";
-import { text } from "@/assets/text";
-import { useWallet } from "@demox-labs/aleo-wallet-adapter-react";
 import { signOut } from "next-auth/react";
 
+import { text } from "~/assets/text/index.js";
+import { useBBWallet } from "~/service/bb-wallet.js";
+
 export const LogoutButton = () => {
-  const { disconnect } = useWallet();
+  const { disconnect } = useBBWallet();
 
   const logout = async () => {
     await signOut();

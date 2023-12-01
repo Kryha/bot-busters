@@ -1,10 +1,5 @@
-import { Page } from "@/layouts";
-import { Landing } from "@/features";
+import { Homepage } from "~/containers/home/index.js";
 
 export default function Home() {
-  return (
-    <Page>
-      <Landing />
-    </Page>
-  );
+  return <Homepage />;
 }

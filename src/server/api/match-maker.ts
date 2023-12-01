@@ -1,36 +1,68 @@
-import { CHAT_TIME_MS, MATCH_TIME_MS } from "@/constants";
-import { env } from "@/env.cjs";
 import { EventEmitter } from "events";
 import { v4 as uuid } from "uuid";
-import type {
-  ChatEventType,
-  ChatRoom,
-  Player,
-  ReadyToPlayPayload,
-} from "@/server/api/match-types";
-import { getRandomInt } from "@/utils/math";
-import { db } from "@/server/db";
-import { users } from "@/server/db/schema";
 import { sql } from "drizzle-orm";
+
+import {
+  CHAT_TIME_MS,
+  MATCH_TIME_MS,
+  VOTING_TIME_MS,
+} from "~/constants/main.js";
+import { env } from "~/env.mjs";
+import { db } from "~/server/db/index.js";
+import { matches as matchesTable, users } from "~/server/db/schema.js";
+
+import type {
+  MatchEventType,
+  MatchRoom,
+  PlayerType as Player,
+  ReadyToPlayPayload,
+} from "./match-types.js";
+import { CHARACTERS } from "~/constants/index.js";
 
 export const ee = new EventEmitter();
 export const lobbyQueue: string[] = [];
 
-export const chatEvent = (
+export const matchEvent = (
   roomId: string,
-  eventType: ChatEventType = "message"
+  eventType: MatchEventType = "message",
 ) => {
   return `chat_${roomId}_${eventType}`;
 };
 
-export const chatRooms = new Map<string, ChatRoom>();
+export const matches = new Map<string, MatchRoom>();
+const assignedCharacterIds = new Set<number>();
+const generatePlayer = (userId: string): Player => {
+  const characterId = assignCharacterId();
+  return {
+    userId,
+    characterId: characterId,
+    score: 0,
+    isBot: false, // TODO: set to correct value
+    isScoreSaved: false,
+    botsBusted: 0,
+    correctGuesses: 0,
+    votes: [],
+  };
+};
 
-const generatePlayer = (userId: string): Player => ({
-  userId,
-  score: 0,
-  isBot: false, // TODO: set to correct value
-  isScoreSaved: false,
-});
+const assignCharacterId = (): number => {
+  const availableCharacterIds = Object.keys(CHARACTERS).filter(
+    (id) => !assignedCharacterIds.has(Number(id)),
+  );
+
+  if (availableCharacterIds.length === 0) {
+    throw new Error("No available characters.");
+  }
+
+  const randomCharacterId =
+    availableCharacterIds[
+      Math.floor(Math.random() * availableCharacterIds.length)
+    ];
+
+  assignedCharacterIds.add(Number(randomCharacterId));
+
+  return Number(randomCharacterId);
+};
 
 const makeMatch = () => {
   try {
@@ -40,13 +72,14 @@ const makeMatch = () => {
 
     const roomId = uuid();
 
-    chatRooms.set(roomId, {
+    matches.set(roomId, {
       players: playerIds.map((id) => generatePlayer(id)),
       stage: "chat",
+      arePointsCalculated: false,
       createdAt: Date.now(),
+      votingAt: Date.now() + CHAT_TIME_MS,
     });
 
-    // TODO: update event
     ee.emit("readyToPlay", {
       roomId,
       players: playerIds,
@@ -58,56 +91,103 @@ const makeMatch = () => {
 };
 
 const updateRooms = () => {
-  chatRooms.forEach((room, roomId) => {
+  matches.forEach((room, roomId) => {
     const roomAge = Date.now() - room.createdAt;
 
     if (roomAge >= MATCH_TIME_MS) {
-      chatRooms.delete(roomId);
+      matches.delete(roomId);
       return;
     }
 
     if (room.stage === "chat" && roomAge >= CHAT_TIME_MS) {
-      // TODO: calculate score based on votes
-      const players = room.players.map((player) => ({
-        ...player,
-        score: getRandomInt(25),
-      }));
+      room.stage = "voting";
+      ee.emit(matchEvent(roomId, "stageChange"));
+      // TODO: get scores
+    }
+    if (room.stage === "voting" && roomAge >= CHAT_TIME_MS + VOTING_TIME_MS) {
+      room.stage = "results";
 
-      ee.emit(chatEvent(roomId, "timeout"));
-      // TODO: set stage to `voting`, set it to `results` after voting is complete and delete after score has been calculated
-      chatRooms.set(roomId, { ...room, players, stage: "results" });
+      // score calculation
+      const players = room.players.map((player) => {
+        let score = 0;
+        let correctGuesses = 0;
+        let botsBusted = 0;
+
+        const otherPlayers = room.players.filter(
+          (p) => p.userId !== player.userId,
+        );
+
+        otherPlayers.forEach((p) => {
+          const isVoted = player.votes.includes(p.userId);
+          const hasGuessed = p.isBot ? isVoted : !isVoted;
+
+          if (hasGuessed) {
+            if (p.isBot) {
+              botsBusted += 1;
+            }
+
+            correctGuesses += 1;
+            // TODO: update score calculation based on final ruleset
+            score += 5;
+          }
+        });
+
+        return { ...player, score, correctGuesses, botsBusted };
+      });
+
+      matches.set(roomId, {
+        ...room,
+        players,
+        stage: "results",
+        arePointsCalculated: true,
+      });
+      ee.emit(matchEvent(roomId, "stageChange"));
     }
   });
 };
 
-// TODO: also store match details in the db
 const saveScore = async () => {
-  const roomsToDelete = new Set<string>();
+  const roomsToArchive = new Map<string, MatchRoom>();
 
-  const promises = Array.from(chatRooms.entries()).flatMap(([roomId, room]) => {
-    if (room.stage !== "results") return;
-    roomsToDelete.add(roomId);
+  const promises = Array.from(matches.entries()).flatMap(([roomId, room]) => {
+    if (room.stage !== "results" || !room.arePointsCalculated) return;
+    roomsToArchive.set(roomId, room);
 
     return room.players.map(async (player) => {
       try {
         if (player.isScoreSaved) return;
         player.isScoreSaved = true;
         await db.execute(
-          sql`UPDATE ${users} SET score = score + ${player.score} WHERE ${users.id} = ${player.userId}`
+          sql`UPDATE ${users} SET score = score + ${player.score} WHERE ${users.id} = ${player.userId}`,
         );
       } catch (error) {
         player.isScoreSaved = false;
+        roomsToArchive.delete(roomId);
         console.error("Score update error:", error);
-        roomsToDelete.delete(roomId);
       }
     });
   });
 
-  await Promise.all(promises);
+  try {
+    await Promise.all(promises);
 
-  roomsToDelete.forEach((roomId) => {
-    chatRooms.delete(roomId);
-  });
+    const roomsToStore = Array.from(roomsToArchive.entries()).reduce(
+      (acc, [roomId, room]) => {
+        return [...acc, { id: roomId, room }];
+      },
+      [] as { id: string; room: MatchRoom }[],
+    );
+
+    if (roomsToStore.length) {
+      await db.insert(matchesTable).values(roomsToStore);
+    }
+
+    roomsToArchive.forEach((_room, roomId) => {
+      matches.delete(roomId);
+    });
+  } catch (error) {
+    console.error("Room archive error:", error);
+  }
 };
 
 setInterval(() => {
@@ -115,3 +195,5 @@ setInterval(() => {
   void saveScore();
   makeMatch();
 }, 10000);
+
+// TODO: add anonymous user cleanup

@@ -1,5 +1,5 @@
 import { SvgIcon } from "@mui/material";
-import { styles } from "./styles";
+import { styles } from "./styles.js";
 
 export const Top100SVG = () => {
   return (

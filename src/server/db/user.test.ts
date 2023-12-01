@@ -1,73 +1,85 @@
 /*
  * @jest-environment node
  */
-import * as schema from "./schema";
-import { closePostgressConnection, db } from "./index";
-import { eq } from "drizzle-orm";
+import { closeDbConnection } from "~/server/db/index.js";
 
-describe("Users CRUD", () => {
-  let testUser: schema.User;
+import {
+  insertAnonymousUser,
+  setUserScore,
+  deleteAllUsers,
+  insertVerifiedUser,
+} from "./user";
+
+describe("Users CRUD API", () => {
+  beforeEach(async () => {
+    await deleteAllUsers();
+  });
 
   afterAll(async () => {
-    await closePostgressConnection();
+    await closeDbConnection();
   });
 
-  it("Should insert a new user", async () => {
-    const newUsers = await db.insert(schema.users).values({}).returning();
-    const newUser = newUsers.at(0);
-    if (!newUser) return;
-    testUser = newUser;
+  it("Should insert a anonymous user", async () => {
+    const newAnonymousUser = await insertAnonymousUser();
+    if (!newAnonymousUser) return;
 
-    expect(testUser).toBeDefined();
-  });
-
-  it("Should update the username ", async () => {
-    if (!testUser.id) return;
-
-    const updatedUsers = await db
-      .update(schema.users)
-      .set({ username: "testUserName" })
-      .where(eq(schema.users.id, testUser.id))
-      .returning();
-
-    const updatedUser = updatedUsers.at(0);
-
-    if (!updatedUser) return;
-
-    expect(updatedUser.username).toBe("testUserName");
+    expect(newAnonymousUser).toBeDefined();
   });
 
   it("Should update the score ", async () => {
-    if (!testUser.id) return;
+    const newAnonymousUser = await insertAnonymousUser();
+    if (!newAnonymousUser?.id) return;
 
-    const updatedUsers = await db
-      .update(schema.users)
-      .set({ score: 1 })
-      .where(eq(schema.users.id, testUser.id))
-      .returning();
+    const updatedUser = await setUserScore(newAnonymousUser.id, 1);
 
-    const updatedUser = updatedUsers.at(0);
-
+    expect(updatedUser).toBeDefined();
     if (!updatedUser) return;
 
     expect(updatedUser.score).toBe(1);
   });
 
-  it("Sould delete the user", async () => {
-    if (!testUser.id) return;
+  it("Should insert a verified user", async () => {
+    const newVerifiedUser = await insertVerifiedUser(
+      "aleo1rhgdu77hgyqd3xjj8ucu3jj9r2krwz6mnzyd80gncr5fxcwlh5rsvzp9px",
+      "testUserName"
+    );
+    expect(newVerifiedUser).toBeDefined();
+    expect(newVerifiedUser?.address).toBe(
+      "aleo1rhgdu77hgyqd3xjj8ucu3jj9r2krwz6mnzyd80gncr5fxcwlh5rsvzp9px"
+    );
+    expect(newVerifiedUser?.username).toBe("testUserName");
+  });
 
-    await db
-      .delete(schema.users)
-      .where(eq(schema.users.id, testUser.id))
-      .returning();
+  it("Should not insert a verified user with an existing address", async () => {
+    const existingUser = await insertVerifiedUser(
+      "aleo1rhgdu77hgyqd3xjj8ucu3jj9r2krwz6mnzyd80gncr5fxcwlh5rsvzp9px",
+      "testUserName"
+    );
+    expect(existingUser).toBeDefined();
 
-    const deletedUsers = await db
-      .select()
-      .from(schema.users)
-      .where(eq(schema.users.id, testUser.id));
+    const newUser = async () => {
+      return await insertVerifiedUser(
+        "aleo1rhgdu77hgyqd3xjj8ucu3jj9r2krwz6mnzyd80gncr5fxcwlh5rsvzp9px",
+        "testUserName2"
+      );
+    };
+    await expect(newUser()).rejects.toThrow();
+  });
 
-    const deletedUser = deletedUsers.at(0);
+  it("Should not insert a verified user with an existing username", async () => {
+    const existingUser = await insertVerifiedUser(
+      "aleo1rhgdu77hgyqd3xjj8ucu3jj9r2krwz6mnzyd80gncr5fxcwlh5rsvzp9px",
+      "testUserName"
+    );
+    expect(existingUser).toBeDefined();
 
-    expect(deletedUser).toBeUndefined();
+    const newUser = async () => {
+      return await insertVerifiedUser(
+        "aleo1tes78447sw8vq0gyc2vqzwlmcvgg2jwes8d3qdveja2r9dejdqxsuegfts",
+        "testUserName"
+      );
+    };
+
+    await expect(newUser()).rejects.toThrow();
   });
 });

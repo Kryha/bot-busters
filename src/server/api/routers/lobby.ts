@@ -1,17 +1,14 @@
 import { observable } from "@trpc/server/observable";
-import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 
-import { ee, lobbyQueue } from "@/server/api/match-maker";
-import type {
-  QueueUpdatePayload,
-  ReadyToPlayPayload,
-} from "@/server/api/match-types";
+import { createTRPCRouter, protectedProcedure } from "../trpc.js";
+import { ee, lobbyQueue } from "../match-maker.js";
+import type { QueueUpdatePayload, ReadyToPlayPayload } from "../match-types.js";
 
 export const lobbyRouter = createTRPCRouter({
   onQueueUpdate: protectedProcedure.subscription(({ ctx }) => {
     return observable<QueueUpdatePayload>((emit) => {
       const handleEvent = () => {
-        const playerQueuePosition = lobbyQueue.indexOf(ctx.session.id) + 1;
+        const playerQueuePosition = lobbyQueue.indexOf(ctx.session.user.id) + 1;
         // emit data to client
         emit.next({
           playerQueuePosition,
@@ -24,7 +21,7 @@ export const lobbyRouter = createTRPCRouter({
       return () => {
         ee.off("queueUpdate", handleEvent);
 
-        const { id } = ctx.session;
+        const { id } = ctx.session.user;
 
         const index = lobbyQueue.indexOf(id);
         if (index < 0) return;
@@ -33,7 +30,7 @@ export const lobbyRouter = createTRPCRouter({
     });
   }),
   join: protectedProcedure.mutation(({ ctx }) => {
-    const { id } = ctx.session;
+    const { id } = ctx.session.user;
 
     const hasJoined = lobbyQueue.includes(id);
 
@@ -41,7 +38,7 @@ export const lobbyRouter = createTRPCRouter({
       lobbyQueue.push(id);
     }
 
-    const playerQueuePosition = lobbyQueue.indexOf(ctx.session.id) + 1;
+    const playerQueuePosition = lobbyQueue.indexOf(ctx.session.user.id) + 1;
 
     ee.emit("queueUpdate");
     return { playerQueuePosition, queueLength: lobbyQueue.length };
@@ -50,7 +47,7 @@ export const lobbyRouter = createTRPCRouter({
   onReadyToPlay: protectedProcedure.subscription(({ ctx }) => {
     return observable<ReadyToPlayPayload>((emit) => {
       const handleEvent = (payload: ReadyToPlayPayload) => {
-        const isPlayer = payload.players.includes(ctx.session.id);
+        const isPlayer = payload.players.includes(ctx.session.user.id);
 
         if (isPlayer) {
           emit.next(payload);

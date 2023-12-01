@@ -1,2 +1,3 @@
-export * from "./lobby";
-export * from "./chat";
+export * from "./lobby.js";
+export * from "./match.js";
+export * from "./user.js";

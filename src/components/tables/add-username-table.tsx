@@ -1,10 +1,10 @@
 import { Table, TableBody, TableContainer } from "@mui/material";
 
-import { leaderboardData } from "@/constants";
-import { LeaderboardRow } from "./leaderboard-row";
+import { leaderboardData } from "~/constants/index.js";
 
-import { styles } from "./styles";
-import { COLUMN_WIDTH } from "./constants";
+import { RowLeaderboard } from "./components/index.js";
+import { styles } from "./styles.js";
+import { COLUMN_WIDTH } from "./constants.js";
 
 export const AddUsernameTable = () => {
   return (
@@ -21,7 +21,7 @@ export const AddUsernameTable = () => {
         <TableBody>
           {leaderboardData.map((leaderboard, index) => {
             return (
-              <LeaderboardRow key={index} leaderboard={leaderboard} isBlurred />
+              <RowLeaderboard key={index} leaderboard={leaderboard} isBlurred />
             );
           })}
         </TableBody>

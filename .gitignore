@@ -6,6 +6,7 @@
 .pnp.js
 install-state.gz
 .yarn/unplugged
+/.yarn/cache
 
 # testing
 /coverage
@@ -22,6 +23,7 @@ next-env.d.ts
 
 # production
 /build
+/.idea/
 
 # misc
 .DS_Store

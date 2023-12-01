@@ -6,11 +6,13 @@ import {
   TableContainer,
   Typography,
 } from "@mui/material";
-import { text } from "@/assets/text";
-import { leaderboardData } from "@/constants";
-import { COLUMN_WIDTH } from "./constants";
-import { styles } from "./styles";
-import { AddScoreRow, Top100SVG } from "./components";
+
+import { text } from "~/assets/text/index.js";
+import { leaderboardData } from "~/constants/index.js";
+
+import { COLUMN_WIDTH } from "./constants.js";
+import { styles } from "./styles.js";
+import { RowAddScore, Top100SVG } from "./components/index.js";
 
 interface Props {
   isAuthenticated: boolean;
@@ -42,7 +44,7 @@ export const AddScoreTable: FC<Props> = ({
               <col width={COLUMN_WIDTH.md} />
             </colgroup>
             <TableBody sx={styles.addScoreBody(isNotLoggedInOrPlayed)}>
-              <AddScoreRow
+              <RowAddScore
                 leaderboard={leaderboardData[2]}
                 isGamePlayed={isGamePlayed}
                 isAuthenticated={isAuthenticated}
@@ -55,7 +57,7 @@ export const AddScoreTable: FC<Props> = ({
           color="customGrey.main"
           sx={styles.countdown}
         >
-          {text.landing.countdown(countdown)}
+          {text.leaderboard.countdown(countdown)}
         </Typography>
       </Stack>
     </Stack>

@@ -13,10 +13,12 @@ import {
 import { createTRPCNext } from "@trpc/next";
 import { type inferRouterInputs, type inferRouterOutputs } from "@trpc/server";
 import superjson from "superjson";
-import { type AppRouter } from "@/server/api/root";
 import { type NextPageContext } from "next";
-import { env } from "@/env.cjs";
-import { isClient } from "./client";
+
+import { type AppRouter } from "~/server/api/root.js";
+import { env } from "~/env.mjs";
+
+import { isClient } from "./client.js";
 
 const getEndingLink = (ctx: NextPageContext | undefined) => {
   if (!isClient()) {

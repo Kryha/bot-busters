@@ -1,5 +1,3 @@
-import { env } from "@/env.cjs";
-import { uuidToBigInt } from "@/utils/uuid";
 import {
   Account,
   AleoKeyProvider,
@@ -7,6 +5,9 @@ import {
   NetworkRecordProvider,
   ProgramManager,
 } from "@aleohq/sdk";
+
+import { env } from "~/env.mjs";
+import { uuidToBigInt } from "~/utils/uuid.js";
 
 const account = new Account({ privateKey: env.ALEO_PRIVATE_KEY });
 

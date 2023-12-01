@@ -1,5 +1,6 @@
-import { isClient } from "@/utils/client";
 import { useEffect, useState } from "react";
+
+import { isClient } from "~/utils/client.js";
 
 interface ViewportProps {
   width?: number;

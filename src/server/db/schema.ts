@@ -1,21 +1,17 @@
-import { PUBLIC_KEY_LENGTH } from "@/constants";
-import { relations } from "drizzle-orm";
+import { relations, sql } from "drizzle-orm";
 import {
-  date,
   integer,
-  pgTableCreator,
   varchar,
   uuid,
+  pgTableCreator,
+  timestamp,
+  json,
 } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { type z } from "zod";
 
-/**
- * Multi-project schema feature of Drizzle ORM.
- * Use the same database instance for multiple projects.
- *
- * @see https://orm.drizzle.team/docs/goodies#multi-project-schema
- */
+import { PUBLIC_KEY_LENGTH } from "~/constants/index.js";
+
 export const bbPgTable = pgTableCreator((name) => `bot_busters_${name}`);
 
 export const users = bbPgTable("user", {
@@ -23,15 +19,11 @@ export const users = bbPgTable("user", {
   username: varchar("username", { length: 32 }).unique(),
   address: varchar("address", { length: PUBLIC_KEY_LENGTH }),
   score: integer("score").default(0).notNull(),
-  gamesPlayed: integer("gamesPlayed").default(0).notNull(),
   // TODO: add zPass
   // zPass: json("zPass"),
 
-  createdAt: date("createdAt").defaultNow(),
+  createdAt: timestamp("createdAt").default(sql`CURRENT_TIMESTAMP`),
 });
-
-export const userSchema = createInsertSchema(users);
-export type User = z.infer<typeof userSchema>;
 
 export const usersRelations = relations(users, ({ one }) => ({
   rank: one(ranks, {
@@ -40,6 +32,9 @@ export const usersRelations = relations(users, ({ one }) => ({
   }),
 }));
 
+export const userSchema = createInsertSchema(users);
+export type User = z.infer<typeof userSchema>;
+
 export const ranks = bbPgTable("rank", {
   userId: uuid("userId")
     .references(() => users.id)
@@ -47,4 +42,10 @@ export const ranks = bbPgTable("rank", {
   position: integer("position").notNull().unique(),
 });
 
-// TODO: define `match` table for storing old matches
+export const rankSchema = createInsertSchema(ranks);
+export type Rank = z.infer<typeof rankSchema>;
+
+export const matches = bbPgTable("match", {
+  id: uuid("id").primaryKey(),
+  room: json("room").notNull(),
+});

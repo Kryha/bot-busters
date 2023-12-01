@@ -1,27 +1,22 @@
-import { useState, type FC } from "react";
+import { type FC } from "react";
 import { useRouter } from "next/router";
-import { Typography, Button, Stack } from "@mui/material";
+import { CircularProgress, Typography } from "@mui/material";
 
-import { Page } from "@/layouts";
-import { api } from "@/utils/api";
-import { pages } from "@/utils/router";
-import { text } from "@/assets/text";
+import { LobbyLayout as Layout } from "~/components/lobby-layout/index.js";
+import { api } from "~/utils/api.js";
+import { pages } from "~/router.js";
+import { text } from "~/assets/text/index.js";
 
 const Lobby: FC = () => {
-  const router = useRouter();
-
-  const [queueLength, setQueueLength] = useState(0);
-  const [myPlaceInQueue, setMyPlaceInQueue] = useState(0);
-
+  const { push } = useRouter();
   const join = api.lobby.join.useMutation();
 
   api.lobby.onQueueUpdate.useSubscription(undefined, {
     onStarted() {
       join.mutate();
     },
-    onData(payload) {
-      setQueueLength(payload.queueLength);
-      setMyPlaceInQueue(payload.playerQueuePosition);
+    onData(_payload) {
+      // TODO: Add data handler
     },
     onError(error) {
       console.error("Queue update error:", error);
@@ -30,7 +25,7 @@ const Lobby: FC = () => {
 
   api.lobby.onReadyToPlay.useSubscription(undefined, {
     onData({ roomId }) {
-      void router.push({ pathname: pages.match, query: { roomId } });
+      void push({ pathname: pages.match, query: { roomId } });
     },
     onError(error) {
       console.error("Ready to play error:", error);
@@ -38,18 +33,10 @@ const Lobby: FC = () => {
   });
 
   return (
-    <Page>
-      <Typography variant="h1">Lobby</Typography>
-      <Stack flexDirection="row" mt={2} gap={1}>
-        <Button variant="text" onClick={() => void router.push(pages.home)}>
-          {text.lobby.leave}
-        </Button>
-
-        {/* TODO: maybe don't show queue length */}
-        <Typography>{text.lobby.peopleInQueue(queueLength)}</Typography>
-        <Typography>{text.lobby.placeInQueue(myPlaceInQueue)}</Typography>
-      </Stack>
-    </Page>
+    <Layout>
+      <Typography variant="h5">{text.lobby.waiting}</Typography>
+      <CircularProgress />
+    </Layout>
   );
 };
 

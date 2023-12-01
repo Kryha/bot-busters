@@ -8,3 +8,27 @@ a {
   color: inherit;
   text-decoration: none;
 }
+
+/* Animations */
+
+@keyframes infinite_text_primary {
+  0% {
+    transform: translateX(50%);
+    -webkit-transform: translateX(50%);
+  }
+  100% {
+    transform: translateX(-150%);
+    -webkit-transform: translateX(-150%);
+  }
+}
+
+@keyframes infinite_text_secondary {
+  0% {
+    transform: translateX(0%);
+    -webkit-transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-200%);
+    -webkit-transform: translateX(-200%);
+  }
+}

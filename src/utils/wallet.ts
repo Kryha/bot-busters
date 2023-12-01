@@ -1,5 +1,6 @@
-import { AUTH_SIGN_MESSAGE } from "@/constants";
 import { Address, Signature } from "@aleohq/sdk";
+
+import { AUTH_SIGN_MESSAGE } from "~/constants/index.js";
 
 export const verifySignature = (
   address: string,

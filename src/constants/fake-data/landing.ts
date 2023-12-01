@@ -1,4 +1,4 @@
-import { type UserStatsData } from "@/types";
+import { type UserStatsData } from "~/types/index.js";
 
 export const fakeUsername = "CharlieBrown";
 

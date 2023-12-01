@@ -6,7 +6,7 @@ export const useMinidenticonImg = (username: string) => {
     () =>
       "data:image/svg+xml;utf8," +
       encodeURIComponent(minidenticon(username, 90)),
-    [username]
+    [username],
   );
   return svgURI;
 };
