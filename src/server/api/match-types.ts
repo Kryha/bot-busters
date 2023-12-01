@@ -16,16 +16,15 @@ export interface ChatMessagePayload {
   sentAt: number; // unix time
 }
 
-// TODO: there might be leakage, Someone could just read the Component state and infer who's a bot directly.
 export const playerSchema = z.object({
   userId: z.string().uuid(),
   characterId: z.number(),
   score: z.number(),
-  isBot: z.boolean().optional(),
+  isBot: z.boolean().optional(), // `optional` makes sure we can hide this value when not in `results` stage
   isScoreSaved: z.boolean(),
   botsBusted: z.number(),
   correctGuesses: z.number(),
-  votes: z.array(z.string().uuid()), // array of voted ids
+  votes: z.array(z.string().uuid()).optional(), // array of voted ids
 });
 export type PlayerType = z.infer<typeof playerSchema>;
 

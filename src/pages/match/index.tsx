@@ -62,6 +62,7 @@ const MatchInternal: FC<Props> = ({ roomId, session }) => {
   );
 
   const handleVote = (selectedUserIds: string[]) => {
+    // TODO: don't allow calling if user never sent a message
     vote.mutate({ selectedUserIds, roomId });
   };
 

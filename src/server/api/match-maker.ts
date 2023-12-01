@@ -5,6 +5,8 @@ import { sql } from "drizzle-orm";
 import {
   CHAT_TIME_MS,
   MATCH_TIME_MS,
+  POINTS_BOT_BUSTED,
+  POINTS_USER_BUSTED,
   VOTING_TIME_MS,
 } from "~/constants/main.js";
 import { env } from "~/env.mjs";
@@ -24,7 +26,7 @@ export const lobbyQueue: string[] = [];
 
 export const matchEvent = (
   roomId: string,
-  eventType: MatchEventType = "message",
+  eventType: MatchEventType = "message"
 ) => {
   return `chat_${roomId}_${eventType}`;
 };
@@ -47,7 +49,7 @@ const generatePlayer = (userId: string): Player => {
 
 const assignCharacterId = (): number => {
   const availableCharacterIds = Object.keys(CHARACTERS).filter(
-    (id) => !assignedCharacterIds.has(Number(id)),
+    (id) => !assignedCharacterIds.has(Number(id))
   );
 
   if (availableCharacterIds.length === 0) {
@@ -102,8 +104,8 @@ const updateRooms = () => {
     if (room.stage === "chat" && roomAge >= CHAT_TIME_MS) {
       room.stage = "voting";
       ee.emit(matchEvent(roomId, "stageChange"));
-      // TODO: get scores
     }
+
     if (room.stage === "voting" && roomAge >= CHAT_TIME_MS + VOTING_TIME_MS) {
       room.stage = "results";
 
@@ -114,23 +116,26 @@ const updateRooms = () => {
         let botsBusted = 0;
 
         const otherPlayers = room.players.filter(
-          (p) => p.userId !== player.userId,
+          (p) => p.userId !== player.userId
         );
 
-        otherPlayers.forEach((p) => {
-          const isVoted = player.votes.includes(p.userId);
-          const hasGuessed = p.isBot ? isVoted : !isVoted;
+        if (player.votes) {
+          otherPlayers.forEach((p) => {
+            const isVoted = player.votes!.includes(p.userId);
+            const hasGuessed = p.isBot ? isVoted : !isVoted;
 
-          if (hasGuessed) {
-            if (p.isBot) {
-              botsBusted += 1;
+            if (hasGuessed) {
+              correctGuesses += 1;
+
+              if (p.isBot) {
+                botsBusted += 1;
+                score += POINTS_BOT_BUSTED;
+              } else {
+                score += POINTS_USER_BUSTED;
+              }
             }
-
-            correctGuesses += 1;
-            // TODO: update score calculation based on final ruleset
-            score += 5;
-          }
-        });
+          });
+        }
 
         return { ...player, score, correctGuesses, botsBusted };
       });
@@ -158,7 +163,7 @@ const saveScore = async () => {
         if (player.isScoreSaved) return;
         player.isScoreSaved = true;
         await db.execute(
-          sql`UPDATE ${users} SET score = score + ${player.score} WHERE ${users.id} = ${player.userId}`,
+          sql`UPDATE ${users} SET score = score + ${player.score} WHERE ${users.id} = ${player.userId}`
         );
       } catch (error) {
         player.isScoreSaved = false;
@@ -175,7 +180,7 @@ const saveScore = async () => {
       (acc, [roomId, room]) => {
         return [...acc, { id: roomId, room }];
       },
-      [] as { id: string; room: MatchRoom }[],
+      [] as { id: string; room: MatchRoom }[]
     );
 
     if (roomsToStore.length) {
@@ -191,9 +196,13 @@ const saveScore = async () => {
 };
 
 setInterval(() => {
-  updateRooms();
-  void saveScore();
-  makeMatch();
+  try {
+    updateRooms();
+    void saveScore();
+    makeMatch();
+  } catch (error) {
+    console.error("Main loop error:", error);
+  }
 }, 10000);
 
 // TODO: add anonymous user cleanup

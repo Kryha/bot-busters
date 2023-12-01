@@ -133,6 +133,7 @@ export const matchRouter = createTRPCRouter({
       const { selectedUserIds, roomId } = input;
 
       const { room, player } = verifyPlayer(ctx.session.user.id, roomId);
+      // TODO: check if player sent at least one message
 
       if (room.stage !== "voting") {
         throw new TRPCError({
