@@ -22,7 +22,7 @@ export const PlayersOthers: FC<Props> = ({
   isVoteEnabled,
   onVote,
 }) => {
-  const [disable, setDisabled] = useState(!isVoteEnabled);
+  const [isLoadingVotes, setIsLoadingVotes] = useState(false);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const { stage, players, votingAt } = room;
 
@@ -42,10 +42,10 @@ export const PlayersOthers: FC<Props> = ({
 
   const handleVote = async () => {
     try {
-      setDisabled(true);
+      setIsLoadingVotes(true);
       await onVote(selectedIds);
     } catch (error) {
-      setDisabled(false);
+      setIsLoadingVotes(false);
     }
   };
 
@@ -79,7 +79,7 @@ export const PlayersOthers: FC<Props> = ({
             <Timer time={votingAt} duration={VOTING_TIME_MS} />
             <Button
               variant="contained"
-              disabled={disable}
+              disabled={!isVoteEnabled || isLoadingVotes}
               onClick={() => void handleVote()}
             >
               {text.general.confirm}

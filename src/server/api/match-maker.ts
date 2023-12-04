@@ -6,7 +6,7 @@ import {
   CHAT_TIME_MS,
   MATCH_TIME_MS,
   POINTS_BOT_BUSTED,
-  POINTS_USER_BUSTED,
+  POINTS_HUMAN_BUSTED,
   VOTING_TIME_MS,
 } from "~/constants/main.js";
 import { env } from "~/env.mjs";
@@ -123,7 +123,7 @@ const updateRooms = () => {
                 botsBusted += 1;
                 score += POINTS_BOT_BUSTED;
               } else {
-                score += POINTS_USER_BUSTED;
+                score += POINTS_HUMAN_BUSTED;
               }
             }
           });
