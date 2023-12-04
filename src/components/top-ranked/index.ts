@@ -1,1 +1,1 @@
-export * from "./top-ranked";
+export * from "./top-ranked.jsx";

@@ -1,9 +1,10 @@
 import { Container } from "@mui/material";
 import { type ReactNode, type FC } from "react";
 
+import { SplashScreenChat } from "~/components/splash-screen-chat/index.js";
+import { SplashScreenVoting } from "~/components/splash-screen-voting/index.js";
+
 import { styles } from "./styles.js";
-import { SplashScreenChat } from "~/components/splash-screen-chat";
-import { SplashScreenVoting } from "~/components/splash-screen-voting";
 
 interface Props {
   splashScreenVariant?: "chat" | "voting";

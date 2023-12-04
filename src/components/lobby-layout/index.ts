@@ -1,1 +1,1 @@
-export * from "./lobby-layout";
+export * from "./lobby-layout.jsx";

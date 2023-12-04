@@ -1,1 +1,1 @@
-export * from "./splash-screen-voting";
+export * from "./splash-screen-voting.jsx";

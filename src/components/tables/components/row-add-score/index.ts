@@ -1,1 +1,1 @@
-export * from "./row-add-score";
+export * from "./row-add-score.jsx";

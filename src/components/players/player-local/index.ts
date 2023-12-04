@@ -1,1 +1,1 @@
-export * from "./player-local";
+export * from "./player-local.jsx";

@@ -1,17 +1,17 @@
 import { type FC } from "react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/router.js";
 import { useSession } from "next-auth/react";
 import { type Session } from "next-auth";
 import { z } from "zod";
 
-import { MatchLayout as Layout } from "~/components/match-layout";
-import { MatchOverviewLayout as OverviewLayout } from "~/components/match-overview-layout";
-import { Players } from "src/components/players";
-import { Score } from "~/components/score";
-import { api } from "~/utils/api";
-import { Chat } from "~/containers/chat/chat";
+import { MatchLayout as Layout } from "~/components/match-layout/index.js";
+import { MatchOverviewLayout as OverviewLayout } from "~/components/match-overview-layout/index.js";
+import { Players } from "src/components/players/index.js";
+import { Score } from "~/components/score/index.js";
+import { api } from "~/utils/api.js";
+import { Chat } from "~/containers/chat/chat.jsx";
 import { Results } from "~/containers/results/index.js";
-import { ErrorView } from "~/components/error-view/index.js";
+import { ErrorView } from "~/components/error-view/index.jsx";
 
 const Match: FC = () => {
   const { query } = useRouter();

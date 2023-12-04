@@ -1,6 +1,6 @@
 import { Stack, type SxProps } from "@mui/material";
 import { type FC, useEffect } from "react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/router.js";
 import { signIn, useSession } from "next-auth/react";
 
 import { AddUsernameTable } from "~/components/tables/index.js";
@@ -9,7 +9,7 @@ import { isVerifiedSession } from "~/utils/session.js";
 import { pages } from "~/router.js";
 import { api } from "~/utils/api.js";
 import { useBBWallet } from "~/service/bb-wallet.js";
-import Page from "~/components/page/page";
+import Page from "~/components/page/page.jsx";
 
 // TODO: move styles to another file
 const styles = {

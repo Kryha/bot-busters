@@ -1,1 +1,1 @@
-export * from "./players-others";
+export * from "./players-others.jsx";

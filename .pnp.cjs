@@ -369,6 +369,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/types", "npm:7.23.0"]\
           ],\
           "linkType": "HARD"\
+        }],\
+        ["npm:7.23.5", {\
+          "packageLocation": "./.yarn/cache/@babel-parser-npm-7.23.5-6bd8ea402a-ea76362931.zip/node_modules/@babel/parser/",\
+          "packageDependencies": [\
+            ["@babel/parser", "npm:7.23.5"],\
+            ["@babel/types", "npm:7.23.0"]\
+          ],\
+          "linkType": "HARD"\
         }]\
       ]],\
       ["@babel/plugin-syntax-async-generators", [\
@@ -3489,10 +3497,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@types/linkify-it", [\
-        ["npm:3.0.3", {\
-          "packageLocation": "./.yarn/cache/@types-linkify-it-npm-3.0.3-cb8d4d3e99-a734becc4e.zip/node_modules/@types/linkify-it/",\
+        ["npm:3.0.5", {\
+          "packageLocation": "./.yarn/cache/@types-linkify-it-npm-3.0.5-ff4a6ef3bd-fac28f41a6.zip/node_modules/@types/linkify-it/",\
           "packageDependencies": [\
-            ["@types/linkify-it", "npm:3.0.3"]\
+            ["@types/linkify-it", "npm:3.0.5"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -3511,17 +3519,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@types-markdown-it-npm-12.2.3-ef47108ac6-868824a3e4.zip/node_modules/@types/markdown-it/",\
           "packageDependencies": [\
             ["@types/markdown-it", "npm:12.2.3"],\
-            ["@types/linkify-it", "npm:3.0.3"],\
-            ["@types/mdurl", "npm:1.0.3"]\
+            ["@types/linkify-it", "npm:3.0.5"],\
+            ["@types/mdurl", "npm:1.0.5"]\
           ],\
           "linkType": "HARD"\
         }]\
       ]],\
       ["@types/mdurl", [\
-        ["npm:1.0.3", {\
-          "packageLocation": "./.yarn/cache/@types-mdurl-npm-1.0.3-07a1eff7b0-5bbed4f0eb.zip/node_modules/@types/mdurl/",\
+        ["npm:1.0.5", {\
+          "packageLocation": "./.yarn/cache/@types-mdurl-npm-1.0.5-924b60d7d4-e8e872e8da.zip/node_modules/@types/mdurl/",\
           "packageDependencies": [\
-            ["@types/mdurl", "npm:1.0.3"]\
+            ["@types/mdurl", "npm:1.0.5"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -9086,7 +9094,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/jsdoc-npm-3.6.11-fa3556bbd1-7920b5cba6.zip/node_modules/jsdoc/",\
           "packageDependencies": [\
             ["jsdoc", "npm:3.6.11"],\
-            ["@babel/parser", "npm:7.23.0"],\
+            ["@babel/parser", "npm:7.23.5"],\
             ["@types/markdown-it", "npm:12.2.3"],\
             ["bluebird", "npm:3.7.2"],\
             ["catharsis", "npm:0.9.0"],\

@@ -6,9 +6,9 @@ import { isVerifiedSession } from "~/utils/session.js";
 import { api } from "~/utils/api.js";
 import { fakeUsername } from "~/constants/fake-data/landing.js";
 import { useBBWallet } from "~/service/bb-wallet.js";
+import { UserStats } from "~/components/user-stats/index.js";
 
 import { styles } from "./styles.js";
-import { UserStats } from "~/components/user-stats";
 
 export const Layout: FC<StackProps> = ({ children }) => {
   const { data: sessionData } = useSession();

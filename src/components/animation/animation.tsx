@@ -1,6 +1,7 @@
 import React, { type FC, useState } from "react";
-import { DEFAULT_SPRITE_SCALE } from "~/components/animation/animation-constants";
-import { styles } from "~/components/animation/dancing-girl/styles";
+
+import { DEFAULT_SPRITE_SCALE } from "./animation-constants.js";
+import { styles } from "./dancing-girl/styles.js";
 
 interface Props {
   id: string;

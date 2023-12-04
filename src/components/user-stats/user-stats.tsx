@@ -2,11 +2,11 @@ import { type FC } from "react";
 import { Stack } from "@mui/material";
 import { signOut } from "next-auth/react";
 
-import { StatsDisplay } from "~/components/stats-display";
-import { text } from "~/assets/text";
+import { StatsDisplay } from "~/components/stats-display/index.js";
+import { UserMenu } from "~/components/user-menu/index.js";
+import { MenuDialog } from "~/components/menu-dialog/index.js";
+import { text } from "~/assets/text/index.js";
 
-import { UserMenu } from "../user-menu";
-import { MenuDialog } from "../menu-dialog";
 import { styles } from "./styles.js";
 
 interface Props {
