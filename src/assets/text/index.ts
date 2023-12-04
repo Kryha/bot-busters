@@ -6,6 +6,7 @@ import { match } from "./match.js";
 import { leaderboard } from "./leaderboard.js";
 import { homepage } from "./homepage.js";
 import { playerProfile } from "./player-profile.js";
+import { chat } from "./chat.js";
 
 export const text = {
   auth,
@@ -16,4 +17,5 @@ export const text = {
   leaderboard,
   homepage,
   playerProfile,
+  chat,
 };

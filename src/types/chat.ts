@@ -1,30 +1,12 @@
-import { z } from "zod";
+import { type ChatMessagePayload } from "~/server/api/match-types";
 
-export const chatMessageDataSchema = z.object({
-  username: z.string(),
-  avatar: z.string(),
-  content: z.array(z.string()),
-  isLocalUser: z.boolean(),
-  time: z.number(),
-});
+export interface ChatMessage extends ChatMessagePayload {
+  isLocalSender: boolean;
+  message: string;
+  sentAt: number;
+}
 
-export type ChatMessageData = z.infer<typeof chatMessageDataSchema>;
-
-export const contactListDataSchema = z.object({
-  username: z.string(),
-  avatar: z.string(),
-  lastMessage: z.string(),
-  time: z.number(),
-});
-
-export type ContactListData = z.infer<typeof contactListDataSchema>;
-
-export type GroupedMessage = {
-  messages?: string[];
-  isLocalSender?: boolean;
-};
-
-export type Player = {
-  username: string;
-  score: number;
-};
+export interface MessageData {
+  message: ChatMessage;
+  character: { name: string; color: string };
+}

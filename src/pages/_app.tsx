@@ -9,11 +9,11 @@ import Head from "next/head";
 
 import "~/styles/globals.css";
 import { api } from "~/utils/api.js";
-import { ThemeProvider } from "~/features/mui/index.js";
+import { ThemeProvider } from "~/styles";
 import { APP_NAME } from "~/constants/index.js";
-import { Layout } from "~/layouts/index.js";
 import { useRouter } from "next/router";
-import { pages } from "~/utils/router";
+import { pages } from "~/router";
+import { Layout } from "~/containers/layout";
 
 const headTitle = "Bot Busters";
 

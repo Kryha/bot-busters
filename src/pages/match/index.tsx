@@ -1,51 +1,96 @@
-import dynamic from "next/dynamic";
-import { useEffect, type FC } from "react";
+import { type FC } from "react";
 import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
+import { type Session } from "next-auth";
 import { z } from "zod";
 
-import {
-  MatchLayout as Layout,
-  MatchOverviewLayout as OverviewLayout,
-} from "../../layouts/index.js";
-import { Chat } from "../../features/chat/index.js";
-import { Players } from "../../features/players/index.js";
-import { Score } from "../../features/score/index.js";
-import { Results } from "../../features/score/components/index.js";
-import { useMatchState } from "../../service/index.js";
-import { pages } from "../../utils/router.js";
-import { api } from "../../utils/api.js";
+import { MatchLayout as Layout } from "~/components/match-layout";
+import { MatchOverviewLayout as OverviewLayout } from "~/components/match-overview-layout";
+import { Players } from "src/components/players";
+import { Score } from "~/components/score";
+import { api } from "~/utils/api";
+import { Chat } from "~/containers/chat/chat";
+import { Results } from "~/containers/results/index.js";
+import { ErrorView } from "~/components/error-view/index.js";
 
 const Match: FC = () => {
-  const matchState = useMatchState();
-  const { query, push } = useRouter();
+  const { query } = useRouter();
+  const { data: session } = useSession();
   const roomId = z.string().safeParse(query.roomId);
 
-  useEffect(() => {
-    if (!roomId.success) {
-      void push(pages.home);
+  if (!roomId.success || !session) return <ErrorView />;
+
+  return <MatchInternal roomId={roomId.data} session={session} />;
+};
+
+interface Props {
+  roomId: string;
+  session: Session;
+}
+
+const MatchInternal: FC<Props> = ({ roomId, session }) => {
+  const vote = api.match.vote.useMutation();
+  const roomData = api.match.getRoom.useQuery({ roomId });
+
+  api.match.onStageChange.useSubscription(
+    { roomId },
+    {
+      onData() {
+        void roomData.refetch();
+      },
+      onError(error) {
+        console.error(error);
+      },
+      enabled: roomData.data && !roomData.data.arePointsCalculated,
     }
-  }, [roomId.success, push]);
+  );
 
-  if (!roomId.success || !matchState) return;
+  if (roomData.isError) return <ErrorView />;
+  if (!roomData.data) return;
 
-  const { data: room } = api.chat.getRoom.useQuery({
-    roomId: roomId.data,
-  });
+  const room = roomData.data;
+
+  const localPlayer = room.players.find(
+    (player) => player.userId === session.user.id
+  );
+
+  if (!localPlayer) return <ErrorView />;
+
+  const totalBots = room.players.reduce(
+    (acc, player) => (player.isBot ? acc + 1 : acc),
+    0
+  );
+
+  const handleVote = (selectedUserIds: string[]) => {
+    vote.mutate({ selectedUserIds, roomId });
+  };
+
+  const splashVariant = room.stage === "results" ? undefined : room.stage;
 
   return (
-    <Layout>
-      <OverviewLayout>
-        {room && <Players matchState={matchState} room={room} />}
-        <Score matchState={matchState} />
+    <Layout splashScreenVariant={splashVariant}>
+      <OverviewLayout matchStage={room.stage}>
+        <Players room={room} localPlayer={localPlayer} onVote={handleVote} />
+
+        {room.stage === "results" && (
+          <Score
+            gainedScore={localPlayer.score}
+            correctGuesses={localPlayer.correctGuesses}
+          />
+        )}
       </OverviewLayout>
-      <Results matchState={matchState} />
-      {room && (
-        <Chat roomId={roomId.data} matchState={matchState} room={room} />
+
+      {room.stage === "results" && (
+        <Results
+          gainedScore={localPlayer.score}
+          totalBots={totalBots}
+          botsBusted={localPlayer.botsBusted}
+        />
       )}
+
+      {room && room.stage !== "results" && <Chat roomId={roomId} room={room} />}
     </Layout>
   );
 };
 
-export default dynamic(() => Promise.resolve(Match), {
-  ssr: false,
-});
+export default Match;

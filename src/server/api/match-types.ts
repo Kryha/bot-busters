@@ -1,3 +1,5 @@
+import { z } from "zod";
+
 export interface ReadyToPlayPayload {
   players: string[];
   roomId: string;
@@ -14,24 +16,29 @@ export interface ChatMessagePayload {
   sentAt: number; // unix time
 }
 
-export interface Player {
-  userId: string;
-  score: number;
-  isBot: boolean;
-  isScoreSaved: boolean;
-  // TODO: add `votes` and `chatNickname` fields
-}
+// TODO: there might be leakage, Someone could just read the Component state and infer who's a bot directly.
+export const playerSchema = z.object({
+  userId: z.string().uuid(),
+  characterId: z.number(),
+  score: z.number(),
+  isBot: z.boolean().optional(),
+  isScoreSaved: z.boolean(),
+  botsBusted: z.number(),
+  correctGuesses: z.number(),
+  votes: z.array(z.string().uuid()), // array of voted ids
+});
+export type PlayerType = z.infer<typeof playerSchema>;
 
-// TODO: add record of votes after implementing voting mechanism and distinguishing between bots and humans
-export interface ChatRoom {
-  players: Player[];
-  stage: "chat" | "voting" | "results";
-  createdAt: number; // unix timestamp
-  votingAt: number; // unix timestamp
-}
+export const matchStageSchema = z.enum(["chat", "voting", "results"]);
+export type MatchStage = z.infer<typeof matchStageSchema>;
 
-export type ChatEventType = "message" | "timeout" | "stageChange";
+export const matchRoomSchema = z.object({
+  players: z.array(playerSchema),
+  stage: matchStageSchema,
+  arePointsCalculated: z.boolean(),
+  createdAt: z.number(), // unix timestamp
+  votingAt: z.number(), // unix timestamp
+});
+export type MatchRoom = z.infer<typeof matchRoomSchema>;
 
-export interface StagePayload {
-  stage: "chat" | "voting" | "results";
-}
+export type MatchEventType = "message" | "stageChange";

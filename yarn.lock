@@ -2312,6 +2312,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/lodash@npm:^4.14.202":
+  version: 4.14.202
+  resolution: "@types/lodash@npm:4.14.202"
+  checksum: a91acf3564a568c6f199912f3eb2c76c99c5a0d7e219394294213b3f2d54f672619f0fde4da22b29dc5d4c31457cd799acc2e5cb6bd90f9af04a1578483b6ff7
+  languageName: node
+  linkType: hard
+
 "@types/markdown-it@npm:^12.2.3":
   version: 12.2.3
   resolution: "@types/markdown-it@npm:12.2.3"
@@ -3219,6 +3226,7 @@ __metadata:
     "@trpc/server": ^10.37.1
     "@types/eslint": ^8.44.2
     "@types/jest": ^29.5.6
+    "@types/lodash": ^4.14.202
     "@types/node": ^18.16.0
     "@types/react": ^18.2.20
     "@types/react-dom": ^18.2.7
@@ -3239,6 +3247,7 @@ __metadata:
     jest: ^29.7.0
     jest-environment-jsdom: ^29.7.0
     leva: ^0.9.35
+    lodash: ^4.17.21
     minidenticons: ^4.2.0
     next: 13.4.12
     next-auth: ^4.23.0
@@ -3255,7 +3264,6 @@ __metadata:
     uuid: ^9.0.1
     ws: ^8.14.2
     zod: ^3.21.4
-    zustand: ^4.4.6
   languageName: unknown
   linkType: soft
 
@@ -9919,7 +9927,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"use-sync-external-store@npm:1.2.0, use-sync-external-store@npm:^1.2.0":
+"use-sync-external-store@npm:^1.2.0":
   version: 1.2.0
   resolution: "use-sync-external-store@npm:1.2.0"
   peerDependencies:
@@ -10301,25 +10309,5 @@ __metadata:
     react:
       optional: true
   checksum: 18f025b1b666a311121d3855303ff58e6a21fd107920ca474307e86984c13338d6c4cfa5cdf13382a9e0f76821f2554a12d4d200a98a66b58637e729f149797b
-  languageName: node
-  linkType: hard
-
-"zustand@npm:^4.4.6":
-  version: 4.4.6
-  resolution: "zustand@npm:4.4.6"
-  dependencies:
-    use-sync-external-store: 1.2.0
-  peerDependencies:
-    "@types/react": ">=16.8"
-    immer: ">=9.0"
-    react: ">=16.8"
-  peerDependenciesMeta:
-    "@types/react":
-      optional: true
-    immer:
-      optional: true
-    react:
-      optional: true
-  checksum: da7b00cc6dbe5cf5fc2e3fbca745317da4bbaf53bf4a6909bbd3e335242704df9689027f613461aff07eb5f672d5570bc1a2ef99d0ad7bc868920a3b331613d4
   languageName: node
   linkType: hard

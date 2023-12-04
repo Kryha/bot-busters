@@ -1,25 +1,23 @@
-import { Stack, type StackProps } from "@mui/material";
-import { useState, type FC, useEffect } from "react";
+import { Stack } from "@mui/material";
+import { useState, type FC, useEffect, type ReactNode } from "react";
 
 import { SPLASH_SCREEN_DURATION } from "~/constants/index.js";
 
 import { styles } from "./styles.js";
 
-interface Props extends StackProps {
-  show: boolean;
+interface Props {
+  children: ReactNode;
 }
 
-export const SplashScreen: FC<Props> = ({ children, show }) => {
+export const SplashScreen: FC<Props> = ({ children }) => {
   const [showSplashScreen, setShowSplashScreen] = useState(false);
 
   useEffect(() => {
-    if (show) {
-      setShowSplashScreen(true);
-      setTimeout(() => {
-        setShowSplashScreen(false);
-      }, SPLASH_SCREEN_DURATION);
-    }
-  }, [show]);
+    setShowSplashScreen(true);
+    setTimeout(() => {
+      setShowSplashScreen(false);
+    }, SPLASH_SCREEN_DURATION);
+  }, []);
 
   if (!showSplashScreen) return;
 
