@@ -15,3 +15,6 @@ export const FONT_SIZE = 16;
 export const COEFFICIENT = 14;
 
 export const CHIP_TIMEOUT = 4000;
+
+export const POINTS_BOT_BUSTED = 11;
+export const POINTS_HUMAN_BUSTED = 10;

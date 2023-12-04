@@ -1,22 +1,28 @@
 import { Button, Stack, Typography } from "@mui/material";
 import { type FC, useState } from "react";
 
-import { VOTING_TIME_MS } from "~/constants";
-import { text } from "~/assets/text";
+import { VOTING_TIME_MS } from "~/constants/index.js";
+import { text } from "~/assets/text/index.js";
 import { type MatchRoom, type PlayerType } from "~/server/api/match-types.js";
-import { Timer } from "~/components/timer";
+import { Timer } from "~/components/timer/index.js";
+import { PlayerData } from "~/components/players/player-data/index.js";
 
 import { styles } from "./styles.js";
-import { PlayerData } from "~/components/players/player-data";
 
 interface Props {
   room: MatchRoom;
   localPlayer: PlayerType;
-  onVote: (selectedUserIds: string[]) => void;
+  isVoteEnabled: boolean;
+  onVote: (selectedUserIds: string[]) => Promise<void>;
 }
 
-export const PlayersOthers: FC<Props> = ({ room, localPlayer, onVote }) => {
-  const [disable, setDisabled] = useState(false);
+export const PlayersOthers: FC<Props> = ({
+  room,
+  localPlayer,
+  isVoteEnabled,
+  onVote,
+}) => {
+  const [isLoadingVotes, setIsLoadingVotes] = useState(false);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const { stage, players, votingAt } = room;
 
@@ -34,16 +40,20 @@ export const PlayersOthers: FC<Props> = ({ room, localPlayer, onVote }) => {
     });
   };
 
-  const handleVote = () => {
-    setDisabled(true);
-    onVote(selectedIds);
+  const handleVote = async () => {
+    try {
+      setIsLoadingVotes(true);
+      await onVote(selectedIds);
+    } catch (error) {
+      setIsLoadingVotes(false);
+    }
   };
 
   const intro =
     stage === "results" ? text.match.whosBot : text.match.otherParticipants;
 
   const otherPlayers = players.filter(
-    (player) => player.userId !== localPlayer.userId,
+    (player) => player.userId !== localPlayer.userId
   );
 
   return (
@@ -69,8 +79,8 @@ export const PlayersOthers: FC<Props> = ({ room, localPlayer, onVote }) => {
             <Timer time={votingAt} duration={VOTING_TIME_MS} />
             <Button
               variant="contained"
-              disabled={disable}
-              onClick={() => handleVote()}
+              disabled={!isVoteEnabled || isLoadingVotes}
+              onClick={() => void handleVote()}
             >
               {text.general.confirm}
             </Button>

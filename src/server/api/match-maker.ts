@@ -5,15 +5,18 @@ import { sql } from "drizzle-orm";
 import {
   CHAT_TIME_MS,
   MATCH_TIME_MS,
+  POINTS_BOT_BUSTED,
+  POINTS_HUMAN_BUSTED,
   VOTING_TIME_MS,
-  CHARACTERS,
-} from "~/constants/index.js";
+} from "~/constants/main.js";
+
 import { env } from "~/env.mjs";
 import { db } from "~/server/db/index.js";
 import { matches as matchesTable, users } from "~/server/db/schema.js";
 import { generateAgent } from "~/server/service/agent.js";
 
 import type {
+  CharacterId,
   MatchEventType,
   MatchRoom,
   PlayerType as Player,
@@ -21,7 +24,10 @@ import type {
 } from "./match-types.js";
 
 export const ee = new EventEmitter();
+
 export const lobbyQueue: string[] = [];
+
+export const matches = new Map<string, MatchRoom>();
 
 export const matchEvent = (
   roomId: string,
@@ -30,74 +36,63 @@ export const matchEvent = (
   return `chat_${roomId}_${eventType}`;
 };
 
-export const matches = new Map<string, MatchRoom>();
-const assignedCharacterIds = new Set<number>();
-const generatePlayer = (userId: string): Player => {
-  const characterId = assignCharacterId();
+const generatePlayer = (
+  userId: string,
+  availableCharacterIds: CharacterId[]
+): Player => {
+  // TODO: Make random so that the bots don't always end up with the last characters
+  const characterId = availableCharacterIds.pop();
+
+  if (!characterId) throw new Error("User generation failed: too many players");
+
   return {
     userId,
-    characterId: characterId,
+    characterId,
     score: 0,
     isBot: false, // TODO: set to correct value
     isScoreSaved: false,
     botsBusted: 0,
     correctGuesses: 0,
-    votes: [],
   };
 };
 
-export const assignCharacterId = (): number => {
-  const availableCharacterIds = Object.keys(CHARACTERS).filter(
-    (id) => !assignedCharacterIds.has(Number(id))
+const makeMatch = () => {
+  // TODO: Make the players per match random withing range 1-4
+  if (lobbyQueue.length < env.PLAYERS_PER_MATCH) return;
+
+  const availableCharacterIds: CharacterId[] = ["1", "2", "3", "4", "5"];
+
+  if (availableCharacterIds.length < env.PLAYERS_PER_MATCH) {
+    throw new Error(
+      "Match making error: characters amount is lower than the amount of players per match"
+    );
+  }
+
+  const playerIds = lobbyQueue.splice(0, env.PLAYERS_PER_MATCH);
+  const roomId = uuid();
+
+  const players = playerIds.map((id) =>
+    generatePlayer(id, availableCharacterIds)
   );
 
-  if (availableCharacterIds.length === 0) {
-    throw new Error("No available characters.");
-  }
+  // TODO: Add correct amount of agents based on amount of human players
+  const { agent } = generateAgent(uuid(), roomId, availableCharacterIds);
+  players.push(agent);
 
-  const randomCharacterId =
-    availableCharacterIds[
-      Math.floor(Math.random() * availableCharacterIds.length)
-    ];
+  matches.set(roomId, {
+    players: players,
+    messages: [],
+    stage: "chat",
+    arePointsCalculated: false,
+    createdAt: Date.now(),
+    votingAt: Date.now() + CHAT_TIME_MS,
+  });
 
-  assignedCharacterIds.add(Number(randomCharacterId));
-
-  return Number(randomCharacterId);
-};
-
-const makeMatch = () => {
-  try {
-    // TODO: Make the players per match random withing range 1-4
-    if (lobbyQueue.length < env.PLAYERS_PER_MATCH) return;
-
-    const playerIds = lobbyQueue.splice(0, env.PLAYERS_PER_MATCH);
-
-    const roomId = uuid();
-
-    const players = playerIds.map((id) => generatePlayer(id));
-
-    // TODO: add correct amount of agents based on amount of human players
-    // Add agents to list of players
-    // TODO: Bootstrap Agent & Connect to room WS
-    const { agent } = generateAgent(uuid(), roomId);
-    players.push(agent);
-
-    matches.set(roomId, {
-      players: players,
-      stage: "chat",
-      arePointsCalculated: false,
-      createdAt: Date.now(),
-      votingAt: Date.now() + CHAT_TIME_MS,
-    });
-
-    ee.emit("readyToPlay", {
-      roomId,
-      players: playerIds,
-    } satisfies ReadyToPlayPayload);
-    ee.emit("queueUpdate");
-  } catch (error) {
-    console.error("Match making error:", error);
-  }
+  ee.emit("readyToPlay", {
+    roomId,
+    players: playerIds,
+  } satisfies ReadyToPlayPayload);
+  ee.emit("queueUpdate");
 };
 
 const updateRooms = () => {
@@ -127,20 +122,23 @@ const updateRooms = () => {
           (p) => p.userId !== player.userId
         );
 
-        otherPlayers.forEach((p) => {
-          const isVoted = player.votes.includes(p.userId);
-          const hasGuessed = p.isBot ? isVoted : !isVoted;
+        if (player.votes) {
+          otherPlayers.forEach((p) => {
+            const isVoted = player.votes!.includes(p.userId);
+            const hasGuessed = p.isBot ? isVoted : !isVoted;
 
-          if (hasGuessed) {
-            if (p.isBot) {
-              botsBusted += 1;
+            if (hasGuessed) {
+              correctGuesses += 1;
+
+              if (p.isBot) {
+                botsBusted += 1;
+                score += POINTS_BOT_BUSTED;
+              } else {
+                score += POINTS_HUMAN_BUSTED;
+              }
             }
-
-            correctGuesses += 1;
-            // TODO: update score calculation based on final ruleset
-            score += 5;
-          }
-        });
+          });
+        }
 
         return { ...player, score, correctGuesses, botsBusted };
       });
@@ -183,7 +181,7 @@ const saveScore = async () => {
 
     const roomsToStore = Array.from(roomsToArchive.entries()).reduce(
       (acc, [roomId, room]) => {
-        return [...acc, { id: roomId, room }];
+        return [...acc, { id: roomId, room: { ...room, messages: [] } }];
       },
       [] as { id: string; room: MatchRoom }[]
     );
@@ -201,9 +199,13 @@ const saveScore = async () => {
 };
 
 setInterval(() => {
-  updateRooms();
-  void saveScore();
-  makeMatch();
+  try {
+    updateRooms();
+    void saveScore();
+    makeMatch();
+  } catch (error) {
+    console.error("Main loop error:", error);
+  }
 }, 10000);
 
 // TODO: add anonymous user cleanup

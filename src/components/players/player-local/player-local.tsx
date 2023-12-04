@@ -16,7 +16,7 @@ export const PlayerLocal: FC<Props> = ({ localPlayer }) => {
   return (
     <Stack sx={styles.container}>
       <Typography variant="body1">{text.match.inThisChat}</Typography>
-      <Player characterName={character!.name} color={character!.color} />
+      <Player characterName={character.name} color={character.color} />
     </Stack>
   );
 };

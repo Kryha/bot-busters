@@ -1,7 +1,8 @@
 import WebSocket from "ws";
 import { env } from "~/env.mjs";
-import { matchEvent, ee, assignCharacterId } from "~/server/api/match-maker.js";
+import { matchEvent, ee } from "~/server/api/match-maker.js";
 import type {
+  CharacterId,
   ChatMessagePayload,
   PlayerType,
 } from "~/server/api/match-types.js";
@@ -9,10 +10,12 @@ import type {
 // TODO: Update Agent type
 export const generateAgent = (
   agentId: string,
-  roomId: string
+  roomId: string,
+  availableCharacterIds: CharacterId[]
 ): { agent: PlayerType; ws: WebSocket } => {
   // TODO: Check that assignCharacter has the right inner context
-  const characterId = assignCharacterId();
+  // TODO: Fix potential undefined when pop
+  const characterId = availableCharacterIds.pop() ?? "5";
   const agent = {
     userId: agentId,
     characterId: characterId,
