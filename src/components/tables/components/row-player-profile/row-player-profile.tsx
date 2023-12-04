@@ -5,7 +5,7 @@ import { type PlayerProfileData } from "~/types/index.js";
 import { text } from "~/assets/text/index.js";
 import { formatDate, longDateFormat } from "~/utils/date.js";
 
-import { Payout } from "./payout";
+import { Payout } from "./payout.jsx";
 import { styles } from "./styles.js";
 
 interface Props {

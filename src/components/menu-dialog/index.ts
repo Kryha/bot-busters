@@ -1,1 +1,1 @@
-export * from "./menu-dialog";
+export * from "./menu-dialog.jsx";

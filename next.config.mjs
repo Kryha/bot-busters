@@ -25,7 +25,8 @@ const config = {
   webpack: (webpackConfig) => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     webpackConfig.resolve.extensionAlias = {
-      ".js": [".ts", ".tsx", ".js", ".jsx"],
+      ".js": [".ts", ".js"],
+      ".jsx": [".tsx", ".jsx"],
       ".mjs": [".mts", ".mjs"],
       ".cjs": [".cts", ".cjs"],
     };

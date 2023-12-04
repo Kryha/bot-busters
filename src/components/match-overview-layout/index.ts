@@ -1,1 +1,1 @@
-export * from "./match-overview-layout";
+export * from "./match-overview-layout.jsx";

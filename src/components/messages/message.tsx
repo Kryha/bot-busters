@@ -1,9 +1,9 @@
 import { type FC } from "react";
 import { Avatar, Stack, Typography } from "@mui/material";
-import { type ChatMessage } from "~/types";
+import { type ChatMessage } from "~/types/index.js";
 
 import { styles } from "./styles.js";
-import { getTimeStamp } from "~/utils/date";
+import { getTimeStamp } from "~/utils/date.js";
 
 interface Props {
   message: ChatMessage;

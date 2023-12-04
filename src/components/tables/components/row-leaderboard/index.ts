@@ -1,1 +1,1 @@
-export * from "./row-leaderboard";
+export * from "./row-leaderboard.jsx";
