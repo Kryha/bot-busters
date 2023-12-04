@@ -1,1 +1,1 @@
-export * from "./row-player-profile";
+export * from "./row-player-profile.jsx";

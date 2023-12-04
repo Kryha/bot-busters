@@ -1,1 +1,1 @@
-export * from "./points-display";
+export * from "./points-display.jsx";

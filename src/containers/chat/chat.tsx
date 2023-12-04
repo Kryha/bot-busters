@@ -1,7 +1,7 @@
 import { type FC, type KeyboardEvent, useMemo, useState } from "react";
 import { Stack } from "@mui/material";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/router.js";
 
 import {
   type CharacterId,

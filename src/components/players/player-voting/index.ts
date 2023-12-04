@@ -1,1 +1,1 @@
-export * from "./player-vote";
+export * from "./player-vote.jsx";

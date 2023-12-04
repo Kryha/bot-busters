@@ -1,8 +1,8 @@
 import { type FC } from "react";
 
-import { Player, PlayerResult, PlayerVote } from "~/components";
-import { type MatchStage, type PlayerType } from "~/server/api/match-types";
-import { CHARACTERS } from "~/constants";
+import { Player, PlayerResult, PlayerVote } from "~/components/index.js";
+import { type MatchStage, type PlayerType } from "~/server/api/match-types.js";
+import { CHARACTERS } from "~/constants/index.js";
 
 export interface Props {
   stage: MatchStage;

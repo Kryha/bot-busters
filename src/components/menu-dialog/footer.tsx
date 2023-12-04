@@ -1,9 +1,9 @@
 import { type FC } from "react";
 import { Stack, Typography } from "@mui/material";
-import Link from "next/link";
-import { useRouter } from "next/router";
+import Link from "next/link.js";
+import { useRouter } from "next/router.js";
 
-import { text } from "~/assets/text";
+import { text } from "~/assets/text/index.js";
 import { pages } from "~/router.js";
 
 import { styles } from "./styles.js";

@@ -1,3 +1,4 @@
+import React, { type FC } from "react";
 import {
   Button,
   type ButtonProps,
@@ -7,9 +8,9 @@ import {
   Typography,
 } from "@mui/material";
 
+import { text } from "~/assets/text/index.js";
+
 import { styles } from "./styles.js";
-import React, { type FC } from "react";
-import { text } from "~/assets/text";
 
 type Props = Pick<ButtonProps, "onClick"> & Omit<TextFieldProps, "onClick">;
 

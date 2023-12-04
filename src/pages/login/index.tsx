@@ -1,15 +1,15 @@
 import { type FC, useEffect } from "react";
 import { signIn, useSession } from "next-auth/react";
-import Image from "next/image";
+import Image from "next/image.js";
 import { Stack, type SxProps, Typography } from "@mui/material";
-import { useRouter } from "next/router";
+import { useRouter } from "next/router.js";
 
-import spinner from "~/assets/images/spinner.gif";
+import { default as spinner } from "~/assets/images/spinner.gif";
 import { useBBWallet } from "~/service/bb-wallet.js";
 import { text } from "~/assets/text/index.js";
 import { isValidSession } from "~/utils/session.js";
 import { pages } from "~/router.js";
-import Page from "~/components/page/page";
+import Page from "~/components/page/page.jsx";
 
 // TODO: move styles to another file
 const styles = {
@@ -83,6 +83,7 @@ const Login: FC = () => {
           <Stack sx={styles.progress}>
             <Typography variant="h5">{text.auth.connectYourWallet}</Typography>
             <Image
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
               src={spinner}
               alt="spinner"
               width={SPINNER_SIZE}

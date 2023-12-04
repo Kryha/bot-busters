@@ -1,19 +1,19 @@
 import { type Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
-import { type AppType } from "next/app";
+import { type AppType } from "next/app.js";
 import { useMemo } from "react";
 import { LeoWalletAdapter } from "@demox-labs/aleo-wallet-adapter-leo";
 import { WalletModalProvider } from "@demox-labs/aleo-wallet-adapter-reactui";
 import { WalletProvider } from "@demox-labs/aleo-wallet-adapter-react";
-import Head from "next/head";
+import Head from "next/head.js";
 
 import "~/styles/globals.css";
 import { api } from "~/utils/api.js";
-import { ThemeProvider } from "~/styles";
+import { ThemeProvider } from "~/styles/index.js";
 import { APP_NAME } from "~/constants/index.js";
-import { useRouter } from "next/router";
-import { pages } from "~/router";
-import { Layout } from "~/containers/layout";
+import { useRouter } from "next/router.js";
+import { pages } from "~/router.js";
+import { Layout } from "~/containers/layout/index.js";
 
 const headTitle = "Bot Busters";
 
@@ -27,7 +27,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
         appName: APP_NAME,
       }),
     ],
-    [],
+    []
   );
 
   const router = useRouter();

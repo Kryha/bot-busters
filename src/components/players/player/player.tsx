@@ -2,7 +2,7 @@ import { type FC } from "react";
 import { Avatar, Stack, Typography } from "@mui/material";
 
 import { styles } from "./styles.js";
-import { Skeleton } from "./skeleton";
+import { Skeleton } from "./skeleton.jsx";
 
 interface Props {
   color?: string;

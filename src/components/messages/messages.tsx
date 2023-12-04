@@ -1,11 +1,12 @@
 import { Stack } from "@mui/material";
 import { type FC } from "react";
-import { text } from "~/assets/text";
 
-import { Prompt } from "../prompt";
-import { Message } from "./message";
+import { text } from "~/assets/text/index.js";
+import { type MessageData } from "~/types/index.js";
+import { Prompt } from "~/components/prompt/index.js";
+
+import { Message } from "./message.jsx";
 import { styles } from "./styles.js";
-import { type MessageData } from "~/types";
 
 interface Props {
   messageData: MessageData[];

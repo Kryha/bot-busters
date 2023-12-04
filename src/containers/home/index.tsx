@@ -1,13 +1,13 @@
 import { Button, Stack, Typography } from "@mui/material";
 import React from "react";
 import { signIn, useSession } from "next-auth/react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/router.js";
 
-import { text } from "~/assets/text";
-import { TopRanked } from "~/components";
+import { text } from "~/assets/text/index.js";
+import { TopRanked } from "~/components/index.js";
 import { api } from "~/utils/api.js";
 import { pages } from "~/router.js";
-import { TOP_RANKED_PLAYERS } from "~/constants";
+import { TOP_RANKED_PLAYERS } from "~/constants/index.js";
 import { isValidSession } from "~/utils/session.js";
 
 import { styles } from "./styles.js";

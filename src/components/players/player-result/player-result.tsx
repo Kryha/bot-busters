@@ -1,12 +1,12 @@
 import { type FC } from "react";
 import { Divider, Stack, Typography } from "@mui/material";
 
-import { text } from "~/assets/text";
+import { text } from "~/assets/text/index.js";
 import { type PlayerType } from "~/server/api/match-types.js";
+import { Player } from "~/components/index.js";
+import { CHARACTERS } from "~/constants/index.js";
 
-import { Player } from "~/components";
 import { styles } from "./styles.js";
-import { CHARACTERS } from "~/constants";
 
 interface Props {
   player: PlayerType;
