@@ -31,6 +31,7 @@ export const generateAgent = (
 
   ee.on(chatEvent(roomId), (stream: ChatMessagePayload) => {
     console.log(stream);
+
     if (stream?.sender !== agent.userId) {
       const cb = () => {
         ee.emit(chatEvent(roomId), {

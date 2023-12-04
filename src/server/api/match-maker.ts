@@ -41,6 +41,7 @@ const generatePlayer = (userId: string): Player => ({
 
 const makeMatch = () => {
   try {
+    // TODO: Make the players per match random withing range 1-4
     if (lobbyQueue.length < env.PLAYERS_PER_MATCH) return;
 
     const playerIds = lobbyQueue.splice(0, env.PLAYERS_PER_MATCH);
