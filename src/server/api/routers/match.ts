@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { eq } from "drizzle-orm";
 import { observable } from "@trpc/server/observable";
 import { TRPCError } from "@trpc/server";
 import lodash from "lodash";
@@ -9,7 +10,6 @@ import { matches as matchesTable } from "~/server/db/schema.js";
 import { createTRPCRouter, protectedProcedure } from "../trpc.js";
 import { matchEvent, matches, ee } from "../match-maker.js";
 import { matchRoomSchema, type ChatMessagePayload } from "../match-types.js";
-import { eq } from "drizzle-orm";
 
 const verifyPlayer = (userId: string, roomId: string) => {
   const room = matches.get(roomId);
@@ -56,10 +56,13 @@ export const matchRouter = createTRPCRouter({
       const { message, sentAt, roomId } = input;
       const sender = ctx.session.user.id;
 
-      verifyPlayer(sender, input.roomId);
+      const { room } = verifyPlayer(sender, input.roomId);
 
       const payload: ChatMessagePayload = { sender, message, sentAt };
+
+      room.messages.push(payload);
       ee.emit(matchEvent(roomId), payload);
+
       return payload;
     }),
 
@@ -131,8 +134,18 @@ export const matchRouter = createTRPCRouter({
     )
     .mutation(({ ctx, input }) => {
       const { selectedUserIds, roomId } = input;
-
       const { room, player } = verifyPlayer(ctx.session.user.id, roomId);
+
+      const playerMessage = room.messages.find(
+        (message) => message.sender === player.userId
+      );
+
+      if (!playerMessage) {
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: "Player never sent a message",
+        });
+      }
 
       if (room.stage !== "voting") {
         throw new TRPCError({

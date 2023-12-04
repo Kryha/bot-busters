@@ -23,7 +23,7 @@ export const PlayerData: FC<Props> = ({
   const character = CHARACTERS[player.characterId]!;
   const { name, color } = character;
 
-  const isVoted = localPlayer.votes.includes(player.userId);
+  const isVoted = !!localPlayer.votes?.includes(player.userId);
   const hasGuessed = player.isBot ? isVoted : !isVoted;
 
   switch (stage) {
