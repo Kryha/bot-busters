@@ -46,7 +46,7 @@ const generatePlayer = (userId: string): Player => {
   };
 };
 
-const assignCharacterId = (): number => {
+export const assignCharacterId = (): number => {
   const availableCharacterIds = Object.keys(CHARACTERS).filter(
     (id) => !assignedCharacterIds.has(Number(id))
   );

@@ -1,17 +1,27 @@
 import WebSocket from "ws";
 import { env } from "~/env.mjs";
-import { chatEvent, ee } from "~/server/api/match-maker.js";
-import type { ChatMessagePayload, Player } from "~/server/api/match-types.js";
+import { matchEvent, ee, assignCharacterId } from "~/server/api/match-maker.js";
+import type {
+  ChatMessagePayload,
+  PlayerType,
+} from "~/server/api/match-types.js";
 
+// TODO: Update Agent type
 export const generateAgent = (
   agentId: string,
   roomId: string
-): { agent: Player; ws: WebSocket } => {
+): { agent: PlayerType; ws: WebSocket } => {
+  // TODO: Check that assignCharacter has the right inner context
+  const characterId = assignCharacterId();
   const agent = {
     userId: agentId,
+    characterId: characterId,
     score: 0,
     isBot: true,
     isScoreSaved: false,
+    botsBusted: 0,
+    correctGuesses: 0,
+    votes: [],
   };
 
   const ws = new WebSocket(env.NEXT_PUBLIC_WS_URL);
@@ -29,12 +39,15 @@ export const generateAgent = (
     //   );
   });
 
-  ee.on(chatEvent(roomId), (stream: ChatMessagePayload) => {
+  ee.on(matchEvent(roomId), (stream: ChatMessagePayload) => {
     console.log(stream);
 
+    // This will be be a controller that listents to events and emmits the right action
     if (stream?.sender !== agent.userId) {
+      // TODO: make async call to LLM Container
+      // Mock async
       const cb = () => {
-        ee.emit(chatEvent(roomId), {
+        ee.emit(matchEvent(roomId), {
           sender: agent.userId,
           message: "Definitely not a bot....",
           sentAt: Date.now(),
