@@ -1,6 +1,7 @@
 import { EventEmitter } from "events";
 import { v4 as uuid } from "uuid";
 import { sql } from "drizzle-orm";
+import lodash from "lodash";
 
 import {
   CHAT_TIME_MS,
@@ -40,7 +41,6 @@ const generatePlayer = (
   userId: string,
   availableCharacterIds: CharacterId[]
 ): Player => {
-  // TODO: Make random so that the bots don't always end up with the last characters
   const characterId = availableCharacterIds.pop();
 
   if (!characterId) throw new Error("User generation failed: too many players");
@@ -57,10 +57,15 @@ const generatePlayer = (
 };
 
 const makeMatch = () => {
-  // TODO: Make the players per match random withing range 1-4
-  if (lobbyQueue.length < env.PLAYERS_PER_MATCH) return;
-
-  const availableCharacterIds: CharacterId[] = ["1", "2", "3", "4", "5"];
+  const botsInMatch = 1; // TODO: use more options
+  const humansInMatch = env.PLAYERS_PER_MATCH - botsInMatch;
+  const availableCharacterIds: CharacterId[] = lodash.shuffle([
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+  ]);
 
   if (availableCharacterIds.length < env.PLAYERS_PER_MATCH) {
     throw new Error(
@@ -68,19 +73,23 @@ const makeMatch = () => {
     );
   }
 
-  const playerIds = lobbyQueue.splice(0, env.PLAYERS_PER_MATCH);
+  // TODO: Make the players per match random within the range 1-4
+  if (lobbyQueue.length < humansInMatch) return;
+
+  const playerIds = lobbyQueue.splice(0, humansInMatch);
   const roomId = uuid();
 
   const players = playerIds.map((id) =>
     generatePlayer(id, availableCharacterIds)
   );
 
-  // TODO: Add correct amount of agents based on amount of human players
-  const { agent } = generateAgent(uuid(), roomId, availableCharacterIds);
-  players.push(agent);
+  const agents = lodash
+    .range(0, botsInMatch)
+    .map(() => generateAgent(roomId, availableCharacterIds));
+  players.push(...agents);
 
   matches.set(roomId, {
-    players: players,
+    players: lodash.shuffle(players),
     messages: [],
     stage: "chat",
     arePointsCalculated: false,
