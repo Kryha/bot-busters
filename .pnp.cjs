@@ -46,6 +46,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@trpc/next", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:10.38.5"],\
             ["@trpc/react-query", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:10.38.5"],\
             ["@trpc/server", "npm:10.38.5"],\
+            ["@types/bad-words", "npm:3.0.3"],\
             ["@types/eslint", "npm:8.44.3"],\
             ["@types/jest", "npm:29.5.6"],\
             ["@types/lodash", "npm:4.14.202"],\
@@ -57,6 +58,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/ws", "npm:8.5.6"],\
             ["@typescript-eslint/eslint-plugin", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:6.7.3"],\
             ["@typescript-eslint/parser", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:6.7.3"],\
+            ["bad-words", "npm:3.0.4"],\
             ["concurrently", "npm:8.2.1"],\
             ["copyfiles", "npm:2.4.1"],\
             ["dotenv-cli", "npm:7.3.0"],\
@@ -3369,6 +3371,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["@types/bad-words", [\
+        ["npm:3.0.3", {\
+          "packageLocation": "./.yarn/cache/@types-bad-words-npm-3.0.3-9f1e1fd5f4-220729e688.zip/node_modules/@types/bad-words/",\
+          "packageDependencies": [\
+            ["@types/bad-words", "npm:3.0.3"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["@types/concat-stream", [\
         ["npm:1.6.1", {\
           "packageLocation": "./.yarn/cache/@types-concat-stream-npm-1.6.1-42cd06b019-7d211e7433.zip/node_modules/@types/concat-stream/",\
@@ -4647,6 +4658,25 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["bad-words", [\
+        ["npm:3.0.4", {\
+          "packageLocation": "./.yarn/cache/bad-words-npm-3.0.4-8a75c0d2f6-49595ab6ce.zip/node_modules/bad-words/",\
+          "packageDependencies": [\
+            ["bad-words", "npm:3.0.4"],\
+            ["badwords-list", "npm:1.0.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["badwords-list", [\
+        ["npm:1.0.0", {\
+          "packageLocation": "./.yarn/cache/badwords-list-npm-1.0.0-82abbc9361-fa7a4fbf34.zip/node_modules/badwords-list/",\
+          "packageDependencies": [\
+            ["badwords-list", "npm:1.0.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["balanced-match", [\
         ["npm:1.0.2", {\
           "packageLocation": "./.yarn/cache/balanced-match-npm-1.0.2-a53c126459-9706c088a2.zip/node_modules/balanced-match/",\
@@ -4727,6 +4757,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@trpc/next", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:10.38.5"],\
             ["@trpc/react-query", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:10.38.5"],\
             ["@trpc/server", "npm:10.38.5"],\
+            ["@types/bad-words", "npm:3.0.3"],\
             ["@types/eslint", "npm:8.44.3"],\
             ["@types/jest", "npm:29.5.6"],\
             ["@types/lodash", "npm:4.14.202"],\
@@ -4738,6 +4769,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/ws", "npm:8.5.6"],\
             ["@typescript-eslint/eslint-plugin", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:6.7.3"],\
             ["@typescript-eslint/parser", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:6.7.3"],\
+            ["bad-words", "npm:3.0.4"],\
             ["concurrently", "npm:8.2.1"],\
             ["copyfiles", "npm:2.4.1"],\
             ["dotenv-cli", "npm:7.3.0"],\

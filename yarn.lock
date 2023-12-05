@@ -2227,6 +2227,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/bad-words@npm:^3.0.3":
+  version: 3.0.3
+  resolution: "@types/bad-words@npm:3.0.3"
+  checksum: 220729e6888b523477e3b1ca431b2fd01d816e9dbdd309c8a68b7a1a64ce02ed13ec44fe83bf83872f559d19b9180d4103b5f4179b7d4b1dd497306a46cb3c1d
+  languageName: node
+  linkType: hard
+
 "@types/concat-stream@npm:^1.6.0":
   version: 1.6.1
   resolution: "@types/concat-stream@npm:1.6.1"
@@ -3223,6 +3230,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"bad-words@npm:^3.0.4":
+  version: 3.0.4
+  resolution: "bad-words@npm:3.0.4"
+  dependencies:
+    badwords-list: ^1.0.0
+  checksum: 49595ab6ce5012b2dd5c4237839e450e4bbd349fccc7c66f11f06a1ab91cddfaa65e9855b63536297be6e0a22e3868b26b6012659a2cea0968f3caebf026bc9d
+  languageName: node
+  linkType: hard
+
+"badwords-list@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "badwords-list@npm:1.0.0"
+  checksum: fa7a4fbf3428aa15a86c303e0dd794cb9acda521e28c9eb83875f000b63f7940127c9d26368defe550a261ea546d5e8baeba2eaf5eebaf14f3c0774f69738ac8
+  languageName: node
+  linkType: hard
+
 "balanced-match@npm:^1.0.0":
   version: 1.0.2
   resolution: "balanced-match@npm:1.0.2"
@@ -3291,6 +3314,7 @@ __metadata:
     "@trpc/next": ^10.37.1
     "@trpc/react-query": ^10.37.1
     "@trpc/server": ^10.37.1
+    "@types/bad-words": ^3.0.3
     "@types/eslint": ^8.44.2
     "@types/jest": ^29.5.6
     "@types/lodash": ^4.14.202
@@ -3302,6 +3326,7 @@ __metadata:
     "@types/ws": ^8.5.6
     "@typescript-eslint/eslint-plugin": ^6.3.0
     "@typescript-eslint/parser": ^6.3.0
+    bad-words: ^3.0.4
     concurrently: ^8.2.1
     copyfiles: ^2.4.1
     dotenv-cli: ^7.3.0
