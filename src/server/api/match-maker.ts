@@ -174,7 +174,11 @@ const saveScore = async () => {
     return room.players.map(async (player) => {
       try {
         if (player.isScoreSaved) return;
+
         player.isScoreSaved = true;
+
+        if (player.isBot) return;
+
         await db.execute(
           sql`UPDATE ${users} SET score = score + ${player.score} WHERE ${users.id} = ${player.userId}`
         );
