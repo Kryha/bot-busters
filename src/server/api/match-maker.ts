@@ -10,19 +10,17 @@ import {
   POINTS_HUMAN_BUSTED,
   VOTING_TIME_MS,
 } from "~/constants/main.js";
-
 import { env } from "~/env.mjs";
 import { db } from "~/server/db/index.js";
 import { matches as matchesTable, users } from "~/server/db/schema.js";
 import { generateAgent } from "~/server/service/agent.js";
-
 import type {
   CharacterId,
   MatchEventType,
   MatchRoom,
   PlayerType as Player,
   ReadyToPlayPayload,
-} from "./match-types.js";
+} from "~/types/index.js";
 
 export const ee = new EventEmitter();
 
@@ -85,16 +83,19 @@ const makeMatch = () => {
 
   const agents = lodash
     .range(0, botsInMatch)
-    .map(() => generateAgent(roomId, availableCharacterIds));
+    .map(() => generateAgent(availableCharacterIds));
   players.push(...agents);
 
+  const createdAt = Date.now();
+
   matches.set(roomId, {
+    id: roomId,
     players: lodash.shuffle(players),
     messages: [],
     stage: "chat",
     arePointsCalculated: false,
-    createdAt: Date.now(),
-    votingAt: Date.now() + CHAT_TIME_MS,
+    createdAt,
+    votingAt: createdAt + CHAT_TIME_MS,
   });
 
   ee.emit("readyToPlay", {

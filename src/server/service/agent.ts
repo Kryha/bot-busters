@@ -4,11 +4,45 @@ import { matchEvent, ee } from "~/server/api/match-maker.js";
 import type {
   CharacterId,
   ChatMessagePayload,
+  MatchRoom,
   PlayerType,
-} from "~/server/api/match-types.js";
+} from "~/types/index.js";
+import { wait } from "~/utils/timer.js";
+
+const requestMessageFromLLM = async (
+  _agentId: string,
+  _messageHistory: ChatMessagePayload[]
+) => {
+  // TODO: make actual call to LLM process
+  const message = await Promise.resolve("Definitely not a bot...");
+  return message;
+};
+
+export const computeAgentMessages = async (room: MatchRoom) => {
+  const agents = room.players.filter((player) => player.isBot);
+
+  try {
+    for (const agent of agents) {
+      // TODO: improve logic, delete hardcoded wait and use Promise.all()
+      const message = await requestMessageFromLLM(agent.userId, room.messages);
+
+      await wait(2000);
+
+      const payload: ChatMessagePayload = {
+        sender: agent.userId,
+        message,
+        sentAt: Date.now(),
+      };
+
+      room.messages.unshift(payload);
+      ee.emit(matchEvent(room.id), payload);
+    }
+  } catch (error) {
+    console.error("Error computing LLM messages:", error);
+  }
+};
 
 export const generateAgent = (
-  roomId: string,
   availableCharacterIds: CharacterId[]
 ): PlayerType => {
   const characterId = availableCharacterIds.pop();
@@ -25,26 +59,6 @@ export const generateAgent = (
     correctGuesses: 0,
     votes: [],
   };
-
-  ee.on(matchEvent(roomId), (stream: ChatMessagePayload) => {
-    // This will be be a controller that listents to events and emmits the right action
-    if (stream?.sender !== agent.userId) {
-      const cb = async () => {
-        // TODO: make async call to LLM Container
-        try {
-          const message = await Promise.resolve("Definetely not a bot...");
-          ee.emit(matchEvent(roomId), {
-            sender: agent.userId,
-            message,
-            sentAt: Date.now(),
-          });
-        } catch (error) {
-          console.error(error);
-        }
-      };
-      setTimeout(() => void cb(), 2000);
-    }
-  });
 
   return agent;
 };

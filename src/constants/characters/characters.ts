@@ -1,5 +1,4 @@
-import { type CharacterId } from "~/server/api/match-types.js";
-import { type Character } from "~/types/chat.js";
+import type { CharacterId, Character } from "~/types/index.js";
 
 export const CHARACTERS: Record<CharacterId, Character> = {
   1: { id: "1", name: "orange orangutan", color: "orange" },
