@@ -3,7 +3,7 @@ import { Stack, Typography } from "@mui/material";
 
 import { Player } from "~/components/index.js";
 import { text } from "~/assets/text/index.js";
-import { type PlayerType } from "~/server/api/match-types.js";
+import { type PlayerType } from "~/types/index.js";
 import { CHARACTERS } from "~/constants/index.js";
 
 import { styles } from "./styles.js";

@@ -1,7 +1,4 @@
-import type {
-  ChatMessagePayload,
-  CharacterId,
-} from "~/server/api/match-types.js";
+import type { ChatMessagePayload, CharacterId } from "~/types/index.js";
 
 export type CharacterColor = "orange" | "brown" | "green" | "pink" | "blue";
 export type CharacterName =

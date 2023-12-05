@@ -1,7 +1,7 @@
 import { type ReactNode, type FC } from "react";
 import { Stack } from "@mui/material";
 
-import { type MatchStage } from "~/server/api/match-types.js";
+import { type MatchStage } from "~/types/index.js";
 
 import { styles } from "./styles.js";
 

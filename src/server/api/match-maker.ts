@@ -1,6 +1,7 @@
 import { EventEmitter } from "events";
 import { v4 as uuid } from "uuid";
 import { sql } from "drizzle-orm";
+import lodash from "lodash";
 
 import {
   CHAT_TIME_MS,
@@ -12,14 +13,14 @@ import {
 import { env } from "~/env.mjs";
 import { db } from "~/server/db/index.js";
 import { matches as matchesTable, users } from "~/server/db/schema.js";
-
+import { generateAgent } from "~/server/service/agent.js";
 import type {
   CharacterId,
   MatchEventType,
   MatchRoom,
   PlayerType as Player,
   ReadyToPlayPayload,
-} from "./match-types.js";
+} from "~/types/index.js";
 
 export const ee = new EventEmitter();
 
@@ -36,9 +37,9 @@ export const matchEvent = (
 
 const generatePlayer = (
   userId: string,
-  availableIds: CharacterId[]
+  availableCharacterIds: CharacterId[]
 ): Player => {
-  const characterId = availableIds.pop();
+  const characterId = availableCharacterIds.pop();
 
   if (!characterId) throw new Error("User generation failed: too many players");
 
@@ -54,9 +55,15 @@ const generatePlayer = (
 };
 
 const makeMatch = () => {
-  if (lobbyQueue.length < env.PLAYERS_PER_MATCH) return;
-
-  const availableCharacterIds: CharacterId[] = ["1", "2", "3", "4", "5"];
+  const botsInMatch = 1; // TODO: use more options
+  const humansInMatch = env.PLAYERS_PER_MATCH - botsInMatch;
+  const availableCharacterIds: CharacterId[] = lodash.shuffle([
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+  ]);
 
   if (availableCharacterIds.length < env.PLAYERS_PER_MATCH) {
     throw new Error(
@@ -64,17 +71,31 @@ const makeMatch = () => {
     );
   }
 
-  const playerIds = lobbyQueue.splice(0, env.PLAYERS_PER_MATCH);
+  // TODO: Make the players per match random within the range 1-4
+  if (lobbyQueue.length < humansInMatch) return;
 
+  const playerIds = lobbyQueue.splice(0, humansInMatch);
   const roomId = uuid();
 
+  const players = playerIds.map((id) =>
+    generatePlayer(id, availableCharacterIds)
+  );
+
+  const agents = lodash
+    .range(0, botsInMatch)
+    .map(() => generateAgent(availableCharacterIds));
+  players.push(...agents);
+
+  const createdAt = Date.now();
+
   matches.set(roomId, {
-    players: playerIds.map((id) => generatePlayer(id, availableCharacterIds)),
+    id: roomId,
+    players: lodash.shuffle(players),
     messages: [],
     stage: "chat",
     arePointsCalculated: false,
-    createdAt: Date.now(),
-    votingAt: Date.now() + CHAT_TIME_MS,
+    createdAt,
+    votingAt: createdAt + CHAT_TIME_MS,
   });
 
   ee.emit("readyToPlay", {
@@ -153,7 +174,11 @@ const saveScore = async () => {
     return room.players.map(async (player) => {
       try {
         if (player.isScoreSaved) return;
+
         player.isScoreSaved = true;
+
+        if (player.isBot) return;
+
         await db.execute(
           sql`UPDATE ${users} SET score = score + ${player.score} WHERE ${users.id} = ${player.userId}`
         );
