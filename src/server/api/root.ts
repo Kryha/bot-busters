@@ -1,4 +1,9 @@
-import { userRouter, matchRouter, lobbyRouter } from "./routers/index.js";
+import {
+  lobbyRouter,
+  matchRouter,
+  recaptchaRouter,
+  userRouter,
+} from "./routers/index.js";
 import { createTRPCRouter } from "./trpc.js";
 
 /**
@@ -10,6 +15,7 @@ export const appRouter = createTRPCRouter({
   lobby: lobbyRouter,
   match: matchRouter,
   user: userRouter,
+  recaptcha: recaptchaRouter,
 });
 
 // export type definition of API
