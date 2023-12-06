@@ -7,6 +7,8 @@ import { text } from "~/assets/text";
 import { styles } from "./styles.js";
 import { Footer } from "./footer";
 import { MenuOptions } from "./menu-options";
+import { useRouter } from "next/router";
+import { pages } from "~/router";
 
 const Transition = forwardRef(function Transition(
   props: TransitionProps & {
@@ -24,6 +26,12 @@ interface Props {
 }
 
 export const MenuDialog: FC<Props> = ({ open, setOpen }) => {
+  const { push } = useRouter();
+
+  const goHome = () => {
+    void push(pages.home);
+    setOpen(false);
+  };
   const handleClose = () => {
     setOpen(false);
   };
@@ -37,6 +45,9 @@ export const MenuDialog: FC<Props> = ({ open, setOpen }) => {
       sx={styles.dialog}
     >
       <Stack sx={styles.buttonWrapper}>
+        <Button variant="contained" sx={styles.button} onClick={goHome}>
+          {text.general.home}
+        </Button>
         <Button variant="contained" sx={styles.button} onClick={handleClose}>
           {text.general.close}
         </Button>
