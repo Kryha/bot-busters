@@ -2,12 +2,10 @@ import { z } from "zod";
 import { eq } from "drizzle-orm";
 import { observable } from "@trpc/server/observable";
 import { TRPCError } from "@trpc/server";
-import lodash from "lodash";
 
 import { db } from "~/server/db/index.js";
 import { matches as matchesTable } from "~/server/db/schema.js";
 import { matchRoomSchema, type ChatMessagePayload } from "~/types/index.js";
-import { computeAgentMessages } from "~/server/service/agent.js";
 
 import { createTRPCRouter, protectedProcedure } from "../trpc.js";
 import { matchEvent, matches, ee } from "../match-maker.js";
@@ -57,14 +55,11 @@ export const matchRouter = createTRPCRouter({
       const { message, sentAt, roomId } = input;
       const sender = ctx.session.user.id;
 
-      const { room } = verifyPlayer(sender, input.roomId);
+      const { room } = verifyPlayer(sender, roomId);
 
       const payload: ChatMessagePayload = { sender, message, sentAt };
 
-      room.messages.unshift(payload);
-      ee.emit(matchEvent(roomId), payload);
-
-      void computeAgentMessages(room);
+      room.addMessage(payload);
 
       return payload;
     }),
@@ -91,7 +86,7 @@ export const matchRouter = createTRPCRouter({
   getRoom: protectedProcedure
     .input(z.object({ roomId: z.string().uuid() }))
     .query(async ({ ctx, input }) => {
-      let room = matches.get(input.roomId);
+      let room = matches.get(input.roomId)?.toSerializable();
 
       if (!room) {
         const [dbRes] = await db
@@ -111,18 +106,11 @@ export const matchRouter = createTRPCRouter({
         (player) => player.userId === ctx.session.user.id
       );
 
-      if (!player)
+      if (!player) {
         throw new TRPCError({
           code: "FORBIDDEN",
           message: "User is not part of this room",
         });
-
-      if (room.stage !== "results") {
-        const clonedRoom = lodash.cloneDeep(room);
-        clonedRoom.players.forEach((player) => {
-          player.isBot = undefined;
-        });
-        return clonedRoom;
       }
 
       return room;
@@ -137,33 +125,8 @@ export const matchRouter = createTRPCRouter({
     )
     .mutation(({ ctx, input }) => {
       const { selectedUserIds, roomId } = input;
-      const { room, player } = verifyPlayer(ctx.session.user.id, roomId);
+      const { room } = verifyPlayer(ctx.session.user.id, roomId);
 
-      const playerMessage = room.messages.find(
-        (message) => message.sender === player.userId
-      );
-
-      if (!playerMessage) {
-        throw new TRPCError({
-          code: "FORBIDDEN",
-          message: "Player never sent a message",
-        });
-      }
-
-      if (room.stage !== "voting") {
-        throw new TRPCError({
-          code: "FORBIDDEN",
-          message: "Not in the voting stage",
-        });
-      }
-
-      if (selectedUserIds.includes(player.userId)) {
-        throw new TRPCError({
-          code: "BAD_REQUEST",
-          message: "Cannot pick yourself as a bot",
-        });
-      }
-
-      player.votes = selectedUserIds;
+      room.vote(ctx.session.user.id, selectedUserIds);
     }),
 });
