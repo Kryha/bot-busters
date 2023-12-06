@@ -11,6 +11,7 @@ import { computeAgentMessages } from "~/server/service/agent.js";
 
 import { createTRPCRouter, protectedProcedure } from "../trpc.js";
 import { matchEvent, matches, ee } from "../match-maker.js";
+import { profanityFilter } from "~/service/index.js";
 
 const verifyPlayer = (userId: string, roomId: string) => {
   const room = matches.get(roomId);
@@ -54,10 +55,15 @@ export const matchRouter = createTRPCRouter({
       })
     )
     .mutation(({ ctx, input }) => {
-      const { message, sentAt, roomId } = input;
+      const { sentAt, roomId } = input;
+      let { message } = input;
       const sender = ctx.session.user.id;
 
       const { room } = verifyPlayer(sender, input.roomId);
+
+      if (profanityFilter.isProfane(message)) {
+        message = profanityFilter.clean(message);
+      }
 
       const payload: ChatMessagePayload = { sender, message, sentAt };
 
