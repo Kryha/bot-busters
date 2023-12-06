@@ -1,5 +1,5 @@
 import { type FC } from "react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/router.js";
 import { CircularProgress, Typography } from "@mui/material";
 
 import { LobbyLayout as Layout } from "~/components/lobby-layout/index.js";

@@ -1,6 +1,6 @@
 import { type FC, useEffect, useState } from "react";
 import { Button, Stack, Typography } from "@mui/material";
-import { useRouter } from "next/router";
+import { useRouter } from "next/router.js";
 import { signIn, useSession } from "next-auth/react";
 
 import { pages } from "~/router.js";
@@ -9,7 +9,7 @@ import { api } from "~/utils/api.js";
 import { isAnonymousSession, isUnverifiedSession } from "~/utils/session.js";
 
 import { styles } from "./styles.js";
-import { text } from "~/assets/text";
+import { text } from "~/assets/text/index.js";
 
 interface Props {
   gainedScore: number;

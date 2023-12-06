@@ -8,7 +8,7 @@ import {
   setUserScore,
   deleteAllUsers,
   insertVerifiedUser,
-} from "./user";
+} from "./user.js";
 
 describe("Users CRUD API", () => {
   beforeEach(async () => {

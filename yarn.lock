@@ -19,7 +19,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aleohq/sdk@npm:^0.6.2":
+"@aleohq/sdk@npm:0.6.2":
   version: 0.6.2
   resolution: "@aleohq/sdk@npm:0.6.2"
   dependencies:
@@ -232,12 +232,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/parser@npm:^7.1.0, @babel/parser@npm:^7.14.7, @babel/parser@npm:^7.20.7, @babel/parser@npm:^7.22.15, @babel/parser@npm:^7.23.0, @babel/parser@npm:^7.9.4":
+"@babel/parser@npm:^7.1.0, @babel/parser@npm:^7.14.7, @babel/parser@npm:^7.20.7, @babel/parser@npm:^7.22.15, @babel/parser@npm:^7.23.0":
   version: 7.23.0
   resolution: "@babel/parser@npm:7.23.0"
   bin:
     parser: ./bin/babel-parser.js
   checksum: 453fdf8b9e2c2b7d7b02139e0ce003d1af21947bbc03eb350fb248ee335c9b85e4ab41697ddbdd97079698de825a265e45a0846bb2ed47a2c7c1df833f42a354
+  languageName: node
+  linkType: hard
+
+"@babel/parser@npm:^7.9.4":
+  version: 7.23.5
+  resolution: "@babel/parser@npm:7.23.5"
+  bin:
+    parser: ./bin/babel-parser.js
+  checksum: ea763629310f71580c4a3ea9d3705195b7ba994ada2cc98f9a584ebfdacf54e92b2735d351672824c2c2b03c7f19206899f4d95650d85ce514a822b19a8734c7
   languageName: node
   linkType: hard
 
@@ -410,15 +419,6 @@ __metadata:
   dependencies:
     regenerator-runtime: ^0.14.0
   checksum: 6c4df4839ec75ca10175f636d6362f91df8a3137f86b38f6cd3a4c90668a0fe8e9281d320958f4fbd43b394988958585a17c3aab2a4ea6bf7316b22916a371fb
-  languageName: node
-  linkType: hard
-
-"@babel/runtime@npm:^7.17.9":
-  version: 7.23.5
-  resolution: "@babel/runtime@npm:7.23.5"
-  dependencies:
-    regenerator-runtime: ^0.14.0
-  checksum: 164d9802424f06908e62d29b8fd3a87db55accf82f46f964ac481dcead11ff7df8391e3696e5fa91a8ca10ea8845bf650acd730fa88cf13f8026cd8d5eec6936
   languageName: node
   linkType: hard
 
@@ -935,33 +935,6 @@ __metadata:
   version: 0.1.4
   resolution: "@floating-ui/utils@npm:0.1.4"
   checksum: e6195ded5b3a6fd38411a833605184c31f24609b08feab2615e90ccc063bf4d3965383d817642fc7e8ca5ab6a54c29c71103e874f3afb0518595c8bd3390ba16
-  languageName: node
-  linkType: hard
-
-"@hcaptcha/loader@npm:^1.0.10":
-  version: 1.0.10
-  resolution: "@hcaptcha/loader@npm:1.0.10"
-  checksum: 8e01a7768a5a7c334ad3a5f7ce1d674edd8a80ce47c7cae6e0e5d7d23fec4dfe464d5755451e967841417e55b107efd5acebfb3ce80f1ce663f2ec770e7363de
-  languageName: node
-  linkType: hard
-
-"@hcaptcha/react-hcaptcha@npm:^1.9.2":
-  version: 1.9.2
-  resolution: "@hcaptcha/react-hcaptcha@npm:1.9.2"
-  dependencies:
-    "@babel/runtime": ^7.17.9
-    "@hcaptcha/loader": ^1.0.10
-  peerDependencies:
-    react: ">= 16.3.0"
-    react-dom: ">= 16.3.0"
-  checksum: 5738b41dbeed0dd9727f8f74ac7c2a496dae8d8444d3ac1906c9fdb351e9b0a9d2289c957351a750b7c44b11897a48f7412305bc290f17f7527e0e57847ba0ad
-  languageName: node
-  linkType: hard
-
-"@hcaptcha/types@npm:^1.0.3":
-  version: 1.0.3
-  resolution: "@hcaptcha/types@npm:1.0.3"
-  checksum: 9ee5a528532dc25b3e82d7d78c9afd9df5a7f9aed747ba149880b28b8529422c313850cc7120e65dd1b4c0946f362fef9babe23fe15af7345ef67aa473753ade
   languageName: node
   linkType: hard
 
@@ -2254,6 +2227,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/bad-words@npm:^3.0.3":
+  version: 3.0.3
+  resolution: "@types/bad-words@npm:3.0.3"
+  checksum: 220729e6888b523477e3b1ca431b2fd01d816e9dbdd309c8a68b7a1a64ce02ed13ec44fe83bf83872f559d19b9180d4103b5f4179b7d4b1dd497306a46cb3c1d
+  languageName: node
+  linkType: hard
+
 "@types/concat-stream@npm:^1.6.0":
   version: 1.6.1
   resolution: "@types/concat-stream@npm:1.6.1"
@@ -2295,13 +2275,6 @@ __metadata:
   dependencies:
     "@types/node": "*"
   checksum: 6e1ee9c119e075134696171b680fee7b627f3e077ec5e5ad9ba9359f1688a84fa35ea6804f96922c43ca30ab8d4ca9531a526b64f57fa13e1d721bf741884829
-  languageName: node
-  linkType: hard
-
-"@types/grecaptcha@npm:^3.0.7":
-  version: 3.0.7
-  resolution: "@types/grecaptcha@npm:3.0.7"
-  checksum: e095a29086097afb7f02919524e954fd06c41ec0e81012f86f44ef4656bd673ec7d33996639624d678429bd0790254075ae60b0b147cb7bcd4de4ace66e8c62f
   languageName: node
   linkType: hard
 
@@ -2373,9 +2346,9 @@ __metadata:
   linkType: hard
 
 "@types/linkify-it@npm:*":
-  version: 3.0.3
-  resolution: "@types/linkify-it@npm:3.0.3"
-  checksum: a734becc4e7476833b0e6951ec133c006a34809639c722d3e28b7cf88f5f6ccbb433f195788be5e56209b1e9e6e0778879291dd2db401acee3bb585c44dcc329
+  version: 3.0.5
+  resolution: "@types/linkify-it@npm:3.0.5"
+  checksum: fac28f41a6e576282300a459d70ea0d33aab70dbb77c3d09582bb0335bb00d862b6de69585792a4d590aae4173fbab0bf28861e2d90ca7b2b1439b52688e9ff6
   languageName: node
   linkType: hard
 
@@ -2397,9 +2370,9 @@ __metadata:
   linkType: hard
 
 "@types/mdurl@npm:*":
-  version: 1.0.3
-  resolution: "@types/mdurl@npm:1.0.3"
-  checksum: 5bbed4f0eb9f60040fa26be77aa2158ca468b6423876cec0d2043e7f8298e83b8e5b95fb66056327b02d747c4d376aed16c11ff3fdc4cb3dca327a6931a71f18
+  version: 1.0.5
+  resolution: "@types/mdurl@npm:1.0.5"
+  checksum: e8e872e8da8f517a9c748b06cec61c947cb73fd3069e8aeb0926670ec5dfac5d30549b3d0f1634950401633e812f9b7263f2d5dbe7e98fce12bcb2c659aa4b21
   languageName: node
   linkType: hard
 
@@ -3257,6 +3230,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"bad-words@npm:^3.0.4":
+  version: 3.0.4
+  resolution: "bad-words@npm:3.0.4"
+  dependencies:
+    badwords-list: ^1.0.0
+  checksum: 49595ab6ce5012b2dd5c4237839e450e4bbd349fccc7c66f11f06a1ab91cddfaa65e9855b63536297be6e0a22e3868b26b6012659a2cea0968f3caebf026bc9d
+  languageName: node
+  linkType: hard
+
+"badwords-list@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "badwords-list@npm:1.0.0"
+  checksum: fa7a4fbf3428aa15a86c303e0dd794cb9acda521e28c9eb83875f000b63f7940127c9d26368defe550a261ea546d5e8baeba2eaf5eebaf14f3c0774f69738ac8
+  languageName: node
+  linkType: hard
+
 "balanced-match@npm:^1.0.0":
   version: 1.0.2
   resolution: "balanced-match@npm:1.0.2"
@@ -3307,7 +3296,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "bot-busters@workspace:."
   dependencies:
-    "@aleohq/sdk": ^0.6.2
+    "@aleohq/sdk": 0.6.2
     "@demox-labs/aleo-wallet-adapter-base": ^0.0.19
     "@demox-labs/aleo-wallet-adapter-leo": ^0.0.18
     "@demox-labs/aleo-wallet-adapter-react": ^0.0.18
@@ -3315,8 +3304,6 @@ __metadata:
     "@emotion/react": ^11.11.1
     "@emotion/styled": ^11.11.0
     "@faker-js/faker": ^8.1.0
-    "@hcaptcha/react-hcaptcha": ^1.9.2
-    "@hcaptcha/types": ^1.0.3
     "@mui/icons-material": ^5.14.11
     "@mui/material": ^5.14.11
     "@t3-oss/env-nextjs": ^0.7.0
@@ -3327,8 +3314,8 @@ __metadata:
     "@trpc/next": ^10.37.1
     "@trpc/react-query": ^10.37.1
     "@trpc/server": ^10.37.1
+    "@types/bad-words": ^3.0.3
     "@types/eslint": ^8.44.2
-    "@types/grecaptcha": ^3.0.7
     "@types/jest": ^29.5.6
     "@types/lodash": ^4.14.202
     "@types/node": ^18.16.0
@@ -3339,6 +3326,7 @@ __metadata:
     "@types/ws": ^8.5.6
     "@typescript-eslint/eslint-plugin": ^6.3.0
     "@typescript-eslint/parser": ^6.3.0
+    bad-words: ^3.0.4
     concurrently: ^8.2.1
     copyfiles: ^2.4.1
     dotenv-cli: ^7.3.0
@@ -3357,8 +3345,6 @@ __metadata:
     next-auth: ^4.23.0
     pg: ^8.11.3
     postgres: ^3.3.5
-    puppeteer: ^21.5.2
-    rate-limiter-flexible: ^2.4.1
     react: 18.2.0
     react-dom: 18.2.0
     react-fps: ^1.0.6
@@ -8825,13 +8811,6 @@ __metadata:
   version: 1.0.1
   resolution: "queue-tick@npm:1.0.1"
   checksum: 57c3292814b297f87f792fbeb99ce982813e4e54d7a8bdff65cf53d5c084113913289d4a48ec8bbc964927a74b847554f9f4579df43c969a6c8e0f026457ad01
-  languageName: node
-  linkType: hard
-
-"rate-limiter-flexible@npm:^2.4.1":
-  version: 2.4.2
-  resolution: "rate-limiter-flexible@npm:2.4.2"
-  checksum: 039e58b664991963ba2668a83d0406a72e5822683103acbe416854deb92ed834b840ce6e0acfea35917d9b49685bd53946ae47435a9f5916c2e7550395dec9dc
   languageName: node
   linkType: hard
 

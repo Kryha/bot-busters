@@ -6,10 +6,11 @@ import {
   type SelectChangeEvent,
 } from "@mui/material";
 
-import { text } from "~/assets/text";
-import { type LeaderboardType, leaderboardTypeSchema } from "~/types";
+import { text } from "~/assets/text/index.js";
+import { type LeaderboardType, leaderboardTypeSchema } from "~/types/index.js";
+import { getRelativeDate } from "~/utils/date.js";
+
 import { styles } from "./styles.js";
-import { getRelativeDate } from "~/utils/date";
 
 interface Props {
   leaderboardType: LeaderboardType;

@@ -1,21 +1,22 @@
 import { type FC, type KeyboardEvent, useMemo, useState } from "react";
 import { Stack } from "@mui/material";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/router.js";
+
 import {
+  type CharacterId,
   type ChatMessagePayload,
   type MatchRoom,
-} from "~/server/api/match-types";
-
-import { CHARACTERS, CHAT_TIME_MS } from "~/constants";
+} from "~/types/index.js";
+import { CHARACTERS, CHAT_TIME_MS } from "~/constants/index.js";
 import { pages } from "~/router.js";
-import { Messages } from "~/components/messages";
-import { InputField } from "~/components/input-field";
-import { Timer } from "~/components/timer";
+import { Messages } from "~/components/messages/index.js";
+import { InputField } from "~/components/input-field/index.js";
+import { Timer } from "~/components/timer/index.js";
+import { api } from "~/utils/api.js";
+import { type MessageData } from "~/types/index.js";
 
-import { styles } from "./styles";
-import { api } from "~/utils/api";
-import { type MessageData } from "~/types";
+import { styles } from "./styles.js";
 
 interface Props {
   roomId: string;
@@ -30,7 +31,7 @@ export const Chat: FC<Props> = ({ roomId, room }) => {
   const sendMessage = api.match.sendMessage.useMutation();
 
   const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState<ChatMessagePayload[]>([]);
+  const [messages, setMessages] = useState<ChatMessagePayload[]>(room.messages);
 
   const appendMessage = (newMessage: ChatMessagePayload) => {
     setMessages((prev) => [newMessage, ...prev]);
@@ -46,26 +47,19 @@ export const Chat: FC<Props> = ({ roomId, room }) => {
         console.error("Chat message error:", error);
         void push(pages.home);
       },
-    },
+    }
   );
 
   const messageData: MessageData[] = useMemo(() => {
     return messages.map((message) => {
       const isLocalSender = message.sender === session?.user?.id;
-      const characterId = players.find(
-        (player) => player.userId === message.sender,
+      const characterId: CharacterId = players.find(
+        (player) => player.userId === message.sender
       )!.characterId;
 
-      const character = CHARACTERS[characterId]!;
       return {
-        message: {
-          isLocalSender,
-          ...message,
-        },
-        character: {
-          name: character.name,
-          color: character.color,
-        },
+        message: { ...message, isLocalSender },
+        character: CHARACTERS[characterId],
       };
     });
   }, [messages, session, players]);
@@ -86,17 +80,17 @@ export const Chat: FC<Props> = ({ roomId, room }) => {
     }
   };
 
-  const isDisabled = stage !== "chat";
+  const isChatDisabled = stage !== "chat";
 
   return (
-    <Stack component="section" sx={styles.section(isDisabled)}>
+    <Stack component="section" sx={styles.section(isChatDisabled)}>
       <Messages messageData={messageData} />
       <Timer time={room.createdAt} duration={CHAT_TIME_MS} />
       <InputField
         value={message}
         onChange={(e) => setMessage(e.target.value)}
         onClick={() => handleSend(message)}
-        disabled={isDisabled}
+        disabled={isChatDisabled}
         onKeyDown={(e) => handleKeyDown(e)}
       />
     </Stack>

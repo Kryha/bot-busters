@@ -1,9 +1,9 @@
 import { type FC } from "react";
 import { Divider, Stack, ToggleButton, Typography } from "@mui/material";
 
-import { text } from "~/assets/text";
+import { text } from "~/assets/text/index.js";
+import { Player } from "~/components/index.js";
 
-import { Player } from "~/components";
 import { styles } from "./styles.js";
 
 interface Props {

@@ -7,7 +7,7 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import { useRouter } from "next/router";
+import { useRouter } from "next/router.js";
 
 import { type LeaderboardData } from "~/types/index.js";
 import { text } from "~/assets/text/index.js";

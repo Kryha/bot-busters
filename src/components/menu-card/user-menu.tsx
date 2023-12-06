@@ -1,17 +1,19 @@
 //TODO: delete when changing layout : Ask Tsungi about this
 import { type FC, type MouseEvent, useEffect, useState } from "react";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import {
+  ArrowDropDown as ArrowDropDownIcon,
+  ArrowDropUp as ArrowDropUpIcon,
+} from "@mui/icons-material";
 import { signOut } from "next-auth/react";
 import { Avatar, Button, Chip, Stack, Typography } from "@mui/material";
-import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 
 import { text } from "~/assets/text/index.js";
 import { fakeStats } from "~/constants/fake-data/landing.js";
 import { useBBWallet } from "~/service/bb-wallet.js";
+import { CHIP_TIMEOUT } from "~/constants/index.js";
 
 import { styles } from "./styles.js";
-import { MenuCard } from "./menu-card";
-import { CHIP_TIMEOUT } from "~/constants";
+import { MenuCard } from "./menu-card.jsx";
 
 interface Props {
   isMenuVisible: boolean;

@@ -1,5 +1,5 @@
 import { Button, Stack, Typography } from "@mui/material";
-import { useRouter } from "next/router";
+import { useRouter } from "next/router.js";
 import { type FC } from "react";
 
 import { pages } from "~/router.js";

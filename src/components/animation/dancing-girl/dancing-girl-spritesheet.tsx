@@ -1,13 +1,15 @@
 import React from "react";
-import Box from "@mui/material/Box";
-import { useAnimatedSprite } from "~/hooks/use-animated-sprite";
-import { DancingGirlHips } from "~/components/animation/dancing-girl/dancing-girl-hips";
-import { DancingGirlBalancing } from "~/components/animation/dancing-girl/dancing-girl-balancing";
-import { DancingGirlSlides } from "~/components/animation/dancing-girl/dancing-girl-slides";
-import { DancingGirlSkips } from "~/components/animation/dancing-girl/dancing-girl-skips";
-import { DancingGirlSnaps } from "~/components/animation/dancing-girl/dancing-girl-snaps";
-import { styles } from "./styles";
-import { Animation } from "~/components/animation/animation";
+import { Box } from "@mui/material";
+
+import { Animation } from "~/components/animation/animation.jsx";
+import { useAnimatedSprite } from "~/hooks/use-animated-sprite.js";
+import { DancingGirlHips } from "./dancing-girl-hips.jsx";
+import { DancingGirlBalancing } from "./dancing-girl-balancing.jsx";
+import { DancingGirlSlides } from "./dancing-girl-slides.jsx";
+import { DancingGirlSkips } from "./dancing-girl-skips.jsx";
+import { DancingGirlSnaps } from "./dancing-girl-snaps.jsx";
+
+import { styles } from "./styles.js";
 
 export const DancingGirlSpriteSheet: React.FC = () => {
   const controls = useAnimatedSprite({

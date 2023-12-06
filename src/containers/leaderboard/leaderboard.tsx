@@ -2,11 +2,11 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useSession } from "next-auth/react";
 import { Box, Typography } from "@mui/material";
 
-import { type LeaderboardData } from "~/types";
+import { type LeaderboardData } from "~/types/index.js";
 import { isValidSession } from "~/utils/session.js";
-import { AddScoreTable, LeaderboardTable } from "~/components/tables";
-import { leaderboardData } from "~/constants";
-import { text } from "~/assets/text";
+import { AddScoreTable, LeaderboardTable } from "~/components/tables/index.js";
+import { leaderboardData } from "~/constants/index.js";
+import { text } from "~/assets/text/index.js";
 import { fakeCountdown } from "~/constants/fake-data/landing.js";
 import { styles } from "./styles.js";
 

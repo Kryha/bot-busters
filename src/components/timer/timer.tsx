@@ -1,7 +1,7 @@
 import { type FC, useEffect, useState } from "react";
 import { Stack, Typography } from "@mui/material";
 
-import { text } from "~/assets/text";
+import { text } from "~/assets/text/index.js";
 import { ALERT_TIME_MS } from "~/constants/main.js";
 
 import { styles } from "./styles.js";
@@ -38,7 +38,7 @@ export const Timer: FC<Props> = ({
   const seconds = Math.floor(remainingTime / 1000);
   const formattedCountdown = text.general.formattedCountdown(
     Math.floor(seconds / 60),
-    seconds % 60,
+    seconds % 60
   );
 
   return (

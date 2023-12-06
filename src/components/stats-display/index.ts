@@ -1,1 +1,1 @@
-export * from "./stats-display";
+export * from "./stats-display.jsx";

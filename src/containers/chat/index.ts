@@ -1,1 +1,1 @@
-export * from "~/assets/text/chat";
+export * from "./chat.jsx";
