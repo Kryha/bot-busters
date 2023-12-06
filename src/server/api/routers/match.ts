@@ -11,7 +11,7 @@ import { computeAgentMessages } from "~/server/service/agent.js";
 
 import { createTRPCRouter, protectedProcedure } from "../trpc.js";
 import { matchEvent, matches, ee } from "../match-maker.js";
-import { profanityFilter } from "~/constants/index.js";
+import { profanityFilter } from "~/service/index.js";
 
 const verifyPlayer = (userId: string, roomId: string) => {
   const room = matches.get(roomId);
