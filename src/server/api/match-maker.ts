@@ -44,7 +44,7 @@ const makeMatch = () => {
   ee.emit("queueUpdate");
 };
 
-const updateRooms = () => {
+const matchLoop = () => {
   matches.forEach((room, roomId) => {
     const roomAge = Date.now() - room.createdAt;
 
@@ -97,7 +97,7 @@ const storeMatches = async () => {
 
 setInterval(() => {
   try {
-    updateRooms();
+    matchLoop();
     storeMatches().catch((error) =>
       console.error("Error storing matches:", error)
     );
