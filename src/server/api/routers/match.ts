@@ -6,10 +6,11 @@ import lodash from "lodash";
 
 import { db } from "~/server/db/index.js";
 import { matches as matchesTable } from "~/server/db/schema.js";
+import { matchRoomSchema, type ChatMessagePayload } from "~/types/index.js";
+import { computeAgentMessages } from "~/server/service/agent.js";
 
 import { createTRPCRouter, protectedProcedure } from "../trpc.js";
 import { matchEvent, matches, ee } from "../match-maker.js";
-import { matchRoomSchema, type ChatMessagePayload } from "../match-types.js";
 import { profanityFilter } from "~/constants/index.js";
 
 const verifyPlayer = (userId: string, roomId: string) => {
@@ -66,8 +67,10 @@ export const matchRouter = createTRPCRouter({
 
       const payload: ChatMessagePayload = { sender, message, sentAt };
 
-      room.messages.push(payload);
+      room.messages.unshift(payload);
       ee.emit(matchEvent(roomId), payload);
+
+      void computeAgentMessages(room);
 
       return payload;
     }),

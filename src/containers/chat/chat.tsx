@@ -7,7 +7,7 @@ import {
   type CharacterId,
   type ChatMessagePayload,
   type MatchRoom,
-} from "~/server/api/match-types.js";
+} from "~/types/index.js";
 import { CHARACTERS, CHAT_TIME_MS } from "~/constants/index.js";
 import { pages } from "~/router.js";
 import { Messages } from "~/components/messages/index.js";

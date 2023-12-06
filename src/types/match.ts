@@ -36,6 +36,7 @@ export const matchStageSchema = z.enum(["chat", "voting", "results"]);
 export type MatchStage = z.infer<typeof matchStageSchema>;
 
 export const matchRoomSchema = z.object({
+  id: z.string().uuid(),
   players: z.array(playerSchema),
   messages: z.array(chatMessagePayloadSchema),
   stage: matchStageSchema,
