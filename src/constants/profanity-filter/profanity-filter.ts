@@ -1,5 +1,6 @@
 import BadWordsFilter from "bad-words";
-const badWords = ["fack"];
+//TODO: Add more bad words to filter
+const badWords = ["fuck"];
 
 export const profanityFilter = new BadWordsFilter();
 
