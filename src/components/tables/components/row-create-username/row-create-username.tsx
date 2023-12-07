@@ -1,5 +1,6 @@
 import { useState, type FC, useEffect } from "react";
 import {
+  Alert,
   Avatar,
   Button,
   Stack,
@@ -21,7 +22,7 @@ interface RowCreateUsernameProps {
 
 export const RowCreateUsername: FC<RowCreateUsernameProps> = ({
   onSetUsername,
-  error: _,
+  error,
 }) => {
   const [username, setUsername] = useState("");
 
@@ -40,15 +41,11 @@ export const RowCreateUsername: FC<RowCreateUsernameProps> = ({
         </TableCell>
         <TableCell sx={styles.select}>
           <Stack sx={styles.wrapper}>
+            {/* TODO: uncomment after fixing styling */}
+            {error && <Alert severity="error">{error}</Alert>}
             <Avatar alt="avatar" sx={styles.avatar}>
               {text.leaderboard.avatarEmoji}
             </Avatar>
-            {/* TODO: uncomment after fixing styling */}
-            {/* {error && (
-              <Typography variant="body1" color="error">
-                {error}
-              </Typography>
-            )} */}
             <TextField
               id="outlined"
               value={username}
