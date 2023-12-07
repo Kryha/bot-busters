@@ -37,4 +37,5 @@ spec:
             - name: NEXT_PUBLIC_WS_URL
               value: wss://bot-busters.staging.kryha.dev
             - name: PLAYERS_PER_MATCH
-              value: "4"
+              # TODO: set to correct value
+              value: "2"
