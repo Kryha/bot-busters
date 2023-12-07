@@ -7,6 +7,7 @@ import type {
 } from "~/types/index.js";
 import { type Match } from "~/server/service/index.js";
 import { ee, matchEvent } from "~/server/api/match-maker.js";
+import { env } from "~/env.mjs";
 
 export class Agent {
   private _id: string;
@@ -67,34 +68,30 @@ export class Agent {
   private async requestMessageFromLLM() {
     const { messages } = this._match;
 
-    // TODO: uncomment once we use conversational API
-    // const pastInputs = messages
-    //   .slice(0, messages.length - 1)
-    //   .map((msg) => msg.message)
-    //   .filter((message) => !this._sentMessages.includes(message));
+    const pastInputs = messages
+      .slice(0, messages.length - 1)
+      .filter((payload) => payload.sender === this._id)
+      .map((msg) => msg.message);
 
     const latestMessage =
       messages[messages.length - 1]?.message ?? "Who are you?";
 
-    // TODO: uncomment once we find a correct conversational API
-    // const body = JSON.stringify({
-    //   inputs: {
-    //     past_user_inputs: pastInputs,
-    //     generated_responses: this._sentMessages,
-    //     text: latestMessage,
-    //   },
-    //   parameters: { max_new_tokens: 30 },
-    // });
-
     const body = JSON.stringify({
-      inputs: latestMessage,
-      parameters: { max_new_tokens: 30 },
+      inputs: {
+        past_user_inputs: pastInputs,
+        generated_responses: this._sentMessages,
+        text: latestMessage,
+      },
     });
 
     const response = await fetch(
-      "http://llm-botbusters.kryha.dev:31547/generate",
+      // TODO: use our own API
+      "https://api-inference.huggingface.co/models/facebook/blenderbot-400M-distill",
       {
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${env.HUGGING_FACE_TOKEN}`,
+        },
         method: "POST",
         body,
       }

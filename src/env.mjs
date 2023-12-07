@@ -22,6 +22,7 @@ export const env = createEnv({
       .string()
       .default("5")
       .transform((val) => Number(val)),
+    HUGGING_FACE_TOKEN: z.string(),
   },
 
   /**
@@ -55,6 +56,7 @@ export const env = createEnv({
     NEXT_PUBLIC_WS_URL: process.env.NEXT_PUBLIC_WS_URL,
     NEXT_PUBLIC_MOCK_AUTH: process.env.NEXT_PUBLIC_MOCK_AUTH,
     PLAYERS_PER_MATCH: process.env.PLAYERS_PER_MATCH,
+    HUGGING_FACE_TOKEN: process.env.HUGGING_FACE_TOKEN,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.
