@@ -7,7 +7,6 @@ import { users } from "~/server/db/schema.js";
 import { isValidSession } from "~/utils/session.js";
 import { verifySignature } from "~/utils/wallet.js";
 import { profanityFilter } from "~/service/index.js";
-import { TRPCError } from "@trpc/server";
 
 export const userRouter = createTRPCRouter({
   mergeScore: protectedProcedure
