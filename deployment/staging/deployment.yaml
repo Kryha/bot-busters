@@ -38,4 +38,4 @@ spec:
               value: wss://bot-busters.staging.kryha.dev
             - name: PLAYERS_PER_MATCH
               # TODO: set to correct value
-              value: "2"
+              value: "3"
