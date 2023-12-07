@@ -26,6 +26,11 @@ spec:
                 secretKeyRef:
                   name: backend-secrets
                   key: nextauth_secret
+            - name: HUGGING_FACE_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets
+                  key: hugging_face_token
             - name: DATABASE_URL
               value: postgresql://postgres:$(DB_PASSWORD)@postgres.$(POD_NAMESPACE).svc.cluster.local:5432
             - name: NEXTAUTH_URL
