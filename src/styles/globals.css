@@ -9,6 +9,10 @@ a {
   text-decoration: none;
 }
 
+.grecaptcha-badge {
+  visibility: hidden !important;
+}
+
 /* Animations */
 
 @keyframes infinite_text_primary {
