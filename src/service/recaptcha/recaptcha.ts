@@ -1,11 +1,8 @@
-"use client";
-
-import { useCallback, useRef } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef } from "react";
 import {
   type ReCaptchaContextProps,
   useReCaptchaContext,
-} from "~/containers/reCaptcha";
-import { useIsomorphicLayoutEffect } from "~/containers/reCaptcha/utils";
+} from "~/containers/recaptcha-provider/recaptcha-provider";
 
 export interface useReCaptchaProps extends ReCaptchaContextProps {
   executeRecaptcha: (action: string) => Promise<string>;
@@ -15,7 +12,7 @@ export interface useReCaptchaProps extends ReCaptchaContextProps {
  * @example
  * const { executeRecaptcha } = useReCaptcha()
  */
-const useReCaptcha = (reCaptchaKey?: string): useReCaptchaProps => {
+export const useRecaptcha = (reCaptchaKey?: string): useReCaptchaProps => {
   const {
     grecaptcha,
     loaded,
@@ -55,4 +52,27 @@ const useReCaptcha = (reCaptchaKey?: string): useReCaptchaProps => {
   };
 };
 
-export { useReCaptcha };
+export const getRecaptchaScriptSrc = ({
+  reCaptchaKey,
+  language,
+  useRecaptchaNet = false,
+  useEnterprise = false,
+}: {
+  reCaptchaKey?: string;
+  language?: string;
+  useRecaptchaNet?: boolean;
+  useEnterprise?: boolean;
+} = {}): string => {
+  const hostName = useRecaptchaNet ? "recaptcha.net" : "google.com";
+  const script = useEnterprise ? "enterprise.js" : "api.js";
+
+  let src = `https://www.${hostName}/recaptcha/${script}?`;
+  if (reCaptchaKey) src += `render=${reCaptchaKey}`;
+  if (language) src += `&hl=${language}`;
+
+  return src;
+};
+
+// https://usehooks-ts.com/react-hook/use-isomorphic-layout-effect
+export const useIsomorphicLayoutEffect =
+  typeof window !== "undefined" ? useLayoutEffect : useEffect;
