@@ -1,64 +1,125 @@
 import { v4 as uuid } from "uuid";
 
-import { matchEvent, ee } from "~/server/api/match-maker.js";
 import type {
   CharacterId,
   ChatMessagePayload,
-  MatchRoom,
   PlayerType,
 } from "~/types/index.js";
+import { type Match } from "~/server/service/index.js";
+import { ee, matchEvent } from "~/server/api/match-maker.js";
+import { env } from "~/env.mjs";
 import { wait } from "~/utils/timer.js";
 
-const requestMessageFromLLM = async (
-  _agentId: string,
-  _messageHistory: ChatMessagePayload[]
-) => {
-  // TODO: make actual call to LLM process
-  const message = await Promise.resolve("Definitely not a bot...");
-  return message;
-};
+export class Agent {
+  private _id: string;
+  private _characterId: CharacterId;
+  private _match: Match;
+  private _sentMessages: string[] = [];
 
-export const computeAgentMessages = async (room: MatchRoom) => {
-  const agents = room.players.filter((player) => player.isBot);
+  private _triggeredAt = Date.now();
 
-  try {
-    for (const agent of agents) {
-      // TODO: improve logic, delete hardcoded wait and use Promise.all()
-      const message = await requestMessageFromLLM(agent.userId, room.messages);
-
-      await wait(2000);
-
-      const payload: ChatMessagePayload = {
-        sender: agent.userId,
-        message,
-        sentAt: Date.now(),
-      };
-
-      room.messages.unshift(payload);
-      ee.emit(matchEvent(room.id), payload);
-    }
-  } catch (error) {
-    console.error("Error computing LLM messages:", error);
+  get id() {
+    return this._id;
   }
-};
 
-export const generateAgent = (
-  availableCharacterIds: CharacterId[]
-): PlayerType => {
-  const characterId = availableCharacterIds.pop();
+  get characterId() {
+    return this._characterId;
+  }
 
-  if (!characterId) throw new Error("Out of characters");
+  get triggeredAt() {
+    return this._triggeredAt;
+  }
 
-  const agent = {
-    userId: uuid(),
-    characterId,
-    score: 0,
-    isBot: true,
-    isScoreSaved: false,
-    botsBusted: 0,
-    correctGuesses: 0,
-    votes: [],
+  constructor(characterId: CharacterId, match: Match) {
+    this._id = uuid();
+    this._match = match;
+    this._characterId = characterId;
+
+    ee.on(matchEvent(match.id), this.handleMessageEvent);
+  }
+
+  handleMessageEvent = (latestMessage: ChatMessagePayload) => {
+    if (latestMessage.sender === this._id) return;
+
+    this.triggerResponse().catch((error) => {
+      console.error("Error handling agent message:", error);
+    });
   };
 
-  return agent;
-};
+  async triggerResponse() {
+    // TODO: perform actual logic to understand if response should be triggered or not
+    // TODO: consider that there is more than one agent per chat
+    const shouldTrigger = true;
+
+    if (!shouldTrigger) return;
+
+    this._triggeredAt = Date.now();
+    const message = await this.requestMessageFromLLM();
+
+    const payload: ChatMessagePayload = {
+      sender: this.id,
+      message,
+      sentAt: Date.now(),
+    };
+
+    this._sentMessages.push(payload.message);
+    this._match.addMessage(payload);
+  }
+
+  private async requestMessageFromLLM() {
+    const { messages } = this._match;
+
+    const pastInputs = messages
+      .slice(0, messages.length - 1)
+      .filter((payload) => payload.sender === this._id)
+      .map((msg) => msg.message);
+
+    const latestMessage =
+      messages[messages.length - 1]?.message ?? "Who are you?";
+
+    const body = JSON.stringify({
+      inputs: {
+        past_user_inputs: pastInputs,
+        generated_responses: this._sentMessages,
+        text: latestMessage,
+      },
+    });
+
+    await wait(2000);
+
+    const response = await fetch(
+      // TODO: use our own API
+      "https://api-inference.huggingface.co/models/facebook/blenderbot-400M-distill",
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${env.HUGGING_FACE_TOKEN}`,
+        },
+        method: "POST",
+        body,
+      }
+    );
+
+    const textRes = await response.text();
+    const result = JSON.parse(textRes) as { generated_text: string };
+
+    return result.generated_text;
+  }
+
+  cleanup() {
+    ee.off(matchEvent(this._match.id), this.handleMessageEvent);
+  }
+
+  toPlayer(): PlayerType {
+    return {
+      userId: this.id,
+      characterId: this.characterId,
+      score: 0,
+      isBot: true,
+      isScoreSaved: false,
+      botsBusted: 0,
+      correctGuesses: 0,
+      votes: [],
+    };
+  }
+}

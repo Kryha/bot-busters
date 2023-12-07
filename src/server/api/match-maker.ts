@@ -1,75 +1,31 @@
 import { EventEmitter } from "events";
 import { v4 as uuid } from "uuid";
-import { sql } from "drizzle-orm";
-import lodash from "lodash";
 
 import {
   CHAT_TIME_MS,
   MATCH_TIME_MS,
-  POINTS_BOT_BUSTED,
-  POINTS_HUMAN_BUSTED,
   VOTING_TIME_MS,
 } from "~/constants/main.js";
 import { env } from "~/env.mjs";
 import { db } from "~/server/db/index.js";
-import { matches as matchesTable, users } from "~/server/db/schema.js";
-import { generateAgent } from "~/server/service/agent.js";
-import type {
-  CharacterId,
-  MatchEventType,
-  MatchRoom,
-  PlayerType as Player,
-  ReadyToPlayPayload,
-} from "~/types/index.js";
+import { matches as matchesTable } from "~/server/db/schema.js";
+import { Match } from "~/server/service/index.js";
+import type { MatchEventType, ReadyToPlayPayload } from "~/types/index.js";
 
 export const ee = new EventEmitter();
 
 export const lobbyQueue: string[] = [];
 
-export const matches = new Map<string, MatchRoom>();
+export const matches = new Map<string, Match>();
 
 export const matchEvent = (
   roomId: string,
   eventType: MatchEventType = "message"
-) => {
-  return `chat_${roomId}_${eventType}`;
-};
-
-const generatePlayer = (
-  userId: string,
-  availableCharacterIds: CharacterId[]
-): Player => {
-  const characterId = availableCharacterIds.pop();
-
-  if (!characterId) throw new Error("User generation failed: too many players");
-
-  return {
-    userId,
-    characterId,
-    score: 0,
-    isBot: false, // TODO: set to correct value
-    isScoreSaved: false,
-    botsBusted: 0,
-    correctGuesses: 0,
-  };
-};
+) => `chat_${roomId}_${eventType}`;
 
 const makeMatch = () => {
   const botsInMatch = 1; // TODO: use more options
   const humansInMatch = env.PLAYERS_PER_MATCH - botsInMatch;
-  const availableCharacterIds: CharacterId[] = lodash.shuffle([
-    "1",
-    "2",
-    "3",
-    "4",
-    "5",
-  ]);
-
-  if (availableCharacterIds.length < env.PLAYERS_PER_MATCH) {
-    throw new Error(
-      "Match making error: characters amount is lower than the amount of players per match"
-    );
-  }
 
   // TODO: Make the players per match random within the range 1-4
   if (lobbyQueue.length < humansInMatch) return;
@@ -77,26 +33,9 @@ const makeMatch = () => {
   const playerIds = lobbyQueue.splice(0, humansInMatch);
   const roomId = uuid();
 
-  const players = playerIds.map((id) =>
-    generatePlayer(id, availableCharacterIds)
-  );
+  const match = new Match(roomId, playerIds, botsInMatch);
 
-  const agents = lodash
-    .range(0, botsInMatch)
-    .map(() => generateAgent(availableCharacterIds));
-  players.push(...agents);
-
-  const createdAt = Date.now();
-
-  matches.set(roomId, {
-    id: roomId,
-    players: lodash.shuffle(players),
-    messages: [],
-    stage: "chat",
-    arePointsCalculated: false,
-    createdAt,
-    votingAt: createdAt + CHAT_TIME_MS,
-  });
+  matches.set(roomId, match);
 
   ee.emit("readyToPlay", {
     roomId,
@@ -105,7 +44,7 @@ const makeMatch = () => {
   ee.emit("queueUpdate");
 };
 
-const updateRooms = () => {
+const matchLoop = () => {
   matches.forEach((room, roomId) => {
     const roomAge = Date.now() - room.createdAt;
 
@@ -121,101 +60,47 @@ const updateRooms = () => {
 
     if (room.stage === "voting" && roomAge >= CHAT_TIME_MS + VOTING_TIME_MS) {
       room.stage = "results";
-
-      // score calculation
-      const players = room.players.map((player) => {
-        let score = 0;
-        let correctGuesses = 0;
-        let botsBusted = 0;
-
-        const otherPlayers = room.players.filter(
-          (p) => p.userId !== player.userId
-        );
-
-        if (player.votes) {
-          otherPlayers.forEach((p) => {
-            const isVoted = player.votes!.includes(p.userId);
-            const hasGuessed = p.isBot ? isVoted : !isVoted;
-
-            if (hasGuessed) {
-              correctGuesses += 1;
-
-              if (p.isBot) {
-                botsBusted += 1;
-                score += POINTS_BOT_BUSTED;
-              } else {
-                score += POINTS_HUMAN_BUSTED;
-              }
-            }
-          });
-        }
-
-        return { ...player, score, correctGuesses, botsBusted };
-      });
-
-      matches.set(roomId, {
-        ...room,
-        players,
-        stage: "results",
-        arePointsCalculated: true,
-      });
+      room.calculatePoints();
       ee.emit(matchEvent(roomId, "stageChange"));
     }
   });
 };
 
-const saveScore = async () => {
-  const roomsToArchive = new Map<string, MatchRoom>();
+const storeMatches = async () => {
+  const roomsToArchive = new Map<string, Match>();
 
-  const promises = Array.from(matches.entries()).flatMap(([roomId, room]) => {
+  const promises = Array.from(matches.values()).map(async (room) => {
     if (room.stage !== "results" || !room.arePointsCalculated) return;
-    roomsToArchive.set(roomId, room);
 
-    return room.players.map(async (player) => {
-      try {
-        if (player.isScoreSaved) return;
+    const allScoresStored = await room.storeScore();
 
-        player.isScoreSaved = true;
-
-        if (player.isBot) return;
-
-        await db.execute(
-          sql`UPDATE ${users} SET score = score + ${player.score} WHERE ${users.id} = ${player.userId}`
-        );
-      } catch (error) {
-        player.isScoreSaved = false;
-        roomsToArchive.delete(roomId);
-        console.error("Score update error:", error);
-      }
-    });
+    if (allScoresStored) {
+      roomsToArchive.set(room.id, room);
+    }
   });
 
-  try {
-    await Promise.all(promises);
+  await Promise.all(promises);
 
-    const roomsToStore = Array.from(roomsToArchive.entries()).reduce(
-      (acc, [roomId, room]) => {
-        return [...acc, { id: roomId, room: { ...room, messages: [] } }];
-      },
-      [] as { id: string; room: MatchRoom }[]
-    );
+  roomsToArchive.forEach((room) => room.cleanup());
 
-    if (roomsToStore.length) {
-      await db.insert(matchesTable).values(roomsToStore);
-    }
+  const roomsToStore = Array.from(roomsToArchive.values()).map((room) => ({
+    id: room.id,
+    room: room.toSerializable(),
+  }));
 
-    roomsToArchive.forEach((_room, roomId) => {
-      matches.delete(roomId);
-    });
-  } catch (error) {
-    console.error("Room archive error:", error);
+  if (roomsToStore.length) {
+    await db.insert(matchesTable).values(roomsToStore);
   }
+
+  roomsToArchive.forEach((_room, roomId) => matches.delete(roomId));
 };
 
 setInterval(() => {
   try {
-    updateRooms();
-    void saveScore();
+    matchLoop();
+    storeMatches().catch((error) =>
+      console.error("Error storing matches:", error)
+    );
     makeMatch();
   } catch (error) {
     console.error("Main loop error:", error);
