@@ -41,7 +41,6 @@ export const RowCreateUsername: FC<RowCreateUsernameProps> = ({
         </TableCell>
         <TableCell sx={styles.select}>
           <Stack sx={styles.wrapper}>
-            {/* TODO: uncomment after fixing styling */}
             {error && <Alert severity="error">{error}</Alert>}
             <Avatar alt="avatar" sx={styles.avatar}>
               {text.leaderboard.avatarEmoji}
