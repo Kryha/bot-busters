@@ -1,12 +1,24 @@
 // Type definitions for Google Recaptcha 3.0
 // Copied from: https://github.com/DefinitelyTyped/DefinitelyTyped
 
+import { z } from "zod";
+
 export interface Action {
   /**
    * the name of the action. Actions may only contain alphanumeric characters and slashes, and must not be user-specific.
    */
   action: string;
 }
+
+export const recaptchaResponseSchema = z.object({
+  success: z.boolean(),
+  score: z.number(),
+  action: z.string(),
+  challenge_ts: z.string(),
+  hostname: z.string(),
+});
+
+export type RecaptchaResponse = z.infer<typeof recaptchaResponseSchema>;
 
 export type Theme = "light" | "dark";
 export type Type = "image" | "audio";
