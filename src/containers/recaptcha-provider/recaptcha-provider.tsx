@@ -1,5 +1,3 @@
-"use client";
-
 import React, {
   createContext,
   useCallback,
@@ -12,9 +10,9 @@ import React, {
 } from "react";
 import Script, { type ScriptProps } from "next/script.js";
 
-import { getRecaptchaScriptSrc } from "./utils.js";
 import { type IReCaptcha } from "~/types/recaptcha";
 import { env } from "~/env.mjs";
+import { getRecaptchaScriptSrc } from "~/service/recaptcha/recaptcha";
 
 interface ReCaptchaContextProps {
   /** reCAPTCHA_site_key */
@@ -53,7 +51,7 @@ interface ReCaptchaProviderProps extends Partial<Omit<ScriptProps, "onLoad">> {
   onLoad?: (grecaptcha: IReCaptcha, e: undefined) => void;
 }
 
-const ReCaptchaProvider: React.FC<ReCaptchaProviderProps> = ({
+const RecaptchaProvider: React.FC<ReCaptchaProviderProps> = ({
   reCaptchaKey: passedReCaptchaKey,
 
   useEnterprise = false,
@@ -148,5 +146,5 @@ const ReCaptchaProvider: React.FC<ReCaptchaProviderProps> = ({
   );
 };
 
-export { ReCaptchaContext, useReCaptchaContext, ReCaptchaProvider };
+export { ReCaptchaContext, useReCaptchaContext, RecaptchaProvider };
 export type { ReCaptchaContextProps, ReCaptchaProviderProps };

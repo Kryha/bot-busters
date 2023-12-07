@@ -10,7 +10,7 @@ import { pages } from "~/router.js";
 import { TOP_RANKED_PLAYERS } from "~/constants/index.js";
 import { isValidSession } from "~/utils/session.js";
 import { styles } from "./styles.js";
-import { useReCaptcha } from "~/service/use-reCaptcha.js";
+import { useRecaptcha } from "~/service/index.js";
 
 export const Homepage = () => {
   const { push } = useRouter();
@@ -18,10 +18,11 @@ export const Homepage = () => {
   const verifyCaptcha = api.recaptcha.verify.useMutation();
   const join = api.lobby.join.useMutation();
   const { data: sessionData } = useSession();
-  const { executeRecaptcha } = useReCaptcha();
+  const { executeRecaptcha } = useRecaptcha();
 
   const handleGameStart = async () => {
     const captchaToken = await executeRecaptcha("start_game");
+
     try {
       if (!isValidSession(sessionData)) {
         await signIn("credentials", {

@@ -1,10 +1,10 @@
 import { Homepage } from "~/containers/home/index.js";
-import { ReCaptchaProvider } from "~/containers/reCaptcha";
+import { RecaptchaProvider } from "~/containers/recaptcha-provider/index.js";
 
 export default function Home() {
   return (
-    <ReCaptchaProvider>
+    <RecaptchaProvider>
       <Homepage />
-    </ReCaptchaProvider>
+    </RecaptchaProvider>
   );
 }
