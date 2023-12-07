@@ -38,3 +38,8 @@ spec:
               value: wss://bot-busters.staging.kryha.dev
             - name: PLAYERS_PER_MATCH
               value: "4"
+            - name: NEXT_PUBLIC_RECAPTCHA_SITE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets
+                  key: recaptcha_site_key
