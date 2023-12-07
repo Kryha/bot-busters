@@ -61,8 +61,8 @@ export const matchRouter = createTRPCRouter({
 
       const { room } = verifyPlayer(sender, input.roomId);
 
-      if (profanityFilter.isProfane(message)) {
-        message = profanityFilter.clean(message);
+      if (profanityFilter.exists(message)) {
+        message = profanityFilter.censor(message);
       }
 
       const payload: ChatMessagePayload = { sender, message, sentAt };
