@@ -1,6 +1,5 @@
 import { v4 as uuid } from "uuid";
 
-import { matchEvent, ee } from "~/server/api/match-maker.js";
 import type {
   CharacterId,
   ChatMessagePayload,
@@ -11,8 +10,9 @@ import { type Match } from "~/server/service/index.js";
 export class Agent {
   private _id: string;
   private _characterId: CharacterId;
-
   private _match: Match;
+
+  private _triggeredAt = Date.now();
 
   get id() {
     return this._id;
@@ -22,24 +22,19 @@ export class Agent {
     return this._characterId;
   }
 
+  get triggeredAt() {
+    return this._triggeredAt;
+  }
+
   constructor(characterId: CharacterId, match: Match) {
     this._id = uuid();
     this._match = match;
     this._characterId = characterId;
-
-    ee.on(matchEvent(match.id), this.handleMessageEvent);
   }
 
-  handleMessageEvent = (payload: ChatMessagePayload) => {
-    this.computeMessage(payload).catch((error) => {
-      console.error("Error handling agent message:", error);
-    });
-  };
-
-  private async computeMessage(received: ChatMessagePayload) {
-    if (received.sender === this.id) return;
-
+  async triggerResponse() {
     const message = await this.requestMessageFromLLM();
+    this._triggeredAt = Date.now();
 
     const payload: ChatMessagePayload = {
       sender: this.id,
@@ -56,10 +51,6 @@ export class Agent {
     // TODO: make actual call to LLM process
     const message = await Promise.resolve("Definitely not a bot...");
     return message;
-  }
-
-  delete() {
-    ee.off(matchEvent(this._match.id), this.handleMessageEvent);
   }
 
   toPlayer(): PlayerType {

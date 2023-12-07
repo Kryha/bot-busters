@@ -31,9 +31,10 @@ export class Match {
     "4",
     "5",
   ]);
-
   private _players: PlayerType[];
   private _agents: Agent[];
+  private _messageCountSinceLastTrigger = 0;
+  private _intervalId: NodeJS.Timeout;
 
   stage: MatchStage = "chat";
   arePointsCalculated = false;
@@ -78,6 +79,33 @@ export class Match {
     });
 
     this._players = lodash.shuffle([...botPlayers, ...humanPlayers]);
+
+    this._intervalId = setInterval(() => this.triggerAgentsResponse(), 1000);
+  }
+
+  private triggerAgentsResponse() {
+    const agentsToTrigger = new Set<Agent>();
+
+    const now = Date.now();
+
+    this.agents.forEach((agent) => {
+      const timeSinceLastTrigger = now - agent.triggeredAt;
+
+      // TODO: improve trigger logic, also taking into account multiple agents
+      const shouldTrigger =
+        this._messageCountSinceLastTrigger > 4 || timeSinceLastTrigger > 10000;
+
+      if (shouldTrigger) {
+        agentsToTrigger.add(agent);
+        this._messageCountSinceLastTrigger = 0;
+      }
+    });
+
+    agentsToTrigger.forEach((agent) => {
+      agent.triggerResponse().catch((error) => {
+        console.error("Error generating agent response:", error);
+      });
+    });
   }
 
   private popCharacterId(): CharacterId {
@@ -109,7 +137,8 @@ export class Match {
       });
     }
 
-    this.messages.unshift(message);
+    this._messageCountSinceLastTrigger++;
+    this.messages.push(message);
     ee.emit(matchEvent(this.id), message);
   }
 
@@ -207,7 +236,7 @@ export class Match {
   }
 
   cleanup() {
-    this.agents.forEach((agent) => agent.delete());
+    clearInterval(this._intervalId);
     this._messages = [];
   }
 
