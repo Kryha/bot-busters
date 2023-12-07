@@ -8,6 +8,7 @@ import type {
 import { type Match } from "~/server/service/index.js";
 import { ee, matchEvent } from "~/server/api/match-maker.js";
 import { env } from "~/env.mjs";
+import { wait } from "~/utils/timer.js";
 
 export class Agent {
   private _id: string;
@@ -83,6 +84,8 @@ export class Agent {
         text: latestMessage,
       },
     });
+
+    await wait(2000);
 
     const response = await fetch(
       // TODO: use our own API
