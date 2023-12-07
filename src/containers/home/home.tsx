@@ -3,14 +3,14 @@ import React, { useState } from "react";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/router.js";
 
-import { text } from "~/assets/text/index.js";
+import { useRecaptcha } from "~/service/index.js";
 import { TopRanked } from "~/components/index.js";
+import { isValidSession } from "~/utils/session.js";
 import { api } from "~/utils/api.js";
+import { text } from "~/assets/text/index.js";
 import { pages } from "~/router.js";
 import { TOP_RANKED_PLAYERS } from "~/constants/index.js";
-import { isValidSession } from "~/utils/session.js";
 import { styles } from "./styles.js";
-import { useRecaptcha } from "~/service/index.js";
 
 export const Homepage = () => {
   const { push } = useRouter();

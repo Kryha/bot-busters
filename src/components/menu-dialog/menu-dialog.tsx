@@ -7,13 +7,13 @@ import { styles } from "./styles.js";
 import { Footer } from "./footer.jsx";
 import { MenuOptions } from "./menu-options.jsx";
 import { useRouter } from "next/router";
-import { pages } from "~/router";
+import { pages } from "~/router.js";
 
 const Transition = forwardRef(function Transition(
   props: TransitionProps & {
     children: ReactElement;
   },
-  ref: Ref<unknown>
+  ref: Ref<unknown>,
 ) {
   return <Slide direction="left" ref={ref} {...props} />;
 });
@@ -28,9 +28,10 @@ export const MenuDialog: FC<Props> = ({ open, setOpen }) => {
   const { push } = useRouter();
 
   const goHome = () => {
-    void push(pages.home);
     setOpen(false);
+    void push(pages.home);
   };
+
   const handleClose = () => {
     setOpen(false);
   };
