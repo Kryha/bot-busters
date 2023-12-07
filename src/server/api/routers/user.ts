@@ -6,6 +6,8 @@ import { db } from "~/server/db/index.js";
 import { users } from "~/server/db/schema.js";
 import { isValidSession } from "~/utils/session.js";
 import { verifySignature } from "~/utils/wallet.js";
+import { profanityFilter } from "~/service/index.js";
+import { TRPCError } from "@trpc/server";
 
 export const userRouter = createTRPCRouter({
   mergeScore: protectedProcedure
@@ -75,6 +77,11 @@ export const userRouter = createTRPCRouter({
 
       if (!isValidSession(session)) throw new Error("Invalid session");
       if (session.user.username) throw new Error("User already verified");
+      if (profanityFilter.exists(username)) {
+        throw new Error(
+          "Username contains bad language please choose a different one"
+        );
+      }
 
       if (session.user.address) {
         await db
