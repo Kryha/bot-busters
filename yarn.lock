@@ -2278,13 +2278,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/grecaptcha@npm:^3.0.7":
-  version: 3.0.7
-  resolution: "@types/grecaptcha@npm:3.0.7"
-  checksum: e095a29086097afb7f02919524e954fd06c41ec0e81012f86f44ef4656bd673ec7d33996639624d678429bd0790254075ae60b0b147cb7bcd4de4ace66e8c62f
-  languageName: node
-  linkType: hard
-
 "@types/istanbul-lib-coverage@npm:*, @types/istanbul-lib-coverage@npm:^2.0.0, @types/istanbul-lib-coverage@npm:^2.0.1":
   version: 2.0.5
   resolution: "@types/istanbul-lib-coverage@npm:2.0.5"
@@ -3323,7 +3316,6 @@ __metadata:
     "@trpc/server": ^10.37.1
     "@types/bad-words": ^3.0.3
     "@types/eslint": ^8.44.2
-    "@types/grecaptcha": ^3.0.7
     "@types/jest": ^29.5.6
     "@types/lodash": ^4.14.202
     "@types/node": ^18.16.0
