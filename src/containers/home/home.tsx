@@ -11,6 +11,7 @@ import { text } from "~/assets/text/index.js";
 import { pages } from "~/router.js";
 import { TOP_RANKED_PLAYERS } from "~/constants/index.js";
 import { styles } from "./styles.js";
+import Script from "next/script";
 
 export const Homepage = () => {
   const { push } = useRouter();
@@ -18,7 +19,8 @@ export const Homepage = () => {
   const verifyCaptcha = api.recaptcha.verify.useMutation();
   const join = api.lobby.join.useMutation();
   const { data: sessionData } = useSession();
-  const { executeRecaptcha } = useRecaptcha();
+  const { executeRecaptcha, id, src, onError, onLoad, strategy, ...props } =
+    useRecaptcha();
 
   const handleGameStart = async () => {
     const captchaToken = await executeRecaptcha("start_game");
@@ -79,6 +81,14 @@ export const Homepage = () => {
         </Button>
       </Stack>
       <TopRanked players={TOP_RANKED_PLAYERS} />
+      <Script
+        id={id}
+        src={src}
+        strategy={strategy}
+        onLoad={onLoad}
+        onError={onError}
+        {...props}
+      />
     </Stack>
   );
 };

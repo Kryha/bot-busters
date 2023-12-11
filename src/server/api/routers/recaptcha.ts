@@ -12,8 +12,8 @@ export const recaptchaRouter = createTRPCRouter({
       const { captchaToken } = input;
 
       // Check if it's not in production (development mode)
-      if (process.env.NODE_ENV !== "production") {
-        return true;
+      if (env.NODE_ENV !== "production") {
+        return false;
       }
 
       try {
