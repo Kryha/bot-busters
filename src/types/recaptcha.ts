@@ -95,27 +95,27 @@ export interface IReCaptcha {
    * The values in parameters will take precedence over the attributes.
    * @return the ID of the newly created widget.
    */
-  render(
+  render: (
     container: string | HTMLElement,
     parameters?: Parameters,
     inherit?: boolean,
-  ): number;
+  ) => number;
   /**
    * Resets the reCAPTCHA widget.
    * @param opt_widget_id Optional widget ID, defaults to the first widget created if unspecified.
    */
-  reset(opt_widget_id?: number): void;
+  reset: (opt_widget_id?: number) => void;
   /**
    * Gets the response for the reCAPTCHA widget.
    * @param opt_widget_id Optional widget ID, defaults to the first widget created if unspecified.
    * @return the response of the reCAPTCHA widget.
    */
-  getResponse(opt_widget_id?: number): string;
+  getResponse: (opt_widget_id?: number) => string;
   /**
    * Programatically invoke the reCAPTCHA check. Used if the invisible reCAPTCHA is on a div instead of a button.
    * @param opt_widget_id Optional widget ID, defaults to the first widget created if unspecified.
    */
-  execute(opt_widget_id?: number): PromiseLike<void>;
+  executes: (opt_widget_id?: number) => PromiseLike<void>;
   /**
    * Programatically invoke the reCAPTCHA check. Used if the invisible reCAPTCHA is on a div instead of a button.
    * @param siteKey the key of your site
@@ -123,12 +123,12 @@ export interface IReCaptcha {
    *
    * @return a promise-like object containing the token
    */
-  execute(siteKey: string, action: Action): PromiseLike<string>;
+  execute: (siteKey: string, action: Action) => PromiseLike<string>;
   /**
    * will run the given function as soon as the reCAPTCHA library has loaded
    * @param callback the function to coll
    */
-  ready(callback: () => void): void;
+  ready: (callback: () => void) => void;
 }
 
 declare global {
