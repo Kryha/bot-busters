@@ -120,6 +120,7 @@ export class Agent {
       botsBusted: 0,
       correctGuesses: 0,
       votes: [],
+      achievements: [],
     };
   }
 }

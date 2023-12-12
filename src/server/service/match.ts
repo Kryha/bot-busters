@@ -18,6 +18,7 @@ import type {
   MatchStage,
   CharacterId,
 } from "~/types/index.js";
+import { MATCH_ACHIEVEMENTS } from "./achievements.js";
 
 export class Match {
   private _id: string;
@@ -98,6 +99,7 @@ export class Match {
       isScoreSaved: false,
       botsBusted: 0,
       correctGuesses: 0,
+      achievements: [],
     };
   }
 
@@ -171,6 +173,20 @@ export class Match {
               score += POINTS_HUMAN_BUSTED;
             }
           }
+        });
+      }
+
+      if (!player.isBot) {
+        // Check achievements
+        MATCH_ACHIEVEMENTS.forEach((achievement) => {
+          if (achievement.calculate(player, this._messages))
+            player.achievements.push(achievement.id);
+        });
+
+        // add achievements points
+        player.achievements.forEach((achievementId) => {
+          const achievement = MATCH_ACHIEVEMENTS.get(achievementId);
+          if (achievement) score += achievement.points;
         });
       }
 
