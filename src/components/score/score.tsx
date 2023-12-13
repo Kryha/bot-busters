@@ -22,7 +22,8 @@ export const Score: FC<Props> = ({
       <Stack sx={styles.score}>
         <Typography variant="body1">Achievements:</Typography>
         {achievements.map((achievmentID) => {
-          const achievement = MATCH_ACHIEVEMENTS.get(achievmentID);
+          const achievement = MATCH_ACHIEVEMENTS[achievmentID];
+
           if (!achievement) return;
           return (
             <>
@@ -30,7 +31,7 @@ export const Score: FC<Props> = ({
                 {achievement?.name}
               </Typography>
               <Typography variant="body1">
-                {text.points(achievement?.points)}
+                {text.points(achievement.points)}
               </Typography>
             </>
           );
