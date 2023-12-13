@@ -4,11 +4,12 @@ import { Divider, Stack, Typography } from "@mui/material";
 import { styles } from "./styles.js";
 import { text } from "./text.js";
 import { MATCH_ACHIEVEMENTS } from "~/server/service/achievements.js";
+import { PlayerAchievementResult } from "~/types/match.js";
 
 interface Props {
   correctGuesses: number;
   gainedScore: number;
-  achievements: string[];
+  achievements: PlayerAchievementResult[];
 }
 
 export const Score: FC<Props> = ({
@@ -21,17 +22,18 @@ export const Score: FC<Props> = ({
       <Divider />
       <Stack sx={styles.score}>
         <Typography variant="body1">Achievements:</Typography>
-        {achievements.map((achievmentID) => {
-          const achievement = MATCH_ACHIEVEMENTS[achievmentID];
+        {achievements.map((achievementResult) => {
+          const { name } = MATCH_ACHIEVEMENTS[achievementResult.id] ?? {
+            name: "Achievement",
+          };
 
-          if (!achievement) return;
           return (
             <>
-              <Typography key={achievmentID} variant="body1">
-                {achievement?.name}
+              <Typography key={achievementResult.id} variant="body1">
+                {name}
               </Typography>
               <Typography variant="body1">
-                {text.points(achievement.points)}
+                {text.points(achievementResult.points)}
               </Typography>
             </>
           );
