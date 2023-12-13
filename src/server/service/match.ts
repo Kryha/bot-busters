@@ -177,19 +177,30 @@ export class Match {
       }
 
       if (!player.isBot) {
+        // TODO: Implement player stats functionality
+        //const playerStats = getPlayerStats(player.id);
+
         // Check achievements
-        MATCH_ACHIEVEMENTS.forEach((achievement) => {
-          if (achievement.calculate(player, this._messages))
-            player.achievements.push(achievement.id);
-        });
+        const achievementPoints = Object.entries(MATCH_ACHIEVEMENTS)
+          .map(([achievementId, achievement]) => {
+            const pointsEarned = achievement.calculate({
+              player,
+              messages: this._messages,
+            });
+            return { achievementId, pointsEarned };
+          })
+          .filter((achievement) => achievement.pointsEarned > 0)
+          .reduce((totalPoints, achievement) => {
+            player.achievements.push({
+              id: achievement.achievementId,
+              points: achievement.pointsEarned,
+            });
+            return (totalPoints += achievement.pointsEarned);
+          }, 0);
 
-        // add achievements points
-        player.achievements.forEach((achievementId) => {
-          const achievement = MATCH_ACHIEVEMENTS.get(achievementId);
-          if (achievement) score += achievement.points;
-        });
+        score += achievementPoints;
       }
-
+      //TODO: Store stats of the match
       return { ...player, score, correctGuesses, botsBusted };
     });
 
