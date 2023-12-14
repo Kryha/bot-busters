@@ -1,10 +1,10 @@
-import { ReactComponent as SelectIcon } from "./menu-button-select.svg";
-import { ReactComponent as BotBustersIcon } from "./botbusters-icon.svg";
-import { ReactComponent as UserIcon } from "./user-icon.svg";
-import { ReactComponent as SoundOffIcon } from "./sound-off.svg";
-import { ReactComponent as SoundOnIcon } from "./sound-on.svg";
-import { ReactComponent as CloseIcon } from "./close-icon.svg";
-import { ReactComponent as BotBustersLogo } from "./botbusters-logo.svg";
+import SelectIcon from "./menu-button-select.svg";
+import BotBustersIcon from "./botbusters-icon.svg";
+import UserIcon from "./user-icon.svg";
+import SoundOffIcon from "./sound-off.svg";
+import SoundOnIcon from "./sound-on.svg";
+import CloseIcon from "./close-icon.svg";
+import BotBustersLogo from "./botbusters-logo.svg";
 
 export {
   BotBustersLogo,
