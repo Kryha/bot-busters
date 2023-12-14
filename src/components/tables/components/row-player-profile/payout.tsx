@@ -16,7 +16,11 @@ export const Payout: FC<Props> = ({ payout, fontWeight }) => {
     case "new":
       return (
         <Stack sx={styles.payout}>
-          <Typography fontWeight={fontWeight} color="customGrey.main">
+          <Typography
+            fontWeight={fontWeight}
+            variant={"body2"}
+            color="customGrey.main"
+          >
             {text.playerProfile.credits(payout.credits)}
           </Typography>
           <Chip
@@ -29,13 +33,21 @@ export const Payout: FC<Props> = ({ payout, fontWeight }) => {
 
     case "potential":
       return (
-        <Typography fontWeight={fontWeight} color="customGrey.main">
+        <Typography
+          fontWeight={fontWeight}
+          variant={"body2"}
+          color="customGrey.main"
+        >
           {text.playerProfile.potentialCredits(payout.credits)}
         </Typography>
       );
     case "noPayout":
       return (
-        <Typography fontWeight={fontWeight} color="customGrey.main">
+        <Typography
+          fontWeight={fontWeight}
+          variant={"body2"}
+          color="customGrey.main"
+        >
           {text.playerProfile.noCredits}
         </Typography>
       );
