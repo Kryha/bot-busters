@@ -111,7 +111,7 @@ export const typography = (): Typography => {
     body1: {
       // normal text
       fontFamily: appleIIPro.style.fontFamily,
-      fontSize: "24px",
+      fontSize: "16px",
       fontWeight: 400,
       lineHeight: "normal",
     },

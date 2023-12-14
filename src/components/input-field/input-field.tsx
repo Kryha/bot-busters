@@ -18,7 +18,7 @@ export const InputField: FC<Props> = ({ onClick, disabled, ...rest }) => {
   return (
     <Stack sx={styles.wrapper(disabled)}>
       {disabled ? (
-        <Typography variant="body1" color="customGrey.main" sx={styles.text}>
+        <Typography variant="body1" color="common.black" sx={styles.text}>
           {text.chat.chatEnded}
         </Typography>
       ) : (

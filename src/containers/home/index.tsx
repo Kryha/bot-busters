@@ -42,9 +42,6 @@ export const Homepage = () => {
           {text.homepage.descriptionPart1}
         </Typography>
         <BotBustersLogo />
-        {/*<Typography variant="body1">*/}
-        {/*  {text.homepage.descriptionPart2}*/}
-        {/*</Typography>*/}
       </Stack>
       <Stack sx={styles.actions}>
         <Button
@@ -57,16 +54,8 @@ export const Homepage = () => {
             {text.homepage.startNewGame}
           </Typography>
         </Button>
-        <HomeButton
-          onClick={openDailyHandler}
-          isDisabled={isDisabled}
-          text={text.homepage.openDaily}
-        />
-        <HomeButton
-          isDisabled={true}
-          onClick={openAboutHandler}
-          text={text.homepage.about}
-        />
+        <HomeButton onClick={openDailyHandler} text={text.homepage.openDaily} />
+        <HomeButton onClick={openAboutHandler} text={text.homepage.about} />
       </Stack>
       <TopRanked players={TOP_RANKED_PLAYERS} />
     </Stack>

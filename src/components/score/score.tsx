@@ -4,7 +4,7 @@ import { Divider, Stack, Typography } from "@mui/material";
 import { styles } from "./styles.js";
 import { text } from "./text.js";
 import { MATCH_ACHIEVEMENTS } from "~/server/service/achievements.js";
-import { PlayerAchievementResult } from "~/types/match.js";
+import { type PlayerAchievementResult } from "~/types/match.js";
 
 interface Props {
   correctGuesses: number;
