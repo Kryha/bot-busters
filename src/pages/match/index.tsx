@@ -86,6 +86,7 @@ const MatchInternal: FC<Props> = ({ roomId, session }) => {
           <Score
             gainedScore={localPlayer.score}
             correctGuesses={localPlayer.correctGuesses}
+            achievements={localPlayer.achievements}
           />
         )}
       </OverviewLayout>

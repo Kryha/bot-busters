@@ -18,6 +18,7 @@ import type {
   MatchStage,
   CharacterId,
 } from "~/types/index.js";
+import { MATCH_ACHIEVEMENTS } from "./achievements.js";
 
 export class Match {
   private _id: string;
@@ -99,6 +100,7 @@ export class Match {
       isScoreSaved: false,
       botsBusted: 0,
       correctGuesses: 0,
+      achievements: [],
     };
   }
 
@@ -175,6 +177,27 @@ export class Match {
         });
       }
 
+      if (!player.isBot) {
+        // TODO: Implement player stats functionality
+        //const playerStats = getPlayerStats(player.id);
+
+        // Check achievements
+        const achievementPoints = Object.entries(MATCH_ACHIEVEMENTS)
+          .map(([id, achievement]) => {
+            const pointsEarned = achievement.calculate({
+              player,
+              messages: this._messages,
+            });
+            return { id, points: pointsEarned };
+          })
+          .filter((achievement) => achievement.points > 0)
+          .reduce((totalPoints, achievement) => {
+            player.achievements.push(achievement);
+            return (totalPoints += achievement.points);
+          }, 0);
+
+        score += achievementPoints;
+      }
       return { ...player, score, correctGuesses, botsBusted };
     });
 
