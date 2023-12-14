@@ -3,7 +3,6 @@
  * for Docker builds.
  */
 await import("./src/env.mjs");
-
 /** @type {import("next").NextConfig} */
 const config = {
   reactStrictMode: true,
@@ -21,8 +20,26 @@ const config = {
   experimental: {
     instrumentationHook: true,
   },
-
   webpack: (webpackConfig) => {
+    webpackConfig.module.rules.push({
+      test: /\.svg$/,
+      use: [
+        {
+          loader: '@svgr/webpack'
+        },
+        {
+          loader: 'file-loader',
+          options: {
+            name: 'static/[path][name].[ext]'
+          }
+        }
+      ],
+      type: 'javascript/auto',
+      issuer: {
+        and: [/\.(ts|tsx|js|jsx|md|mdx)$/]
+      }
+    });
+
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     webpackConfig.resolve.extensionAlias = {
       ".js": [".ts", ".js"],
