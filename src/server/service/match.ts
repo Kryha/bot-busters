@@ -182,14 +182,14 @@ export class Match {
 
         // Check achievements
         const achievementPoints = Object.entries(MATCH_ACHIEVEMENTS)
-          .map(([achievementId, achievement]) => {
+          .map(([id, achievement]) => {
             const pointsEarned = achievement.calculate({
               player,
               messages: this._messages,
               botsBusted,
               agents: this._agents,
             });
-            return { id: achievementId, points: pointsEarned };
+            return { id, points: pointsEarned };
           })
           .filter((achievement) => achievement.points > 0)
           .reduce((totalPoints, achievement) => {
