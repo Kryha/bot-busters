@@ -1,12 +1,13 @@
-import { type FC } from "react";
+import React, { type FC } from "react";
 import { useRouter } from "next/router.js";
-import { Button, Stack, Typography } from "@mui/material";
+import { Stack } from "@mui/material";
 
 import { text } from "~/assets/text/index.js";
 import { api } from "~/utils/api.js";
 import { pages } from "~/router.js";
 
 import { styles } from "./styles.js";
+import { MenuOptionsButton } from "~/components/menu-options-button/index.js";
 
 interface Props {
   handleClose: () => void;
@@ -22,62 +23,26 @@ export const MenuOptions: FC<Props> = ({ handleClose }) => {
   };
 
   return (
-    <>
-      <Stack sx={styles.menuButtonContainer}>
-        <Stack sx={styles.startGame}>
-          <Button
-            variant="text"
-            sx={styles.menuButton}
-            color="customGrey"
-            disabled={join.status === "loading"}
-            // TODO: LOGIN the user with anonymous account
-            onClick={() => handleNavigation(pages.lobby)}
-          >
-            <Typography variant="h1" color="common.black">
-              {text.general.startNewGame}
-            </Typography>
-          </Button>
-        </Stack>
-        <Button
-          variant="text"
-          sx={styles.menuButton}
-          color="customGrey"
-          onClick={() => handleNavigation(pages.playerProfile)}
-        >
-          <Typography variant="h1" color="common.black">
-            {text.general.playerProfile}
-          </Typography>
-        </Button>
-        <Button
-          variant="text"
-          sx={styles.menuButton}
-          color="customGrey"
-          onClick={() => handleNavigation(pages.leaderboard)}
-        >
-          <Typography variant="h1" color="common.black">
-            {text.general.dailyLeaderboard}
-          </Typography>
-        </Button>
-        <Button variant="text" sx={styles.menuButton} color="customGrey">
-          <Typography
-            variant="h1"
-            color="common.black"
-            onClick={() => handleNavigation(pages.rules)}
-          >
-            {text.general.howToPlay}
-          </Typography>
-        </Button>
-        <Button
-          variant="text"
-          sx={styles.menuButton}
-          color="customGrey"
-          onClick={() => handleNavigation(pages.login)}
-        >
-          <Typography variant="h1" color="common.black">
-            {text.general.connectWallet}
-          </Typography>
-        </Button>
-      </Stack>
-    </>
+    <Stack sx={styles.menuButtonContainer}>
+      <MenuOptionsButton
+        disabled={join.status === "loading"}
+        // TODO: LOGIN the user with anonymous account
+        onClick={() => handleNavigation(pages.lobby)}
+        text={text.general.playNewGame}
+      />
+      <MenuOptionsButton
+        onClick={() => handleNavigation(pages.playerProfile)}
+        text={text.general.playerProfile}
+      />
+      <MenuOptionsButton
+        onClick={() => handleNavigation(pages.leaderboard)}
+        text={text.general.dailyLeaderboard}
+      />
+      <MenuOptionsButton text={text.general.howToPlay} />
+      <MenuOptionsButton
+        onClick={() => handleNavigation(pages.login)}
+        text={text.general.connectWallet}
+      />
+    </Stack>
   );
 };

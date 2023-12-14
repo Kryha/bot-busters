@@ -1,18 +1,20 @@
-import { type FC, forwardRef, type ReactElement, type Ref } from "react";
-import { Button, Dialog, Slide, Stack } from "@mui/material";
+import React, { type FC, forwardRef, type ReactElement, type Ref } from "react";
+import { Button, Dialog, Slide } from "@mui/material";
 import { type TransitionProps } from "@mui/material/transitions";
-
-import { text } from "~/assets/text/index.js";
 
 import { styles } from "./styles.js";
 import { Footer } from "./footer.jsx";
-import { MenuOptions } from "./menu-options.jsx";
+import { Header } from "~/components/menu-dialog/header";
+import { MenuOptions } from "~/components/menu-dialog/menu-options";
+import { pages } from "~/router";
+import { BotBustersIcon } from "~/assets/icons";
+import { useRouter } from "next/router";
 
 const Transition = forwardRef(function Transition(
   props: TransitionProps & {
     children: ReactElement;
   },
-  ref: Ref<unknown>
+  ref: Ref<unknown>,
 ) {
   return <Slide direction="left" ref={ref} {...props} />;
 });
@@ -24,8 +26,14 @@ interface Props {
 }
 
 export const MenuDialog: FC<Props> = ({ open, setOpen }) => {
+  const router = useRouter();
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleNavigation = (path: string) => {
+    void router.push(path);
+    handleClose();
   };
 
   return (
@@ -36,11 +44,14 @@ export const MenuDialog: FC<Props> = ({ open, setOpen }) => {
       TransitionComponent={Transition}
       sx={styles.dialog}
     >
-      <Stack sx={styles.buttonWrapper}>
-        <Button variant="contained" sx={styles.button} onClick={handleClose}>
-          {text.general.close}
-        </Button>
-      </Stack>
+      <Header handleClose={handleClose} />
+      <Button
+        variant="text"
+        sx={styles.dialogLogo}
+        onClick={() => handleNavigation(pages.home)}
+      >
+        <BotBustersIcon />
+      </Button>
       <MenuOptions handleClose={handleClose} />
       <Footer handleClose={handleClose} />
     </Dialog>
