@@ -69,6 +69,7 @@ const matchLoop = () => {
 const storeMatches = async () => {
   const roomsToArchive = new Map<string, Match>();
 
+  //TODO: Store stats of the match
   const promises = Array.from(matches.values()).map(async (room) => {
     if (room.stage !== "results" || !room.arePointsCalculated) return;
 

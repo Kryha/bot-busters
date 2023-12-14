@@ -197,7 +197,6 @@ export class Match {
 
         score += achievementPoints;
       }
-      //TODO: Store stats of the match
       return { ...player, score, correctGuesses, botsBusted };
     });
 
