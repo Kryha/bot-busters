@@ -2,7 +2,7 @@ import { type SxProps } from "@mui/material";
 
 export const styles = {
   textContainer: {
-    pt: "240px",
+    pt: "170px",
     alignItems: "center",
   },
   description: {
@@ -19,6 +19,7 @@ export const styles = {
   actions: {
     gap: 2,
     flexDirection: "column",
+    alignItems: "flex-start",
   },
   buttonText: { textTransform: "none" } satisfies SxProps,
 };

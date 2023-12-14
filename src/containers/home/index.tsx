@@ -11,6 +11,8 @@ import { TOP_RANKED_PLAYERS } from "~/constants/index.js";
 import { isValidSession } from "~/utils/session.js";
 
 import { styles } from "./styles.js";
+import { BotBustersLogo } from "~/assets/icons/index.js";
+import { HomeButton } from "~/components/home-page-button";
 
 export const Homepage = () => {
   const { push } = useRouter();
@@ -30,14 +32,19 @@ export const Homepage = () => {
   };
 
   const openDailyHandler = () => void push(pages.leaderboard);
+  const openAboutHandler = () => void push(pages.about);
   const isDisabled = join.status === "loading";
 
   return (
     <Stack sx={styles.textContainer}>
-      <Typography variant="h1">{text.homepage.appName}</Typography>
       <Stack sx={styles.description}>
-        <Typography variant="h5">{text.homepage.descriptionPart1}</Typography>
-        <Typography variant="h5">{text.homepage.descriptionPart2}</Typography>
+        <Typography variant="body1">
+          {text.homepage.descriptionPart1}
+        </Typography>
+        <BotBustersLogo />
+        {/*<Typography variant="body1">*/}
+        {/*  {text.homepage.descriptionPart2}*/}
+        {/*</Typography>*/}
       </Stack>
       <Stack sx={styles.actions}>
         <Button
@@ -50,15 +57,16 @@ export const Homepage = () => {
             {text.homepage.startNewGame}
           </Typography>
         </Button>
-        <Button
-          variant="contained"
-          color="blueGrey"
-          disabled={isDisabled}
+        <HomeButton
           onClick={openDailyHandler}
-          sx={styles.openDailyButton}
-        >
-          {text.homepage.openDaily}
-        </Button>
+          isDisabled={isDisabled}
+          text={text.homepage.openDaily}
+        />
+        <HomeButton
+          isDisabled={true}
+          onClick={openAboutHandler}
+          text={text.homepage.about}
+        />
       </Stack>
       <TopRanked players={TOP_RANKED_PLAYERS} />
     </Stack>
