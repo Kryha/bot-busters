@@ -1,8 +1,6 @@
 import { type FC } from "react";
 import { Stack } from "@mui/material";
 import { signOut } from "next-auth/react";
-
-import { StatsDisplay } from "~/components/stats-display/index.js";
 import { UserMenu } from "~/components/user-menu/index.js";
 import { MenuDialog } from "~/components/menu-dialog/index.js";
 import { text } from "~/assets/text/index.js";
@@ -39,19 +37,20 @@ export const UserStats: FC<Props> = ({
 
   return (
     <Stack sx={styles.container}>
+      <UserMenu
+        isVerifiedUser={isVerifiedUser}
+        setOpen={setOpen}
+        logout={logout}
+      />
+      {/* TODO: Will need to find a new place for the stats*/}
       <Stack sx={styles.statsWrapper}>
-        {isGamePlayed && (
-          <StatsDisplay
-            title={title}
-            info={text.general.points(points)}
-            isCentered
-          />
-        )}
-        <UserMenu
-          isVerifiedUser={isVerifiedUser}
-          setOpen={setOpen}
-          logout={logout}
-        />
+        {/*{isGamePlayed && (*/}
+        {/*  <StatsDisplay*/}
+        {/*    title={title}*/}
+        {/*    info={text.general.points(points)}*/}
+        {/*    isCentered*/}
+        {/*  />*/}
+        {/*)}*/}
       </Stack>
       <MenuDialog open={open} setOpen={setOpen} />
     </Stack>
