@@ -7,8 +7,8 @@ import { isValidSession } from "~/utils/session.js";
 import { AddScoreTable, LeaderboardTable } from "~/components/tables/index.js";
 import { leaderboardData } from "~/constants/index.js";
 import { text } from "~/assets/text/index.js";
-import { fakeCountdown } from "~/constants/fake-data/landing.js";
 import { styles } from "./styles.js";
+import { fakeCountdown } from "~/constants/fake-data/landing";
 
 export const LeaderBoard = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -65,6 +65,7 @@ export const LeaderBoard = () => {
         <LeaderboardTable leaderboard={currentData} />
         <Box ref={intersectionRef} />
       </Box>
+      {/*TODO: Add the current user score + move to main table */}
       <AddScoreTable
         isAuthenticated={isAuthenticated}
         isGamePlayed={isGamePlayed}
