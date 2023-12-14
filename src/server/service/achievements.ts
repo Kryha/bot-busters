@@ -17,7 +17,6 @@ const lastMessageAchievement: MatchAchievement = {
   id: "11",
   name: "Last message",
   description: "Write the last message in a match",
-  // put this in a separate file
   calculate: ({ player, messages }) => {
     const lastMessage = messages[messages.length - 1];
     console.log("lastMessage", lastMessage);
