@@ -187,15 +187,12 @@ export class Match {
               player,
               messages: this._messages,
             });
-            return { achievementId, pointsEarned };
+            return { id: achievementId, points: pointsEarned };
           })
-          .filter((achievement) => achievement.pointsEarned > 0)
+          .filter((achievement) => achievement.points > 0)
           .reduce((totalPoints, achievement) => {
-            player.achievements.push({
-              id: achievement.achievementId,
-              points: achievement.pointsEarned,
-            });
-            return (totalPoints += achievement.pointsEarned);
+            player.achievements.push(achievement);
+            return (totalPoints += achievement.points);
           }, 0);
 
         score += achievementPoints;
