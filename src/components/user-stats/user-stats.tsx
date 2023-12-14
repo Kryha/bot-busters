@@ -6,6 +6,7 @@ import { MenuDialog } from "~/components/menu-dialog/index.js";
 import { text } from "~/assets/text/index.js";
 
 import { styles } from "./styles.js";
+import { StatsDisplay } from "~/components/stats-display";
 
 interface Props {
   isVerifiedUser: boolean;
@@ -44,13 +45,13 @@ export const UserStats: FC<Props> = ({
       />
       {/* TODO: Will need to find a new place for the stats*/}
       <Stack sx={styles.statsWrapper}>
-        {/*{isGamePlayed && (*/}
-        {/*  <StatsDisplay*/}
-        {/*    title={title}*/}
-        {/*    info={text.general.points(points)}*/}
-        {/*    isCentered*/}
-        {/*  />*/}
-        {/*)}*/}
+        {isGamePlayed && (
+          <StatsDisplay
+            title={title}
+            info={text.general.points(points)}
+            isCentered
+          />
+        )}
       </Stack>
       <MenuDialog open={open} setOpen={setOpen} />
     </Stack>
