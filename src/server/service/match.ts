@@ -62,6 +62,7 @@ export class Match {
     return this._agents;
   }
 
+  // TODO: Inject initial prompt as first chat message from "host"
   constructor(roomId: string, playerIds: string[], botsInMatch: number) {
     this._id = roomId;
 
