@@ -10,6 +10,7 @@ import {
 import { type IReCaptcha } from "~/types/recaptcha";
 import { env } from "~/env.mjs";
 import { type ScriptProps } from "next/script";
+import { isClient } from "~/utils/client.js";
 
 /** React Hook to generate ReCaptcha token
  * @example
@@ -48,8 +49,10 @@ export const useRecaptcha = () => {
   };
 };
 
+type Captcha = "recaptcha.net" | "google.com";
+
 interface RecaptchaSrcProps {
-  recaptchaKey?: string;
+  recaptchaKey: string;
   language?: string;
   useRecaptchaNet?: boolean;
   useEnterprise?: boolean;
@@ -61,19 +64,26 @@ export const getRecaptchaScriptSrc = ({
   useRecaptchaNet = false,
   useEnterprise = false,
 }: RecaptchaSrcProps): string => {
-  const hostName = useRecaptchaNet ? "recaptcha.net" : "google.com";
+  const hostName: Captcha = useRecaptchaNet ? "recaptcha.net" : "google.com";
   const script = useEnterprise ? "enterprise.js" : "api.js";
 
   let src = `https://www.${hostName}/recaptcha/${script}?`;
-  if (recaptchaKey) src += `render=${recaptchaKey}`;
-  if (language) src += `&hl=${language}`;
+
+  if (recaptchaKey) {
+    src += `render=${recaptchaKey}`;
+  }
+
+  if (language) {
+    src += `&hl=${language}`;
+  }
 
   return src;
 };
 
 // https://usehooks-ts.com/react-hook/use-isomorphic-layout-effect
-export const useIsomorphicLayoutEffect =
-  typeof window !== "undefined" ? useLayoutEffect : useEffect;
+export const useIsomorphicLayoutEffect = !isClient()
+  ? useLayoutEffect
+  : useEffect;
 
 interface RecaptchaProps extends Partial<Omit<ScriptProps, "onLoad">> {
   language?: string;
