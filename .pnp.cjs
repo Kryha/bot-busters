@@ -28,6 +28,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         [null, {\
           "packageLocation": "./",\
           "packageDependencies": [\
+            ["@2toad/profanity", "npm:2.2.0"],\
             ["@aleohq/sdk", "npm:0.6.2"],\
             ["@demox-labs/aleo-wallet-adapter-base", "npm:0.0.19"],\
             ["@demox-labs/aleo-wallet-adapter-leo", "npm:0.0.18"],\
@@ -88,6 +89,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["zod", "npm:3.22.2"]\
           ],\
           "linkType": "SOFT"\
+        }]\
+      ]],\
+      ["@2toad/profanity", [\
+        ["npm:2.2.0", {\
+          "packageLocation": "./.yarn/cache/@2toad-profanity-npm-2.2.0-ca9906a46a-42d63bb389.zip/node_modules/@2toad/profanity/",\
+          "packageDependencies": [\
+            ["@2toad/profanity", "npm:2.2.0"]\
+          ],\
+          "linkType": "HARD"\
         }]\
       ]],\
       ["@aashutoshrathi/word-wrap", [\
@@ -4638,6 +4648,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./",\
           "packageDependencies": [\
             ["bot-busters", "workspace:."],\
+            ["@2toad/profanity", "npm:2.2.0"],\
             ["@aleohq/sdk", "npm:0.6.2"],\
             ["@demox-labs/aleo-wallet-adapter-base", "npm:0.0.19"],\
             ["@demox-labs/aleo-wallet-adapter-leo", "npm:0.0.18"],\

@@ -34,7 +34,7 @@ export const Chat: FC<Props> = ({ roomId, room }) => {
   const [messages, setMessages] = useState<ChatMessagePayload[]>(room.messages);
 
   const appendMessage = (newMessage: ChatMessagePayload) => {
-    setMessages((prev) => [newMessage, ...prev]);
+    setMessages((prev) => [...prev, newMessage]);
   };
 
   api.match.onMessage.useSubscription(
@@ -51,17 +51,19 @@ export const Chat: FC<Props> = ({ roomId, room }) => {
   );
 
   const messageData: MessageData[] = useMemo(() => {
-    return messages.map((message) => {
-      const isLocalSender = message.sender === session?.user?.id;
-      const characterId: CharacterId = players.find(
-        (player) => player.userId === message.sender
-      )!.characterId;
+    return messages
+      .map((message) => {
+        const isLocalSender = message.sender === session?.user?.id;
+        const characterId: CharacterId = players.find(
+          (player) => player.userId === message.sender
+        )!.characterId;
 
-      return {
-        message: { ...message, isLocalSender },
-        character: CHARACTERS[characterId],
-      };
-    });
+        return {
+          message: { ...message, isLocalSender },
+          character: CHARACTERS[characterId],
+        };
+      })
+      .toReversed();
   }, [messages, session, players]);
 
   const handleSend = (value: string) => {

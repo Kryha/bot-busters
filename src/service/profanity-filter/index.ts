@@ -1,6 +1,11 @@
-import BadWordsFilter from "bad-words";
-import { badWords } from "./bad-words.js";
+import { Profanity, ProfanityOptions } from "@2toad/profanity";
+import { badWords, whitelist } from "./words.js";
 
-export const profanityFilter = new BadWordsFilter();
+const options = new ProfanityOptions();
+options.wholeWord = false;
+options.grawlix = "****";
 
-profanityFilter.addWords(...badWords);
+export const profanityFilter = new Profanity(options);
+
+profanityFilter.addWords(badWords);
+profanityFilter.whitelist.addWords(whitelist);
