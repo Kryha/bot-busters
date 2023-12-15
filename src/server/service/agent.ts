@@ -48,12 +48,12 @@ export class Agent {
 
   async triggerResponse() {
     // TODO: perform actual logic to understand if response should be triggered or not
-    // TODO: consider that there is more than one agent per chat
     const shouldTrigger = true;
 
     if (!shouldTrigger) return;
 
     this._triggeredAt = Date.now();
+
     const message = await this.requestMessageFromLLM();
 
     const payload: ChatMessagePayload = {
@@ -62,18 +62,24 @@ export class Agent {
       sentAt: Date.now(),
     };
 
+    // TODO: remove artificial wait in favour of something more inteligent
+    await wait(1500);
+
     this._sentMessages.push(payload.message);
     this._match.addMessage(payload);
   }
 
+  // TODO: consider that there are multiple players sending messages in the same chat
   private async requestMessageFromLLM() {
     const { messages } = this._match;
 
+    // TODO: Inject Character name as prefix of each message "Ash: {message}"
     const pastInputs = messages
       .slice(0, messages.length - 1)
-      .filter((payload) => payload.sender === this._id)
+      .filter((payload) => payload.sender !== this._id)
       .map((msg) => msg.message);
 
+    // TODO: remove default since we'll always have at least the first prompt as message
     const latestMessage =
       messages[messages.length - 1]?.message ?? "Who are you?";
 
@@ -84,8 +90,6 @@ export class Agent {
         text: latestMessage,
       },
     });
-
-    await wait(2000);
 
     const response = await fetch(
       // TODO: use our own API
