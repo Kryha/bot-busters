@@ -16,8 +16,7 @@ import { type ScriptProps } from "next/script";
  * const { executeRecaptcha } = useReCaptcha()
  */
 export const useRecaptcha = () => {
-  const { value, onError, onLoad, src, strategy, id, ...props } =
-    useSetupRecaptcha({});
+  const { recaptchaProps, value, ...props } = useSetupRecaptcha({});
 
   const { grecaptcha, loaded, reCaptchaKey } = value;
   const siteKey = reCaptchaKey;
@@ -46,11 +45,7 @@ export const useRecaptcha = () => {
     loaded,
     reCaptchaKey: siteKey,
     executeRecaptcha,
-    onLoad,
-    onError,
-    src,
-    strategy,
-    id,
+    recaptchaProps,
   };
 };
 
@@ -155,5 +150,10 @@ export const useSetupRecaptcha = ({
     [reCaptchaKey, grecaptcha, loaded, error],
   );
 
-  return { id, src, strategy, onLoad, onError, ...props, value };
+  const recaptchaProps = useMemo(
+    () => ({ id, src, strategy, onLoad, onError }),
+    [id, src, strategy, onLoad, onError],
+  );
+
+  return { recaptchaProps, ...props, value };
 };

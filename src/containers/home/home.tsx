@@ -6,12 +6,12 @@ import { useRouter } from "next/router.js";
 import { useRecaptcha } from "~/service/index.js";
 import { TopRanked } from "~/components/index.js";
 import { isValidSession } from "~/utils/session.js";
+import Script from "next/script";
 import { api } from "~/utils/api.js";
 import { text } from "~/assets/text/index.js";
 import { pages } from "~/router.js";
 import { TOP_RANKED_PLAYERS } from "~/constants/index.js";
 import { styles } from "./styles.js";
-import Script from "next/script";
 
 export const Homepage = () => {
   const { push } = useRouter();
@@ -19,8 +19,7 @@ export const Homepage = () => {
   const verifyCaptcha = api.recaptcha.verify.useMutation();
   const join = api.lobby.join.useMutation();
   const { data: sessionData } = useSession();
-  const { executeRecaptcha, id, src, onError, onLoad, strategy, ...props } =
-    useRecaptcha();
+  const { recaptchaProps, executeRecaptcha, ...props } = useRecaptcha();
 
   const handleGameStart = async () => {
     const captchaToken = await executeRecaptcha("start_game");
@@ -82,11 +81,11 @@ export const Homepage = () => {
       </Stack>
       <TopRanked players={TOP_RANKED_PLAYERS} />
       <Script
-        id={id}
-        src={src}
-        strategy={strategy}
-        onLoad={onLoad}
-        onError={onError}
+        id={recaptchaProps.id}
+        src={recaptchaProps.src}
+        strategy={recaptchaProps.strategy}
+        onLoad={recaptchaProps.onLoad}
+        onError={recaptchaProps.onError}
         {...props}
       />
     </Stack>

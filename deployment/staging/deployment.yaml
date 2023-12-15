@@ -44,7 +44,9 @@ spec:
             - name: PLAYERS_PER_MATCH
               value: "3"
             - name: NEXT_PUBLIC_RECAPTCHA_SITE_KEY
+              value: "6LdpdiEpAAAAAJ6HKbT9Dmax-Li-SipyWdTcV0qW"
+            - name: RECAPTCHA_SECRET_KEY
               valueFrom:
-                secretKeyRef:
-                  name: backend-secrets
-                  key: recaptcha_site_key
+                 secretKeyRef:
+                   name: backend-secrets
+                   key: recaptcha_secret_key
