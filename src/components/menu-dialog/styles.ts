@@ -9,8 +9,11 @@ export const styles = {
   },
   buttonWrapper: {
     alignItems: "flex-end",
+    flexDirection: "row",
+    justifyContent: "space-between",
     pt: 3,
     pr: 3,
+    pl: 3,
     width: "100vw",
   },
   button: {

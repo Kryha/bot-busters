@@ -1,28 +1,42 @@
 import { Button, Stack, Typography } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/router.js";
 
-import { text } from "~/assets/text/index.js";
+import { useRecaptcha } from "~/service/index.js";
 import { TopRanked } from "~/components/index.js";
+import { isValidSession } from "~/utils/session.js";
+import Script from "next/script";
 import { api } from "~/utils/api.js";
+import { text } from "~/assets/text/index.js";
 import { pages } from "~/router.js";
 import { TOP_RANKED_PLAYERS } from "~/constants/index.js";
-import { isValidSession } from "~/utils/session.js";
-
 import { styles } from "./styles.js";
 
 export const Homepage = () => {
   const { push } = useRouter();
+  const [isRecaptchaFailed, setIsRecaptchaFailed] = useState<boolean>(false);
+  const verifyCaptcha = api.recaptcha.verify.useMutation();
   const join = api.lobby.join.useMutation();
   const { data: sessionData } = useSession();
+  const { scriptProps, executeRecaptcha, ...props } = useRecaptcha();
 
   const handleGameStart = async () => {
+    const captchaToken = await executeRecaptcha("start_game");
+
     try {
       if (!isValidSession(sessionData)) {
-        await signIn("credentials", { callbackUrl: pages.lobby });
+        const result = await verifyCaptcha.mutateAsync({ captchaToken });
+        if (!result) {
+          await signIn("credentials", {
+            callbackUrl: pages.lobby,
+          });
+        } else {
+          setIsRecaptchaFailed(true);
+          return;
+        }
       } else {
-        await push(pages.lobby);
+        void push(pages.lobby);
       }
     } catch (error) {
       console.error(error);
@@ -38,6 +52,11 @@ export const Homepage = () => {
       <Stack sx={styles.description}>
         <Typography variant="h5">{text.homepage.descriptionPart1}</Typography>
         <Typography variant="h5">{text.homepage.descriptionPart2}</Typography>
+        {isRecaptchaFailed && (
+          <Typography variant="h6" color="error">
+            {text.homepage.botDetected}
+          </Typography>
+        )}
       </Stack>
       <Stack sx={styles.actions}>
         <Button
@@ -61,6 +80,14 @@ export const Homepage = () => {
         </Button>
       </Stack>
       <TopRanked players={TOP_RANKED_PLAYERS} />
+      <Script
+        id={scriptProps.id}
+        src={scriptProps.src}
+        strategy={scriptProps.strategy}
+        onLoad={scriptProps.onLoad}
+        onError={scriptProps.onError}
+        {...props}
+      />
     </Stack>
   );
 };

@@ -23,6 +23,7 @@ export const env = createEnv({
       .default("5")
       .transform((val) => Number(val)),
     HUGGING_FACE_TOKEN: z.string(),
+    RECAPTCHA_SECRET_KEY: z.string().min(1),
   },
 
   /**
@@ -39,6 +40,7 @@ export const env = createEnv({
       .enum(["true", "false"])
       .default("false")
       .transform((val) => (val === "true" ? true : false)),
+    NEXT_PUBLIC_RECAPTCHA_SITE_KEY: z.string().min(1),
   },
 
   /**
@@ -57,6 +59,8 @@ export const env = createEnv({
     NEXT_PUBLIC_MOCK_AUTH: process.env.NEXT_PUBLIC_MOCK_AUTH,
     PLAYERS_PER_MATCH: process.env.PLAYERS_PER_MATCH,
     HUGGING_FACE_TOKEN: process.env.HUGGING_FACE_TOKEN,
+    NEXT_PUBLIC_RECAPTCHA_SITE_KEY: process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY,
+    RECAPTCHA_SECRET_KEY: process.env.RECAPTCHA_SECRET_KEY,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.
