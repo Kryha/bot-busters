@@ -153,7 +153,7 @@ export class Match {
       let score = 0;
       let correctGuesses = 0;
       let botsBusted = 0;
-
+      // TODO: query db for matches played Filter most of the logic in SQL
       const otherPlayers = this.players.filter(
         (p) => p.userId !== player.userId
       );
@@ -187,7 +187,7 @@ export class Match {
               player,
               messages: this._messages,
               botsBusted,
-              agents: this._agents,
+              otherPlayers,
             });
             return { id, points: pointsEarned };
           })

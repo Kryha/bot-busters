@@ -1,5 +1,4 @@
 import { type ChatMessagePayload, type PlayerType } from "~/types/index.js";
-import { Agent } from "./agent";
 
 interface MatchAchievement {
   id: string;
@@ -13,7 +12,7 @@ interface MatchData {
   player: PlayerType;
   messages: ChatMessagePayload[];
   botsBusted: number;
-  agents: Agent[];
+  otherPlayers: PlayerType[];
 }
 
 const lastMessageAchievement: MatchAchievement = {
@@ -22,7 +21,6 @@ const lastMessageAchievement: MatchAchievement = {
   description: "Write the last message in a match",
   calculate: ({ player, messages }) => {
     const lastMessage = messages[messages.length - 1];
-    console.log("lastMessage", lastMessage);
     if (!lastMessage) return 0;
 
     const lastSender = lastMessage.sender;
@@ -35,8 +33,11 @@ const perfectScoreAchievement: MatchAchievement = {
   id: "12",
   name: "Perfect score",
   description: "Get all votes correct in a match",
-  calculate: ({ botsBusted, agents }) => {
+  calculate: ({ botsBusted, otherPlayers }) => {
+    const agents = otherPlayers.filter((p) => p.isBot);
+
     if (botsBusted !== agents.length) return 0;
+
     return 13;
   },
 };
@@ -45,9 +46,12 @@ const someoneSelectedYouAsABotAchievement: MatchAchievement = {
   id: "13",
   name: "Someone selected you as a bot",
   description: "Someone selected you as a bot",
-  calculate: ({ player }) => {
-    if (!player.isBot) return 0;
-    return 13;
+  calculate: ({ otherPlayers, player }) => {
+    let isVotedAgainst = 0;
+    otherPlayers.forEach((p) => {
+      if (p.votes?.includes(player.userId)) isVotedAgainst = 13;
+    });
+    return isVotedAgainst;
   },
 };
 
