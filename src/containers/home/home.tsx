@@ -26,17 +26,17 @@ export const Homepage = () => {
 
     try {
       if (!isValidSession(sessionData)) {
-        await signIn("credentials", {
-          callbackUrl: pages.lobby,
-        });
-      } else {
         const result = await verifyCaptcha.mutateAsync({ captchaToken });
         if (!result) {
-          void push(pages.lobby);
+          await signIn("credentials", {
+            callbackUrl: pages.lobby,
+          });
         } else {
           setIsRecaptchaFailed(true);
           return;
         }
+      } else {
+        void push(pages.lobby);
       }
     } catch (error) {
       console.error(error);
@@ -53,7 +53,7 @@ export const Homepage = () => {
         <Typography variant="h5">{text.homepage.descriptionPart1}</Typography>
         <Typography variant="h5">{text.homepage.descriptionPart2}</Typography>
         {isRecaptchaFailed && (
-          <Typography variant="h6" color={"error"}>
+          <Typography variant="h6" color="error">
             {text.homepage.botDetected}
           </Typography>
         )}

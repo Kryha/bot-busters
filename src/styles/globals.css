@@ -9,6 +9,7 @@ a {
   text-decoration: none;
 }
 
+/* Hide the recaptcha badge to ensure the fetched script from google does not override the hidden property */
 .grecaptcha-badge {
   visibility: hidden !important;
 }

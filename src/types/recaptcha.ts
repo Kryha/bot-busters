@@ -3,13 +3,6 @@
 
 import { z } from "zod";
 
-export interface Action {
-  /**
-   * the name of the action. Actions may only contain alphanumeric characters and slashes, and must not be user-specific.
-   */
-  action: string;
-}
-
 export const recaptchaResponseSchema = z.object({
   success: z.boolean(),
   score: z.number(),
@@ -29,43 +22,43 @@ export interface Parameters {
   /**
    * Your sitekey.
    */
-  sitekey?: string | undefined;
+  sitekey?: string;
   /**
    * Optional. The color theme of the widget.
    * Accepted values: "light", "dark"
    * @default "light"
    */
-  theme?: Theme | undefined;
+  theme?: Theme;
   /**
    * Optional. The type of CAPTCHA to serve.
    * Accepted values: "audio", "image"
    * @default "image"
    */
-  type?: Type | undefined;
+  type?: Type;
   /**
    * Optional. The size of the widget.
    * Accepted values: "compact", "normal", "invisible".
    * @default "compact"
    */
-  size?: Size | undefined;
+  size?: Size;
   /**
    * Optional. The tabindex of the widget and challenge.
    * If other elements in your page use tabindex, it should be set to make user navigation easier.
    */
-  tabindex?: number | undefined;
+  tabindex?: number;
   /**
    * Optional. The badge location for g-recaptcha with size of "invisible".
    *
    * @default "bottomright"
    */
-  badge?: Badge | undefined;
+  badge?: Badge;
   /**
    * Optional. Invisible reCAPTCHA only. For plugin owners to not interfere with existing reCAPTCHA installations on a page.
    * If true, this reCAPTCHA instance will be part of a separate ID space.
    *
    * @default false
    */
-  isolated?: boolean | undefined;
+  isolated?: boolean;
   /**
    * Optional. Your callback function that's executed when the user submits a successful CAPTCHA response.
    * The user's response, g-recaptcha-response, will be the input for your callback function.
@@ -123,7 +116,7 @@ export interface IReCaptcha {
    *
    * @return a promise-like object containing the token
    */
-  execute: (siteKey: string, action: Action) => PromiseLike<string>;
+  execute: (siteKey: string, action: string) => PromiseLike<string>;
   /**
    * will run the given function as soon as the reCAPTCHA library has loaded
    * @param callback the function to coll
