@@ -19,7 +19,7 @@ export const Homepage = () => {
   const verifyCaptcha = api.recaptcha.verify.useMutation();
   const join = api.lobby.join.useMutation();
   const { data: sessionData } = useSession();
-  const { recaptchaProps, executeRecaptcha, ...props } = useRecaptcha();
+  const { scriptProps, executeRecaptcha, ...props } = useRecaptcha();
 
   const handleGameStart = async () => {
     const captchaToken = await executeRecaptcha("start_game");
@@ -81,11 +81,11 @@ export const Homepage = () => {
       </Stack>
       <TopRanked players={TOP_RANKED_PLAYERS} />
       <Script
-        id={recaptchaProps.id}
-        src={recaptchaProps.src}
-        strategy={recaptchaProps.strategy}
-        onLoad={recaptchaProps.onLoad}
-        onError={recaptchaProps.onError}
+        id={scriptProps.id}
+        src={scriptProps.src}
+        strategy={scriptProps.strategy}
+        onLoad={scriptProps.onLoad}
+        onError={scriptProps.onError}
         {...props}
       />
     </Stack>

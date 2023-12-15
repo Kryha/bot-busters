@@ -16,10 +16,9 @@ import { type ScriptProps } from "next/script";
  * const { executeRecaptcha } = useReCaptcha()
  */
 export const useRecaptcha = () => {
-  const { recaptchaProps, value, ...props } = useSetupRecaptcha({});
+  const { scriptProps, value, ...props } = useSetupRecaptcha({});
 
-  const { grecaptcha, loaded, reCaptchaKey } = value;
-  const siteKey = reCaptchaKey;
+  const { grecaptcha, loaded, recaptchaKey } = value;
 
   // Create a ref that stores 'grecaptcha.execute' method to prevent rerenders
   const executeCaptchaRef = useRef(grecaptcha?.execute);
@@ -34,37 +33,39 @@ export const useRecaptcha = () => {
         throw new Error("Recaptcha has not been loaded");
       }
 
-      return await executeCaptchaRef.current(siteKey, { action });
+      return await executeCaptchaRef.current(recaptchaKey, action);
     },
-    [siteKey],
+    [recaptchaKey],
   );
 
   return {
     ...props,
     grecaptcha,
     loaded,
-    reCaptchaKey: siteKey,
+    recaptchaKey,
     executeRecaptcha,
-    recaptchaProps,
+    scriptProps,
   };
 };
 
-export const getRecaptchaScriptSrc = ({
-  reCaptchaKey,
-  language,
-  useRecaptchaNet = false,
-  useEnterprise = false,
-}: {
-  reCaptchaKey?: string;
+interface RecaptchaSrcProps {
+  recaptchaKey?: string;
   language?: string;
   useRecaptchaNet?: boolean;
   useEnterprise?: boolean;
-} = {}): string => {
+}
+
+export const getRecaptchaScriptSrc = ({
+  recaptchaKey,
+  language,
+  useRecaptchaNet = false,
+  useEnterprise = false,
+}: RecaptchaSrcProps): string => {
   const hostName = useRecaptchaNet ? "recaptcha.net" : "google.com";
   const script = useEnterprise ? "enterprise.js" : "api.js";
 
   let src = `https://www.${hostName}/recaptcha/${script}?`;
-  if (reCaptchaKey) src += `render=${reCaptchaKey}`;
+  if (recaptchaKey) src += `render=${recaptchaKey}`;
   if (language) src += `&hl=${language}`;
 
   return src;
@@ -88,19 +89,19 @@ export const useSetupRecaptcha = ({
   onError: passedOnError,
   ...props
 }: RecaptchaProps) => {
-  const [grecaptcha, setGreCaptcha] = useState<IReCaptcha | null>(null);
+  const [grecaptcha, setGreCaptcha] = useState<IReCaptcha>();
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
   const mounted = useRef(false);
 
-  const reCaptchaKey = env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+  const recaptchaKey = env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
   const useEnterprise = false;
   const useRecaptchaNet = false;
 
   const src =
     passedSrc ??
     getRecaptchaScriptSrc({
-      reCaptchaKey,
+      recaptchaKey,
       language,
       useRecaptchaNet,
       useEnterprise,
@@ -146,14 +147,14 @@ export const useSetupRecaptcha = ({
 
   // Prevent unnecessary rerenders
   const value = useMemo(
-    () => ({ reCaptchaKey, grecaptcha, loaded, error }),
-    [reCaptchaKey, grecaptcha, loaded, error],
+    () => ({ recaptchaKey, grecaptcha, loaded, error }),
+    [recaptchaKey, grecaptcha, loaded, error],
   );
 
-  const recaptchaProps = useMemo(
+  const scriptProps = useMemo(
     () => ({ id, src, strategy, onLoad, onError }),
     [id, src, strategy, onLoad, onError],
   );
 
-  return { recaptchaProps, ...props, value };
+  return { scriptProps, ...props, value };
 };
