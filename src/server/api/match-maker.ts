@@ -66,6 +66,16 @@ const matchLoop = () => {
   });
 };
 
+const getPlayerData = async () => {
+  const promises = Array.from(matches.values()).map(async (room) => {
+    if (room.playerStatsAggregated) return;
+
+    await room.calculatePlayerStats();
+  });
+
+  await Promise.all(promises);
+};
+
 const storeMatches = async () => {
   const roomsToArchive = new Map<string, Match>();
 
@@ -101,6 +111,9 @@ setInterval(() => {
     matchLoop();
     storeMatches().catch((error) =>
       console.error("Error storing matches:", error)
+    );
+    getPlayerData().catch((error) =>
+      console.error("Error getting player stats:", error)
     );
     makeMatch();
   } catch (error) {
