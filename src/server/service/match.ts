@@ -19,6 +19,7 @@ import type {
   CharacterId,
 } from "~/types/index.js";
 import { MATCH_ACHIEVEMENTS } from "./achievements.js";
+import { selectMatchPlayedByUser } from "../db/user.js";
 
 export class Match {
   private _id: string;
@@ -38,6 +39,7 @@ export class Match {
 
   stage: MatchStage = "chat";
   arePointsCalculated = false;
+  playerStatsAggregated = false;
 
   get id() {
     return this._id;
@@ -147,6 +149,49 @@ export class Match {
       if (player.userId !== playerId) return;
       player.votes = selectedPlayerIds;
     });
+  }
+
+  async calculatePlayerStats() {
+    let allPlayerStatsLoaded = true;
+
+    const promises = this.players.map(async (player) => {
+      try {
+        if (player.isBot) return;
+        if (player.stats) return;
+
+        const matches = await selectMatchPlayedByUser(player.userId);
+
+        const playerStats = matches
+          .filter((match) => {
+            const timeElapsed = this._createdAt - match.room.createdAt;
+            return timeElapsed >= 86400000;
+          })
+          .map(({ room }) => {
+            const playerMatchData: PlayerType[] = [];
+            const playerMatch = room.players.filter((player) => {
+              if (player.userId === player.userId) {
+                playerMatchData.push(player);
+              }
+            });
+            return playerMatchData;
+          });
+
+        console.log(matches);
+
+        player.stats = {
+          matchesPlayed: matches.length,
+          AllBotsBustedInARow: 0,
+          wordIsOutAchievement: false,
+        };
+      } catch (error) {
+        allPlayerStatsLoaded = false;
+        console.error("Error getting matches played:", error);
+        player.stats = undefined;
+      }
+    });
+    await Promise.all(promises);
+
+    return allPlayerStatsLoaded;
   }
 
   calculatePoints() {
