@@ -1,18 +1,16 @@
 import { type FC, useState } from "react";
 import { Button, Stack, Typography } from "@mui/material";
 import { useRouter } from "next/router.js";
-
+import { pages } from "~/router";
+import { MenuButton } from "~/components/menu-dialog/index.js";
 import { text } from "~/assets/text/index.js";
-
 import { styles } from "./styles.js";
 import {
   BotBustersIcon,
   SoundOffIcon,
   SoundOnIcon,
   UserIcon,
-} from "~/assets/icons";
-import { pages } from "~/router";
-import { MenuButton } from "~/components/menu-dialog/menu-button";
+} from "~/assets/icons/index.js";
 
 interface Props {
   handleClose: () => void;
@@ -20,6 +18,7 @@ interface Props {
 
 export const Header: FC<Props> = ({ handleClose }) => {
   const router = useRouter();
+  // TODO: Implement sound hook
   const [sound, setSound] = useState(true);
 
   const onSoundClick = () => {

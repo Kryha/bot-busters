@@ -1,7 +1,7 @@
 import { styled } from "@mui/material/styles";
 import { theme } from "~/styles/theme";
 import { Button } from "@mui/base";
-import React, { type FC } from "react";
+import { type FC } from "react";
 import { SelectIcon } from "~/assets/icons/index.js";
 
 interface Props extends React.ComponentProps<typeof Button> {

@@ -1,14 +1,14 @@
 import { styled } from "@mui/material/styles";
-import { theme } from "~/styles/theme";
+import { theme } from "~/styles/theme.js";
 import { Button } from "@mui/base";
-import React, { type FC } from "react";
+import { type FC } from "react";
 import { SelectIcon } from "~/assets/icons/index.js";
 
 interface Props extends React.ComponentProps<typeof Button> {
   text: string;
 }
 
-export const HomeButtonStyle = styled(Button)({
+const PixelButtonStyle = styled(Button)({
   background: "none",
   border: "none",
   outline: "none",
@@ -45,11 +45,11 @@ export const HomeButtonStyle = styled(Button)({
   },
 });
 
-export const HomeButton: FC<Props> = ({ text, ...props }) => {
+export const PixelButton: FC<Props> = ({ text, ...props }) => {
   return (
-    <HomeButtonStyle {...props}>
+    <PixelButtonStyle {...props}>
       <SelectIcon />
       {text}
-    </HomeButtonStyle>
+    </PixelButtonStyle>
   );
 };

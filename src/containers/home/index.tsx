@@ -1,5 +1,4 @@
 import { Button, Stack, Typography } from "@mui/material";
-import React from "react";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/router.js";
 
@@ -12,7 +11,7 @@ import { isValidSession } from "~/utils/session.js";
 
 import { styles } from "./styles.js";
 import { BotBustersLogo } from "~/assets/icons/index.js";
-import { HomeButton } from "~/components/home-page-button";
+import { PixelButton } from "~/components/pixel-button/index.js";
 
 export const Homepage = () => {
   const { push } = useRouter();
@@ -54,8 +53,11 @@ export const Homepage = () => {
             {text.homepage.startNewGame}
           </Typography>
         </Button>
-        <HomeButton onClick={openDailyHandler} text={text.homepage.openDaily} />
-        <HomeButton onClick={openAboutHandler} text={text.homepage.about} />
+        <PixelButton
+          onClick={openDailyHandler}
+          text={text.homepage.openDaily}
+        />
+        <PixelButton onClick={openAboutHandler} text={text.homepage.about} />
       </Stack>
       <TopRanked players={TOP_RANKED_PLAYERS} />
     </Stack>
