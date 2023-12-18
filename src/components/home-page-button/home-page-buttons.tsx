@@ -18,7 +18,7 @@ export const HomeButtonStyle = styled(Button)({
   textAlign: "left",
   gap: 24,
   fontSize: "72px",
-  lineHeight: "74.47px",
+  lineHeight: "normal",
   color: theme.palette.text.secondary,
   fontFamily: theme.typography.h2.fontFamily,
   textTransform: "uppercase",
