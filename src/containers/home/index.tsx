@@ -1,5 +1,4 @@
 import { Button, Stack, Typography } from "@mui/material";
-import React from "react";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/router.js";
 
@@ -11,6 +10,8 @@ import { TOP_RANKED_PLAYERS } from "~/constants/index.js";
 import { isValidSession } from "~/utils/session.js";
 
 import { styles } from "./styles.js";
+import { BotBustersLogo } from "~/assets/icons/index.js";
+import { PixelButton } from "~/components/pixel-button/index.js";
 
 export const Homepage = () => {
   const { push } = useRouter();
@@ -30,14 +31,16 @@ export const Homepage = () => {
   };
 
   const openDailyHandler = () => void push(pages.leaderboard);
+  const openAboutHandler = () => void push(pages.about);
   const isDisabled = join.status === "loading";
 
   return (
     <Stack sx={styles.textContainer}>
-      <Typography variant="h1">{text.homepage.appName}</Typography>
       <Stack sx={styles.description}>
-        <Typography variant="h5">{text.homepage.descriptionPart1}</Typography>
-        <Typography variant="h5">{text.homepage.descriptionPart2}</Typography>
+        <Typography variant="body1">
+          {text.homepage.descriptionPart1}
+        </Typography>
+        <BotBustersLogo />
       </Stack>
       <Stack sx={styles.actions}>
         <Button
@@ -50,15 +53,11 @@ export const Homepage = () => {
             {text.homepage.startNewGame}
           </Typography>
         </Button>
-        <Button
-          variant="contained"
-          color="blueGrey"
-          disabled={isDisabled}
+        <PixelButton
           onClick={openDailyHandler}
-          sx={styles.openDailyButton}
-        >
-          {text.homepage.openDaily}
-        </Button>
+          text={text.homepage.openDaily}
+        />
+        <PixelButton onClick={openAboutHandler} text={text.homepage.about} />
       </Stack>
       <TopRanked players={TOP_RANKED_PLAYERS} />
     </Stack>

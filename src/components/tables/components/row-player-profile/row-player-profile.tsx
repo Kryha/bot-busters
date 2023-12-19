@@ -21,7 +21,7 @@ export const RowPlayerProfile: FC<Props> = ({ playerProfile }) => {
     <TableRow key={playerProfile.ranking} sx={styles.tableRow}>
       <TableCell component="th" scope="row">
         <Typography
-          variant="body1"
+          variant="body2"
           color="customGrey.main"
           fontWeight={fontWeight}
         >
@@ -30,7 +30,7 @@ export const RowPlayerProfile: FC<Props> = ({ playerProfile }) => {
       </TableCell>
       <TableCell>
         <Typography
-          variant="body1"
+          variant="body2"
           color="customGrey.main"
           fontWeight={fontWeight}
         >
@@ -39,7 +39,7 @@ export const RowPlayerProfile: FC<Props> = ({ playerProfile }) => {
       </TableCell>
       <TableCell>
         <Typography
-          variant="body1"
+          variant="body2"
           color="customGrey.main"
           fontWeight={fontWeight}
         >
@@ -48,7 +48,7 @@ export const RowPlayerProfile: FC<Props> = ({ playerProfile }) => {
       </TableCell>
       <TableCell>
         <Typography
-          variant="body1"
+          variant="body2"
           color="customGrey.main"
           fontWeight={fontWeight}
         >

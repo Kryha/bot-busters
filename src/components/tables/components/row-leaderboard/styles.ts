@@ -1,4 +1,5 @@
 import { type SxProps } from "@mui/material";
+import { theme } from "~/styles/theme";
 
 export const styles = {
   tableRow: (isBlurred?: boolean) => {
@@ -13,5 +14,13 @@ export const styles = {
     gap: 1,
     alignItems: "center",
   },
+  tableText: {
+    textAlign: "center",
+  },
+  ranking: {
+    fontFamily: theme.typography.h2.fontFamily,
+    fontSize: "24px",
+    textAlign: "center",
+  } satisfies SxProps,
   avatar: { backgroundColor: "customGrey.main" } satisfies SxProps,
 };

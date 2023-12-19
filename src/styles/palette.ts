@@ -5,23 +5,36 @@ export const palette = (theme: Theme): Palette => {
   return {
     ...theme.palette,
     common: {
-      black: "#424242",
+      black: "#000000",
       white: "#FFFFFF",
     },
+    background: {
+      default: "#000000",
+      paper: "#000000",
+    },
+    text: {
+      primary: "#f5f5f5",
+      secondary: "#494949",
+      disabled: "#494949",
+    },
     primary: {
-      ...theme.palette.primary,
+      // ...theme.palette.primary,
+      light: "#7CFF33",
+      main: "#5CFF00" as const,
+      dark: "#40B200",
       contrastText: "#FFFFFF",
     },
     secondary: {
-      light: "#FFFFFF",
-      main: "#FFFFFF",
-      dark: grey[50],
+      light: "#FF9C33",
+      main: "#FF8400",
+      dark: "#B25C00",
       contrastText: grey[900],
     },
+    divider: "#494949",
     orange: {
-      light: "#FFF3E0",
-      main: "#FFCC80",
-      dark: "#FF9800",
+      light: "#FF9C33",
+      main: "#FF8400",
+      dark: "#B25C00",
       contrastText: "#FFFFFF",
     },
     brown: {

@@ -1,5 +1,5 @@
 import { type FC } from "react";
-import { Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import Link from "next/link.js";
 import { useRouter } from "next/router.js";
 
@@ -22,43 +22,33 @@ export const Footer: FC<Props> = ({ handleClose }) => {
 
   return (
     <Stack sx={styles.footer}>
-      <Stack sx={styles.group}>
-        <Typography variant="h4" color="common.black" sx={styles.textButton}>
-          {text.general.aleoSystems}
-        </Typography>
+      <Box component={"div"} sx={styles.group}>
         <Typography
           variant="h4"
-          color="common.black"
-          onClick={() => handleNavigation(pages.privacy)}
-          sx={styles.textButton}
-        >
-          {text.general.privacy}
-        </Typography>
-        <Typography variant="h4" color="common.black" sx={styles.textButton}>
-          {text.general.cookies}
-        </Typography>
-      </Stack>
-      <Stack sx={styles.group}>
-        <Typography
-          variant="h4"
-          color="common.black"
           onClick={() => handleNavigation(pages.support)}
           sx={styles.textButton}
         >
           {text.general.support}
         </Typography>
-        <Typography variant="h4" color="common.black" sx={styles.textButton}>
+        <Typography variant="h4" sx={styles.textButton}>
           {text.general.discord}
         </Typography>
         <Link href={text.general.aleoWebsite} target="_blank">
-          <Typography variant="h4" color="common.black" sx={styles.textButton}>
+          <Typography variant="h4" sx={styles.textButton}>
             {text.general.aleoOrg}
           </Typography>
         </Link>
-        <Typography variant="h4" color="common.black" sx={styles.textButton}>
+        <Typography variant="h4" sx={styles.textButton}>
           {text.general.zPass}
         </Typography>
-      </Stack>
+        <Typography
+          variant="h4"
+          onClick={() => handleNavigation(pages.privacy)}
+          sx={styles.textButton}
+        >
+          {text.general.legal}
+        </Typography>
+      </Box>
     </Stack>
   );
 };

@@ -10,6 +10,7 @@ import { text } from "~/assets/text/index.js";
 import { isValidSession } from "~/utils/session.js";
 import { pages } from "~/router.js";
 import Page from "~/components/page/page.jsx";
+import { breakpoints } from "~/styles/theme.js";
 
 // TODO: move styles to another file
 const styles = {
@@ -21,7 +22,7 @@ const styles = {
   container: {
     justifyContent: "space-between",
     height: "62.4%",
-    "@media (max-width:600px)": {
+    [`@media (max-width: ${breakpoints.sm}px)`]: {
       pl: 4,
       pr: 4,
     },

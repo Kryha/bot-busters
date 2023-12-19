@@ -19,7 +19,7 @@ export const StatsDisplay: FC<Props> = ({
       <Typography variant="overline" color="common.black">
         {title}
       </Typography>
-      <Typography variant="h5" color="common.black" sx={styles.info}>
+      <Typography variant="body1" color="common.white" sx={styles.info}>
         {info}
       </Typography>
     </Stack>

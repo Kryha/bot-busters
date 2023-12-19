@@ -13,7 +13,9 @@ export const Header: FC<Props> = ({ cells }) => {
       <TableRow sx={styles.tableRow}>
         {cells.map((cell, index) => (
           <TableCell key={index} sx={{ padding: 1 }}>
-            <Typography variant="overline">{cell}</Typography>
+            <Typography variant="body2" sx={styles.tableHeader}>
+              {cell}
+            </Typography>
           </TableCell>
         ))}
       </TableRow>

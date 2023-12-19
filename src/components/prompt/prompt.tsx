@@ -14,7 +14,7 @@ export const Prompt: FC<Props> = ({ title, info }) => {
       <Typography variant="body1" color="blueGrey.main">
         {title}
       </Typography>
-      <Typography variant="h6" color="blueGrey.main">
+      <Typography variant="h4" color="blueGrey.main">
         {info}
       </Typography>
     </Stack>

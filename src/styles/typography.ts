@@ -1,12 +1,42 @@
 import { type Typography } from "@mui/material/styles/createTypography.js";
-import { Roboto } from "next/font/google";
-
+import { PT_Serif } from "next/font/google";
 import { COEFFICIENT, FONT_SIZE } from "~/constants/index.js";
+import localFont from "next/font/local";
 
-const font = Roboto({
-  weight: ["100", "300", "400", "500", "700", "900"],
+const overlineFont = PT_Serif({
+  weight: ["400"],
   style: ["normal"],
   subsets: ["latin"],
+});
+
+const headingsFont = localFont({
+  src: [
+    {
+      path: "./fonts/dispdigibb/disposableDigiBB_italics.otf",
+      weight: "400",
+      style: "italic",
+    },
+  ],
+});
+
+const subHeadingsFont = localFont({
+  src: [
+    {
+      path: "./fonts/eightbit16.ttf",
+      weight: "400",
+      style: "normal",
+    },
+  ],
+});
+
+const bodyFont = localFont({
+  src: [
+    {
+      path: "./fonts/appleII.ttf",
+      weight: "400",
+      style: "normal",
+    },
+  ],
 });
 
 export const typography = (): Typography => {
@@ -14,7 +44,7 @@ export const typography = (): Typography => {
   const pxToRem = (px: number) => `${(px / FONT_SIZE) * coefficient}rem`;
 
   return {
-    fontFamily: font.style.fontFamily,
+    fontFamily: bodyFont.style.fontFamily,
     fontSize: FONT_SIZE,
     fontWeightLight: 300,
     fontWeightRegular: 400,
@@ -23,76 +53,93 @@ export const typography = (): Typography => {
     htmlFontSize: 16,
     pxToRem: pxToRem,
     h1: {
-      fontFamily: font.style.fontFamily,
-      fontSize: "88px",
-      fontWeight: 400,
-      lineHeight: "96px",
+      fontFamily: headingsFont.style.fontFamily,
+      fontSize: "clamp(3.0rem, 7.4vw + 1rem, 7rem);", //150px
+      lineHeight: "clamp(5rem, 9.4vw + 1rem, 8rem);", //
+      color: "#FF8400 !important",
+      textTransform: "uppercase" as const,
     },
     h2: {
-      fontSize: "57px",
-      lineHeight: "60px",
-      fontFamily: font.style.fontFamily,
+      fontSize: "clamp(3.0rem, 7.4vw + 1rem, 7rem);", //110px
+      lineHeight: "clamp(5rem, 9.4vw + 1rem, 8rem);",
+      fontFamily: headingsFont.style.fontFamily,
       fontWeight: 400,
+      textTransform: "uppercase" as const,
     },
     h3: {
-      fontFamily: font.style.fontFamily,
-      fontSize: "48px",
+      fontFamily: subHeadingsFont.style.fontFamily,
+      fontSize: "clamp(1.5rem, 2vw + 1rem, 3rem);",
       fontWeight: 400,
-      lineHeight: "50px",
+      lineHeight: "49.65px", // TODO to be converted to rem
+      textTransform: "uppercase" as const,
     },
     h4: {
-      fontFamily: font.style.fontFamily,
-      fontSize: "34px",
+      fontFamily: subHeadingsFont.style.fontFamily,
+      fontSize: "clamp(0.5rem, 2vw + 1rem, 2rem);",
       fontWeight: 400,
-      lineHeight: "40px",
+      lineHeight: "38.1px", // TODO to be converted to rem
+      textTransform: "uppercase" as const,
     },
     h5: {
-      fontFamily: font.style.fontFamily,
-      fontSize: "23px",
+      fontFamily: bodyFont.style.fontFamily,
+      fontSize: "48px",
       fontWeight: 400,
-      lineHeight: "32px",
+      lineHeight: "72.09px", // TODO to be converted to rem
     },
     h6: {
-      fontFamily: font.style.fontFamily,
+      fontFamily: bodyFont.style.fontFamily,
       fontSize: "24px",
       fontWeight: 400,
-      lineHeight: "33.6px",
+      lineHeight: "33.6px", // TODO to be converted to rem
     },
     subtitle1: {
-      fontFamily: font.style.fontFamily,
+      // top ranked title
+      fontFamily: headingsFont.style.fontFamily,
+      fontSize: "48px",
+      fontWeight: 400,
+      lineHeight: "49.65px", // TODO to be converted to rem
+      textTransform: "uppercase" as const,
     },
     subtitle2: {
-      fontFamily: font.style.fontFamily,
+      // top ranked positions
+      fontFamily: bodyFont.style.fontFamily,
+      fontSize: pxToRem(20),
+      fontWeight: 400,
+      lineHeight: "53.5px", // TODO to be converted to rem
     },
     body1: {
-      fontFamily: font.style.fontFamily,
+      // normal text
+      fontFamily: bodyFont.style.fontFamily,
       fontSize: "16px",
       fontWeight: 400,
-      lineHeight: "24px",
-      letterSpacing: "0.5px",
+      lineHeight: "normal",
     },
     body2: {
-      fontFamily: font.style.fontFamily,
+      // leaderboard
+      fontFamily: bodyFont.style.fontFamily,
+      fontSize: "16px",
+      fontWeight: 400,
+      lineHeight: "normal",
     },
     button: {
-      fontFamily: font.style.fontFamily,
+      fontFamily: subHeadingsFont.style.fontFamily,
       fontSize: "14px",
       fontWeight: 500,
-      lineHeight: "36px",
+      lineHeight: "18.75px", // TODO to be converted to rem
       textTransform: "uppercase" as const,
     },
     caption: {
-      fontFamily: font.style.fontFamily,
+      fontFamily: bodyFont.style.fontFamily,
       fontSize: "12px",
       fontWeight: 400,
       lineHeight: "20px",
     },
     overline: {
-      fontFamily: font.style.fontFamily,
-      fontSize: "12px",
+      // top ranked points
+      fontFamily: overlineFont.style.fontFamily,
+      fontSize: "20px",
       fontWeight: 400,
-      lineHeight: "32px",
-      letterSpacing: "2px",
+      lineHeight: "25.88px", // TODO to be converted to rem
       textTransform: "uppercase" as const,
     },
   };

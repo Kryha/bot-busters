@@ -4,7 +4,7 @@ export const styles = {
   container: {
     position: "fixed",
     inset: 0,
-    backgroundColor: "common.white",
+    backgroundColor: "common.black",
     zIndex: 1,
     alignItems: "center",
     justifyContent: "center",
