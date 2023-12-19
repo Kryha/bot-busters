@@ -18,7 +18,7 @@ export const Payout: FC<Props> = ({ payout, fontWeight }) => {
         <Stack sx={styles.payout}>
           <Typography
             fontWeight={fontWeight}
-            variant={"body2"}
+            variant="body2"
             color="customGrey.main"
           >
             {text.playerProfile.credits(payout.credits)}
@@ -35,7 +35,7 @@ export const Payout: FC<Props> = ({ payout, fontWeight }) => {
       return (
         <Typography
           fontWeight={fontWeight}
-          variant={"body2"}
+          variant="body2"
           color="customGrey.main"
         >
           {text.playerProfile.potentialCredits(payout.credits)}
@@ -45,7 +45,7 @@ export const Payout: FC<Props> = ({ payout, fontWeight }) => {
       return (
         <Typography
           fontWeight={fontWeight}
-          variant={"body2"}
+          variant="body2"
           color="customGrey.main"
         >
           {text.playerProfile.noCredits}

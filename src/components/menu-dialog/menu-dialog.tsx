@@ -1,14 +1,14 @@
 import { type FC, forwardRef, type ReactElement, type Ref } from "react";
 import { Button, Dialog, Slide } from "@mui/material";
 import { type TransitionProps } from "@mui/material/transitions";
+import { useRouter } from "next/router";
 
 import { styles } from "./styles.js";
 import { Footer } from "./footer.jsx";
-import { Header } from "~/components/menu-dialog/header";
-import { MenuOptions } from "~/components/menu-dialog/menu-options";
+import { Header } from "~/components/menu-dialog/header.jsx";
+import { MenuOptions } from "~/components/menu-dialog/menu-options.jsx";
 import { pages } from "~/router";
-import { BotBustersIcon } from "~/assets/icons";
-import { useRouter } from "next/router";
+import { BotBustersIcon } from "~/assets/icons/index.js";
 
 const Transition = forwardRef(function Transition(
   props: TransitionProps & {
