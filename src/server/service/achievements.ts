@@ -36,10 +36,16 @@ const perfectScoreAchievement: MatchAchievement = {
   name: "Perfect score",
   description: "Get all votes correct in a match",
   points: 13,
-  calculate: ({ botsBusted, otherPlayers }) => {
+  calculate: ({ player, botsBusted, otherPlayers }) => {
     const agents = otherPlayers.filter((p) => p.isBot);
 
+    const wrongVotes = player.votes?.filter((vote) => {
+      const isCorrectGuess = agents.find((a) => a.userId === vote);
+      return !isCorrectGuess;
+    });
+
     if (botsBusted !== agents.length) return false;
+    if (wrongVotes?.length) return false;
 
     return true;
   },
