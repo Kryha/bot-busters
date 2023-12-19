@@ -28,21 +28,19 @@ export const MenuOptions: FC<Props> = ({ handleClose }) => {
         disabled={join.status === "loading"}
         // TODO: LOGIN the user with anonymous account
         onClick={() => handleNavigation(pages.lobby)}
-        text={text.general.playNewGame}
-      />
-      <MenuOptionsButton
-        onClick={() => handleNavigation(pages.playerProfile)}
-        text={text.general.playerProfile}
-      />
-      <MenuOptionsButton
-        onClick={() => handleNavigation(pages.leaderboard)}
-        text={text.general.dailyLeaderboard}
-      />
-      <MenuOptionsButton text={text.general.howToPlay} />
-      <MenuOptionsButton
-        onClick={() => handleNavigation(pages.login)}
+      >
+        {text.general.playNewGame}
+      </MenuOptionsButton>
+      <MenuOptionsButton onClick={() => handleNavigation(pages.playerProfile)}>
+        {text.general.playerProfile}
+      </MenuOptionsButton>
+      <MenuOptionsButton onClick={() => handleNavigation(pages.leaderboard)}>
+        {text.general.dailyLeaderboard}
+      </MenuOptionsButton>
+      <MenuOptionsButton>{text.general.howToPlay}</MenuOptionsButton>
+      <MenuOptionsButton onClick={() => handleNavigation(pages.login)}>
         text={text.general.connectWallet}
-      />
+      </MenuOptionsButton>
     </Stack>
   );
 };

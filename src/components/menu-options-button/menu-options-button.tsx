@@ -5,7 +5,7 @@ import { type FC } from "react";
 import { SelectIcon } from "~/assets/icons/index.js";
 
 interface Props extends React.ComponentProps<typeof Button> {
-  text: string;
+  children?: React.ReactNode;
 }
 
 export const MenuOptionsButtonStyle = styled(Button)({
@@ -45,11 +45,11 @@ export const MenuOptionsButtonStyle = styled(Button)({
   },
 });
 
-export const MenuOptionsButton: FC<Props> = ({ text, ...props }) => {
+export const MenuOptionsButton: FC<Props> = ({ children, ...props }) => {
   return (
     <MenuOptionsButtonStyle {...props}>
       <SelectIcon />
-      {text}
+      {children}
     </MenuOptionsButtonStyle>
   );
 };
