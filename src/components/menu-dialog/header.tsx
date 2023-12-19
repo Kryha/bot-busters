@@ -1,7 +1,7 @@
 import { type FC, useState } from "react";
 import { Button, Stack, Typography } from "@mui/material";
 import { useRouter } from "next/router.js";
-import { pages } from "~/router";
+import { pages } from "~/router.js";
 import { MenuButton } from "~/components/menu-dialog/index.js";
 import { text } from "~/assets/text/index.js";
 import { styles } from "./styles.js";
