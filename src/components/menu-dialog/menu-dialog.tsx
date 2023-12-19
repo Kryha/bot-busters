@@ -1,4 +1,4 @@
-import React, { type FC, forwardRef, type ReactElement, type Ref } from "react";
+import { type FC, forwardRef, type ReactElement, type Ref } from "react";
 import { Button, Dialog, Slide } from "@mui/material";
 import { type TransitionProps } from "@mui/material/transitions";
 
