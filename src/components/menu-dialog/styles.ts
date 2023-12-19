@@ -1,5 +1,5 @@
 import { type SxProps } from "@mui/material";
-import { theme } from "~/styles/theme";
+import { breakpoints, theme } from "~/styles/theme.js";
 
 export const styles = {
   dialog: {
@@ -9,7 +9,7 @@ export const styles = {
   },
   dialogLogo: {
     display: "none",
-    "@media (max-width: 600px)": {
+    [`@media (max-width: ${breakpoints.sm}px)`]: {
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
@@ -24,7 +24,7 @@ export const styles = {
         },
       },
     },
-    "@media (max-width: 600px)": {
+    [`@media (max-width: ${breakpoints.sm}px)`]: {
       display: "none",
     },
   },
@@ -43,7 +43,7 @@ export const styles = {
     justifyContent: "flex-start",
     pl: 4,
     pr: 4,
-    "@media (max-width: 600px)": {
+    [`@media (max-width: ${breakpoints.sm}px)`]: {
       pl: 2,
       pr: 2,
     },
@@ -78,7 +78,7 @@ export const styles = {
     pr: 3,
     flexDirection: "row",
     justifyContent: "space-between",
-    "@media (max-width: 600px)": {
+    [`@media (max-width: ${breakpoints.sm}px)`]: {
       pl: 2,
       pr: 2,
       pt: 2,
@@ -90,7 +90,7 @@ export const styles = {
     pb: 3,
     flexDirection: "row",
     justifyContent: "space-between",
-    "@media (max-width: 600px)": {
+    [`@media (max-width: ${breakpoints.sm}px)`]: {
       pl: 2,
       pr: 2,
       pb: 2,
@@ -103,7 +103,7 @@ export const styles = {
     gridTemplateRows: "1fr",
     gridGap: "16px",
     alignItems: "center",
-    "@media (max-width: 600px)": {
+    [`@media (max-width: ${breakpoints.sm}px)`]: {
       gridTemplateColumns: "repeat(3, 1fr)",
       gridTemplateRows: "repeat(2, 1fr)",
       gridGap: "16px",

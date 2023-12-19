@@ -1,5 +1,5 @@
 import { styled } from "@mui/material/styles";
-import { theme } from "~/styles/theme";
+import { theme } from "~/styles/theme.js";
 import { Button } from "@mui/base";
 import { type FC } from "react";
 import { SelectIcon } from "~/assets/icons/index.js";

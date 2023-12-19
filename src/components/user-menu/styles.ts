@@ -1,5 +1,5 @@
 import { type SxProps } from "@mui/material";
-import { theme } from "~/styles/theme";
+import { breakpoints, theme } from "~/styles/theme.js";
 
 export const styles = {
   wrapper: {
@@ -8,7 +8,7 @@ export const styles = {
     pr: 3,
     flexDirection: "row",
     justifyContent: "space-between",
-    "@media (max-width: 600px)": {
+    [`@media (max-width: ${breakpoints.sm}px)`]: {
       pl: 2,
       pr: 2,
       pt: 2,
@@ -22,7 +22,7 @@ export const styles = {
         },
       },
     },
-    "@media (max-width: 600px)": {
+    [`@media (max-width: ${breakpoints.sm}px)`]: {
       display: "none",
     },
   },
