@@ -75,10 +75,11 @@ const bustThreeBotsInARowAchievement: MatchAchievement = {
   id: "101",
   name: "Bust three bots in a row",
   description: "Bust three bots in a row",
+  points: 13,
   calculate: ({ player, playerHistory, otherPlayers, botsBusted }) => {
-    if (!playerHistory || playerHistory.length < 2) return 0;
+    if (!playerHistory || playerHistory.length < 2) return false;
     if (alreadyReceivedAchievementToday(player.userId, playerHistory, "101"))
-      return 0;
+      return false;
 
     // Sort playerHistory in descending order by timestamp
     const sortedPlayerHistory = playerHistory.sort(
@@ -116,9 +117,7 @@ const bustThreeBotsInARowAchievement: MatchAchievement = {
 
     const perfectCurrentGame = botsBusted === agents.length;
 
-    if (allBotsBustedLastTwoMatches && perfectCurrentGame) return 13;
-
-    return 0;
+    return allBotsBustedLastTwoMatches && perfectCurrentGame;
   },
 };
 
@@ -126,9 +125,10 @@ const playerFirstMatchAchievement: MatchAchievement = {
   id: "201",
   name: "First match",
   description: "Played your first match",
+  points: 13,
   calculate: ({ playerHistory }) => {
-    if (!playerHistory || playerHistory.length === 0) return 13;
-    return 0;
+    if (!playerHistory || playerHistory.length === 0) return true;
+    return false;
   },
 };
 
