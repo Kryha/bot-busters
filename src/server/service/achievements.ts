@@ -1,4 +1,9 @@
-import { type ChatMessagePayload, type PlayerType } from "~/types/index.js";
+import { alreadyReceivedAchievementToday } from "~/utils/achievements.js";
+import {
+  type MatchRoom,
+  type ChatMessagePayload,
+  type PlayerType,
+} from "~/types/index.js";
 
 interface MatchAchievement {
   id: string;
@@ -13,6 +18,7 @@ interface MatchData {
   messages: ChatMessagePayload[];
   botsBusted: number;
   otherPlayers: PlayerType[];
+  playerHistory?: MatchRoom[];
 }
 
 const lastMessageAchievement: MatchAchievement = {
@@ -55,6 +61,67 @@ const someoneSelectedYouAsABotAchievement: MatchAchievement = {
   },
 };
 
+const bustThreeBotsInARowAchievement: MatchAchievement = {
+  id: "101",
+  name: "Bust three bots in a row",
+  description: "Bust three bots in a row",
+  calculate: ({ player, playerHistory, otherPlayers, botsBusted }) => {
+    if (!playerHistory || playerHistory.length < 2) return 0;
+    if (alreadyReceivedAchievementToday(player.userId, playerHistory, "101"))
+      return 0;
+
+    // Sort playerHistory in descending order by timestamp
+    const sortedPlayerHistory = playerHistory.sort(
+      (a, b) => b.createdAt - a.createdAt
+    );
+
+    // Get the last two matches
+    const lastTwoMatches = sortedPlayerHistory.slice(0, 2);
+    console.log("Last two played matches", lastTwoMatches);
+
+    //Get the player data from the last two matches
+    const playerMatchData = lastTwoMatches.map((match) => {
+      return match.players.find((p) => p.userId === player.userId);
+    });
+    console.log("Player data", playerMatchData);
+
+    // Check if all bots were busted in the last two matches
+    const allBotsBustedLastTwoMatches = playerMatchData.every((p) => {
+      console.log("Player Achievements", p?.achievements);
+
+      const perfectScore = p?.achievements.filter((achievement) => {
+        return achievement.id === "12";
+      });
+      console.log("Perfect Score", perfectScore);
+      return perfectScore && perfectScore.length > 0;
+    });
+
+    console.log(
+      "All bots busted last two matches",
+      allBotsBustedLastTwoMatches
+    );
+
+    // Get the bots from the current match
+    const agents = otherPlayers.filter((p) => p.isBot);
+
+    const perfectCurrentGame = botsBusted === agents.length;
+
+    if (allBotsBustedLastTwoMatches && perfectCurrentGame) return 13;
+
+    return 0;
+  },
+};
+
+const playerFirstMatchAchievement: MatchAchievement = {
+  id: "201",
+  name: "First match",
+  description: "Played your first match",
+  calculate: ({ playerHistory }) => {
+    if (!playerHistory || playerHistory.length === 0) return 13;
+    return 0;
+  },
+};
+
 export const MATCH_ACHIEVEMENTS: Record<string, MatchAchievement> = {
   // Match achievement - written last message
   "11": lastMessageAchievement,
@@ -62,12 +129,12 @@ export const MATCH_ACHIEVEMENTS: Record<string, MatchAchievement> = {
   "12": perfectScoreAchievement,
   // Match achievement - someone selected you as a bot
   "13": someoneSelectedYouAsABotAchievement,
-  // Day achievement - say a specific word
-  // "101": 5,
   // Day achievement - successfully bust all bots 3 consecutive games
-  // "102": 10,
+  "101": bustThreeBotsInARowAchievement,
   // Day achievement - Daily streak plays bot busters X days in a row
-  // "103": 10,
+  // "102": 10,
+  // One time achievement - player plays his first game
+  "201": playerFirstMatchAchievement,
   // One time achievement - player wins his first game
-  // "201": 10,
+  //"202": playerWinsFirstMatchAchievement,
 };
