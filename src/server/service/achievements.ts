@@ -9,7 +9,8 @@ interface MatchAchievement {
   id: string;
   name: string;
   description: string;
-  calculate: (matchData: MatchData) => number;
+  points: number;
+  calculate: (matchData: MatchData) => boolean;
 }
 
 // TODO: add player stats
@@ -25,13 +26,14 @@ const lastMessageAchievement: MatchAchievement = {
   id: "11",
   name: "Last message",
   description: "Write the last message in a match",
+  points: 13,
   calculate: ({ player, messages }) => {
     const lastMessage = messages[messages.length - 1];
-    if (!lastMessage) return 0;
+    if (!lastMessage) return false;
 
     const lastSender = lastMessage.sender;
-    if (lastSender !== player.userId) return 0;
-    return 13;
+    if (lastSender !== player.userId) return false;
+    return true;
   },
 };
 
@@ -39,12 +41,19 @@ const perfectScoreAchievement: MatchAchievement = {
   id: "12",
   name: "Perfect score",
   description: "Get all votes correct in a match",
-  calculate: ({ botsBusted, otherPlayers }) => {
+  points: 13,
+  calculate: ({ player, botsBusted, otherPlayers }) => {
     const agents = otherPlayers.filter((p) => p.isBot);
 
-    if (botsBusted !== agents.length) return 0;
+    const wrongVotes = player.votes?.filter((vote) => {
+      const isCorrectGuess = agents.find((a) => a.userId === vote);
+      return !isCorrectGuess;
+    });
 
-    return 13;
+    if (botsBusted !== agents.length) return false;
+    if (wrongVotes?.length) return false;
+
+    return true;
   },
 };
 
@@ -52,10 +61,11 @@ const someoneSelectedYouAsABotAchievement: MatchAchievement = {
   id: "13",
   name: "Someone selected you as a bot",
   description: "Someone selected you as a bot",
+  points: 13,
   calculate: ({ otherPlayers, player }) => {
-    let isVotedAgainst = 0;
+    let isVotedAgainst = false;
     otherPlayers.forEach((p) => {
-      if (p.votes?.includes(player.userId)) isVotedAgainst = 13;
+      if (p.votes?.includes(player.userId)) isVotedAgainst = true;
     });
     return isVotedAgainst;
   },

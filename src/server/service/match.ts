@@ -214,14 +214,18 @@ export class Match {
         // Check achievements
         const achievementPoints = Object.entries(MATCH_ACHIEVEMENTS)
           .map(([id, achievement]) => {
-            const pointsEarned = achievement.calculate({
-              player,
-              messages: this._messages,
-              botsBusted,
-              otherPlayers,
-              playerHistory: this._playerPreviousMatches[player.userId],
-            });
-            return { id, points: pointsEarned };
+            if (
+              achievement.calculate({
+                player,
+                messages: this._messages,
+                botsBusted,
+                otherPlayers,
+                playerHistory: this._playerPreviousMatches[player.userId],
+              })
+            ) {
+              return { id, points: achievement.points };
+            }
+            return { id, points: 0 };
           })
           .filter((achievement) => achievement.points > 0)
           .reduce((totalPoints, achievement) => {
