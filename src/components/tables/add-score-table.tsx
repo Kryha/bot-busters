@@ -53,7 +53,7 @@ export const AddScoreTable: FC<Props> = ({
           </Table>
         </TableContainer>
         <Typography
-          variant="body1"
+          variant="body2"
           color="customGrey.main"
           sx={styles.countdown}
         >

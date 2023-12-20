@@ -15,8 +15,8 @@ export const RowLeaderboard: FC<Props> = ({ leaderboard, isBlurred }) => {
   return (
     <TableRow key={leaderboard.rank} sx={styles.tableRow(isBlurred)}>
       <TableCell component="th" scope="row">
-        <Typography variant="body1" color="customGrey.main">
-          {text.leaderboard.rankNumber(leaderboard.rank)}
+        <Typography variant="body2" sx={styles.ranking} color="customGrey.main">
+          {leaderboard.rank}
         </Typography>
       </TableCell>
       <TableCell>
@@ -24,24 +24,40 @@ export const RowLeaderboard: FC<Props> = ({ leaderboard, isBlurred }) => {
           <Avatar alt="avatar" sx={styles.avatar}>
             {text.leaderboard.avatarEmoji}
           </Avatar>
-          <Typography variant="body1" color="customGrey.main">
+          <Typography
+            variant="body2"
+            sx={styles.tableText}
+            color="customGrey.main"
+          >
             {leaderboard.username}
           </Typography>
         </Stack>
       </TableCell>
       <TableCell>
-        <Typography variant="body1" color="customGrey.main">
+        <Typography
+          variant="body2"
+          sx={styles.tableText}
+          color="customGrey.main"
+        >
           {leaderboard.gamesPlayed}
         </Typography>
       </TableCell>
       <TableCell>
-        <Typography variant="body1" color="customGrey.main">
+        <Typography
+          variant="body2"
+          sx={styles.tableText}
+          color="customGrey.main"
+        >
           {leaderboard.score}
         </Typography>
       </TableCell>
       <TableCell>
-        <Typography variant="body1" color="customGrey.main">
-          {text.leaderboard.aleoCredits(leaderboard.payout)}
+        <Typography
+          variant="body2"
+          sx={styles.tableText}
+          color="customGrey.main"
+        >
+          {leaderboard.payout}
         </Typography>
       </TableCell>
     </TableRow>

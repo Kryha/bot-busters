@@ -1,4 +1,5 @@
 import { type SxProps } from "@mui/material";
+import { theme } from "~/styles/theme";
 
 export const styles = {
   wrapper: {
@@ -8,9 +9,12 @@ export const styles = {
   },
   table: {
     minWidth: 650,
-    width: "51.6vw",
-    maxWidth: "60vw",
+    maxWidth: 1200,
     borderCollapse: "separate",
+    "& td, & th": {
+      borderColor: theme.palette.divider,
+      borderWidth: 2,
+    },
   },
   tableContainer: { height: "100vh", overflowY: "hidden" },
   addScoreContainer: (isGamePlayed: boolean) => {
