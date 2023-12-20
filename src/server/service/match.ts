@@ -4,6 +4,7 @@ import { sql } from "drizzle-orm";
 
 import {
   CHAT_TIME_MS,
+  POINTS_ACHIEVEMENTS,
   POINTS_BOT_BUSTED,
   POINTS_HUMAN_BUSTED,
 } from "~/constants/index.js";
@@ -11,12 +12,13 @@ import { Agent } from "~/server/service/index.js";
 import { ee, matchEvent } from "~/server/api/match-maker.js";
 import { db } from "~/server/db/index.js";
 import { users } from "~/server/db/schema.js";
-import type {
-  PlayerType,
-  MatchRoom,
-  ChatMessagePayload,
-  MatchStage,
-  CharacterId,
+import {
+  type PlayerType,
+  type MatchRoom,
+  type ChatMessagePayload,
+  type MatchStage,
+  type CharacterId,
+  achievementIdSchema,
 } from "~/types/index.js";
 import { MATCH_ACHIEVEMENTS } from "./achievements.js";
 import { selectMatchPlayedByUser } from "../db/user.js";
@@ -184,7 +186,6 @@ export class Match {
       let score = 0;
       let correctGuesses = 0;
       let botsBusted = 0;
-      // TODO: query db for matches played Filter most of the logic in SQL
       const otherPlayers = this.players.filter(
         (p) => p.userId !== player.userId
       );
@@ -208,29 +209,22 @@ export class Match {
       }
 
       if (!player.isBot) {
-        // TODO: Implement player stats functionality
-        //const playerStats = getPlayerStats(player.id);
-
         // Check achievements
         const achievementPoints = Object.entries(MATCH_ACHIEVEMENTS)
-          .map(([id, achievement]) => {
-            if (
-              achievement.calculate({
-                player,
-                messages: this._messages,
-                botsBusted,
-                otherPlayers,
-                playerHistory: this._playerPreviousMatches[player.userId],
-              })
-            ) {
-              return { id, points: achievement.points };
-            }
-            return { id, points: 0 };
+          .filter(([_, achievement]) => {
+            return achievement.calculate({
+              player,
+              messages: this._messages,
+              botsBusted,
+              otherPlayers,
+              playerHistory: this._playerPreviousMatches[player.userId],
+            });
           })
-          .filter((achievement) => achievement.points > 0)
-          .reduce((totalPoints, achievement) => {
-            player.achievements.push(achievement);
-            return (totalPoints += achievement.points);
+          .reduce((totalPoints, [id, _]) => {
+            const achievementId = achievementIdSchema.safeParse(id);
+            if (!achievementId.success) return totalPoints;
+            player.achievements.push(achievementId.data);
+            return (totalPoints += POINTS_ACHIEVEMENTS[achievementId.data]);
           }, 0);
 
         score += achievementPoints;

@@ -1,32 +1,9 @@
+import { type AchievementId, type Achievement } from "~/types/index.js";
 import { alreadyReceivedAchievementToday } from "~/utils/achievements.js";
-import {
-  type MatchRoom,
-  type ChatMessagePayload,
-  type PlayerType,
-} from "~/types/index.js";
 
-interface MatchAchievement {
-  id: string;
-  name: string;
-  description: string;
-  points: number;
-  calculate: (matchData: MatchData) => boolean;
-}
-
-// TODO: add player stats
-interface MatchData {
-  player: PlayerType;
-  messages: ChatMessagePayload[];
-  botsBusted: number;
-  otherPlayers: PlayerType[];
-  playerHistory?: MatchRoom[];
-}
-
-const lastMessageAchievement: MatchAchievement = {
-  id: "11",
-  name: "Last message",
+const lastOneAchievement: Achievement = {
+  name: "Last One",
   description: "Write the last message in a match",
-  points: 13,
   calculate: ({ player, messages }) => {
     const lastMessage = messages[messages.length - 1];
     if (!lastMessage) return false;
@@ -37,11 +14,9 @@ const lastMessageAchievement: MatchAchievement = {
   },
 };
 
-const perfectScoreAchievement: MatchAchievement = {
-  id: "12",
-  name: "Perfect score",
+const goodBustAchievement: Achievement = {
+  name: "Good Bust",
   description: "Get all votes correct in a match",
-  points: 13,
   calculate: ({ player, botsBusted, otherPlayers }) => {
     const agents = otherPlayers.filter((p) => p.isBot);
 
@@ -57,25 +32,21 @@ const perfectScoreAchievement: MatchAchievement = {
   },
 };
 
-const someoneSelectedYouAsABotAchievement: MatchAchievement = {
-  id: "13",
-  name: "Someone selected you as a bot",
-  description: "Someone selected you as a bot",
-  points: 13,
+const doubleAgentAchievement: Achievement = {
+  name: "Double Agent",
+  description: "Convince 2 or more humans that you are a bot in a match",
   calculate: ({ otherPlayers, player }) => {
-    let isVotedAgainst = false;
+    let isVotedAgainst = 0;
     otherPlayers.forEach((p) => {
-      if (p.votes?.includes(player.userId)) isVotedAgainst = true;
+      if (p.votes?.includes(player.userId)) isVotedAgainst += 1;
     });
-    return isVotedAgainst;
+    return isVotedAgainst >= 2;
   },
 };
 
-const bustThreeBotsInARowAchievement: MatchAchievement = {
-  id: "101",
-  name: "Bust three bots in a row",
+const busterStreakAchievement: Achievement = {
+  name: "Buster Streak",
   description: "Bust three bots in a row",
-  points: 13,
   calculate: ({ player, playerHistory, otherPlayers, botsBusted }) => {
     if (!playerHistory || playerHistory.length < 2) return false;
     if (alreadyReceivedAchievementToday(player.userId, playerHistory, "101"))
@@ -88,29 +59,19 @@ const bustThreeBotsInARowAchievement: MatchAchievement = {
 
     // Get the last two matches
     const lastTwoMatches = sortedPlayerHistory.slice(0, 2);
-    console.log("Last two played matches", lastTwoMatches);
 
     //Get the player data from the last two matches
     const playerMatchData = lastTwoMatches.map((match) => {
       return match.players.find((p) => p.userId === player.userId);
     });
-    console.log("Player data", playerMatchData);
 
     // Check if all bots were busted in the last two matches
     const allBotsBustedLastTwoMatches = playerMatchData.every((p) => {
-      console.log("Player Achievements", p?.achievements);
-
       const perfectScore = p?.achievements.filter((achievement) => {
-        return achievement.id === "12";
+        return achievement === "12";
       });
-      console.log("Perfect Score", perfectScore);
       return perfectScore && perfectScore.length > 0;
     });
-
-    console.log(
-      "All bots busted last two matches",
-      allBotsBustedLastTwoMatches
-    );
 
     // Get the bots from the current match
     const agents = otherPlayers.filter((p) => p.isBot);
@@ -121,22 +82,18 @@ const bustThreeBotsInARowAchievement: MatchAchievement = {
   },
 };
 
-const playerFirstMatchAchievement: MatchAchievement = {
-  id: "201",
-  name: "First match",
+const firstTimerAchievement: Achievement = {
+  name: "First-Timer",
   description: "Played your first match",
-  points: 13,
   calculate: ({ playerHistory }) => {
     if (!playerHistory || playerHistory.length === 0) return true;
     return false;
   },
 };
 
-const playerBustBotFirstMatchAchievement: MatchAchievement = {
-  id: "202",
-  name: "First bot busted",
-  description: "In your first game you busted at least one bot",
-  points: 13,
+const beginnersLuckAchievement: Achievement = {
+  name: "Beginners Luck",
+  description: "Player busts at least one bot in the first match",
   calculate: ({ playerHistory, botsBusted }) => {
     const isFirstMatch = !playerHistory || playerHistory.length === 0;
 
@@ -144,17 +101,11 @@ const playerBustBotFirstMatchAchievement: MatchAchievement = {
   },
 };
 
-export const MATCH_ACHIEVEMENTS: Record<string, MatchAchievement> = {
-  // Match achievement - written last message
-  "11": lastMessageAchievement,
-  // Match achievement - perfect score (all votes correct)
-  "12": perfectScoreAchievement,
-  // Match achievement - someone selected you as a bot
-  "13": someoneSelectedYouAsABotAchievement,
-  // Day achievement - successfully bust all bots 3 consecutive games
-  "101": bustThreeBotsInARowAchievement,
-  // One time achievement - player plays his first game
-  "201": playerFirstMatchAchievement,
-  // One time achievement - player Bust at least one bot in his first game
-  "202": playerBustBotFirstMatchAchievement,
+export const MATCH_ACHIEVEMENTS: Record<AchievementId, Achievement> = {
+  "11": lastOneAchievement,
+  "12": goodBustAchievement,
+  "13": doubleAgentAchievement,
+  "101": busterStreakAchievement,
+  "201": firstTimerAchievement,
+  "202": beginnersLuckAchievement,
 };
