@@ -132,6 +132,18 @@ const playerFirstMatchAchievement: MatchAchievement = {
   },
 };
 
+const playerBustBotFirstMatchAchievement: MatchAchievement = {
+  id: "202",
+  name: "First bot busted",
+  description: "In your first game you busted at least one bot",
+  points: 13,
+  calculate: ({ playerHistory, botsBusted }) => {
+    const isFirstMatch = !playerHistory || playerHistory.length === 0;
+
+    return isFirstMatch && botsBusted > 0;
+  },
+};
+
 export const MATCH_ACHIEVEMENTS: Record<string, MatchAchievement> = {
   // Match achievement - written last message
   "11": lastMessageAchievement,
@@ -141,10 +153,8 @@ export const MATCH_ACHIEVEMENTS: Record<string, MatchAchievement> = {
   "13": someoneSelectedYouAsABotAchievement,
   // Day achievement - successfully bust all bots 3 consecutive games
   "101": bustThreeBotsInARowAchievement,
-  // Day achievement - Daily streak plays bot busters X days in a row
-  // "102": 10,
   // One time achievement - player plays his first game
   "201": playerFirstMatchAchievement,
-  // One time achievement - player wins his first game
-  //"202": playerWinsFirstMatchAchievement,
+  // One time achievement - player Bust at least one bot in his first game
+  "202": playerBustBotFirstMatchAchievement,
 };
