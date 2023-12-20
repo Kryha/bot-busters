@@ -68,9 +68,9 @@ const matchLoop = () => {
 
 const getPlayerData = async () => {
   const promises = Array.from(matches.values()).map(async (room) => {
-    if (room.playerStatsAggregated) return;
+    if (room.playerHistoryLoaded) return;
 
-    await room.calculatePlayerStats();
+    await room.getPlayerPreviousMatches();
   });
 
   await Promise.all(promises);

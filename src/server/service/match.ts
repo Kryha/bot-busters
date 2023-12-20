@@ -37,10 +37,12 @@ export class Match {
   private _agents: Agent[];
   private _messageCountSinceLastTrigger = 0;
 
+  //TODO: check for better solution
+  private _playerPreviousMatches: Record<string, MatchRoom[]>;
+
   stage: MatchStage = "chat";
   arePointsCalculated = false;
-  playerStatsAggregated = false;
-
+  playerHistoryLoaded = false;
   get id() {
     return this._id;
   }
@@ -82,6 +84,7 @@ export class Match {
     });
 
     this._players = lodash.shuffle([...botPlayers, ...humanPlayers]);
+    this._playerPreviousMatches = {};
   }
 
   private popCharacterId(): CharacterId {
@@ -151,47 +154,29 @@ export class Match {
     });
   }
 
-  async calculatePlayerStats() {
-    let allPlayerStatsLoaded = true;
+  async getPlayerPreviousMatches() {
+    let playerHistoryLoaded = true;
 
     const promises = this.players.map(async (player) => {
       try {
         if (player.isBot) return;
-        if (player.stats) return;
+        if (this._playerPreviousMatches[player.userId]) return;
 
         const matches = await selectMatchPlayedByUser(player.userId);
+        const matchRooms = matches.map((match) => {
+          return match.room;
+        });
 
-        const playerStats = matches
-          .filter((match) => {
-            const timeElapsed = this._createdAt - match.room.createdAt;
-            return timeElapsed >= 86400000;
-          })
-          .map(({ room }) => {
-            const playerMatchData: PlayerType[] = [];
-            const playerMatch = room.players.filter((player) => {
-              if (player.userId === player.userId) {
-                playerMatchData.push(player);
-              }
-            });
-            return playerMatchData;
-          });
-
-        console.log(matches);
-
-        player.stats = {
-          matchesPlayed: matches.length,
-          AllBotsBustedInARow: 0,
-          wordIsOutAchievement: false,
-        };
+        this._playerPreviousMatches[player.userId] = [...matchRooms];
       } catch (error) {
-        allPlayerStatsLoaded = false;
+        playerHistoryLoaded = false;
         console.error("Error getting matches played:", error);
-        player.stats = undefined;
       }
     });
     await Promise.all(promises);
 
-    return allPlayerStatsLoaded;
+    this.playerHistoryLoaded = playerHistoryLoaded;
+    return playerHistoryLoaded;
   }
 
   calculatePoints() {
@@ -234,6 +219,7 @@ export class Match {
               messages: this._messages,
               botsBusted,
               otherPlayers,
+              playerHistory: this._playerPreviousMatches[player.userId],
             });
             return { id, points: pointsEarned };
           })
