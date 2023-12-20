@@ -28,13 +28,6 @@ export type PlayerAchievementResult = z.infer<
   typeof playerAchievementResultSchema
 >;
 
-export const playerStatsSchema = z.object({
-  matchesPlayed: z.number(),
-  AllBotsBustedInARow: z.number(),
-  wordIsOutAchievement: z.boolean(),
-});
-export type PlayerStats = z.infer<typeof playerStatsSchema>;
-
 export const playerSchema = z.object({
   userId: z.string().uuid(),
   characterId: characterIdSchema,
@@ -44,7 +37,6 @@ export const playerSchema = z.object({
   botsBusted: z.number(),
   correctGuesses: z.number(),
   votes: z.array(z.string().uuid()).optional(), // array of voted ids
-  stats: playerStatsSchema.optional(),
   achievements: z.array(playerAchievementResultSchema), // array of achievement ids
 });
 export type PlayerType = z.infer<typeof playerSchema>;
