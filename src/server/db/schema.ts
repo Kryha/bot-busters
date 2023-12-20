@@ -11,7 +11,7 @@ import { createInsertSchema } from "drizzle-zod";
 import { type z } from "zod";
 
 import { PUBLIC_KEY_LENGTH } from "~/constants/index.js";
-import { type MatchRoom } from "~/types";
+import { type MatchRoom } from "~/types/index.js";
 
 export const bbPgTable = pgTableCreator((name) => `bot_busters_${name}`);
 
