@@ -23,25 +23,40 @@ export const Score: FC<Props> = ({
       <Divider />
       <Stack sx={styles.score}>
         <Typography variant="body1">Achievements:</Typography>
-        <Stack sx={{ flexDirection: "colum" }}>
-          <Stack sx={{ flexDirection: "row" }}>
-            {achievements.map((achievementResult) => {
-              const { name } = MATCH_ACHIEVEMENTS[achievementResult] ?? {
-                name: "Achievement",
-              };
+        <Stack
+          sx={{
+            flexDirection: "colum",
+            justifyContent: "space-between",
+            width: "100%",
+          }}
+        >
+          {achievements.map((achievementResult) => {
+            const { name } = MATCH_ACHIEVEMENTS[achievementResult] ?? {
+              name: "Achievement",
+            };
 
-              return (
-                <>
-                  <Typography key={achievementResult} variant="body1">
+            return (
+              <>
+                <Stack
+                  key={achievementResult}
+                  sx={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    marginBottom: "7px",
+                    marginTop: "7px",
+                  }}
+                >
+                  <Typography variant="body1" sx={{ marginBottom: "2px" }}>
                     {name}
                   </Typography>
                   <Typography variant="body1">
                     {text.points(POINTS_ACHIEVEMENTS[achievementResult])}
                   </Typography>
-                </>
-              );
-            })}
-          </Stack>
+                </Stack>
+              </>
+            );
+          })}
+          <Divider />
         </Stack>
       </Stack>
       <Stack sx={styles.score}>
