@@ -159,22 +159,24 @@ export class Match {
   async getPlayerPreviousMatches() {
     let playerHistoryLoaded = true;
 
-    const promises = this.players.map(async (player) => {
-      try {
-        if (player.isBot) return;
-        if (this._playerPreviousMatches[player.userId]) return;
+    const promises = this.players
+      .filter((player) => {
+        return !player.isBot;
+      })
+      .map(async (player) => {
+        try {
+          if (this._playerPreviousMatches[player.userId]) return;
 
-        const matches = await selectMatchPlayedByUser(player.userId);
-        const matchRooms = matches.map((match) => {
-          return match.room;
-        });
+          const matchRooms = (await selectMatchPlayedByUser(player.userId)).map(
+            (match) => match.room
+          );
 
-        this._playerPreviousMatches[player.userId] = [...matchRooms];
-      } catch (error) {
-        playerHistoryLoaded = false;
-        console.error("Error getting matches played:", error);
-      }
-    });
+          this._playerPreviousMatches[player.userId] = [...matchRooms];
+        } catch (error) {
+          playerHistoryLoaded = false;
+          console.error("Error getting matches played:", error);
+        }
+      });
     await Promise.all(promises);
 
     this.playerHistoryLoaded = playerHistoryLoaded;
