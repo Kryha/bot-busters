@@ -19,16 +19,11 @@ const goodBustAchievement: Achievement = {
   description: "Get all votes correct in a match",
   calculate: ({ player, botsBusted, otherPlayers }) => {
     const agents = otherPlayers.filter((p) => p.isBot);
+    const wrongVotes = player.votes?.some(
+      (vote) => !agents.some((a) => a.userId === vote)
+    );
 
-    const wrongVotes = player.votes?.filter((vote) => {
-      const isCorrectGuess = agents.find((a) => a.userId === vote);
-      return !isCorrectGuess;
-    });
-
-    if (botsBusted !== agents.length) return false;
-    if (wrongVotes?.length) return false;
-
-    return true;
+    return botsBusted === agents.length && !wrongVotes;
   },
 };
 
@@ -36,10 +31,9 @@ const doubleAgentAchievement: Achievement = {
   name: "Double Agent",
   description: "Convince 2 or more humans that you are a bot in a match",
   calculate: ({ otherPlayers, player }) => {
-    let isVotedAgainst = 0;
-    otherPlayers.forEach((p) => {
-      if (p.votes?.includes(player.userId)) isVotedAgainst += 1;
-    });
+    const isVotedAgainst = otherPlayers.filter((p) =>
+      p.votes?.includes(player.userId)
+    ).length;
     return isVotedAgainst >= 2;
   },
 };
@@ -48,46 +42,31 @@ const busterStreakAchievement: Achievement = {
   name: "Buster Streak",
   description: "Bust three bots in a row",
   calculate: ({ player, playerHistory, otherPlayers, botsBusted }) => {
-    if (!playerHistory || playerHistory.length < 2) return false;
-    if (alreadyReceivedAchievementToday(player.userId, playerHistory, "101"))
+    if (
+      !playerHistory ||
+      playerHistory.length < 2 ||
+      alreadyReceivedAchievementToday(player.userId, playerHistory, "101")
+    )
       return false;
 
-    // Sort playerHistory in descending order by timestamp
-    const sortedPlayerHistory = playerHistory.sort(
-      (a, b) => b.createdAt - a.createdAt
-    );
+    const allBotsBustedLastTwoMatches = playerHistory
+      .sort((a, b) => b.createdAt - a.createdAt)
+      .slice(0, 2)
+      .map((match) => match.players.find((p) => p.userId === player.userId))
+      .every((p) => p?.achievements.includes("12"));
 
-    // Get the last two matches
-    const lastTwoMatches = sortedPlayerHistory.slice(0, 2);
-
-    //Get the player data from the last two matches
-    const playerMatchData = lastTwoMatches.map((match) => {
-      return match.players.find((p) => p.userId === player.userId);
-    });
-
-    // Check if all bots were busted in the last two matches
-    const allBotsBustedLastTwoMatches = playerMatchData.every((p) => {
-      const perfectScore = p?.achievements.filter((achievement) => {
-        return achievement === "12";
-      });
-      return perfectScore && perfectScore.length > 0;
-    });
-
-    // Get the bots from the current match
-    const agents = otherPlayers.filter((p) => p.isBot);
-
-    const perfectCurrentGame = botsBusted === agents.length;
+    const perfectCurrentGame =
+      botsBusted === otherPlayers.filter((p) => p.isBot).length;
 
     return allBotsBustedLastTwoMatches && perfectCurrentGame;
   },
 };
 
 const firstTimerAchievement: Achievement = {
-  name: "First-Timer",
+  name: "First Timer",
   description: "Played your first match",
   calculate: ({ playerHistory }) => {
-    if (!playerHistory || playerHistory.length === 0) return true;
-    return false;
+    return !playerHistory || playerHistory.length === 0;
   },
 };
 
