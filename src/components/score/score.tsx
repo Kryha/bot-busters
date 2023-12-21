@@ -30,6 +30,14 @@ export const Score: FC<Props> = ({
             width: "100%",
           }}
         >
+          {achievements.length === 0 && (
+            <Typography
+              variant="body1"
+              sx={{ marginBottom: "7px", marginTop: "7px" }}
+            >
+              better luck next time
+            </Typography>
+          )}
           {achievements.map((achievementResult) => {
             const { name } = MATCH_ACHIEVEMENTS[achievementResult] ?? {
               name: "Achievement",
