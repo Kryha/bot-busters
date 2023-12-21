@@ -11,7 +11,7 @@ export const styles = {
   },
   inputField: {
     flexGrow: 1,
-    backgroundColor: "grey.50",
+    backgroundColor: "common.black",
     borderRadius: 1,
   },
   inputFieldProps: {

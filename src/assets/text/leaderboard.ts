@@ -6,7 +6,7 @@ export const leaderboard = {
     "Player",
     "Games",
     "Score",
-    "Potential Payout",
+    "Daily Top 10 Aleo Credits",
   ],
   leaderboardRank: "#5",
   allTimeLeaderboard: "All time leaderboard",
