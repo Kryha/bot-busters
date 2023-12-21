@@ -58,7 +58,10 @@ const matchLoop = () => {
       ee.emit(matchEvent(roomId, "stageChange"));
     }
 
-    if (room.stage === "voting" && roomAge >= CHAT_TIME_MS + VOTING_TIME_MS) {
+    if (
+      room.stage === "voting" &&
+      (room.allPlayersVoted || roomAge >= CHAT_TIME_MS + VOTING_TIME_MS)
+    ) {
       room.stage = "results";
       room.calculatePoints();
       ee.emit(matchEvent(roomId, "stageChange"));

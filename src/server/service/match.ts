@@ -45,6 +45,8 @@ export class Match {
   stage: MatchStage = "chat";
   arePointsCalculated = false;
   playerHistoryLoaded = false;
+  allPlayersVoted = false;
+
   get id() {
     return this._id;
   }
@@ -154,6 +156,14 @@ export class Match {
       if (player.userId !== playerId) return;
       player.votes = selectedPlayerIds;
     });
+
+    this.allPlayersVoted = !this._players
+      .filter(
+        (player) =>
+          !player.isBot &&
+          this.messages.some((message) => message.sender === player.userId)
+      )
+      .some((player) => !player.votes);
   }
 
   async getPlayerPreviousMatches() {
