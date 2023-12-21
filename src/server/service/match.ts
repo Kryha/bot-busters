@@ -154,7 +154,7 @@ export class Match {
       let score = 0;
       let correctGuesses = 0;
       let botsBusted = 0;
-
+      // TODO: query db for matches played Filter most of the logic in SQL
       const otherPlayers = this.players.filter(
         (p) => p.userId !== player.userId
       );
@@ -184,11 +184,17 @@ export class Match {
         // Check achievements
         const achievementPoints = Object.entries(MATCH_ACHIEVEMENTS)
           .map(([id, achievement]) => {
-            const pointsEarned = achievement.calculate({
-              player,
-              messages: this._messages,
-            });
-            return { id, points: pointsEarned };
+            if (
+              achievement.calculate({
+                player,
+                messages: this._messages,
+                botsBusted,
+                otherPlayers,
+              })
+            ) {
+              return { id, points: achievement.points };
+            }
+            return { id, points: 0 };
           })
           .filter((achievement) => achievement.points > 0)
           .reduce((totalPoints, achievement) => {
