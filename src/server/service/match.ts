@@ -224,6 +224,7 @@ export class Match {
             const achievementId = achievementIdSchema.safeParse(id);
             if (!achievementId.success) return totalPoints;
             player.achievements.push(achievementId.data);
+
             return (totalPoints += POINTS_ACHIEVEMENTS[achievementId.data]);
           }, 0);
 
