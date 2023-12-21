@@ -4,6 +4,7 @@ import { sql } from "drizzle-orm";
 
 import {
   CHAT_TIME_MS,
+  POINTS_ACHIEVEMENTS,
   POINTS_BOT_BUSTED,
   POINTS_HUMAN_BUSTED,
 } from "~/constants/index.js";
@@ -11,14 +12,16 @@ import { Agent } from "~/server/service/index.js";
 import { ee, matchEvent } from "~/server/api/match-maker.js";
 import { db } from "~/server/db/index.js";
 import { users } from "~/server/db/schema.js";
-import type {
-  PlayerType,
-  MatchRoom,
-  ChatMessagePayload,
-  MatchStage,
-  CharacterId,
+import {
+  type PlayerType,
+  type MatchRoom,
+  type ChatMessagePayload,
+  type MatchStage,
+  type CharacterId,
+  achievementIdSchema,
 } from "~/types/index.js";
 import { MATCH_ACHIEVEMENTS } from "./achievements.js";
+import { selectMatchPlayedByUser } from "../db/user.js";
 
 export class Match {
   private _id: string;
@@ -36,9 +39,12 @@ export class Match {
   private _agents: Agent[];
   private _messageCountSinceLastTrigger = 0;
 
+  //TODO: check for better solution
+  private _playerPreviousMatches: Record<string, MatchRoom[]>;
+
   stage: MatchStage = "chat";
   arePointsCalculated = false;
-
+  playerHistoryLoaded = false;
   get id() {
     return this._id;
   }
@@ -80,6 +86,7 @@ export class Match {
     });
 
     this._players = lodash.shuffle([...botPlayers, ...humanPlayers]);
+    this._playerPreviousMatches = {};
   }
 
   private popCharacterId(): CharacterId {
@@ -149,12 +156,38 @@ export class Match {
     });
   }
 
+  async getPlayerPreviousMatches() {
+    let playerHistoryLoaded = true;
+
+    const promises = this.players
+      .filter((player) => {
+        return !player.isBot;
+      })
+      .map(async (player) => {
+        try {
+          if (this._playerPreviousMatches[player.userId]) return;
+
+          const matchRooms = (await selectMatchPlayedByUser(player.userId)).map(
+            (match) => match.room
+          );
+
+          this._playerPreviousMatches[player.userId] = [...matchRooms];
+        } catch (error) {
+          playerHistoryLoaded = false;
+          console.error("Error getting matches played:", error);
+        }
+      });
+    await Promise.all(promises);
+
+    this.playerHistoryLoaded = playerHistoryLoaded;
+    return playerHistoryLoaded;
+  }
+
   calculatePoints() {
     this._players = this.players.map((player) => {
       let score = 0;
       let correctGuesses = 0;
       let botsBusted = 0;
-      // TODO: query db for matches played Filter most of the logic in SQL
       const otherPlayers = this.players.filter(
         (p) => p.userId !== player.userId
       );
@@ -178,28 +211,23 @@ export class Match {
       }
 
       if (!player.isBot) {
-        // TODO: Implement player stats functionality
-        //const playerStats = getPlayerStats(player.id);
-
         // Check achievements
         const achievementPoints = Object.entries(MATCH_ACHIEVEMENTS)
-          .map(([id, achievement]) => {
-            if (
-              achievement.calculate({
-                player,
-                messages: this._messages,
-                botsBusted,
-                otherPlayers,
-              })
-            ) {
-              return { id, points: achievement.points };
-            }
-            return { id, points: 0 };
+          .filter(([_, achievement]) => {
+            return achievement.calculate({
+              player,
+              messages: this._messages,
+              botsBusted,
+              otherPlayers,
+              playerHistory: this._playerPreviousMatches[player.userId],
+            });
           })
-          .filter((achievement) => achievement.points > 0)
-          .reduce((totalPoints, achievement) => {
-            player.achievements.push(achievement);
-            return (totalPoints += achievement.points);
+          .reduce((totalPoints, [id, _]) => {
+            const achievementId = achievementIdSchema.safeParse(id);
+            if (!achievementId.success) return totalPoints;
+            player.achievements.push(achievementId.data);
+
+            return (totalPoints += POINTS_ACHIEVEMENTS[achievementId.data]);
           }, 0);
 
         score += achievementPoints;
@@ -222,7 +250,7 @@ export class Match {
         if (player.isBot) return;
 
         await db.execute(
-          sql`UPDATE ${users} SET score = score + ${player.score} WHERE ${users.id} = ${player.userId}`
+          sql`UPDATE ${users} SET score = score + ${player.score}, matches_played = array_append(matches_played,${this._id}) WHERE ${users.id} = ${player.userId}`
         );
       } catch (error) {
         player.isScoreSaved = false;

@@ -11,6 +11,7 @@ import { createInsertSchema } from "drizzle-zod";
 import { type z } from "zod";
 
 import { PUBLIC_KEY_LENGTH } from "~/constants/index.js";
+import { type MatchRoom } from "~/types/index.js";
 
 export const bbPgTable = pgTableCreator((name) => `bot_busters_${name}`);
 
@@ -21,7 +22,7 @@ export const users = bbPgTable("user", {
   score: integer("score").default(0).notNull(),
   // TODO: add zPass
   // zPass: json("zPass"),
-  // TODO: Matches played []match ID
+  matches_played: uuid("matches_played").array(),
   createdAt: timestamp("createdAt").default(sql`CURRENT_TIMESTAMP`),
 });
 
@@ -47,5 +48,5 @@ export type Rank = z.infer<typeof rankSchema>;
 
 export const matches = bbPgTable("match", {
   id: uuid("id").primaryKey(),
-  room: json("room").notNull(),
+  room: json("room").notNull().$type<MatchRoom>(),
 });

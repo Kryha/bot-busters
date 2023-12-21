@@ -4,12 +4,13 @@ import { Divider, Stack, Typography } from "@mui/material";
 import { styles } from "./styles.js";
 import { text } from "./text.js";
 import { MATCH_ACHIEVEMENTS } from "~/server/service/achievements.js";
-import { type PlayerAchievementResult } from "~/types/match.js";
+import { type AchievementId } from "~/types/index.js";
+import { POINTS_ACHIEVEMENTS } from "~/constants/main.js";
 
 interface Props {
   correctGuesses: number;
   gainedScore: number;
-  achievements: PlayerAchievementResult[];
+  achievements: AchievementId[];
 }
 
 export const Score: FC<Props> = ({
@@ -22,25 +23,48 @@ export const Score: FC<Props> = ({
       <Divider />
       <Stack sx={styles.score}>
         <Typography variant="body1">Achievements:</Typography>
-        <Stack sx={{ flexDirection: "colum" }}>
-          <Stack sx={{ flexDirection: "row" }}>
-            {achievements.map((achievementResult) => {
-              const { name } = MATCH_ACHIEVEMENTS[achievementResult.id] ?? {
-                name: "Achievement",
-              };
+        <Stack
+          sx={{
+            flexDirection: "colum",
+            justifyContent: "space-between",
+            width: "100%",
+          }}
+        >
+          {achievements.length === 0 && (
+            <Typography
+              variant="body1"
+              sx={{ marginBottom: "7px", marginTop: "7px" }}
+            >
+              better luck next time
+            </Typography>
+          )}
+          {achievements.map((achievementResult) => {
+            const { name } = MATCH_ACHIEVEMENTS[achievementResult] ?? {
+              name: "Achievement",
+            };
 
-              return (
-                <>
-                  <Typography key={achievementResult.id} variant="body1">
+            return (
+              <>
+                <Stack
+                  key={achievementResult}
+                  sx={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    marginBottom: "7px",
+                    marginTop: "7px",
+                  }}
+                >
+                  <Typography variant="body1" sx={{ marginBottom: "2px" }}>
                     {name}
                   </Typography>
                   <Typography variant="body1">
-                    {text.points(achievementResult.points)}
+                    {text.points(POINTS_ACHIEVEMENTS[achievementResult])}
                   </Typography>
-                </>
-              );
-            })}
-          </Stack>
+                </Stack>
+              </>
+            );
+          })}
+          <Divider />
         </Stack>
       </Stack>
       <Stack sx={styles.score}>

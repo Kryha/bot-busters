@@ -1,8 +1,8 @@
-import { eq } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 
 import { db, dbSchema } from "~/server/db/index.js";
 
-const { users } = dbSchema;
+const { users, matches } = dbSchema;
 
 // This is only here for testing purposes
 export const deleteAllUsers = async () => {
@@ -23,6 +23,16 @@ export const insertUserWithAddress = async (address: string) => {
 
   if (!newUser) throw new Error("User creation failed");
   return newUser;
+};
+
+export const selectMatchPlayedByUser = async (userId: string) => {
+  const selectedUsers = await db
+    .select()
+    .from(matches)
+    .where(
+      sql`id IN (SELECT unnest(matches_played) AS id FROM bot_busters_user WHERE id = ${userId})`
+    );
+  return selectedUsers;
 };
 
 export const insertVerifiedUser = async (address: string, username: string) => {
