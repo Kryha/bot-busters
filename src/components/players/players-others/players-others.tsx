@@ -49,17 +49,12 @@ export const PlayersOthers: FC<Props> = ({
     }
   };
 
-  const intro =
-    stage === "results" ? text.match.whosBot : text.match.otherParticipants;
-
   const otherPlayers = players.filter(
     (player) => player.userId !== localPlayer.userId,
   );
 
   return (
     <Stack sx={styles.container}>
-      {/*<Typography variant="body1">{intro}</Typography>*/}
-
       <Stack sx={styles.list(stage === "results")}>
         {otherPlayers.map((player, index) => {
           return (
