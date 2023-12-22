@@ -5,17 +5,16 @@ import { text } from "~/assets/text/index.js";
 import { Player } from "~/components/index.js";
 
 import { styles } from "./styles.js";
+import { type Character } from "~/types/index.js";
 
 interface Props {
-  characterName: string;
-  color?: string;
+  character: Character;
   isSelected: boolean;
   onSelectPlayer: () => void;
 }
 
 export const PlayerVote: FC<Props> = ({
-  characterName,
-  color,
+  character,
   isSelected,
   onSelectPlayer,
 }) => {
@@ -24,7 +23,7 @@ export const PlayerVote: FC<Props> = ({
       <Stack sx={styles.usernameContainer}>
         <Divider />
         <Stack sx={styles.username}>
-          <Player characterName={characterName} color={color} />
+          <Player character={character} />
         </Stack>
         <Divider />
       </Stack>

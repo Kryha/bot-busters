@@ -1,17 +1,13 @@
-import type { ChatMessagePayload, CharacterId } from "~/types/index.js";
+import type { CharacterId, ChatMessagePayload } from "~/types/index.js";
 
-export type CharacterColor = "orange" | "brown" | "green" | "pink" | "blue";
-export type CharacterName =
-  | "orange orangutan"
-  | "brown bear"
-  | "green gator"
-  | "pink panda"
-  | "blue bird";
+export type CharacterColor = "orange" | "yellow" | "green" | "pink" | "blue";
+export type CharacterName = "ash" | "hal" | "roy" | "eve" | "dot";
 
 export interface Character {
   id: CharacterId;
   name: CharacterName;
   color: CharacterColor;
+  image?: string;
 }
 
 export interface ChatMessage extends ChatMessagePayload {

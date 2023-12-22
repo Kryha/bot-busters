@@ -1,26 +1,24 @@
-import { type FC } from "react";
+import React, { type FC } from "react";
 import { Avatar, Stack, Typography } from "@mui/material";
 
 import { styles } from "./styles.js";
 import { Skeleton } from "./skeleton.jsx";
+import { type Character } from "~/types/index.js";
 
 interface Props {
-  color?: string;
-  characterName: string;
+  character: Character;
 }
 
-export const Player: FC<Props> = ({ color = "blue", characterName }) => {
-  // TODO: Fix "src" after svg's set up
-  const src = "../images/svg/alien.svg";
+export const Player: FC<Props> = ({ character }) => {
+  const { name, color, image } = character;
   const textColor = `${color}.dark`;
-
-  if (!characterName) return <Skeleton />;
+  if (!name) return <Skeleton />;
 
   return (
     <Stack sx={styles.container}>
-      <Avatar src={src} color={color} sx={styles.avatar} />
-      <Typography variant="body1" color={textColor}>
-        {characterName}
+      <Avatar sx={styles.avatar} src={image} alt={name} />
+      <Typography variant="body1" sx={styles.character} color={textColor}>
+        {name}
       </Typography>
     </Stack>
   );

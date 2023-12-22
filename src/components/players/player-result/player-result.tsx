@@ -19,13 +19,12 @@ export const PlayerResult: FC<Props> = ({ player, hasGuessed }) => {
   // TODO: Add colors to theme
   const textColor = hasGuessed ? "#4CAF50" : "#F44336";
   const character = CHARACTERS[player.characterId]!;
-  const { name, color } = character;
 
   return (
     <Stack sx={styles.container}>
       <Divider />
       <Stack sx={styles.user}>
-        <Player characterName={name} color={color} />
+        <Player character={character} />
         <Typography variant="body1" color={textColor} sx={styles.text}>
           {textResult}
         </Typography>

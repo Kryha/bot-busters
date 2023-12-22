@@ -1,9 +1,9 @@
-import type { CharacterId, Character } from "~/types/index.js";
+import type { Character, CharacterId } from "~/types/index.js";
 
 export const CHARACTERS: Record<CharacterId, Character> = {
-  1: { id: "1", name: "orange orangutan", color: "orange" },
-  2: { id: "2", name: "brown bear", color: "brown" },
-  3: { id: "3", name: "green gator", color: "green" },
-  4: { id: "4", name: "pink panda", color: "pink" },
-  5: { id: "5", name: "blue bird", color: "blue" },
+  1: { id: "1", name: "ash", color: "orange", image: "" },
+  2: { id: "2", name: "eve", color: "yellow", image: "" },
+  3: { id: "3", name: "hal", color: "green", image: "" },
+  4: { id: "4", name: "dot", color: "pink", image: "" },
+  5: { id: "5", name: "roy", color: "blue", image: "" },
 };
