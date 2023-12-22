@@ -1,5 +1,5 @@
 import { type FC } from "react";
-import { Divider, Stack } from "@mui/material";
+import { Stack } from "@mui/material";
 
 import { type MatchRoom, type PlayerType } from "~/types/index.js";
 import { PlayerLocal } from "~/components/players/player-local/index.js";
@@ -23,7 +23,6 @@ export const Players: FC<Props> = ({
   return (
     <Stack sx={styles.container}>
       <PlayerLocal localPlayer={localPlayer} />
-      <Divider sx={styles.divider} />
       <PlayersOthers
         room={room}
         localPlayer={localPlayer}

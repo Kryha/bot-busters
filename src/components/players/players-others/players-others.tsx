@@ -1,4 +1,4 @@
-import { Button, Stack, Typography } from "@mui/material";
+import { Button, Stack } from "@mui/material";
 import { type FC, useState } from "react";
 
 import { VOTING_TIME_MS } from "~/constants/index.js";
@@ -53,12 +53,12 @@ export const PlayersOthers: FC<Props> = ({
     stage === "results" ? text.match.whosBot : text.match.otherParticipants;
 
   const otherPlayers = players.filter(
-    (player) => player.userId !== localPlayer.userId
+    (player) => player.userId !== localPlayer.userId,
   );
 
   return (
     <Stack sx={styles.container}>
-      <Typography variant="body1">{intro}</Typography>
+      {/*<Typography variant="body1">{intro}</Typography>*/}
 
       <Stack sx={styles.list(stage === "results")}>
         {otherPlayers.map((player, index) => {
