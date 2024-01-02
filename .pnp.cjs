@@ -698,14 +698,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "HARD"\
         }],\
-        ["npm:7.23.5", {\
-          "packageLocation": "./.yarn/cache/@babel-parser-npm-7.23.5-6bd8ea402a-ea76362931.zip/node_modules/@babel/parser/",\
-          "packageDependencies": [\
-            ["@babel/parser", "npm:7.23.5"],\
-            ["@babel/types", "npm:7.23.0"]\
-          ],\
-          "linkType": "HARD"\
-        }],\
         ["npm:7.23.6", {\
           "packageLocation": "./.yarn/cache/@babel-parser-npm-7.23.6-2fad283d6e-140801c437.zip/node_modules/@babel/parser/",\
           "packageDependencies": [\
@@ -12104,7 +12096,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/jsdoc-npm-3.6.11-fa3556bbd1-7920b5cba6.zip/node_modules/jsdoc/",\
           "packageDependencies": [\
             ["jsdoc", "npm:3.6.11"],\
-            ["@babel/parser", "npm:7.23.5"],\
+            ["@babel/parser", "npm:7.23.6"],\
             ["@types/markdown-it", "npm:12.2.3"],\
             ["bluebird", "npm:3.7.2"],\
             ["catharsis", "npm:0.9.0"],\
