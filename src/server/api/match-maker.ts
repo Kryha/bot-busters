@@ -9,8 +9,12 @@ import {
 import { env } from "~/env.mjs";
 import { db } from "~/server/db/index.js";
 import { matches as matchesTable } from "~/server/db/schema.js";
-import { Match } from "~/server/service/index.js";
-import type { MatchEventType, ReadyToPlayPayload } from "~/types/index.js";
+import { Match, calculateRanks } from "~/server/service/index.js";
+import type {
+  MatchEventType,
+  MatchRoom,
+  ReadyToPlayPayload,
+} from "~/types/index.js";
 
 export const ee = new EventEmitter();
 
@@ -79,45 +83,50 @@ const getPlayerData = async () => {
   await Promise.all(promises);
 };
 
-const storeMatches = async () => {
-  const roomsToArchive = new Map<string, Match>();
+const storeScoresAndMatches = async () => {
+  const roomsToArchive = new Map<string, MatchRoom>();
 
-  //TODO: Store stats of the match
-  const promises = Array.from(matches.values()).map(async (room) => {
-    if (room.stage !== "results" || !room.arePointsCalculated) return;
+  await db.transaction(async (tx) => {
+    //TODO: Store stats of the match
+    const promises = Array.from(matches.values()).map(async (room) => {
+      if (room.stage !== "results" || !room.arePointsCalculated) return;
 
-    const allScoresStored = await room.storeScore();
+      const allScoresStored = await room.storeScore(tx);
 
-    if (allScoresStored) {
-      roomsToArchive.set(room.id, room);
+      if (allScoresStored) {
+        room.cleanup();
+        roomsToArchive.set(room.id, room.toSerializable());
+      }
+    });
+
+    await Promise.all(promises);
+
+    const roomsToInsert = Array.from(roomsToArchive.values()).map((room) => ({
+      id: room.id,
+      room,
+    }));
+
+    if (roomsToInsert.length) {
+      await tx.insert(matchesTable).values(roomsToInsert);
+      await calculateRanks(tx);
     }
+
+    roomsToArchive.forEach((_room, roomId) => matches.delete(roomId));
   });
-
-  await Promise.all(promises);
-
-  roomsToArchive.forEach((room) => room.cleanup());
-
-  const roomsToStore = Array.from(roomsToArchive.values()).map((room) => ({
-    id: room.id,
-    room: room.toSerializable(),
-  }));
-
-  if (roomsToStore.length) {
-    await db.insert(matchesTable).values(roomsToStore);
-  }
-
-  roomsToArchive.forEach((_room, roomId) => matches.delete(roomId));
 };
 
 setInterval(() => {
   try {
     matchLoop();
-    storeMatches().catch((error) =>
+    storeScoresAndMatches().catch((error) =>
       console.error("Error storing matches:", error)
     );
+
+    // TODO: remove `getPlayerData` from here
     getPlayerData().catch((error) =>
       console.error("Error getting player stats:", error)
     );
+
     makeMatch();
   } catch (error) {
     console.error("Main loop error:", error);
