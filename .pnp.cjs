@@ -53,6 +53,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/jest", "npm:29.5.6"],\
             ["@types/lodash", "npm:4.14.202"],\
             ["@types/node", "npm:18.18.0"],\
+            ["@types/node-cron", "npm:3.0.11"],\
             ["@types/react", "npm:18.2.23"],\
             ["@types/react-dom", "npm:18.2.8"],\
             ["@types/stats", "npm:0.16.30"],\
@@ -77,6 +78,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["next", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:13.4.12"],\
             ["next-auth", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:4.23.1"],\
             ["next-plugin-svgr", "npm:1.1.10"],\
+            ["node-cron", "npm:3.0.3"],\
             ["pg", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:8.11.3"],\
             ["postgres", "npm:3.3.5"],\
             ["puppeteer", "npm:21.5.2"],\
@@ -6262,6 +6264,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["@types/node-cron", [\
+        ["npm:3.0.11", {\
+          "packageLocation": "./.yarn/cache/@types-node-cron-npm-3.0.11-6930d3a671-a73f69bcca.zip/node_modules/@types/node-cron/",\
+          "packageDependencies": [\
+            ["@types/node-cron", "npm:3.0.11"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["@types/parse-json", [\
         ["npm:4.0.0", {\
           "packageLocation": "./.yarn/cache/@types-parse-json-npm-4.0.0-298522afa6-fd6bce2b67.zip/node_modules/@types/parse-json/",\
@@ -7550,6 +7561,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/jest", "npm:29.5.6"],\
             ["@types/lodash", "npm:4.14.202"],\
             ["@types/node", "npm:18.18.0"],\
+            ["@types/node-cron", "npm:3.0.11"],\
             ["@types/react", "npm:18.2.23"],\
             ["@types/react-dom", "npm:18.2.8"],\
             ["@types/stats", "npm:0.16.30"],\
@@ -7574,6 +7586,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["next", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:13.4.12"],\
             ["next-auth", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:4.23.1"],\
             ["next-plugin-svgr", "npm:1.1.10"],\
+            ["node-cron", "npm:3.0.3"],\
             ["pg", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:8.11.3"],\
             ["postgres", "npm:3.3.5"],\
             ["puppeteer", "npm:21.5.2"],\
@@ -13156,6 +13169,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["node-addon-api", "npm:6.1.0"],\
             ["node-gyp", "npm:9.4.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["node-cron", [\
+        ["npm:3.0.3", {\
+          "packageLocation": "./.yarn/cache/node-cron-npm-3.0.3-fd539f5b81-351c37491e.zip/node_modules/node-cron/",\
+          "packageDependencies": [\
+            ["node-cron", "npm:3.0.3"],\
+            ["uuid", "npm:8.3.2"]\
           ],\
           "linkType": "HARD"\
         }]\

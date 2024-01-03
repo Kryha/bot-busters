@@ -3822,6 +3822,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/node-cron@npm:^3.0.11":
+  version: 3.0.11
+  resolution: "@types/node-cron@npm:3.0.11"
+  checksum: a73f69bcca52a5f3b1671cfb00a8e4a1d150d0aef36a611564a2f94e66b6981bade577e267ceeeca6fcee241768902d55eb8cf3a81f9ef4ed767a23112fdb16d
+  languageName: node
+  linkType: hard
+
 "@types/node@npm:*":
   version: 20.8.4
   resolution: "@types/node@npm:20.8.4"
@@ -4817,6 +4824,7 @@ __metadata:
     "@types/jest": ^29.5.6
     "@types/lodash": ^4.14.202
     "@types/node": ^18.16.0
+    "@types/node-cron": ^3.0.11
     "@types/react": ^18.2.20
     "@types/react-dom": ^18.2.7
     "@types/stats": ^0.16.30
@@ -4841,6 +4849,7 @@ __metadata:
     next: 13.4.12
     next-auth: ^4.23.0
     next-plugin-svgr: ^1.1.10
+    node-cron: ^3.0.3
     pg: ^8.11.3
     postgres: ^3.3.5
     puppeteer: ^21.5.2
@@ -9677,6 +9686,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"node-cron@npm:^3.0.3":
+  version: 3.0.3
+  resolution: "node-cron@npm:3.0.3"
+  dependencies:
+    uuid: 8.3.2
+  checksum: 351c37491ebf717d0ae69cc941465de118e5c2ef5d48bc3f87c98556241b060f100402c8a618c7b86f9f626b44756b20d8b5385b70e52f80716f21e55db0f1c5
+  languageName: node
+  linkType: hard
+
 "node-fetch@npm:^2.6.12":
   version: 2.7.0
   resolution: "node-fetch@npm:2.7.0"
@@ -12239,7 +12257,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"uuid@npm:^8.3.2":
+"uuid@npm:8.3.2, uuid@npm:^8.3.2":
   version: 8.3.2
   resolution: "uuid@npm:8.3.2"
   bin:
