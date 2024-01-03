@@ -23,7 +23,7 @@ export const users = bbPgTable("user", {
   // TODO: add zPass
   // zPass: json("zPass"),
   matches_played: uuid("matches_played").array(),
-  createdAt: timestamp("createdAt").default(sql`CURRENT_TIMESTAMP`),
+  created_at: timestamp("createdAt").default(sql`CURRENT_TIMESTAMP`),
 });
 
 export const usersRelations = relations(users, ({ one }) => ({
