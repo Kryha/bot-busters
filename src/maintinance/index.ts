@@ -7,8 +7,11 @@ const { users } = dbSchema;
 // Function to perform your SQL query
 async function runDatabaseTask(): Promise<void> {
   try {
-    // Replace with your SQL query
-    const result = await db.delete(users).where(sql`SELECT * FROM ;`);
+    await db
+      .delete(users)
+      .where(
+        sql`bot_busters_user.created_at < NOW() - INTERVAL '24 HOURS' AND bot_busters_user.address IS NULL AND bot_busters_user.username IS NULL;`
+      );
   } catch (err) {
     console.error(err);
   }
