@@ -7,7 +7,7 @@ import { users } from "~/server/db/schema.js";
 import { isValidSession } from "~/utils/session.js";
 import { verifySignature } from "~/utils/wallet.js";
 import { profanityFilter } from "~/service/index.js";
-import { calculateRanks } from "~/server/service/index.js";
+import { leaderboard } from "~/server/service/index.js";
 
 export const userRouter = createTRPCRouter({
   mergeScore: protectedProcedure
@@ -57,7 +57,7 @@ export const userRouter = createTRPCRouter({
           )
         );
 
-        await calculateRanks(tx);
+        await leaderboard.calculate(tx);
 
         return { isUsernameSet: !!firstUser?.username };
       });
@@ -91,7 +91,7 @@ export const userRouter = createTRPCRouter({
             .update(users)
             .set({ username })
             .where(eq(users.id, session.user.id));
-          await calculateRanks(tx);
+          await leaderboard.calculate(tx);
         });
         return;
       }
@@ -106,7 +106,7 @@ export const userRouter = createTRPCRouter({
           .update(users)
           .set({ username, address })
           .where(eq(users.id, session.user.id));
-        await calculateRanks(tx);
+        await leaderboard.calculate(tx);
       });
     }),
 

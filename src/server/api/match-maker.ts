@@ -9,7 +9,7 @@ import {
 import { env } from "~/env.mjs";
 import { db } from "~/server/db/index.js";
 import { matches as matchesTable } from "~/server/db/schema.js";
-import { Match, calculateRanks } from "~/server/service/index.js";
+import { Match, leaderboard } from "~/server/service/index.js";
 import type {
   MatchEventType,
   MatchRoom,
@@ -108,7 +108,7 @@ const storeScoresAndMatches = async () => {
 
     if (roomsToInsert.length) {
       await tx.insert(matchesTable).values(roomsToInsert);
-      await calculateRanks(tx);
+      await leaderboard.calculate(tx);
     }
 
     roomsToArchive.forEach((_room, roomId) => matches.delete(roomId));
