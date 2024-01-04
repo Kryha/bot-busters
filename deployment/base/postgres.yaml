@@ -17,7 +17,8 @@ spec:
     spec:
       containers:
         - name: postgres
-          image: bot-busters-db
+          # TODO: Use gcr image
+          image: ankane/pgvector
           env:
             - name: POD_IP
               valueFrom:
