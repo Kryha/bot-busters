@@ -20,15 +20,6 @@ export async function register() {
 
     await db.execute(sql`CREATE EXTENSION IF NOT EXISTS vector`);
 
-    await db.execute(sql`CREATE EXTENSION IF NOT EXISTS pg_cron`);
-
-    console.log("========================================");
-    console.log("setting up cron jobs");
-
-    await db.execute(
-      sql`SELECT cron.schedule('0 10 * * *', $$DELETE FROM bot_busters_user WHERE bot_busters_user.created_at < NOW() - INTERVAL '24 HOURS' AND bot_busters_user.address IS NULL AND bot_busters_user.username IS NULL$$);`
-    );
-
     console.log(`Next server running in ${process.env.NODE_ENV} environment`);
 
     console.log("========================================");
