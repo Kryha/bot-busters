@@ -30,7 +30,7 @@ export const userRouter = createTRPCRouter({
           .select()
           .from(users)
           .where(eq(users.address, address))
-          .orderBy(users.created_at)
+          .orderBy(users.createdAt)
           .then((users) => users.filter((user) => user.id !== loggedUser.id));
 
         if (duplicateUsers.length === 0) {
