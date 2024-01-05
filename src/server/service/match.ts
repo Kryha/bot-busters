@@ -260,7 +260,7 @@ export class Match {
         if (player.isBot) return;
 
         await db.execute(
-          sql`UPDATE ${users} SET score = score + ${player.score}, matches_played = array_append(matches_played,${this._id}) WHERE ${users.id} = ${player.userId}`
+          sql`UPDATE ${users} SET ${users.score} = ${users.score} + ${player.score}, ${users.matchesPlayed} = array_append(${users.matchesPlayed},${this._id}) WHERE ${users.id} = ${player.userId}`
         );
       } catch (error) {
         player.isScoreSaved = false;
