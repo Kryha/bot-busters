@@ -32,8 +32,17 @@ export const Chat: FC<Props> = ({ roomId, room }) => {
 
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState<ChatMessagePayload[]>(room.messages);
+  const [hostMessage, setHostMessage] = useState<ChatMessagePayload>({
+    sender: "host",
+    message: "Welcome to the chat!",
+    sentAt: Date.now(),
+  });
 
   const appendMessage = (newMessage: ChatMessagePayload) => {
+    if (newMessage.sender === "host") {
+      setHostMessage(newMessage);
+      return;
+    }
     setMessages((prev) => [...prev, newMessage]);
   };
 
@@ -52,6 +61,13 @@ export const Chat: FC<Props> = ({ roomId, room }) => {
 
   const messageData: MessageData[] = useMemo(() => {
     return messages
+      .filter((message) => {
+        if (message.sender === "host") {
+          setHostMessage(message);
+          return false;
+        }
+        return true;
+      })
       .map((message) => {
         const isLocalSender = message.sender === session?.user?.id;
         const characterId: CharacterId = players.find(
@@ -86,7 +102,7 @@ export const Chat: FC<Props> = ({ roomId, room }) => {
 
   return (
     <Stack component="section" sx={styles.section(isChatDisabled)}>
-      <Messages messageData={messageData} />
+      <Messages messageData={messageData} hostMessage={hostMessage} />
       <Timer time={room.createdAt} duration={CHAT_TIME_MS} />
       <InputField
         value={message}
