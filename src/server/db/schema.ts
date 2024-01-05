@@ -37,7 +37,7 @@ export const userSchema = createInsertSchema(users);
 export type User = z.infer<typeof userSchema>;
 
 export const ranks = bbPgTable("rank", {
-  userId: uuid("userId")
+  userId: uuid("user_id")
     .references(() => users.id)
     .primaryKey(),
   position: integer("position").notNull().unique(),

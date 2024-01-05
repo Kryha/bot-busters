@@ -10,7 +10,7 @@ import {
 } from "~/constants/index.js";
 import { Agent } from "~/server/service/index.js";
 import { ee, matchEvent } from "~/server/api/match-maker.js";
-import { db } from "~/server/db/index.js";
+import { type BBPgTransaction, db } from "~/server/db/index.js";
 import { users } from "~/server/db/schema.js";
 import {
   type PlayerType,
@@ -166,6 +166,7 @@ export class Match {
       .some((player) => !player.votes);
   }
 
+  // TODO: make a proper DB relation with user and matches instead of doing this
   async getPlayerPreviousMatches() {
     let playerHistoryLoaded = true;
 
@@ -248,7 +249,9 @@ export class Match {
     this.arePointsCalculated = true;
   }
 
-  async storeScore() {
+  async storeScore(tx?: BBPgTransaction) {
+    const dbTx = tx ?? db;
+
     let allScoresStored = true;
 
     const promises = this._players.map(async (player) => {
