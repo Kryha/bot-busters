@@ -17,6 +17,7 @@ import { api } from "~/utils/api.js";
 import { type MessageData } from "~/types/index.js";
 
 import { styles } from "./styles.js";
+import { INITIAL_HOST_MESSAGE } from "~/constants/match.js";
 
 interface Props {
   roomId: string;
@@ -32,17 +33,10 @@ export const Chat: FC<Props> = ({ roomId, room }) => {
 
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState<ChatMessagePayload[]>(room.messages);
-  const [hostMessage, setHostMessage] = useState<ChatMessagePayload>({
-    sender: "host",
-    message: "Welcome to the chat!",
-    sentAt: Date.now(),
-  });
+  const [hostMessage, setHostMessage] =
+    useState<ChatMessagePayload>(INITIAL_HOST_MESSAGE);
 
   const appendMessage = (newMessage: ChatMessagePayload) => {
-    if (newMessage.sender === "host") {
-      setHostMessage(newMessage);
-      return;
-    }
     setMessages((prev) => [...prev, newMessage]);
   };
 
@@ -62,11 +56,9 @@ export const Chat: FC<Props> = ({ roomId, room }) => {
   const messageData: MessageData[] = useMemo(() => {
     return messages
       .filter((message) => {
-        if (message.sender === "host") {
-          setHostMessage(message);
-          return false;
-        }
-        return true;
+        return message.sender === "host"
+          ? (setHostMessage(message), false)
+          : true;
       })
       .map((message) => {
         const isLocalSender = message.sender === session?.user?.id;
