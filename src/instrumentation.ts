@@ -18,8 +18,6 @@ export async function register() {
 
     console.log(stdout);
 
-    await db.execute(sql`CREATE EXTENSION IF NOT EXISTS vector`);
-
     console.log(`Next server running in ${process.env.NODE_ENV} environment`);
 
     console.log("========================================");
