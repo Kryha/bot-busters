@@ -1,8 +1,7 @@
 import { Stack } from "@mui/material";
 import { type FC } from "react";
 
-import { text } from "~/assets/text/index.js";
-import { type MessageData } from "~/types/index.js";
+import { type ChatMessagePayload, type MessageData } from "~/types/index.js";
 import { Prompt } from "~/components/prompt/index.js";
 
 import { Message } from "./message.jsx";
@@ -10,9 +9,10 @@ import { styles } from "./styles.js";
 
 interface Props {
   messageData: MessageData[];
+  hostMessage: ChatMessagePayload;
 }
 
-export const Messages: FC<Props> = ({ messageData }) => {
+export const Messages: FC<Props> = ({ hostMessage, messageData }) => {
   return (
     <Stack sx={styles.messagesContainer}>
       {messageData.map(({ message, character }, index) => (
@@ -23,10 +23,7 @@ export const Messages: FC<Props> = ({ messageData }) => {
           characterName={character.name}
         />
       ))}
-      <Prompt
-        title={text.chat.firstPrompt.title}
-        info={text.chat.firstPrompt.info}
-      />
+      <Prompt name={hostMessage.sender} prompt={hostMessage.message} />
     </Stack>
   );
 };
