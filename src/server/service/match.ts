@@ -22,6 +22,7 @@ import {
 } from "~/types/index.js";
 import { MATCH_ACHIEVEMENTS } from "./achievements.js";
 import { selectMatchPlayedByUser } from "../db/user.js";
+import { matchPrompts } from "~/assets/text/match-promts.js";
 
 export class Match {
   private _id: string;
@@ -89,8 +90,20 @@ export class Match {
 
     this._players = lodash.shuffle([...botPlayers, ...humanPlayers]);
     this._playerPreviousMatches = {};
+    this.addMessage(this.getRandomPrompt());
   }
+  private getRandomPrompt(): ChatMessagePayload {
+    const randomPrompt =
+      matchPrompts[Math.floor(Math.random() * matchPrompts.length)];
 
+    if (!randomPrompt) throw new Error("No random prompt found");
+
+    return {
+      sender: "host",
+      message: randomPrompt,
+      sentAt: Date.now(),
+    };
+  }
   private popCharacterId(): CharacterId {
     const characterId = this._availableCharacterIds.pop();
 
