@@ -92,6 +92,7 @@ export class Match {
     this._playerPreviousMatches = {};
     this.addMessage(this.getRandomPrompt());
   }
+
   private getRandomPrompt(): ChatMessagePayload {
     const randomPrompt =
       matchPrompts[Math.floor(Math.random() * matchPrompts.length)];
@@ -104,6 +105,7 @@ export class Match {
       sentAt: Date.now(),
     };
   }
+
   private popCharacterId(): CharacterId {
     const characterId = this._availableCharacterIds.pop();
 
