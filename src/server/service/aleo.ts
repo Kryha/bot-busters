@@ -8,8 +8,6 @@ import {
 
 import { env } from "~/env.mjs";
 
-const LEO_ARRAY_SIZE = 32;
-
 const account = new Account({ privateKey: env.ALEO_PRIVATE_KEY });
 
 const keyProvider = new AleoKeyProvider();
@@ -24,4 +22,4 @@ const programManager = new ProgramManager(
   recordProvider
 );
 
-export const aleo = { programManager, LEO_ARRAY_SIZE };
+export const aleo = { programManager };

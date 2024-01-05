@@ -20,7 +20,9 @@
     "db:studio": "dotenv drizzle-kit studio",
     "dev": "next dev",
     "dev:ws": "yarn build:ws && yarn start:ws",
-    "lint": "next lint"
+    "lint": "next lint",
+    "aleo:build-leaderboard": "cd ./programs/leaderboard && leo build",
+    "aleo:deploy-leaderboard": "dotenv node src/deploy-programs.mjs"
   },
   "dependencies": {
     "@2toad/profanity": "^2.2.0",
