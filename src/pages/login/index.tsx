@@ -66,7 +66,6 @@ const Login: FC = () => {
         console.error(error);
       }
     };
-    console.log("Login useEffect");
     void authenticate();
   }, [
     address,
