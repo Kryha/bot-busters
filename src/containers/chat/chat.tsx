@@ -8,7 +8,7 @@ import {
   type ChatMessagePayload,
   type MatchRoom,
 } from "~/types/index.js";
-import { CHARACTERS, CHAT_TIME_MS } from "~/constants/index.js";
+import { CHARACTERS, CHAT_TIME_MS, MATCH_HOST } from "~/constants/index.js";
 import { pages } from "~/router.js";
 import { Messages } from "~/components/messages/index.js";
 import { InputField } from "~/components/input-field/index.js";
@@ -17,7 +17,6 @@ import { api } from "~/utils/api.js";
 import { type MessageData } from "~/types/index.js";
 
 import { styles } from "./styles.js";
-import { INITIAL_HOST_MESSAGE } from "~/constants/match.js";
 
 interface Props {
   roomId: string;
@@ -33,9 +32,6 @@ export const Chat: FC<Props> = ({ roomId, room }) => {
 
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState<ChatMessagePayload[]>(room.messages);
-  const [hostMessage, setHostMessage] =
-    useState<ChatMessagePayload>(INITIAL_HOST_MESSAGE);
-
   const appendMessage = (newMessage: ChatMessagePayload) => {
     setMessages((prev) => [...prev, newMessage]);
   };
@@ -53,12 +49,17 @@ export const Chat: FC<Props> = ({ roomId, room }) => {
     }
   );
 
+  const hostMessageData: ChatMessagePayload | undefined = useMemo(() => {
+    const hostMessage = messages.findLast(
+      (message) => message.sender === MATCH_HOST
+    );
+    return hostMessage;
+  }, [messages]);
+
   const messageData: MessageData[] = useMemo(() => {
     return messages
       .filter((message) => {
-        return message.sender === "host"
-          ? (setHostMessage(message), false)
-          : true;
+        return message.sender !== MATCH_HOST;
       })
       .map((message) => {
         const isLocalSender = message.sender === session?.user?.id;
@@ -94,7 +95,7 @@ export const Chat: FC<Props> = ({ roomId, room }) => {
 
   return (
     <Stack component="section" sx={styles.section(isChatDisabled)}>
-      <Messages messageData={messageData} hostMessage={hostMessage} />
+      <Messages messageData={messageData} hostMessage={hostMessageData} />
       <Timer time={room.createdAt} duration={CHAT_TIME_MS} />
       <InputField
         value={message}

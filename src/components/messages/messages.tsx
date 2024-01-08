@@ -9,7 +9,7 @@ import { styles } from "./styles.js";
 
 interface Props {
   messageData: MessageData[];
-  hostMessage: ChatMessagePayload;
+  hostMessage?: ChatMessagePayload;
 }
 
 export const Messages: FC<Props> = ({ hostMessage, messageData }) => {
@@ -23,7 +23,9 @@ export const Messages: FC<Props> = ({ hostMessage, messageData }) => {
           characterName={character.name}
         />
       ))}
-      <Prompt name={hostMessage.sender} prompt={hostMessage.message} />
+      {hostMessage && (
+        <Prompt name={hostMessage.sender} message={hostMessage.message} />
+      )}
     </Stack>
   );
 };
