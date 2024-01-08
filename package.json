@@ -22,11 +22,21 @@
     "dev:ws": "yarn build:ws && yarn start:ws",
     "lint": "next lint",
     "aleo:build-leaderboard": "cd ./programs/leaderboard && leo build",
-    "aleo:deploy-leaderboard": "dotenv node src/deploy-programs.mjs"
+    "aleo:deploy-leaderboard": "dotenv node src/deploy-programs.mjs",
+    "aleo:run-0": "snarkos start --dev 0 --validator --private-key APrivateKey1zkp8CZNn3yeCseEtxuVPbDCwSyhGW6yZKUYKfgXmcpoGPWH --nodisplay",
+    "aleo:run-1": "snarkos start --dev 1 --validator --private-key APrivateKey1zkp8CZNn3yeCseEtxuVPbDCwSyhGW6yZKUYKfgXmcpoGPWH --nodisplay",
+    "aleo:run-2": "snarkos start --dev 2 --validator --private-key APrivateKey1zkp8CZNn3yeCseEtxuVPbDCwSyhGW6yZKUYKfgXmcpoGPWH --nodisplay",
+    "aleo:run-3": "snarkos start --dev 3 --validator --private-key APrivateKey1zkp8CZNn3yeCseEtxuVPbDCwSyhGW6yZKUYKfgXmcpoGPWH --nodisplay",
+    "aleo:run": "concurrently \"yarn aleo:run-0\" \"yarn aleo:run-1\" \"yarn aleo:run-2\" \"yarn aleo:run-3\"",
+    "aleo:clean-0": "snarkos clean --dev 0",
+    "aleo:clean-1": "snarkos clean --dev 1",
+    "aleo:clean-2": "snarkos clean --dev 2",
+    "aleo:clean-3": "snarkos clean --dev 3",
+    "aleo:clean": "concurrently \"yarn aleo:clean-0\" \"yarn aleo:clean-1\" \"yarn aleo:clean-2\" \"yarn aleo:clean-3\""
   },
   "dependencies": {
     "@2toad/profanity": "^2.2.0",
-    "@aleohq/sdk": "0.6.2",
+    "@aleohq/sdk": "^0.6.9",
     "@demox-labs/aleo-wallet-adapter-base": "^0.0.19",
     "@demox-labs/aleo-wallet-adapter-leo": "^0.0.18",
     "@demox-labs/aleo-wallet-adapter-react": "^0.0.18",

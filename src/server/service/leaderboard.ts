@@ -1,5 +1,5 @@
 import { desc, eq } from "drizzle-orm";
-import { range } from "lodash";
+import lodash from "lodash";
 
 import { env } from "~/env.mjs";
 import { db, type BBPgTransaction } from "~/server/db/index.js";
@@ -39,7 +39,7 @@ const storeOnChain = async () => {
     USERS_ON_CHAIN > players.length ? USERS_ON_CHAIN : players.length;
   const slicesAmount = Math.ceil(slicesDividend / USERS_PER_SLICE);
 
-  const slices = range(0, slicesAmount).map((i) => {
+  const slices = lodash.range(0, slicesAmount).map((i) => {
     const start = i * USERS_PER_SLICE;
     const end = (i + 1) * USERS_PER_SLICE;
 

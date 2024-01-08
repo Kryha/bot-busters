@@ -45,21 +45,21 @@ const deploy = async () => {
     const txId = await programManager.deploy(program, fee, false);
 
     if (txId instanceof Error) {
-      console.error(txId);
+      console.error("Deployment error:", txId);
       return;
     }
 
-    console.log("Deployment ok!");
+    console.log("TX id:", txId);
 
     // Verify the transaction was successful
-    const transaction = await programManager.networkClient.getTransaction(txId);
+    // const transaction = await programManager.networkClient.getTransaction(txId);
 
-    if (transaction instanceof Error) {
-      console.error(transaction);
-      return;
-    }
+    // if (transaction instanceof Error) {
+    //   console.error("Get TX error:", transaction);
+    //   return;
+    // }
 
-    console.log(transaction);
+    // console.log(transaction);
 
     console.log(
       "Deployment successful! Check your wallet and wait a couple of seconds for your transaction to complete."
