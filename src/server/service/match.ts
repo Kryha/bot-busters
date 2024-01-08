@@ -91,19 +91,18 @@ export class Match {
 
     this._players = lodash.shuffle([...botPlayers, ...humanPlayers]);
     this._playerPreviousMatches = {};
-    this.addMessage(this.getRandomPrompt());
+    this.addPrompt();
   }
 
-  private getRandomPrompt(): ChatMessagePayload {
+  private addPrompt() {
     const randomPrompt = matchPrompts[getRandomInt(matchPrompts.length)];
-
     if (!randomPrompt) throw new Error("No random prompt found");
 
-    return {
+    this.addMessage({
       sender: "host",
       message: randomPrompt,
       sentAt: Date.now(),
-    };
+    });
   }
 
   private popCharacterId(): CharacterId {
