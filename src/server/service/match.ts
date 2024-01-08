@@ -23,6 +23,7 @@ import {
 import { MATCH_ACHIEVEMENTS } from "./achievements.js";
 import { selectMatchPlayedByUser } from "../db/user.js";
 import { matchPrompts } from "~/assets/text/match-promts.js";
+import { getRandomInt } from "~/utils/math.js";
 
 export class Match {
   private _id: string;
@@ -94,8 +95,7 @@ export class Match {
   }
 
   private getRandomPrompt(): ChatMessagePayload {
-    const randomPrompt =
-      matchPrompts[Math.floor(Math.random() * matchPrompts.length)];
+    const randomPrompt = matchPrompts[getRandomInt(matchPrompts.length)];
 
     if (!randomPrompt) throw new Error("No random prompt found");
 
