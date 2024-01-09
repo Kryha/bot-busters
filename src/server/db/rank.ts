@@ -9,7 +9,7 @@ TRUNCATE TABLE ${ranks};
 INSERT INTO ${ranks}
 SELECT
     ${users.id} AS user_id,
-    RANK () OVER (ORDER BY ${users.score} DESC) AS position
+    RANK () OVER (ORDER BY ${users.score} DESC, ${users.createdAt}) AS position
 FROM ${users}
 WHERE
     ${users.username} IS NOT NULL AND
