@@ -33,6 +33,7 @@ export const Results: FC<Props> = ({ gainedScore, botsBusted, totalBots }) => {
 
       setMergeRequested(false);
       try {
+        //TODO: Fix so user only presses the button once now signature is undefined on first press
         const signature = await getSignature();
         if (!signature) return;
 
