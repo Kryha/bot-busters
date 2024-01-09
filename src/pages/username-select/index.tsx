@@ -29,15 +29,18 @@ const styles = {
 const UsernameSelect: FC = () => {
   const router = useRouter();
   const { data: session } = useSession();
-  const { address, getSignature } = useBBWallet();
+  const { connect, isConnected, address, getSignature } = useBBWallet();
 
   const verify = api.user.verify.useMutation();
-
   useEffect(() => {
     if (isVerifiedSession(session)) {
       void router.push(pages.home);
     }
-  }, [router, session]);
+
+    if (!isConnected) {
+      void connect();
+    }
+  }, [connect, isConnected, router, session]);
 
   const handleSetUsername = async (username: string) => {
     try {
