@@ -2,13 +2,13 @@ import { Typography } from "@mui/material";
 
 import { text } from "~/assets/text/index.js";
 
-function Support() {
+function Rules() {
   // TODO: update page
   return (
     <Typography variant="h1" color="common.black" pt={15} textAlign="center">
-      {text.general.support}
+      {text.general.howToPlay}
     </Typography>
   );
 }
 
-export default Support;
+export default Rules;
