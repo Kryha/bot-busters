@@ -35,7 +35,7 @@ const deploy = async () => {
     programManager.setAccount(account);
 
     // Define a fee to pay to deploy the program
-    const fee = 4.216;
+    const fee = 4.408;
 
     const program = await readFile(
       "./programs/leaderboard/build/main.aleo",

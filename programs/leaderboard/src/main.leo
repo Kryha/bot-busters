@@ -17,18 +17,15 @@ program leaderboard.aleo {
 
     finalize update_scores(user_ids: [field; 16], new_scores: [u64; 16], slice: u8) {
         for i: u8 in 0u8..16u8 {
-            let key: u8 = (slice * 16u8) + i;
+            let key: u8 = (slice * 16u8) + i + 1u8;
             let user_id: field = user_ids[i];
             let new_score: u64 = new_scores[i];
 
-            let current_user: User = Mapping::get_or_use(users, key, User {
-                id: user_id,
-                score: 0u64,
-            });
+            let keyOrNull: u8 = user_id != 0field ? key : 0u8;
 
-            Mapping::set(users, key, User {
+            Mapping::set(users, keyOrNull, User {
                 id: user_id,
-                score: current_user.score + new_score,
+                score: new_score,
             });
         }
     }
