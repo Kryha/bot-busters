@@ -27,13 +27,9 @@ export const Layout: FC<StackProps> = ({ children }) => {
   const isGamePlayed = true;
 
   useEffect(() => {
-    if (isVerifiedUser) return;
-    if (!sessionData) return;
-    if (isAnonymousSession(sessionData)) return;
-
-    if (isUnverifiedSession(sessionData)) {
-      void push(pages.usernameSelect);
-    }
+    if (!sessionData || isVerifiedUser || isAnonymousSession(sessionData))
+      return;
+    if (isUnverifiedSession(sessionData)) void push(pages.usernameSelect);
   }, [sessionData]);
 
   return (
