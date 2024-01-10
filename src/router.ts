@@ -8,7 +8,7 @@ export const pages = {
   login: "/login",
   usernameSelect: "/username-select",
   playerProfile: "/player-profile",
-  rules: "/rules",
+  howToPlay: "/how-to-play",
   support: "/support",
   privacy: "/privacy",
   animationLab: "/animation-lab",
