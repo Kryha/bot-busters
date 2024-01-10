@@ -13,7 +13,8 @@ SELECT
 FROM ${users}
 WHERE
     ${users.username} IS NOT NULL AND
-    ${users.address} IS NOT NULL;
+    ${users.address} IS NOT NULL AND
+    ${users.score} > 0;
 `;
 
 export const updateRanks = async (tx?: BBPgTransaction) => {
