@@ -1,7 +1,6 @@
 export * from "./authentication/index.js";
 export * from "./error-view/index.jsx";
 export * from "./tables/index.js";
-export * from "./menu-card/index.js";
 export * from "./points-display/index.js";
 export * from "./top-ranked/index.js";
 export * from "./players/player/index.js";
