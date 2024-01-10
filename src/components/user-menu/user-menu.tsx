@@ -17,9 +17,15 @@ interface Props {
   isVerifiedUser: boolean;
   setOpen: (open: boolean) => void;
   logout: () => Promise<void>;
+  username: string;
 }
 
-export const UserMenu: FC<Props> = ({ isVerifiedUser, setOpen, logout }) => {
+export const UserMenu: FC<Props> = ({
+  isVerifiedUser,
+  setOpen,
+  logout,
+  username,
+}) => {
   const router = useRouter();
   // TODO: Add sound functionality eventually
   const [sound, setSound] = useState(true);
@@ -35,7 +41,7 @@ export const UserMenu: FC<Props> = ({ isVerifiedUser, setOpen, logout }) => {
     <Stack sx={styles.wrapper}>
       <Stack sx={styles.userName}>
         <UserIcon />
-        <Typography variant="h3">{text.general.username}</Typography>
+        <Typography variant="h3">{username}</Typography>
       </Stack>
       <Button
         variant="text"
