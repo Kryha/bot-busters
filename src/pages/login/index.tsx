@@ -7,7 +7,7 @@ import { useRouter } from "next/router.js";
 import { default as spinner } from "~/assets/images/spinner.gif";
 import { useBBWallet } from "~/service/bb-wallet.js";
 import { text } from "~/assets/text/index.js";
-import { isUnverifiedSession, isVerifiedSession } from "~/utils/session.js";
+import { isUnverifiedSession } from "~/utils/session.js";
 import { pages } from "~/router.js";
 import Page from "~/components/page/page.jsx";
 import { breakpoints } from "~/styles/theme.js";
