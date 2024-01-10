@@ -9,7 +9,7 @@ import { text } from "~/assets/text/index.js";
 import { styles } from "../styles/pages/leaderboard.js";
 import { fakeCountdown } from "~/constants/fake-data/landing";
 
-export const LeaderBoard = () => {
+const LeaderBoard = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [currentData, setCurrentData] = useState<LeaderboardData[]>([]);
   const itemsPerPage = 6;
@@ -73,3 +73,5 @@ export const LeaderBoard = () => {
     </>
   );
 };
+
+export default LeaderBoard;
