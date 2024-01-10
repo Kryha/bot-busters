@@ -1,8 +1,9 @@
-import { type FC, useState } from "react";
+import { type FC } from "react";
 import { Button, Stack, Typography } from "@mui/material";
+
 import { useRouter } from "next/router.js";
 import { pages } from "~/router.js";
-import { MenuButton } from "~/components/menu-dialog/index.js";
+import { NavbarMenuButton } from "~/components/main-menu/index.js";
 import { text } from "~/assets/text/index.js";
 import { styles } from "./styles.js";
 import {
@@ -14,15 +15,15 @@ import {
 
 interface Props {
   handleClose: () => void;
+  soundOn: boolean;
+  setSoundOn: (value: boolean) => void;
 }
 
-export const Header: FC<Props> = ({ handleClose }) => {
+export const NavbarMenu: FC<Props> = ({ handleClose, soundOn, setSoundOn }) => {
   const router = useRouter();
-  // TODO: Implement sound hook
-  const [sound, setSound] = useState(true);
 
   const onSoundClick = () => {
-    setSound(!sound);
+    setSoundOn(!soundOn);
   };
 
   const handleNavigation = (path: string) => {
@@ -45,9 +46,9 @@ export const Header: FC<Props> = ({ handleClose }) => {
       </Button>
       <Stack direction={"row"} rowGap={2}>
         <Button variant="text" onClick={onSoundClick}>
-          {sound ? <SoundOnIcon /> : <SoundOffIcon />}
+          {soundOn ? <SoundOnIcon /> : <SoundOffIcon />}
         </Button>
-        <MenuButton sx={styles.button} onClick={handleClose} />
+        <NavbarMenuButton sx={styles.button} onClick={handleClose} />
       </Stack>
     </Stack>
   );

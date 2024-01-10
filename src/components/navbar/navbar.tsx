@@ -1,38 +1,59 @@
 import { type FC, useState } from "react";
 import { Button, Stack, Typography } from "@mui/material";
+import { signOut } from "next-auth/react";
+import { useRouter } from "next/router";
 
 import { text } from "~/assets/text/index.js";
 import { styles } from "./styles.js";
-import { MenuButton } from "~/components/main-menu/menu-button.jsx";
 import {
   BotBustersIcon,
   SoundOffIcon,
   SoundOnIcon,
   UserIcon,
 } from "~/assets/icons";
-import { pages } from "~/router";
-import { useRouter } from "next/router";
+import { MenuButton } from "~/components/main-menu/menu-button.jsx";
+import { MainMenu } from "../main-menu/index.js";
+import { pages } from "~/router.js";
 
 interface Props {
   isVerifiedUser: boolean;
+  isGamePlayed: boolean;
+  username: string;
+  open: boolean;
   setOpen: (open: boolean) => void;
-  logout: () => Promise<void>;
+  disconnect: () => Promise<void>;
+  points: number;
 }
 
-export const UserMenu: FC<Props> = ({ isVerifiedUser, setOpen, logout }) => {
+export const Navbar: FC<Props> = ({
+  isVerifiedUser,
+  isGamePlayed,
+  username,
+  open,
+  setOpen,
+  disconnect,
+  points,
+}) => {
   const router = useRouter();
-  // TODO: Add sound functionality eventually
-  const [sound, setSound] = useState(true);
+  const [soundOn, setSoundOn] = useState(true);
+  const isVerifiedUserAndPlayed = isVerifiedUser && isGamePlayed;
+  const title = isVerifiedUserAndPlayed ? username : text.general.dailyScore;
+
+  const logout = async () => {
+    await signOut();
+    await disconnect();
+    sessionStorage.clear();
+  };
+  
   const onSoundClick = () => {
-    setSound(!sound);
+    setSoundOn(!soundOn);
   };
 
   const handleNavigation = (path: string) => {
     void router.push(path);
   };
-
   return (
-    <>
+    <Stack sx={styles.container}>
       <Stack sx={styles.wrapper}>
         <Stack sx={styles.userName}>
           <UserIcon />
@@ -58,11 +79,12 @@ export const UserMenu: FC<Props> = ({ isVerifiedUser, setOpen, logout }) => {
         )}
         <Stack direction={"row"} rowGap={2}>
           <Button variant="text" onClick={onSoundClick}>
-            {sound ? <SoundOnIcon /> : <SoundOffIcon />}
+            {soundOn ? <SoundOnIcon /> : <SoundOffIcon />}
           </Button>
           <MenuButton sx={styles.button} onClick={() => setOpen(true)} />
         </Stack>
       </Stack>
-    </>
+      <MainMenu soundOn={soundOn} setSoundOn={setSoundOn} open={open} setOpen={setOpen}/>
+    </Stack>
   );
 };

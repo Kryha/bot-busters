@@ -9,6 +9,6 @@ export * from "./players/player-voting/index.js";
 export * from "./players/player-result/index.js";
 export * from "./splash-screen/index.js";
 export * from "./score/index.js";
-export * from "./user-stats/index.js";
+export * from "./navbar/index.js";
 export * from "./players/player-local/index.js";
 export * from "./animation/index.js";

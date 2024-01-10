@@ -5,8 +5,8 @@ import { useRouter } from "next/router";
 
 import { styles } from "./styles.js";
 import { Footer } from "./footer.jsx";
-import { Header } from "~/components/menu-dialog/header.jsx";
-import { MenuOptions } from "~/components/menu-dialog/menu-options.jsx";
+import { NavbarMenu } from "~/components/main-menu/navbar-menu.jsx";
+import { MenuOptions } from "~/components/main-menu/menu-options.jsx";
 import { pages } from "~/router";
 import { BotBustersIcon } from "~/assets/icons/index.js";
 
@@ -21,11 +21,12 @@ const Transition = forwardRef(function Transition(
 
 interface Props {
   open: boolean;
-
   setOpen: (open: boolean) => void;
-}
+  soundOn: boolean;
+  setSoundOn: (value: boolean) => void;
+};
 
-export const MenuDialog: FC<Props> = ({ open, setOpen }) => {
+export const MainMenu: FC<Props> = ({ open, setOpen, soundOn, setSoundOn }) => {
   const router = useRouter();
   const handleClose = () => {
     setOpen(false);
@@ -44,7 +45,7 @@ export const MenuDialog: FC<Props> = ({ open, setOpen }) => {
       TransitionComponent={Transition}
       sx={styles.dialog}
     >
-      <Header handleClose={handleClose} />
+      <NavbarMenu soundOn={soundOn} setSoundOn={setSoundOn} handleClose={handleClose} />
       <Button
         variant="text"
         sx={styles.dialogLogo}
