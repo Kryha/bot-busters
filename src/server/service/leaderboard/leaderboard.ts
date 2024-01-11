@@ -117,6 +117,4 @@ const storeOnChain = async () => {
   return transactions;
 };
 
-storeOnChain().catch((err) => console.error("store on chain:", err));
-
 export const leaderboard = { calculate, storeOnChain };
