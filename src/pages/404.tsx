@@ -1,13 +1,22 @@
-import { Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
+import React, { type FC } from "react";
 
-import { text } from "~/assets/text/index.js";
+import { text } from "~/assets/text";
 
-function Custom404() {
+const styles = {
+  container: {
+    height: "100vh",
+    alignItems: "center",
+    justifyContent: "center"
+  },
+};
+
+const Custom404: FC = () => {
   return (
-    <Typography variant="h1" pt={"50vh"} textAlign="center">
-      {text.general.pageNotFound}
-    </Typography>
-  );
-}
-
+    <Stack sx={styles.container} >
+      <Typography variant="h1" textAlign="center">
+        {text.general.pageNotFound}
+      </Typography>
+    </Stack>
+)};
 export default Custom404;
