@@ -79,21 +79,15 @@ cargo install --path .
 
 Now that we have installed the necessary tools we can start building our first smart contract. Let's first use SnarkOS to run a local Aleo node where we are going to deploy our programs during development.
 
-### Running the chain locally
+### Run the chain locally
 
-To run a local instance of an Aleo network, you have to install [SnarkOS CLI](https://github.com/AleoHQ/snarkOS?tab=readme-ov-file#22-installation) on your computer, then run the following command from the Bot Busters root directory:
-
-```sh
-yarn aleo:run
-```
-
-> You can use `ctrl+c` to stop it.
-
-To reset the network after you stopped it run:
+To run a local instance of an Aleo network, you have to install [SnarkOS CLI](https://github.com/AleoHQ/snarkOS?tab=readme-ov-file#22-installation) and [tmux](https://github.com/tmux/tmux/wiki/Installing) on your computer, then run the following command from the Bot Busters root directory:
 
 ```sh
-yarn aleo:clean
+yarn aleo:devnet
 ```
+
+> You can type `ctrl+b` and type `:kill-session` to stop the network.
 
 ### Deploy the Leaderboard program locally
 
