@@ -27,19 +27,14 @@ interface Props {
 
 export const Navbar: FC<Props> = ({
   isVerifiedUser,
-  isGamePlayed,
-  username,
   open,
   setOpen,
   disconnect,
-  points,
 }) => {
   const router = useRouter();
   const [soundOn, setSoundOn] = useState(true);
-  const isVerifiedUserAndPlayed = isVerifiedUser && isGamePlayed;
-  const title = isVerifiedUserAndPlayed ? username : text.general.dailyScore;
 
-  const logout = async () => {
+  const logOut = async () => {
     await signOut();
     await disconnect();
     sessionStorage.clear();
@@ -71,7 +66,7 @@ export const Navbar: FC<Props> = ({
           <Button
             variant="contained"
             color="blueGrey"
-            onClick={() => void logout()}
+            onClick={() => void logOut()}
             sx={styles.button}
           >
             {text.general.signOut}
