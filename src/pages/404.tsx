@@ -1,5 +1,6 @@
 import { Stack, Typography } from "@mui/material";
 import React, { type FC } from "react";
+
 import { text } from "~/assets/text";
 
 const styles = {
