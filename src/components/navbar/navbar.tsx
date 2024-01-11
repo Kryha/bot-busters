@@ -21,7 +21,7 @@ interface Props {
   username: string;
   open: boolean;
   setOpen: (open: boolean) => void;
-  disconnect: () => Promise<void>;
+  disconnectWallet: () => Promise<void>;
   points: number;
 }
 
@@ -29,14 +29,14 @@ export const Navbar: FC<Props> = ({
   isVerifiedUser,
   open,
   setOpen,
-  disconnect,
+  disconnectWallet,
 }) => {
   const router = useRouter();
   const [soundOn, setSoundOn] = useState(true);
 
   const logOut = async () => {
     await signOut();
-    await disconnect();
+    await disconnectWallet();
     sessionStorage.clear();
   };
   

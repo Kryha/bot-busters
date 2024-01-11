@@ -13,7 +13,7 @@ export const Layout: FC<StackProps> = ({ children }) => {
   const { data: sessionData } = useSession();
   const isVerifiedUser = isVerifiedSession(sessionData);
   const [menuIsOpen, setMenuIsOpen] = useState(false);
-  const { disconnect } = useBBWallet();
+  const { disconnect: disconnectWallet } = useBBWallet();
   const { data } = api.user.getUserById.useQuery();
   const playerPoints = data?.score ? data.score : 0;
   const isGamePlayed = true;
@@ -28,7 +28,7 @@ export const Layout: FC<StackProps> = ({ children }) => {
         }
         open={menuIsOpen}
         setOpen={setMenuIsOpen}
-        disconnect={disconnect}
+        disconnectWallet={disconnectWallet}
         points={playerPoints}
       />
       {children}
