@@ -4,7 +4,7 @@ import { signOut } from "next-auth/react";
 import { useRouter } from "next/router";
 
 import { text } from "~/assets/text/index.js";
-import { styles } from "./styles.js";
+import { styles } from "~/components/navbar/styles.js";
 import {
   BotBustersIcon,
   SoundOffIcon,
@@ -12,7 +12,7 @@ import {
   UserIcon,
 } from "~/assets/icons";
 import { MenuButton } from "~/components/main-menu/menu-button.jsx";
-import { MainMenu } from "../main-menu/index.js";
+import { MainMenu } from "~/components/main-menu/index.js";
 import { pages } from "~/router.js";
 
 interface Props {

@@ -10,7 +10,7 @@ import { fakeUsername } from "~/constants/fake-data/landing.js";
 import { isValidSession } from "~/utils/session.js";
 import { PlayerTable } from "~/components/index.js";
 import { fakePlayerProfile } from "~/constants/fake-data/player-profile.jsx";
-import { styles } from "../styles/pages/player-profile.js";
+import { styles } from "~/styles/pages/player-profile.js";
 
 const PlayerProfile = () => {
   const { push } = useRouter();

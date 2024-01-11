@@ -7,7 +7,7 @@ import { api } from "~/utils/api.js";
 import { fakeUsername } from "~/constants/fake-data/landing.js";
 import { useBBWallet } from "~/service/bb-wallet.js";
 import { Navbar } from "~/components/navbar/index.js";
-import { styles } from "./styles.js";
+import { styles } from "~/containers/layout/styles.js";
 
 export const Layout: FC<StackProps> = ({ children }) => {
   const { data: sessionData } = useSession();

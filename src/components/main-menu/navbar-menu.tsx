@@ -5,7 +5,7 @@ import { useRouter } from "next/router.js";
 import { pages } from "~/router.js";
 import { NavbarMenuButton } from "~/components/main-menu/index.js";
 import { text } from "~/assets/text/index.js";
-import { styles } from "./styles.js";
+import { styles } from "~/components/main-menu/styles.js";
 import {
   BotBustersIcon,
   SoundOffIcon,

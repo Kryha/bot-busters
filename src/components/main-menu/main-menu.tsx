@@ -3,7 +3,7 @@ import { Button, Dialog, Slide } from "@mui/material";
 import { type TransitionProps } from "@mui/material/transitions";
 import { useRouter } from "next/router";
 
-import { styles } from "./styles.js";
+import { styles } from "~/components/main-menu/styles.js";
 import { Footer } from "./footer.jsx";
 import { NavbarMenu } from "~/components/main-menu/navbar-menu.jsx";
 import { MenuOptions } from "~/components/main-menu/menu-options.jsx";

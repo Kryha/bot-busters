@@ -6,7 +6,7 @@ import { isValidSession } from "~/utils/session.js";
 import { AddScoreTable, LeaderboardTable } from "~/components/tables/index.js";
 import { leaderboardData } from "~/constants/index.js";
 import { text } from "~/assets/text/index.js";
-import { styles } from "../styles/pages/leaderboard.js";
+import { styles } from "~/styles/pages/leaderboard.js";
 import { fakeCountdown } from "~/constants/fake-data/landing";
 
 const LeaderBoard = () => {
