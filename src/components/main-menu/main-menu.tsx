@@ -24,7 +24,7 @@ interface Props {
   setOpen: (open: boolean) => void;
   soundOn: boolean;
   setSoundOn: (value: boolean) => void;
-};
+}
 
 export const MainMenu: FC<Props> = ({ open, setOpen, soundOn, setSoundOn }) => {
   const router = useRouter();
@@ -45,7 +45,11 @@ export const MainMenu: FC<Props> = ({ open, setOpen, soundOn, setSoundOn }) => {
       TransitionComponent={Transition}
       sx={styles.dialog}
     >
-      <NavbarMenu soundOn={soundOn} setSoundOn={setSoundOn} handleClose={handleClose} />
+      <NavbarMenu
+        soundOn={soundOn}
+        setSoundOn={setSoundOn}
+        handleClose={handleClose}
+      />
       <Button
         variant="text"
         sx={styles.dialogLogo}

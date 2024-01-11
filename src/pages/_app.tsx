@@ -27,7 +27,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
         appName: APP_NAME,
       }),
     ],
-    []
+    [],
   );
 
   const router = useRouter();

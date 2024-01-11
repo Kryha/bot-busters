@@ -53,7 +53,7 @@ export const PlayersOthers: FC<Props> = ({
     stage === "results" ? text.match.whosBot : text.match.otherParticipants;
 
   const otherPlayers = players.filter(
-    (player) => player.userId !== localPlayer.userId
+    (player) => player.userId !== localPlayer.userId,
   );
 
   return (

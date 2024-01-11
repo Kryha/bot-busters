@@ -49,6 +49,6 @@ void app.prepare().then(() => {
   server.listen(port);
 
   console.log(
-    `> Server listening at http://localhost:${port} as ${env.NODE_ENV}`
+    `> Server listening at http://localhost:${port} as ${env.NODE_ENV}`,
   );
 });

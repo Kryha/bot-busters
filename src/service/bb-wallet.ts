@@ -33,7 +33,7 @@ export const useBBWallet = () => {
   }, [select]);
 
   const [signature, setSignature] = useState(
-    ls?.getItem("signature") ?? undefined
+    ls?.getItem("signature") ?? undefined,
   );
 
   const getSignature = useCallback(async () => {
@@ -62,7 +62,7 @@ export const useBBWallet = () => {
       await connect(
         DecryptPermission.UponRequest,
         // leave the following as an env variable
-        env.NEXT_PUBLIC_ALEO_NETWORK as WalletAdapterNetwork
+        env.NEXT_PUBLIC_ALEO_NETWORK as WalletAdapterNetwork,
       );
     } catch (error) {
       console.error(error);

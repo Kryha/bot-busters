@@ -9,7 +9,7 @@ import { pages } from "~/router.js";
 import { api } from "~/utils/api.js";
 import { useBBWallet } from "~/service/bb-wallet.js";
 import Page from "~/components/page/page.jsx";
-import { styles } from '../styles/pages/username-select';
+import { styles } from "../styles/pages/username-select";
 
 const UsernameSelect: FC = () => {
   const router = useRouter();

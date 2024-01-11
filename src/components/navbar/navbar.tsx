@@ -39,7 +39,7 @@ export const Navbar: FC<Props> = ({
     await disconnectWallet();
     sessionStorage.clear();
   };
-  
+
   const onSoundClick = () => {
     setSoundOn(!soundOn);
   };
@@ -79,7 +79,12 @@ export const Navbar: FC<Props> = ({
           <MenuButton sx={styles.button} onClick={() => setOpen(true)} />
         </Stack>
       </Stack>
-      <MainMenu soundOn={soundOn} setSoundOn={setSoundOn} open={open} setOpen={setOpen}/>
+      <MainMenu
+        soundOn={soundOn}
+        setSoundOn={setSoundOn}
+        open={open}
+        setOpen={setOpen}
+      />
     </Stack>
   );
 };
