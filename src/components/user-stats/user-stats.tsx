@@ -26,7 +26,9 @@ export const UserStats: FC<Props> = ({
   disconnect,
 }) => {
   const isVerifiedUserAndPlayed = isVerifiedUser && isGamePlayed;
-  const title = isVerifiedUserAndPlayed ? username : text.general.dailyScore;
+  const playerUsername = isVerifiedUserAndPlayed
+    ? username
+    : text.general.username;
 
   const logout = async () => {
     await signOut();
@@ -40,6 +42,7 @@ export const UserStats: FC<Props> = ({
         isVerifiedUser={isVerifiedUser}
         setOpen={setOpen}
         logout={logout}
+        username={playerUsername}
       />
       {/* TODO: Will need to find a new place for the stats*/}
       {/*<Stack sx={styles.statsWrapper}>*/}

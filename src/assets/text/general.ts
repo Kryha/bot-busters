@@ -26,7 +26,7 @@ export const general = {
   dailyScore: "Daily score",
   aleoCreditsPayout: "Aleo credits payouts",
   clickChat: "Click on the chat to open messages",
-  username: "usernamexyz",
+  username: "AnonymousBuster",
   newCredits: "new",
   todaysPosition: "Today's position",
   allTimeScore: "All time score",
