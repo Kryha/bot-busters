@@ -3,6 +3,8 @@ import { sql } from "drizzle-orm";
 import { db, type BBPgTransaction } from "~/server/db/index.js";
 import { ranks, users } from "~/server/db/schema.js";
 
+/* //TODO: At the moment the ranks are decided by the score and the date of creation of the user.
+          A more fair approach would be to make it so the first user to reach that Rank would remain there if another player reaches the same amount of points.*/
 const UPDATE_RANKS_QUERY = sql`
 TRUNCATE TABLE ${ranks};
 
@@ -13,7 +15,8 @@ SELECT
 FROM ${users}
 WHERE
     ${users.username} IS NOT NULL AND
-    ${users.address} IS NOT NULL;
+    ${users.address} IS NOT NULL AND
+    ${users.score} > 0;
 `;
 
 export const updateRanks = async (tx?: BBPgTransaction) => {

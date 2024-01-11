@@ -24,7 +24,6 @@ export const UserStats: FC<Props> = ({
   open,
   setOpen,
   disconnect,
-  points,
 }) => {
   const isVerifiedUserAndPlayed = isVerifiedUser && isGamePlayed;
   const playerUsername = isVerifiedUserAndPlayed

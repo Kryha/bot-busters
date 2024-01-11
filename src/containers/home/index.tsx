@@ -7,16 +7,11 @@ import { TopRanked } from "~/components/index.js";
 import { api } from "~/utils/api.js";
 import { pages } from "~/router.js";
 import { TOP_RANKED_PLAYERS } from "~/constants/index.js";
-import {
-  isUnverifiedSession,
-  isValidSession,
-  isVerifiedSession,
-} from "~/utils/session.js";
+import { isValidSession } from "~/utils/session.js";
 
 import { styles } from "./styles.js";
 import { BotBustersLogo } from "~/assets/icons/index.js";
 import { PixelButton } from "~/components/pixel-button/index.js";
-import { useEffect } from "react";
 
 export const Homepage = () => {
   const { push } = useRouter();
@@ -34,11 +29,6 @@ export const Homepage = () => {
       console.error(error);
     }
   };
-  useEffect(() => {
-    if (isUnverifiedSession(sessionData) && !isVerifiedSession(sessionData)) {
-      void push(pages.usernameSelect);
-    }
-  }, [push, sessionData]);
 
   const openDailyHandler = () => void push(pages.leaderboard);
   const openAboutHandler = () => void push(pages.about);
