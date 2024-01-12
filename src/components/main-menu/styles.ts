@@ -1,5 +1,7 @@
 import { type SxProps } from "@mui/material";
+
 import { breakpoints, theme } from "~/styles/theme.js";
+import { styles as navbarStyles } from "~/components/navbar/styles.js";
 
 export const styles = {
   dialog: {
@@ -16,26 +18,11 @@ export const styles = {
       width: "100%",
     },
   },
-  mainLogo: {
-    "&:hover": {
-      "& > svg": {
-        "& > path": {
-          fill: theme.palette.secondary.main,
-        },
-      },
-    },
-    [`@media (max-width: ${breakpoints.sm}px)`]: {
-      display: "none",
-    },
-  },
   buttonWrapper: {
     alignItems: "flex-end",
     pt: 3,
     pr: 3,
     width: "100vw",
-  },
-  button: {
-    p: "4px 16px",
   },
   menuButtonContainer: {
     display: "flex",
@@ -63,14 +50,6 @@ export const styles = {
     "&:hover .MuiTypography-root": {
       color: theme.palette.primary.main,
     },
-  },
-  userName: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    color: theme.palette.primary.main,
-    gap: 2,
   },
   header: {
     pt: 3,
@@ -117,4 +96,5 @@ export const styles = {
       color: theme.palette.secondary.main,
     },
   } satisfies SxProps,
+  ...navbarStyles,
 };

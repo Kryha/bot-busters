@@ -20,7 +20,9 @@
     "db:studio": "dotenv drizzle-kit studio",
     "dev": "next dev",
     "dev:ws": "yarn build:ws && yarn start:ws",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prettier:run": "yarn prettier ./src --write",
+    "prettier:config": "yarn prettier --find-config-path ./src"
   },
   "dependencies": {
     "@2toad/profanity": "^2.2.0",
@@ -83,6 +85,7 @@
     "leva": "^0.9.35",
     "next-plugin-svgr": "^1.1.10",
     "pg": "^8.11.3",
+    "prettier": "3.1.1",
     "puppeteer": "^21.5.2",
     "react-fps": "^1.0.6",
     "rimraf": "^5.0.5",
