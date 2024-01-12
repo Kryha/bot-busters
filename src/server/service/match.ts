@@ -21,7 +21,7 @@ import {
   achievementIdSchema,
 } from "~/types/index.js";
 import { MATCH_ACHIEVEMENTS } from "./achievements.js";
-import { selectMatchPlayedByUser } from "../db/user.js";
+import { selectMatchPlayedByUser } from "~/server/db/user.js";
 import { matchPrompts } from "~/assets/text/match-promts.js";
 import { getRandomInt } from "~/utils/math.js";
 

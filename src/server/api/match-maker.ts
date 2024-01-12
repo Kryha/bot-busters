@@ -14,7 +14,7 @@ import type {
   MatchRoom,
   ReadyToPlayPayload,
 } from "~/types/index.js";
-import { insertMatches } from "../db/match.js";
+import { insertMatches } from "~/server/db/match.js";
 
 export const ee = new EventEmitter();
 
