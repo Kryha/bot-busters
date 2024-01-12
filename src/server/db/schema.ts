@@ -1,5 +1,4 @@
 import { relations, sql } from "drizzle-orm";
-import { primaryKey } from "drizzle-orm/mysql-core";
 import {
   integer,
   varchar,
@@ -7,6 +6,7 @@ import {
   pgTableCreator,
   timestamp,
   json,
+  primaryKey,
 } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { type z } from "zod";
@@ -51,13 +51,21 @@ export const matches = bbPgTable("match", {
   room: json("room").notNull().$type<MatchRoom>(),
 });
 
-export const usersToMatches = bbPgTable("user_match", {
-  userId: uuid("user_id")
-    .notNull()
-    .references(() => users.id),
-  matchId: uuid("match_id")
-    .notNull()
-    .references(() => matches.id),
-});
+export const usersToMatches = bbPgTable(
+  "user_match",
+  {
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => users.id),
+    matchId: uuid("match_id")
+      .notNull()
+      .references(() => matches.id),
+  },
+  (table) => {
+    return {
+      id: primaryKey({ name: "id", columns: [table.userId, table.matchId] }),
+    };
+  }
+);
 export const usersToMatchesSchema = createInsertSchema(usersToMatches);
 export type UserToMatch = z.infer<typeof usersToMatchesSchema>;
