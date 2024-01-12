@@ -1,3 +1,5 @@
+// This file is referenced by `worker-client.ts` thus they should always stay in the same directory
+
 import { isMainThread, parentPort, workerData } from "node:worker_threads";
 import { PrivateKey } from "@aleohq/sdk";
 

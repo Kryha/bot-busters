@@ -8,8 +8,8 @@ import { uuidToBigInt } from "~/utils/uuid.js";
 
 import { leaderboardWorker } from "./worker-client.js";
 
-const USERS_ON_CHAIN = 112;
-const USERS_PER_SLICE = 16;
+const USERS_ON_CHAIN = 112; // amount of users that will be stored in the `users` mapping of `leaderboard` program
+const USERS_PER_SLICE = 16; // maximum amount of users we can set in a finalize call (Leo language limitation)
 
 interface ScoreSlice {
   idsSlice: string[];
