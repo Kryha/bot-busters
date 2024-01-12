@@ -4,18 +4,18 @@ import { type FC } from "react";
 import { styles } from "./styles.js";
 
 interface Props {
-  title: string;
-  info: string;
+  name: string;
+  message: string;
 }
 
-export const Prompt: FC<Props> = ({ title, info }) => {
+export const Prompt: FC<Props> = ({ name, message }) => {
   return (
     <Stack sx={styles.wrapper}>
       <Typography variant="body1" color="blueGrey.main">
-        {title}
+        {name}
       </Typography>
       <Typography variant="h4" color="blueGrey.main">
-        {info}
+        {message}
       </Typography>
     </Stack>
   );

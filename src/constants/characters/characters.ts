@@ -1,5 +1,7 @@
 import type { CharacterId, Character } from "~/types/index.js";
 
+export const MATCH_HOST = "host";
+
 export const CHARACTERS: Record<CharacterId, Character> = {
   1: { id: "1", name: "orange orangutan", color: "orange" },
   2: { id: "2", name: "brown bear", color: "brown" },

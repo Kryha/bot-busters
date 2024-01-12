@@ -14,6 +14,7 @@ import { APP_NAME } from "~/constants/index.js";
 import { useRouter } from "next/router.js";
 import { pages } from "~/router.js";
 import { Layout } from "~/containers/layout/index.js";
+import { CheckVerifiedSessionWrapper } from "~/containers/check-verified-session-wrapper";
 
 const headTitle = "Bot Busters";
 
@@ -27,7 +28,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
         appName: APP_NAME,
       }),
     ],
-    []
+    [],
   );
 
   const router = useRouter();
@@ -47,9 +48,11 @@ const MyApp: AppType<{ session: Session | null }> = ({
               {animationLab ? (
                 <Component {...pageProps} />
               ) : (
-                <Layout>
-                  <Component {...pageProps} />
-                </Layout>
+                <CheckVerifiedSessionWrapper>
+                  <Layout>
+                    <Component {...pageProps} />
+                  </Layout>
+                </CheckVerifiedSessionWrapper>
               )}
             </SessionProvider>
           </ThemeProvider>
