@@ -6,7 +6,7 @@
 // current_score: i64 = 0i64;
 // win: bool = false;
 
-[update_score]
-user_id: field = 42field;
-username: field = 42field;
-new_score: u64 = 42u64
+[update_scores]
+user_ids: [field; 16] = [553022319473841835241324053369526779010field,1515531690203881765739586217360383179440field,0field,0field,0field,0field,0field,0field,0field,0field,0field,0field,0field,0field,0field, 0field];
+scores: [field; 16] = [58u64,83u64,0u64,0u64,0u64,0u64,0u64,0u64,0u64,0u64,0u64,0u64,0u64,0u64,0u64,0u64];
+slice: u8 = 0u8;
