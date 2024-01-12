@@ -42,7 +42,7 @@ export class Match {
   private _messageCountSinceLastTrigger = 0;
 
   //TODO: check for better solution
-  private _playerPreviousMatches: Record<string, MatchRoom[]>;
+  private _playerPreviousMatches = new Map<string, MatchRoom[]>;
 
   stage: MatchStage = "chat";
   arePointsCalculated = false;
@@ -90,7 +90,9 @@ export class Match {
     });
 
     this._players = lodash.shuffle([...botPlayers, ...humanPlayers]);
-    this._playerPreviousMatches = {};
+    this.getPlayerPreviousMatches().catch(err => {
+      // TODO: handle
+    })
     this.addPrompt();
   }
 
@@ -181,31 +183,20 @@ export class Match {
   }
 
   // TODO: make a proper DB relation with user and matches instead of doing this
-  async getPlayerPreviousMatches() {
-    let playerHistoryLoaded = true;
-
+  private async getPlayerPreviousMatches() {
     const promises = this.players
-      .filter((player) => {
-        return !player.isBot;
-      })
+      .filter((player) =>  !player.isBot)
       .map(async (player) => {
-        try {
-          if (this._playerPreviousMatches[player.userId]) return;
+        if (this._playerPreviousMatches.get(player.userId)) return;
 
-          const matchRooms = (await selectMatchPlayedByUser(player.userId)).map(
-            (match) => match.match.room,
-          );
+        const matchRooms = (await selectMatchPlayedByUser(player.userId)).map(
+          (match) => match.match.room,
+        );
 
-          this._playerPreviousMatches[player.userId] = [...matchRooms];
-        } catch (error) {
-          playerHistoryLoaded = false;
-          console.error("Error getting matches played:", error);
-        }
+        this._playerPreviousMatches.set(player.userId, matchRooms);
       });
-    await Promise.all(promises);
-
-    this.playerHistoryLoaded = playerHistoryLoaded;
-    return playerHistoryLoaded;
+    await Promise.allSettled(promises);
+    this.playerHistoryLoaded = true;
   }
 
   calculatePoints() {
@@ -244,7 +235,7 @@ export class Match {
               messages: this._messages,
               botsBusted,
               otherPlayers,
-              playerHistory: this._playerPreviousMatches[player.userId],
+              playerHistory: this._playerPreviousMatches.get(player.userId),
             });
           })
           .reduce((totalPoints, [id, _]) => {

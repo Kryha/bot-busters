@@ -73,16 +73,6 @@ const matchLoop = () => {
   });
 };
 
-const getPlayerData = async () => {
-  const promises = Array.from(matches.values()).map(async (room) => {
-    if (room.playerHistoryLoaded) return;
-
-    await room.getPlayerPreviousMatches();
-  });
-
-  await Promise.all(promises);
-};
-
 const storeScoresAndMatches = async () => {
   const roomsToArchive = new Map<string, MatchRoom>();
 
@@ -120,11 +110,6 @@ setInterval(() => {
     matchLoop();
     storeScoresAndMatches().catch((error) =>
       console.error("Error storing matches:", error),
-    );
-
-    // TODO: remove `getPlayerData` from here
-    getPlayerData().catch((error) =>
-      console.error("Error getting player stats:", error),
     );
 
     makeMatch();
