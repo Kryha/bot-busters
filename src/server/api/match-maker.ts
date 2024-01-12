@@ -8,13 +8,13 @@ import {
 } from "~/constants/main.js";
 import { env } from "~/env.mjs";
 import { db } from "~/server/db/index.js";
-import { matches as matchesTable } from "~/server/db/schema.js";
 import { Match, leaderboard } from "~/server/service/index.js";
 import type {
   MatchEventType,
   MatchRoom,
   ReadyToPlayPayload,
 } from "~/types/index.js";
+import { updateUserToMatch } from "../db/match.js";
 
 export const ee = new EventEmitter();
 
@@ -107,7 +107,7 @@ const storeScoresAndMatches = async () => {
     }));
 
     if (roomsToInsert.length) {
-      await tx.insert(matchesTable).values(roomsToInsert);
+      await updateUserToMatch(roomsToInsert, tx);
       await leaderboard.calculate(tx);
     }
 
@@ -132,5 +132,3 @@ setInterval(() => {
     console.error("Main loop error:", error);
   }
 }, 10000);
-
-// TODO: add anonymous user cleanup

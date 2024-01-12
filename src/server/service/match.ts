@@ -193,7 +193,7 @@ export class Match {
           if (this._playerPreviousMatches[player.userId]) return;
 
           const matchRooms = (await selectMatchPlayedByUser(player.userId)).map(
-            (match) => match.room
+            (match) => match.match.room
           );
 
           this._playerPreviousMatches[player.userId] = [...matchRooms];
