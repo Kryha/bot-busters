@@ -22,7 +22,6 @@ export const users = bbPgTable("user", {
   score: integer("score").default(0).notNull(),
   // TODO: add zPass
   // zPass: json("zPass"),
-  matchesPlayed: uuid("matches_played").array(),
   createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`),
 });
 

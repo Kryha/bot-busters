@@ -280,7 +280,6 @@ export class Match {
           .update(users)
           .set({
             score: sql`${users.score} + ${player.score}`,
-            matchesPlayed: sql`array_append(${users.matchesPlayed},${this._id})`,
           })
           .where(eq(users.id, player.userId));
       } catch (error) {
