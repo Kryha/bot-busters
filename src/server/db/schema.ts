@@ -50,3 +50,14 @@ export const matches = bbPgTable("match", {
   id: uuid("id").primaryKey(),
   room: json("room").notNull().$type<MatchRoom>(),
 });
+
+export const userToMatches = bbPgTable("user_match", {
+  //TODO: Check if we need the primary key to make sure there are no duplicates
+  //id: varchar("id").primaryKey(),
+  userId: uuid("user_id")
+    .notNull()
+    .references(() => users.id),
+  matchId: uuid("match_id")
+    .notNull()
+    .references(() => matches.id),
+});
