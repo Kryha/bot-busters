@@ -14,7 +14,7 @@ import type {
   MatchRoom,
   ReadyToPlayPayload,
 } from "~/types/index.js";
-import { updateUsersToMatches } from "../db/match.js";
+import { insertMatches } from "../db/match.js";
 
 export const ee = new EventEmitter();
 
@@ -107,7 +107,7 @@ const storeScoresAndMatches = async () => {
     }));
 
     if (roomsToInsert.length) {
-      await updateUsersToMatches(roomsToInsert, tx);
+      await insertMatches(roomsToInsert, tx);
       await leaderboard.calculate(tx);
     }
 
