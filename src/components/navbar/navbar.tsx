@@ -47,12 +47,17 @@ export const Navbar: FC<Props> = ({
   const handleNavigation = (path: string) => {
     void router.push(path);
   };
+
   return (
     <Stack sx={styles.container}>
       <Stack sx={styles.wrapper}>
-        <Stack sx={styles.userName}>
-          <UserIcon />
-          <Typography variant="h3">{text.general.username}</Typography>
+        <Stack sx={{ ...styles.userName, ...styles.navbarStart }}>
+          <Stack sx={styles.userIcon}>
+            <UserIcon />
+          </Stack>
+          <Typography variant="h3" sx={styles.userNameText}>
+            {text.general.username}
+          </Typography>
         </Stack>
         <Button
           variant="text"
@@ -72,7 +77,7 @@ export const Navbar: FC<Props> = ({
             {text.general.signOut}
           </Button>
         )}
-        <Stack direction={"row"} rowGap={2}>
+        <Stack direction={"row"} rowGap={2} sx={styles.navbarEnd}>
           <Button variant="text" onClick={onSoundClick}>
             {soundOn ? <SoundOnIcon /> : <SoundOffIcon />}
           </Button>
