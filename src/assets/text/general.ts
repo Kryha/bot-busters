@@ -26,7 +26,7 @@ export const general = {
   dailyScore: "Daily score",
   aleoCreditsPayout: "Aleo credits payouts",
   clickChat: "Click on the chat to open messages",
-  username: "usernamexyz",
+  username: "AnonymousBuster",
   newCredits: "new",
   todaysPosition: "Today's position",
   allTimeScore: "All time score",
@@ -37,8 +37,7 @@ export const general = {
   bot: "bot",
   confirm: "Confirm",
   aleoWebsite: "https://aleo.org/",
-  pageNotFound: "Page not found",
-
+  pageNotFound: "404:Page not found",
   countdown: (val: string): string => `${val} left`,
   formattedCountdown: (minutes: number, seconds: number): string =>
     `${minutes.toString().padStart(2, "0")}:${seconds

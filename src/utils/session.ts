@@ -10,7 +10,7 @@ export const isAnonymousSession = (session: Session | null) => {
   );
 };
 
-export const isUnverifiedSession = (session: Session | null) => {
+export const missingUsername = (session: Session | null) => {
   const validSession = isValidSession(session);
   return Boolean(
     validSession && session?.user.address && !session?.user.username,

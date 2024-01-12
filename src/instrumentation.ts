@@ -1,7 +1,5 @@
 export async function register() {
   if (process.env.NEXT_RUNTIME === "nodejs") {
-    const { db } = await import("~/server/db/index.js");
-    const { sql } = await import("drizzle-orm");
     const { exec } = await import("child_process");
     const { promisify } = await import("util");
 
