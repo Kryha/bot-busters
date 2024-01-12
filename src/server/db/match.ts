@@ -13,7 +13,7 @@ export const insertMatches = async (
   const dbTx = tx ?? db;
   await dbTx.insert(matchesTable).values(matches);
 
-  matches.map(async (match) => {
+  Promise.all(matches.map(async (match) => {
     const userMatch: UserToMatch[] = match.room.players
       .filter((player) => {
         return !player.isBot;
@@ -25,5 +25,7 @@ export const insertMatches = async (
         };
       });
     await dbTx.insert(usersToMatches).values(userMatch);
+  } )).catch((error) => {
+    console.error("Error inserting matches:", error);
   });
 };
