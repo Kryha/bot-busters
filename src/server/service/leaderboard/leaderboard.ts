@@ -17,10 +17,16 @@ interface ScoreSlice {
   sliceIndex: string;
 }
 
-interface TxResult {
-  isSuccess: boolean;
-  txId?: string;
+interface TxResultOk {
+  isSuccess: true;
+  txId: string;
 }
+
+interface TxResultErr {
+  isSuccess: false;
+}
+
+type TxResult = TxResultOk | TxResultErr;
 
 const calculate = (tx?: BBPgTransaction) => updateRanks(tx);
 
