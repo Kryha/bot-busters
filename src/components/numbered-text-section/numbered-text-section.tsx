@@ -1,8 +1,7 @@
 import type { FC, ReactNode } from "react";
 import { Stack, Typography } from "@mui/material";
 
-import { text } from "~/assets/text/index.js";
-import { styles } from "~/components/navbar/styles.js";
+import { styles } from "~/components/numbered-text-section/styles.js";
 
 interface Props {
   number: number,
@@ -13,11 +12,11 @@ interface Props {
 export const NumberedTextSection: FC<Props> = ({ number, title, content }) => {
   return (
     <Stack sx={styles.container}>
-      <Typography>
+      <Typography variant="h2" sx={styles.largeNumber}>
         {number}
       </Typography>
-      <Stack sx={styles.wrapper}>
-        <Typography>
+      <Stack sx={styles.column}>
+        <Typography variant="body1" sx={styles.title}>
           {title}
         </Typography>
         {content}
