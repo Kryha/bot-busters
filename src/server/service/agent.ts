@@ -101,7 +101,7 @@ export class Agent {
         },
         method: "POST",
         body,
-      }
+      },
     );
 
     const textRes = await response.text();

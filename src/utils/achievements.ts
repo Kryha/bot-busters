@@ -3,14 +3,14 @@ import { type MatchRoom } from "../types/match.js";
 export const alreadyReceivedAchievementToday = (
   playerId: string,
   playerMatchHistory: MatchRoom[],
-  achievementId: string
+  achievementId: string,
 ): boolean => {
   // Get the timestamp for 24 hours ago
   const twentyFourHoursAgo = Date.now() - 24 * 60 * 60 * 1000;
 
   // Filter playerHistory to only include matches from the past 24 hours
   const matchesPastDayHours = playerMatchHistory.filter(
-    (match) => match.createdAt > twentyFourHoursAgo
+    (match) => match.createdAt > twentyFourHoursAgo,
   );
 
   // Get the player data from the last two matches

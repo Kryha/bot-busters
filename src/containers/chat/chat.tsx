@@ -46,12 +46,12 @@ export const Chat: FC<Props> = ({ roomId, room }) => {
         console.error("Chat message error:", error);
         void push(pages.home);
       },
-    }
+    },
   );
 
   const hostMessageData: ChatMessagePayload | undefined = useMemo(() => {
     const hostMessage = messages.findLast(
-      (message) => message.sender === MATCH_HOST
+      (message) => message.sender === MATCH_HOST,
     );
     return hostMessage;
   }, [messages]);
@@ -64,7 +64,7 @@ export const Chat: FC<Props> = ({ roomId, room }) => {
       .map((message) => {
         const isLocalSender = message.sender === session?.user?.id;
         const characterId: CharacterId = players.find(
-          (player) => player.userId === message.sender
+          (player) => player.userId === message.sender,
         )!.characterId;
 
         return {
