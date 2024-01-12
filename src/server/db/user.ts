@@ -1,7 +1,7 @@
 import { eq } from "drizzle-orm";
 
 import { db, dbSchema } from "~/server/db/index.js";
-import { userToMatches } from "./schema.js";
+import { usersToMatches } from "./schema.js";
 
 const { users, matches } = dbSchema;
 
@@ -29,9 +29,9 @@ export const insertUserWithAddress = async (address: string) => {
 export const selectMatchPlayedByUser = async (userId: string) => {
   const matchesPlayed = await db
     .select()
-    .from(userToMatches)
-    .innerJoin(matches, eq(matches.id, userToMatches.matchId))
-    .where(eq(userToMatches.userId, userId));
+    .from(usersToMatches)
+    .innerJoin(matches, eq(matches.id, usersToMatches.matchId))
+    .where(eq(usersToMatches.userId, userId));
   return matchesPlayed;
 };
 

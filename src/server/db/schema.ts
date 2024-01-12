@@ -1,4 +1,5 @@
 import { relations, sql } from "drizzle-orm";
+import { primaryKey } from "drizzle-orm/mysql-core";
 import {
   integer,
   varchar,
@@ -50,9 +51,7 @@ export const matches = bbPgTable("match", {
   room: json("room").notNull().$type<MatchRoom>(),
 });
 
-export const userToMatches = bbPgTable("user_match", {
-  //TODO: Check if we need the primary key to make sure there are no duplicates
-  //id: varchar("id").primaryKey(),
+export const usersToMatches = bbPgTable("user_match", {
   userId: uuid("user_id")
     .notNull()
     .references(() => users.id),
@@ -60,5 +59,5 @@ export const userToMatches = bbPgTable("user_match", {
     .notNull()
     .references(() => matches.id),
 });
-export const userToMatchesSchema = createInsertSchema(userToMatches);
-export type UserToMatch = z.infer<typeof userToMatchesSchema>;
+export const usersToMatchesSchema = createInsertSchema(usersToMatches);
+export type UserToMatch = z.infer<typeof usersToMatchesSchema>;

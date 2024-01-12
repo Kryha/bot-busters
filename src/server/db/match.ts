@@ -3,7 +3,7 @@ import {
   type UserToMatch,
   matches as matchesTable,
 } from "~/server/db/schema.js";
-import { userToMatches } from "~/server/db/schema.js";
+import { usersToMatches } from "~/server/db/schema.js";
 import { type MatchRoom } from "~/types";
 
 export const updateUserToMatch = async (
@@ -24,6 +24,6 @@ export const updateUserToMatch = async (
           matchId: match.id,
         };
       });
-    await dbTx.insert(userToMatches).values(userMatch);
+    await dbTx.insert(usersToMatches).values(userMatch);
   });
 };
