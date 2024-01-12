@@ -6,7 +6,7 @@ import {
 import { usersToMatches } from "~/server/db/schema.js";
 import { type MatchRoom } from "~/types";
 
-export const updateUserToMatch = async (
+export const updateUsersToMatches = async (
   matches: { id: string; room: MatchRoom }[],
   tx?: BBPgTransaction
 ) => {

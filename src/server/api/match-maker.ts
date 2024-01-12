@@ -14,7 +14,7 @@ import type {
   MatchRoom,
   ReadyToPlayPayload,
 } from "~/types/index.js";
-import { updateUserToMatch } from "../db/match.js";
+import { updateUsersToMatches } from "../db/match.js";
 
 export const ee = new EventEmitter();
 
@@ -24,7 +24,7 @@ export const matches = new Map<string, Match>();
 
 export const matchEvent = (
   roomId: string,
-  eventType: MatchEventType = "message",
+  eventType: MatchEventType = "message"
 ) => `chat_${roomId}_${eventType}`;
 
 const makeMatch = () => {
@@ -107,7 +107,7 @@ const storeScoresAndMatches = async () => {
     }));
 
     if (roomsToInsert.length) {
-      await updateUserToMatch(roomsToInsert, tx);
+      await updateUsersToMatches(roomsToInsert, tx);
       await leaderboard.calculate(tx);
     }
 
@@ -119,12 +119,12 @@ setInterval(() => {
   try {
     matchLoop();
     storeScoresAndMatches().catch((error) =>
-      console.error("Error storing matches:", error),
+      console.error("Error storing matches:", error)
     );
 
     // TODO: remove `getPlayerData` from here
     getPlayerData().catch((error) =>
-      console.error("Error getting player stats:", error),
+      console.error("Error getting player stats:", error)
     );
 
     makeMatch();
