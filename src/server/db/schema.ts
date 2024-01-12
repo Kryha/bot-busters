@@ -56,7 +56,7 @@ export const usersToMatches = bbPgTable(
   {
     userId: uuid("user_id")
       .notNull()
-      .references(() => users.id),
+      .references(() => users.id, { onDelete: "cascade" }),
     matchId: uuid("match_id")
       .notNull()
       .references(() => matches.id),
