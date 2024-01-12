@@ -7,16 +7,17 @@ const styles = {
   container: {
     height: "100vh",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
 };
 
 const Custom404: FC = () => {
   return (
-    <Stack sx={styles.container} >
+    <Stack sx={styles.container}>
       <Typography variant="h1" textAlign="center">
         {text.general.pageNotFound}
       </Typography>
     </Stack>
-)};
+  );
+};
 export default Custom404;
