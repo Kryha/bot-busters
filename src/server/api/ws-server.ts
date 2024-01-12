@@ -27,7 +27,7 @@ wss.on("connection", (ws) => {
 });
 
 console.log(
-  `✅ WebSocket Server listening on ws://localhost:3001 in ${env.NODE_ENV} environment`
+  `✅ WebSocket Server listening on ws://localhost:3001 in ${env.NODE_ENV} environment`,
 );
 
 process.on("SIGTERM", () => {

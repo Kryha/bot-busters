@@ -20,7 +20,7 @@ const goodBustAchievement: Achievement = {
   calculate: ({ player, botsBusted, otherPlayers }) => {
     const agents = otherPlayers.filter((p) => p.isBot);
     const wrongVotes = player.votes?.some(
-      (vote) => !agents.some((a) => a.userId === vote)
+      (vote) => !agents.some((a) => a.userId === vote),
     );
 
     return botsBusted === agents.length && !wrongVotes;
@@ -31,8 +31,8 @@ const doubleAgentAchievement: Achievement = {
   name: "Double Agent",
   description: "Convince 2 or more humans that you are a bot in a match",
   calculate: ({ otherPlayers, player }) => {
-    const isVotedAgainst = otherPlayers.filter((p) =>
-      p.votes?.includes(player.userId)
+    const isVotedAgainst = otherPlayers.filter(
+      (p) => p.votes?.includes(player.userId),
     ).length;
     return isVotedAgainst >= 2;
   },

@@ -41,11 +41,40 @@ export const MenuButtonStyle = styled(Button)({
   },
 });
 
+export const NavbarMenuButtonStyle = styled(MenuButtonStyle)({
+  color: theme.palette.secondary.main,
+  "& > svg": {
+    "& > path": {
+      fill: theme.palette.secondary.main,
+    },
+  },
+  "&:hover": {
+    color: theme.palette.secondary.main,
+  },
+  "&:active": {
+    color: theme.palette.secondary.main,
+    "& > svg": {
+      "& > path": {
+        fill: theme.palette.secondary.main,
+      },
+    },
+  },
+});
+
 export const MenuButton: FC<Props> = ({ ...props }) => {
   return (
     <MenuButtonStyle {...props}>
       {text.general.menu}
       <CloseIcon />
     </MenuButtonStyle>
+  );
+};
+
+export const NavbarMenuButton: FC<Props> = ({ ...props }) => {
+  return (
+    <NavbarMenuButtonStyle {...props}>
+      {text.general.menu}
+      <CloseIcon />
+    </NavbarMenuButtonStyle>
   );
 };

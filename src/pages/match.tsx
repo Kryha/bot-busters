@@ -42,7 +42,7 @@ const MatchInternal: FC<Props> = ({ roomId, session }) => {
         console.error(error);
       },
       enabled: roomData.data && !roomData.data.arePointsCalculated,
-    }
+    },
   );
 
   if (roomData.isError) return <ErrorView />;
@@ -51,18 +51,18 @@ const MatchInternal: FC<Props> = ({ roomId, session }) => {
   const room = roomData.data;
 
   const localPlayer = room.players.find(
-    (player) => player.userId === session.user.id
+    (player) => player.userId === session.user.id,
   );
 
   if (!localPlayer) return <ErrorView />;
 
   const totalBots = room.players.reduce(
     (acc, player) => (player.isBot ? acc + 1 : acc),
-    0
+    0,
   );
 
   const isVoteEnabled = !!room.messages.find(
-    (message) => message.sender === localPlayer.userId
+    (message) => message.sender === localPlayer.userId,
   );
 
   const handleVote = async (selectedUserIds: string[]) => {
