@@ -4,5 +4,12 @@ export const styles = {
       alignItems: "center",
       justifyContent: "center"
     },
+    text: {
+      width: "60vw",
+      overflow: "wrap",
+      textAlign: "start",
+      lineHeight: "35px",
+    },
+    
   };
   
