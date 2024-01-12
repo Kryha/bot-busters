@@ -4,7 +4,7 @@ import {
   matches as matchesTable,
 } from "~/server/db/schema.js";
 import { usersToMatches } from "~/server/db/schema.js";
-import { type MatchRoom } from "~/types";
+import { type MatchRoom } from "~/types/index.js";
 
 export const updateUsersToMatches = async (
   matches: { id: string; room: MatchRoom }[],
