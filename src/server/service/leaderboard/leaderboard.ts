@@ -11,6 +11,12 @@ import { leaderboardWorker } from "./worker-client.js";
 const USERS_ON_CHAIN = 112;
 const USERS_PER_SLICE = 16;
 
+interface ScoreSlice {
+  idsSlice: string[];
+  scoresSlice: string[];
+  sliceIndex: string;
+}
+
 const calculate = (tx?: BBPgTransaction) => updateRanks(tx);
 
 const storeOnChain = async () => {
@@ -39,7 +45,7 @@ const storeOnChain = async () => {
     USERS_ON_CHAIN > players.length ? players.length : USERS_ON_CHAIN;
   const slicesAmount = Math.ceil(slicesDividend / USERS_PER_SLICE);
 
-  const slices = lodash.range(0, slicesAmount).map((i) => {
+  const slices: ScoreSlice[] = lodash.range(0, slicesAmount).map((i) => {
     const start = i * USERS_PER_SLICE;
     const end = (i + 1) * USERS_PER_SLICE;
 
@@ -49,30 +55,35 @@ const storeOnChain = async () => {
       const fieldFill = new Array(diff).fill("0field") as string[];
       const u64Fill = new Array(diff).fill("0u64") as string[];
 
-      return [
-        [...userIds.slice(start, userIds.length), ...fieldFill],
-        [...scores.slice(start, scores.length), ...u64Fill],
-      ];
+      return {
+        idsSlice: [...userIds.slice(start, userIds.length), ...fieldFill],
+        scoresSlice: [...scores.slice(start, scores.length), ...u64Fill],
+        sliceIndex: `${i}u8`,
+      };
     } else {
-      return [userIds.slice(start, end), scores.slice(start, end)];
+      return {
+        idsSlice: userIds.slice(start, end),
+        scoresSlice: scores.slice(start, end),
+        sliceIndex: `${i}u8`,
+      };
     }
   });
 
-  const executionPromises = slices.map(async ([idsSlice, scoresSlice], i) => {
-    if (!idsSlice || !scoresSlice) throw new Error("Slicing error");
+  const executionPromises = slices.map(
+    async ({ idsSlice, scoresSlice, sliceIndex }) => {
+      if (!idsSlice || !scoresSlice) throw new Error("Slicing error");
 
-    const sliceNum = `${i}u8`;
+      // TODO: if update for a specific slice fails, try again
+      const txId = await leaderboardWorker.updateScores({
+        slice: sliceIndex,
+        userIds: idsSlice,
+        scores: scoresSlice,
+      });
 
-    // TODO: if update for a specific slice fails, try again
-    const txId = await leaderboardWorker.updateScores({
-      slice: sliceNum,
-      userIds: idsSlice,
-      scores: scoresSlice,
-    });
-
-    if (txId instanceof Error) throw txId;
-    return txId;
-  });
+      if (txId instanceof Error) throw txId;
+      return txId;
+    }
+  );
 
   const txIds = await Promise.all(executionPromises);
 
@@ -80,5 +91,7 @@ const storeOnChain = async () => {
 
   return txIds;
 };
+
+storeOnChain().catch((err) => console.error("Store on chain:", err));
 
 export const leaderboard = { calculate, storeOnChain };
