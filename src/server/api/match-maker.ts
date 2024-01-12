@@ -133,5 +133,3 @@ setInterval(() => {
     console.error("Main loop error:", error);
   }
 }, 10000);
-
-// TODO: add anonymous user cleanup

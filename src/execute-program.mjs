@@ -31,15 +31,15 @@ const programManager = new ProgramManager(
   recordProvider
 );
 
+const transitionName = "update_scores";
+
 const idsArg =
-  "[553022319473841835241324053369526779010field,1515531690203881765739586217360383179440field,1field,0field,0field,0field,0field,0field,0field,0field,0field,0field,0field,0field,0field, 0field]";
+  "[553022319473841835241324053369526779010field,1515531690203881765739586217360383179440field,1field,2field,3field,4field,5field,6field,7field,8field,0field,0field,0field,0field,0field, 0field]";
 
 const scoresArg =
-  "[58u64,83u64,12u64,0u64,0u64,0u64,0u64,0u64,0u64,0u64,0u64,0u64,0u64,0u64,0u64,0u64]";
+  "[58u64,83u64,12u64,11u64,10u64,9u64,8u64,7u64,6u64,0u64,0u64,0u64,0u64,0u64,0u64,0u64]";
 
-const sliceNum = "0u8";
-
-const transitionName = "update_scores";
+const sliceNum = "6u8";
 
 const txId = await programManager.execute(
   LEADERBOARD_PROGRAM_NAME ?? "",

@@ -10,7 +10,7 @@ program leaderboard.aleo {
     // array length is set to 16 because Leo only supports 16 calls to `set` per call
     transition update_scores(user_ids: [field; 16], new_scores: [u64; 16], slice: u8) {
         assert_eq(self.caller, self.signer);
-        assert(slice < 4u8); // we only need 4 slices to update 100 positions
+        assert(slice < 7u8); // we only need 7 slices to update 100 positions
 
         return then finalize(user_ids, new_scores, slice);
     }
