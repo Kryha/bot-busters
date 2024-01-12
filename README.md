@@ -101,6 +101,12 @@ LEADERBOARD_PROGRAM_NAME="leaderboard.aleo"
 
 > These are the same as the defaults copied from `.env.example`.
 
+Build the program:
+
+```sh
+yarn aleo:build-leaderboard
+```
+
 Deploy the program:
 
 ```sh
@@ -109,4 +115,4 @@ yarn aleo:deploy-leaderboard
 
 > It's normal for the script to take a while to complete.
 
-If you wish to re-deploy the leaderboard you will have to update its name in the `.env` as well before re-running the deploy script. Aleo uses program names as identifiers, thus 2 programs with the same name cannot co-exist on the same network.
+If you wish to re-deploy the leaderboard you will have to update its name in the `.env` before re-running the deploy script. Aleo uses program names as identifiers, thus 2 programs with the same name cannot co-exist on the same network.
