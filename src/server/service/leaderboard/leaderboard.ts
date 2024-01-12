@@ -1,13 +1,12 @@
-import { PrivateKey } from "@aleohq/sdk";
-import { desc, eq } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import lodash from "lodash";
 
-import { env } from "~/env.mjs";
 import { db, type BBPgTransaction } from "~/server/db/index.js";
 import { updateRanks } from "~/server/db/rank.js";
 import { ranks, users } from "~/server/db/schema.js";
-import { aleo } from "~/server/service/aleo.js";
 import { uuidToBigInt } from "~/utils/uuid.js";
+
+import { leaderboardWorker } from "./worker-client.js";
 
 const USERS_ON_CHAIN = 112;
 const USERS_PER_SLICE = 16;
@@ -19,9 +18,8 @@ const storeOnChain = async () => {
     .select()
     .from(users)
     .innerJoin(ranks, eq(users.id, ranks.userId))
-    .orderBy(desc(ranks.position))
+    .orderBy(ranks.position)
     .limit(USERS_ON_CHAIN);
-  console.log("🚀 ~ storeOnChain ~ players:", players);
 
   const userIds: string[] = [];
   const scores: string[] = [];
@@ -33,9 +31,6 @@ const storeOnChain = async () => {
     scores.push(`${p.user.score}u64`);
   });
 
-  console.log("🚀 ~ storeOnChain ~ userIds:", userIds);
-  console.log("🚀 ~ storeOnChain ~ scores:", scores);
-
   if (userIds.length !== scores.length) {
     throw new Error("Users and scores length do not match");
   }
@@ -43,7 +38,6 @@ const storeOnChain = async () => {
   const slicesDividend =
     USERS_ON_CHAIN > players.length ? players.length : USERS_ON_CHAIN;
   const slicesAmount = Math.ceil(slicesDividend / USERS_PER_SLICE);
-  console.log("🚀 ~ storeOnChain ~ slicesAmount:", slicesAmount);
 
   const slices = lodash.range(0, slicesAmount).map((i) => {
     const start = i * USERS_PER_SLICE;
@@ -63,58 +57,28 @@ const storeOnChain = async () => {
       return [userIds.slice(start, end), scores.slice(start, end)];
     }
   });
-  console.log("🚀 ~ slices ~ slices:", slices);
 
   const executionPromises = slices.map(async ([idsSlice, scoresSlice], i) => {
-    console.log("PROMISSEESESESESESESESESESESESESESESESE");
     if (!idsSlice || !scoresSlice) throw new Error("Slicing error");
 
-    const idsArg = `[${idsSlice.toString()}]`.replaceAll('"', "");
-    console.log("🚀 ~ executionPromises ~ idsArg:", idsArg);
-    const scoresArg = `[${scoresSlice.toString()}]`.replaceAll('"', "");
-    console.log("🚀 ~ executionPromises ~ scoresArg:", scoresArg);
     const sliceNum = `${i}u8`;
-    console.log("🚀 ~ executionPromises ~ sliceNum:", sliceNum);
 
-    // TODO: move this to a worker
-    const txId = await aleo.programManager.execute(
-      env.LEADERBOARD_PROGRAM_NAME,
-      "update_scores",
-      0.02,
-      false,
-      [idsArg, scoresArg, sliceNum],
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      PrivateKey.from_string(env.ALEO_PRIVATE_KEY)
-    );
-    console.log("🚀 ~ executionPromises ~ txId:", txId);
+    // TODO: if update for a specific slice fails, try again
+    const txId = await leaderboardWorker.updateScores({
+      slice: sliceNum,
+      userIds: idsSlice,
+      scores: scoresSlice,
+    });
 
     if (txId instanceof Error) throw txId;
     return txId;
   });
-  console.log("🚀 ~ executionPromises ~ executionPromises:", executionPromises);
 
   const txIds = await Promise.all(executionPromises);
-  console.log("🚀 ~ storeOnChain ~ txIds:", txIds);
 
-  const transactions = await Promise.all(
-    txIds.map(async (txId) => {
-      const transaction =
-        await aleo.programManager.networkClient.getTransaction(txId);
+  console.log("Executed transactions:", txIds);
 
-      if (transaction instanceof Error) {
-        console.error("Transaction fetch error:", transaction);
-      }
-
-      return transaction;
-    })
-  );
-  console.log("🚀 ~ storeOnChain ~ transactions:", transactions);
-
-  return transactions;
+  return txIds;
 };
 
 export const leaderboard = { calculate, storeOnChain };

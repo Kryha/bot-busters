@@ -1,3 +1,5 @@
+// This file is purely for testing and debugging purposes
+
 import {
   Account,
   AleoKeyProvider,
@@ -30,10 +32,10 @@ const programManager = new ProgramManager(
 );
 
 const idsArg =
-  "[553022319473841835241324053369526779010field,1515531690203881765739586217360383179440field,0field,0field,0field,0field,0field,0field,0field,0field,0field,0field,0field,0field,0field, 0field]";
+  "[553022319473841835241324053369526779010field,1515531690203881765739586217360383179440field,1field,0field,0field,0field,0field,0field,0field,0field,0field,0field,0field,0field,0field, 0field]";
 
 const scoresArg =
-  "[58u64,83u64,0u64,0u64,0u64,0u64,0u64,0u64,0u64,0u64,0u64,0u64,0u64,0u64,0u64,0u64]";
+  "[58u64,83u64,12u64,0u64,0u64,0u64,0u64,0u64,0u64,0u64,0u64,0u64,0u64,0u64,0u64,0u64]";
 
 const sliceNum = "0u8";
 
@@ -42,7 +44,7 @@ const transitionName = "update_scores";
 const txId = await programManager.execute(
   LEADERBOARD_PROGRAM_NAME ?? "",
   transitionName,
-  20,
+  5,
   false,
   [idsArg, scoresArg, sliceNum],
   undefined,

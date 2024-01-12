@@ -64,6 +64,7 @@ const matchLoop = () => {
 
     if (
       room.stage === "voting" &&
+      // FIXME: this condition is not correct and some users may not be able to vote because of this
       (room.allPlayersVoted || roomAge >= CHAT_TIME_MS + VOTING_TIME_MS)
     ) {
       room.stage = "results";
