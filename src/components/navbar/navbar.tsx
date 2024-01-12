@@ -10,7 +10,7 @@ import {
   SoundOffIcon,
   SoundOnIcon,
   UserIcon,
-} from "~/assets/icons";
+} from "~/assets/icons/index.js";
 import { MenuButton } from "~/components/main-menu/menu-button.jsx";
 import { MainMenu } from "~/components/main-menu/index.js";
 import { pages } from "~/router.js";
