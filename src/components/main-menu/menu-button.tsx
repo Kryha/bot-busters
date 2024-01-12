@@ -50,11 +50,7 @@ export const NavbarMenuButtonStyle = styled(MenuButtonStyle)({
 });
 
 export const MenuButton: FC<Props> = ({ ...props }) => {
-  return (
-    <MenuButtonStyle {...props}>
-      {text.general.menu}
-    </MenuButtonStyle>
-  );
+  return <MenuButtonStyle {...props}>{text.general.menu}</MenuButtonStyle>;
 };
 
 export const NavbarMenuButton: FC<Props> = ({ ...props }) => {

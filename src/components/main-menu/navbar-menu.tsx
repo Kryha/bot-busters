@@ -34,11 +34,13 @@ export const NavbarMenu: FC<Props> = ({ handleClose, soundOn, setSoundOn }) => {
 
   return (
     <Stack sx={styles.wrapper}>
-      <Stack sx={{ ...styles.userName, ...styles.navbarStart}}>
+      <Stack sx={{ ...styles.userName, ...styles.navbarStart }}>
         <Stack sx={styles.userIcon}>
           <UserIcon />
         </Stack>
-        <Typography variant="h3" sx={styles.userNameText}>{text.general.username}</Typography>
+        <Typography variant="h3" sx={styles.userNameText}>
+          {text.general.username}
+        </Typography>
       </Stack>
       <Button
         variant="text"

@@ -68,7 +68,7 @@ export const styles = {
   button: {
     mr: 2,
     fontStyle: "italic",
-   } satisfies SxProps,
+  } satisfies SxProps,
   navbarEnd: {
     fontStyle: "italic",
     width: 300,

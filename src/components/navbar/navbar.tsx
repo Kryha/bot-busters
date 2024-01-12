@@ -47,7 +47,7 @@ export const Navbar: FC<Props> = ({
   const handleNavigation = (path: string) => {
     void router.push(path);
   };
-  
+
   return (
     <Stack sx={styles.container}>
       <Stack sx={styles.wrapper}>
@@ -55,7 +55,9 @@ export const Navbar: FC<Props> = ({
           <Stack sx={styles.userIcon}>
             <UserIcon />
           </Stack>
-          <Typography variant="h3" sx={styles.userNameText}>{text.general.username}</Typography>
+          <Typography variant="h3" sx={styles.userNameText}>
+            {text.general.username}
+          </Typography>
         </Stack>
         <Button
           variant="text"
