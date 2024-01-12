@@ -6,30 +6,29 @@ import { isVerifiedSession } from "~/utils/session.js";
 import { api } from "~/utils/api.js";
 import { fakeUsername } from "~/constants/fake-data/landing.js";
 import { useBBWallet } from "~/service/bb-wallet.js";
-import { UserStats } from "~/components/user-stats/index.js";
-
-import { styles } from "./styles.js";
+import { Navbar } from "~/components/navbar/index.js";
+import { styles } from "~/containers/layout/styles.js";
 
 export const Layout: FC<StackProps> = ({ children }) => {
   const { data: sessionData } = useSession();
   const isVerifiedUser = isVerifiedSession(sessionData);
-  const [open, setOpen] = useState(false);
-  const { disconnect } = useBBWallet();
+  const [menuIsOpen, setMenuIsOpen] = useState(false);
+  const { disconnect: disconnectWallet } = useBBWallet();
   const { data } = api.user.getUserById.useQuery();
   const playerPoints = data?.score ? data.score : 0;
   const isGamePlayed = true;
 
   return (
     <Container component="main" sx={styles.container}>
-      <UserStats
+      <Navbar
         isVerifiedUser={isVerifiedUser}
         isGamePlayed={isGamePlayed}
         username={
           sessionData?.user.username ? sessionData.user.username : fakeUsername
         }
-        open={open}
-        setOpen={setOpen}
-        disconnect={disconnect}
+        open={menuIsOpen}
+        setOpen={setMenuIsOpen}
+        disconnectWallet={disconnectWallet}
         points={playerPoints}
       />
       {children}
