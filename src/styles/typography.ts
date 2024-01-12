@@ -68,7 +68,7 @@ export const typography = (): Typography => {
     },
     h3: {
       fontFamily: subHeadingsFont.style.fontFamily,
-      fontSize: "clamp(1.5rem, 2vw + 1rem, 3rem);",
+      fontSize: "clamp(1.5rem, 0.8vw + 1rem, 3rem);",
       fontWeight: 400,
       lineHeight: "49.65px", // TODO to be converted to rem
       textTransform: "uppercase" as const,
