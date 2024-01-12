@@ -19,7 +19,7 @@ const recordProvider = new NetworkRecordProvider(account, networkClient);
 const programManager = new ProgramManager(
   env.ALEO_NETWORK_URL,
   keyProvider,
-  recordProvider
+  recordProvider,
 );
 
 export const aleo = { programManager };

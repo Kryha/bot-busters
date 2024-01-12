@@ -105,7 +105,7 @@ const storeOnChain = async () => {
   do {
     tryCount--;
     failedTransactions = await Promise.all(
-      slices.map((slice) => executeUpdateScores(slice))
+      slices.map((slice) => executeUpdateScores(slice)),
     ).then((txs) => txs.filter((tx) => !tx.isSuccess));
   } while (tryCount > 0 && failedTransactions.length);
 

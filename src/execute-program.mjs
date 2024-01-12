@@ -28,7 +28,7 @@ const recordProvider = new NetworkRecordProvider(account, networkClient);
 const programManager = new ProgramManager(
   ALEO_NETWORK_URL,
   keyProvider,
-  recordProvider
+  recordProvider,
 );
 
 const transitionName = "update_scores";
@@ -52,6 +52,6 @@ const txId = await programManager.execute(
   undefined,
   undefined,
   undefined,
-  PrivateKey.from_string(ALEO_PRIVATE_KEY)
+  PrivateKey.from_string(ALEO_PRIVATE_KEY),
 );
 console.log("🚀 ~ txId:", txId);

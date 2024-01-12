@@ -28,7 +28,7 @@ const txId = await aleo.programManager.execute(
   undefined,
   undefined,
   undefined,
-  PrivateKey.from_string(env.ALEO_PRIVATE_KEY)
+  PrivateKey.from_string(env.ALEO_PRIVATE_KEY),
 );
 
 parentPort.postMessage(txId);

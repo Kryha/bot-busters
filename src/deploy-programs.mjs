@@ -29,7 +29,7 @@ const deploy = async () => {
     const programManager = new ProgramManager(
       ALEO_NETWORK_URL,
       keyProvider,
-      recordProvider
+      recordProvider,
     );
 
     programManager.setAccount(account);
@@ -39,7 +39,7 @@ const deploy = async () => {
 
     const program = await readFile(
       "./programs/leaderboard/build/main.aleo",
-      "utf-8"
+      "utf-8",
     ).then((p) => p.replaceAll("leaderboard.aleo", LEADERBOARD_PROGRAM_NAME));
 
     const txId = await programManager.deploy(program, fee, false);
@@ -62,7 +62,7 @@ const deploy = async () => {
     // console.log(transaction);
 
     console.log(
-      "Deployment successful! Check your wallet and wait a couple of seconds for your transaction to complete."
+      "Deployment successful! Check your wallet and wait a couple of seconds for your transaction to complete.",
     );
   } catch (error) {
     console.error(error);
