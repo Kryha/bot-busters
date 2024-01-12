@@ -16,7 +16,7 @@ export const updateUserToMatch = async (
   matches.map(async (match) => {
     const userMatch: UserToMatch[] = match.room.players
       .filter((player) => {
-        if (!player.isBot) return player;
+        !player.isBot;
       })
       .map((player) => {
         return {
