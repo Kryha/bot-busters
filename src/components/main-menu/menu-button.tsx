@@ -23,21 +23,8 @@ export const MenuButtonStyle = styled(Button)({
   color: theme.palette.primary.main,
   fontFamily: theme.typography.h3.fontFamily,
   textTransform: "uppercase",
-  "& > svg": {
-    "& > path": {
-      fill: theme.palette.common.black,
-    },
-  },
   "&:hover": {
     color: theme.palette.secondary.main,
-  },
-  "&:active": {
-    color: theme.palette.secondary.main,
-    "& > svg": {
-      "& > path": {
-        fill: theme.palette.secondary.main,
-      },
-    },
   },
 });
 
@@ -46,6 +33,7 @@ export const NavbarMenuButtonStyle = styled(MenuButtonStyle)({
   "& > svg": {
     "& > path": {
       fill: theme.palette.secondary.main,
+      transform: "scale(0.67) translate(11px, 5px)",
     },
   },
   "&:hover": {
@@ -65,7 +53,6 @@ export const MenuButton: FC<Props> = ({ ...props }) => {
   return (
     <MenuButtonStyle {...props}>
       {text.general.menu}
-      <CloseIcon />
     </MenuButtonStyle>
   );
 };

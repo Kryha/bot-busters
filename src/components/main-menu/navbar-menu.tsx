@@ -6,6 +6,7 @@ import { pages } from "~/router.js";
 import { NavbarMenuButton } from "~/components/main-menu/index.js";
 import { text } from "~/assets/text/index.js";
 import { styles } from "~/components/main-menu/styles.js";
+
 import {
   BotBustersIcon,
   SoundOffIcon,
@@ -32,10 +33,12 @@ export const NavbarMenu: FC<Props> = ({ handleClose, soundOn, setSoundOn }) => {
   };
 
   return (
-    <Stack sx={styles.header}>
-      <Stack sx={styles.userName}>
-        <UserIcon />
-        <Typography variant="h3">{text.general.username}</Typography>
+    <Stack sx={styles.wrapper}>
+      <Stack sx={{ ...styles.userName, ...styles.navbarStart}}>
+        <Stack sx={styles.userIcon}>
+          <UserIcon />
+        </Stack>
+        <Typography variant="h3" sx={styles.userNameText}>{text.general.username}</Typography>
       </Stack>
       <Button
         variant="text"
@@ -44,7 +47,7 @@ export const NavbarMenu: FC<Props> = ({ handleClose, soundOn, setSoundOn }) => {
       >
         <BotBustersIcon />
       </Button>
-      <Stack direction={"row"} rowGap={2}>
+      <Stack direction={"row"} rowGap={2} sx={styles.navbarEnd}>
         <Button variant="text" onClick={onSoundClick}>
           {soundOn ? <SoundOnIcon /> : <SoundOffIcon />}
         </Button>
