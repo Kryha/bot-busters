@@ -78,7 +78,7 @@ export const MenuCard: FC<Props> = ({
               <Typography variant="body1">
                 {text.general.dateAndCredits(
                   fakeDateAndCreditsOne.date,
-                  fakeDateAndCreditsOne.credits
+                  fakeDateAndCreditsOne.credits,
                 )}
               </Typography>
               <Chip
@@ -91,7 +91,7 @@ export const MenuCard: FC<Props> = ({
             <Typography variant="body1">
               {text.general.dateAndCredits(
                 fakeDateAndCreditsTwo.date,
-                fakeDateAndCreditsTwo.credits
+                fakeDateAndCreditsTwo.credits,
               )}
             </Typography>
           </Stack>

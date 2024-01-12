@@ -38,7 +38,7 @@ export const Timer: FC<Props> = ({
   const seconds = Math.floor(remainingTime / 1000);
   const formattedCountdown = text.general.formattedCountdown(
     Math.floor(seconds / 60),
-    seconds % 60
+    seconds % 60,
   );
 
   return (
