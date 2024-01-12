@@ -74,6 +74,7 @@ const executeUpdateScores = async ({
   }
 };
 
+// TODO: call this funtion once per day after testnet is working
 const storeOnChain = async () => {
   const players = await db
     .select()
