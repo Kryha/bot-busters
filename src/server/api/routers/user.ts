@@ -53,8 +53,8 @@ export const userRouter = createTRPCRouter({
 
         await Promise.all(
           usersToDelete.map((user) =>
-            tx.delete(users).where(eq(users.id, user.id))
-          )
+            tx.delete(users).where(eq(users.id, user.id)),
+          ),
         );
 
         await leaderboard.calculate(tx);
@@ -71,7 +71,7 @@ export const userRouter = createTRPCRouter({
         username: z.string(),
         address: z.string().optional(),
         signature: z.string().optional(),
-      })
+      }),
     )
     .mutation(async ({ ctx, input }) => {
       const { session } = ctx;
@@ -81,7 +81,7 @@ export const userRouter = createTRPCRouter({
       if (session.user.username) throw new Error("User already verified");
       if (profanityFilter.exists(username)) {
         throw new Error(
-          "Username contains bad language please choose a different one"
+          "Username contains bad language please choose a different one",
         );
       }
 

@@ -17,6 +17,7 @@ spec:
     spec:
       containers:
         - name: postgres
+          # TODO: Use gcr image
           image: ankane/pgvector
           env:
             - name: POD_IP

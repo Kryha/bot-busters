@@ -10,9 +10,9 @@ import { fakeUsername } from "~/constants/fake-data/landing.js";
 import { isValidSession } from "~/utils/session.js";
 import { PlayerTable } from "~/components/index.js";
 import { fakePlayerProfile } from "~/constants/fake-data/player-profile.jsx";
-import { styles } from "./styles.js";
+import { styles } from "~/styles/pages/player-profile.js";
 
-export const UserProfile = () => {
+const PlayerProfile = () => {
   const { push } = useRouter();
   const { data: sessionData } = useSession();
   const isAuthenticated = isValidSession(sessionData);
@@ -52,3 +52,5 @@ export const UserProfile = () => {
     </Stack>
   );
 };
+
+export default PlayerProfile;

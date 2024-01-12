@@ -2,7 +2,10 @@ version: "3.1"
 
 services:
   db:
-    image: ankane/pgvector
+    image: kryha/pgvectorcron
+    build:
+      context: .
+      dockerfile: Dockerfile.postgres
     restart: always
     environment:
       POSTGRES_PASSWORD: example
@@ -10,7 +13,10 @@ services:
       - 5432:5432
 
   test-db:
-    image: ankane/pgvector
+    image: kryha/pgvectorcron
+    build:
+      context: .
+      dockerfile: Dockerfile.postgres
     restart: always
     environment:
       POSTGRES_PASSWORD: test-example

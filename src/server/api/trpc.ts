@@ -56,7 +56,7 @@ const createInnerTRPCContext = ({ session }: CreateContextOptions) => {
 export const createTRPCContext = async (
   opts:
     | CreateNextContextOptions
-    | NodeHTTPCreateContextFnOptions<IncomingMessage, ws>
+    | NodeHTTPCreateContextFnOptions<IncomingMessage, ws>,
 ) => {
   const session = await getSession(opts);
 

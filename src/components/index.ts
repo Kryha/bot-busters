@@ -1,7 +1,6 @@
 export * from "./authentication/index.js";
 export * from "./error-view/index.jsx";
 export * from "./tables/index.js";
-export * from "./menu-card/index.js";
 export * from "./points-display/index.js";
 export * from "./top-ranked/index.js";
 export * from "./players/player/index.js";
@@ -9,6 +8,6 @@ export * from "./players/player-voting/index.js";
 export * from "./players/player-result/index.js";
 export * from "./splash-screen/index.js";
 export * from "./score/index.js";
-export * from "./user-stats/index.js";
+export * from "./navbar/index.js";
 export * from "./players/player-local/index.js";
 export * from "./animation/index.js";

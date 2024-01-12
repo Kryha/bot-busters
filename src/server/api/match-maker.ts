@@ -24,7 +24,7 @@ export const matches = new Map<string, Match>();
 
 export const matchEvent = (
   roomId: string,
-  eventType: MatchEventType = "message"
+  eventType: MatchEventType = "message",
 ) => `chat_${roomId}_${eventType}`;
 
 const makeMatch = () => {
@@ -120,12 +120,12 @@ setInterval(() => {
   try {
     matchLoop();
     storeScoresAndMatches().catch((error) =>
-      console.error("Error storing matches:", error)
+      console.error("Error storing matches:", error),
     );
 
     // TODO: remove `getPlayerData` from here
     getPlayerData().catch((error) =>
-      console.error("Error getting player stats:", error)
+      console.error("Error getting player stats:", error),
     );
 
     makeMatch();

@@ -6,7 +6,7 @@ import { signIn, useSession } from "next-auth/react";
 import { pages } from "~/router.js";
 import { useBBWallet } from "~/service/bb-wallet.js";
 import { api } from "~/utils/api.js";
-import { isAnonymousSession, isUnverifiedSession } from "~/utils/session.js";
+import { isAnonymousSession, missingUsername } from "~/utils/session.js";
 
 import { styles } from "./styles.js";
 import { text } from "~/assets/text/index.js";
@@ -33,6 +33,7 @@ export const Results: FC<Props> = ({ gainedScore, botsBusted, totalBots }) => {
 
       setMergeRequested(false);
       try {
+        //TODO: Fix so user only presses the button once now signature is undefined on first press
         const signature = await getSignature();
         if (!signature) return;
 
@@ -84,7 +85,7 @@ export const Results: FC<Props> = ({ gainedScore, botsBusted, totalBots }) => {
           {text.chat.addScoreToLeaderboard}
         </Typography>
         <Stack sx={styles.buttonContainer}>
-          {(isAnonymousSession(session) || isUnverifiedSession(session)) && (
+          {(isAnonymousSession(session) || missingUsername(session)) && (
             <Button
               variant="contained"
               size="large"
