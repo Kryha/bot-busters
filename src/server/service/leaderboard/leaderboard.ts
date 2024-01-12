@@ -17,7 +17,62 @@ interface ScoreSlice {
   sliceIndex: string;
 }
 
+interface TxResult {
+  isSuccess: boolean;
+  txId?: string;
+}
+
 const calculate = (tx?: BBPgTransaction) => updateRanks(tx);
+
+const sliceScores = (userIds: string[], scores: string[]): ScoreSlice[] => {
+  const slicesDividend =
+    USERS_ON_CHAIN > userIds.length ? userIds.length : USERS_ON_CHAIN;
+  const slicesAmount = Math.ceil(slicesDividend / USERS_PER_SLICE);
+
+  return lodash.range(0, slicesAmount).map((i) => {
+    const start = i * USERS_PER_SLICE;
+    const end = (i + 1) * USERS_PER_SLICE;
+
+    if (end > userIds.length) {
+      const diff = end - userIds.length;
+
+      const fieldFill = new Array(diff).fill("0field") as string[];
+      const u64Fill = new Array(diff).fill("0u64") as string[];
+
+      return {
+        idsSlice: [...userIds.slice(start, userIds.length), ...fieldFill],
+        scoresSlice: [...scores.slice(start, scores.length), ...u64Fill],
+        sliceIndex: `${i}u8`,
+      };
+    } else {
+      return {
+        idsSlice: userIds.slice(start, end),
+        scoresSlice: scores.slice(start, end),
+        sliceIndex: `${i}u8`,
+      };
+    }
+  });
+};
+
+const executeUpdateScores = async ({
+  idsSlice,
+  scoresSlice,
+  sliceIndex,
+}: ScoreSlice): Promise<TxResult> => {
+  try {
+    const txId = (await leaderboardWorker.updateScores({
+      slice: sliceIndex,
+      userIds: idsSlice,
+      scores: scoresSlice,
+    })) as string | Error;
+
+    if (txId instanceof Error) throw txId;
+
+    return { txId, isSuccess: true };
+  } catch (error) {
+    return { isSuccess: false };
+  }
+};
 
 const storeOnChain = async () => {
   const players = await db
@@ -41,57 +96,19 @@ const storeOnChain = async () => {
     throw new Error("Users and scores length do not match");
   }
 
-  const slicesDividend =
-    USERS_ON_CHAIN > players.length ? players.length : USERS_ON_CHAIN;
-  const slicesAmount = Math.ceil(slicesDividend / USERS_PER_SLICE);
+  const slices: ScoreSlice[] = sliceScores(userIds, scores);
 
-  const slices: ScoreSlice[] = lodash.range(0, slicesAmount).map((i) => {
-    const start = i * USERS_PER_SLICE;
-    const end = (i + 1) * USERS_PER_SLICE;
+  let failedTransactions: TxResult[] = [];
+  let tryCount = 3;
 
-    if (end > userIds.length) {
-      const diff = end - userIds.length;
+  do {
+    tryCount--;
+    failedTransactions = await Promise.all(
+      slices.map((slice) => executeUpdateScores(slice))
+    ).then((txs) => txs.filter((tx) => !tx.isSuccess));
+  } while (tryCount > 0 && failedTransactions.length);
 
-      const fieldFill = new Array(diff).fill("0field") as string[];
-      const u64Fill = new Array(diff).fill("0u64") as string[];
-
-      return {
-        idsSlice: [...userIds.slice(start, userIds.length), ...fieldFill],
-        scoresSlice: [...scores.slice(start, scores.length), ...u64Fill],
-        sliceIndex: `${i}u8`,
-      };
-    } else {
-      return {
-        idsSlice: userIds.slice(start, end),
-        scoresSlice: scores.slice(start, end),
-        sliceIndex: `${i}u8`,
-      };
-    }
-  });
-
-  const executionPromises = slices.map(
-    async ({ idsSlice, scoresSlice, sliceIndex }) => {
-      if (!idsSlice || !scoresSlice) throw new Error("Slicing error");
-
-      // TODO: if update for a specific slice fails, try again
-      const txId = await leaderboardWorker.updateScores({
-        slice: sliceIndex,
-        userIds: idsSlice,
-        scores: scoresSlice,
-      });
-
-      if (txId instanceof Error) throw txId;
-      return txId;
-    }
-  );
-
-  const txIds = await Promise.all(executionPromises);
-
-  console.log("Executed transactions:", txIds);
-
-  return txIds;
+  console.log("Executed transactions");
 };
-
-storeOnChain().catch((err) => console.error("Store on chain:", err));
 
 export const leaderboard = { calculate, storeOnChain };
