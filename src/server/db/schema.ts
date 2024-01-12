@@ -65,7 +65,7 @@ export const usersToMatches = bbPgTable(
     return {
       id: primaryKey({ name: "id", columns: [table.userId, table.matchId] }),
     };
-  }
+  },
 );
 export const usersToMatchesSchema = createInsertSchema(usersToMatches);
 export type UserToMatch = z.infer<typeof usersToMatchesSchema>;

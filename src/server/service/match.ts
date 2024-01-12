@@ -156,7 +156,7 @@ export class Match {
     }
 
     const playerMessage = this.messages.find(
-      (message) => message.sender === playerId
+      (message) => message.sender === playerId,
     );
 
     if (!playerMessage) {
@@ -175,7 +175,7 @@ export class Match {
       .filter(
         (player) =>
           !player.isBot &&
-          this.messages.some((message) => message.sender === player.userId)
+          this.messages.some((message) => message.sender === player.userId),
       )
       .some((player) => !player.votes);
   }
@@ -193,7 +193,7 @@ export class Match {
           if (this._playerPreviousMatches[player.userId]) return;
 
           const matchRooms = (await selectMatchPlayedByUser(player.userId)).map(
-            (match) => match.match.room
+            (match) => match.match.room,
           );
 
           this._playerPreviousMatches[player.userId] = [...matchRooms];
@@ -214,7 +214,7 @@ export class Match {
       let correctGuesses = 0;
       let botsBusted = 0;
       const otherPlayers = this.players.filter(
-        (p) => p.userId !== player.userId
+        (p) => p.userId !== player.userId,
       );
 
       if (player.votes) {

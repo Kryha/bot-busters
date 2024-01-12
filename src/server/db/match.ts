@@ -8,7 +8,7 @@ import { type MatchRoom } from "~/types";
 
 export const updateUsersToMatches = async (
   matches: { id: string; room: MatchRoom }[],
-  tx?: BBPgTransaction
+  tx?: BBPgTransaction,
 ) => {
   const dbTx = tx ?? db;
   await dbTx.insert(matchesTable).values(matches);
