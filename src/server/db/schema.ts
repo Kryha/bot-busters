@@ -60,3 +60,5 @@ export const userToMatches = bbPgTable("user_match", {
     .notNull()
     .references(() => matches.id),
 });
+export const userToMatchesSchema = createInsertSchema(userToMatches);
+export type UserToMatch = z.infer<typeof userToMatchesSchema>;

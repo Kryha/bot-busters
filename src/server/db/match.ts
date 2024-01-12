@@ -1,5 +1,8 @@
 import { db, type BBPgTransaction } from "~/server/db/index.js";
-import { matches as matchesTable } from "~/server/db/schema.js";
+import {
+  type UserToMatch,
+  matches as matchesTable,
+} from "~/server/db/schema.js";
 import { userToMatches } from "~/server/db/schema.js";
 import { type MatchRoom } from "~/types";
 
@@ -11,7 +14,7 @@ export const updateUserToMatch = async (
   await dbTx.insert(matchesTable).values(matches);
 
   matches.map(async (match) => {
-    const userMatch: { userId: string; matchId: string }[] = match.room.players
+    const userMatch: UserToMatch[] = match.room.players
       .filter((player) => {
         if (!player.isBot) return player;
       })
