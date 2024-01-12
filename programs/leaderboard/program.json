@@ -1,6 +1,6 @@
 {
-    "program": "leaderboard.aleo",
-    "version": "0.0.0",
-    "description": "",
-    "license": "MIT"
+  "program": "leaderboard.aleo",
+  "version": "0.0.1",
+  "description": "",
+  "license": "Apache2.0"
 }

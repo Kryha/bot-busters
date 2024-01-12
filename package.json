@@ -21,6 +21,10 @@
     "dev": "next dev",
     "dev:ws": "yarn build:ws && yarn start:ws",
     "lint": "next lint",
+    "aleo:build-leaderboard": "cd ./programs/leaderboard && leo build",
+    "aleo:deploy-leaderboard": "dotenv node src/deploy-programs.mjs",
+    "aleo:execute-leaderboard": "dotenv node src/execute-program.mjs",
+    "aleo:devnet": "./devnet.sh",
     "prettier:run": "yarn prettier ./src --write",
     "prettier:config": "yarn prettier --find-config-path ./src"
   },

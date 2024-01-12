@@ -267,7 +267,7 @@ export class Match {
 
         if (player.isBot) return;
 
-        await db
+        await dbTx
           .update(users)
           .set({
             score: sql`${users.score} + ${player.score}`,
