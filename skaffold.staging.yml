@@ -14,10 +14,6 @@ build:
         buildArgs:
           NEXT_PUBLIC_ALEO_NETWORK: testnet3
           NEXT_PUBLIC_WS_URL: wss://bot-busters.staging.kryha.dev
-    # TODO: delete
-    - image: eu.gcr.io/aleo-botbusters/bot-busters/postgres
-      docker:
-        dockerfile: Dockerfile.postgres
 manifests:
   kustomize:
     paths:
