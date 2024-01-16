@@ -7,7 +7,6 @@ export interface Character {
   id: CharacterId;
   name: CharacterName;
   color: CharacterColor;
-  image?: string;
 }
 
 export interface ChatMessage extends ChatMessagePayload {
