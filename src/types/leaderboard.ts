@@ -2,7 +2,8 @@ import { z } from "zod";
 
 import { type RouterOutput } from "~/server/api/root.js";
 
-export type LeaderboardData = RouterOutput["user"]["getRankedUsers"][number];
+export type LeaderboardData =
+  RouterOutput["user"]["getRankedUsers"]["players"][number];
 
 export const userStatsDataSchema = z.object({
   todaysPoints: z.number(),

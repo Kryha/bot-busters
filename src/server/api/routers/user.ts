@@ -130,12 +130,12 @@ export const userRouter = createTRPCRouter({
   getRankedUsers: publicProcedure
     .input(
       z.object({
-        offset: z.number().gte(0),
-        limit: z.number().gte(1),
+        limit: z.number().min(1).max(100).default(50),
+        cursor: z.number().min(0).default(0),
       }),
     )
     .query(async ({ input }) => {
-      const { offset, limit } = input;
+      const { cursor, limit } = input;
 
       const players = await db
         .select({
@@ -148,9 +148,11 @@ export const userRouter = createTRPCRouter({
         .from(users)
         .innerJoin(ranks, eq(users.id, ranks.userId))
         .orderBy(ranks.position)
-        .offset(offset)
+        .offset(cursor)
         .limit(limit);
 
-      return players;
+      const nextCursor = players.length + cursor;
+
+      return { players, nextCursor };
     }),
 });
