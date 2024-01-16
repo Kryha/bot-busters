@@ -8,7 +8,7 @@ import {
   type ChatMessagePayload,
   type MatchRoom,
 } from "~/types/index.js";
-import { CHARACTERS, CHAT_TIME_MS } from "~/constants/index.js";
+import { CHARACTERS, CHAT_TIME_MS, MATCH_HOST } from "~/constants/index.js";
 import { pages } from "~/router.js";
 import { Messages } from "~/components/messages/index.js";
 import { InputField } from "~/components/input-field/index.js";
@@ -32,7 +32,6 @@ export const Chat: FC<Props> = ({ roomId, room }) => {
 
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState<ChatMessagePayload[]>(room.messages);
-
   const appendMessage = (newMessage: ChatMessagePayload) => {
     setMessages((prev) => [...prev, newMessage]);
   };
@@ -47,15 +46,25 @@ export const Chat: FC<Props> = ({ roomId, room }) => {
         console.error("Chat message error:", error);
         void push(pages.home);
       },
-    }
+    },
   );
+
+  const hostMessageData: ChatMessagePayload | undefined = useMemo(() => {
+    const hostMessage = messages.findLast(
+      (message) => message.sender === MATCH_HOST,
+    );
+    return hostMessage;
+  }, [messages]);
 
   const messageData: MessageData[] = useMemo(() => {
     return messages
+      .filter((message) => {
+        return message.sender !== MATCH_HOST;
+      })
       .map((message) => {
         const isLocalSender = message.sender === session?.user?.id;
         const characterId: CharacterId = players.find(
-          (player) => player.userId === message.sender
+          (player) => player.userId === message.sender,
         )!.characterId;
 
         return {
@@ -86,7 +95,7 @@ export const Chat: FC<Props> = ({ roomId, room }) => {
 
   return (
     <Stack component="section" sx={styles.section(isChatDisabled)}>
-      <Messages messageData={messageData} />
+      <Messages messageData={messageData} hostMessage={hostMessageData} />
       <Timer time={room.createdAt} duration={CHAT_TIME_MS} />
       <InputField
         value={message}

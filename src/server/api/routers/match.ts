@@ -50,7 +50,7 @@ export const matchRouter = createTRPCRouter({
         message: z.string(),
         sentAt: z.number(),
         roomId: z.string().uuid(),
-      })
+      }),
     )
     .mutation(({ ctx, input }) => {
       const { sentAt, roomId } = input;
@@ -109,7 +109,7 @@ export const matchRouter = createTRPCRouter({
       }
 
       const player = room.players.find(
-        (player) => player.userId === ctx.session.user.id
+        (player) => player.userId === ctx.session.user.id,
       );
 
       if (!player) {
@@ -127,7 +127,7 @@ export const matchRouter = createTRPCRouter({
       z.object({
         selectedUserIds: z.array(z.string().uuid()),
         roomId: z.string().uuid(),
-      })
+      }),
     )
     .mutation(({ ctx, input }) => {
       const { selectedUserIds, roomId } = input;

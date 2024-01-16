@@ -38,3 +38,7 @@ spec:
               value: ws://bot-busters.localhost
             - name: PLAYERS_PER_MATCH
               value: "2"
+            - name: ALEO_NETWORK_URL
+              value: http://localhost:3030
+            - name: ALEO_PRIVATE_KEY
+              value: APrivateKey1zkp8CZNn3yeCseEtxuVPbDCwSyhGW6yZKUYKfgXmcpoGPWH # not a real account

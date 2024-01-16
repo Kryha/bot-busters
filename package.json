@@ -20,11 +20,17 @@
     "db:studio": "dotenv drizzle-kit studio",
     "dev": "next dev",
     "dev:ws": "yarn build:ws && yarn start:ws",
-    "lint": "next lint"
+    "lint": "next lint",
+    "aleo:build-leaderboard": "cd ./programs/leaderboard && leo build",
+    "aleo:deploy-leaderboard": "dotenv node src/deploy-programs.mjs",
+    "aleo:execute-leaderboard": "dotenv node src/execute-program.mjs",
+    "aleo:devnet": "./devnet.sh",
+    "prettier:run": "yarn prettier ./src --write",
+    "prettier:config": "yarn prettier --find-config-path ./src"
   },
   "dependencies": {
     "@2toad/profanity": "^2.2.0",
-    "@aleohq/sdk": "0.6.2",
+    "@aleohq/sdk": "^0.6.9",
     "@demox-labs/aleo-wallet-adapter-base": "^0.0.19",
     "@demox-labs/aleo-wallet-adapter-leo": "^0.0.18",
     "@demox-labs/aleo-wallet-adapter-react": "^0.0.18",
@@ -83,6 +89,7 @@
     "leva": "^0.9.35",
     "next-plugin-svgr": "^1.1.10",
     "pg": "^8.11.3",
+    "prettier": "3.1.1",
     "puppeteer": "^21.5.2",
     "react-fps": "^1.0.6",
     "rimraf": "^5.0.5",

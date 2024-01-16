@@ -22,8 +22,8 @@ export const users = bbPgTable("user", {
   score: integer("score").default(0).notNull(),
   // TODO: add zPass
   // zPass: json("zPass"),
-  matches_played: uuid("matches_played").array(),
-  createdAt: timestamp("createdAt").default(sql`CURRENT_TIMESTAMP`),
+  matchesPlayed: uuid("matches_played").array(),
+  createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`),
 });
 
 export const usersRelations = relations(users, ({ one }) => ({
@@ -37,7 +37,7 @@ export const userSchema = createInsertSchema(users);
 export type User = z.infer<typeof userSchema>;
 
 export const ranks = bbPgTable("rank", {
-  userId: uuid("userId")
+  userId: uuid("user_id")
     .references(() => users.id)
     .primaryKey(),
   position: integer("position").notNull().unique(),

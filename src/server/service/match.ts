@@ -1,6 +1,6 @@
 import { TRPCError } from "@trpc/server";
 import lodash from "lodash";
-import { sql } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 
 import {
   CHAT_TIME_MS,
@@ -10,7 +10,7 @@ import {
 } from "~/constants/index.js";
 import { Agent } from "~/server/service/index.js";
 import { ee, matchEvent } from "~/server/api/match-maker.js";
-import { db } from "~/server/db/index.js";
+import { type BBPgTransaction, db } from "~/server/db/index.js";
 import { users } from "~/server/db/schema.js";
 import {
   type PlayerType,
@@ -22,6 +22,8 @@ import {
 } from "~/types/index.js";
 import { MATCH_ACHIEVEMENTS } from "./achievements.js";
 import { selectMatchPlayedByUser } from "../db/user.js";
+import { matchPrompts } from "~/assets/text/match-promts.js";
+import { getRandomInt } from "~/utils/math.js";
 
 export class Match {
   private _id: string;
@@ -89,6 +91,18 @@ export class Match {
 
     this._players = lodash.shuffle([...botPlayers, ...humanPlayers]);
     this._playerPreviousMatches = {};
+    this.addPrompt();
+  }
+
+  private addPrompt() {
+    const randomPrompt = matchPrompts[getRandomInt(matchPrompts.length)];
+    if (!randomPrompt) throw new Error("No random prompt found");
+
+    this.addMessage({
+      sender: "host",
+      message: randomPrompt,
+      sentAt: Date.now(),
+    });
   }
 
   private popCharacterId(): CharacterId {
@@ -142,7 +156,7 @@ export class Match {
     }
 
     const playerMessage = this.messages.find(
-      (message) => message.sender === playerId
+      (message) => message.sender === playerId,
     );
 
     if (!playerMessage) {
@@ -161,11 +175,12 @@ export class Match {
       .filter(
         (player) =>
           !player.isBot &&
-          this.messages.some((message) => message.sender === player.userId)
+          this.messages.some((message) => message.sender === player.userId),
       )
       .some((player) => !player.votes);
   }
 
+  // TODO: make a proper DB relation with user and matches instead of doing this
   async getPlayerPreviousMatches() {
     let playerHistoryLoaded = true;
 
@@ -178,7 +193,7 @@ export class Match {
           if (this._playerPreviousMatches[player.userId]) return;
 
           const matchRooms = (await selectMatchPlayedByUser(player.userId)).map(
-            (match) => match.room
+            (match) => match.room,
           );
 
           this._playerPreviousMatches[player.userId] = [...matchRooms];
@@ -199,7 +214,7 @@ export class Match {
       let correctGuesses = 0;
       let botsBusted = 0;
       const otherPlayers = this.players.filter(
-        (p) => p.userId !== player.userId
+        (p) => p.userId !== player.userId,
       );
 
       if (player.votes) {
@@ -248,7 +263,9 @@ export class Match {
     this.arePointsCalculated = true;
   }
 
-  async storeScore() {
+  async storeScore(tx?: BBPgTransaction) {
+    const dbTx = tx ?? db;
+
     let allScoresStored = true;
 
     const promises = this._players.map(async (player) => {
@@ -259,9 +276,13 @@ export class Match {
 
         if (player.isBot) return;
 
-        await db.execute(
-          sql`UPDATE ${users} SET score = score + ${player.score}, matches_played = array_append(matches_played,${this._id}) WHERE ${users.id} = ${player.userId}`
-        );
+        await dbTx
+          .update(users)
+          .set({
+            score: sql`${users.score} + ${player.score}`,
+            matchesPlayed: sql`array_append(${users.matchesPlayed},${this._id})`,
+          })
+          .where(eq(users.id, player.userId));
       } catch (error) {
         player.isScoreSaved = false;
         allScoresStored = false;

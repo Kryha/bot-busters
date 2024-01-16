@@ -1,32 +1,32 @@
 program leaderboard.aleo {
     struct User {
-        username: field;
+        id: field;
         score: u64;
-        games_played: u64;
-        // encrypted_address: address;
     }
 
-    mapping users: field => User;
+    // mapping at key `0` is the first user on the leaderboard
+    mapping users: u8 => User;
 
-    // TODO: check how to update more players at once
-    transition update_score(user_id: field, username: field, new_score: u64) {
-        // TODO: validate zPass
+    // array length is set to 16 because Leo only supports 16 calls to `set` per call
+    transition update_scores(user_ids: [field; 16], new_scores: [u64; 16], slice: u8) {
         assert_eq(self.caller, self.signer);
-        return then finalize(user_id, username, new_score);
+        assert(slice < 7u8); // we only need 7 slices to update 100 positions
+
+        return then finalize(user_ids, new_scores, slice);
     }
 
-    finalize update_score(user_id: field, username: field, new_score: u64) {
-        // TODO: also store encrypted/hashed address after zPass implementation
-        let current_user: User = Mapping::get_or_use(users, user_id, User {
-            username,
-            score: 0u64,
-            games_played: 0u64
-        });
+    finalize update_scores(user_ids: [field; 16], new_scores: [u64; 16], slice: u8) {
+        for i: u8 in 0u8..16u8 {
+            let key: u8 = (slice * 16u8) + i + 1u8;
+            let user_id: field = user_ids[i];
+            let new_score: u64 = new_scores[i];
 
-        Mapping::set(users, user_id, User {
-            username,
-            score: current_user.score + new_score,
-            games_played: current_user.games_played + 1u64
-        });
+            let keyOrNull: u8 = user_id != 0field ? key : 0u8;
+
+            Mapping::set(users, keyOrNull, User {
+                id: user_id,
+                score: new_score,
+            });
+        }
     }
 }

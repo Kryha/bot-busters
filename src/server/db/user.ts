@@ -30,7 +30,7 @@ export const selectMatchPlayedByUser = async (userId: string) => {
     .select()
     .from(matches)
     .where(
-      sql`id IN (SELECT unnest(matches_played) AS id FROM bot_busters_user WHERE id = ${userId})`
+      sql`${matches.id} IN (SELECT unnest(${users.matchesPlayed}) AS id FROM ${users} WHERE id = ${userId})`,
     );
   return selectedUsers;
 };

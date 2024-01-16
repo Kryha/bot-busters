@@ -7,6 +7,7 @@ import { users } from "~/server/db/schema.js";
 import { isValidSession } from "~/utils/session.js";
 import { verifySignature } from "~/utils/wallet.js";
 import { profanityFilter } from "~/service/index.js";
+import { leaderboard } from "~/server/service/index.js";
 
 export const userRouter = createTRPCRouter({
   mergeScore: protectedProcedure
@@ -52,9 +53,11 @@ export const userRouter = createTRPCRouter({
 
         await Promise.all(
           usersToDelete.map((user) =>
-            tx.delete(users).where(eq(users.id, user.id))
-          )
+            tx.delete(users).where(eq(users.id, user.id)),
+          ),
         );
+
+        await leaderboard.calculate(tx);
 
         return { isUsernameSet: !!firstUser?.username };
       });
@@ -68,7 +71,7 @@ export const userRouter = createTRPCRouter({
         username: z.string(),
         address: z.string().optional(),
         signature: z.string().optional(),
-      })
+      }),
     )
     .mutation(async ({ ctx, input }) => {
       const { session } = ctx;
@@ -78,15 +81,18 @@ export const userRouter = createTRPCRouter({
       if (session.user.username) throw new Error("User already verified");
       if (profanityFilter.exists(username)) {
         throw new Error(
-          "Username contains bad language please choose a different one"
+          "Username contains bad language please choose a different one",
         );
       }
 
       if (session.user.address) {
-        await db
-          .update(users)
-          .set({ username })
-          .where(eq(users.id, session.user.id));
+        await db.transaction(async (tx) => {
+          await tx
+            .update(users)
+            .set({ username })
+            .where(eq(users.id, session.user.id));
+          await leaderboard.calculate(tx);
+        });
         return;
       }
 
@@ -95,10 +101,13 @@ export const userRouter = createTRPCRouter({
       const isVerified = verifySignature(address, signature);
       if (!isVerified) throw new Error("Invalid signature");
 
-      await db
-        .update(users)
-        .set({ username, address })
-        .where(eq(users.id, session.user.id));
+      await db.transaction(async (tx) => {
+        await db
+          .update(users)
+          .set({ username, address })
+          .where(eq(users.id, session.user.id));
+        await leaderboard.calculate(tx);
+      });
     }),
 
   getUserById: protectedProcedure.query(async ({ ctx }) => {
