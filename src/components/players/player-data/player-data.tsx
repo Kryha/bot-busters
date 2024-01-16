@@ -35,7 +35,13 @@ export const PlayerData: FC<Props> = ({
       );
 
     case "results":
-      return <PlayerResult player={player} hasGuessed={hasGuessed} />;
+      return (
+        <PlayerResult
+          player={player}
+          hasGuessed={hasGuessed}
+          isSelected={isSelected}
+        />
+      );
 
     default:
       return <Player character={character} />;

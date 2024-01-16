@@ -1,7 +1,5 @@
 import { type FC } from "react";
-import { Divider, Stack, ToggleButton, Typography } from "@mui/material";
-
-import { text } from "~/assets/text/index.js";
+import { Stack } from "@mui/material";
 import { Player } from "~/components/index.js";
 
 import { styles } from "./styles.js";
@@ -20,20 +18,12 @@ export const PlayerVote: FC<Props> = ({
 }) => {
   return (
     <Stack sx={styles.container}>
-      <Stack sx={styles.usernameContainer}>
-        <Divider />
-        <Stack sx={styles.username}>
-          <Player character={character} />
-        </Stack>
-        <Divider />
-      </Stack>
-      <ToggleButton
-        value="check"
+      <Player
+        stage="voting"
+        character={character}
         selected={isSelected}
-        onClick={onSelectPlayer}
-      >
-        <Typography>{text.general.bot}</Typography>
-      </ToggleButton>
+        onSelectPlayer={onSelectPlayer}
+      />
     </Stack>
   );
 };

@@ -14,15 +14,17 @@ interface Props {
   onVote: (selectedUserIds: string[]) => Promise<void>;
 }
 
+// TODO: Not in use right now, will keep it for a possible update during chat stage
 export const Players: FC<Props> = ({
   room,
   localPlayer,
   isVoteEnabled,
   onVote,
 }) => {
+  const { stage } = room;
   return (
     <Stack sx={styles.container}>
-      <PlayerLocal localPlayer={localPlayer} />
+      {stage === "chat" && <PlayerLocal localPlayer={localPlayer} />}
       <PlayersOthers
         room={room}
         localPlayer={localPlayer}
