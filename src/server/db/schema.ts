@@ -6,6 +6,7 @@ import {
   pgTableCreator,
   timestamp,
   json,
+  primaryKey,
 } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { type z } from "zod";
@@ -22,7 +23,6 @@ export const users = bbPgTable("user", {
   score: integer("score").default(0).notNull(),
   // TODO: add zPass
   // zPass: json("zPass"),
-  matchesPlayed: uuid("matches_played").array(),
   createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`),
 });
 
@@ -50,3 +50,22 @@ export const matches = bbPgTable("match", {
   id: uuid("id").primaryKey(),
   room: json("room").notNull().$type<MatchRoom>(),
 });
+
+export const usersToMatches = bbPgTable(
+  "user_match",
+  {
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    matchId: uuid("match_id")
+      .notNull()
+      .references(() => matches.id),
+  },
+  (table) => {
+    return {
+      id: primaryKey({ name: "id", columns: [table.userId, table.matchId] }),
+    };
+  },
+);
+export const usersToMatchesSchema = createInsertSchema(usersToMatches);
+export type UserToMatch = z.infer<typeof usersToMatchesSchema>;
