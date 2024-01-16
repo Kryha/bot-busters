@@ -1,6 +1,7 @@
 //TODO: Add more bad words to filter
 export const url = [
   "https://",
+  "http",
   "http://",
   "www.",
   ".com",
