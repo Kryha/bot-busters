@@ -1,12 +1,21 @@
 import { type SxProps } from "@mui/material";
+import { theme } from "~/styles/theme";
 
 export const styles = {
   wrapper: {
     width: "100%",
+    flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "blueGrey.light",
-    p: 2,
-    mt: 5,
-    mb: 5,
+    justifyContent: "center",
+    gap: 5,
+    borderBottom: `4px solid ${theme.palette.divider}`,
   } satisfies SxProps,
+  chatTitle: {
+    textTransform: "uppercase",
+    textAlign: "center",
+    pt: 4,
+    pb: 4,
+    pr: 2,
+    pl: 2,
+  },
 };
