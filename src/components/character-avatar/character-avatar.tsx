@@ -2,7 +2,7 @@ import { Ash, Dot, Eve, Hal, Roy } from "~/assets/characters";
 import { type Character, type MatchStage } from "~/types";
 import { type FC } from "react";
 import { Stack } from "@mui/material";
-import { styles } from "./styles";
+import { styles } from "./styles.js";
 
 interface Props {
   character: Character;

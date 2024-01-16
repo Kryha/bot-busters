@@ -1,21 +1,35 @@
 import { type SxProps } from "@mui/material";
+import { theme } from "~/styles/theme.js";
 
 export const styles = {
-  wrapper: (isFinished?: boolean) => {
-    return {
-      flexDirection: "row",
-      backgroundColor: isFinished ? "grey.50" : "grey.200",
-      padding: "16px 16px 16px 24px",
-      gap: 1,
-    };
+  wrapper: {
+    flexDirection: "row",
+    mt: 1,
+    border: `4px solid ${theme.palette.primary.main}`,
+    "& > button": {
+      border: "none",
+      width: "150px",
+      gap: 0,
+      pl: 0,
+    },
   },
   inputField: {
+    borderRight: `4px solid ${theme.palette.primary.main}`,
     flexGrow: 1,
     backgroundColor: "common.black",
-    borderRadius: 1,
   },
   inputFieldProps: {
     flexGrow: 1,
+    border: "none",
+    "&:hover": {
+      border: "none",
+    },
+    "&:focus": {
+      border: "none",
+    },
+    "&:active": {
+      border: "none",
+    },
   },
   text: {
     flexGrow: 1,
