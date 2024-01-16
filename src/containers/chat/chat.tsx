@@ -7,6 +7,7 @@ import {
   type CharacterId,
   type ChatMessagePayload,
   type MatchRoom,
+  type MessageData,
 } from "~/types/index.js";
 import { CHARACTERS, CHAT_TIME_MS, MATCH_HOST } from "~/constants/index.js";
 import { pages } from "~/router.js";
@@ -14,9 +15,9 @@ import { Messages } from "~/components/messages/index.js";
 import { InputField } from "~/components/input-field/index.js";
 import { Timer } from "~/components/timer/index.js";
 import { api } from "~/utils/api.js";
-import { type MessageData } from "~/types/index.js";
 
 import { styles } from "./styles.js";
+import { Prompt } from "~/components/prompt/index.js";
 
 interface Props {
   roomId: string;
@@ -50,10 +51,7 @@ export const Chat: FC<Props> = ({ roomId, room }) => {
   );
 
   const hostMessageData: ChatMessagePayload | undefined = useMemo(() => {
-    const hostMessage = messages.findLast(
-      (message) => message.sender === MATCH_HOST,
-    );
-    return hostMessage;
+    return messages.findLast((message) => message.sender === MATCH_HOST);
   }, [messages]);
 
   const messageData: MessageData[] = useMemo(() => {
@@ -94,16 +92,25 @@ export const Chat: FC<Props> = ({ roomId, room }) => {
   const isChatDisabled = stage !== "chat";
 
   return (
-    <Stack component="section" sx={styles.section(isChatDisabled)}>
-      <Messages messageData={messageData} hostMessage={hostMessageData} />
+    <Stack>
+      <Stack component="section" sx={styles.section(isChatDisabled)}>
+        <Prompt
+          stage={stage}
+          name={hostMessageData?.sender}
+          message={hostMessageData?.message}
+        />
+        <Messages messageData={messageData} />
+      </Stack>
       <Timer time={room.createdAt} duration={CHAT_TIME_MS} />
-      <InputField
-        value={message}
-        onChange={(e) => setMessage(e.target.value)}
-        onClick={() => handleSend(message)}
-        disabled={isChatDisabled}
-        onKeyDown={(e) => handleKeyDown(e)}
-      />
+      {!isChatDisabled && (
+        <InputField
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          onClick={() => handleSend(message)}
+          disabled={isChatDisabled}
+          onKeyDown={(e) => handleKeyDown(e)}
+        />
+      )}
     </Stack>
   );
 };
