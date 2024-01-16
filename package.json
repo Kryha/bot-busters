@@ -26,7 +26,8 @@
     "aleo:execute-leaderboard": "dotenv node src/execute-program.mjs",
     "aleo:devnet": "./devnet.sh",
     "prettier:run": "yarn prettier ./src --write",
-    "prettier:config": "yarn prettier --find-config-path ./src"
+    "prettier:config": "yarn prettier --find-config-path ./src",
+    "debug:populate-users": "dotenv node dist/scripts/populate-users.js"
   },
   "dependencies": {
     "@2toad/profanity": "^2.2.0",

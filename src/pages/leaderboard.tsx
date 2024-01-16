@@ -1,33 +1,41 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSession } from "next-auth/react";
-import { Box, Typography } from "@mui/material";
-import { type LeaderboardData } from "~/types/index.js";
+import { Box, CircularProgress, Typography } from "@mui/material";
+
 import { isValidSession } from "~/utils/session.js";
 import { AddScoreTable, LeaderboardTable } from "~/components/tables/index.js";
-import { leaderboardData } from "~/constants/index.js";
 import { text } from "~/assets/text/index.js";
 import { styles } from "~/styles/pages/leaderboard.js";
-import { fakeCountdown } from "~/constants/fake-data/landing";
+import { fakeCountdown } from "~/constants/fake-data/landing.js";
+import { api } from "~/utils/api.js";
+
+const USERS_PER_PAGE = 6;
 
 const LeaderBoard = () => {
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const [currentData, setCurrentData] = useState<LeaderboardData[]>([]);
-  const itemsPerPage = 6;
   const { data: sessionData } = useSession();
   const isAuthenticated = isValidSession(sessionData);
+
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  // const [currentData, setCurrentData] = useState<LeaderboardData[]>([]);
+  // const itemsPerPage = 6;
   const isGamePlayed = true;
 
-  const loadMoreData = useCallback(() => {
-    const startIndex: number = (currentPage - 1) * itemsPerPage;
-    const endIndex: number = startIndex + itemsPerPage;
-    const newData: LeaderboardData[] = leaderboardData.slice(0, endIndex);
+  const players = api.user.getRankedUsers.useQuery({
+    limit: USERS_PER_PAGE,
+    offset: currentPage - 1,
+  });
 
-    setCurrentData(newData);
-  }, [currentPage]);
+  // const loadMoreData = useCallback(() => {
+  //   const startIndex: number = (currentPage - 1) * itemsPerPage;
+  //   const endIndex: number = startIndex + itemsPerPage;
+  //   const newData: LeaderboardData[] = leaderboardData.slice(0, endIndex);
 
-  useEffect(() => {
-    loadMoreData();
-  }, [currentPage, loadMoreData]);
+  //   setCurrentData(newData);
+  // }, [currentPage]);
+
+  // useEffect(() => {
+  //   loadMoreData();
+  // }, [currentPage, loadMoreData]);
 
   const intersectionRef = useRef<HTMLDivElement | null>(null);
 
@@ -55,13 +63,15 @@ const LeaderBoard = () => {
     };
   }, []);
 
+  if (players.isLoading) return <CircularProgress />;
+
   return (
     <>
       <Typography variant="h1" color="common.black" sx={styles.text}>
         {text.leaderboard.dailyLeaderboard}
       </Typography>
       <Box>
-        <LeaderboardTable leaderboard={currentData} />
+        <LeaderboardTable leaderboard={players.data} />
         <Box ref={intersectionRef} />
       </Box>
       {/*TODO: Add the current user score + move to main table */}

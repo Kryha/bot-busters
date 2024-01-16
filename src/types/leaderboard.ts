@@ -1,17 +1,8 @@
 import { z } from "zod";
 
-// These are for the data rendered on the page
-export const leaderboardDataSchema = z.object({
-  rank: z.number(),
-  avatar: z.string(),
-  username: z.string(),
-  score: z.number(),
-  address: z.string(),
-  gamesPlayed: z.number(),
-  payout: z.number(),
-});
+import { type RouterOutput } from "~/server/api/root.js";
 
-export type LeaderboardData = z.infer<typeof leaderboardDataSchema>;
+export type LeaderboardData = RouterOutput["user"]["getRankedUsers"][number];
 
 export const userStatsDataSchema = z.object({
   todaysPoints: z.number(),

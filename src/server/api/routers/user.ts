@@ -1,9 +1,13 @@
 import { z } from "zod";
 import { eq } from "drizzle-orm";
 
-import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc.js";
+import {
+  createTRPCRouter,
+  protectedProcedure,
+  publicProcedure,
+} from "~/server/api/trpc.js";
 import { db } from "~/server/db/index.js";
-import { users } from "~/server/db/schema.js";
+import { ranks, users } from "~/server/db/schema.js";
 import { isValidSession } from "~/utils/session.js";
 import { verifySignature } from "~/utils/wallet.js";
 import { profanityFilter } from "~/service/index.js";
@@ -122,4 +126,31 @@ export const userRouter = createTRPCRouter({
 
     return selectedUser;
   }),
+
+  getRankedUsers: publicProcedure
+    .input(
+      z.object({
+        offset: z.number().gte(0),
+        limit: z.number().gte(1),
+      }),
+    )
+    .query(async ({ input }) => {
+      const { offset, limit } = input;
+
+      const players = await db
+        .select({
+          id: users.id,
+          username: users.username,
+          score: users.score,
+          matchesPlayed: users.matchesPlayed,
+          rank: ranks.position,
+        })
+        .from(users)
+        .innerJoin(ranks, eq(users.id, ranks.userId))
+        .orderBy(ranks.position)
+        .offset(offset)
+        .limit(limit);
+
+      return players;
+    }),
 });
