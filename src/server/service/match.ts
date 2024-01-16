@@ -1,29 +1,29 @@
 import { TRPCError } from "@trpc/server";
-import lodash from "lodash";
 import { eq, sql } from "drizzle-orm";
+import lodash from "lodash";
 
+import { matchPrompts } from "~/assets/text/match-promts.js";
 import {
   CHAT_TIME_MS,
   POINTS_ACHIEVEMENTS,
   POINTS_BOT_BUSTED,
   POINTS_HUMAN_BUSTED,
 } from "~/constants/index.js";
-import { Agent } from "~/server/service/index.js";
 import { ee, matchEvent } from "~/server/api/match-maker.js";
-import { type BBPgTransaction, db } from "~/server/db/index.js";
+import { db, type BBPgTransaction } from "~/server/db/index.js";
 import { users } from "~/server/db/schema.js";
-import {
-  type PlayerType,
-  type MatchRoom,
-  type ChatMessagePayload,
-  type MatchStage,
-  type CharacterId,
-  achievementIdSchema,
-} from "~/types/index.js";
-import { MATCH_ACHIEVEMENTS } from "./achievements.js";
 import { selectMatchPlayedByUser } from "~/server/db/user.js";
-import { matchPrompts } from "~/assets/text/match-promts.js";
+import { Agent } from "~/server/service/index.js";
+import {
+  achievementIdSchema,
+  type CharacterId,
+  type ChatMessagePayload,
+  type MatchRoom,
+  type MatchStage,
+  type PlayerType,
+} from "~/types/index.js";
 import { getRandomInt } from "~/utils/math.js";
+import { MATCH_ACHIEVEMENTS } from "./achievements.js";
 
 export class Match {
   private _id: string;
@@ -42,7 +42,7 @@ export class Match {
   private _messageCountSinceLastTrigger = 0;
 
   //TODO: check for better solution
-  private _playerPreviousMatches = new Map<string, MatchRoom[]>;
+  private _playerPreviousMatches = new Map<string, MatchRoom[]>();
 
   stage: MatchStage = "chat";
   arePointsCalculated = false;
@@ -90,9 +90,9 @@ export class Match {
     });
 
     this._players = lodash.shuffle([...botPlayers, ...humanPlayers]);
-    this.getPlayerPreviousMatches().catch(err => {
-      // TODO: handle
-    })
+    this.getPlayerPreviousMatches().catch((err) => {
+      console.error("Error loading player history:", err);
+    });
     this.addPrompt();
   }
 
@@ -185,7 +185,7 @@ export class Match {
   // TODO: make a proper DB relation with user and matches instead of doing this
   private async getPlayerPreviousMatches() {
     const promises = this.players
-      .filter((player) =>  !player.isBot)
+      .filter((player) => !player.isBot)
       .map(async (player) => {
         if (this._playerPreviousMatches.get(player.userId)) return;
 
