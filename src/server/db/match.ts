@@ -1,9 +1,9 @@
 import { db, type BBPgTransaction } from "~/server/db/index.js";
 import {
-  type UserToMatch,
   matches as matchesTable,
+  usersToMatches,
+  type UserToMatch,
 } from "~/server/db/schema.js";
-import { usersToMatches } from "~/server/db/schema.js";
 import { type MatchRoom } from "~/types/index.js";
 
 export const insertMatches = async (
@@ -25,9 +25,7 @@ export const insertMatches = async (
         };
       });
     await dbTx.insert(usersToMatches).values(userMatch);
-  } )
-  
-  Promise.all(promises).catch((error) => {
-    console.error("Error inserting matches:", error);
   });
+
+  await Promise.all(promises);
 };
