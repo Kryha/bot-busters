@@ -1,7 +1,6 @@
 import { type SxProps } from "@mui/material";
-import { breakpoints } from "~/styles/theme";
+import { breakpoints } from "~/styles/theme.js";
 
-// TODO: To be updated.
 export const styles = {
   container: {
     position: "relative",
