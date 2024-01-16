@@ -1,9 +1,10 @@
 import { type FC } from "react";
-import { Avatar, Stack, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import { type ChatMessage } from "~/types/index.js";
 
 import { styles } from "./styles.js";
 import { getTimeStamp } from "~/utils/date.js";
+import { Ash, Dot, Eve, Hal, Roy } from "~/assets/characters/index.js";
 
 interface Props {
   message: ChatMessage;
@@ -12,7 +13,6 @@ interface Props {
 }
 
 export const Message: FC<Props> = ({ message, color, characterName }) => {
-  const avatar = "../images/svg/alien.svg";
   const isLocalSender = message.isLocalSender;
   const textColor = `${color}.dark`;
   const backgroundColor = `${color}.light`;
@@ -21,9 +21,9 @@ export const Message: FC<Props> = ({ message, color, characterName }) => {
 
   return (
     <Stack sx={styles.messageContainer(isLocalSender)}>
-      {!isLocalSender && (
-        <Avatar src={avatar} sx={styles.avatar} color={color} />
-      )}
+      <Stack sx={styles.avatar}>
+        {!isLocalSender && getCharacter(characterName)}
+      </Stack>
       <Stack sx={styles.message(isLocalSender)}>
         <Stack sx={styles.messageSingle(backgroundColor, isLocalSender)}>
           <Typography variant="body1" color={textColor} sx={styles.username}>
@@ -32,11 +32,30 @@ export const Message: FC<Props> = ({ message, color, characterName }) => {
           <Typography variant="body1" textAlign={textAlign}>
             {message.message}
           </Typography>
-          <Typography variant="caption" textAlign={"right"}>
-            {timeStamp}
-          </Typography>
+          <Stack>
+            <Typography variant="caption" textAlign={"right"}>
+              {timeStamp}
+            </Typography>
+          </Stack>
         </Stack>
       </Stack>
     </Stack>
   );
+};
+
+const getCharacter = (characterName: string) => {
+  switch (characterName) {
+    case "hal":
+      return <Hal />;
+    case "ash":
+      return <Ash />;
+    case "roy":
+      return <Roy />;
+    case "eve":
+      return <Eve />;
+    case "dot":
+      return <Dot />;
+    default:
+      return <Hal />;
+  }
 };
