@@ -74,6 +74,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["leva", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:0.9.35"],\
             ["lodash", "npm:4.17.21"],\
             ["minidenticons", "npm:4.2.0"],\
+            ["naughty-words", "npm:1.2.0"],\
             ["next", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:13.4.12"],\
             ["next-auth", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:4.23.1"],\
             ["next-plugin-svgr", "npm:1.1.10"],\
@@ -7532,6 +7533,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["leva", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:0.9.35"],\
             ["lodash", "npm:4.17.21"],\
             ["minidenticons", "npm:4.2.0"],\
+            ["naughty-words", "npm:1.2.0"],\
             ["next", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:13.4.12"],\
             ["next-auth", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:4.23.1"],\
             ["next-plugin-svgr", "npm:1.1.10"],\
@@ -12825,6 +12827,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/natural-compare-npm-1.4.0-97b75b362d-23ad088b08.zip/node_modules/natural-compare/",\
           "packageDependencies": [\
             ["natural-compare", "npm:1.4.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["naughty-words", [\
+        ["npm:1.2.0", {\
+          "packageLocation": "./.yarn/cache/naughty-words-npm-1.2.0-80cffb53e5-b439970357.zip/node_modules/naughty-words/",\
+          "packageDependencies": [\
+            ["naughty-words", "npm:1.2.0"]\
           ],\
           "linkType": "HARD"\
         }]\
