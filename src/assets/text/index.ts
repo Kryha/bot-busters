@@ -8,6 +8,7 @@ import { homepage } from "./homepage.js";
 import { playerProfile } from "./player-profile.js";
 import { chat } from "./chat.js";
 import { matchPrompts } from "./match-promts.js";
+import { howToPlay } from "./how-to-play.js";
 
 export const text = {
   auth,
@@ -20,4 +21,5 @@ export const text = {
   playerProfile,
   chat,
   matchPrompts,
+  howToPlay,
 };

@@ -11,3 +11,4 @@ export * from "./score/index.js";
 export * from "./navbar/index.js";
 export * from "./players/player-local/index.js";
 export * from "./animation/index.js";
+export * from "./bullet-point/index.js";
