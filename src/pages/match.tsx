@@ -5,13 +5,12 @@ import { type Session } from "next-auth";
 import { z } from "zod";
 
 import { MatchLayout as Layout } from "~/components/match-layout/index.js";
-import { MatchOverviewLayout as OverviewLayout } from "~/components/match-overview-layout/index.js";
-import { Players } from "src/components/players/index.js";
-import { Score } from "~/components/score/index.js";
 import { api } from "~/utils/api.js";
 import { Chat } from "~/containers/chat/chat.jsx";
 import { Results } from "~/containers/results/index.js";
 import { ErrorView } from "~/components/error-view/index.jsx";
+import { PlayerLocal } from "~/components/players/player-local/index.js";
+import { PlayersOthers } from "~/components/players/players-others/index.js";
 
 const Match: FC = () => {
   const { query } = useRouter();
@@ -74,32 +73,23 @@ const MatchInternal: FC<Props> = ({ roomId, session }) => {
 
   return (
     <Layout splashScreenVariant={splashVariant}>
-      <OverviewLayout matchStage={room.stage}>
-        <Players
-          room={room}
-          localPlayer={localPlayer}
-          isVoteEnabled={isVoteEnabled}
-          onVote={handleVote}
-        />
-
-        {room.stage === "results" && (
-          <Score
-            gainedScore={localPlayer.score}
-            correctGuesses={localPlayer.correctGuesses}
-            achievements={localPlayer.achievements}
-          />
-        )}
-      </OverviewLayout>
-
+      <PlayersOthers
+        room={room}
+        localPlayer={localPlayer}
+        isVoteEnabled={isVoteEnabled}
+        onVote={handleVote}
+      />
       {room.stage === "results" && (
         <Results
           gainedScore={localPlayer.score}
           totalBots={totalBots}
           botsBusted={localPlayer.botsBusted}
+          achievements={localPlayer.achievements}
         />
       )}
 
-      {room && room.stage !== "results" && <Chat roomId={roomId} room={room} />}
+      {room.stage !== "results" && <Chat roomId={roomId} room={room} />}
+      {room.stage === "chat" && <PlayerLocal localPlayer={localPlayer} />}
     </Layout>
   );
 };
