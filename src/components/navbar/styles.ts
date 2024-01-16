@@ -19,7 +19,7 @@ export const styles = {
     mt: 2,
   } satisfies SxProps,
   wrapper: {
-    pt: 3,
+    pt: 1,
     pl: 3,
     pr: 3,
     flexDirection: "row",
@@ -31,6 +31,7 @@ export const styles = {
     },
   },
   mainLogo: {
+    transform: "scale(0.7) translateY(6px)",
     "&:hover": {
       "& > svg": {
         "& > path": {
@@ -41,6 +42,9 @@ export const styles = {
     [`@media (max-width: ${breakpoints.sm}px)`]: {
       display: "none",
     },
+  },
+  userIcon: {
+    transform: "scale(0.7)",
   },
   iconButton: {
     backgroundColor: "darkBlue.main",
@@ -54,8 +58,25 @@ export const styles = {
     alignItems: "center",
     justifyContent: "center",
     color: theme.palette.primary.main,
-    gap: 2,
+    gap: 1,
+  } satisfies SxProps,
+  userNameText: {
+    overflow: "hidden",
+    textOverflow: "ellipsis",
   } satisfies SxProps,
   icon: { width: "0.8em", height: "0.8em" },
-  button: { mr: 2 } satisfies SxProps,
+  button: {
+    mr: 2,
+    fontStyle: "italic",
+  } satisfies SxProps,
+  navbarEnd: {
+    fontStyle: "italic",
+    width: 300,
+    justifyContent: "flex-end",
+  } satisfies SxProps,
+  navbarStart: {
+    fontStyle: "italic",
+    width: 300,
+    justifyContent: "flex-start",
+  } satisfies SxProps,
 };

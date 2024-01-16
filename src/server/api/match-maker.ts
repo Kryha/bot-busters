@@ -8,13 +8,13 @@ import {
 } from "~/constants/main.js";
 import { env } from "~/env.mjs";
 import { db } from "~/server/db/index.js";
-import { matches as matchesTable } from "~/server/db/schema.js";
 import { Match, leaderboard } from "~/server/service/index.js";
 import type {
   MatchEventType,
   MatchRoom,
   ReadyToPlayPayload,
 } from "~/types/index.js";
+import { insertMatches } from "~/server/db/match.js";
 
 export const ee = new EventEmitter();
 
@@ -64,6 +64,7 @@ const matchLoop = () => {
 
     if (
       room.stage === "voting" &&
+      // FIXME: this condition is not correct and some users may not be able to vote because of this
       (room.allPlayersVoted || roomAge >= CHAT_TIME_MS + VOTING_TIME_MS)
     ) {
       room.stage = "results";
@@ -71,16 +72,6 @@ const matchLoop = () => {
       ee.emit(matchEvent(roomId, "stageChange"));
     }
   });
-};
-
-const getPlayerData = async () => {
-  const promises = Array.from(matches.values()).map(async (room) => {
-    if (room.playerHistoryLoaded) return;
-
-    await room.getPlayerPreviousMatches();
-  });
-
-  await Promise.all(promises);
 };
 
 const storeScoresAndMatches = async () => {
@@ -107,7 +98,7 @@ const storeScoresAndMatches = async () => {
     }));
 
     if (roomsToInsert.length) {
-      await tx.insert(matchesTable).values(roomsToInsert);
+      await insertMatches(roomsToInsert, tx);
       await leaderboard.calculate(tx);
     }
 
@@ -122,15 +113,8 @@ setInterval(() => {
       console.error("Error storing matches:", error),
     );
 
-    // TODO: remove `getPlayerData` from here
-    getPlayerData().catch((error) =>
-      console.error("Error getting player stats:", error),
-    );
-
     makeMatch();
   } catch (error) {
     console.error("Main loop error:", error);
   }
 }, 10000);
-
-// TODO: add anonymous user cleanup
