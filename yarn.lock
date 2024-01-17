@@ -1742,12 +1742,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@drizzle-team/studio@npm:^0.0.37":
-  version: 0.0.37
-  resolution: "@drizzle-team/studio@npm:0.0.37"
+"@drizzle-team/studio@npm:^0.0.39":
+  version: 0.0.39
+  resolution: "@drizzle-team/studio@npm:0.0.39"
   dependencies:
     superjson: ^2.2.1
-  checksum: 072c28bfa3d177803d45261f3587f65ccbf9e9442bce162ee2f2b6dbd8e6c59718c91ddc1d05e36269f5364c38338d174277f0fa002a608104ac968aedf37bfd
+  checksum: b15e55b795a3bfb4d4f7987b164d7c1b8784faf8fd0f512101dd3a1574a20365e1a4cd46c3766b8f59de3aaa67fa9e4e4550757bd8f434b806554fe4332b253c
   languageName: node
   linkType: hard
 
@@ -4958,7 +4958,7 @@ __metadata:
     concurrently: ^8.2.1
     copyfiles: ^2.4.1
     dotenv-cli: ^7.3.0
-    drizzle-kit: ^0.20.10
+    drizzle-kit: latest
     drizzle-orm: ^0.29.3
     drizzle-zod: ^0.5.1
     eslint: ^8.47.0
@@ -6086,11 +6086,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"drizzle-kit@npm:^0.20.10":
-  version: 0.20.10
-  resolution: "drizzle-kit@npm:0.20.10"
+"drizzle-kit@npm:latest":
+  version: 0.20.13
+  resolution: "drizzle-kit@npm:0.20.13"
   dependencies:
-    "@drizzle-team/studio": ^0.0.37
+    "@drizzle-team/studio": ^0.0.39
     "@esbuild-kit/esm-loader": ^2.5.5
     camelcase: ^7.0.1
     chalk: ^5.2.0
@@ -6106,7 +6106,7 @@ __metadata:
     zod: ^3.20.2
   bin:
     drizzle-kit: bin.cjs
-  checksum: 039601978b96d1dcb0b664e2ab33293308d230f78dd3a4e79ea0551299e659f12815635d86381f7f5ccc164e163a29708cc9247bd8a7bdfdc5679a6ac774fb3a
+  checksum: 86c045d4245a35b6eadedd7986d59ce94812076af462de44adfdfdf734346162571e42e47a17f61197c91193708e1b160e5c066a606192e1afa6bbf943b7d32a
   languageName: node
   linkType: hard
 
