@@ -1,7 +1,6 @@
-import { type Character, type MatchStage } from "~/types";
 import { type FC } from "react";
 import { Stack } from "@mui/material";
-
+import { type Character, type MatchStage } from "~/types/index.js";
 import { getCharacter } from "~/utils/character.jsx";
 
 import { styles } from "./styles.js";

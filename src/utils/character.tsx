@@ -1,5 +1,5 @@
 import { Ash, Dot, Eve, Hal, Roy } from "~/assets/characters/index.js";
-import { type CharacterName } from "~/types";
+import { type CharacterName } from "~/types/index.js";
 
 export const getCharacter = (characterName: CharacterName) => {
   switch (characterName) {
@@ -13,7 +13,5 @@ export const getCharacter = (characterName: CharacterName) => {
       return <Eve />;
     case "dot":
       return <Dot />;
-    default:
-      return <Hal />;
   }
 };

@@ -1,4 +1,4 @@
-import { type MatchStage } from "~/types";
+import { type MatchStage } from "~/types/index.js";
 import { theme } from "~/styles/theme.js";
 
 export const styles = {

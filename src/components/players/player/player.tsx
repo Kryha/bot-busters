@@ -3,9 +3,8 @@ import { Stack, Typography } from "@mui/material";
 
 import { type Character, type MatchStage } from "~/types/index.js";
 import { CharacterAvatar } from "~/components/character-avatar/index.js";
-import { Skeleton } from "./skeleton.jsx";
-
 import { text } from "~/assets/text/index.js";
+import { Skeleton } from "./skeleton.jsx";
 
 import { styles } from "./styles.js";
 
