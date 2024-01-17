@@ -14,14 +14,14 @@ export const Prompt: FC<Props> = ({ stage, name, message }) => {
   return (
     <Stack sx={styles.wrapper}>
       {stage === "chat" && name && message && (
-        <>
+        <Stack sx={styles.prompt}>
           <Typography variant="subtitle1" color="white">
             {name}:
           </Typography>
           <Typography variant="body1" color="white">
             {message}
           </Typography>
-        </>
+        </Stack>
       )}
       {stage === "voting" && (
         <Typography sx={styles.chatTitle} variant="h6" color="white">

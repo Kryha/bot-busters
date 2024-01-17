@@ -18,4 +18,12 @@ export const styles = {
     pr: 2,
     pl: 2,
   },
+  prompt: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    pr: 2,
+    gap: 5,
+    pl: 2,
+  },
 };
