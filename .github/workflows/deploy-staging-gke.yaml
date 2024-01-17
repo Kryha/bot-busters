@@ -3,8 +3,7 @@ name: Build and Deploy staging to GKE
 on:
   push:
     branches:
-      # - "main"
-      - "fix/skaffold-cache"
+      - "main"
 
 env:
   PROJECT_ID: aleo-botbusters
