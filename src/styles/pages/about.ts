@@ -8,12 +8,11 @@ export const styles = {
   } as SxProps,
   container: {
     width: "60vw",
+    mb: 2,
   } as SxProps,
   header: {
     fontWeight: "400",
     fontStyle: "italic",
-    fontSize: "150px",
-    lineHeight: "94.5px",
   } as SxProps,
   body: {
     fontWeight: "400",
