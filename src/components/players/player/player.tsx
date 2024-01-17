@@ -1,4 +1,4 @@
-import React, { type FC, useEffect, useState } from "react";
+import React, { type FC } from "react";
 import { Stack, Typography } from "@mui/material";
 
 import { type Character, type MatchStage } from "~/types/index.js";
@@ -29,19 +29,11 @@ export const Player: FC<Props> = ({
 }) => {
   const { name, color } = character;
   const textColor = `${color}.dark`;
-  const [isBotSelect, setIsBotSelect] = useState<boolean | undefined>(false);
 
-  useEffect(() => {
-    const isBotSelected = stage === "voting" && isSelected;
-
-    if (isBotSelected) {
-      setIsBotSelect(true);
-    } else {
-      setIsBotSelect(false);
-    }
-  }, [isSelected, stage]);
+  const isBotSelected = stage === "voting" && isSelected;
 
   if (!name) return <Skeleton />;
+
   let textResult = isBot ? text.match.isBot : text.match.isHuman;
 
   if (stage === "results") {
@@ -81,7 +73,7 @@ export const Player: FC<Props> = ({
           )}
         </>
       )}
-      {stage === "voting" && isBotSelect && (
+      {stage === "voting" && isBotSelected && (
         <Stack direction={"row"} gap={1}>
           <Typography variant="body1" sx={styles.selectBot}>
             {text.match.isBotSelect}
