@@ -3,14 +3,14 @@ import {
   AleoKeyProvider,
   AleoNetworkClient,
   NetworkRecordProvider,
+  PrivateKey,
   ProgramManager,
 } from "@aleohq/sdk";
 
 import { env } from "~/env.mjs";
 
-console.log("env:", env.ALEO_PRIVATE_KEY);
-
-const account = new Account({ privateKey: env.ALEO_PRIVATE_KEY });
+const account = new Account();
+account._privateKey = PrivateKey.from_string(env.ALEO_PRIVATE_KEY);
 
 const keyProvider = new AleoKeyProvider();
 keyProvider.useCache(true);
