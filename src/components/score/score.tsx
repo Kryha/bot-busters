@@ -1,12 +1,12 @@
 import { type FC } from "react";
 import { Divider, Stack, Typography } from "@mui/material";
 
-import { styles } from "./styles.js";
-
 import { MATCH_ACHIEVEMENTS } from "~/server/service/achievements.js";
 import { type AchievementId } from "~/types/index.js";
 import { POINTS_ACHIEVEMENTS } from "~/constants/main.js";
 import { text } from "~/assets/text/index.js";
+
+import { styles } from "./styles.js";
 
 interface Props {
   correctGuesses: number;

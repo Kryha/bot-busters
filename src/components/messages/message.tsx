@@ -2,9 +2,10 @@ import { type FC } from "react";
 import { Stack, Typography } from "@mui/material";
 import { type ChatMessage } from "~/types/index.js";
 
-import { styles } from "./styles.js";
 import { getTimeStamp } from "~/utils/date.js";
-import { Ash, Dot, Eve, Hal, Roy } from "~/assets/characters/index.js";
+import { getCharacter } from "~/utils/character.jsx";
+
+import { styles } from "./styles.js";
 
 interface Props {
   message: ChatMessage;
@@ -41,21 +42,4 @@ export const Message: FC<Props> = ({ message, color, characterName }) => {
       </Stack>
     </Stack>
   );
-};
-
-const getCharacter = (characterName: string) => {
-  switch (characterName) {
-    case "hal":
-      return <Hal />;
-    case "ash":
-      return <Ash />;
-    case "roy":
-      return <Roy />;
-    case "eve":
-      return <Eve />;
-    case "dot":
-      return <Dot />;
-    default:
-      return <Hal />;
-  }
 };
