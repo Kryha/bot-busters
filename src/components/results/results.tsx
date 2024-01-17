@@ -10,6 +10,9 @@ import { api } from "~/utils/api.js";
 import { styles } from "./styles.js";
 import { type AchievementId } from "~/types/index.js";
 import { Score } from "~/components/score/index.js";
+import { isAnonymousSession, missingUsername } from "~/utils/session";
+import { PrimaryButton } from "~/components/primary-button";
+import { text } from "~/assets/text/index.js";
 
 interface Props {
   gainedScore: number;
@@ -75,25 +78,25 @@ export const Results: FC<Props> = ({ gainedScore, achievements }) => {
   return (
     <Stack sx={styles.wrapper}>
       <Score gainedScore={gainedScore} achievements={achievements} />
-      {/*<Stack sx={styles.buttonContainer}>*/}
-      {/*  {(isAnonymousSession(session) || missingUsername(session)) && (*/}
-      {/*    <PrimaryButton*/}
-      {/*      sx={styles.button}*/}
-      {/*      onClick={() => void handleConnect()}*/}
-      {/*      disabled={isConnecting}*/}
-      {/*    >*/}
-      {/*      {text.chat.addScore}*/}
-      {/*    </PrimaryButton>*/}
-      {/*  )}*/}
+      <Stack sx={styles.buttonContainer}>
+        {(isAnonymousSession(session) || missingUsername(session)) && (
+          <PrimaryButton
+            sx={styles.button}
+            onClick={() => void handleConnect()}
+            disabled={isConnecting}
+          >
+            {text.chat.addScore}
+          </PrimaryButton>
+        )}
 
-      {/*  <PrimaryButton*/}
-      {/*    sx={styles.button}*/}
-      {/*    onClick={() => void router.push(pages.home)}*/}
-      {/*    disabled={isConnecting}*/}
-      {/*  >*/}
-      {/*    {text.chat.playNewGame}*/}
-      {/*  </PrimaryButton>*/}
-      {/*</Stack>*/}
+        <PrimaryButton
+          sx={styles.button}
+          onClick={() => void router.push(pages.home)}
+          disabled={isConnecting}
+        >
+          {text.chat.playNewGame}
+        </PrimaryButton>
+      </Stack>
     </Stack>
   );
 };
