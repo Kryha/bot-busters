@@ -8,6 +8,8 @@ import {
 
 import { env } from "~/env.mjs";
 
+console.log("env:", env.ALEO_PRIVATE_KEY);
+
 const account = new Account({ privateKey: env.ALEO_PRIVATE_KEY });
 
 const keyProvider = new AleoKeyProvider();
