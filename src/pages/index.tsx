@@ -1,4 +1,4 @@
-import { Button, Stack, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/router.js";
 
@@ -9,8 +9,9 @@ import { pages } from "~/router.js";
 import { TOP_RANKED_PLAYERS } from "~/constants/index.js";
 import { isValidSession } from "~/utils/session.js";
 import { styles } from "~/styles/pages/homepage.js";
-import { BotBustersLogo } from "~/assets/icons/index.js";
 import { PixelButton } from "~/components/pixel-button/index.js";
+import { BotBusterLogoAnimation } from "~/containers/lottie-animations/index.js";
+import { PrimaryButton } from "~/components/primary-button/index.js";
 
 const Homepage = () => {
   const { push } = useRouter();
@@ -39,11 +40,11 @@ const Homepage = () => {
         <Typography variant="body1">
           {text.homepage.descriptionPart1}
         </Typography>
-        <BotBustersLogo />
+        <BotBusterLogoAnimation />
       </Stack>
       <Stack sx={styles.actions}>
-        <Button
-          variant="contained"
+        <PrimaryButton
+          aria-label="Start new game"
           disabled={isDisabled}
           onClick={() => void handleGameStart()}
           sx={styles.startGameButton}
@@ -51,7 +52,7 @@ const Homepage = () => {
           <Typography variant="h3" sx={styles.buttonText}>
             {text.homepage.startNewGame}
           </Typography>
-        </Button>
+        </PrimaryButton>
         <PixelButton
           onClick={openDailyHandler}
           text={text.homepage.openDaily}

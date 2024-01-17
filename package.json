@@ -49,6 +49,7 @@
     "drizzle-orm": "^0.29.3",
     "drizzle-zod": "^0.5.1",
     "lodash": "^4.17.21",
+    "lottie-react": "^2.4.0",
     "minidenticons": "^4.2.0",
     "next": "13.4.12",
     "next-auth": "^4.23.0",
