@@ -38,7 +38,6 @@ export const general = {
   confirm: "Confirm",
   aleoWebsite: "https://aleo.org/",
   pageNotFound: "404:Page not found",
-  countdown: (val: string): string => `${val}`,
   formattedCountdown: (minutes: number, seconds: number): string =>
     `${minutes.toString().padStart(2, "0")}:${seconds
       .toString()

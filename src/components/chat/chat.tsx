@@ -12,12 +12,12 @@ import {
 import { CHARACTERS, CHAT_TIME_MS, MATCH_HOST } from "~/constants/index.js";
 import { pages } from "~/router.js";
 import { Messages } from "~/components/messages/index.js";
+import { HostChatPrompt } from "~/components/host-chat-prompt/index.js";
 import { InputField } from "~/components/input-field/index.js";
 import { Timer } from "~/components/timer/index.js";
 import { api } from "~/utils/api.js";
 
 import { styles } from "./styles.js";
-import { Prompt } from "~/components/prompt/index.js";
 
 interface Props {
   roomId: string;
@@ -94,7 +94,7 @@ export const Chat: FC<Props> = ({ roomId, room }) => {
   return (
     <Stack>
       <Stack component="section" sx={styles.section(isChatDisabled)}>
-        <Prompt
+        <HostChatPrompt
           stage={stage}
           name={hostMessageData?.sender}
           message={hostMessageData?.message}

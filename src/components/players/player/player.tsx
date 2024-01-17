@@ -1,15 +1,16 @@
-import React, { type FC, useEffect, useState } from "react";
+import { type FC } from "react";
 import { Stack, Typography } from "@mui/material";
 
-import { styles } from "./styles.js";
-import { Skeleton } from "./skeleton.jsx";
 import { type Character, type MatchStage } from "~/types/index.js";
-import { text } from "~/assets/text/index.js";
 import { CharacterAvatar } from "~/components/character-avatar/index.js";
+import { text } from "~/assets/text/index.js";
+import { Skeleton } from "./skeleton.jsx";
+
+import { styles } from "./styles.js";
 
 interface Props {
   character: Character;
-  selected?: boolean;
+  isSelected?: boolean;
   isLocalPlayer?: boolean;
   hasGuessed?: boolean;
   isBot?: boolean;
@@ -20,7 +21,7 @@ interface Props {
 export const Player: FC<Props> = ({
   character,
   isLocalPlayer = false,
-  selected,
+  isSelected,
   hasGuessed,
   isBot,
   onSelectPlayer,
@@ -28,25 +29,19 @@ export const Player: FC<Props> = ({
 }) => {
   const { name, color } = character;
   const textColor = `${color}.dark`;
-  const [isBotSelect, setIsBotSelect] = useState<boolean | undefined>(false);
 
-  useEffect(() => {
-    if (stage === "voting" && selected) {
-      setIsBotSelect(true);
-    } else {
-      setIsBotSelect(false);
-    }
-  }, [selected, stage]);
+  const isBotSelected = stage === "voting" && isSelected;
 
   if (!name) return <Skeleton />;
+
   let textResult = isBot ? text.match.isBot : text.match.isHuman;
 
   if (stage === "results") {
-    if (selected === true && isBot === true) {
+    if (isSelected && isBot) {
       textResult = text.match.botBusted;
-    } else if (selected === true && isBot === false) {
+    } else if (isSelected && !isBot) {
       textResult = text.match.isNotBot;
-    } else if (selected === false && isBot === false) {
+    } else if (!isSelected && !isBot) {
       textResult = text.match.isHuman;
     }
   }
@@ -61,7 +56,7 @@ export const Player: FC<Props> = ({
       <CharacterAvatar
         stage={stage}
         character={character}
-        isSelected={selected}
+        isSelected={isSelected}
         hasGuessed={hasGuessed}
         isBot={isBot}
         onSelectPlayer={onSelectPlayer}
@@ -78,7 +73,7 @@ export const Player: FC<Props> = ({
           )}
         </>
       )}
-      {stage === "voting" && isBotSelect && (
+      {stage === "voting" && isBotSelected && (
         <Stack direction={"row"} gap={1}>
           <Typography variant="body1" sx={styles.selectBot}>
             {text.match.isBotSelect}
@@ -89,7 +84,7 @@ export const Player: FC<Props> = ({
         <Stack direction={"row"} gap={1}>
           <Typography
             variant="caption"
-            sx={styles.botResult(stage, isBot, selected)}
+            sx={styles.botResult(stage, isBot, isSelected)}
           >
             {textResult}
           </Typography>

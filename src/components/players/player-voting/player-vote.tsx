@@ -2,8 +2,8 @@ import { type FC } from "react";
 import { Stack } from "@mui/material";
 import { Player } from "~/components/index.js";
 
-import { styles } from "./styles.js";
 import { type Character } from "~/types/index.js";
+import { styles } from "./styles.js";
 
 interface Props {
   character: Character;
@@ -21,7 +21,7 @@ export const PlayerVote: FC<Props> = ({
       <Player
         stage="voting"
         character={character}
-        selected={isSelected}
+        isSelected={isSelected}
         onSelectPlayer={onSelectPlayer}
       />
     </Stack>
