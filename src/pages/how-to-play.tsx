@@ -1,63 +1,47 @@
 import { Stack, Typography } from "@mui/material";
 import React, { type FC } from "react";
-
-import { text } from "~/assets/text";
-import { BulletPoint, type BulletPointProps } from "~/components";
-import { NumberedTextSection } from "~/components/numbered-text-section/index.js";
+import { text as copywrite } from "~/assets/text";
+import { BulletPoint, GameRules, PlayerProfiles, PointsAndPenalties } from "~/components";
 import { styles } from "~/styles/pages/how-to-play.js";
-import { theme } from "~/styles/theme";
 
 const HowToPlay: FC = () => {
-
-  const NumberedSection = Object.entries(text.howToPlay.numberedSection).map(
-    ([title, content], idx) => (
-      <NumberedTextSection
-        key={idx + 1}
-        number={idx + 1}
-        title={title}
-        content={content.map((listElement, idxList) => {
-          
-          const props = {
-            variant: "body1",
-            text: listElement,
-            sxContainer: styles.listElement,
-          } as BulletPointProps;
-
-          // two of the list items require specific styling hence the following ifs
-          if (title === "chatting" && idxList === 3) {
-            return (
-              <BulletPoint key={idxList} {...props} sxText={{ color: theme.palette.secondary.main }} />
-            );
-          } else if (title === "results" && idxList === 2) {
-            return (
-              <BulletPoint key={idxList} {...props}>
-                <Typography variant="body1">
-                  <a href={text.howToPlay.link.connectingYourWallet.link}>
-                    {text.howToPlay.link.connectingYourWallet.text}
-                  </a>
-                </Typography>
-              </BulletPoint>
-            );
-          } else {
-          return (
-            <BulletPoint key={idxList} { ...props }/>
-          );
-        }})}
-      />
-    ),
-  );
+  const pageContent = copywrite.howToPlay;
   return (
     <Stack sx={styles.container}>
       <Typography variant="h1" textAlign="center">
-        {text.general.howToPlay}
+        {pageContent.headings.howToPlay}
       </Typography>
       <Typography variant="body1" textAlign="center" sx={styles.text}>
-        {text.howToPlay.main[0]}
+        {pageContent.main[0]}
         <br />
         <br />
-        {text.howToPlay.main[1]}
+        {pageContent.main[1]}
       </Typography>
-      <Stack sx={styles.numberedListSection}>{NumberedSection}</Stack>      
+      <Stack sx={styles.gameRulesSection}>
+        <GameRules />
+      </Stack>
+    
+      <Typography variant="h1" textAlign="center">
+        {pageContent.headings.pointsAndPenalties}
+      </Typography>
+      <Stack sx={styles.pointsAndPenaltiesSection}>
+        <PointsAndPenalties />
+      </Stack>
+        
+      <Typography variant="h1" textAlign="center">
+        {pageContent.headings.dailyLeaderboard}
+      </Typography>
+      <Stack sx={styles.dailyLeaderboard}>
+        {pageContent.dailyLeaderboard.map((content, idx) => 
+          <BulletPoint key={"leaderboard"+idx} text={content}/>)}
+      </Stack>
+
+      <Typography variant="h1" textAlign="center">
+        {pageContent.headings.playerProfiles}
+      </Typography>
+      <Stack sx={styles.playerProfiles}>
+        <PlayerProfiles />
+      </Stack>
     </Stack>
   );
 };

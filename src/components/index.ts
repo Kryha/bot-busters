@@ -12,3 +12,6 @@ export * from "./navbar/index.js";
 export * from "./players/player-local/index.js";
 export * from "./animation/index.js";
 export * from "./bullet-point/index.js";
+export * from "./player-profiles/index.js";
+export * from "./points-and-penalties/index.js";
+export * from "./game-rules/index.js";

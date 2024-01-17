@@ -1,3 +1,4 @@
+// TODO: add missing links
 export const howToPlay = {
   headings: {
     howToPlay: "HOW TO PLAY",
@@ -31,15 +32,26 @@ export const howToPlay = {
     results: [
       "Points are awarded for correct guesses.",
       "Hidden achievements offer additional points.",
-      "Add your score to the leaderboard by",
+      "Add your score to the leaderboard by ",
     ],
   },
   pointsAndPenalties: [
-    "Correct bot identification: +11 points.",
-    "Correct human identification: +10 points.",
-    "Incorrect selection: 0 points.",
-    "No messages sent or no selection submitted: Results invalidated.",
-    "Hidden achievements grant additional points. You'll have to keep playing to find them all.",
+    {
+      regular: "Correct bot identification: ",
+      highlight: "+11 points.",
+    },
+    {
+      regular: "Correct human identification: ",
+      highlight: "+10 points.",
+    },
+    {
+      regular: "No messages sent or no selection submitted: ",
+      highlight: "Results invalidated.",
+    },
+    {
+      regular: "Hidden achievements grant additional points. You'll have to keep playing to find them all.",
+      highlight: "",
+    },
   ],
   dailyLeaderboard: [
     "Ranks are based on daily total scores.",
@@ -47,18 +59,20 @@ export const howToPlay = {
     "Leaderboard resets daily at 00:00 PST.",
   ],
   playerProfiles: [
-    "Anon players are ineligible for leaderboard/credits.",
     {
-      text: "Profiles are created by ",
-      linkText: "connecting your wallet.",
-      // TODO: add link
-      linkUrl: "",
+      regular: "Anon players are ineligible for leaderboard/credits.",
+      highlight: "",
+      link: "",
     },
     {
-      text: "KYC (Know Your Customer) process required for credit eligibility via ",
-      linkText: "zPass.",
-      // TODO: add link
-      linkUrl: "",
+      regular: "Profiles are created by ",
+      highlight: "connecting your wallet.",
+      link: "",
+    },
+    {
+      regular: "KYC (Know Your Customer) process required for credit eligibility via ",
+      highlight: "zPass.",
+      link: "",
     },
   ],
   link: {
