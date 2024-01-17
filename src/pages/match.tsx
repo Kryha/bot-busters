@@ -84,7 +84,6 @@ const MatchInternal: FC<Props> = ({ roomId, session }) => {
           gainedScore={localPlayer.score}
           totalBots={totalBots}
           botsBusted={localPlayer.botsBusted}
-          achievements={localPlayer.achievements}
         />
       )}
 
