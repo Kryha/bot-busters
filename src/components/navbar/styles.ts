@@ -4,11 +4,9 @@ import { breakpoints, theme } from "~/styles/theme.js";
 
 export const styles = {
   container: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
+    position: "relative",
     zIndex: 2,
+    flex: "0 1 auto",
   },
   statsWrapper: {
     justifyContent: "flex-end",
@@ -20,8 +18,9 @@ export const styles = {
   } satisfies SxProps,
   wrapper: {
     pt: 1,
-    pl: 3,
-    pr: 3,
+    pb: 1,
+    pl: 2,
+    pr: 2,
     flexDirection: "row",
     justifyContent: "space-between",
     [`@media (max-width: ${breakpoints.sm}px)`]: {

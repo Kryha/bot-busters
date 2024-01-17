@@ -7,7 +7,9 @@ import { SplashScreen } from "~/components/index.js";
 export const SplashScreenChat = () => {
   return (
     <SplashScreen>
-      <Typography variant="h1">{text.match.chat}</Typography>
+      <Typography aria-label={"start-chatting"} variant="h1">
+        {text.match.chat}
+      </Typography>
     </SplashScreen>
   );
 };

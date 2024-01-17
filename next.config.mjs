@@ -24,7 +24,12 @@ const config = {
     webpackConfig.module.rules.push({
         test: /\.svg$/i,
         issuer: /\.[jt]sx?$/,
-        use: ['@svgr/webpack'],
+        use: [{
+          loader:'@svgr/webpack',
+          options: {
+            svgo: false
+          }
+        }],
     });
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access

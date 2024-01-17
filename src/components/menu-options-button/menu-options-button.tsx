@@ -25,6 +25,7 @@ export const MenuOptionsButtonStyle = styled(Button)({
   "& > svg": {
     "& > path": {
       fill: theme.palette.common.black,
+      stroke: theme.palette.common.black,
     },
   },
   "&:hover": {
@@ -32,6 +33,7 @@ export const MenuOptionsButtonStyle = styled(Button)({
     "& > svg": {
       "& > path": {
         fill: theme.palette.primary.main,
+        stroke: theme.palette.primary.main,
       },
     },
   },
@@ -40,6 +42,7 @@ export const MenuOptionsButtonStyle = styled(Button)({
     "& > svg": {
       "& > path": {
         fill: theme.palette.primary.main,
+        stroke: theme.palette.primary.main,
       },
     },
   },

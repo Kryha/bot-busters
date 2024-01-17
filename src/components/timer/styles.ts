@@ -1,15 +1,23 @@
 import { type SxProps } from "@mui/material";
 
 export const styles = {
-  wrapper: { width: "100%" },
+  wrapper: {
+    width: "100%",
+    mt: 1,
+    backgroundColor: "customGrey.main",
+    position: "relative",
+  },
   progress: (progress: number, isFinalSeconds?: boolean) => {
     return {
+      position: "absolute",
+      top: 0,
+      left: 0,
       width: `${progress}%`,
-      height: "16px",
-      backgroundColor: isFinalSeconds ? "red" : "customGrey.main",
+      height: "24px",
+      backgroundColor: isFinalSeconds ? "red" : "customGrey.light",
       alignItems: "flex-end",
     };
   },
-  countdownWrapper: { alignItems: "center" },
-  countdown: { mr: 1, lineHeight: "16px" } satisfies SxProps,
+  countdownWrapper: { alignItems: "flex-start", position: "relative", pl: 1 },
+  countdown: { mr: 1, lineHeight: "24px" } satisfies SxProps,
 };

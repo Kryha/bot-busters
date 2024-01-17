@@ -21,8 +21,6 @@ export const PlayerData: FC<Props> = ({
   onSelectPlayer,
 }) => {
   const character = CHARACTERS[player.characterId]!;
-  const { name, color } = character;
-
   const isVoted = !!localPlayer.votes?.includes(player.userId);
   const hasGuessed = player.isBot ? isVoted : !isVoted;
 
@@ -30,17 +28,22 @@ export const PlayerData: FC<Props> = ({
     case "voting":
       return (
         <PlayerVote
-          characterName={name}
-          color={color}
+          character={character}
           onSelectPlayer={onSelectPlayer}
           isSelected={isSelected}
         />
       );
 
     case "results":
-      return <PlayerResult player={player} hasGuessed={hasGuessed} />;
+      return (
+        <PlayerResult
+          player={player}
+          hasGuessed={hasGuessed}
+          isSelected={isSelected}
+        />
+      );
 
     default:
-      return <Player characterName={name} color={color} />;
+      return <Player character={character} />;
   }
 };
