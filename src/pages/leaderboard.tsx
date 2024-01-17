@@ -72,9 +72,10 @@ const LeaderBoard = () => {
         {text.leaderboard.dailyLeaderboard}
       </Typography>
 
+      {/* TODO: if user is logged in, pass their data as param to show their score on top */}
       <LeaderboardTable leaderboard={leaderboardData} />
 
-      {/*TODO: Add the current user score + move to main table */}
+      {/*TODO: delete this component after refactoring username creation */}
       <AddScoreTable
         isAuthenticated={isAuthenticated}
         isGamePlayed={isGamePlayed}
