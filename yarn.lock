@@ -4969,6 +4969,7 @@ __metadata:
     leva: ^0.9.35
     lodash: ^4.17.21
     minidenticons: ^4.2.0
+    naughty-words: ^1.2.0
     next: 13.4.12
     next-auth: ^4.23.0
     next-plugin-svgr: ^1.1.10
@@ -9652,6 +9653,13 @@ __metadata:
   version: 1.4.0
   resolution: "natural-compare@npm:1.4.0"
   checksum: 23ad088b08f898fc9b53011d7bb78ec48e79de7627e01ab5518e806033861bef68d5b0cd0e2205c2f36690ac9571ff6bcb05eb777ced2eeda8d4ac5b44592c3d
+  languageName: node
+  linkType: hard
+
+"naughty-words@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "naughty-words@npm:1.2.0"
+  checksum: b439970357cb6649197435542ec267d36044b8316011a9deb4ba23b294de1b527be5e8233fa63edd21fd22337e5b583f86e3d131eb7896731f4645dbf83b75bf
   languageName: node
   linkType: hard
 
