@@ -1,21 +1,32 @@
 import { type MatchStage } from "~/types";
-import { theme } from "~/styles/theme";
+import { theme } from "~/styles/theme.js";
 
 export const styles = {
-  avatar: (stage?: MatchStage, isSelected?: boolean, isBot?: boolean) => {
-    let fill = "transparent";
-
-    if (stage === "voting") {
-      fill = isSelected ? theme.palette.common.white : "transparent";
-    } else if (stage === "results") {
-      if (isSelected === false && isBot === false) {
-        fill = "transparent";
-      } else if (isSelected === true && isBot === false) {
-        fill = theme.palette.error.main;
-      } else if (isSelected === true && isBot === true) {
-        fill = theme.palette.success.main;
+  avatar: (stage: MatchStage, isSelected?: boolean, isBot?: boolean) => {
+    const determineFill = (
+      stage: MatchStage,
+      isBot?: boolean,
+      isSelected?: boolean,
+    ) => {
+      if (stage === "voting") {
+        return isSelected ? theme.palette.common.white : "transparent";
       }
-    }
+
+      if (stage === "results") {
+        if (isSelected && isBot) {
+          return theme.palette.success.main;
+        }
+        if (isSelected && !isBot) {
+          return theme.palette.error.main;
+        }
+        if (!isSelected && !isBot) {
+          return "transparent";
+        }
+      }
+      return "transparent";
+    };
+
+    const fill = determineFill(stage, isSelected, isBot);
 
     return {
       width: stage === "chat" ? "140px" : "150px",
