@@ -1,4 +1,4 @@
-import { about } from "./about.js";
+import { about, wordsToLinkAbout } from "./about.js";
 import { auth } from "./auth.js";
 import { chat } from "./chat.js";
 import { general } from "./general.js";
@@ -15,6 +15,7 @@ export const text = {
   about,
   general,
   navigation,
+  wordsToLinkAbout,
   lobby,
   match,
   leaderboard,
