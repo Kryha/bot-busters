@@ -1,16 +1,17 @@
 import { Stack, Typography } from "@mui/material";
 import { type FC } from "react";
 
-import { styles } from "./styles.js";
 import { text } from "~/assets/text/index.js";
+
+import { styles } from "./styles.js";
 
 interface Props {
   stage: string;
-  name: string | undefined;
-  message: string | undefined;
+  name?: string;
+  message?: string;
 }
 
-export const Prompt: FC<Props> = ({ stage, name, message }) => {
+export const HostChatPrompt: FC<Props> = ({ stage, name, message }) => {
   return (
     <Stack sx={styles.wrapper}>
       {stage === "chat" && name && message && (
