@@ -49,7 +49,8 @@ export const howToPlay = {
       highlight: "Results invalidated.",
     },
     {
-      regular: "Hidden achievements grant additional points. You'll have to keep playing to find them all.",
+      regular:
+        "Hidden achievements grant additional points. You'll have to keep playing to find them all.",
       highlight: "",
     },
   ],
@@ -70,15 +71,16 @@ export const howToPlay = {
       link: "",
     },
     {
-      regular: "KYC (Know Your Customer) process required for credit eligibility via ",
+      regular:
+        "KYC (Know Your Customer) process required for credit eligibility via ",
       highlight: "zPass.",
       link: "",
     },
   ],
   link: {
     connectingYourWallet: {
-        text: "connecting your wallet.",
-        link: ""
-    }
-  }
+      text: "connecting your wallet.",
+      link: "",
+    },
+  },
 } as const;

@@ -1,7 +1,12 @@
 import { Stack, Typography } from "@mui/material";
 import React, { type FC } from "react";
 import { text as copywrite } from "~/assets/text";
-import { BulletPoint, GameRules, PlayerProfiles, PointsAndPenalties } from "~/components";
+import {
+  BulletPoint,
+  GameRules,
+  PlayerProfiles,
+  PointsAndPenalties,
+} from "~/components";
 import { styles } from "~/styles/pages/how-to-play.js";
 
 const HowToPlay: FC = () => {
@@ -20,20 +25,21 @@ const HowToPlay: FC = () => {
       <Stack sx={styles.gameRulesSection}>
         <GameRules />
       </Stack>
-    
+
       <Typography variant="h1" textAlign="center">
         {pageContent.headings.pointsAndPenalties}
       </Typography>
       <Stack sx={styles.pointsAndPenaltiesSection}>
         <PointsAndPenalties />
       </Stack>
-        
+
       <Typography variant="h1" textAlign="center">
         {pageContent.headings.dailyLeaderboard}
       </Typography>
       <Stack sx={styles.dailyLeaderboard}>
-        {pageContent.dailyLeaderboard.map((content, idx) => 
-          <BulletPoint key={"leaderboard"+idx} text={content}/>)}
+        {pageContent.dailyLeaderboard.map((content, idx) => (
+          <BulletPoint key={"leaderboard" + idx} text={content} />
+        ))}
       </Stack>
 
       <Typography variant="h1" textAlign="center">

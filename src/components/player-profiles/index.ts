@@ -1,1 +1,1 @@
-export * from './player-profiles';
+export * from "./player-profiles";

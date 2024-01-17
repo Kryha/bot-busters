@@ -7,7 +7,8 @@ import { NumberedTextSection } from "~/components/numbered-text-section/index.js
 import { styles } from "~/styles/pages/how-to-play.js";
 import { theme } from "~/styles/theme";
 
-export const GameRules: FC = () => Object.entries(copywrite.howToPlay.numberedSection).map(
+export const GameRules: FC = () =>
+  Object.entries(copywrite.howToPlay.numberedSection).map(
     ([title, content], idx) => (
       <NumberedTextSection
         key={idx + 1}
@@ -22,7 +23,11 @@ export const GameRules: FC = () => Object.entries(copywrite.howToPlay.numberedSe
           // two of the list items require specific styling hence the following ifs
           if (title === "chatting" && idxList === 3) {
             return (
-              <BulletPoint key={idxList} {...propsBulletPoint} sxText={{ color: theme.palette.secondary.main }} />
+              <BulletPoint
+                key={idxList}
+                {...propsBulletPoint}
+                sxText={{ color: theme.palette.secondary.main }}
+              />
             );
           } else if (title === "results" && idxList === 2) {
             const { text, ...propsNoText } = propsBulletPoint;
@@ -37,10 +42,9 @@ export const GameRules: FC = () => Object.entries(copywrite.howToPlay.numberedSe
               </BulletPoint>
             );
           } else {
-            return (
-              <BulletPoint key={idxList} {...propsBulletPoint}/>
-            );
-        }})}
+            return <BulletPoint key={idxList} {...propsBulletPoint} />;
+          }
+        })}
       />
     ),
   );
