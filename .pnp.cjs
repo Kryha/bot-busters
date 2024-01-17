@@ -63,7 +63,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["concurrently", "npm:8.2.1"],\
             ["copyfiles", "npm:2.4.1"],\
             ["dotenv-cli", "npm:7.3.0"],\
-            ["drizzle-kit", "npm:0.20.10"],\
+            ["drizzle-kit", "npm:0.20.13"],\
             ["drizzle-orm", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:0.29.3"],\
             ["drizzle-zod", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:0.5.1"],\
             ["eslint", "npm:8.50.0"],\
@@ -3321,10 +3321,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@drizzle-team/studio", [\
-        ["npm:0.0.37", {\
-          "packageLocation": "./.yarn/cache/@drizzle-team-studio-npm-0.0.37-aed7c3652d-072c28bfa3.zip/node_modules/@drizzle-team/studio/",\
+        ["npm:0.0.39", {\
+          "packageLocation": "./.yarn/cache/@drizzle-team-studio-npm-0.0.39-b895ead472-b15e55b795.zip/node_modules/@drizzle-team/studio/",\
           "packageDependencies": [\
-            ["@drizzle-team/studio", "npm:0.0.37"],\
+            ["@drizzle-team/studio", "npm:0.0.39"],\
             ["superjson", "npm:2.2.1"]\
           ],\
           "linkType": "HARD"\
@@ -7686,7 +7686,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["concurrently", "npm:8.2.1"],\
             ["copyfiles", "npm:2.4.1"],\
             ["dotenv-cli", "npm:7.3.0"],\
-            ["drizzle-kit", "npm:0.20.10"],\
+            ["drizzle-kit", "npm:0.20.13"],\
             ["drizzle-orm", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:0.29.3"],\
             ["drizzle-zod", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:0.5.1"],\
             ["eslint", "npm:8.50.0"],\
@@ -8982,18 +8982,18 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["drizzle-kit", [\
-        ["npm:0.20.10", {\
-          "packageLocation": "./.yarn/cache/drizzle-kit-npm-0.20.10-2289003597-039601978b.zip/node_modules/drizzle-kit/",\
+        ["npm:0.20.13", {\
+          "packageLocation": "./.yarn/cache/drizzle-kit-npm-0.20.13-5fbee76122-86c045d424.zip/node_modules/drizzle-kit/",\
           "packageDependencies": [\
-            ["drizzle-kit", "npm:0.20.10"],\
-            ["@drizzle-team/studio", "npm:0.0.37"],\
+            ["drizzle-kit", "npm:0.20.13"],\
+            ["@drizzle-team/studio", "npm:0.0.39"],\
             ["@esbuild-kit/esm-loader", "npm:2.6.5"],\
             ["camelcase", "npm:7.0.1"],\
             ["chalk", "npm:5.3.0"],\
             ["commander", "npm:9.5.0"],\
             ["env-paths", "npm:3.0.0"],\
             ["esbuild", "npm:0.19.11"],\
-            ["esbuild-register", "virtual:2289003597f8d83e0cf30b246a6e77684310c3e7cb456c3a1a2528edbcf49cb5ba8e2c25ab3ff830da393c0347da80793c00ab15073e780c0cba836877a93f5e#npm:3.5.0"],\
+            ["esbuild-register", "virtual:5fbee761221ad3fdda52407f5de070d7e05cc3a336b978c760ecb0664d11fc09888d659c58048d0b6266b7a3d1c7fadb8f0216d5c13c4871a8ab18e2bab0b7e0#npm:3.5.0"],\
             ["glob", "npm:8.1.0"],\
             ["hanji", "npm:0.0.5"],\
             ["json-diff", "npm:0.9.0"],\
@@ -9494,10 +9494,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:2289003597f8d83e0cf30b246a6e77684310c3e7cb456c3a1a2528edbcf49cb5ba8e2c25ab3ff830da393c0347da80793c00ab15073e780c0cba836877a93f5e#npm:3.5.0", {\
-          "packageLocation": "./.yarn/__virtual__/esbuild-register-virtual-a80a7b8bc4/0/cache/esbuild-register-npm-3.5.0-d823f64ce0-f4307753c9.zip/node_modules/esbuild-register/",\
+        ["virtual:5fbee761221ad3fdda52407f5de070d7e05cc3a336b978c760ecb0664d11fc09888d659c58048d0b6266b7a3d1c7fadb8f0216d5c13c4871a8ab18e2bab0b7e0#npm:3.5.0", {\
+          "packageLocation": "./.yarn/__virtual__/esbuild-register-virtual-9fa71ca53f/0/cache/esbuild-register-npm-3.5.0-d823f64ce0-f4307753c9.zip/node_modules/esbuild-register/",\
           "packageDependencies": [\
-            ["esbuild-register", "virtual:2289003597f8d83e0cf30b246a6e77684310c3e7cb456c3a1a2528edbcf49cb5ba8e2c25ab3ff830da393c0347da80793c00ab15073e780c0cba836877a93f5e#npm:3.5.0"],\
+            ["esbuild-register", "virtual:5fbee761221ad3fdda52407f5de070d7e05cc3a336b978c760ecb0664d11fc09888d659c58048d0b6266b7a3d1c7fadb8f0216d5c13c4871a8ab18e2bab0b7e0#npm:3.5.0"],\
             ["@types/esbuild", null],\
             ["debug", "virtual:2f4f5d4be0c4271f81a756602d102e02c292a5b30d8b7f5dd19d5368d75df8bb2f1bf516e3f835c2b5501d1663eb437d4f00d6d057bcaee770b46e87267a0fa3#npm:4.3.4"],\
             ["esbuild", "npm:0.19.11"]\

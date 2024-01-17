@@ -81,7 +81,7 @@
     "concurrently": "^8.2.1",
     "copyfiles": "^2.4.1",
     "dotenv-cli": "^7.3.0",
-    "drizzle-kit": "^0.20.10",
+    "drizzle-kit": "latest",
     "eslint": "^8.47.0",
     "eslint-config-next": "^13.4.19",
     "eslint-plugin-jest": "^27.6.0",
