@@ -54,7 +54,7 @@ export const RowAddScore: FC<Props> = ({ player, isAuthenticated }) => {
       </TableCell>
       <TableCell>
         <Typography variant="body1" color="customGrey.main">
-          {player.matchesPlayed?.length}
+          {player.matchesPlayed}
         </Typography>
       </TableCell>
       <TableCell>

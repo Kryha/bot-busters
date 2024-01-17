@@ -142,7 +142,8 @@ export const userRouter = createTRPCRouter({
           id: users.id,
           username: users.username,
           score: users.score,
-          matchesPlayed: users.matchesPlayed,
+          // TODO: count matches that have been played
+          matchesPlayed: users.score,
           rank: ranks.position,
         })
         .from(users)
