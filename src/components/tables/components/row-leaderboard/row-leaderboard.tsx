@@ -40,7 +40,7 @@ export const RowLeaderboard: FC<Props> = ({ leaderboard, isBlurred }) => {
           sx={styles.tableText}
           color="customGrey.main"
         >
-          {leaderboard.matchesPlayed?.length}
+          {leaderboard.matchesPlayed}
         </Typography>
       </TableCell>
       <TableCell>
