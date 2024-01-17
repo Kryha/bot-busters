@@ -3,7 +3,8 @@ name: Build and Deploy staging to GKE
 on:
   push:
     branches:
-      - "main"
+      # - "main"
+      - "skaffold/cache"
 
 env:
   PROJECT_ID: aleo-botbusters
@@ -49,4 +50,4 @@ jobs:
           OBSCURA_API_KEY: ${{ secrets.OBSCURA_API_KEY }}
         run: |-
           envsubst < deployment/staging/secrets.template.yaml > deployment/staging/secrets.yaml
-          skaffold run --filename skaffold.staging.yml
+          skaffold run --filename skaffold.staging.yml --cache-artifacts=false
