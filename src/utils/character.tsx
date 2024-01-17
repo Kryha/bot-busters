@@ -1,6 +1,7 @@
 import { Ash, Dot, Eve, Hal, Roy } from "~/assets/characters/index.js";
+import { type CharacterName } from "~/types";
 
-export const getCharacter = (characterName: string) => {
+export const getCharacter = (characterName: CharacterName) => {
   switch (characterName) {
     case "hal":
       return <Hal />;

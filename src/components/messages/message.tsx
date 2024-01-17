@@ -1,6 +1,6 @@
 import { type FC } from "react";
 import { Stack, Typography } from "@mui/material";
-import { type ChatMessage } from "~/types/index.js";
+import { type CharacterName, type ChatMessage } from "~/types/index.js";
 
 import { getTimeStamp } from "~/utils/date.js";
 import { getCharacter } from "~/utils/character.jsx";
@@ -9,7 +9,7 @@ import { styles } from "./styles.js";
 
 interface Props {
   message: ChatMessage;
-  characterName: string;
+  characterName: CharacterName;
   color: string;
 }
 

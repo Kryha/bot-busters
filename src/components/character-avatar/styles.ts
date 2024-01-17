@@ -19,9 +19,6 @@ export const styles = {
         if (isSelected && !isBot) {
           return theme.palette.error.main;
         }
-        if (isSelected && isBot) {
-          return theme.palette.error.main;
-        }
       }
       return "transparent";
     };
