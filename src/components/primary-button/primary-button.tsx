@@ -2,7 +2,7 @@ import { type FC } from "react";
 import { Button } from "@mui/base";
 import { styled } from "@mui/material/styles";
 import { theme } from "~/styles/theme.js";
-import { SelectIcon } from "~/assets/icons";
+import { SelectIcon } from "~/assets/icons/index.js";
 
 interface Props extends React.ComponentProps<typeof Button> {
   children: React.ReactNode;
