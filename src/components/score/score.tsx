@@ -1,11 +1,12 @@
 import { type FC } from "react";
 import { Divider, Stack, Typography } from "@mui/material";
 
-import { styles } from "./styles.js";
-import { text } from "./text.js";
 import { MATCH_ACHIEVEMENTS } from "~/server/service/achievements.js";
 import { type AchievementId } from "~/types/index.js";
 import { POINTS_ACHIEVEMENTS } from "~/constants/main.js";
+import { text } from "~/assets/text/index.js";
+
+import { styles } from "./styles.js";
 
 interface Props {
   correctGuesses: number;
@@ -58,7 +59,9 @@ export const Score: FC<Props> = ({
                     {name}
                   </Typography>
                   <Typography variant="body1">
-                    {text.points(POINTS_ACHIEVEMENTS[achievementResult])}
+                    {text.achievements.points(
+                      POINTS_ACHIEVEMENTS[achievementResult],
+                    )}
                   </Typography>
                 </Stack>
               </>
@@ -69,9 +72,11 @@ export const Score: FC<Props> = ({
       </Stack>
       <Stack sx={styles.score}>
         <Typography variant="body1">
-          {text.yourScore(correctGuesses)}
+          {text.achievements.yourScore(correctGuesses)}
         </Typography>
-        <Typography variant="body1">{text.points(gainedScore)}</Typography>
+        <Typography variant="body1">
+          {text.achievements.points(gainedScore)}
+        </Typography>
       </Stack>
       <Divider />
     </Stack>

@@ -5,11 +5,16 @@ export const styles = {
     flexDirection: "row",
     gap: 1,
   },
-  usernameContainer: {
-    minWidth: 250,
-    justifyContent: "space-between",
+  playerHeading: {
+    textAlign: "center",
+    textTransform: "uppercase",
   },
-  username: {
-    pl: 2,
+  playerSubHeading: {
+    textAlign: "center",
+  },
+  timeSection: {
+    gap: 0.5,
+    justifyContent: "center",
+    alignItems: "center",
   } satisfies SxProps,
 };

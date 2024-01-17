@@ -32,7 +32,7 @@ export const palette = (theme: Theme): Palette => {
     },
     divider: "#494949",
     orange: {
-      light: "#FF9C33",
+      light: "#f6c281",
       main: "#FF8400",
       dark: "#B25C00",
       contrastText: "#FFFFFF",
@@ -61,6 +61,12 @@ export const palette = (theme: Theme): Palette => {
       dark: "#2196F3",
       contrastText: "#FFFFFF",
     },
+    yellow: {
+      light: "#FFF9C4",
+      main: "#FFEB3B",
+      dark: "#FBC02D",
+      contrastText: "#FFFFFF",
+    },
     blueGrey: theme.palette.augmentColor({
       color: {
         light: "#ECEFF1",
@@ -73,10 +79,20 @@ export const palette = (theme: Theme): Palette => {
         main: "#FB8C00",
       },
     }),
+    error: theme.palette.augmentColor({
+      color: {
+        main: "#FF4823",
+      },
+    }),
+    success: theme.palette.augmentColor({
+      color: {
+        main: "#5CFF00",
+      },
+    }),
     customGrey: theme.palette.augmentColor({
       color: {
-        light: "#BDBDBD",
-        main: "#9E9E9E",
+        light: "#747474",
+        main: "#494949",
       },
       name: "customGrey",
     }),

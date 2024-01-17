@@ -43,16 +43,11 @@ export const Timer: FC<Props> = ({
 
   return (
     <Stack sx={styles.wrapper}>
-      <Stack sx={styles.progress(progress, remainingTime < alertTime)}>
-        <Stack sx={styles.countdownWrapper}>
-          <Typography
-            variant="caption"
-            color="common.white"
-            sx={styles.countdown}
-          >
-            {text.general.countdown(formattedCountdown)}
-          </Typography>
-        </Stack>
+      <Stack sx={styles.progress(progress, remainingTime < alertTime)} />
+      <Stack sx={styles.countdownWrapper}>
+        <Typography variant="body1" color="common.white" sx={styles.countdown}>
+          {formattedCountdown}
+        </Typography>
       </Stack>
     </Stack>
   );

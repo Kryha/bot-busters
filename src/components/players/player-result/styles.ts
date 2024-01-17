@@ -13,4 +13,11 @@ export const styles = {
     justifyContent: "space-between",
     alignItems: "center",
   } satisfies SxProps,
+  playerHeading: {
+    textAlign: "center",
+    textTransform: "uppercase",
+  },
+  playerSubHeading: {
+    textAlign: "center",
+  },
 };
