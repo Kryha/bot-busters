@@ -3,14 +3,13 @@ import {
   AleoKeyProvider,
   AleoNetworkClient,
   NetworkRecordProvider,
-  PrivateKey,
   ProgramManager,
 } from "@aleohq/sdk";
 
 import { env } from "~/env.mjs";
 
+//! do not pass the private key here, else the sdk will fail
 const account = new Account();
-account._privateKey = PrivateKey.from_string(env.ALEO_PRIVATE_KEY);
 
 const keyProvider = new AleoKeyProvider();
 keyProvider.useCache(true);
