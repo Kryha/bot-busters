@@ -31,12 +31,7 @@ export const howToPlay = {
     results: [
       "Points are awarded for correct guesses.",
       "Hidden achievements offer additional points.",
-      {
-        text: "Add your score to the leaderboard by ",
-        linkText: "connecting your wallet.",
-        // TODO: add link
-        linkUrl: "",
-      },
+      "Add your score to the leaderboard by",
     ],
   },
   pointsAndPenalties: [
@@ -66,4 +61,10 @@ export const howToPlay = {
       linkUrl: "",
     },
   ],
+  link: {
+    connectingYourWallet: {
+        text: "connecting your wallet.",
+        link: ""
+    }
+  }
 } as const;
