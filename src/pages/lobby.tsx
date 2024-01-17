@@ -34,7 +34,9 @@ const Lobby: FC = () => {
 
   return (
     <Layout>
-      <Typography variant="h5">{text.lobby.waiting}</Typography>
+      <Typography aria-label={"lobby"} variant="h5">
+        {text.lobby.waiting}
+      </Typography>
       <CircularProgress />
     </Layout>
   );

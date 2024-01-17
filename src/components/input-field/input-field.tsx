@@ -17,6 +17,7 @@ export const InputField: FC<Props> = ({ onClick, disabled, ...rest }) => {
   return (
     <Stack sx={styles.wrapper}>
       <TextField
+        aria-label="chat-input"
         placeholder={text.chat.inputFieldPlaceholder}
         InputProps={{ sx: styles.inputFieldProps }}
         sx={styles.inputField}
