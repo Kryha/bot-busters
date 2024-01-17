@@ -2,11 +2,11 @@ export const leaderboard = {
   useNickname: "USE NICKNAME ON LEADERBOARD",
   avatarEmoji: "🙂",
   leaderboardColumns: [
-    "Ranking",
-    "Player",
+    "", // indicates rank but has no title
+    "Buster",
     "Games",
     "Score",
-    "Daily Top 10 Aleo Credits",
+    "Daily Top 10 Earn Aleo Credits",
   ],
   leaderboardRank: "#5",
   allTimeLeaderboard: "All time leaderboard",

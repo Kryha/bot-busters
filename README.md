@@ -44,6 +44,17 @@ yarn dev
 
 Happy hacking!
 
+## Generating database migrations
+
+Whenever you make some changes to the database schemas and tables, make sure to run the following commands to generate the migrations:
+
+```sh
+yarn build
+yarn db:gen-migrations
+```
+
+Run `yarn start` and navigate to the application URL to make sure they are running correctly.
+
 ## Getting started with Aleo
 
 Aleo is aiming to build a platform for web applications that are performant, secure, and private.

@@ -21,10 +21,10 @@ export const styles = {
   inputFieldProps: {
     flexGrow: 1,
     border: "none",
-    "&:hover": {
+    "&:hover fieldset": {
       border: "none",
     },
-    "&:focus": {
+    "&.Mui-focused fieldset": {
       border: "none",
     },
     "&:active": {

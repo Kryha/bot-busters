@@ -49,8 +49,8 @@ spec:
                 secretKeyRef:
                   name: backend-secrets
                   key: obscura_api_key
-            - name: ALEO_NETWORK_URL
-              value: https://aleo.obscura.network/v1/$(OBSCURA_API_KEY)
+            - name: ALEO_NETWORK_URL # TODO: update to new obscura URL
+              value: https://aleo-testnet3.obscura.build/v1/$(OBSCURA_API_KEY)
             - name: ALEO_PRIVATE_KEY
               valueFrom:
                 secretKeyRef:

@@ -15,5 +15,5 @@ export interface ChatMessage extends ChatMessagePayload {
 
 export interface MessageData {
   message: ChatMessage;
-  character: { name: string; color: string };
+  character: { name: CharacterName; color: string };
 }

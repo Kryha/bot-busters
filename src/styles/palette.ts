@@ -32,7 +32,7 @@ export const palette = (theme: Theme): Palette => {
     },
     divider: "#494949",
     orange: {
-      light: "#FF9C33",
+      light: "#f6c281",
       main: "#FF8400",
       dark: "#B25C00",
       contrastText: "#FFFFFF",

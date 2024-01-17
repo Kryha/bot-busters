@@ -1,70 +1,81 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useMemo } from "react";
 import { useSession } from "next-auth/react";
-import { Box, Typography } from "@mui/material";
-import { type LeaderboardData } from "~/types/index.js";
+import { CircularProgress, Typography } from "@mui/material";
+
 import { isValidSession } from "~/utils/session.js";
 import { AddScoreTable, LeaderboardTable } from "~/components/tables/index.js";
-import { leaderboardData } from "~/constants/index.js";
 import { text } from "~/assets/text/index.js";
 import { styles } from "~/styles/pages/leaderboard.js";
-import { fakeCountdown } from "~/constants/fake-data/landing";
+import { fakeCountdown } from "~/constants/fake-data/landing.js";
+import { api } from "~/utils/api.js";
+import { isClient } from "~/utils/client.js";
+
+const USERS_PER_PAGE = 20;
 
 const LeaderBoard = () => {
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const [currentData, setCurrentData] = useState<LeaderboardData[]>([]);
-  const itemsPerPage = 6;
   const { data: sessionData } = useSession();
   const isAuthenticated = isValidSession(sessionData);
+
   const isGamePlayed = true;
 
-  const loadMoreData = useCallback(() => {
-    const startIndex: number = (currentPage - 1) * itemsPerPage;
-    const endIndex: number = startIndex + itemsPerPage;
-    const newData: LeaderboardData[] = leaderboardData.slice(0, endIndex);
+  const getRankedUsers = api.user.getRankedUsers.useInfiniteQuery(
+    {
+      limit: USERS_PER_PAGE,
+    },
+    {
+      getNextPageParam: (lastPage) => lastPage.nextCursor,
+      initialCursor: 0,
+    },
+  );
 
-    setCurrentData(newData);
-  }, [currentPage]);
-
-  useEffect(() => {
-    loadMoreData();
-  }, [currentPage, loadMoreData]);
-
-  const intersectionRef = useRef<HTMLDivElement | null>(null);
-
-  const handleIntersection = (entries: IntersectionObserverEntry[]) => {
-    const entry = entries[0];
-    if (entry && entry.isIntersecting) {
-      setCurrentPage((prevPage) => prevPage + 1);
-    }
-  };
+  const leaderboardData = useMemo(
+    () => getRankedUsers.data?.pages.flatMap((page) => page.players),
+    [getRankedUsers.data?.pages],
+  );
 
   useEffect(() => {
-    const options = {
-      root: null,
-      rootMargin: "0px",
-      threshold: 0.1,
+    if (!isClient()) return;
+
+    const handleScrollEvent = () => {
+      const { scrollTop, scrollHeight, clientHeight } =
+        document.documentElement;
+
+      const pages = getRankedUsers.data?.pages;
+
+      // if users on last page are fewer than the users per page
+      // then all users have been fetched and we should not fetch on scroll
+      let allFetched = false;
+      if (pages?.length) {
+        const latestPage = pages[pages.length - 1];
+        allFetched = latestPage!.players.length < USERS_PER_PAGE;
+      }
+
+      if (scrollTop + clientHeight >= scrollHeight - 5 && !allFetched) {
+        getRankedUsers
+          .fetchNextPage()
+          .catch((err) => console.error("Fetching page:", err));
+      }
     };
 
-    const observer = new IntersectionObserver(handleIntersection, options);
-    if (intersectionRef.current) {
-      observer.observe(intersectionRef.current);
-    }
+    window.addEventListener("scroll", handleScrollEvent, { passive: true });
 
     return () => {
-      observer.disconnect();
+      window.removeEventListener("scroll", handleScrollEvent);
     };
-  }, []);
+  }, [getRankedUsers]);
+
+  if (getRankedUsers.isLoading) return <CircularProgress />;
 
   return (
     <>
       <Typography variant="h1" color="common.black" sx={styles.text}>
         {text.leaderboard.dailyLeaderboard}
       </Typography>
-      <Box>
-        <LeaderboardTable leaderboard={currentData} />
-        <Box ref={intersectionRef} />
-      </Box>
-      {/*TODO: Add the current user score + move to main table */}
+
+      {/* TODO: if user is logged in, pass their data as param to show their score on top */}
+      <LeaderboardTable leaderboard={leaderboardData} />
+
+      {/*TODO: delete this component after refactoring username creation */}
       <AddScoreTable
         isAuthenticated={isAuthenticated}
         isGamePlayed={isGamePlayed}

@@ -22,7 +22,7 @@ export const PlayerResult: FC<Props> = ({ player, hasGuessed, isSelected }) => {
         character={character}
         hasGuessed={hasGuessed}
         isBot={player.isBot}
-        selected={isSelected}
+        isSelected={isSelected}
       />
     </Stack>
   );

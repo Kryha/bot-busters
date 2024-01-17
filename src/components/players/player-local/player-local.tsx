@@ -15,7 +15,7 @@ export const PlayerLocal: FC<Props> = ({ localPlayer }) => {
   const character = CHARACTERS[localPlayer.characterId];
   return (
     <Stack sx={styles.container}>
-      <Player character={character} isLocalPlayer={true} />
+      <Player character={character} isLocalPlayer />
     </Stack>
   );
 };

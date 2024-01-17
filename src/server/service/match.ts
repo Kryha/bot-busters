@@ -2,7 +2,7 @@ import { TRPCError } from "@trpc/server";
 import { eq, sql } from "drizzle-orm";
 import lodash from "lodash";
 
-import { matchPrompts } from "~/assets/text/match-promts.js";
+import { matchPrompts } from "~/assets/text/match-prompts.js";
 import {
   CHAT_TIME_MS,
   POINTS_ACHIEVEMENTS,
@@ -10,7 +10,7 @@ import {
   POINTS_HUMAN_BUSTED,
 } from "~/constants/index.js";
 import { ee, matchEvent } from "~/server/api/match-maker.js";
-import { db, type BBPgTransaction } from "~/server/db/index.js";
+import { type BBPgTransaction, db } from "~/server/db/index.js";
 import { users } from "~/server/db/schema.js";
 import { selectMatchPlayedByUser } from "~/server/db/user.js";
 import { Agent } from "~/server/service/index.js";
