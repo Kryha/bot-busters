@@ -9,7 +9,6 @@ import { PlayerData } from "~/components/players/player-data/index.js";
 
 import { PrimaryButton } from "~/components/primary-button/index.js";
 import { styles } from "./styles.js";
-import { PrimaryButton } from "~/components/primary-button/index.js";
 
 interface Props {
   room: MatchRoom;
