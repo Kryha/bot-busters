@@ -1,6 +1,7 @@
-import { eq, sql } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 
 import { db, dbSchema } from "~/server/db/index.js";
+import { usersToMatches } from "./schema.js";
 
 const { users, matches } = dbSchema;
 
@@ -26,13 +27,12 @@ export const insertUserWithAddress = async (address: string) => {
 };
 
 export const selectMatchPlayedByUser = async (userId: string) => {
-  const selectedUsers = await db
+  const matchesPlayed = await db
     .select()
-    .from(matches)
-    .where(
-      sql`${matches.id} IN (SELECT unnest(${users.matchesPlayed}) AS id FROM ${users} WHERE id = ${userId})`,
-    );
-  return selectedUsers;
+    .from(usersToMatches)
+    .innerJoin(matches, eq(matches.id, usersToMatches.matchId))
+    .where(eq(usersToMatches.userId, userId));
+  return matchesPlayed;
 };
 
 export const insertVerifiedUser = async (address: string, username: string) => {
