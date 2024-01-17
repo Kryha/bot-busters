@@ -18,6 +18,7 @@
     "db:run": "docker-compose up -d",
     "db:push": "dotenv drizzle-kit push:pg",
     "db:studio": "dotenv drizzle-kit studio",
+    "db:gen-migrations": "dotenv drizzle-kit generate:pg",
     "dev": "next dev",
     "dev:ws": "yarn build:ws && yarn start:ws",
     "lint": "next lint",
