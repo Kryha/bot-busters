@@ -9,7 +9,7 @@ import { api } from "~/utils/api.js";
 
 import { type AchievementId } from "~/types/index.js";
 import { Score } from "~/components/score/index.js";
-import { isAnonymousSession, missingUsername } from "~/utils/session";
+import { isAnonymousSession, missingUsername } from "~/utils/session.js";
 import { PrimaryButton } from "~/components/primary-button/index.js";
 import { text } from "~/assets/text/index.js";
 import { styles } from "./styles.js";
