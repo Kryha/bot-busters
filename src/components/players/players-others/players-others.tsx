@@ -6,8 +6,8 @@ import { text } from "~/assets/text/index.js";
 import { type MatchRoom, type PlayerType } from "~/types/index.js";
 import { Timer } from "~/components/timer/index.js";
 import { PlayerData } from "~/components/players/player-data/index.js";
-
 import { PrimaryButton } from "~/components/primary-button/index.js";
+
 import { styles } from "./styles.js";
 
 interface Props {

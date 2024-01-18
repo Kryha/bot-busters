@@ -2,7 +2,6 @@ import { type SxProps } from "@mui/material";
 
 export const styles = {
   textContainer: {
-    pt: "170px",
     alignItems: "center",
   },
   description: {
@@ -11,7 +10,7 @@ export const styles = {
     textAlign: "center",
   },
   startGameButton: {
-    p: "23px 60px",
+    width: "100%",
   },
   openDailyButton: {
     p: "12px 120px",
