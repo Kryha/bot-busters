@@ -1,4 +1,4 @@
-import type { SxStyleRecord } from "~/types/sx-style-record";
+import type { SxStyleRecord } from "~/types/sx-style-record.js";
 
 const sectionPadding = {
   pt: "30px",

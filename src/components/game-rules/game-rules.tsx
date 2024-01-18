@@ -1,11 +1,11 @@
 import React, { type FC } from "react";
 import { Typography } from "@mui/material";
 
-import { text as copywrite } from "~/assets/text";
-import { BulletPoint, type BulletPointProps } from "~/components";
+import { text as copywrite } from "~/assets/text/index.js";
+import { BulletPoint, type BulletPointProps } from "~/components/index.js";
 import { NumberedSection } from "~/components/numbered-text-section/index.js";
 import { styles } from "~/styles/pages/how-to-play.js";
-import { theme } from "~/styles/theme";
+import { theme } from "~/styles/theme.js";
 
 /**
  * How-to-play page section with static content

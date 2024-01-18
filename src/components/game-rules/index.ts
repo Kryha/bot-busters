@@ -1,1 +1,1 @@
-export * from "./game-rules";
+export * from "./game-rules.jsx";

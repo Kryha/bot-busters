@@ -1,1 +1,1 @@
-export * from "./points-and-penalties";
+export * from "./points-and-penalties.jsx";

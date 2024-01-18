@@ -1,12 +1,12 @@
 import { Stack, Typography } from "@mui/material";
 import React, { type FC } from "react";
-import { text as copywrite } from "~/assets/text";
+import { text as copywrite } from "~/assets/text/index.js";
 import {
   BulletPoint,
   GameRules,
   PlayerProfiles,
   PointsAndPenalties,
-} from "~/components";
+} from "~/components/index.js";
 import { styles } from "~/styles/pages/how-to-play.js";
 
 const HowToPlay: FC = () => {

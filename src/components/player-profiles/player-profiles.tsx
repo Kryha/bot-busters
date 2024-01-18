@@ -1,9 +1,9 @@
 import React, { type FC } from "react";
 import { Typography } from "@mui/material";
 
-import { text } from "~/assets/text";
-import { BulletPoint } from "~/components";
-import { theme } from "~/styles/theme";
+import { text } from "~/assets/text/index.js";
+import { BulletPoint } from "~/components/index.js";
+import { theme } from "~/styles/theme.js";
 
 const sectionContent = text.howToPlay.playerProfiles;
 
