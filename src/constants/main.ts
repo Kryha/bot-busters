@@ -28,3 +28,8 @@ export const POINTS_ACHIEVEMENTS: Record<AchievementId, number> = {
   "201": 5,
   "202": 5,
 };
+
+//TODO: replace all match stages with these constants
+export const VOTING = "voting" as const;
+export const RESULTS = "results" as const;
+export const CHAT = "chat" as const;

@@ -1,5 +1,5 @@
 import { type FC } from "react";
-import { Avatar, Stack, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 
 import { type Character, type MatchStage } from "~/types/index.js";
 import { CharacterAvatar } from "~/components/character-avatar/index.js";
