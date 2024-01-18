@@ -9,12 +9,10 @@ import { COLUMN_WIDTH } from "./constants.js";
 import { styles } from "./styles.js";
 
 interface Props {
-  leaderboard: LeaderboardData[];
+  leaderboard?: LeaderboardData[];
 }
 
-export const LeaderboardTable: FC<Props> = ({ leaderboard }) => {
-  if (!leaderboard) return;
-
+export const LeaderboardTable: FC<Props> = ({ leaderboard = [] }) => {
   return (
     <TableContainer sx={styles.wrapper}>
       <Table sx={styles.table} aria-label="simple table">

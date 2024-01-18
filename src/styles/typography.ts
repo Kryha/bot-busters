@@ -87,10 +87,9 @@ export const typography = (): Typography => {
       lineHeight: "72.09px", // TODO to be converted to rem
     },
     h6: {
-      fontFamily: bodyFont.style.fontFamily,
-      fontSize: "24px",
+      fontFamily: headingsFont.style.fontFamily,
+      fontSize: "42px",
       fontWeight: 400,
-      lineHeight: "33.6px", // TODO to be converted to rem
     },
     subtitle1: {
       // top ranked title
@@ -115,9 +114,9 @@ export const typography = (): Typography => {
       lineHeight: "normal",
     },
     body2: {
-      // leaderboard
+      // larger normal text
       fontFamily: bodyFont.style.fontFamily,
-      fontSize: "16px",
+      fontSize: "24px",
       fontWeight: 400,
       lineHeight: "normal",
     },

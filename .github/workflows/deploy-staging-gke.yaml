@@ -45,6 +45,8 @@ jobs:
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
           NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
           HUGGING_FACE_TOKEN: ${{ secrets.HUGGING_FACE_TOKEN }}
+          ALEO_PRIVATE_KEY: ${{ secrets.ALEO_PRIVATE_KEY }}
+          OBSCURA_API_KEY: ${{ secrets.OBSCURA_API_KEY }}
         run: |-
           envsubst < deployment/staging/secrets.template.yaml > deployment/staging/secrets.yaml
-          skaffold run --filename skaffold.staging.yml
+          skaffold run --filename skaffold.staging.yml --cache-artifacts=false

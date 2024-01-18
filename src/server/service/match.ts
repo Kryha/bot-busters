@@ -1,29 +1,29 @@
 import { TRPCError } from "@trpc/server";
-import lodash from "lodash";
 import { eq, sql } from "drizzle-orm";
+import lodash from "lodash";
 
+import { matchPrompts } from "~/assets/text/match-prompts.js";
 import {
   CHAT_TIME_MS,
   POINTS_ACHIEVEMENTS,
   POINTS_BOT_BUSTED,
   POINTS_HUMAN_BUSTED,
 } from "~/constants/index.js";
-import { Agent } from "~/server/service/index.js";
 import { ee, matchEvent } from "~/server/api/match-maker.js";
 import { type BBPgTransaction, db } from "~/server/db/index.js";
 import { users } from "~/server/db/schema.js";
+import { selectMatchPlayedByUser } from "~/server/db/user.js";
+import { Agent } from "~/server/service/index.js";
 import {
-  type PlayerType,
-  type MatchRoom,
-  type ChatMessagePayload,
-  type MatchStage,
-  type CharacterId,
   achievementIdSchema,
+  type CharacterId,
+  type ChatMessagePayload,
+  type MatchRoom,
+  type MatchStage,
+  type PlayerType,
 } from "~/types/index.js";
-import { MATCH_ACHIEVEMENTS } from "./achievements.js";
-import { selectMatchPlayedByUser } from "../db/user.js";
-import { matchPrompts } from "~/assets/text/match-promts.js";
 import { getRandomInt } from "~/utils/math.js";
+import { MATCH_ACHIEVEMENTS } from "./achievements.js";
 
 export class Match {
   private _id: string;
@@ -42,7 +42,7 @@ export class Match {
   private _messageCountSinceLastTrigger = 0;
 
   //TODO: check for better solution
-  private _playerPreviousMatches: Record<string, MatchRoom[]>;
+  private _playerPreviousMatches = new Map<string, MatchRoom[]>();
 
   stage: MatchStage = "chat";
   arePointsCalculated = false;
@@ -90,7 +90,9 @@ export class Match {
     });
 
     this._players = lodash.shuffle([...botPlayers, ...humanPlayers]);
-    this._playerPreviousMatches = {};
+    this.getPlayerPreviousMatches().catch((err) => {
+      console.error("Error loading player history:", err);
+    });
     this.addPrompt();
   }
 
@@ -181,31 +183,20 @@ export class Match {
   }
 
   // TODO: make a proper DB relation with user and matches instead of doing this
-  async getPlayerPreviousMatches() {
-    let playerHistoryLoaded = true;
-
+  private async getPlayerPreviousMatches() {
     const promises = this.players
-      .filter((player) => {
-        return !player.isBot;
-      })
+      .filter((player) => !player.isBot)
       .map(async (player) => {
-        try {
-          if (this._playerPreviousMatches[player.userId]) return;
+        if (this._playerPreviousMatches.get(player.userId)) return;
 
-          const matchRooms = (await selectMatchPlayedByUser(player.userId)).map(
-            (match) => match.room,
-          );
+        const matchRooms = (await selectMatchPlayedByUser(player.userId)).map(
+          (match) => match.match.room,
+        );
 
-          this._playerPreviousMatches[player.userId] = [...matchRooms];
-        } catch (error) {
-          playerHistoryLoaded = false;
-          console.error("Error getting matches played:", error);
-        }
+        this._playerPreviousMatches.set(player.userId, matchRooms);
       });
-    await Promise.all(promises);
-
-    this.playerHistoryLoaded = playerHistoryLoaded;
-    return playerHistoryLoaded;
+    await Promise.allSettled(promises);
+    this.playerHistoryLoaded = true;
   }
 
   calculatePoints() {
@@ -244,7 +235,7 @@ export class Match {
               messages: this._messages,
               botsBusted,
               otherPlayers,
-              playerHistory: this._playerPreviousMatches[player.userId],
+              playerHistory: this._playerPreviousMatches.get(player.userId),
             });
           })
           .reduce((totalPoints, [id, _]) => {
@@ -280,7 +271,6 @@ export class Match {
           .update(users)
           .set({
             score: sql`${users.score} + ${player.score}`,
-            matchesPlayed: sql`array_append(${users.matchesPlayed},${this._id})`,
           })
           .where(eq(users.id, player.userId));
       } catch (error) {

@@ -44,3 +44,15 @@ spec:
             - name: PLAYERS_PER_MATCH
               # TODO: set to correct value
               value: "3"
+            - name: OBSCURA_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets
+                  key: obscura_api_key
+            - name: ALEO_NETWORK_URL # TODO: update to new obscura URL
+              value: https://aleo-testnet3.obscura.build/v1/$(OBSCURA_API_KEY)
+            - name: ALEO_PRIVATE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets
+                  key: aleo_private_key

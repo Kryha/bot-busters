@@ -20,6 +20,7 @@ interface Props {
   countdown: string | number;
 }
 
+// TODO: refactor this component and delete fake data
 export const AddScoreTable: FC<Props> = ({
   isAuthenticated,
   isGamePlayed,
@@ -45,7 +46,7 @@ export const AddScoreTable: FC<Props> = ({
             </colgroup>
             <TableBody sx={styles.addScoreBody(isNotLoggedInOrPlayed)}>
               <RowAddScore
-                leaderboard={leaderboardData[2]}
+                player={leaderboardData[2]}
                 isGamePlayed={isGamePlayed}
                 isAuthenticated={isAuthenticated}
               />

@@ -8,7 +8,8 @@ import {
 
 import { env } from "~/env.mjs";
 
-const account = new Account({ privateKey: env.ALEO_PRIVATE_KEY });
+//! do not pass the private key here, else the sdk will fail
+const account = new Account();
 
 const keyProvider = new AleoKeyProvider();
 keyProvider.useCache(true);
