@@ -1,17 +1,17 @@
-import { type FC, useEffect, useState } from "react";
 import { Stack } from "@mui/material";
-import { useRouter } from "next/router.js";
 import { signIn, useSession } from "next-auth/react";
+import { useRouter } from "next/router.js";
+import { useEffect, useState, type FC } from "react";
 
 import { pages } from "~/router.js";
 import { useBBWallet } from "~/service/bb-wallet.js";
 import { api } from "~/utils/api.js";
 
-import { type AchievementId } from "~/types/index.js";
-import { Score } from "~/components/score/index.js";
-import { isAnonymousSession, missingUsername } from "~/utils/session.js";
-import { PrimaryButton } from "~/components/primary-button/index.js";
 import { text } from "~/assets/text/index.js";
+import { PrimaryButton } from "~/components/primary-button/index.js";
+import { Score } from "~/components/score/index.js";
+import { type AchievementId } from "~/types/index.js";
+import { isAnonymousSession, missingUsername } from "~/utils/session.js";
 import { styles } from "./styles.js";
 
 interface Props {
@@ -35,7 +35,6 @@ export const Results: FC<Props> = ({ gainedScore, achievements }) => {
     const merge = async () => {
       if (isConnecting || !address || !isConnected || !mergeRequested) return;
 
-      setMergeRequested(false);
       try {
         //TODO: Fix so user only presses the button once now signature is undefined on first press
         const signature = await getSignature();
@@ -52,7 +51,9 @@ export const Results: FC<Props> = ({ gainedScore, achievements }) => {
             signature,
             callbackUrl: pages.home,
           });
+          setMergeRequested(false);
         } else {
+          setMergeRequested(false);
           await router.push(pages.usernameSelect);
         }
       } catch (error) {
