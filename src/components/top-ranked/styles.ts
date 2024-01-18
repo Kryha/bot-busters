@@ -23,12 +23,12 @@ export const styles = {
     gap: 4,
     pr: 4,
   },
-  animation1: {
-    animation: "infinite_text_primary 20s linear infinite",
+  topRankedBanner1: {
+    animation: "infinite_text_primary 40s linear infinite",
   },
-  animation2: {
-    animation: "infinite_text_secondary 20s linear infinite",
-    animationDelay: "5s",
+  topRankedBanner2: {
+    animation: "infinite_text_secondary 40s linear infinite",
+    animationDelay: "10s",
   },
   title: {
     ml: 2,

@@ -6,8 +6,8 @@ import { text } from "~/assets/text/index.js";
 import { type MatchRoom, type PlayerType } from "~/types/index.js";
 import { Timer } from "~/components/timer/index.js";
 import { PlayerData } from "~/components/players/player-data/index.js";
-
 import { PrimaryButton } from "~/components/primary-button/index.js";
+
 import { styles } from "./styles.js";
 
 interface Props {
@@ -26,6 +26,13 @@ export const PlayersOthers: FC<Props> = ({
   const [isLoadingVotes, setIsLoadingVotes] = useState(false);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const { stage, players, votingAt } = room;
+
+  const resultHeading =
+    localPlayer.botsBusted === 0 ? text.match.bummer : text.match.busted;
+  const resultText =
+    localPlayer.botsBusted === 0
+      ? text.match.bustedResultFail
+      : text.match.bustedResultPass;
 
   const selectPlayer = (userId: string) => {
     setSelectedIds((prevIds) => {
@@ -69,10 +76,10 @@ export const PlayersOthers: FC<Props> = ({
       {stage === "results" && (
         <Stack sx={styles.results}>
           <Typography variant="subtitle1" sx={styles.playerHeading}>
-            {text.match.busted}
+            {resultHeading}
           </Typography>
           <Typography variant="body1" sx={styles.playerSubHeading}>
-            {text.match.bustedResultPass}
+            {resultText}
           </Typography>
         </Stack>
       )}

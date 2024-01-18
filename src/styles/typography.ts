@@ -141,5 +141,5 @@ export const typography = (): Typography => {
       lineHeight: "25.88px", // TODO to be converted to rem
       textTransform: "uppercase" as const,
     },
-  };
+  } as const;
 };

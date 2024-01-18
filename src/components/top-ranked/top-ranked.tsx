@@ -5,14 +5,14 @@ import { text } from "~/assets/text/index.js";
 import { type TopRankedPlayer } from "~/types/index.js";
 
 import { styles } from "./styles.js";
-import { theme } from "~/styles/theme";
+import { theme } from "~/styles/theme.js";
 
 interface Props {
   players: TopRankedPlayer[];
 }
 
 export const TopRanked: FC<Props> = ({ players }) => {
-  const animationStyles = [styles.animation1, styles.animation2];
+  const animationStyles = [styles.topRankedBanner1, styles.topRankedBanner2];
 
   return (
     <Stack sx={styles.container}>

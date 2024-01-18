@@ -13,6 +13,7 @@ export const match = {
   isNotBot: "is not a bot",
   isBotSelect: "Bot?",
   busted: "Busted!",
+  bummer: "Bummer!",
   bustedResultPass: "You Win!",
   bustedResultFail: "You lost. Try again.",
 };

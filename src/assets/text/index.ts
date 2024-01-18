@@ -10,6 +10,7 @@ import { matchPrompts } from "./match-prompts.js";
 import { match } from "./match.js";
 import { navigation } from "./navigation.js";
 import { playerProfile } from "./player-profile.js";
+import { howToPlay } from "./how-to-play.js";
 
 export const text = {
   auth,
@@ -24,5 +25,6 @@ export const text = {
   playerProfile,
   chat,
   matchPrompts,
+  howToPlay,
   achievements,
 };
