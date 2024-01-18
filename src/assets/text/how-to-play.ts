@@ -1,10 +1,10 @@
 // TODO: add missing links
 export const howToPlay = {
   headings: {
-    howToPlay: "HOW TO PLAY",
-    pointsAndPenalties: "POINTS AND PENALTIES",
-    dailyLeaderboard: "DAILY LEADERBOARD",
-    playerProfiles: "PLAYER PROFILES",
+    howToPlay: "how to play",
+    pointsAndPenalties: "points and penalties",
+    dailyLeaderboard: "daily leaderboard",
+    playerProfiles: "player profiles",
   },
   main: [
     "BotBusters is a multiplayer chatroom game where you interact with a mix of humans and bots and do your best to discern who the bots are.",
@@ -18,7 +18,7 @@ export const howToPlay = {
       "Players are randomly assigned one of five characters for easy identification in the chatroom.",
     ],
     chatting: [
-      "Five players interact and chat to determine who’s a bot.",
+      "Five players interact and chat to determine who's a bot.",
       "Time limit: Three minutes.",
       "Prompts are provided to stimulate conversation.",
       "Profanity and harassment are prohibited.",

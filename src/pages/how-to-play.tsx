@@ -13,7 +13,7 @@ const HowToPlay: FC = () => {
   const pageContent = copywrite.howToPlay;
   return (
     <Stack sx={styles.container}>
-      <Typography variant="h1" textAlign="center">
+      <Typography variant="h1" sx={styles.heading}>
         {pageContent.headings.howToPlay}
       </Typography>
       <Typography variant="body1" textAlign="center" sx={styles.text}>
@@ -26,14 +26,14 @@ const HowToPlay: FC = () => {
         <GameRules />
       </Stack>
 
-      <Typography variant="h1" textAlign="center">
+      <Typography variant="h1" sx={styles.heading}>
         {pageContent.headings.pointsAndPenalties}
       </Typography>
       <Stack sx={styles.pointsAndPenaltiesSection}>
         <PointsAndPenalties />
       </Stack>
 
-      <Typography variant="h1" textAlign="center">
+      <Typography variant="h1" sx={styles.heading}>
         {pageContent.headings.dailyLeaderboard}
       </Typography>
       <Stack sx={styles.dailyLeaderboard}>
@@ -42,7 +42,7 @@ const HowToPlay: FC = () => {
         ))}
       </Stack>
 
-      <Typography variant="h1" textAlign="center">
+      <Typography variant="h1" sx={styles.heading}>
         {pageContent.headings.playerProfiles}
       </Typography>
       <Stack sx={styles.playerProfiles}>

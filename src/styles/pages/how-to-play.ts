@@ -38,4 +38,8 @@ export const styles = {
     width: "62vw",
     ...sectionPadding,
   },
+  heading: {
+    textTransform: "uppercase",
+    textAlign: "center",
+  },
 } satisfies SxStyleRecord;
