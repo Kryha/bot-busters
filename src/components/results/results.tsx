@@ -7,12 +7,13 @@ import { pages } from "~/router.js";
 import { useBBWallet } from "~/service/bb-wallet.js";
 import { api } from "~/utils/api.js";
 
-import { styles } from "./styles.js";
+
 import { type AchievementId } from "~/types/index.js";
 import { Score } from "~/components/score/index.js";
 import { isAnonymousSession, missingUsername } from "~/utils/session";
-import { PrimaryButton } from "~/components/primary-button";
+import { PrimaryButton } from "~/components/primary-button/index.js";
 import { text } from "~/assets/text/index.js";
+import { styles } from "./styles.js";
 
 interface Props {
   gainedScore: number;
