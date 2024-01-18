@@ -49,8 +49,8 @@ export const Results: FC<Props> = ({ gainedScore, botsBusted, totalBots }) => {
           });
           setMergeRequested(false);
         } else {
-          await router.push(pages.usernameSelect);
           setMergeRequested(false);
+          await router.push(pages.usernameSelect);
         }
       } catch (error) {
         console.error(error);
