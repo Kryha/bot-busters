@@ -30,6 +30,9 @@ COPY tsconfig.json ./tsconfig.json
 COPY tsconfig.server.json ./tsconfig.server.json
 COPY .eslintrc.cjs ./.eslintrc.cjs
 
+# migrations
+COPY migrations/ ./migrations/
+
 # src and public files
 COPY public/ ./public/
 COPY src/ ./src/
@@ -53,6 +56,7 @@ COPY --from=build --chown=nextjs:nodejs /app/.next ./.next
 COPY --from=build --chown=nextjs:nodejs /app/dist/ ./dist/
 COPY --from=build --chown=nextjs:nodejs /app/public/ ./public/
 COPY --from=build --chown=nextjs:nodejs /app/src/ ./src/
+COPY --from=build --chown=nextjs:nodejs /app/migrations/ ./migrations/
 
 COPY --from=build --chown=nextjs:nodejs /app/.yarn/ ./.yarn/
 COPY --from=build --chown=nextjs:nodejs /app/.yarnrc.yml ./.yarnrc.yml

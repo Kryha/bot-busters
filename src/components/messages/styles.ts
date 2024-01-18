@@ -2,12 +2,8 @@ import { type SxProps } from "@mui/material";
 
 export const styles = {
   avatar: {
-    borderRadius: "4px",
-    "> img": {
-      height: "32px",
-      width: "23px",
-      objectFit: "contain",
-    },
+    height: "60px",
+    width: "60px",
   },
   messageContainer: (isLocal?: boolean) => {
     return {
@@ -23,7 +19,7 @@ export const styles = {
       display: "flex",
       flexDirection: "column",
       alignItems: isLocal ? "flex-end" : "flex-start",
-      maxWidth: "652px",
+      maxWidth: "600px",
     };
   },
   messageSingle: (backgroundColor: string, isLocal?: boolean) => {
@@ -57,17 +53,17 @@ export const styles = {
     };
   },
   messagesContainer: {
-    pl: 3,
-    pr: 3,
+    pl: 2,
+    pr: 1,
     overflowY: "scroll",
     flexDirection: "column-reverse",
-    flexGrow: 1,
+    flex: "1 1 500px",
   },
   username: {
     fontSize: "12px",
-    fontWeight: 400,
+    fontWeight: 600,
     lineHeight: "20px",
     letterSpacing: "0.4px",
-    textAlign: "center",
+    textTransform: "uppercase",
   } satisfies SxProps,
 };

@@ -12,6 +12,7 @@ declare module "@mui/material/styles" {
     orange: Palette["primary"];
     brown: Palette["primary"];
     green: Palette["primary"];
+    yellow: Palette["primary"];
     pink: Palette["primary"];
     blue: Palette["primary"];
     darkBlue: Palette["primary"];
@@ -35,6 +36,7 @@ declare module "@mui/material/Avatar" {
     orange: true;
     brown: true;
     green: true;
+    yellow: true;
     pink: true;
     blue: true;
     darkBlue: true;
@@ -48,6 +50,7 @@ declare module "@mui/material/Typography" {
     orange: true;
     brown: true;
     green: true;
+    yellow: true;
     pink: true;
     blue: true;
     darkBlue: true;

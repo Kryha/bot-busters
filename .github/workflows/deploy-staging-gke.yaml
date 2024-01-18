@@ -49,4 +49,4 @@ jobs:
           OBSCURA_API_KEY: ${{ secrets.OBSCURA_API_KEY }}
         run: |-
           envsubst < deployment/staging/secrets.template.yaml > deployment/staging/secrets.yaml
-          skaffold run --filename skaffold.staging.yml
+          skaffold run --filename skaffold.staging.yml --cache-artifacts=false

@@ -5,6 +5,7 @@ import SoundOffIcon from "./sound-off.svg";
 import SoundOnIcon from "./sound-on.svg";
 import CloseIcon from "./close-icon.svg";
 import BotBustersLogo from "./botbusters-logo.svg";
+import BotArrowIcon from "./bot-arrow-icon.svg";
 
 export {
   BotBustersLogo,
@@ -14,4 +15,5 @@ export {
   SoundOffIcon,
   SoundOnIcon,
   CloseIcon,
+  BotArrowIcon,
 };

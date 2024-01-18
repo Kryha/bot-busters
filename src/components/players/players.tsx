@@ -1,5 +1,5 @@
 import { type FC } from "react";
-import { Divider, Stack } from "@mui/material";
+import { Stack } from "@mui/material";
 
 import { type MatchRoom, type PlayerType } from "~/types/index.js";
 import { PlayerLocal } from "~/components/players/player-local/index.js";
@@ -14,16 +14,17 @@ interface Props {
   onVote: (selectedUserIds: string[]) => Promise<void>;
 }
 
+// TODO: Not in use right now, will keep it for a possible update during chat stage
 export const Players: FC<Props> = ({
   room,
   localPlayer,
   isVoteEnabled,
   onVote,
 }) => {
+  const { stage } = room;
   return (
     <Stack sx={styles.container}>
-      <PlayerLocal localPlayer={localPlayer} />
-      <Divider sx={styles.divider} />
+      {stage === "chat" && <PlayerLocal localPlayer={localPlayer} />}
       <PlayersOthers
         room={room}
         localPlayer={localPlayer}

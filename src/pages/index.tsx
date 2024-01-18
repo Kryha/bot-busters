@@ -44,6 +44,7 @@ const Homepage = () => {
       <Stack sx={styles.actions}>
         <Button
           variant="contained"
+          aria-label="Start new game"
           disabled={isDisabled}
           onClick={() => void handleGameStart()}
           sx={styles.startGameButton}

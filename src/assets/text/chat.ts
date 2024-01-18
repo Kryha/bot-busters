@@ -11,6 +11,7 @@ export const chat = {
     title: "25 bonus points for every vote on you as a bot",
     info: "Try and convince the other participants you are a bot",
   },
+  chatHistory: "Chat History",
 
   amountBotsBusted: (botsBusted: number, totalBots: number) =>
     `${botsBusted} out of ${totalBots} bots busted!`,

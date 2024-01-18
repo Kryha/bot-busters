@@ -1,4 +1,4 @@
-import { Button, Stack, Typography } from "@mui/material";
+import { Stack } from "@mui/material";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/router.js";
 import { useEffect, useState, type FC } from "react";
@@ -6,18 +6,22 @@ import { useEffect, useState, type FC } from "react";
 import { pages } from "~/router.js";
 import { useBBWallet } from "~/service/bb-wallet.js";
 import { api } from "~/utils/api.js";
-import { isAnonymousSession, missingUsername } from "~/utils/session.js";
 
 import { text } from "~/assets/text/index.js";
+import { PrimaryButton } from "~/components/primary-button/index.js";
+import { Score } from "~/components/score/index.js";
+import { type AchievementId } from "~/types/index.js";
+import { isAnonymousSession, missingUsername } from "~/utils/session.js";
 import { styles } from "./styles.js";
 
 interface Props {
   gainedScore: number;
   botsBusted: number;
   totalBots: number;
+  achievements: AchievementId[];
 }
 
-export const Results: FC<Props> = ({ gainedScore, botsBusted, totalBots }) => {
+export const Results: FC<Props> = ({ gainedScore, achievements }) => {
   const { data: session } = useSession();
   const router = useRouter();
 
@@ -74,41 +78,25 @@ export const Results: FC<Props> = ({ gainedScore, botsBusted, totalBots }) => {
 
   return (
     <Stack sx={styles.wrapper}>
-      <Stack sx={styles.textContainer}>
-        <Typography variant="h2">
-          {text.chat.amountBotsBusted(botsBusted, totalBots)}
-        </Typography>
-        <Typography variant="h1">{text.chat.pointsWon(gainedScore)}</Typography>
-      </Stack>
-
-      <Stack sx={styles.textWrapper}>
-        <Typography variant="body1">
-          {text.chat.addScoreToLeaderboard}
-        </Typography>
-        <Stack sx={styles.buttonContainer}>
-          {(isAnonymousSession(session) || missingUsername(session)) && (
-            <Button
-              variant="contained"
-              size="large"
-              sx={styles.button}
-              color="blueGrey"
-              onClick={() => void handleConnect()}
-              disabled={isConnecting}
-            >
-              {text.chat.addScore}
-            </Button>
-          )}
-
-          <Button
-            variant="contained"
-            size="large"
+      <Score gainedScore={gainedScore} achievements={achievements} />
+      <Stack sx={styles.buttonContainer}>
+        {(isAnonymousSession(session) || missingUsername(session)) && (
+          <PrimaryButton
             sx={styles.button}
-            onClick={() => void router.push(pages.home)}
+            onClick={() => void handleConnect()}
             disabled={isConnecting}
           >
-            {text.chat.playNewGame}
-          </Button>
-        </Stack>
+            {text.chat.addScore}
+          </PrimaryButton>
+        )}
+
+        <PrimaryButton
+          sx={styles.button}
+          onClick={() => void router.push(pages.home)}
+          disabled={isConnecting}
+        >
+          {text.chat.playNewGame}
+        </PrimaryButton>
       </Stack>
     </Stack>
   );

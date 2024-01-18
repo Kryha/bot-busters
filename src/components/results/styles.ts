@@ -3,13 +3,10 @@ import { type SxProps } from "@mui/material";
 export const styles: Record<string, SxProps> = {
   wrapper: {
     alignItems: "center",
-    pt: "217px",
-    pb: "192px",
-    height: "100vh",
     width: "100%",
-    justifyContent: "space-between",
   },
   textWrapper: {
+    flex: 0,
     alignItems: "center",
     justifyContent: "space-between",
   },
@@ -18,7 +15,13 @@ export const styles: Record<string, SxProps> = {
     alignItems: "center",
   },
   button: {
-    p: "11px 60px",
+    width: "100%",
   },
-  buttonContainer: { gap: 1, mt: 2 } satisfies SxProps,
+  buttonContainer: {
+    flex: 0,
+    gap: 1,
+    mt: 2,
+    mb: 2,
+    width: "100%",
+  } satisfies SxProps,
 };
