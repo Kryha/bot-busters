@@ -7,7 +7,6 @@ import { pages } from "~/router.js";
 import { useBBWallet } from "~/service/bb-wallet.js";
 import { api } from "~/utils/api.js";
 
-
 import { type AchievementId } from "~/types/index.js";
 import { Score } from "~/components/score/index.js";
 import { isAnonymousSession, missingUsername } from "~/utils/session";
