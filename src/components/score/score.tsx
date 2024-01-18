@@ -20,38 +20,39 @@ export const Score: FC<Props> = ({ gainedScore, achievements }) => {
         <Typography variant="h6">{text.achievements.scoreBreakdown}</Typography>
       </Stack>
       <Stack sx={styles.achievements}>
-        {achievements.length === 0 && (
+        {achievements.length === 0 ? (
           <Typography
             variant="body2"
             sx={{ margin: "auto", textTransform: "uppercase" }}
           >
             {text.achievements.betterLuckNextTime}
           </Typography>
-        )}
-        {achievements.map((achievementResult) => {
-          const { name } = MATCH_ACHIEVEMENTS[achievementResult] ?? {
-            name: "Achievement",
-          };
+        ) : (
+          achievements.map((achievementResult) => {
+            const { name } = MATCH_ACHIEVEMENTS[achievementResult] ?? {
+              name: "Achievement",
+            };
 
-          return (
-            <Stack
-              key={achievementResult}
-              sx={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                marginBottom: "7px",
-                marginTop: "7px",
-              }}
-            >
-              <Typography variant="body1">{name}</Typography>
-              <Typography variant="body1">
-                {text.achievements.points(
-                  POINTS_ACHIEVEMENTS[achievementResult],
-                )}
-              </Typography>
-            </Stack>
-          );
-        })}
+            return (
+              <Stack
+                key={achievementResult}
+                sx={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  marginBottom: "7px",
+                  marginTop: "7px",
+                }}
+              >
+                <Typography variant="body1">{name}</Typography>
+                <Typography variant="body1">
+                  {text.achievements.points(
+                    POINTS_ACHIEVEMENTS[achievementResult],
+                  )}
+                </Typography>
+              </Stack>
+            );
+          })
+        )}
       </Stack>
       <Stack sx={styles.score}>
         <Typography variant="body1">{text.achievements.totalScore}</Typography>
