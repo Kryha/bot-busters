@@ -1,4 +1,4 @@
-import { Button, Stack, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/router.js";
 
@@ -8,10 +8,11 @@ import { api } from "~/utils/api.js";
 import { pages } from "~/router.js";
 import { TOP_RANKED_PLAYERS } from "~/constants/index.js";
 import { isValidSession } from "~/utils/session.js";
-import { styles } from "~/styles/pages/homepage.js";
 import { PixelButton } from "~/components/pixel-button/index.js";
 import { BotBusterLogoAnimation } from "~/containers/lottie-animations/index.js";
 import { PrimaryButton } from "~/components/primary-button/index.js";
+
+import { styles } from "~/styles/pages/homepage.js";
 
 const Homepage = () => {
   const { push } = useRouter();
@@ -44,7 +45,7 @@ const Homepage = () => {
       </Stack>
       <Stack sx={styles.actions}>
         <PrimaryButton
-          aria-label="Start new game"
+          aria-label="Start"
           disabled={isDisabled}
           onClick={() => void handleGameStart()}
           sx={styles.startGameButton}
