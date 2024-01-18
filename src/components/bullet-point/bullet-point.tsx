@@ -28,18 +28,19 @@ export const BulletPoint: FC<BulletPointProps> = ({
   text,
   children,
 }) => (
-  // simple row container
   <Stack sx={{ ...styles.container, ...sxContainer }}>
-    {/* transforms the dot symbol to a bullet */}
+    {/* transform dot symbol to bullet point */}
     <Typography variant={variant} sx={styles.transformPointToBullet}>
       .
     </Typography>
+
     {/* render text if present */}
     {text && (
       <Typography variant={variant} sx={{ ...styles.text, ...sxText }}>
         {text}
       </Typography>
     )}
+
     {/* render children if present */}
     <Stack sx={styles.childContainer}>{children && children}</Stack>
   </Stack>

@@ -1,6 +1,5 @@
-import { type SxProps } from "@mui/material";
-
 import { theme } from "~/styles/theme.js";
+import type { SxStyleRecord } from "~/types/sx-style-record";
 
 export const styles = {
   container: {
@@ -12,7 +11,7 @@ export const styles = {
     display: "flex",
     flexDirection: "column",
     gap: 4,
-  } satisfies SxProps,
+  },
   number: {
     transform: "translate(-52px, -35px)",
     color: theme.palette.secondary.main,
@@ -25,4 +24,4 @@ export const styles = {
     transform: "translateX(-30px)",
     mb: "-30px",
   },
-};
+} satisfies SxStyleRecord;

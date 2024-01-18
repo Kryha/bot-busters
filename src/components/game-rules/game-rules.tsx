@@ -3,14 +3,18 @@ import { Typography } from "@mui/material";
 
 import { text as copywrite } from "~/assets/text";
 import { BulletPoint, type BulletPointProps } from "~/components";
-import { NumberedTextSection } from "~/components/numbered-text-section/index.js";
+import { NumberedSection } from "~/components/numbered-text-section/index.js";
 import { styles } from "~/styles/pages/how-to-play.js";
 import { theme } from "~/styles/theme";
 
+/**
+ * How-to-play page section with static content
+ * explaining the rules of Botbusters
+ */
 export const GameRules: FC = () =>
   Object.entries(copywrite.howToPlay.numberedSection).map(
     ([title, content], idx) => (
-      <NumberedTextSection
+      <NumberedSection
         key={idx + 1}
         number={idx + 1}
         title={title}

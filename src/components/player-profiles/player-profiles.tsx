@@ -7,6 +7,10 @@ import { theme } from "~/styles/theme";
 
 const sectionContent = text.howToPlay.playerProfiles;
 
+/**
+ * How-to-play page section with static content
+ * with information about accounts
+ */
 export const PlayerProfiles: FC = () => [
   <BulletPoint key="playerProfile1">
     <Typography variant="body1">

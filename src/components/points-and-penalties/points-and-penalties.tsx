@@ -6,7 +6,10 @@ import { BulletPoint } from "~/components";
 import { theme } from "~/styles/theme";
 
 const sectionContent = text.howToPlay.pointsAndPenalties;
-
+/**
+ * How-to-play page section with static content
+ * explaining the point system
+ */
 export const PointsAndPenalties: FC = () => [
   <BulletPoint key="points1">
     <Typography variant="body1">

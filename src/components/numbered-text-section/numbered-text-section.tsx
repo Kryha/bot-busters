@@ -8,8 +8,10 @@ interface Props {
   title: string;
   content: ReactNode;
 }
-
-export const NumberedTextSection: FC<Props> = ({ number, title, content }) => {
+/**
+ * Renders a number and title on top of the content prop
+ */
+export const NumberedSection: FC<Props> = ({ number, title, content }) => {
   return (
     <Stack sx={styles.container}>
       <Typography variant="h2" sx={styles.number}>
