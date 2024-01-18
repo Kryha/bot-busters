@@ -22,8 +22,7 @@ export const styles = {
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    pr: 2,
+    p: 2,
     gap: 5,
-    pl: 2,
   },
 };

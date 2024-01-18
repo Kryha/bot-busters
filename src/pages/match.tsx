@@ -6,8 +6,8 @@ import { z } from "zod";
 
 import { MatchLayout as Layout } from "~/components/match-layout/index.js";
 import { api } from "~/utils/api.js";
-import { Chat } from "~/containers/chat/chat.jsx";
-import { Results } from "~/containers/results/index.js";
+import { Chat } from "~/components/chat/chat.jsx";
+import { Results } from "~/components/results/index.js";
 import { ErrorView } from "~/components/error-view/index.jsx";
 import { PlayerLocal } from "~/components/players/player-local/index.js";
 import { PlayersOthers } from "~/components/players/players-others/index.js";
@@ -84,6 +84,7 @@ const MatchInternal: FC<Props> = ({ roomId, session }) => {
           gainedScore={localPlayer.score}
           totalBots={totalBots}
           botsBusted={localPlayer.botsBusted}
+          achievements={localPlayer.achievements}
         />
       )}
 
