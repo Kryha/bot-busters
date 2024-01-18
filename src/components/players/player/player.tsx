@@ -1,4 +1,4 @@
-import React, { type FC } from "react";
+import { type FC } from "react";
 import { Stack, Typography } from "@mui/material";
 
 import { type Character, type MatchStage } from "~/types/index.js";
@@ -34,17 +34,23 @@ export const Player: FC<Props> = ({
 
   if (!name) return <Skeleton />;
 
-  let textResult = isBot ? text.match.isBot : text.match.isHuman;
-
-  if (stage === "results") {
-    if (isSelected && isBot) {
-      textResult = text.match.botBusted;
-    } else if (isSelected && !isBot) {
-      textResult = text.match.isNotBot;
-    } else if (!isSelected && !isBot) {
-      textResult = text.match.isHuman;
+  const getTextResult = () => {
+    if (stage === "results") {
+      if (isSelected) {
+        if (isBot) {
+          return text.match.botBusted;
+        } else {
+          return text.match.isNotBot;
+        }
+      } else if (!isBot) {
+        return text.match.isHuman;
+      }
     }
-  }
+
+    return isBot ? text.match.isBot : text.match.isHuman;
+  };
+
+  const textResult = getTextResult();
 
   return (
     <Stack sx={styles.container}>

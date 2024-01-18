@@ -3,27 +3,23 @@ import { theme } from "~/styles/theme.js";
 
 export const styles = {
   avatar: (stage: MatchStage, isSelected?: boolean, isBot?: boolean) => {
-    const determineFill = (
-      stage: MatchStage,
-      isBot?: boolean,
-      isSelected?: boolean,
-    ) => {
-      if (stage === "voting") {
-        return isSelected ? theme.palette.common.white : "transparent";
+    const determineBorderFill = () => {
+      if (isSelected) {
+        if (stage === "voting") {
+          return theme.palette.common.white;
+        } else if (stage === "results") {
+          if (isBot) {
+            return theme.palette.success.main;
+          } else {
+            return theme.palette.error.main;
+          }
+        }
       }
 
-      if (stage === "results") {
-        if (isSelected && isBot) {
-          return theme.palette.success.main;
-        }
-        if (isSelected && !isBot) {
-          return theme.palette.error.main;
-        }
-      }
       return "transparent";
     };
 
-    const fill = determineFill(stage, isSelected, isBot);
+    const fill = determineBorderFill();
 
     return {
       width: stage === "chat" ? "140px" : "150px",
