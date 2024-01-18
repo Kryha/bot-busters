@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { eq } from "drizzle-orm";
+import { count, eq } from "drizzle-orm";
 
 import {
   createTRPCRouter,
@@ -7,7 +7,7 @@ import {
   publicProcedure,
 } from "~/server/api/trpc.js";
 import { db } from "~/server/db/index.js";
-import { ranks, users } from "~/server/db/schema.js";
+import { ranks, users, usersToMatches } from "~/server/db/schema.js";
 import { isValidSession } from "~/utils/session.js";
 import { verifySignature } from "~/utils/wallet.js";
 import { profanityFilter } from "~/service/index.js";
@@ -142,15 +142,16 @@ export const userRouter = createTRPCRouter({
           id: users.id,
           username: users.username,
           score: users.score,
-          // TODO: count matches that have been played
-          matchesPlayed: users.score,
+          matchesPlayed: count(usersToMatches.userId),
           rank: ranks.position,
         })
         .from(users)
         .innerJoin(ranks, eq(users.id, ranks.userId))
         .orderBy(ranks.position)
         .offset(cursor)
-        .limit(limit);
+        .limit(limit)
+        .innerJoin(usersToMatches, eq(users.id, usersToMatches.userId))
+        .groupBy(users.id, ranks.position);
 
       const nextCursor = players.length + cursor;
 
