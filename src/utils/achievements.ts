@@ -1,9 +1,24 @@
-import { type MatchRoom } from "../types/match.js";
+import { type AchievementId, type MatchRoom } from "../types/match.js";
+
+export const alreadyReceivedAchievement = (
+  playerId: string,
+  playerMatchHistory: MatchRoom[],
+  achievementId: AchievementId,
+): boolean => {
+  // Check if the achievement is in the player's achievements at any time
+  return playerMatchHistory.some((match) =>
+    match.players.some(
+      (player) =>
+        player.userId === playerId &&
+        player.achievements.includes(achievementId),
+    ),
+  );
+};
 
 export const alreadyReceivedAchievementToday = (
   playerId: string,
   playerMatchHistory: MatchRoom[],
-  achievementId: string,
+  achievementId: AchievementId,
 ): boolean => {
   // Get the timestamp for 24 hours ago
   const twentyFourHoursAgo = Date.now() - 24 * 60 * 60 * 1000;
@@ -13,17 +28,12 @@ export const alreadyReceivedAchievementToday = (
     (match) => match.createdAt > twentyFourHoursAgo,
   );
 
-  // Get the player data from the last two matches
-  const playerMatchData = matchesPastDayHours.map((match) => {
-    return match.players.find((p) => p.userId === playerId);
-  });
-
-  // Check if the achievement is in the player's achievements
-  const achievementReceived = playerMatchData.some((p) => {
-    return p?.achievements.some((achievement) => {
-      return achievement === achievementId;
-    });
-  });
-
-  return achievementReceived;
+  // Check if the achievement is in the player's achievements in the past 24 hours
+  return matchesPastDayHours.some((match) =>
+    match.players.some(
+      (player) =>
+        player.userId === playerId &&
+        player.achievements.includes(achievementId),
+    ),
+  );
 };

@@ -47,6 +47,7 @@ export const playerSchema = z.object({
   botsBusted: z.number(),
   correctGuesses: z.number(),
   votes: z.array(z.string().uuid()).optional(), // array of voted ids
+  isVerified: z.boolean().optional(),
   achievements: z.array(achievementIdSchema), // array of achievement ids
 });
 export type PlayerType = z.infer<typeof playerSchema>;

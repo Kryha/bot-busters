@@ -52,6 +52,15 @@ export const selectUserByAddress = async (address: string) => {
   return selectedUsers.at(0);
 };
 
+export const selectUserById = async (userId: string) => {
+  const selectedUser = await db
+    .select()
+    .from(users)
+    .where(eq(users.id, userId));
+
+  return selectedUser.at(0);
+};
+
 export const setUserScore = async (id: string, score: number) => {
   const updatedUsers = await db
     .update(users)

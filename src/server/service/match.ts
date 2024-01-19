@@ -10,9 +10,9 @@ import {
   POINTS_HUMAN_BUSTED,
 } from "~/constants/index.js";
 import { ee, matchEvent } from "~/server/api/match-maker.js";
-import { type BBPgTransaction, db } from "~/server/db/index.js";
+import { db, type BBPgTransaction } from "~/server/db/index.js";
 import { users } from "~/server/db/schema.js";
-import { selectMatchPlayedByUser } from "~/server/db/user.js";
+import { selectMatchPlayedByUser, selectUserById } from "~/server/db/user.js";
 import { Agent } from "~/server/service/index.js";
 import {
   achievementIdSchema,
@@ -90,8 +90,13 @@ export class Match {
     });
 
     this._players = lodash.shuffle([...botPlayers, ...humanPlayers]);
+
     this.getPlayerPreviousMatches().catch((err) => {
       console.error("Error loading player history:", err);
+    });
+
+    this.checkVerifiedPlayers().catch((err) => {
+      console.error("Error checking if player is verified: ", err);
     });
     this.addPrompt();
   }
@@ -180,6 +185,22 @@ export class Match {
           this.messages.some((message) => message.sender === player.userId),
       )
       .some((player) => !player.votes);
+  }
+
+  private async checkVerifiedPlayers() {
+    const promises = this.players
+      .filter((player) => !player.isBot)
+      .map(async (player) => {
+        if (player.isVerified !== undefined) return;
+
+        const checkPlayer = await selectUserById(player.userId);
+        if (checkPlayer?.username && checkPlayer?.address) {
+          player.isVerified = true;
+        } else {
+          player.isVerified = false;
+        }
+      });
+    await Promise.allSettled(promises);
   }
 
   // TODO: make a proper DB relation with user and matches instead of doing this

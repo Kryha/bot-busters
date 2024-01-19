@@ -83,8 +83,14 @@ const beginnersLuckAchievement: Achievement = {
 const realHumanAchievement: Achievement = {
   name: "Real Human",
   description: "First time played as a verified human",
-  calculate: () => {
-    return true;
+  calculate: ({ playerHistory, player }) => {
+    console.log(player);
+    if (!playerHistory || !player.isVerified) return false;
+    return !alreadyReceivedAchievementToday(
+      player.userId,
+      playerHistory,
+      "203",
+    );
   },
 };
 
