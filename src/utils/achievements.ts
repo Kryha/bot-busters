@@ -18,7 +18,7 @@ export const alreadyReceivedAchievementToday = (
     return match.players.find((p) => p.userId === playerId);
   });
 
-  // Check if the achievement with id 101 is in the player's achievements
+  // Check if the achievement is in the player's achievements
   const achievementReceived = playerMatchData.some((p) => {
     return p?.achievements.some((achievement) => {
       return achievement === achievementId;
