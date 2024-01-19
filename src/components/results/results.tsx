@@ -35,8 +35,9 @@ export const Results: FC<Props> = ({ gainedScore, achievements }) => {
     const merge = async () => {
       if (isConnecting || !address || !isConnected || !mergeRequested) return;
 
+      setMergeRequested(false);
+
       try {
-        //TODO: Fix so user only presses the button once now signature is undefined on first press
         const signature = await getSignature();
         if (!signature) return;
 
@@ -51,9 +52,7 @@ export const Results: FC<Props> = ({ gainedScore, achievements }) => {
             signature,
             callbackUrl: pages.home,
           });
-          setMergeRequested(false);
         } else {
-          setMergeRequested(false);
           await router.push(pages.usernameSelect);
         }
       } catch (error) {
@@ -72,8 +71,8 @@ export const Results: FC<Props> = ({ gainedScore, achievements }) => {
   ]);
 
   const handleConnect = async () => {
-    setMergeRequested(true);
     await connect();
+    setMergeRequested(true);
   };
 
   return (
