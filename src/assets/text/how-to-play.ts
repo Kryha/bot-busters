@@ -74,7 +74,7 @@ export const howToPlay = {
       regular:
         "KYC (Know Your Customer) process required for credit eligibility via ",
       highlight: "zPass.",
-      link: "",
+      link: "https://zpass.aleo.org/",
     },
   ],
   link: {
