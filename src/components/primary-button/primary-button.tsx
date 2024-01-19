@@ -11,6 +11,7 @@ interface Props extends React.ComponentProps<typeof Button> {
 const PrimaryButtonStyle = styled(Button)({
   background: "none",
   border: `4px solid ${theme.palette.primary.main}`,
+  cursor: "pointer",
   outline: "none",
   flex: "1 1 auto",
   display: "flex",
