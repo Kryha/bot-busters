@@ -30,6 +30,8 @@ export const achievementIdSchema = z.enum([
   "201",
   // One time achievement - player Bust at least one bot in his first game
   "202",
+  // One time achievement - player plays his first game as verified human
+  "203",
 ]);
 export type AchievementId = z.infer<typeof achievementIdSchema>;
 

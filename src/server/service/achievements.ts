@@ -1,4 +1,4 @@
-import { type AchievementId, type Achievement } from "~/types/index.js";
+import { type Achievement, type AchievementId } from "~/types/index.js";
 import { alreadyReceivedAchievementToday } from "~/utils/achievements.js";
 
 const lastOneAchievement: Achievement = {
@@ -80,6 +80,14 @@ const beginnersLuckAchievement: Achievement = {
   },
 };
 
+const realHumanAchievement: Achievement = {
+  name: "Real Human",
+  description: "First time played as a verified human",
+  calculate: () => {
+    return true;
+  },
+};
+
 export const MATCH_ACHIEVEMENTS: Record<AchievementId, Achievement> = {
   "11": lastOneAchievement,
   "12": goodBustAchievement,
@@ -87,4 +95,5 @@ export const MATCH_ACHIEVEMENTS: Record<AchievementId, Achievement> = {
   "101": busterStreakAchievement,
   "201": firstTimerAchievement,
   "202": beginnersLuckAchievement,
+  "203": realHumanAchievement,
 };

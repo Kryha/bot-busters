@@ -27,6 +27,7 @@ export const POINTS_ACHIEVEMENTS: Record<AchievementId, number> = {
   "101": 9,
   "201": 5,
   "202": 5,
+  "203": 5,
 };
 
 //TODO: replace all match stages with these constants
