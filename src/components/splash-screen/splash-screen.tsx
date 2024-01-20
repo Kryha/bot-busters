@@ -1,15 +1,15 @@
-import { Stack } from "@mui/material";
-import { useState, type FC, useEffect, type ReactNode } from "react";
-
+import { Slide, Stack } from "@mui/material";
+import { type FC, type ReactNode, useEffect, useState } from "react";
 import { SPLASH_SCREEN_DURATION } from "~/constants/index.js";
-
 import { styles } from "./styles.js";
 
 interface Props {
   children: ReactNode;
+  backgroundColor?: string;
 }
 
-export const SplashScreen: FC<Props> = ({ children }) => {
+// TODO: Splash screen timing should not overlap the chat stage timer
+export const SplashScreen: FC<Props> = ({ children, backgroundColor }) => {
   const [showSplashScreen, setShowSplashScreen] = useState(false);
 
   useEffect(() => {
@@ -21,5 +21,9 @@ export const SplashScreen: FC<Props> = ({ children }) => {
 
   if (!showSplashScreen) return;
 
-  return <Stack sx={styles.container}>{children}</Stack>;
+  return (
+    <Slide direction="left" in={showSplashScreen} mountOnEnter unmountOnExit>
+      <Stack sx={styles.container(backgroundColor)}>{children}</Stack>
+    </Slide>
+  );
 };
