@@ -11,6 +11,7 @@ import { Results } from "~/components/results/index.js";
 import { ErrorView } from "~/components/error-view/index.jsx";
 import { PlayerLocal } from "~/components/players/player-local/index.js";
 import { PlayersOthers } from "~/components/players/players-others/index.js";
+import { CHAT, RESULTS } from "~/constants/index.js";
 
 const Match: FC = () => {
   const { query } = useRouter();
@@ -69,17 +70,17 @@ const MatchInternal: FC<Props> = ({ roomId, session }) => {
     await vote.mutateAsync({ selectedUserIds, roomId });
   };
 
-  const splashVariant = room.stage === "results" ? undefined : room.stage;
+  const splashVariant = room.stage === RESULTS ? undefined : room.stage;
 
   return (
-    <Layout splashScreenVariant={splashVariant}>
+    <Layout splashScreenVariant={splashVariant} localPlayer={localPlayer}>
       <PlayersOthers
         room={room}
         localPlayer={localPlayer}
         isVoteEnabled={isVoteEnabled}
         onVote={handleVote}
       />
-      {room.stage === "results" && (
+      {room.stage === RESULTS && (
         <Results
           gainedScore={localPlayer.score}
           totalBots={totalBots}
@@ -88,8 +89,8 @@ const MatchInternal: FC<Props> = ({ roomId, session }) => {
         />
       )}
 
-      {room.stage !== "results" && <Chat roomId={roomId} room={room} />}
-      {room.stage === "chat" && <PlayerLocal localPlayer={localPlayer} />}
+      {room.stage !== RESULTS && <Chat roomId={roomId} room={room} />}
+      {room.stage === CHAT && <PlayerLocal localPlayer={localPlayer} />}
     </Layout>
   );
 };
