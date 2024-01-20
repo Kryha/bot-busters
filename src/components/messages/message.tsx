@@ -3,7 +3,7 @@ import { Stack, Typography } from "@mui/material";
 import { type CharacterName, type ChatMessage } from "~/types/index.js";
 
 import { getTimeStamp } from "~/utils/date.js";
-import { getCharacter } from "~/utils/character.jsx";
+import { getCharacterAvatar } from "~/constants/index.js";
 
 import { styles } from "./styles.js";
 
@@ -23,7 +23,7 @@ export const Message: FC<Props> = ({ message, color, characterName }) => {
   return (
     <Stack sx={styles.messageContainer(isLocalSender)}>
       <Stack sx={styles.avatar}>
-        {!isLocalSender && getCharacter(characterName)}
+        {!isLocalSender && getCharacterAvatar(characterName)}
       </Stack>
       <Stack sx={styles.message(isLocalSender)}>
         <Stack sx={styles.messageSingle(backgroundColor, isLocalSender)}>
