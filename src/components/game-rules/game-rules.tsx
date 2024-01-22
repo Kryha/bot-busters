@@ -6,13 +6,17 @@ import { BulletPoint, type BulletPointProps } from "~/components/index.js";
 import { NumberedSection } from "~/components/numbered-text-section/index.js";
 import { styles } from "~/styles/pages/how-to-play.js";
 import { theme } from "~/styles/theme.js";
+import { useRouter } from "next/router";
+import { pages } from "~/router";
 
 /**
  * How-to-play page section with static content
  * explaining the rules of Botbusters
  */
-export const GameRules: FC = () =>
-  Object.entries(copywrite.howToPlay.numberedSection).map(
+export const GameRules: FC = () => {
+  const router = useRouter();
+
+  return Object.entries(copywrite.howToPlay.numberedSection).map(
     ([title, content], idx) => (
       <NumberedSection
         key={idx + 1}
@@ -39,7 +43,7 @@ export const GameRules: FC = () =>
               <BulletPoint key={idxList} {...propsNoText}>
                 <Typography variant="body1">
                   {text}
-                  <a href={copywrite.howToPlay.link.connectingYourWallet.link}>
+                  <a onClick={() => void router.push(pages.login)}>
                     {copywrite.howToPlay.link.connectingYourWallet.text}
                   </a>
                 </Typography>
@@ -52,3 +56,4 @@ export const GameRules: FC = () =>
       />
     ),
   );
+};
