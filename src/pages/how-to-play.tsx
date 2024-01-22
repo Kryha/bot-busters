@@ -1,6 +1,6 @@
 import { Stack, Typography } from "@mui/material";
-import { useRouter } from "next/router";
 import React, { type FC } from "react";
+
 import { text as copywrite } from "~/assets/text/index.js";
 import {
   BulletPoint,
@@ -8,13 +8,9 @@ import {
   PlayerProfiles,
   PointsAndPenalties,
 } from "~/components/index.js";
-import { pages } from "~/router.js";
 import { styles } from "~/styles/pages/how-to-play.js";
 
 const HowToPlay: FC = () => {
-  const router = useRouter();
-  const redirectToLogin = () => void router.push(pages.login);
-
   const pageContent = copywrite.howToPlay;
   return (
     <Stack sx={styles.container}>
@@ -28,7 +24,7 @@ const HowToPlay: FC = () => {
         {pageContent.main[1]}
       </Typography>
       <Stack sx={styles.gameRulesSection}>
-        <GameRules connectWalletLink={redirectToLogin} />
+        <GameRules />
       </Stack>
 
       <Typography variant="h1" sx={styles.heading}>
