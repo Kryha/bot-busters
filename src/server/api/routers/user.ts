@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { eq } from "drizzle-orm";
+import { count, eq } from "drizzle-orm";
 
 import {
   createTRPCRouter,
@@ -7,11 +7,12 @@ import {
   publicProcedure,
 } from "~/server/api/trpc.js";
 import { db } from "~/server/db/index.js";
-import { ranks, users } from "~/server/db/schema.js";
+import { ranks, users, usersToMatches } from "~/server/db/schema.js";
 import { isValidSession } from "~/utils/session.js";
 import { verifySignature } from "~/utils/wallet.js";
 import { profanityFilter } from "~/service/index.js";
 import { leaderboard } from "~/server/service/index.js";
+import { deleteUser } from "~/server/db/user.js";
 
 export const userRouter = createTRPCRouter({
   mergeScore: protectedProcedure
@@ -39,7 +40,7 @@ export const userRouter = createTRPCRouter({
           .then((users) => users.filter((user) => user.id !== loggedUser.id));
 
         if (duplicateUsers.length === 0) {
-          return { isUsernameSet: !!duplicateUsers.at(0)?.username };
+          return { isUsernameSet: !!loggedUser.username };
         }
 
         const score =
@@ -56,9 +57,7 @@ export const userRouter = createTRPCRouter({
           .where(eq(users.id, firstUser!.id));
 
         await Promise.all(
-          usersToDelete.map((user) =>
-            tx.delete(users).where(eq(users.id, user.id)),
-          ),
+          usersToDelete.map((user) => deleteUser(user.id, firstUser!.id, tx)),
         );
 
         await leaderboard.calculate(tx);
@@ -142,15 +141,16 @@ export const userRouter = createTRPCRouter({
           id: users.id,
           username: users.username,
           score: users.score,
-          // TODO: count matches that have been played
-          matchesPlayed: users.score,
+          matchesPlayed: count(usersToMatches.userId),
           rank: ranks.position,
         })
         .from(users)
         .innerJoin(ranks, eq(users.id, ranks.userId))
         .orderBy(ranks.position)
         .offset(cursor)
-        .limit(limit);
+        .limit(limit)
+        .innerJoin(usersToMatches, eq(users.id, usersToMatches.userId))
+        .groupBy(users.id, ranks.position);
 
       const nextCursor = players.length + cursor;
 
