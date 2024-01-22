@@ -56,3 +56,13 @@ spec:
                 secretKeyRef:
                   name: backend-secrets
                   key: aleo_private_key
+            - name: AWS_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets
+                  key: aws_access_key
+            - name: AWS_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets
+                  key: aws_secret

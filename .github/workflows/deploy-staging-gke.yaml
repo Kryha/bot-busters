@@ -47,6 +47,8 @@ jobs:
           HUGGING_FACE_TOKEN: ${{ secrets.HUGGING_FACE_TOKEN }}
           ALEO_PRIVATE_KEY: ${{ secrets.ALEO_PRIVATE_KEY }}
           OBSCURA_API_KEY: ${{ secrets.OBSCURA_API_KEY }}
+          AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
+          AWS_SECRET: ${{ secrets.AWS_SECRET }}
         run: |-
           envsubst < deployment/staging/secrets.template.yaml > deployment/staging/secrets.yaml
           skaffold run --filename skaffold.staging.yml --cache-artifacts=false
