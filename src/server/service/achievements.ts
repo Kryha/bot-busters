@@ -1,8 +1,5 @@
 import { type Achievement, type AchievementId } from "~/types/index.js";
-import {
-  alreadyReceivedAchievement,
-  alreadyReceivedAchievementToday,
-} from "~/utils/achievements.js";
+import { alreadyReceivedAchievement } from "~/utils/achievements.js";
 
 const lastOneAchievement: Achievement = {
   name: "Last One",
@@ -48,7 +45,7 @@ const busterStreakAchievement: Achievement = {
     if (
       !playerHistory ||
       playerHistory.length < 2 ||
-      alreadyReceivedAchievementToday(player.userId, playerHistory, "101") ||
+      alreadyReceivedAchievement(player.userId, playerHistory, "101", 1) ||
       !player
     )
       return false;
@@ -63,6 +60,37 @@ const busterStreakAchievement: Achievement = {
       botsBusted === otherPlayers.filter((p) => p.isBot).length;
 
     return allBotsBustedLastTwoMatches && perfectCurrentGame;
+  },
+};
+
+const streakCountAchievements: Achievement = {
+  name: "Streak Count",
+  description: "Plus one on your streak count",
+
+  calculate: ({ playerHistory, player }) => {
+    if (!playerHistory || !player.isVerified) return false;
+    return !alreadyReceivedAchievement(player.userId, playerHistory, "1", 1);
+  },
+};
+
+const dailyStreakAchievement: Achievement = {
+  name: "Daily Streak",
+  description: "Play 5 days in a row",
+  calculate: ({ playerHistory, player }) => {
+    if (
+      !playerHistory ||
+      playerHistory.length < 2 ||
+      alreadyReceivedAchievement(player.userId, playerHistory, "101", 5) ||
+      !player
+    )
+      return false;
+
+    const playedFiveTimesInARow = playerHistory
+      .sort((a, b) => b.createdAt - a.createdAt)
+      .map((match) => match.players.find((p) => p.userId === player.userId))
+      .filter((match) => match?.achievements.includes("1"));
+
+    return playedFiveTimesInARow.length === 5;
   },
 };
 
@@ -94,10 +122,12 @@ const realHumanAchievement: Achievement = {
 };
 
 export const MATCH_ACHIEVEMENTS: Record<AchievementId, Achievement> = {
+  "1": streakCountAchievements,
   "11": lastOneAchievement,
   "12": goodBustAchievement,
   "13": doubleAgentAchievement,
   "101": busterStreakAchievement,
+  "102": dailyStreakAchievement,
   "201": firstTimerAchievement,
   "202": beginnersLuckAchievement,
   "203": realHumanAchievement,
