@@ -1,8 +1,7 @@
 import { type FC } from "react";
 import { Stack } from "@mui/material";
 import { type Character, type MatchStage } from "~/types/index.js";
-import { getCharacter } from "~/utils/character.jsx";
-
+import { getCharacterAvatar } from "~/utils/characters.jsx";
 import { styles } from "./styles.js";
 
 interface Props {
@@ -26,7 +25,7 @@ export const CharacterAvatar: FC<Props> = ({
       sx={styles.avatar(stage, isSelected, isBot)}
       onClick={onSelectPlayer}
     >
-      {getCharacter(character.name)}
+      {getCharacterAvatar(character.name)}
     </Stack>
   );
 };

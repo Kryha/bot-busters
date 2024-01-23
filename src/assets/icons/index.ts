@@ -4,11 +4,13 @@ import UserIcon from "./user-icon.svg";
 import SoundOffIcon from "./sound-off.svg";
 import SoundOnIcon from "./sound-on.svg";
 import CloseIcon from "./close-icon.svg";
-import BotBustersLogo from "./botbusters-logo.svg";
 import BotArrowIcon from "./bot-arrow-icon.svg";
+import LetsBustSomeBots from "./lets-bust-some-bots.svg";
+import StartChatting from "./start-chatting.svg";
 
 export {
-  BotBustersLogo,
+  StartChatting,
+  LetsBustSomeBots,
   SelectIcon,
   BotBustersIcon,
   UserIcon,

@@ -16,6 +16,7 @@ export const MenuButtonStyle = styled(Button)({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
+  cursor: "pointer",
   textAlign: "left",
   padding: "0 !important",
   fontSize: theme.typography.h3.fontSize,

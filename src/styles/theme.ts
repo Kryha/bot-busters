@@ -15,6 +15,7 @@ declare module "@mui/material/styles" {
     yellow: Palette["primary"];
     pink: Palette["primary"];
     blue: Palette["primary"];
+    purple: Palette["primary"];
     darkBlue: Palette["primary"];
   }
 

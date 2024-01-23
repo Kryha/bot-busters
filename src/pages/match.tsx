@@ -72,7 +72,7 @@ const MatchInternal: FC<Props> = ({ roomId, session }) => {
   const splashVariant = room.stage === "results" ? undefined : room.stage;
 
   return (
-    <Layout splashScreenVariant={splashVariant}>
+    <Layout splashScreenVariant={splashVariant} localPlayer={localPlayer}>
       <PlayersOthers
         room={room}
         localPlayer={localPlayer}
