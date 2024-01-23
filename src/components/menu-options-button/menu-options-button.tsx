@@ -14,6 +14,7 @@ export const MenuOptionsButtonStyle = styled(Button)({
   outline: "none",
   display: "flex",
   alignItems: "center",
+  cursor: "pointer",
   justifyContent: "center",
   textAlign: "left",
   gap: 24,

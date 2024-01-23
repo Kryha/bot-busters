@@ -15,6 +15,7 @@ const PixelButtonStyle = styled(Button)({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
+  cursor: "pointer",
   textAlign: "left",
   gap: 24,
   fontSize: "72px",

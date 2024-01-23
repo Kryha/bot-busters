@@ -6,7 +6,9 @@
 }
 
 a {
-  color: #5CFF00;
+  color: #5cff00;
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 /* Animations */

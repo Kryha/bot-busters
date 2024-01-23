@@ -1,5 +1,5 @@
 import { useLottie } from "lottie-react";
-import botBustersLogoAnimation from "./bot-busters-logo.json";
+import botBustersLogoAnimation from "./bot-busters-logo.json" assert { type: "json" };
 
 export const BotBusterLogoAnimation = () => {
   const options = {
