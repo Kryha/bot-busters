@@ -1,23 +1,23 @@
-import { type FC } from "react";
+import { type FC, useState } from "react";
 import { useRouter } from "next/router.js";
-import { CircularProgress, Typography } from "@mui/material";
-
-import { LobbyLayout as Layout } from "~/components/lobby-layout/index.js";
+import { Stack } from "@mui/material";
 import { api } from "~/utils/api.js";
 import { pages } from "~/router.js";
-import { text } from "~/assets/text/index.js";
+import { LobbyCharacterLoader } from "~/components/lobby-character-loader/index.js";
+import { styles } from "~/styles/pages/lobby.js";
 
 const Lobby: FC = () => {
   const { push } = useRouter();
   const join = api.lobby.join.useMutation();
+  const [lobbyQueue, setLobbyQueue] = useState(0);
 
   // TODO: consider deleting this listener and call join inside a `useEffect`
   api.lobby.onQueueUpdate.useSubscription(undefined, {
     onStarted() {
       join.mutate();
     },
-    onData(_payload) {
-      // TODO: Add data handler
+    onData({ playerQueuePosition, queueLength }) {
+      setLobbyQueue(queueLength);
     },
     onError(error) {
       console.error("Queue update error:", error);
@@ -34,12 +34,9 @@ const Lobby: FC = () => {
   });
 
   return (
-    <Layout>
-      <Typography aria-label={"lobby"} variant="h5">
-        {text.lobby.waiting}
-      </Typography>
-      <CircularProgress />
-    </Layout>
+    <Stack sx={styles.container}>
+      <LobbyCharacterLoader lobbyQueue={lobbyQueue} />
+    </Stack>
   );
 };
 
