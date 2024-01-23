@@ -1,6 +1,11 @@
 import { type inferRouterInputs, type inferRouterOutputs } from "@trpc/server";
 
-import { userRouter, matchRouter, lobbyRouter } from "./routers/index.js";
+import {
+  userRouter,
+  matchRouter,
+  lobbyRouter,
+  supportRouter,
+} from "./routers/index.js";
 import { createTRPCRouter } from "./trpc.js";
 
 /**
@@ -12,6 +17,7 @@ export const appRouter = createTRPCRouter({
   lobby: lobbyRouter,
   match: matchRouter,
   user: userRouter,
+  support: supportRouter,
 });
 
 // export type definition of API
