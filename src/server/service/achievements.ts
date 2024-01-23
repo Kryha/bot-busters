@@ -1,5 +1,5 @@
 import { type Achievement, type AchievementId } from "~/types/index.js";
-import { alreadyReceivedAchievementToday } from "~/utils/achievements.js";
+import { alreadyReceivedAchievement } from "~/utils/achievements.js";
 
 const lastOneAchievement: Achievement = {
   name: "Last One",
@@ -86,11 +86,7 @@ const realHumanAchievement: Achievement = {
   description: "First time played as a verified human",
   calculate: ({ playerHistory, player }) => {
     if (!playerHistory || !player.isVerified) return false;
-    return !alreadyReceivedAchievementToday(
-      player.userId,
-      playerHistory,
-      "203",
-    );
+    return !alreadyReceivedAchievement(player.userId, playerHistory, "203");
   },
 };
 
