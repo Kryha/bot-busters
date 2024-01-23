@@ -1,5 +1,8 @@
 import { type Achievement, type AchievementId } from "~/types/index.js";
-import { alreadyReceivedAchievement } from "~/utils/achievements.js";
+import {
+  alreadyReceivedAchievement,
+  alreadyReceivedAchievementToday,
+} from "~/utils/achievements.js";
 
 const lastOneAchievement: Achievement = {
   name: "Last One",
