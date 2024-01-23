@@ -21,10 +21,12 @@ export const CHIP_TIMEOUT = 4000;
 export const POINTS_BOT_BUSTED = 11;
 export const POINTS_HUMAN_BUSTED = 10;
 export const POINTS_ACHIEVEMENTS: Record<AchievementId, number> = {
+  "1": 0,
   "11": 1,
   "12": 5,
   "13": 5,
   "101": 9,
+  "102": 9,
   "201": 5,
   "202": 5,
   "203": 5,

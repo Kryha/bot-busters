@@ -18,6 +18,8 @@ export const chatMessagePayloadSchema = z.object({
 export type ChatMessagePayload = z.infer<typeof chatMessagePayloadSchema>;
 
 export const achievementIdSchema = z.enum([
+  // Daily play
+  "1",
   // Match achievement - written last message
   "11",
   // Match achievement - perfect score (all votes correct)
@@ -26,6 +28,8 @@ export const achievementIdSchema = z.enum([
   "13",
   // Day achievement - successfully bust all bots 3 consecutive games
   "101",
+  // Day achievement - play 5 days in a row
+  "102",
   // One time achievement - player plays his first game
   "201",
   // One time achievement - player Bust at least one bot in his first game
