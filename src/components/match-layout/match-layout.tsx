@@ -2,12 +2,10 @@ import { Container } from "@mui/material";
 import { type FC, type ReactNode } from "react";
 import { type PlayerType } from "~/types/index.js";
 import { Interstitials } from "~/components/interstitials/index.js";
-import { type CHAT, type VOTING } from "~/constants/index.js";
-
 import { styles } from "./styles.js";
 
 interface Props {
-  splashScreenVariant?: typeof CHAT | typeof VOTING;
+  splashScreenVariant?: "chat" | "voting";
   localPlayer: PlayerType;
   children: ReactNode;
 }

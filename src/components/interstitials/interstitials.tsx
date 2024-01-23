@@ -1,21 +1,21 @@
 import { type FC } from "react";
+import { Avatar, Stack } from "@mui/material";
+import { type PlayerType } from "~/types/index.js";
+
 import { SplashScreen } from "~/components/index.js";
 import { LetsBustSomeBots, StartChatting } from "~/assets/icons/index.js";
-import { Avatar, Stack } from "@mui/material";
+import { CHARACTERS } from "~/constants/index.js";
+
 import {
-  CHARACTERS,
-  CHAT,
   getCharacterSplashScreen,
   getCharacterTitle,
-  VOTING,
-} from "~/constants/index.js";
-import { type PlayerType } from "~/types/index.js";
-import { theme } from "~/styles/theme.js";
+} from "~/utils/characters.jsx";
 
+import { theme } from "~/styles/index.js";
 import { styles } from "./styles.js";
 
 interface Props {
-  splashScreenVariant?: typeof CHAT | typeof VOTING;
+  splashScreenVariant?: "chat" | "voting";
   localPlayer: PlayerType;
 }
 
@@ -31,7 +31,7 @@ export const Interstitials: FC<Props> = ({
 
   return (
     <>
-      {splashScreenVariant === CHAT && (
+      {splashScreenVariant === "chat" && (
         <SplashScreen backgroundColor={backgroundColor}>
           <Avatar src={characterSplashScreen.src} sx={styles.avatar} />
           <Stack sx={styles.splashText}>
@@ -40,7 +40,7 @@ export const Interstitials: FC<Props> = ({
           </Stack>
         </SplashScreen>
       )}
-      {splashScreenVariant === VOTING && (
+      {splashScreenVariant === "voting" && (
         <SplashScreen backgroundColor={theme.palette.purple.dark}>
           <Stack sx={styles.splashText}>
             <LetsBustSomeBots aria-label={"voting-stage"} />

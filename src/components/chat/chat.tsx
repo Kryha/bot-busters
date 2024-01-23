@@ -9,7 +9,8 @@ import {
   type MatchRoom,
   type MessageData,
 } from "~/types/index.js";
-import { CHARACTERS, CHAT_TIME_MS, MATCH_HOST } from "~/constants/index.js";
+
+import { CHARACTERS, CHAT_TIME_MS } from "~/constants/index.js";
 import { pages } from "~/router.js";
 import { Messages } from "~/components/messages/index.js";
 import { HostChatPrompt } from "~/components/host-chat-prompt/index.js";
@@ -51,13 +52,13 @@ export const Chat: FC<Props> = ({ roomId, room }) => {
   );
 
   const hostMessageData: ChatMessagePayload | undefined = useMemo(() => {
-    return messages.findLast((message) => message.sender === MATCH_HOST);
+    return messages.findLast((message) => message.sender === "host");
   }, [messages]);
 
   const messageData: MessageData[] = useMemo(() => {
     return messages
       .filter((message) => {
-        return message.sender !== MATCH_HOST;
+        return message.sender !== "host";
       })
       .map((message) => {
         const isLocalSender = message.sender === session?.user?.id;

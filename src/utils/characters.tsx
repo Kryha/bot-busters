@@ -1,4 +1,4 @@
-import type { Character, CharacterId, CharacterName } from "~/types/index.js";
+import { type CharacterName } from "~/types/index.js";
 import {
   AvatarAsh,
   AvatarDot,
@@ -12,19 +12,12 @@ import {
   TextRoy,
 } from "~/assets/characters/index.js";
 
+// TODO: Change these to SVGs once received from designer
 import splashHal from "~/assets/characters/hal.png";
 import splashAsh from "~/assets/characters/ash.png";
 import splashRoy from "~/assets/characters/roy.png";
 import splashEve from "~/assets/characters/eve.png";
 import splashDot from "~/assets/characters/dot.png";
-
-export const CHARACTERS: Record<CharacterId, Character> = {
-  1: { id: "1", name: "ash", color: "orange" },
-  2: { id: "2", name: "eve", color: "yellow" },
-  3: { id: "3", name: "hal", color: "green" },
-  4: { id: "4", name: "dot", color: "pink" },
-  5: { id: "5", name: "roy", color: "blue" },
-};
 
 export const getCharacterAvatar = (characterName: CharacterName) => {
   switch (characterName) {
