@@ -45,7 +45,8 @@ const busterStreakAchievement: Achievement = {
     if (
       !playerHistory ||
       playerHistory.length < 2 ||
-      alreadyReceivedAchievementToday(player.userId, playerHistory, "101")
+      alreadyReceivedAchievementToday(player.userId, playerHistory, "101") ||
+      !player
     )
       return false;
 
@@ -84,7 +85,6 @@ const realHumanAchievement: Achievement = {
   name: "Real Human",
   description: "First time played as a verified human",
   calculate: ({ playerHistory, player }) => {
-    console.log(player);
     if (!playerHistory || !player.isVerified) return false;
     return !alreadyReceivedAchievementToday(
       player.userId,

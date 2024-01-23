@@ -39,7 +39,6 @@ export const Results: FC<Props> = ({ gainedScore, achievements }) => {
         //TODO: Fix so user only presses the button once now signature is undefined on first press
         const signature = await getSignature();
         if (!signature) return;
-
         const { isUsernameSet } = await mergeScore.mutateAsync({
           signature,
           address,
