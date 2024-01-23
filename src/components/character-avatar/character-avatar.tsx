@@ -1,8 +1,7 @@
 import { type FC } from "react";
 import { Stack } from "@mui/material";
 import { type Character, type MatchStage } from "~/types/index.js";
-import { getCharacterAvatar } from "~/constants/index.js";
-
+import { getCharacterAvatar } from "~/utils/characters.jsx";
 import { styles } from "./styles.js";
 
 interface Props {

@@ -3,7 +3,7 @@ import { Stack, Typography } from "@mui/material";
 import { type CharacterName, type ChatMessage } from "~/types/index.js";
 
 import { getTimeStamp } from "~/utils/date.js";
-import { getCharacterAvatar } from "~/constants/index.js";
+import { getCharacterAvatar } from "~/utils/characters.jsx";
 
 import { styles } from "./styles.js";
 
