@@ -40,6 +40,7 @@ export const Results: FC<Props> = ({ gainedScore, achievements }) => {
       try {
         const signature = await getSignature();
         if (!signature) return;
+
         const { isUsernameSet } = await mergeScore.mutateAsync({
           signature,
           address,
