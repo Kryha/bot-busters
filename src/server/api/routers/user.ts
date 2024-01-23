@@ -9,13 +9,12 @@ import {
 } from "~/server/api/trpc.js";
 import { db } from "~/server/db/index.js";
 import { ranks, users, usersToMatches } from "~/server/db/schema.js";
-import { selectMatchPlayedByUser } from "~/server/db/user.js";
+import { deleteUser, selectMatchPlayedByUser } from "~/server/db/user.js";
 import { leaderboard } from "~/server/service/index.js";
 import { profanityFilter } from "~/service/index.js";
 import { alreadyReceivedAchievement } from "~/utils/achievements.js";
 import { isValidSession } from "~/utils/session.js";
 import { verifySignature } from "~/utils/wallet.js";
-import { deleteUser } from "~/server/db/user.js";
 
 export const userRouter = createTRPCRouter({
   mergeScore: protectedProcedure
@@ -50,11 +49,7 @@ export const userRouter = createTRPCRouter({
           (user) => user.address === address,
         );
 
-        console.count("Merge account trigged");
-        console.log("Is verified account: ", verifiedAccount);
-
         if (verifiedAccount) {
-          console.log("verified account");
           const matchesPlayed = (
             await selectMatchPlayedByUser(verifiedAccount.id)
           ).map((match) => match.match.room);
@@ -66,7 +61,6 @@ export const userRouter = createTRPCRouter({
           );
 
           if (hasAchievement) {
-            console.log("Has achievement");
             loggedUser.score -= POINTS_ACHIEVEMENTS["201"];
           }
         }
