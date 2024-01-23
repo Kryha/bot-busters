@@ -26,6 +26,10 @@ export const env = createEnv({
     ALEO_NETWORK_URL: z.string().url(),
     ALEO_PRIVATE_KEY: z.string().nonempty(),
     LEADERBOARD_PROGRAM_NAME: z.string().default("leaderboard.aleo"),
+    AWS_REGION: z.string().default("eu-central-1"),
+    BB_EMAIL: z.string().email().default("bot-busters@kryha.io"),
+    AWS_ACCESS_KEY: z.string(),
+    AWS_SECRET: z.string(),
   },
 
   /**
@@ -63,6 +67,10 @@ export const env = createEnv({
     ALEO_NETWORK_URL: process.env.ALEO_NETWORK_URL,
     ALEO_PRIVATE_KEY: process.env.ALEO_PRIVATE_KEY,
     LEADERBOARD_PROGRAM_NAME: process.env.LEADERBOARD_PROGRAM_NAME,
+    AWS_REGION: process.env.AWS_REGION,
+    BB_EMAIL: process.env.BB_EMAIL,
+    AWS_ACCESS_KEY: process.env.AWS_ACCESS_KEY,
+    AWS_SECRET: process.env.AWS_SECRET,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.

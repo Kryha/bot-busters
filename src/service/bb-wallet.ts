@@ -51,6 +51,8 @@ export const useBBWallet = () => {
       // Storing the signature helps preventing a constant request for signing a message
       ls?.setItem("signature", signature);
       setSignature(signature);
+
+      return signature;
     } catch (error) {
       console.error(error);
     }

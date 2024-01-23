@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
 
-import { db, dbSchema } from "~/server/db/index.js";
+import { type BBPgTransaction, db, dbSchema } from "~/server/db/index.js";
 import { usersToMatches } from "./schema.js";
 
 const { users, matches } = dbSchema;
@@ -8,6 +8,23 @@ const { users, matches } = dbSchema;
 // This is only here for testing purposes
 export const deleteAllUsers = async () => {
   await db.delete(users);
+};
+
+export const deleteUser = async (
+  userId: string,
+  userIdToMerge?: string,
+  tx?: BBPgTransaction,
+) => {
+  const dbTx = tx ?? db;
+
+  if (userIdToMerge) {
+    await dbTx
+      .update(usersToMatches)
+      .set({ userId: userIdToMerge })
+      .where(eq(usersToMatches.userId, userId));
+  }
+
+  await dbTx.delete(users).where(eq(users.id, userId));
 };
 
 export const insertAnonymousUser = async () => {

@@ -178,13 +178,10 @@ export class Match {
       player.votes = selectedPlayerIds;
     });
 
-    this.allPlayersVoted = !this._players
-      .filter(
-        (player) =>
-          !player.isBot &&
-          this.messages.some((message) => message.sender === player.userId),
-      )
-      .some((player) => !player.votes);
+    const humanPlayers = this._players.filter((player) => !player.isBot);
+    this.allPlayersVoted = humanPlayers.every(
+      (player) => player.votes !== undefined,
+    );
   }
 
   private async checkVerifiedPlayers() {
