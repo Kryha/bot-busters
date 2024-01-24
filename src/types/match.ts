@@ -18,7 +18,7 @@ export const chatMessagePayloadSchema = z.object({
 export type ChatMessagePayload = z.infer<typeof chatMessagePayloadSchema>;
 
 export const achievementIdSchema = z.enum([
-  // Daily play
+  // Daily streak play
   "1",
   // Match achievement - written last message
   "11",
