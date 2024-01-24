@@ -10,11 +10,11 @@ export const alreadyReceivedAchievement = (
 
   if (days) {
     // Get the timestamp for 24 hours ago
-    const twentyFourHoursAgo = Date.now() - days * 24 * 60 * 60 * 1000;
+    const timeStampToStart = Date.now() - days * 24 * 60 * 60 * 1000;
 
     // Filter playerHistory to only include matches from the past 24 hours
     playerHistory = playerMatchHistory.filter(
-      (match) => match.createdAt > twentyFourHoursAgo,
+      (match) => match.createdAt > timeStampToStart,
     );
   }
   // Check if the achievement is in the player's achievements in the past 24 hours
