@@ -1,12 +1,12 @@
 import { relations, sql } from "drizzle-orm";
 import {
   integer,
-  varchar,
-  uuid,
-  pgTableCreator,
-  timestamp,
   json,
+  pgTableCreator,
   primaryKey,
+  timestamp,
+  uuid,
+  varchar,
 } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { type z } from "zod";
@@ -48,6 +48,7 @@ export type Rank = z.infer<typeof rankSchema>;
 
 export const matches = bbPgTable("match", {
   id: uuid("id").primaryKey(),
+  createdAt: timestamp("created_at"),
   room: json("room").notNull().$type<MatchRoom>(),
 });
 

@@ -8,13 +8,13 @@ import {
 } from "~/constants/main.js";
 import { env } from "~/env.mjs";
 import { db } from "~/server/db/index.js";
+import { insertMatches } from "~/server/db/match.js";
 import { Match, leaderboard } from "~/server/service/index.js";
 import type {
   MatchEventType,
   MatchRoom,
   ReadyToPlayPayload,
 } from "~/types/index.js";
-import { insertMatches } from "~/server/db/match.js";
 
 export const ee = new EventEmitter();
 
@@ -93,6 +93,7 @@ const storeScoresAndMatches = async () => {
 
     const roomsToInsert = Array.from(roomsToArchive.values()).map((room) => ({
       id: room.id,
+      createdAt: new Date(room.createdAt),
       room,
     }));
 
