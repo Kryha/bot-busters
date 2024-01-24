@@ -1,6 +1,6 @@
 resources:
-  - pgadmin.yaml
-  - pgadmin-service.yaml
+  # - pgadmin.yaml
+  # - pgadmin-service.yaml
   - deployment.yaml
   - postgres.yaml
   - service.yaml

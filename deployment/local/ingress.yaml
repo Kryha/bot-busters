@@ -20,13 +20,3 @@ spec:
                 name: bot-busters
                 port:
                   name: bot-busters
-    - host: "pgadmin.localhost"
-      http:
-        paths:
-          - path: "/(.*)"
-            pathType: Prefix
-            backend:
-              service:
-                name: pgadmin
-                port:
-                  name: pgadmin
