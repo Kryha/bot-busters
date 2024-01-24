@@ -26,3 +26,13 @@ spec:
                 name: bot-busters
                 port:
                   name: bot-busters
+    - host: "admin.bot-busters.staging.kryha.dev"
+      http:
+        paths:
+          - path: "/(.*)"
+            pathType: Prefix
+            backend:
+              service:
+                name: pgadmin
+                port:
+                  name: pgadmin
