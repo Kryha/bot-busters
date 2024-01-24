@@ -1,10 +1,8 @@
 import { type FC, useState } from "react";
 import { useRouter } from "next/router.js";
-import { Stack } from "@mui/material";
 import { api } from "~/utils/api.js";
 import { pages } from "~/router.js";
 import { LobbyCharacterLoader } from "~/components/lobby-character-loader/index.js";
-import { styles } from "~/styles/pages/lobby.js";
 
 const Lobby: FC = () => {
   const { push } = useRouter();
@@ -16,7 +14,7 @@ const Lobby: FC = () => {
     onStarted() {
       join.mutate();
     },
-    onData({ playerQueuePosition, queueLength }) {
+    onData({ queueLength }) {
       setLobbyQueue(queueLength);
     },
     onError(error) {
@@ -33,11 +31,7 @@ const Lobby: FC = () => {
     },
   });
 
-  return (
-    <Stack sx={styles.container}>
-      <LobbyCharacterLoader lobbyQueue={lobbyQueue} />
-    </Stack>
-  );
+  return <LobbyCharacterLoader lobbyQueue={lobbyQueue} />;
 };
 
 export default Lobby;
