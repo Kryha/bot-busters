@@ -15,6 +15,9 @@ spec:
     - secretName: bot-busters.staging.kryha.dev
       hosts:
         - bot-busters.staging.kryha.dev
+    - secretName: admin.bot-busters.staging.kryha.dev
+      hosts:
+        - admin.bot-busters.staging.kryha.dev
   rules:
     - host: "bot-busters.staging.kryha.dev"
       http:
