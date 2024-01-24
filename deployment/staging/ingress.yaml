@@ -15,9 +15,9 @@ spec:
     - secretName: bot-busters.staging.kryha.dev
       hosts:
         - bot-busters.staging.kryha.dev
-    - secretName: pg.bot-busters.staging.kryha.dev
+    - secretName: admin.bot-busters.staging.kryha.dev
       hosts:
-        - pg.bot-busters.staging.kryha.dev
+        - admin.bot-busters.staging.kryha.dev
   rules:
     - host: "bot-busters.staging.kryha.dev"
       http:
@@ -29,7 +29,7 @@ spec:
                 name: bot-busters
                 port:
                   name: bot-busters
-    - host: "pg.bot-busters.staging.kryha.dev"
+    - host: "admin.bot-busters.staging.kryha.dev"
       http:
         paths:
           - path: "/(.*)"
@@ -38,4 +38,4 @@ spec:
               service:
                 name: postgres
                 port:
-                  name: postgresql
+                  name: pgadmin
