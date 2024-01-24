@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
         - name: pgadmin
-          image: dpage/pgadmin4:7
+          image: dpage/pgadmin4:8
           resources:
             requests:
               cpu: 470m
@@ -29,12 +29,14 @@ spec:
                 fieldRef:
                   fieldPath: metadata.namespace
             - name: PGADMIN_DEFAULT_EMAIL
-              value: bot-busters@kryha.io
+              value: admin@admin.com
+              # TODO: update default
             - name: PGADMIN_DEFAULT_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: backend-secrets
-                  key: db_password
+              value: root
+              # valueFrom:
+              #   secretKeyRef:
+              #     name: backend-secrets
+              #     key: db_password
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
