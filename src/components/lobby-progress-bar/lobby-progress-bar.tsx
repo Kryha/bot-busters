@@ -14,7 +14,7 @@ export const LobbyProgressBar: FC<Props> = ({ progress }) => {
     <Stack sx={styles.wrapper}>
       <Stack sx={styles.progress(progressPercentage)} />
       <Stack sx={styles.loadingWrapper}>
-        <Typography variant="body2" sx={styles.loading}>
+        <Typography variant="body2" color="common.black" sx={styles.loading}>
           {text.lobby.matchMaking}
         </Typography>
       </Stack>
