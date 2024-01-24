@@ -12,6 +12,8 @@ export const VOTING_TIME_MS = 60000;
 
 export const SPLASH_SCREEN_DURATION = 3000; // 3 seconds
 
+export const DEFAULT_MAX_PLAYERS = 4;
+
 /* MATERIAL UI  */
 export const FONT_SIZE = 16;
 export const COEFFICIENT = 14;
