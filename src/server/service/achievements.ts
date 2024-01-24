@@ -87,7 +87,9 @@ const dailyStreakAchievement: Achievement = {
 
     const playedFiveTimesInARow = playerHistory
       .sort((a, b) => b.createdAt - a.createdAt)
-      .map((match) => match.players.find((p) => p.userId === player.userId))
+      .map((match) => {
+        return match.players.find((p) => p.userId === player.userId);
+      })
       .filter((match) => match?.achievements.includes("1"));
 
     return playedFiveTimesInARow.length === 5;

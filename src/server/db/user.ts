@@ -1,6 +1,6 @@
-import { eq } from "drizzle-orm";
+import { and, eq, gte } from "drizzle-orm";
 
-import { type BBPgTransaction, db, dbSchema } from "~/server/db/index.js";
+import { db, dbSchema, type BBPgTransaction } from "~/server/db/index.js";
 import { usersToMatches } from "./schema.js";
 
 const { users, matches } = dbSchema;
@@ -43,12 +43,24 @@ export const insertUserWithAddress = async (address: string) => {
   return newUser;
 };
 
-export const selectMatchPlayedByUser = async (userId: string) => {
+export const selectMatchPlayedByUser = async (
+  userId: string,
+  days?: number,
+) => {
+  let timestamp = 0;
+  if (days) {
+    timestamp = Date.now() - days * 24 * 60 * 60 * 1000;
+  }
   const matchesPlayed = await db
     .select()
     .from(usersToMatches)
     .innerJoin(matches, eq(matches.id, usersToMatches.matchId))
-    .where(eq(usersToMatches.userId, userId));
+    .where(
+      and(
+        eq(usersToMatches.userId, userId),
+        gte(matches.createdAt, new Date(timestamp)),
+      ),
+    );
   return matchesPlayed;
 };
 

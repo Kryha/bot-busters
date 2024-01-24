@@ -191,11 +191,7 @@ export class Match {
         if (player.isVerified !== undefined) return;
 
         const checkPlayer = await selectUserById(player.userId);
-        if (checkPlayer?.username && checkPlayer?.address) {
-          player.isVerified = true;
-        } else {
-          player.isVerified = false;
-        }
+        player.isVerified = !!(checkPlayer?.username && checkPlayer?.address);
       });
     await Promise.allSettled(promises);
   }
@@ -207,9 +203,9 @@ export class Match {
       .map(async (player) => {
         if (this._playerPreviousMatches.get(player.userId)) return;
 
-        const matchRooms = (await selectMatchPlayedByUser(player.userId)).map(
-          (match) => match.match.room,
-        );
+        const matchRooms = (
+          await selectMatchPlayedByUser(player.userId, 5)
+        ).map((match) => match.match.room);
 
         this._playerPreviousMatches.set(player.userId, matchRooms);
       });
