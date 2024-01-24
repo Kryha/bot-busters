@@ -3,8 +3,7 @@ name: Build and Deploy staging to GKE
 on:
   push:
     branches:
-      # - "main"
-      - "feature/admin-ui"
+      - "main"
 
 env:
   PROJECT_ID: aleo-botbusters
