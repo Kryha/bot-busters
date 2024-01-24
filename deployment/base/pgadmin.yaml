@@ -16,11 +16,11 @@ spec:
           image: dpage/pgadmin4:7
           resources:
             requests:
-              cpu: 100m
-              memory: 128Mi
+              cpu: 470m
+              memory: 512Mi
             limits:
-              cpu: 100m
-              memory: 128Mi
+              cpu: 940m
+              memory: 1024Mi
           ports:
             - containerPort: 80
           env:
