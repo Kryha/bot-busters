@@ -9,7 +9,7 @@ import { useState } from "react";
 import { text } from "~/assets/text/index.js";
 import { TextInputField } from "~/components/input-field/index.js";
 import { PrimaryButton } from "~/components/primary-button/index.js";
-import { SelectField } from "~/components/select-field";
+import { SelectField } from "~/components/select-field/index.js";
 import { SUPPORT_TOPIC } from "~/constants/support.js";
 import { styles } from "~/styles/pages/support.js";
 import { api } from "~/utils/api.js";
