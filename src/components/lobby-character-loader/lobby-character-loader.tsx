@@ -1,10 +1,12 @@
 import { type FC, useEffect, useState } from "react";
-import { Avatar, Stack, Typography } from "@mui/material";
-import { getCharacter } from "~/utils/character.jsx";
+import { Avatar, Box, Stack, Typography } from "@mui/material";
+import { getCharacterAvatar } from "~/utils/characters.jsx";
 import { CHARACTERS } from "~/constants/index.js";
 import { text } from "~/assets/text/index.js";
+import { LobbyProgressBar } from "~/components/lobby-progress-bar/index.js";
 
 import hostAvatar from "~/assets/characters/host-character.png";
+import { theme } from "~/styles/theme.js";
 import { styles } from "./styles.js";
 
 interface Props {
@@ -12,15 +14,14 @@ interface Props {
 }
 
 export const LobbyCharacterLoader: FC<Props> = ({ lobbyQueue }) => {
-  const [activatedIndices, setActivatedIndices] = useState(new Set<number>());
+  const [activatedCharacters, setActivatedCharacters] = useState(
+    new Set<number>(),
+  );
 
-  // Update the set of activated indices when lobbyQueue changes
   useEffect(() => {
-    setActivatedIndices((prevActivatedIndices) => {
-      const newActivatedIndices = new Set(prevActivatedIndices);
-      newActivatedIndices.add(lobbyQueue); // Assuming indices start at 0
-      return newActivatedIndices;
-    });
+    setActivatedCharacters((prevActivatedCharacters) =>
+      new Set(prevActivatedCharacters).add(lobbyQueue),
+    );
   }, [lobbyQueue]);
 
   const characters = Object.values(CHARACTERS).map((character) => ({
@@ -31,25 +32,40 @@ export const LobbyCharacterLoader: FC<Props> = ({ lobbyQueue }) => {
   return (
     <Stack sx={styles.container}>
       <Stack sx={styles.characterList}>
-        {characters.map(({ name, color }, index) => (
-          <Stack key={index} sx={styles.character(activatedIndices, index)}>
+        {characters.map(({ name, color }, characterIdx) => (
+          <Stack
+            key={characterIdx}
+            sx={styles.character(activatedCharacters, characterIdx)}
+          >
             <Typography
-              variant="body1"
-              sx={styles.text(lobbyQueue, index)}
-              color={color}
+              variant="h3"
+              sx={styles.text}
+              color={
+                activatedCharacters.has(characterIdx)
+                  ? color
+                  : theme.palette.customGrey.main
+              }
             >
-              {name}
+              {activatedCharacters.has(characterIdx)
+                ? name
+                : text.lobby.searching}
             </Typography>
-            {getCharacter(name)}
+            {getCharacterAvatar(name)}
           </Stack>
         ))}
       </Stack>
-      <Stack sx={styles.progress}></Stack>
+      <LobbyProgressBar progress={lobbyQueue} />
       <Stack sx={styles.hostContainer}>
         <Avatar sx={styles.hostAvatar} src={hostAvatar.src} />
-        <Typography variant="caption" sx={styles.hostText}>
-          {text.lobby.host}
-        </Typography>
+        <Stack sx={styles.hostParagraph}>
+          <Typography variant="body1" sx={styles.hostText}>
+            {text.lobby.hostParagraph1}
+          </Typography>
+          <Typography variant="body1" sx={styles.hostText}>
+            {text.lobby.hostParagraph2}
+            <Box component={"span"}>{text.lobby.bustSomeBotButt}</Box>
+          </Typography>
+        </Stack>
       </Stack>
     </Stack>
   );
