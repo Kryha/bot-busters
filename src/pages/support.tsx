@@ -119,6 +119,7 @@ function Support() {
           onChange={handleIssue}
           onBlur={validateForm.issue}
           validationError={errors.issue}
+          multiline
         />
         <PrimaryButton sx={styles.button} onClick={handleSubmit}>
           Send
