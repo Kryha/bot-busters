@@ -17,7 +17,7 @@ import {
   validTopic,
   validation,
 } from "~/constants/index.js";
-import { SUPPORT_TOPIC } from "~/constants/support.js";
+import { SUPPORT_TOPIC, type SupportTopic } from "~/constants/support.js";
 import { styles } from "~/styles/pages/support.js";
 import { api } from "~/utils/api.js";
 
@@ -34,11 +34,17 @@ function Support() {
   // TODO: casting unknown as string is not ideal but Mui types seem to require it
   // https://stackoverflow.com/questions/58675993/typescript-react-select-onchange-handler-type-error
   const handleTopic = (event: SelectChangeEvent<unknown>) =>
-    setTopic(event.target.value as (typeof SUPPORT_TOPIC)[number]);
-  const handleEmail = (event: { target: { value: string } }) =>
+    setTopic(event.target.value as SupportTopic);
+
+  const handleEmail = (event: { target: { value: string } }) => {
+    if(errors.email) validateForm.email();
     setEmail(event.target.value);
-  const handleIssue = (event: { target: { value: string } }) =>
+  };
+
+  const handleIssue = (event: { target: { value: string } }) => {
+    if(errors.issue) validateForm.issue();
     setIssue(event.target.value);
+  };
 
   const [errors, setValidation] = useState({
     topic: "",
