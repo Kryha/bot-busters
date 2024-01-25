@@ -37,12 +37,12 @@ function Support() {
     setTopic(event.target.value as SupportTopic);
 
   const handleEmail = (event: { target: { value: string } }) => {
-    if(errors.email) validateForm.email();
+    if (errors.email) validateForm.email();
     setEmail(event.target.value);
   };
 
   const handleIssue = (event: { target: { value: string } }) => {
-    if(errors.issue) validateForm.issue();
+    if (errors.issue) validateForm.issue();
     setIssue(event.target.value);
   };
 
@@ -121,7 +121,11 @@ function Support() {
           validationError={errors.issue}
           multiline
         />
-        <PrimaryButton sx={styles.button} onClick={handleSubmit} disabled={!!Object.values(errors).join("")}>
+        <PrimaryButton
+          sx={styles.button}
+          onClick={handleSubmit}
+          disabled={!!Object.values(errors).join("")}
+        >
           Send
         </PrimaryButton>
       </FormControl>

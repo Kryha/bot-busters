@@ -69,5 +69,5 @@ export const styles = {
     color: theme.palette.error.main,
     pt: "10px",
     height: "60px",
-  }
+  },
 } satisfies SxStyleRecord;
