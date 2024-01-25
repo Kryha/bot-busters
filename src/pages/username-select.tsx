@@ -17,6 +17,7 @@ const UsernameSelect: FC = () => {
   const { connect, isConnected, address, getSignature } = useBBWallet();
 
   const verify = api.user.verify.useMutation();
+
   useEffect(() => {
     if (isVerifiedSession(session)) {
       void router.push(pages.home);

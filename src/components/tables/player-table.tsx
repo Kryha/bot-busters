@@ -12,6 +12,7 @@ interface Props {
   playerProfile: PlayerProfileData[];
 }
 
+// TODO: update component or delete and use leaderboard one or just use one row of data
 export const PlayerTable: FC<Props> = ({ playerProfile }) => {
   if (!playerProfile) return;
 

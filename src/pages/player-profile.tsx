@@ -1,54 +1,50 @@
-import { Button, Stack, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import React from "react";
 import { useRouter } from "next/router.js";
-import { useSession } from "next-auth/react";
 
 import { text } from "~/assets/text/index.js";
-import { api } from "~/utils/api.js";
 import { pages } from "~/router.js";
-import { fakeUsername } from "~/constants/fake-data/landing.js";
-import { isValidSession } from "~/utils/session.js";
-import { PlayerTable } from "~/components/index.js";
-import { fakePlayerProfile } from "~/constants/fake-data/player-profile.jsx";
 import { styles } from "~/styles/pages/player-profile.js";
+import { api } from "~/utils/api.js";
+import { PrimaryButton } from "~/components/primary-button/index.js";
 
 const PlayerProfile = () => {
-  const { push } = useRouter();
-  const { data: sessionData } = useSession();
-  const isAuthenticated = isValidSession(sessionData);
-  const join = api.lobby.join.useMutation();
-  const openDailyHandler = () => void push(pages.leaderboard);
-  const isDisabled = join.status === "loading";
-  const title = isAuthenticated
-    ? text.playerProfile.hiPlayer(fakeUsername)
-    : text.playerProfile.yourPlayerProfile;
+  const router = useRouter();
+
+  const user = api.user.getUserById.useQuery();
+
+  const isVerifiedUser = !!user.data?.address && !!user.data.username;
 
   return (
-    <Stack sx={styles.textContainer}>
+    <Stack sx={styles.mainContainer}>
       <Typography variant="h1" color="common.black">
-        {title}
+        {text.playerProfile.profile}
       </Typography>
-      <Stack sx={styles.table}>
+
+      {/* <Stack sx={styles.table}>
         <PlayerTable playerProfile={fakePlayerProfile} />
-      </Stack>
-      <Stack sx={styles.actions}>
-        {!isAuthenticated && (
-          <>
+      </Stack> */}
+
+      {!isVerifiedUser && (
+        <Stack alignItems="center" gap={4}>
+          <Stack alignItems="center" gap={2}>
             <Typography variant="body1">
               {text.playerProfile.createProfile}
             </Typography>
-            <Button
-              variant="contained"
-              color="blueGrey"
-              disabled={isDisabled}
-              onClick={openDailyHandler}
-              sx={styles.openDailyButton}
-            >
-              {text.playerProfile.addScoreToLeaderboard}
-            </Button>
-          </>
-        )}
-      </Stack>
+            <Typography variant="body1">
+              {text.playerProfile.top10ReceiveCredits}
+            </Typography>
+          </Stack>
+
+          <PrimaryButton
+            variant="contained"
+            color="blueGrey"
+            onClick={() => void router.push(pages.login)}
+          >
+            {text.playerProfile.connectWallet}
+          </PrimaryButton>
+        </Stack>
+      )}
     </Stack>
   );
 };
