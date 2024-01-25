@@ -4,6 +4,7 @@ import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
 import { env } from "~/env.mjs";
 
 import { createTRPCRouter, publicProcedure } from "../trpc.js";
+import { validEmail, validIssue, validTopic } from "~/constants/validation.js";
 
 const ses = new SESClient({
   region: env.AWS_REGION,
@@ -17,13 +18,13 @@ export const supportRouter = createTRPCRouter({
   sendEmail: publicProcedure
     .input(
       z.object({
-        sender: z.string().email(),
-        message: z.string().min(1),
-        subject: z.string().min(1),
+        email: validEmail,
+        issue: validIssue,
+        topic: validTopic,
       }),
     )
     .mutation(async ({ input }) => {
-      const { sender, message, subject } = input;
+      const { email, issue, topic } = input;
 
       const command = new SendEmailCommand({
         Destination: {
@@ -31,11 +32,11 @@ export const supportRouter = createTRPCRouter({
         },
         Message: {
           Body: {
-            Text: { Data: message },
+            Text: { Data: issue },
           },
-          Subject: { Data: subject },
+          Subject: { Data: topic },
         },
-        ReplyToAddresses: [sender],
+        ReplyToAddresses: [email],
         Source: env.BB_EMAIL,
       });
 
