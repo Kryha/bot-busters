@@ -10,9 +10,11 @@ import {
 import { db } from "~/server/db/index.js";
 import { ranks, users, usersToMatches } from "~/server/db/schema.js";
 import { deleteUser, selectMatchPlayedByUser } from "~/server/db/user.js";
-import { leaderboard } from "~/server/service/index.js";
+import {
+  alreadyReceivedAchievement,
+  leaderboard,
+} from "~/server/service/index.js";
 import { profanityFilter } from "~/service/index.js";
-import { alreadyReceivedAchievement } from "~/utils/achievements.js";
 import { isValidSession } from "~/utils/session.js";
 import { verifySignature } from "~/utils/wallet.js";
 
@@ -45,18 +47,26 @@ export const userRouter = createTRPCRouter({
           return { isUsernameSet: !!loggedUser.username };
         }
 
-        const verifiedAccount = duplicateUsers.find(
-          (user) => user.address === address,
-        );
+        const score =
+          duplicateUsers.reduce((acc, user) => acc + user.score, 0) +
+          loggedUser.score;
 
-        if (verifiedAccount) {
-          const matchesPlayed = (
-            await selectMatchPlayedByUser(verifiedAccount.id)
-          ).map((match) => match.match.room);
+        const [firstUser, ...usersToDelete] = duplicateUsers;
+
+        // This section makes sure the logged in user does not get the achievement 201 twice.
+        if (firstUser) {
+          const matchesPlayedByUser = await selectMatchPlayedByUser(
+            firstUser.id,
+            tx,
+          );
+
+          const matchRooms = matchesPlayedByUser.map(
+            (match) => match.match.room,
+          );
 
           const hasAchievement = alreadyReceivedAchievement(
-            verifiedAccount.id,
-            matchesPlayed,
+            firstUser.id,
+            matchRooms,
             "201",
           );
 
@@ -64,13 +74,6 @@ export const userRouter = createTRPCRouter({
             loggedUser.score -= POINTS_ACHIEVEMENTS["201"];
           }
         }
-
-        const score =
-          duplicateUsers.reduce((acc, user) => acc + user.score, 0) +
-          loggedUser.score;
-
-        const [firstUser, ...usersToDelete] = duplicateUsers;
-
         usersToDelete.push(loggedUser);
 
         await tx
