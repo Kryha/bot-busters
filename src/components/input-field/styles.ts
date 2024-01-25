@@ -1,5 +1,5 @@
 import { theme } from "~/styles/theme.js";
-import type { SxStyleRecord } from "~/types/sx-style-record";
+import type { SxStyleRecord } from "~/types/sx-style-record.js";
 
 export const styles = {
   wrapper: {
@@ -44,7 +44,7 @@ export const styles = {
     flexGrow: 1,
     backgroundColor: "common.black",
     mt: "20px",
-    mb: "40px",
+    // mb: "40px",
     textTransform: "capitalize",
   },
   textInputFieldError: {
@@ -52,7 +52,6 @@ export const styles = {
     flexGrow: 1,
     backgroundColor: "common.black",
     mt: "20px",
-    mb: "40px",
     textTransform: "capitalize",
   },
   textInputFieldProps: {
@@ -66,4 +65,9 @@ export const styles = {
       border: "none",
     },
   },
+  errorText: {
+    color: theme.palette.error.main,
+    pt: "10px",
+    height: "60px",
+  }
 } satisfies SxStyleRecord;

@@ -19,8 +19,8 @@ export const validation = {
     },
   },
   invalid: {
-    topic: "Topic is not valid",
-    email: "Email is not valid",
+    topic: "Please select a valid topic",
+    email: "Please enter a valid email",
   },
 } as const;
 

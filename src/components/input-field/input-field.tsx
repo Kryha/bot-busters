@@ -71,6 +71,7 @@ export const TextInputField: FC<TextInputFieldProps> = ({
         multiline={multiline}
         {...rest}
       />
+      <Typography variant="body1" sx={styles.errorText}>{validationError}</Typography>
     </Stack>
   );
 };

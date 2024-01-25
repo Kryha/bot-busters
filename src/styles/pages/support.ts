@@ -21,6 +21,7 @@ export const styles = {
     minHeight: "400px",
   },
   button: {
+    mt: "10px",
     width: "180px",
     alignItems: "center",
     gap: "10px",
