@@ -67,11 +67,11 @@ export const userRouter = createTRPCRouter({
           const hasAchievement = alreadyReceivedAchievement(
             firstUser.id,
             matchRooms,
-            "201",
+            "firstTimer",
           );
 
           if (hasAchievement) {
-            loggedUser.score -= POINTS_ACHIEVEMENTS["201"];
+            loggedUser.score -= POINTS_ACHIEVEMENTS.firstTimer;
           }
         }
         usersToDelete.push(loggedUser);
