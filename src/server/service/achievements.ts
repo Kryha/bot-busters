@@ -1,8 +1,8 @@
-import { type Achievement, type AchievementId } from "~/types/index.js";
 import {
-  alreadyReceivedAchievement,
-  alreadyReceivedAchievementToday,
-} from "~/utils/achievements.js";
+  type Achievement,
+  type AchievementId,
+  type MatchRoom,
+} from "~/types/index.js";
 
 const lastOneAchievement: Achievement = {
   name: "Last One",
@@ -45,13 +45,13 @@ const busterStreakAchievement: Achievement = {
   name: "Buster Streak",
   description: "Bust three bots in a row",
   calculate: ({ player, playerHistory, otherPlayers, botsBusted }) => {
-    if (
+    const isNotEligibleForNewAchievement =
       !playerHistory ||
       playerHistory.length < 2 ||
-      alreadyReceivedAchievementToday(player.userId, playerHistory, "101") ||
-      !player
-    )
-      return false;
+      !player ||
+      alreadyReceivedAchievement(player.userId, playerHistory, "101", 1);
+
+    if (isNotEligibleForNewAchievement) return false;
 
     const allBotsBustedLastTwoMatches = playerHistory
       .sort((a, b) => b.createdAt - a.createdAt)
@@ -101,4 +101,31 @@ export const MATCH_ACHIEVEMENTS: Record<AchievementId, Achievement> = {
   "201": firstTimerAchievement,
   "202": beginnersLuckAchievement,
   "203": realHumanAchievement,
+};
+
+export const alreadyReceivedAchievement = (
+  playerId: string,
+  playerMatchHistory: MatchRoom[],
+  achievementId: AchievementId,
+  days?: number,
+): boolean => {
+  let playerHistory = playerMatchHistory;
+
+  if (days) {
+    // Get the timestamp for 24 hours ago
+    const timeStampToStart = Date.now() - days * 24 * 60 * 60 * 1000;
+
+    // Filter playerHistory to only include matches from the past 24 hours
+    playerHistory = playerMatchHistory.filter(
+      (match) => match.createdAt > timeStampToStart,
+    );
+  }
+  // Check if the achievement is in the player's history
+  return playerHistory.some((match) =>
+    match.players.some(
+      (player) =>
+        player.userId === playerId &&
+        player.achievements.includes(achievementId),
+    ),
+  );
 };
