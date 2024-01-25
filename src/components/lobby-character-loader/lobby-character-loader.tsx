@@ -1,7 +1,7 @@
 import { type FC, useEffect, useState } from "react";
 import { Avatar, Box, Stack, Typography } from "@mui/material";
 import { getCharacterAvatar } from "~/utils/characters.jsx";
-import { CHARACTERS } from "~/constants/index.js";
+import { CHARACTERS, DEFAULT_MAX_PLAYERS_PER_ROOM } from "~/constants/index.js";
 import { text } from "~/assets/text/index.js";
 import { LobbyProgressBar } from "~/components/lobby-progress-bar/index.js";
 
@@ -10,43 +10,54 @@ import { theme } from "~/styles/theme.js";
 import { styles } from "./styles.js";
 
 interface Props {
-  lobbyQueue: number;
+  playerQueuePosition: number;
+  queueLength: number;
 }
 
-export const LobbyCharacterLoader: FC<Props> = ({ lobbyQueue }) => {
+export const LobbyCharacterLoader: FC<Props> = ({
+  playerQueuePosition,
+  queueLength,
+}) => {
   const [activatedCharacters, setActivatedCharacters] = useState(
     new Set<number>(),
   );
 
   useEffect(() => {
-    setActivatedCharacters((prevActivatedCharacters) =>
-      new Set(prevActivatedCharacters).add(lobbyQueue),
-    );
-  }, [lobbyQueue]);
+    if (
+      playerQueuePosition === 0 ||
+      playerQueuePosition > DEFAULT_MAX_PLAYERS_PER_ROOM
+    ) {
+      setActivatedCharacters(new Set());
+      return;
+    }
 
-  const characters = Object.values(CHARACTERS).map((character) => ({
-    name: character.name,
-    color: `${character.color}.dark`,
-  }));
+    const newSet = new Set<number>();
+    const upperLimit = Math.min(queueLength, DEFAULT_MAX_PLAYERS_PER_ROOM);
+    for (let i = 1; i <= upperLimit; i++) {
+      newSet.add(i);
+    }
+
+    setActivatedCharacters(newSet);
+  }, [playerQueuePosition, queueLength]);
 
   return (
     <Stack sx={styles.container}>
       <Stack sx={styles.characterList}>
-        {characters.map(({ name, color }, characterIdx) => (
+        {Object.values(CHARACTERS).map(({ name, color, id }) => (
           <Stack
-            key={characterIdx}
-            sx={styles.character(activatedCharacters, characterIdx)}
+            key={id}
+            sx={styles.character(activatedCharacters, Number(id))}
           >
             <Typography
               variant="h3"
               sx={styles.text}
               color={
-                activatedCharacters.has(characterIdx)
-                  ? color
+                activatedCharacters.has(Number(id))
+                  ? `${color}.dark`
                   : theme.palette.customGrey.main
               }
             >
-              {activatedCharacters.has(characterIdx)
+              {activatedCharacters.has(Number(id))
                 ? name
                 : text.lobby.searching}
             </Typography>
@@ -54,7 +65,7 @@ export const LobbyCharacterLoader: FC<Props> = ({ lobbyQueue }) => {
           </Stack>
         ))}
       </Stack>
-      <LobbyProgressBar progress={lobbyQueue} />
+      <LobbyProgressBar progress={activatedCharacters.size} />
       <Stack sx={styles.hostContainer}>
         <Avatar sx={styles.hostAvatar} src={hostAvatar.src} />
         <Stack sx={styles.hostParagraph}>

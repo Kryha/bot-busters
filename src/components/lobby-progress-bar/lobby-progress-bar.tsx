@@ -1,15 +1,16 @@
 import { type FC } from "react";
 import { Stack, Typography } from "@mui/material";
 import { text } from "~/assets/text/index.js";
+import { DEFAULT_MAX_PLAYERS_PER_ROOM } from "~/constants/index.js";
 import { styles } from "./styles.js";
-import { DEFAULT_MAX_PLAYERS } from "~/constants";
 
 interface Props {
   progress: number;
 }
 
 export const LobbyProgressBar: FC<Props> = ({ progress }) => {
-  const progressPercentage = (progress / DEFAULT_MAX_PLAYERS) * 100;
+  const progressPercentage = (progress / DEFAULT_MAX_PLAYERS_PER_ROOM) * 100;
+
   return (
     <Stack sx={styles.wrapper}>
       <Stack sx={styles.progress(progressPercentage)} />
