@@ -191,11 +191,7 @@ export class Match {
         if (player.isVerified !== undefined) return;
 
         const checkPlayer = await selectUserById(player.userId);
-        if (checkPlayer?.username && checkPlayer?.address) {
-          player.isVerified = true;
-        } else {
-          player.isVerified = false;
-        }
+        player.isVerified = !!(checkPlayer?.username && checkPlayer?.address);
       });
     await Promise.allSettled(promises);
   }
