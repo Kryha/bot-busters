@@ -121,7 +121,7 @@ function Support() {
           validationError={errors.issue}
           multiline
         />
-        <PrimaryButton sx={styles.button} onClick={handleSubmit}>
+        <PrimaryButton sx={styles.button} onClick={handleSubmit} disabled={!!Object.values(errors).join("")}>
           Send
         </PrimaryButton>
       </FormControl>
