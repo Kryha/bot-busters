@@ -23,10 +23,16 @@ export const lobbyRouter = createTRPCRouter({
         ee.off("queueUpdate", handleEvent);
 
         const { id } = ctx.session.user;
-
         const index = lobbyQueue.indexOf(id);
-        if (index < 0) return;
-        lobbyQueue.splice(index, 1);
+
+        // If the user is in the queue, and they unsubscribe (disconnect), remove them from the queue
+        if (index >= 0) {
+          lobbyQueue.splice(index, 1);
+
+          // Emit an event to notify others that the queue has been updated
+          // This is to handle the case where a user leaves and the queue positions might change
+          ee.emit("queueUpdate");
+        }
       };
     });
   }),

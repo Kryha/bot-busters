@@ -7,15 +7,18 @@ import { LobbyCharacterLoader } from "~/components/lobby-character-loader/index.
 const Lobby: FC = () => {
   const { push } = useRouter();
   const join = api.lobby.join.useMutation();
-  const [lobbyQueue, setLobbyQueue] = useState(0);
+  const [lobbyQueue, setLobbyQueue] = useState({
+    playerQueuePosition: 0,
+    queueLength: 0,
+  });
 
   // TODO: consider deleting this listener and call join inside a `useEffect`
   api.lobby.onQueueUpdate.useSubscription(undefined, {
     onStarted() {
       join.mutate();
     },
-    onData({ queueLength }) {
-      setLobbyQueue(queueLength);
+    onData({ playerQueuePosition, queueLength }) {
+      setLobbyQueue({ playerQueuePosition, queueLength });
     },
     onError(error) {
       console.error("Queue update error:", error);
@@ -31,7 +34,12 @@ const Lobby: FC = () => {
     },
   });
 
-  return <LobbyCharacterLoader lobbyQueue={lobbyQueue} />;
+  return (
+    <LobbyCharacterLoader
+      playerQueuePosition={lobbyQueue.playerQueuePosition}
+      queueLength={lobbyQueue.queueLength}
+    />
+  );
 };
 
 export default Lobby;
