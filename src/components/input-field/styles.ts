@@ -1,5 +1,6 @@
 import { type SxProps } from "@mui/material";
 import { theme } from "~/styles/theme.js";
+import { SxStyleRecord } from "~/types/sx-style-record";
 
 export const styles = {
   wrapper: {
@@ -35,12 +36,20 @@ export const styles = {
     flexGrow: 1,
     textAlign: "center",
     mb: 3,
-  } satisfies SxProps,
+  },
   wrapperTextField: {
     width: "100%",
   },
   textInputField: {
     border: `4px solid ${theme.palette.text.disabled}`,
+    flexGrow: 1,
+    backgroundColor: "common.black",
+    mt: "20px",
+    mb: "40px",
+    textTransform: "capitalize",
+  },
+  textInputFieldError: {
+    border: `4px solid ${theme.palette.error.main}`,
     flexGrow: 1,
     backgroundColor: "common.black",
     mt: "20px",
@@ -58,4 +67,4 @@ export const styles = {
       border: "none",
     },
   },
-};
+} satisfies SxStyleRecord;
