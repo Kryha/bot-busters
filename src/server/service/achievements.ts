@@ -4,19 +4,6 @@ import {
   type MatchRoom,
 } from "~/types/index.js";
 
-const lastOneAchievement: Achievement = {
-  name: "Last One",
-  description: "Write the last message in a match",
-  calculate: ({ player, messages }) => {
-    const lastMessage = messages[messages.length - 1];
-    if (!lastMessage) return false;
-
-    const lastSender = lastMessage.sender;
-    if (lastSender !== player.userId) return false;
-    return true;
-  },
-};
-
 const goodBustAchievement: Achievement = {
   name: "Good Bust",
   description: "Get all votes correct in a match",
@@ -49,7 +36,12 @@ const busterStreakAchievement: Achievement = {
       !playerHistory ||
       playerHistory.length < 2 ||
       !player ||
-      alreadyReceivedAchievement(player.userId, playerHistory, "101", 1);
+      alreadyReceivedAchievement(
+        player.userId,
+        playerHistory,
+        "busterStreak",
+        1,
+      );
 
     if (isNotEligibleForNewAchievement) return false;
 
@@ -57,7 +49,7 @@ const busterStreakAchievement: Achievement = {
       .sort((a, b) => b.createdAt - a.createdAt)
       .slice(0, 2)
       .map((match) => match.players.find((p) => p.userId === player.userId))
-      .every((p) => p?.achievements.includes("12"));
+      .every((p) => p?.achievements.includes("goodBust"));
 
     const perfectCurrentGame =
       botsBusted === otherPlayers.filter((p) => p.isBot).length;
@@ -89,18 +81,21 @@ const realHumanAchievement: Achievement = {
   description: "First time played as a verified human",
   calculate: ({ playerHistory, player }) => {
     if (!playerHistory || !player.isVerified) return false;
-    return !alreadyReceivedAchievement(player.userId, playerHistory, "203");
+    return !alreadyReceivedAchievement(
+      player.userId,
+      playerHistory,
+      "realHuman",
+    );
   },
 };
 
 export const MATCH_ACHIEVEMENTS: Record<AchievementId, Achievement> = {
-  "11": lastOneAchievement,
-  "12": goodBustAchievement,
-  "13": doubleAgentAchievement,
-  "101": busterStreakAchievement,
-  "201": firstTimerAchievement,
-  "202": beginnersLuckAchievement,
-  "203": realHumanAchievement,
+  goodBust: goodBustAchievement,
+  doubleAgent: doubleAgentAchievement,
+  busterStreak: busterStreakAchievement,
+  firstTimer: firstTimerAchievement,
+  beginnersLuck: beginnersLuckAchievement,
+  realHuman: realHumanAchievement,
 };
 
 export const alreadyReceivedAchievement = (
