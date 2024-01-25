@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
 
-import { type BBPgTransaction, db, dbSchema } from "~/server/db/index.js";
+import { db, dbSchema, type BBPgTransaction } from "~/server/db/index.js";
 import { usersToMatches } from "./schema.js";
 
 const { users, matches } = dbSchema;
@@ -43,8 +43,13 @@ export const insertUserWithAddress = async (address: string) => {
   return newUser;
 };
 
-export const selectMatchPlayedByUser = async (userId: string) => {
-  const matchesPlayed = await db
+export const selectMatchPlayedByUser = async (
+  userId: string,
+  tx?: BBPgTransaction,
+) => {
+  const dbTx = tx ?? db;
+
+  const matchesPlayed = await dbTx
     .select()
     .from(usersToMatches)
     .innerJoin(matches, eq(matches.id, usersToMatches.matchId))
