@@ -37,7 +37,6 @@ export const Navbar: FC<Props> = ({
   const logOut = async () => {
     await signOut();
     await disconnectWallet();
-    sessionStorage.clear();
   };
 
   const onSoundClick = () => {
