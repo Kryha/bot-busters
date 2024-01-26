@@ -1,4 +1,3 @@
-export * from "./authentication/index.js";
 export * from "./error-view/index.jsx";
 export * from "./tables/index.js";
 export * from "./points-display/index.js";

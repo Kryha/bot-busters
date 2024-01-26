@@ -14,24 +14,20 @@ import {
 import { MenuButton } from "~/components/main-menu/menu-button.jsx";
 import { MainMenu } from "~/components/main-menu/index.js";
 import { pages } from "~/router.js";
+import { useBBWallet } from "~/service/bb-wallet.js";
 
 interface Props {
   isVerifiedUser: boolean;
-  isGamePlayed: boolean;
   username: string;
   open: boolean;
   setOpen: (open: boolean) => void;
-  disconnectWallet: () => Promise<void>;
   points: number;
 }
 
-export const Navbar: FC<Props> = ({
-  isVerifiedUser,
-  open,
-  setOpen,
-  disconnectWallet,
-}) => {
+export const Navbar: FC<Props> = ({ isVerifiedUser, open, setOpen }) => {
   const router = useRouter();
+  const { disconnect: disconnectWallet } = useBBWallet();
+
   const [soundOn, setSoundOn] = useState(true);
 
   const logOut = async () => {

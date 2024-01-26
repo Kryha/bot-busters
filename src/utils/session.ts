@@ -1,5 +1,7 @@
 import { type Session } from "next-auth";
 
+// TODO: check if makes sense to keep these
+
 export const isValidSession = (session: Session | null) =>
   Boolean(session?.user.id && session?.user.id !== "null");
 

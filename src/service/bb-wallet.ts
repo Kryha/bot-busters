@@ -12,9 +12,6 @@ import { useCallback, useEffect, useState } from "react";
 
 import { AUTH_SIGN_MESSAGE } from "~/constants/index.js";
 import { env } from "~/env.mjs";
-import { isClient } from "~/utils/client.js";
-
-const ls = isClient() ? localStorage : undefined;
 
 export const useBBWallet = () => {
   const {
@@ -32,30 +29,22 @@ export const useBBWallet = () => {
     select(LeoWalletName);
   }, [select]);
 
-  const [signature, setSignature] = useState(
-    ls?.getItem("signature") ?? undefined,
-  );
+  const [signature, setSignature] = useState<string>();
 
   const getSignature = useCallback(async () => {
-    if (!wallet) return;
+    if (!wallet) throw new Error("Wallet not initialised.");
 
     if (signature) return signature;
 
-    try {
-      const adapter = wallet.adapter as LeoWalletAdapter;
+    const adapter = wallet.adapter as LeoWalletAdapter;
 
-      const bytes = new TextEncoder().encode(AUTH_SIGN_MESSAGE);
-      const signatureMessageBytes = await adapter.signMessage(bytes);
-      const signature = new TextDecoder().decode(signatureMessageBytes);
+    const bytes = new TextEncoder().encode(AUTH_SIGN_MESSAGE);
+    const signatureMessageBytes = await adapter.signMessage(bytes);
+    const newSignature = new TextDecoder().decode(signatureMessageBytes);
 
-      // Storing the signature helps preventing a constant request for signing a message
-      ls?.setItem("signature", signature);
-      setSignature(signature);
+    setSignature(newSignature);
 
-      return signature;
-    } catch (error) {
-      console.error(error);
-    }
+    return newSignature;
   }, [signature, wallet]);
 
   const connectWallet = useCallback(async () => {
@@ -73,7 +62,6 @@ export const useBBWallet = () => {
 
   const disconnectWallet = useCallback(async () => {
     try {
-      ls?.removeItem("signature");
       await disconnect();
     } catch (error) {
       console.error(error);
