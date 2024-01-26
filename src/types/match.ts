@@ -18,18 +18,18 @@ export const chatMessagePayloadSchema = z.object({
 export type ChatMessagePayload = z.infer<typeof chatMessagePayloadSchema>;
 
 export const achievementIdSchema = z.enum([
-  // Match achievement - written last message
-  "11",
   // Match achievement - perfect score (all votes correct)
-  "12",
+  "goodBust",
   // Match achievement - two people selected you as a bot
-  "13",
+  "doubleAgent",
   // Day achievement - successfully bust all bots 3 consecutive games
-  "101",
+  "busterStreak",
   // One time achievement - player plays his first game
-  "201",
+  "firstTimer",
   // One time achievement - player Bust at least one bot in his first game
-  "202",
+  "beginnersLuck",
+  // One time achievement - player plays his first game as verified human
+  "realHuman",
 ]);
 export type AchievementId = z.infer<typeof achievementIdSchema>;
 
@@ -45,6 +45,7 @@ export const playerSchema = z.object({
   botsBusted: z.number(),
   correctGuesses: z.number(),
   votes: z.array(z.string().uuid()).optional(), // array of voted ids
+  isVerified: z.boolean().optional(),
   achievements: z.array(achievementIdSchema), // array of achievement ids
 });
 export type PlayerType = z.infer<typeof playerSchema>;
