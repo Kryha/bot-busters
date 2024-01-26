@@ -54,6 +54,20 @@ const PrimaryButtonStyle = styled(Button)({
       },
     },
   },
+  "&:disabled": {
+    border: `4px solid ${theme.palette.customGrey.main}`,
+    color: theme.palette.customGrey.main,
+    cursor: "default",
+    "& > div > svg": {
+      "& > path": {
+        fill: theme.palette.customGrey.main,
+        stroke: theme.palette.customGrey.main,
+      },
+    },
+    "&:hover": {
+      background: "none",
+    },
+  },
 });
 
 export const PrimaryButton: FC<Props> = ({ children, ...props }) => {

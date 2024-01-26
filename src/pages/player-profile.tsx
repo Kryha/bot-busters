@@ -11,7 +11,7 @@ import { PrimaryButton } from "~/components/primary-button/index.js";
 const PlayerProfile = () => {
   const router = useRouter();
 
-  const user = api.user.getUserById.useQuery();
+  const user = api.user.getLoggedUser.useQuery(undefined, { retry: false });
 
   const isVerifiedUser = !!user.data?.address && !!user.data.username;
 

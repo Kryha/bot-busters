@@ -2,9 +2,8 @@ import { type FC, useState } from "react";
 import { Button, Stack, Typography } from "@mui/material";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/router";
-
 import { text } from "~/assets/text/index.js";
-import { styles } from "~/components/navbar/styles.js";
+
 import {
   BotBustersIcon,
   SoundOffIcon,
@@ -14,30 +13,30 @@ import {
 import { MenuButton } from "~/components/main-menu/menu-button.jsx";
 import { MainMenu } from "~/components/main-menu/index.js";
 import { pages } from "~/router.js";
+import { useBBWallet } from "~/service/bb-wallet.js";
+import { styles } from "./styles.js";
 
 interface Props {
   isVerifiedUser: boolean;
-  isGamePlayed: boolean;
-  username: string;
+  username?: string | null;
   open: boolean;
   setOpen: (open: boolean) => void;
-  disconnectWallet: () => Promise<void>;
-  points: number;
 }
 
 export const Navbar: FC<Props> = ({
   isVerifiedUser,
   open,
   setOpen,
-  disconnectWallet,
+  username,
 }) => {
   const router = useRouter();
+  const { disconnect: disconnectWallet } = useBBWallet();
+
   const [soundOn, setSoundOn] = useState(true);
 
   const logOut = async () => {
     await signOut();
     await disconnectWallet();
-    sessionStorage.clear();
   };
 
   const onSoundClick = () => {
@@ -56,7 +55,7 @@ export const Navbar: FC<Props> = ({
             <UserIcon />
           </Stack>
           <Typography variant="h3" sx={styles.userNameText}>
-            {text.general.username}
+            {username ?? text.general.username}
           </Typography>
         </Stack>
         <Button

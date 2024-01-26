@@ -5,7 +5,7 @@ export const styles = {
     display: "flex",
     flexDirection: "column",
     position: "relative",
-    minHeight: "100vh",
+    height: "100vh",
     maxWidth: "1800px !important",
   } satisfies SxProps,
 };

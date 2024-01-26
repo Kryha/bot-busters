@@ -23,10 +23,11 @@ export const lobbyRouter = createTRPCRouter({
         ee.off("queueUpdate", handleEvent);
 
         const { id } = ctx.session.user;
-
         const index = lobbyQueue.indexOf(id);
-        if (index < 0) return;
+
+        // If the user is in the queue, and they unsubscribe (disconnect), remove them from the queue
         lobbyQueue.splice(index, 1);
+        ee.emit("queueUpdate");
       };
     });
   }),

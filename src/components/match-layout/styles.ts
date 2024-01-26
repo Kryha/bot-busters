@@ -8,6 +8,7 @@ export const styles = {
     flex: "1 1 auto",
     flexDirection: "row",
     justifyContent: "center",
+    width: "100%",
     maxWidth: "1800px !important",
     pb: "0px !important",
     pl: "0px !important",
