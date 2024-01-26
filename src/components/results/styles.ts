@@ -1,9 +1,13 @@
 import { type SxProps } from "@mui/material";
+import { theme } from "~/styles";
 
 export const styles: Record<string, SxProps> = {
   wrapper: {
     alignItems: "center",
-    width: "100%",
+    width: "50%",
+    [theme.breakpoints.down("md")]: {
+      width: "100%",
+    },
   },
   textWrapper: {
     flex: 0,
