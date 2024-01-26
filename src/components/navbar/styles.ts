@@ -6,7 +6,7 @@ import { zIndex } from "~/styles/z-index.js";
 export const styles = {
   container: {
     position: "relative",
-    zIndex: zIndex.middle,
+    zIndex: zIndex.front,
     flex: "0 1 auto",
   },
   statsWrapper: {

@@ -7,7 +7,7 @@ export const styles = {
       position: "fixed",
       inset: 0,
       backgroundColor: backgroundColor,
-      zIndex: zIndex.middle,
+      zIndex: zIndex.front,
       alignItems: "center",
       justifyContent: "center",
     } satisfies SxProps;

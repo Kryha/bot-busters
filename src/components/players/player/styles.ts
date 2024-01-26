@@ -19,7 +19,7 @@ export const styles = {
     position: "absolute",
   },
   avatarResult: {
-    zIndex: zIndex.front,
+    zIndex: zIndex.middle,
   },
   avatar: {
     width: 150,
