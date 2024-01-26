@@ -1,5 +1,6 @@
 import { count, eq } from "drizzle-orm";
 import { z } from "zod";
+
 import { POINTS_ACHIEVEMENTS } from "~/constants/index.js";
 
 import {
@@ -53,26 +54,22 @@ export const userRouter = createTRPCRouter({
 
         const [firstUser, ...usersToDelete] = duplicateUsers;
 
-        // This section makes sure the logged in user does not get the achievement 201 twice.
-        if (firstUser) {
-          const matchesPlayedByUser = await selectMatchPlayedByUser(
-            firstUser.id,
-            tx,
-          );
+        // This section makes sure the logged in user does not get the beginner's luck achievement twice.
+        const matchesPlayedByUser = await selectMatchPlayedByUser(
+          firstUser!.id,
+          tx,
+        );
 
-          const matchRooms = matchesPlayedByUser.map(
-            (match) => match.match.room,
-          );
+        const matchRooms = matchesPlayedByUser.map((match) => match.match.room);
 
-          const hasAchievement = alreadyReceivedAchievement(
-            firstUser.id,
-            matchRooms,
-            "firstTimer",
-          );
+        const hasAchievement = alreadyReceivedAchievement(
+          firstUser!.id,
+          matchRooms,
+          "firstTimer",
+        );
 
-          if (hasAchievement) {
-            loggedUser.score -= POINTS_ACHIEVEMENTS.firstTimer;
-          }
+        if (hasAchievement) {
+          loggedUser.score -= POINTS_ACHIEVEMENTS.firstTimer;
         }
         usersToDelete.push(loggedUser);
 
