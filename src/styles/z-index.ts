@@ -3,4 +3,4 @@ export const zIndex = {
   front: 1,
   middle: 2,
   back: 3,
-};
+} as const;
