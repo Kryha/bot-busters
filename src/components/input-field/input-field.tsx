@@ -4,6 +4,8 @@ import {
   Stack,
   TextField,
   type TextFieldProps,
+  Typography,
+  type SxProps,
 } from "@mui/material";
 
 import { PrimaryButton } from "~/components/primary-button/index.js";
@@ -33,6 +35,46 @@ export const InputField: FC<Props> = ({ onClick, disabled, ...rest }) => {
       >
         {text.chat.send}
       </PrimaryButton>
+    </Stack>
+  );
+};
+
+type TextInputFieldProps = TextFieldProps & {
+  heading: string;
+  validationError?: string;
+  container?: SxProps;
+};
+
+export const TextInputField: FC<TextInputFieldProps> = ({
+  disabled,
+  placeholder,
+  heading,
+  multiline,
+  fullWidth,
+  validationError,
+  container,
+  ...rest
+}) => {
+  return (
+    <Stack sx={{ ...styles.wrapperTextField, ...container }}>
+      <Typography variant="body1">{heading}</Typography>
+      <TextField
+        placeholder={placeholder}
+        InputProps={{ sx: styles.textInputFieldProps }}
+        sx={{
+          ...(validationError
+            ? styles.textInputFieldError
+            : styles.textInputField),
+        }}
+        disabled={disabled}
+        fullWidth={fullWidth}
+        multiline={multiline}
+        rows={14}
+        {...rest}
+      />
+      <Typography variant="body1" sx={styles.errorText}>
+        {validationError}
+      </Typography>
     </Stack>
   );
 };
