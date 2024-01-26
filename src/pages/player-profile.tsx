@@ -12,6 +12,7 @@ import { PlayerTable } from "~/components/index.js";
 import { fakePlayerProfile } from "~/constants/fake-data/player-profile.jsx";
 import { styles } from "~/styles/pages/player-profile.js";
 
+// TODO: use loggedUser for isAuthenticated check in the profile page PR
 const PlayerProfile = () => {
   const { push } = useRouter();
   const { data: sessionData } = useSession();
