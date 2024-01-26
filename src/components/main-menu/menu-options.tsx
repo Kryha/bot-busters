@@ -43,6 +43,9 @@ export const MenuOptions: FC<Props> = ({ handleClose }) => {
       <MenuOptionsButton onClick={() => handleNavigation(pages.login)}>
         {text.general.connectWallet}
       </MenuOptionsButton>
+      <MenuOptionsButton onClick={() => handleNavigation(pages.about)}>
+        {text.general.about}
+      </MenuOptionsButton>
     </Stack>
   );
 };
