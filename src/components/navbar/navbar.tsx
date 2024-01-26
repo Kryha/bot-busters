@@ -2,9 +2,8 @@ import { type FC, useState } from "react";
 import { Button, Stack, Typography } from "@mui/material";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/router";
-
 import { text } from "~/assets/text/index.js";
-import { styles } from "~/components/navbar/styles.js";
+
 import {
   BotBustersIcon,
   SoundOffIcon,
@@ -14,6 +13,7 @@ import {
 import { MenuButton } from "~/components/main-menu/menu-button.jsx";
 import { MainMenu } from "~/components/main-menu/index.js";
 import { pages } from "~/router.js";
+import { styles } from "./styles.js";
 
 interface Props {
   isVerifiedUser: boolean;
