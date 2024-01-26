@@ -51,7 +51,7 @@ export const Score: FC<Props> = ({ gainedScore, achievements }) => {
                   },
                 }}
               >
-                <Stack key={achievementResult} sx={styles.achievement}>
+                <Stack sx={styles.achievement}>
                   <Typography variant="body1">{name}</Typography>
                   <Typography variant="body1">
                     {text.achievements.points(

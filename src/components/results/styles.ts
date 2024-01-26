@@ -1,5 +1,5 @@
 import { type SxProps } from "@mui/material";
-import { theme } from "~/styles";
+import { theme } from "~/styles/index.js";
 
 export const styles: Record<string, SxProps> = {
   wrapper: {
