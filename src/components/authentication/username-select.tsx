@@ -4,10 +4,10 @@ import { useRouter } from "next/router.js";
 
 import { api } from "~/utils/api.js";
 import { RowCreateUsername } from "~/components/tables/components/index.js";
+import { pages } from "~/router.js";
 
 import { type LoginStage } from "./types.js";
 import { LoginLoading } from "./login-loading.jsx";
-import { pages } from "~/router.js";
 
 interface UsernameSelectProps {
   address: string;
