@@ -8,6 +8,7 @@ import { styles } from "./styles.js";
 
 const SPINNER_SIZE = 34;
 
+// TODO: update styles
 export const LoginLoading = () => (
   <Stack sx={styles.wrapper}>
     <Stack sx={styles.container}>
