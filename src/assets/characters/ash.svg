@@ -22,7 +22,6 @@
   <path d="M190.976 96.3032H184.942V102.337H190.976V96.3032Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M197.009 96.3032H190.976V102.337H197.009V96.3032Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M203.043 96.3032H197.009V102.337H203.043V96.3032Z" fill="#FF8400" stroke="#FF8400"/>
-  <path d="M70.3025 102.337H64.2688V108.371H70.3025V102.337Z" fill="none" stroke="none"/>
   <path d="M76.3361 102.337H70.3025V108.371H76.3361V102.337Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M82.3699 102.337H76.3362V108.371H82.3699V102.337Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M88.4036 102.337H82.3699V108.371H88.4036V102.337Z" fill="#FF8400" stroke="#FF8400"/>
@@ -43,8 +42,6 @@
   <path d="M178.909 102.337H172.875V108.371H178.909V102.337Z" fill="#FFD500" stroke="#FFD500"/>
   <path d="M184.942 102.337H178.909V108.371H184.942V102.337Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M190.976 102.337H184.942V108.371H190.976V102.337Z" fill="#FF8400" stroke="#FF8400"/>
-  <path d="M197.009 102.337H190.976V108.371H197.009V102.337Z" fill="none" stroke="none"/>
-  <path d="M203.043 102.337H197.009V108.371H203.043V102.337Z" fill="none" stroke="none"/>
   <path d="M70.3025 108.371H64.2688V114.404H70.3025V108.371Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M76.3361 108.371H70.3025V114.404H76.3361V108.371Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M82.3699 108.371H76.3362V114.404H82.3699V108.371Z" fill="#FF8400" stroke="#FF8400"/>
@@ -67,7 +64,6 @@
   <path d="M184.942 108.371H178.909V114.404H184.942V108.371Z" fill="#FFD500" stroke="#FFD500"/>
   <path d="M190.976 108.371H184.942V114.404H190.976V108.371Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M197.009 108.371H190.976V114.404H197.009V108.371Z" fill="#FF8400" stroke="#FF8400"/>
-  <path d="M203.043 108.371H197.009V114.404H203.043V108.371Z" fill="none" stroke="none"/>
   <path d="M70.3025 78.2021H64.2688V84.2359H70.3025V78.2021Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M76.3361 78.2021H70.3025V84.2359H76.3361V78.2021Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M82.3699 78.2021H76.3362V84.2359H82.3699V78.2021Z" fill="#FF8400" stroke="#FF8400"/>
@@ -90,7 +86,6 @@
   <path d="M184.942 78.2021H178.909V84.2359H184.942V78.2021Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M190.976 78.2021H184.942V84.2359H190.976V78.2021Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M197.009 78.2021H190.976V84.2359H197.009V78.2021Z" fill="#FF8400" stroke="#FF8400"/>
-  <path d="M203.043 78.2021H197.009V84.2359H203.043V78.2021Z" fill="none" stroke="none"/>
   <path d="M70.3025 72.1685H64.2688V78.2022H70.3025V72.1685Z" fill="#FFD500" stroke="#FFD500"/>
   <path d="M76.3361 72.1685H70.3025V78.2022H76.3361V72.1685Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M82.3699 72.1685H76.3362V78.2022H82.3699V72.1685Z" fill="#FF8400" stroke="#FF8400"/>
@@ -112,8 +107,6 @@
   <path d="M178.909 72.1685H172.875V78.2022H178.909V72.1685Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M184.942 72.1685H178.909V78.2022H184.942V72.1685Z" fill="#FFD500" stroke="#FFD500"/>
   <path d="M190.976 72.1685H184.942V78.2022H190.976V72.1685Z" fill="#FFD500" stroke="#FFD500"/>
-  <path d="M197.009 72.1685H190.976V78.2022H197.009V72.1685Z" fill="none" stroke="none"/>
-  <path d="M203.043 72.1685H197.009V78.2022H203.043V72.1685Z" fill="none" stroke="none"/>
   <path d="M70.3025 84.2358H64.2688V90.2695H70.3025V84.2358Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M76.3361 84.2358H70.3025V90.2695H76.3361V84.2358Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M82.3699 84.2358H76.3362V90.2695H82.3699V84.2358Z" fill="#FFD500" stroke="#FFD500"/>
@@ -159,7 +152,6 @@
   <path d="M184.942 90.2695H178.909V96.3032H184.942V90.2695Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M190.976 90.2695H184.942V96.3032H190.976V90.2695Z" fill="#FFD500" stroke="#FFD500"/>
   <path d="M197.009 90.2695H190.976V96.3032H197.009V90.2695Z" fill="#FF8400" stroke="#FF8400"/>
-  <path d="M203.043 90.2695H197.009V96.3032H203.043V90.2695Z" fill="none" stroke="none"/>
   <path d="M70.3025 114.404H64.2688V120.438H70.3025V114.404Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M76.3361 114.404H70.3025V120.438H76.3361V114.404Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M82.3699 114.404H76.3362V120.438H82.3699V114.404Z" fill="#FF8400" stroke="#FF8400"/>
@@ -182,9 +174,6 @@
   <path d="M184.942 114.404H178.909V120.438H184.942V114.404Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M190.976 114.404H184.942V120.438H190.976V114.404Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M197.009 114.404H190.976V120.438H197.009V114.404Z" fill="#FF8400" stroke="#FF8400"/>
-  <path d="M203.043 114.404H197.009V120.438H203.043V114.404Z" fill="none" stroke="none"/>
-  <path d="M70.3025 120.438H64.2688V126.472H70.3025V120.438Z" fill="none" stroke="none"/>
-  <path d="M76.3361 120.438H70.3025V126.472H76.3361V120.438Z" fill="none" stroke="none"/>
   <path d="M82.3699 120.438H76.3362V126.472H82.3699V120.438Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M88.4036 120.438H82.3699V126.472H88.4036V120.438Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M94.4372 120.438H88.4036V126.472H94.4372V120.438Z" fill="#FF8400" stroke="#FF8400"/>
@@ -204,9 +193,6 @@
   <path d="M178.909 120.438H172.875V126.472H178.909V120.438Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M184.942 120.438H178.909V126.472H184.942V120.438Z" fill="#FFD500" stroke="#FFD500"/>
   <path d="M190.976 120.438H184.942V126.472H190.976V120.438Z" fill="#FF8400" stroke="#FF8400"/>
-  <path d="M197.009 120.438H190.976V126.472H197.009V120.438Z" fill="none" stroke="none"/>
-  <path d="M203.043 120.438H197.009V126.472H203.043V120.438Z" fill="none" stroke="none"/>
-  <path d="M70.3025 126.471H64.2688V132.505H70.3025V126.471Z" fill="none" stroke="none"/>
   <path d="M76.3361 126.471H70.3025V132.505H76.3361V126.471Z" fill="#FFD500" stroke="#FFD500"/>
   <path d="M82.3699 126.471H76.3362V132.505H82.3699V126.471Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M88.4036 126.471H82.3699V132.505H88.4036V126.471Z" fill="#FF8400" stroke="#FF8400"/>
@@ -228,31 +214,25 @@
   <path d="M184.942 126.471H178.909V132.505H184.942V126.471Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M190.976 126.471H184.942V132.505H190.976V126.471Z" fill="#FFD500" stroke="#FFD500"/>
   <path d="M197.009 126.471H190.976V132.505H197.009V126.471Z" fill="#FFD500" stroke="#FFD500"/>
-  <path d="M203.043 126.471H197.009V132.505H203.043V126.471Z" fill="none" stroke="none"/>
   <path d="M70.3025 132.505H64.2688V138.539H70.3025V132.505Z" fill="#FFD500" stroke="#FFD500"/>
   <path d="M76.3361 132.505H70.3025V138.539H76.3361V132.505Z" fill="#FFD500" stroke="#FFD500"/>
-  <path d="M82.3699 132.505H76.3362V138.539H82.3699V132.505Z" fill="none" stroke="none"/>
   <path d="M88.4036 132.505H82.3699V138.539H88.4036V132.505Z" fill="#FFBAF9" stroke="#FFBAF9"/>
   <path d="M94.4372 132.505H88.4036V138.539H94.4372V132.505Z" fill="#F91C86" stroke="#F91C86"/>
   <path d="M100.47 132.505H94.4368V138.539H100.47V132.505Z" fill="#FFBAF9" stroke="#FFBAF9"/>
   <path d="M106.505 132.505H100.471V138.539H106.505V132.505Z" fill="#F5F5F5" stroke="#F5F5F5"/>
-  <path d="M112.538 132.505H106.505V138.539H112.538V132.505Z" fill="none" stroke="none"/>
+  <path d="M112.538 132.505H106.505V138.539H112.538V132.505Z" fill="black" stroke="black"/>
   <path d="M124.606 132.505H118.572V138.539H124.606V132.505Z" fill="#F5F5F5" stroke="#F5F5F5"/>
   <path d="M130.639 132.505H124.605V138.539H130.639V132.505Z" fill="#FFBAF9" stroke="#FFBAF9"/>
   <path d="M136.673 132.505H130.639V138.539H136.673V132.505Z" fill="#F91C86" stroke="#F91C86"/>
   <path d="M142.706 132.505H136.673V138.539H142.706V132.505Z" fill="#FFBAF9" stroke="#FFBAF9"/>
   <path d="M148.741 132.505H142.707V138.539H148.741V132.505Z" fill="#F5F5F5" stroke="#F5F5F5"/>
-  <path d="M154.774 132.505H148.74V138.539H154.774V132.505Z" fill="none" stroke="none"/>
+  <path d="M154.774 132.505H148.74V138.539H154.774V132.505Z" fill="black" stroke="black"/>
   <path d="M166.841 132.505H160.808V138.539H166.841V132.505Z" fill="#F5F5F5" stroke="#F5F5F5"/>
   <path d="M172.875 132.505H166.841V138.539H172.875V132.505Z" fill="#FFBAF9" stroke="#FFBAF9"/>
   <path d="M178.909 132.505H172.875V138.539H178.909V132.505Z" fill="#F91C86" stroke="#F91C86"/>
   <path d="M184.942 132.505H178.909V138.539H184.942V132.505Z" fill="#FFBAF9" stroke="#FFBAF9"/>
-  <path d="M190.976 132.505H184.942V138.539H190.976V132.505Z" fill="none" stroke="none"/>
   <path d="M197.009 132.505H190.976V138.539H197.009V132.505Z" fill="#FFD500" stroke="#FFD500"/>
   <path d="M203.043 132.505H197.009V138.539H203.043V132.505Z" fill="#FFD500" stroke="#FFD500"/>
-  <path d="M70.3025 138.539H64.2688V144.572H70.3025V138.539Z" fill="none" stroke="none"/>
-  <path d="M76.3361 138.539H70.3025V144.572H76.3361V138.539Z" fill="none" stroke="none"/>
-  <path d="M82.3699 138.539H76.3362V144.572H82.3699V138.539Z" fill="none" stroke="none"/>
   <path d="M88.4036 138.539H82.3699V144.572H88.4036V138.539Z" fill="#FFBAF9" stroke="#FFBAF9"/>
   <path d="M94.4372 138.539H88.4036V144.572H94.4372V138.539Z" fill="#F91C86" stroke="#F91C86"/>
   <path d="M100.47 138.539H94.4368V144.572H100.47V138.539Z" fill="#FFBAF9" stroke="#FFBAF9"/>
@@ -270,12 +250,7 @@
   <path d="M172.875 138.539H166.841V144.572H172.875V138.539Z" fill="#FFBAF9" stroke="#FFBAF9"/>
   <path d="M178.909 138.539H172.875V144.572H178.909V138.539Z" fill="#F91C86" stroke="#F91C86"/>
   <path d="M184.942 138.539H178.909V144.572H184.942V138.539Z" fill="#FFBAF9" stroke="#FFBAF9"/>
-  <path d="M190.976 138.539H184.942V144.572H190.976V138.539Z" fill="none" stroke="none"/>
-  <path d="M197.009 138.539H190.976V144.572H197.009V138.539Z" fill="none" stroke="none"/>
   <path d="M203.043 138.539H197.009V144.572H203.043V138.539Z" fill="#FFD500" stroke="#FFD500"/>
-  <path d="M70.3025 144.572H64.2688V150.606H70.3025V144.572Z" fill="none" stroke="none"/>
-  <path d="M76.3361 144.572H70.3025V150.606H76.3361V144.572Z" fill="none" stroke="none"/>
-  <path d="M82.3699 144.572H76.3362V150.606H82.3699V144.572Z" fill="none" stroke="none"/>
   <path d="M88.4036 144.572H82.3699V150.606H88.4036V144.572Z" fill="#FFBAF9" stroke="#FFBAF9"/>
   <path d="M94.4372 144.572H88.4036V150.606H94.4372V144.572Z" fill="#F91C86" stroke="#F91C86"/>
   <path d="M100.47 144.572H94.4368V150.606H100.47V144.572Z" fill="#FFBAF9" stroke="#FFBAF9"/>
@@ -293,11 +268,6 @@
   <path d="M172.875 144.572H166.841V150.606H172.875V144.572Z" fill="#FFBAF9" stroke="#FFBAF9"/>
   <path d="M178.909 144.572H172.875V150.606H178.909V144.572Z" fill="#F91C86" stroke="#F91C86"/>
   <path d="M184.942 144.572H178.909V150.606H184.942V144.572Z" fill="#FFBAF9" stroke="#FFBAF9"/>
-  <path d="M190.976 144.572H184.942V150.606H190.976V144.572Z" fill="none" stroke="none"/>
-  <path d="M197.009 144.572H190.976V150.606H197.009V144.572Z" fill="none" stroke="none"/>
-  <path d="M203.043 144.572H197.009V150.606H203.043V144.572Z" fill="none" stroke="none"/>
-  <path d="M70.3025 150.606H64.2688V156.64H70.3025V150.606Z" fill="none" stroke="none"/>
-  <path d="M76.3361 150.606H70.3025V156.64H76.3361V150.606Z" fill="none" stroke="none"/>
   <path d="M82.3699 150.606H76.3362V156.64H82.3699V150.606Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M88.4036 150.606H82.3699V156.64H88.4036V150.606Z" fill="#FFBAF9" stroke="#FFBAF9"/>
   <path d="M94.4372 150.606H88.4036V156.64H94.4372V150.606Z" fill="#F91C86" stroke="#F91C86"/>
@@ -317,10 +287,6 @@
   <path d="M178.909 150.606H172.875V156.64H178.909V150.606Z" fill="#F91C86" stroke="#F91C86"/>
   <path d="M184.942 150.606H178.909V156.64H184.942V150.606Z" fill="#FFBAF9" stroke="#FFBAF9"/>
   <path d="M190.976 150.606H184.942V156.64H190.976V150.606Z" fill="#FF8400" stroke="#FF8400"/>
-  <path d="M197.009 150.606H190.976V156.64H197.009V150.606Z" fill="none" stroke="none"/>
-  <path d="M203.043 150.606H197.009V156.64H203.043V150.606Z" fill="none" stroke="none"/>
-  <path d="M70.3025 156.639H64.2688V162.673H70.3025V156.639Z" fill="none" stroke="none"/>
-  <path d="M76.3361 156.639H70.3025V162.673H76.3361V156.639Z" fill="none" stroke="none"/>
   <path d="M82.3699 156.639H76.3362V162.673H82.3699V156.639Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M88.4036 156.639H82.3699V162.673H88.4036V156.639Z" fill="#F5F5F5" stroke="#F5F5F5"/>
   <path d="M94.4372 156.639H88.4036V162.673H94.4372V156.639Z" fill="#F91C86" stroke="#F91C86"/>
@@ -340,10 +306,6 @@
   <path d="M178.909 156.639H172.875V162.673H178.909V156.639Z" fill="#F91C86" stroke="#F91C86"/>
   <path d="M184.942 156.639H178.909V162.673H184.942V156.639Z" fill="#F5F5F5" stroke="#F5F5F5"/>
   <path d="M190.976 156.639H184.942V162.673H190.976V156.639Z" fill="#FF8400" stroke="#FF8400"/>
-  <path d="M197.009 156.639H190.976V162.673H197.009V156.639Z" fill="none" stroke="none"/>
-  <path d="M203.043 156.639H197.009V162.673H203.043V156.639Z" fill="none" stroke="none"/>
-  <path d="M70.3025 162.673H64.2688V168.707H70.3025V162.673Z" fill="none" stroke="none"/>
-  <path d="M76.3361 162.673H70.3025V168.707H76.3361V162.673Z" fill="none" stroke="none"/>
   <path d="M82.3699 162.673H76.3362V168.707H82.3699V162.673Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M88.4036 162.673H82.3699V168.707H88.4036V162.673Z" fill="#5A0038" stroke="#5A0038"/>
   <path d="M94.4372 162.673H88.4036V168.707H94.4372V162.673Z" fill="#5A0038" stroke="#5A0038"/>
@@ -363,10 +325,6 @@
   <path d="M178.909 162.673H172.875V168.707H178.909V162.673Z" fill="#5A0038" stroke="#5A0038"/>
   <path d="M184.942 162.673H178.909V168.707H184.942V162.673Z" fill="#5A0038" stroke="#5A0038"/>
   <path d="M190.976 162.673H184.942V168.707H190.976V162.673Z" fill="#FF8400" stroke="#FF8400"/>
-  <path d="M197.009 162.673H190.976V168.707H197.009V162.673Z" fill="none" stroke="none"/>
-  <path d="M203.043 162.673H197.009V168.707H203.043V162.673Z" fill="none" stroke="none"/>
-  <path d="M70.3025 168.707H64.2688V174.741H70.3025V168.707Z" fill="none" stroke="none"/>
-  <path d="M76.3361 168.707H70.3025V174.741H76.3361V168.707Z" fill="none" stroke="none"/>
   <path d="M82.3699 168.707H76.3362V174.741H82.3699V168.707Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M88.4036 168.707H82.3699V174.741H88.4036V168.707Z" fill="#FFD500" stroke="#FFD500"/>
   <path d="M94.4372 168.707H88.4036V174.741H94.4372V168.707Z" fill="#FF8400" stroke="#FF8400"/>
@@ -386,9 +344,6 @@
   <path d="M178.909 168.707H172.875V174.741H178.909V168.707Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M184.942 168.707H178.909V174.741H184.942V168.707Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M190.976 168.707H184.942V174.741H190.976V168.707Z" fill="#FF8400" stroke="#FF8400"/>
-  <path d="M197.009 168.707H190.976V174.741H197.009V168.707Z" fill="none" stroke="none"/>
-  <path d="M203.043 168.707H197.009V174.741H203.043V168.707Z" fill="none" stroke="none"/>
-  <path d="M70.3025 174.741H64.2688V180.774H70.3025V174.741Z" fill="none" stroke="none"/>
   <path d="M76.3361 174.741H70.3025V180.774H76.3361V174.741Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M82.3699 174.741H76.3362V180.774H82.3699V174.741Z" fill="#FFD500" stroke="#FFD500"/>
   <path d="M88.4036 174.741H82.3699V180.774H88.4036V174.741Z" fill="#FF8400" stroke="#FF8400"/>
@@ -409,9 +364,6 @@
   <path d="M178.909 174.741H172.875V180.774H178.909V174.741Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M184.942 174.741H178.909V180.774H184.942V174.741Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M190.976 174.741H184.942V180.774H190.976V174.741Z" fill="#FF8400" stroke="#FF8400"/>
-  <path d="M197.009 174.741H190.976V180.774H197.009V174.741Z" fill="none" stroke="none"/>
-  <path d="M203.043 174.741H197.009V180.774H203.043V174.741Z" fill="none" stroke="none"/>
-  <path d="M70.3025 180.774H64.2688V186.808H70.3025V180.774Z" fill="none" stroke="none"/>
   <path d="M76.3361 180.774H70.3025V186.808H76.3361V180.774Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M82.3699 180.774H76.3362V186.808H82.3699V180.774Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M88.4036 180.774H82.3699V186.808H88.4036V180.774Z" fill="#FF8400" stroke="#FF8400"/>
@@ -433,7 +385,6 @@
   <path d="M184.942 180.774H178.909V186.808H184.942V180.774Z" fill="#FFD500" stroke="#FFD500"/>
   <path d="M190.976 180.774H184.942V186.808H190.976V180.774Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M197.009 180.774H190.976V186.808H197.009V180.774Z" fill="#FF8400" stroke="#FF8400"/>
-  <path d="M203.043 180.774H197.009V186.808H203.043V180.774Z" fill="none" stroke="none"/>
   <path d="M70.3025 186.808H64.2688V192.842H70.3025V186.808Z" fill="#FFD500" stroke="#FFD500"/>
   <path d="M76.3361 186.808H70.3025V192.842H76.3361V186.808Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M82.3699 186.808H76.3362V192.842H82.3699V186.808Z" fill="#FFD500" stroke="#FFD500"/>
@@ -495,7 +446,6 @@
   <path d="M190.976 198.875H184.942V204.909H190.976V198.875Z" fill="#FFD500" stroke="#FFD500"/>
   <path d="M197.009 198.875H190.976V204.909H197.009V198.875Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M203.043 198.875H197.009V204.909H203.043V198.875Z" fill="#FF8400" stroke="#FF8400"/>
-  <path d="M70.3025 204.909H64.2688V210.942H70.3025V204.909Z" fill="none" stroke="none"/>
   <path d="M76.3361 204.909H70.3025V210.942H76.3361V204.909Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M82.3699 204.909H76.3362V210.942H82.3699V204.909Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M88.4036 204.909H82.3699V210.942H88.4036V204.909Z" fill="#FFD500" stroke="#FFD500"/>
@@ -510,7 +460,6 @@
   <path d="M190.976 204.909H184.942V210.942H190.976V204.909Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M197.009 204.909H190.976V210.942H197.009V204.909Z" fill="#FFD500" stroke="#FFD500"/>
   <path d="M203.043 204.909H197.009V210.942H203.043V204.909Z" fill="#FF8400" stroke="#FF8400"/>
-  <path d="M70.3025 210.942H64.2688V216.976H70.3025V210.942Z" fill="none" stroke="none"/>
   <path d="M76.3361 210.942H70.3025V216.976H76.3361V210.942Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M82.3699 210.942H76.3362V216.976H82.3699V210.942Z" fill="#FFD500" stroke="#FFD500"/>
   <path d="M88.4036 210.942H82.3699V216.976H88.4036V210.942Z" fill="#FF8400" stroke="#FF8400"/>
@@ -527,7 +476,6 @@
   <path d="M190.976 210.942H184.942V216.976H190.976V210.942Z" fill="#FFD500" stroke="#FFD500"/>
   <path d="M197.009 210.942H190.976V216.976H197.009V210.942Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M203.043 210.942H197.009V216.976H203.043V210.942Z" fill="#FF8400" stroke="#FF8400"/>
-  <path d="M70.3025 216.976H64.2688V223.01H70.3025V216.976Z" fill="none" stroke="none"/>
   <path d="M76.3361 216.976H70.3025V223.01H76.3361V216.976Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M82.3699 216.976H76.3362V223.01H82.3699V216.976Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M88.4036 216.976H82.3699V223.01H88.4036V216.976Z" fill="#FF8400" stroke="#FF8400"/>
@@ -543,8 +491,6 @@
   <path d="M184.942 216.976H178.909V223.01H184.942V216.976Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M190.976 216.976H184.942V223.01H190.976V216.976Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M197.009 216.976H190.976V223.01H197.009V216.976Z" fill="#FF8400" stroke="#FF8400"/>
-  <path d="M203.043 216.976H197.009V223.01H203.043V216.976Z" fill="none" stroke="none"/>
-  <path d="M70.3025 223.01H64.2688V229.043H70.3025V223.01Z" fill="none" stroke="none"/>
   <path d="M76.3361 223.01H70.3025V229.043H76.3361V223.01Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M82.3699 223.01H76.3362V229.043H82.3699V223.01Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M88.4036 223.01H82.3699V229.043H88.4036V223.01Z" fill="#FF8400" stroke="#FF8400"/>
@@ -560,7 +506,6 @@
   <path d="M184.942 223.01H178.909V229.043H184.942V223.01Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M190.976 223.01H184.942V229.043H190.976V223.01Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M197.009 223.01H190.976V229.043H197.009V223.01Z" fill="#FF8400" stroke="#FF8400"/>
-  <path d="M203.043 223.01H197.009V229.043H203.043V223.01Z" fill="none" stroke="none"/>
   <path d="M118.572 229.043H112.538V235.077H118.572V229.043Z" fill="#FFBAF9" stroke="#FFBAF9"/>
   <path d="M124.606 229.043H118.572V235.077H124.606V229.043Z" fill="#FFBAF9" stroke="#FFBAF9"/>
   <path d="M130.639 229.043H124.605V235.077H130.639V229.043Z" fill="#FFBAF9" stroke="#FFBAF9"/>
@@ -590,384 +535,24 @@
   <path d="M130.639 253.178H124.605V259.212H130.639V253.178Z" fill="#FFBAF9" stroke="#FFBAF9"/>
   <path d="M136.673 253.178H130.639V259.212H136.673V253.178Z" fill="#78A2FF" stroke="#78A2FF"/>
   <path d="M142.706 253.178H136.673V259.212H142.706V253.178Z" fill="#FFBAF9" stroke="#FFBAF9"/>
-  <path d="M58.2356 96.3032H52.2019V102.337H58.2356V96.3032Z" fill="none" stroke="none"/>
   <path d="M64.2688 96.3032H58.2351V102.337H64.2688V96.3032Z" fill="#FFD500" stroke="#FFD500"/>
   <path d="M58.2356 102.337H52.2019V108.371H58.2356V102.337Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M64.2688 102.337H58.2351V108.371H64.2688V102.337Z" fill="#FF8400" stroke="#FF8400"/>
-  <path d="M58.2356 108.371H52.2019V114.404H58.2356V108.371Z" fill="none" stroke="none"/>
-  <path d="M64.2688 108.371H58.2351V114.404H64.2688V108.371Z" fill="none" stroke="none"/>
+<!--  <path d="M58.2356 108.371H52.2019V114.404H58.2356V108.371Z" fill="none" stroke="none"/>-->
+<!--  <path d="M64.2688 108.371H58.2351V114.404H64.2688V108.371Z" fill="none" stroke="none"/>-->
   <path d="M58.2356 78.2021H52.2019V84.2359H58.2356V78.2021Z" fill="#FFD500" stroke="#FFD500"/>
   <path d="M64.2688 78.2021H58.2351V84.2359H64.2688V78.2021Z" fill="#FFD500" stroke="#FFD500"/>
-  <path d="M58.2356 72.1685H52.2019V78.2022H58.2356V72.1685Z" fill="none" stroke="none"/>
   <path d="M64.2688 72.1685H58.2351V78.2022H64.2688V72.1685Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M58.2356 84.2358H52.2019V90.2695H58.2356V84.2358Z" fill="#FFD500" stroke="#FFD500"/>
   <path d="M64.2688 84.2358H58.2351V90.2695H64.2688V84.2358Z" fill="#FF8400" stroke="#FF8400"/>
-  <path d="M58.2356 90.2695H52.2019V96.3032H58.2356V90.2695Z" fill="none" stroke="none"/>
   <path d="M64.2688 90.2695H58.2351V96.3032H64.2688V90.2695Z" fill="#FF8400" stroke="#FF8400"/>
-  <path d="M58.2356 114.404H52.2019V120.438H58.2356V114.404Z" fill="none" stroke="none"/>
   <path d="M64.2688 114.404H58.2351V120.438H64.2688V114.404Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M58.2356 120.438H52.2019V126.472H58.2356V120.438Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M64.2688 120.438H58.2351V126.472H64.2688V120.438Z" fill="#FF8400" stroke="#FF8400"/>
-  <path d="M58.2356 126.471H52.2019V132.505H58.2356V126.471Z" fill="none" stroke="none"/>
-  <path d="M64.2688 126.471H58.2351V132.505H64.2688V126.471Z" fill="none" stroke="none"/>
-  <path d="M58.2356 132.505H52.2019V138.539H58.2356V132.505Z" fill="none" stroke="none"/>
-  <path d="M64.2688 132.505H58.2351V138.539H64.2688V132.505Z" fill="none" stroke="none"/>
-  <path d="M58.2356 138.539H52.2019V144.572H58.2356V138.539Z" fill="none" stroke="none"/>
   <path d="M64.2688 138.539H58.2351V144.572H64.2688V138.539Z" fill="#FFD500" stroke="#FFD500"/>
-  <path d="M58.2356 144.572H52.2019V150.606H58.2356V144.572Z" fill="none" stroke="none"/>
-  <path d="M64.2688 144.572H58.2351V150.606H64.2688V144.572Z" fill="none" stroke="none"/>
-  <path d="M58.2356 150.606H52.2019V156.64H58.2356V150.606Z" fill="none" stroke="none"/>
-  <path d="M64.2688 150.606H58.2351V156.64H64.2688V150.606Z" fill="none" stroke="none"/>
-  <path d="M58.2356 156.639H52.2019V162.673H58.2356V156.639Z" fill="none" stroke="none"/>
-  <path d="M64.2688 156.639H58.2351V162.673H64.2688V156.639Z" fill="none" stroke="none"/>
-  <path d="M58.2356 162.673H52.2019V168.707H58.2356V162.673Z" fill="none" stroke="none"/>
-  <path d="M64.2688 162.673H58.2351V168.707H64.2688V162.673Z" fill="none" stroke="none"/>
-  <path d="M58.2356 168.707H52.2019V174.741H58.2356V168.707Z" fill="none" stroke="none"/>
-  <path d="M64.2688 168.707H58.2351V174.741H64.2688V168.707Z" fill="none" stroke="none"/>
-  <path d="M58.2356 174.741H52.2019V180.774H58.2356V174.741Z" fill="none" stroke="none"/>
-  <path d="M64.2688 174.741H58.2351V180.774H64.2688V174.741Z" fill="none" stroke="none"/>
-  <path d="M58.2356 180.774H52.2019V186.808H58.2356V180.774Z" fill="none" stroke="none"/>
-  <path d="M64.2688 180.774H58.2351V186.808H64.2688V180.774Z" fill="none" stroke="none"/>
-  <path d="M58.2356 186.808H52.2019V192.842H58.2356V186.808Z" fill="none" stroke="none"/>
-  <path d="M64.2688 186.808H58.2351V192.842H64.2688V186.808Z" fill="none" stroke="none"/>
-  <path d="M58.2356 192.841H52.2019V198.875H58.2356V192.841Z" fill="none" stroke="none"/>
-  <path d="M64.2688 192.841H58.2351V198.875H64.2688V192.841Z" fill="none" stroke="none"/>
-  <path d="M58.2356 198.875H52.2019V204.909H58.2356V198.875Z" fill="none" stroke="none"/>
-  <path d="M64.2688 198.875H58.2351V204.909H64.2688V198.875Z" fill="none" stroke="none"/>
-  <path d="M58.2356 204.909H52.2019V210.942H58.2356V204.909Z" fill="none" stroke="none"/>
-  <path d="M64.2688 204.909H58.2351V210.942H64.2688V204.909Z" fill="none" stroke="none"/>
-  <path d="M58.2356 210.942H52.2019V216.976H58.2356V210.942Z" fill="none" stroke="none"/>
-  <path d="M64.2688 210.942H58.2351V216.976H64.2688V210.942Z" fill="none" stroke="none"/>
-  <path d="M58.2356 216.976H52.2019V223.01H58.2356V216.976Z" fill="none" stroke="none"/>
-  <path d="M64.2688 216.976H58.2351V223.01H64.2688V216.976Z" fill="none" stroke="none"/>
-  <path d="M58.2356 223.01H52.2019V229.043H58.2356V223.01Z" fill="none" stroke="none"/>
-  <path d="M64.2688 223.01H58.2351V229.043H64.2688V223.01Z" fill="none" stroke="none"/>
-  <path d="M46.1682 96.3032H40.1345V102.337H46.1682V96.3032Z" fill="none" stroke="none"/>
-  <path d="M52.2014 96.3032H46.1677V102.337H52.2014V96.3032Z" fill="none" stroke="none"/>
-  <path d="M46.1682 102.337H40.1345V108.371H46.1682V102.337Z" fill="none" stroke="none"/>
-  <path d="M52.2014 102.337H46.1677V108.371H52.2014V102.337Z" fill="none" stroke="none"/>
-  <path d="M46.1682 108.371H40.1345V114.404H46.1682V108.371Z" fill="none" stroke="none"/>
-  <path d="M52.2014 108.371H46.1677V114.404H52.2014V108.371Z" fill="none" stroke="none"/>
-  <path d="M46.1682 78.2021H40.1345V84.2359H46.1682V78.2021Z" fill="none" stroke="none"/>
-  <path d="M52.2014 78.2021H46.1677V84.2359H52.2014V78.2021Z" fill="none" stroke="none"/>
-  <path d="M46.1682 72.1685H40.1345V78.2022H46.1682V72.1685Z" fill="none" stroke="none"/>
-  <path d="M52.2014 72.1685H46.1677V78.2022H52.2014V72.1685Z" fill="none" stroke="none"/>
-  <path d="M46.1682 84.2358H40.1345V90.2695H46.1682V84.2358Z" fill="none" stroke="none"/>
   <path d="M52.2014 84.2358H46.1677V90.2695H52.2014V84.2358Z" fill="#FFD500" stroke="#FFD500"/>
-  <path d="M46.1682 90.2695H40.1345V96.3032H46.1682V90.2695Z" fill="none" stroke="none"/>
-  <path d="M52.2014 90.2695H46.1677V96.3032H52.2014V90.2695Z" fill="none" stroke="none"/>
-  <path d="M46.1682 114.404H40.1345V120.438H46.1682V114.404Z" fill="none" stroke="none"/>
-  <path d="M52.2014 114.404H46.1677V120.438H52.2014V114.404Z" fill="none" stroke="none"/>
-  <path d="M46.1682 120.438H40.1345V126.472H46.1682V120.438Z" fill="none" stroke="none"/>
-  <path d="M52.2014 120.438H46.1677V126.472H52.2014V120.438Z" fill="none" stroke="none"/>
-  <path d="M46.1682 126.471H40.1345V132.505H46.1682V126.471Z" fill="none" stroke="none"/>
-  <path d="M52.2014 126.471H46.1677V132.505H52.2014V126.471Z" fill="none" stroke="none"/>
-  <path d="M46.1682 132.505H40.1345V138.539H46.1682V132.505Z" fill="none" stroke="none"/>
-  <path d="M52.2014 132.505H46.1677V138.539H52.2014V132.505Z" fill="none" stroke="none"/>
-  <path d="M46.1682 138.539H40.1345V144.572H46.1682V138.539Z" fill="none" stroke="none"/>
-  <path d="M52.2014 138.539H46.1677V144.572H52.2014V138.539Z" fill="none" stroke="none"/>
-  <path d="M46.1682 144.572H40.1345V150.606H46.1682V144.572Z" fill="none" stroke="none"/>
-  <path d="M52.2014 144.572H46.1677V150.606H52.2014V144.572Z" fill="none" stroke="none"/>
-  <path d="M46.1682 150.606H40.1345V156.64H46.1682V150.606Z" fill="none" stroke="none"/>
-  <path d="M52.2014 150.606H46.1677V156.64H52.2014V150.606Z" fill="none" stroke="none"/>
-  <path d="M46.1682 156.639H40.1345V162.673H46.1682V156.639Z" fill="none" stroke="none"/>
-  <path d="M52.2014 156.639H46.1677V162.673H52.2014V156.639Z" fill="none" stroke="none"/>
-  <path d="M46.1682 162.673H40.1345V168.707H46.1682V162.673Z" fill="none" stroke="none"/>
-  <path d="M52.2014 162.673H46.1677V168.707H52.2014V162.673Z" fill="none" stroke="none"/>
-  <path d="M46.1682 168.707H40.1345V174.741H46.1682V168.707Z" fill="none" stroke="none"/>
-  <path d="M52.2014 168.707H46.1677V174.741H52.2014V168.707Z" fill="none" stroke="none"/>
-  <path d="M46.1682 174.741H40.1345V180.774H46.1682V174.741Z" fill="none" stroke="none"/>
-  <path d="M52.2014 174.741H46.1677V180.774H52.2014V174.741Z" fill="none" stroke="none"/>
-  <path d="M46.1682 180.774H40.1345V186.808H46.1682V180.774Z" fill="none" stroke="none"/>
-  <path d="M52.2014 180.774H46.1677V186.808H52.2014V180.774Z" fill="none" stroke="none"/>
-  <path d="M46.1682 186.808H40.1345V192.842H46.1682V186.808Z" fill="none" stroke="none"/>
-  <path d="M52.2014 186.808H46.1677V192.842H52.2014V186.808Z" fill="none" stroke="none"/>
-  <path d="M46.1682 192.841H40.1345V198.875H46.1682V192.841Z" fill="none" stroke="none"/>
-  <path d="M52.2014 192.841H46.1677V198.875H52.2014V192.841Z" fill="none" stroke="none"/>
-  <path d="M46.1682 198.875H40.1345V204.909H46.1682V198.875Z" fill="none" stroke="none"/>
-  <path d="M52.2014 198.875H46.1677V204.909H52.2014V198.875Z" fill="none" stroke="none"/>
-  <path d="M46.1682 204.909H40.1345V210.942H46.1682V204.909Z" fill="none" stroke="none"/>
-  <path d="M52.2014 204.909H46.1677V210.942H52.2014V204.909Z" fill="none" stroke="none"/>
-  <path d="M46.1682 210.942H40.1345V216.976H46.1682V210.942Z" fill="none" stroke="none"/>
-  <path d="M52.2014 210.942H46.1677V216.976H52.2014V210.942Z" fill="none" stroke="none"/>
-  <path d="M46.1682 216.976H40.1345V223.01H46.1682V216.976Z" fill="none" stroke="none"/>
-  <path d="M52.2014 216.976H46.1677V223.01H52.2014V216.976Z" fill="none" stroke="none"/>
-  <path d="M46.1682 223.01H40.1345V229.043H46.1682V223.01Z" fill="none" stroke="none"/>
-  <path d="M52.2014 223.01H46.1677V229.043H52.2014V223.01Z" fill="none" stroke="none"/>
-  <path d="M34.1009 96.3032H28.0671V102.337H34.1009V96.3032Z" fill="none" stroke="none"/>
-  <path d="M40.1345 96.3032H34.1008V102.337H40.1345V96.3032Z" fill="none" stroke="none"/>
-  <path d="M34.1009 102.337H28.0671V108.371H34.1009V102.337Z" fill="none" stroke="none"/>
-  <path d="M40.1345 102.337H34.1008V108.371H40.1345V102.337Z" fill="none" stroke="none"/>
-  <path d="M34.1009 108.371H28.0671V114.404H34.1009V108.371Z" fill="none" stroke="none"/>
-  <path d="M40.1345 108.371H34.1008V114.404H40.1345V108.371Z" fill="none" stroke="none"/>
-  <path d="M34.1009 78.2021H28.0671V84.2359H34.1009V78.2021Z" fill="none" stroke="none"/>
-  <path d="M40.1345 78.2021H34.1008V84.2359H40.1345V78.2021Z" fill="none" stroke="none"/>
-  <path d="M34.1009 72.1685H28.0671V78.2022H34.1009V72.1685Z" fill="none" stroke="none"/>
-  <path d="M40.1345 72.1685H34.1008V78.2022H40.1345V72.1685Z" fill="none" stroke="none"/>
-  <path d="M34.1009 84.2358H28.0671V90.2695H34.1009V84.2358Z" fill="none" stroke="none"/>
-  <path d="M40.1345 84.2358H34.1008V90.2695H40.1345V84.2358Z" fill="none" stroke="none"/>
-  <path d="M34.1009 90.2695H28.0671V96.3032H34.1009V90.2695Z" fill="none" stroke="none"/>
-  <path d="M40.1345 90.2695H34.1008V96.3032H40.1345V90.2695Z" fill="none" stroke="none"/>
-  <path d="M34.1009 114.404H28.0671V120.438H34.1009V114.404Z" fill="none" stroke="none"/>
-  <path d="M40.1345 114.404H34.1008V120.438H40.1345V114.404Z" fill="none" stroke="none"/>
-  <path d="M34.1009 120.438H28.0671V126.472H34.1009V120.438Z" fill="none" stroke="none"/>
-  <path d="M40.1345 120.438H34.1008V126.472H40.1345V120.438Z" fill="none" stroke="none"/>
-  <path d="M34.1009 126.471H28.0671V132.505H34.1009V126.471Z" fill="none" stroke="none"/>
-  <path d="M40.1345 126.471H34.1008V132.505H40.1345V126.471Z" fill="none" stroke="none"/>
-  <path d="M34.1009 132.505H28.0671V138.539H34.1009V132.505Z" fill="none" stroke="none"/>
-  <path d="M40.1345 132.505H34.1008V138.539H40.1345V132.505Z" fill="none" stroke="none"/>
-  <path d="M34.1009 138.539H28.0671V144.572H34.1009V138.539Z" fill="none" stroke="none"/>
-  <path d="M40.1345 138.539H34.1008V144.572H40.1345V138.539Z" fill="none" stroke="none"/>
-  <path d="M34.1009 144.572H28.0671V150.606H34.1009V144.572Z" fill="none" stroke="none"/>
-  <path d="M40.1345 144.572H34.1008V150.606H40.1345V144.572Z" fill="none" stroke="none"/>
-  <path d="M34.1009 150.606H28.0671V156.64H34.1009V150.606Z" fill="none" stroke="none"/>
-  <path d="M40.1345 150.606H34.1008V156.64H40.1345V150.606Z" fill="none" stroke="none"/>
-  <path d="M34.1009 156.639H28.0671V162.673H34.1009V156.639Z" fill="none" stroke="none"/>
-  <path d="M40.1345 156.639H34.1008V162.673H40.1345V156.639Z" fill="none" stroke="none"/>
-  <path d="M34.1009 162.673H28.0671V168.707H34.1009V162.673Z" fill="none" stroke="none"/>
-  <path d="M40.1345 162.673H34.1008V168.707H40.1345V162.673Z" fill="none" stroke="none"/>
-  <path d="M34.1009 168.707H28.0671V174.741H34.1009V168.707Z" fill="none" stroke="none"/>
-  <path d="M40.1345 168.707H34.1008V174.741H40.1345V168.707Z" fill="none" stroke="none"/>
-  <path d="M34.1009 174.741H28.0671V180.774H34.1009V174.741Z" fill="none" stroke="none"/>
-  <path d="M40.1345 174.741H34.1008V180.774H40.1345V174.741Z" fill="none" stroke="none"/>
-  <path d="M34.1009 180.774H28.0671V186.808H34.1009V180.774Z" fill="none" stroke="none"/>
-  <path d="M40.1345 180.774H34.1008V186.808H40.1345V180.774Z" fill="none" stroke="none"/>
-  <path d="M34.1009 186.808H28.0671V192.842H34.1009V186.808Z" fill="none" stroke="none"/>
-  <path d="M40.1345 186.808H34.1008V192.842H40.1345V186.808Z" fill="none" stroke="none"/>
-  <path d="M34.1009 192.841H28.0671V198.875H34.1009V192.841Z" fill="none" stroke="none"/>
-  <path d="M40.1345 192.841H34.1008V198.875H40.1345V192.841Z" fill="none" stroke="none"/>
-  <path d="M34.1009 198.875H28.0671V204.909H34.1009V198.875Z" fill="none" stroke="none"/>
-  <path d="M40.1345 198.875H34.1008V204.909H40.1345V198.875Z" fill="none" stroke="none"/>
-  <path d="M34.1009 204.909H28.0671V210.942H34.1009V204.909Z" fill="none" stroke="none"/>
-  <path d="M40.1345 204.909H34.1008V210.942H40.1345V204.909Z" fill="none" stroke="none"/>
-  <path d="M34.1009 210.942H28.0671V216.976H34.1009V210.942Z" fill="none" stroke="none"/>
-  <path d="M40.1345 210.942H34.1008V216.976H40.1345V210.942Z" fill="none" stroke="none"/>
-  <path d="M34.1009 216.976H28.0671V223.01H34.1009V216.976Z" fill="none" stroke="none"/>
-  <path d="M40.1345 216.976H34.1008V223.01H40.1345V216.976Z" fill="none" stroke="none"/>
-  <path d="M34.1009 223.01H28.0671V229.043H34.1009V223.01Z" fill="none" stroke="none"/>
-  <path d="M40.1345 223.01H34.1008V229.043H40.1345V223.01Z" fill="none" stroke="none"/>
-  <path d="M22.0335 96.3032H15.9998V102.337H22.0335V96.3032Z" fill="none" stroke="none"/>
-  <path d="M28.0671 96.3032H22.0334V102.337H28.0671V96.3032Z" fill="none" stroke="none"/>
-  <path d="M22.0335 102.337H15.9998V108.371H22.0335V102.337Z" fill="none" stroke="none"/>
-  <path d="M28.0671 102.337H22.0334V108.371H28.0671V102.337Z" fill="none" stroke="none"/>
-  <path d="M22.0335 108.371H15.9998V114.404H22.0335V108.371Z" fill="none" stroke="none"/>
-  <path d="M28.0671 108.371H22.0334V114.404H28.0671V108.371Z" fill="none" stroke="none"/>
-  <path d="M22.0335 78.2021H15.9998V84.2359H22.0335V78.2021Z" fill="none" stroke="none"/>
-  <path d="M28.0671 78.2021H22.0334V84.2359H28.0671V78.2021Z" fill="none" stroke="none"/>
-  <path d="M22.0335 72.1685H15.9998V78.2022H22.0335V72.1685Z" fill="none" stroke="none"/>
-  <path d="M28.0671 72.1685H22.0334V78.2022H28.0671V72.1685Z" fill="none" stroke="none"/>
-  <path d="M22.0335 84.2358H15.9998V90.2695H22.0335V84.2358Z" fill="none" stroke="none"/>
-  <path d="M28.0671 84.2358H22.0334V90.2695H28.0671V84.2358Z" fill="none" stroke="none"/>
-  <path d="M22.0335 90.2695H15.9998V96.3032H22.0335V90.2695Z" fill="none" stroke="none"/>
-  <path d="M28.0671 90.2695H22.0334V96.3032H28.0671V90.2695Z" fill="none" stroke="none"/>
-  <path d="M22.0335 114.404H15.9998V120.438H22.0335V114.404Z" fill="none" stroke="none"/>
-  <path d="M28.0671 114.404H22.0334V120.438H28.0671V114.404Z" fill="none" stroke="none"/>
-  <path d="M22.0335 120.438H15.9998V126.472H22.0335V120.438Z" fill="none" stroke="none"/>
-  <path d="M28.0671 120.438H22.0334V126.472H28.0671V120.438Z" fill="none" stroke="none"/>
-  <path d="M22.0335 126.471H15.9998V132.505H22.0335V126.471Z" fill="none" stroke="none"/>
-  <path d="M28.0671 126.471H22.0334V132.505H28.0671V126.471Z" fill="none" stroke="none"/>
-  <path d="M22.0335 132.505H15.9998V138.539H22.0335V132.505Z" fill="none" stroke="none"/>
-  <path d="M28.0671 132.505H22.0334V138.539H28.0671V132.505Z" fill="none" stroke="none"/>
-  <path d="M22.0335 138.539H15.9998V144.572H22.0335V138.539Z" fill="none" stroke="none"/>
-  <path d="M28.0671 138.539H22.0334V144.572H28.0671V138.539Z" fill="none" stroke="none"/>
-  <path d="M22.0335 144.572H15.9998V150.606H22.0335V144.572Z" fill="none" stroke="none"/>
-  <path d="M28.0671 144.572H22.0334V150.606H28.0671V144.572Z" fill="none" stroke="none"/>
-  <path d="M22.0335 150.606H15.9998V156.64H22.0335V150.606Z" fill="none" stroke="none"/>
-  <path d="M28.0671 150.606H22.0334V156.64H28.0671V150.606Z" fill="none" stroke="none"/>
-  <path d="M22.0335 156.639H15.9998V162.673H22.0335V156.639Z" fill="none" stroke="none"/>
-  <path d="M28.0671 156.639H22.0334V162.673H28.0671V156.639Z" fill="none" stroke="none"/>
-  <path d="M22.0335 162.673H15.9998V168.707H22.0335V162.673Z" fill="none" stroke="none"/>
-  <path d="M28.0671 162.673H22.0334V168.707H28.0671V162.673Z" fill="none" stroke="none"/>
-  <path d="M22.0335 168.707H15.9998V174.741H22.0335V168.707Z" fill="none" stroke="none"/>
-  <path d="M28.0671 168.707H22.0334V174.741H28.0671V168.707Z" fill="none" stroke="none"/>
-  <path d="M22.0335 174.741H15.9998V180.774H22.0335V174.741Z" fill="none" stroke="none"/>
-  <path d="M28.0671 174.741H22.0334V180.774H28.0671V174.741Z" fill="none" stroke="none"/>
-  <path d="M22.0335 180.774H15.9998V186.808H22.0335V180.774Z" fill="none" stroke="none"/>
-  <path d="M28.0671 180.774H22.0334V186.808H28.0671V180.774Z" fill="none" stroke="none"/>
-  <path d="M22.0335 186.808H15.9998V192.842H22.0335V186.808Z" fill="none" stroke="none"/>
-  <path d="M28.0671 186.808H22.0334V192.842H28.0671V186.808Z" fill="none" stroke="none"/>
-  <path d="M22.0335 192.841H15.9998V198.875H22.0335V192.841Z" fill="none" stroke="none"/>
-  <path d="M28.0671 192.841H22.0334V198.875H28.0671V192.841Z" fill="none" stroke="none"/>
-  <path d="M22.0335 198.875H15.9998V204.909H22.0335V198.875Z" fill="none" stroke="none"/>
-  <path d="M28.0671 198.875H22.0334V204.909H28.0671V198.875Z" fill="none" stroke="none"/>
-  <path d="M22.0335 204.909H15.9998V210.942H22.0335V204.909Z" fill="none" stroke="none"/>
-  <path d="M28.0671 204.909H22.0334V210.942H28.0671V204.909Z" fill="none" stroke="none"/>
-  <path d="M22.0335 210.942H15.9998V216.976H22.0335V210.942Z" fill="none" stroke="none"/>
-  <path d="M28.0671 210.942H22.0334V216.976H28.0671V210.942Z" fill="none" stroke="none"/>
-  <path d="M22.0335 216.976H15.9998V223.01H22.0335V216.976Z" fill="none" stroke="none"/>
-  <path d="M28.0671 216.976H22.0334V223.01H28.0671V216.976Z" fill="none" stroke="none"/>
-  <path d="M22.0335 223.01H15.9998V229.043H22.0335V223.01Z" fill="none" stroke="none"/>
-  <path d="M28.0671 223.01H22.0334V229.043H28.0671V223.01Z" fill="none" stroke="none"/>
-  <path d="M22.0335 229.043H15.9998V235.077H22.0335V229.043Z" fill="none" stroke="none"/>
-  <path d="M28.0671 229.043H22.0334V235.077H28.0671V229.043Z" fill="none" stroke="none"/>
-  <path d="M22.0335 235.077H15.9998V241.11H22.0335V235.077Z" fill="none" stroke="none"/>
   <path d="M136.673 259.211H130.639V265.245H136.673V259.211Z" fill="#F5F5F5" stroke="#F5F5F5"/>
   <path d="M209.077 96.3032H203.043V102.337H209.077V96.3032Z" fill="#FF8400" stroke="#FF8400"/>
-  <path d="M215.11 96.3032H209.077V102.337H215.11V96.3032Z" fill="none" stroke="none"/>
-  <path d="M209.077 102.337H203.043V108.371H209.077V102.337Z" fill="none" stroke="none"/>
-  <path d="M215.11 102.337H209.077V108.371H215.11V102.337Z" fill="none" stroke="none"/>
-  <path d="M209.077 108.371H203.043V114.404H209.077V108.371Z" fill="none" stroke="none"/>
-  <path d="M215.11 108.371H209.077V114.404H215.11V108.371Z" fill="none" stroke="none"/>
-  <path d="M209.077 78.2021H203.043V84.2359H209.077V78.2021Z" fill="none" stroke="none"/>
-  <path d="M215.11 78.2021H209.077V84.2359H215.11V78.2021Z" fill="none" stroke="none"/>
-  <path d="M209.077 72.1685H203.043V78.2022H209.077V72.1685Z" fill="none" stroke="none"/>
-  <path d="M215.11 72.1685H209.077V78.2022H215.11V72.1685Z" fill="none" stroke="none"/>
-  <path d="M209.077 84.2358H203.043V90.2695H209.077V84.2358Z" fill="none" stroke="none"/>
-  <path d="M215.11 84.2358H209.077V90.2695H215.11V84.2358Z" fill="none" stroke="none"/>
-  <path d="M209.077 90.2695H203.043V96.3032H209.077V90.2695Z" fill="none" stroke="none"/>
-  <path d="M215.11 90.2695H209.077V96.3032H215.11V90.2695Z" fill="none" stroke="none"/>
-  <path d="M209.077 114.404H203.043V120.438H209.077V114.404Z" fill="none" stroke="none"/>
-  <path d="M215.11 114.404H209.077V120.438H215.11V114.404Z" fill="none" stroke="none"/>
-  <path d="M209.077 120.438H203.043V126.472H209.077V120.438Z" fill="none" stroke="none"/>
-  <path d="M215.11 120.438H209.077V126.472H215.11V120.438Z" fill="none" stroke="none"/>
-  <path d="M209.077 126.471H203.043V132.505H209.077V126.471Z" fill="none" stroke="none"/>
-  <path d="M215.11 126.471H209.077V132.505H215.11V126.471Z" fill="none" stroke="none"/>
-  <path d="M209.077 132.505H203.043V138.539H209.077V132.505Z" fill="none" stroke="none"/>
-  <path d="M215.11 132.505H209.077V138.539H215.11V132.505Z" fill="none" stroke="none"/>
-  <path d="M209.077 138.539H203.043V144.572H209.077V138.539Z" fill="none" stroke="none"/>
-  <path d="M215.11 138.539H209.077V144.572H215.11V138.539Z" fill="none" stroke="none"/>
-  <path d="M209.077 144.572H203.043V150.606H209.077V144.572Z" fill="none" stroke="none"/>
-  <path d="M215.11 144.572H209.077V150.606H215.11V144.572Z" fill="none" stroke="none"/>
-  <path d="M209.077 150.606H203.043V156.64H209.077V150.606Z" fill="none" stroke="none"/>
-  <path d="M215.11 150.606H209.077V156.64H215.11V150.606Z" fill="none" stroke="none"/>
-  <path d="M209.077 156.639H203.043V162.673H209.077V156.639Z" fill="none" stroke="none"/>
-  <path d="M215.11 156.639H209.077V162.673H215.11V156.639Z" fill="none" stroke="none"/>
-  <path d="M209.077 162.673H203.043V168.707H209.077V162.673Z" fill="none" stroke="none"/>
-  <path d="M215.11 162.673H209.077V168.707H215.11V162.673Z" fill="none" stroke="none"/>
-  <path d="M209.077 168.707H203.043V174.741H209.077V168.707Z" fill="none" stroke="none"/>
-  <path d="M215.11 168.707H209.077V174.741H215.11V168.707Z" fill="none" stroke="none"/>
-  <path d="M209.077 174.741H203.043V180.774H209.077V174.741Z" fill="none" stroke="none"/>
-  <path d="M215.11 174.741H209.077V180.774H215.11V174.741Z" fill="none" stroke="none"/>
-  <path d="M209.077 180.774H203.043V186.808H209.077V180.774Z" fill="none" stroke="none"/>
-  <path d="M215.11 180.774H209.077V186.808H215.11V180.774Z" fill="none" stroke="none"/>
-  <path d="M209.077 186.808H203.043V192.842H209.077V186.808Z" fill="none" stroke="none"/>
-  <path d="M215.11 186.808H209.077V192.842H215.11V186.808Z" fill="none" stroke="none"/>
-  <path d="M209.077 192.841H203.043V198.875H209.077V192.841Z" fill="none" stroke="none"/>
-  <path d="M215.11 192.841H209.077V198.875H215.11V192.841Z" fill="none" stroke="none"/>
-  <path d="M209.077 198.875H203.043V204.909H209.077V198.875Z" fill="none" stroke="none"/>
-  <path d="M215.11 198.875H209.077V204.909H215.11V198.875Z" fill="none" stroke="none"/>
-  <path d="M209.077 204.909H203.043V210.942H209.077V204.909Z" fill="none" stroke="none"/>
-  <path d="M215.11 204.909H209.077V210.942H215.11V204.909Z" fill="none" stroke="none"/>
-  <path d="M209.077 210.942H203.043V216.976H209.077V210.942Z" fill="none" stroke="none"/>
-  <path d="M215.11 210.942H209.077V216.976H215.11V210.942Z" fill="none" stroke="none"/>
-  <path d="M209.077 216.976H203.043V223.01H209.077V216.976Z" fill="none" stroke="none"/>
-  <path d="M215.11 216.976H209.077V223.01H215.11V216.976Z" fill="none" stroke="none"/>
-  <path d="M209.077 223.01H203.043V229.043H209.077V223.01Z" fill="none" stroke="none"/>
-  <path d="M215.11 223.01H209.077V229.043H215.11V223.01Z" fill="none" stroke="none"/>
-  <path d="M221.144 96.3032H215.111V102.337H221.144V96.3032Z" fill="none" stroke="none"/>
-  <path d="M227.178 96.3032H221.144V102.337H227.178V96.3032Z" fill="none" stroke="none"/>
-  <path d="M221.144 102.337H215.111V108.371H221.144V102.337Z" fill="none" stroke="none"/>
-  <path d="M227.178 102.337H221.144V108.371H227.178V102.337Z" fill="none" stroke="none"/>
-  <path d="M221.144 108.371H215.111V114.404H221.144V108.371Z" fill="none" stroke="none"/>
-  <path d="M227.178 108.371H221.144V114.404H227.178V108.371Z" fill="none" stroke="none"/>
-  <path d="M221.144 78.2021H215.111V84.2359H221.144V78.2021Z" fill="none" stroke="none"/>
-  <path d="M227.178 78.2021H221.144V84.2359H227.178V78.2021Z" fill="none" stroke="none"/>
-  <path d="M221.144 72.1685H215.111V78.2022H221.144V72.1685Z" fill="none" stroke="none"/>
-  <path d="M227.178 72.1685H221.144V78.2022H227.178V72.1685Z" fill="none" stroke="none"/>
-  <path d="M221.144 84.2358H215.111V90.2695H221.144V84.2358Z" fill="none" stroke="none"/>
-  <path d="M227.178 84.2358H221.144V90.2695H227.178V84.2358Z" fill="none" stroke="none"/>
-  <path d="M221.144 90.2695H215.111V96.3032H221.144V90.2695Z" fill="none" stroke="none"/>
-  <path d="M227.178 90.2695H221.144V96.3032H227.178V90.2695Z" fill="none" stroke="none"/>
-  <path d="M221.144 114.404H215.111V120.438H221.144V114.404Z" fill="none" stroke="none"/>
-  <path d="M227.178 114.404H221.144V120.438H227.178V114.404Z" fill="none" stroke="none"/>
-  <path d="M221.144 120.438H215.111V126.472H221.144V120.438Z" fill="none" stroke="none"/>
-  <path d="M227.178 120.438H221.144V126.472H227.178V120.438Z" fill="none" stroke="none"/>
-  <path d="M221.144 126.471H215.111V132.505H221.144V126.471Z" fill="none" stroke="none"/>
-  <path d="M227.178 126.471H221.144V132.505H227.178V126.471Z" fill="none" stroke="none"/>
-  <path d="M221.144 132.505H215.111V138.539H221.144V132.505Z" fill="none" stroke="none"/>
-  <path d="M227.178 132.505H221.144V138.539H227.178V132.505Z" fill="none" stroke="none"/>
-  <path d="M221.144 138.539H215.111V144.572H221.144V138.539Z" fill="none" stroke="none"/>
-  <path d="M227.178 138.539H221.144V144.572H227.178V138.539Z" fill="none" stroke="none"/>
-  <path d="M221.144 144.572H215.111V150.606H221.144V144.572Z" fill="none" stroke="none"/>
-  <path d="M227.178 144.572H221.144V150.606H227.178V144.572Z" fill="none" stroke="none"/>
-  <path d="M221.144 150.606H215.111V156.64H221.144V150.606Z" fill="none" stroke="none"/>
-  <path d="M227.178 150.606H221.144V156.64H227.178V150.606Z" fill="none" stroke="none"/>
-  <path d="M221.144 156.639H215.111V162.673H221.144V156.639Z" fill="none" stroke="none"/>
-  <path d="M227.178 156.639H221.144V162.673H227.178V156.639Z" fill="none" stroke="none"/>
-  <path d="M221.144 162.673H215.111V168.707H221.144V162.673Z" fill="none" stroke="none"/>
-  <path d="M227.178 162.673H221.144V168.707H227.178V162.673Z" fill="none" stroke="none"/>
-  <path d="M221.144 168.707H215.111V174.741H221.144V168.707Z" fill="none" stroke="none"/>
-  <path d="M227.178 168.707H221.144V174.741H227.178V168.707Z" fill="none" stroke="none"/>
-  <path d="M221.144 174.741H215.111V180.774H221.144V174.741Z" fill="none" stroke="none"/>
-  <path d="M227.178 174.741H221.144V180.774H227.178V174.741Z" fill="none" stroke="none"/>
-  <path d="M221.144 180.774H215.111V186.808H221.144V180.774Z" fill="none" stroke="none"/>
-  <path d="M227.178 180.774H221.144V186.808H227.178V180.774Z" fill="none" stroke="none"/>
-  <path d="M221.144 186.808H215.111V192.842H221.144V186.808Z" fill="none" stroke="none"/>
-  <path d="M227.178 186.808H221.144V192.842H227.178V186.808Z" fill="none" stroke="none"/>
-  <path d="M221.144 192.841H215.111V198.875H221.144V192.841Z" fill="none" stroke="none"/>
-  <path d="M227.178 192.841H221.144V198.875H227.178V192.841Z" fill="none" stroke="none"/>
-  <path d="M221.144 198.875H215.111V204.909H221.144V198.875Z" fill="none" stroke="none"/>
-  <path d="M227.178 198.875H221.144V204.909H227.178V198.875Z" fill="none" stroke="none"/>
-  <path d="M221.144 204.909H215.111V210.942H221.144V204.909Z" fill="none" stroke="none"/>
-  <path d="M227.178 204.909H221.144V210.942H227.178V204.909Z" fill="none" stroke="none"/>
-  <path d="M221.144 210.942H215.111V216.976H221.144V210.942Z" fill="none" stroke="none"/>
-  <path d="M227.178 210.942H221.144V216.976H227.178V210.942Z" fill="none" stroke="none"/>
-  <path d="M221.144 216.976H215.111V223.01H221.144V216.976Z" fill="none" stroke="none"/>
-  <path d="M227.178 216.976H221.144V223.01H227.178V216.976Z" fill="none" stroke="none"/>
-  <path d="M221.144 223.01H215.111V229.043H221.144V223.01Z" fill="none" stroke="none"/>
-  <path d="M227.178 223.01H221.144V229.043H227.178V223.01Z" fill="none" stroke="none"/>
-  <path d="M233.211 96.3032H227.178V102.337H233.211V96.3032Z" fill="none" stroke="none"/>
-  <path d="M239.245 96.3032H233.211V102.337H239.245V96.3032Z" fill="none" stroke="none"/>
-  <path d="M233.211 102.337H227.178V108.371H233.211V102.337Z" fill="none" stroke="none"/>
-  <path d="M239.245 102.337H233.211V108.371H239.245V102.337Z" fill="none" stroke="none"/>
-  <path d="M233.211 108.371H227.178V114.404H233.211V108.371Z" fill="none" stroke="none"/>
-  <path d="M239.245 108.371H233.211V114.404H239.245V108.371Z" fill="none" stroke="none"/>
-  <path d="M233.211 78.2021H227.178V84.2359H233.211V78.2021Z" fill="none" stroke="none"/>
-  <path d="M239.245 78.2021H233.211V84.2359H239.245V78.2021Z" fill="none" stroke="none"/>
-  <path d="M233.211 72.1685H227.178V78.2022H233.211V72.1685Z" fill="none" stroke="none"/>
-  <path d="M239.245 72.1685H233.211V78.2022H239.245V72.1685Z" fill="none" stroke="none"/>
-  <path d="M233.211 84.2358H227.178V90.2695H233.211V84.2358Z" fill="none" stroke="none"/>
-  <path d="M239.245 84.2358H233.211V90.2695H239.245V84.2358Z" fill="none" stroke="none"/>
-  <path d="M233.211 90.2695H227.178V96.3032H233.211V90.2695Z" fill="none" stroke="none"/>
-  <path d="M239.245 90.2695H233.211V96.3032H239.245V90.2695Z" fill="none" stroke="none"/>
-  <path d="M233.211 114.404H227.178V120.438H233.211V114.404Z" fill="none" stroke="none"/>
-  <path d="M239.245 114.404H233.211V120.438H239.245V114.404Z" fill="none" stroke="none"/>
-  <path d="M233.211 120.438H227.178V126.472H233.211V120.438Z" fill="none" stroke="none"/>
-  <path d="M239.245 120.438H233.211V126.472H239.245V120.438Z" fill="none" stroke="none"/>
-  <path d="M233.211 126.471H227.178V132.505H233.211V126.471Z" fill="none" stroke="none"/>
-  <path d="M239.245 126.471H233.211V132.505H239.245V126.471Z" fill="none" stroke="none"/>
-  <path d="M233.211 132.505H227.178V138.539H233.211V132.505Z" fill="none" stroke="none"/>
-  <path d="M239.245 132.505H233.211V138.539H239.245V132.505Z" fill="none" stroke="none"/>
-  <path d="M233.211 138.539H227.178V144.572H233.211V138.539Z" fill="none" stroke="none"/>
-  <path d="M239.245 138.539H233.211V144.572H239.245V138.539Z" fill="none" stroke="none"/>
-  <path d="M233.211 144.572H227.178V150.606H233.211V144.572Z" fill="none" stroke="none"/>
-  <path d="M239.245 144.572H233.211V150.606H239.245V144.572Z" fill="none" stroke="none"/>
-  <path d="M233.211 150.606H227.178V156.64H233.211V150.606Z" fill="none" stroke="none"/>
-  <path d="M239.245 150.606H233.211V156.64H239.245V150.606Z" fill="none" stroke="none"/>
-  <path d="M233.211 156.639H227.178V162.673H233.211V156.639Z" fill="none" stroke="none"/>
-  <path d="M239.245 156.639H233.211V162.673H239.245V156.639Z" fill="none" stroke="none"/>
-  <path d="M233.211 162.673H227.178V168.707H233.211V162.673Z" fill="none" stroke="none"/>
-  <path d="M239.245 162.673H233.211V168.707H239.245V162.673Z" fill="none" stroke="none"/>
-  <path d="M233.211 168.707H227.178V174.741H233.211V168.707Z" fill="none" stroke="none"/>
-  <path d="M239.245 168.707H233.211V174.741H239.245V168.707Z" fill="none" stroke="none"/>
-  <path d="M233.211 174.741H227.178V180.774H233.211V174.741Z" fill="none" stroke="none"/>
-  <path d="M239.245 174.741H233.211V180.774H239.245V174.741Z" fill="none" stroke="none"/>
-  <path d="M233.211 180.774H227.178V186.808H233.211V180.774Z" fill="none" stroke="none"/>
-  <path d="M239.245 180.774H233.211V186.808H239.245V180.774Z" fill="none" stroke="none"/>
-  <path d="M233.211 186.808H227.178V192.842H233.211V186.808Z" fill="none" stroke="none"/>
-  <path d="M239.245 186.808H233.211V192.842H239.245V186.808Z" fill="none" stroke="none"/>
-  <path d="M233.211 192.841H227.178V198.875H233.211V192.841Z" fill="none" stroke="none"/>
-  <path d="M239.245 192.841H233.211V198.875H239.245V192.841Z" fill="none" stroke="none"/>
-  <path d="M233.211 198.875H227.178V204.909H233.211V198.875Z" fill="none" stroke="none"/>
-  <path d="M239.245 198.875H233.211V204.909H239.245V198.875Z" fill="none" stroke="none"/>
-  <path d="M233.211 204.909H227.178V210.942H233.211V204.909Z" fill="none" stroke="none"/>
-  <path d="M239.245 204.909H233.211V210.942H239.245V204.909Z" fill="none" stroke="none"/>
-  <path d="M233.211 210.942H227.178V216.976H233.211V210.942Z" fill="none" stroke="none"/>
-  <path d="M239.245 210.942H233.211V216.976H239.245V210.942Z" fill="none" stroke="none"/>
-  <path d="M233.211 216.976H227.178V223.01H233.211V216.976Z" fill="none" stroke="none"/>
-  <path d="M239.245 216.976H233.211V223.01H239.245V216.976Z" fill="none" stroke="none"/>
-  <path d="M233.211 223.01H227.178V229.043H233.211V223.01Z" fill="none" stroke="none"/>
-  <path d="M239.245 223.01H233.211V229.043H239.245V223.01Z" fill="none" stroke="none"/>
-  <path d="M245.279 96.3032H239.245V102.337H245.279V96.3032Z" fill="none" stroke="none"/>
-  <path d="M251.313 96.3032H245.279V102.337H251.313V96.3032Z" fill="none" stroke="none"/>
-  <path d="M245.279 102.337H239.245V108.371H245.279V102.337Z" fill="none" stroke="none"/>
-  <path d="M251.313 102.337H245.279V108.371H251.313V102.337Z" fill="none" stroke="none"/>
-  <path d="M245.279 108.371H239.245V114.404H245.279V108.371Z" fill="none" stroke="none"/>
-  <path d="M251.313 108.371H245.279V114.404H251.313V108.371Z" fill="none" stroke="none"/>
-  <path d="M245.279 78.2021H239.245V84.2359H245.279V78.2021Z" fill="none" stroke="none"/>
-  <path d="M251.313 78.2021H245.279V84.2359H251.313V78.2021Z" fill="none" stroke="none"/>
-  <path d="M245.279 72.1685H239.245V78.2022H245.279V72.1685Z" fill="none" stroke="none"/>
-  <path d="M251.313 72.1685H245.279V78.2022H251.313V72.1685Z" fill="none" stroke="none"/>
   <path d="M70.3025 66.1348H64.2688V72.1685H70.3025V66.1348Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M76.3361 66.1348H70.3025V72.1685H76.3361V66.1348Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M82.3699 66.1348H76.3362V72.1685H82.3699V66.1348Z" fill="#FF8400" stroke="#FF8400"/>
@@ -990,23 +575,7 @@
   <path d="M184.942 66.1348H178.909V72.1685H184.942V66.1348Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M190.976 66.1348H184.942V72.1685H190.976V66.1348Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M197.009 66.1348H190.976V72.1685H197.009V66.1348Z" fill="#FF8400" stroke="#FF8400"/>
-  <path d="M203.043 66.1348H197.009V72.1685H203.043V66.1348Z" fill="none" stroke="none"/>
-  <path d="M58.2356 66.1348H52.2019V72.1685H58.2356V66.1348Z" fill="none" stroke="none"/>
   <path d="M64.2688 66.1348H58.2351V72.1685H64.2688V66.1348Z" fill="#FF8400" stroke="#FF8400"/>
-  <path d="M46.1682 66.1348H40.1345V72.1685H46.1682V66.1348Z" fill="none" stroke="none"/>
-  <path d="M52.2014 66.1348H46.1677V72.1685H52.2014V66.1348Z" fill="none" stroke="none"/>
-  <path d="M34.1009 66.1348H28.0671V72.1685H34.1009V66.1348Z" fill="none" stroke="none"/>
-  <path d="M40.1345 66.1348H34.1008V72.1685H40.1345V66.1348Z" fill="none" stroke="none"/>
-  <path d="M22.0335 66.1348H15.9998V72.1685H22.0335V66.1348Z" fill="none" stroke="none"/>
-  <path d="M28.0671 66.1348H22.0334V72.1685H28.0671V66.1348Z" fill="none" stroke="none"/>
-  <path d="M209.077 66.1348H203.043V72.1685H209.077V66.1348Z" fill="none" stroke="none"/>
-  <path d="M215.11 66.1348H209.077V72.1685H215.11V66.1348Z" fill="none" stroke="none"/>
-  <path d="M221.144 66.1348H215.111V72.1685H221.144V66.1348Z" fill="none" stroke="none"/>
-  <path d="M227.178 66.1348H221.144V72.1685H227.178V66.1348Z" fill="none" stroke="none"/>
-  <path d="M233.211 66.1348H227.178V72.1685H233.211V66.1348Z" fill="none" stroke="none"/>
-  <path d="M239.245 66.1348H233.211V72.1685H239.245V66.1348Z" fill="none" stroke="none"/>
-  <path d="M245.279 66.1348H239.245V72.1685H245.279V66.1348Z" fill="none" stroke="none"/>
-  <path d="M251.313 66.1348H245.279V72.1685H251.313V66.1348Z" fill="none" stroke="none"/>
   <path d="M70.3025 60.1011H64.2688V66.1348H70.3025V60.1011Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M76.3361 60.1011H70.3025V66.1348H76.3361V60.1011Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M82.3699 60.1011H76.3362V66.1348H82.3699V60.1011Z" fill="#FF8400" stroke="#FF8400"/>
@@ -1027,27 +596,11 @@
   <path d="M172.875 60.1011H166.841V66.1348H172.875V60.1011Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M178.909 60.1011H172.875V66.1348H178.909V60.1011Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M184.942 60.1011H178.909V66.1348H184.942V60.1011Z" fill="#FF8400" stroke="#FF8400"/>
-  <path d="M190.976 60.1011H184.942V66.1348H190.976V60.1011Z" fill="none" stroke="none"/>
   <path d="M197.009 60.1011H190.976V66.1348H197.009V60.1011Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M203.043 60.1011H197.009V66.1348H203.043V60.1011Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M58.2356 60.1011H52.2019V66.1348H58.2356V60.1011Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M64.2688 60.1011H58.2351V66.1348H64.2688V60.1011Z" fill="#FF8400" stroke="#FF8400"/>
-  <path d="M46.1682 60.1011H40.1345V66.1348H46.1682V60.1011Z" fill="none" stroke="none"/>
-  <path d="M52.2014 60.1011H46.1677V66.1348H52.2014V60.1011Z" fill="none" stroke="none"/>
-  <path d="M34.1009 60.1011H28.0671V66.1348H34.1009V60.1011Z" fill="none" stroke="none"/>
-  <path d="M40.1345 60.1011H34.1008V66.1348H40.1345V60.1011Z" fill="none" stroke="none"/>
-  <path d="M22.0335 60.1011H15.9998V66.1348H22.0335V60.1011Z" fill="none" stroke="none"/>
-  <path d="M28.0671 60.1011H22.0334V66.1348H28.0671V60.1011Z" fill="none" stroke="none"/>
   <path d="M209.077 60.1011H203.043V66.1348H209.077V60.1011Z" fill="#FF8400" stroke="#FF8400"/>
-  <path d="M215.11 60.1011H209.077V66.1348H215.11V60.1011Z" fill="none" stroke="none"/>
-  <path d="M221.144 60.1011H215.111V66.1348H221.144V60.1011Z" fill="none" stroke="none"/>
-  <path d="M227.178 60.1011H221.144V66.1348H227.178V60.1011Z" fill="none" stroke="none"/>
-  <path d="M233.211 60.1011H227.178V66.1348H233.211V60.1011Z" fill="none" stroke="none"/>
-  <path d="M239.245 60.1011H233.211V66.1348H239.245V60.1011Z" fill="none" stroke="none"/>
-  <path d="M245.279 60.1011H239.245V66.1348H245.279V60.1011Z" fill="none" stroke="none"/>
-  <path d="M251.313 60.1011H245.279V66.1348H251.313V60.1011Z" fill="none" stroke="none"/>
-  <path d="M70.3025 54.0679H64.2688V60.1016H70.3025V54.0679Z" fill="none" stroke="none"/>
-  <path d="M76.3361 54.0679H70.3025V60.1016H76.3361V54.0679Z" fill="none" stroke="none"/>
   <path d="M82.3699 54.0679H76.3362V60.1016H82.3699V54.0679Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M88.4036 54.0679H82.3699V60.1016H88.4036V54.0679Z" fill="#FFD500" stroke="#FFD500"/>
   <path d="M94.4372 54.0679H88.4036V60.1016H94.4372V54.0679Z" fill="#FF8400" stroke="#FF8400"/>
@@ -1065,26 +618,6 @@
   <path d="M166.841 54.0679H160.808V60.1016H166.841V54.0679Z" fill="#FFD500" stroke="#FFD500"/>
   <path d="M172.875 54.0679H166.841V60.1016H172.875V54.0679Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M178.909 54.0679H172.875V60.1016H178.909V54.0679Z" fill="#FF8400" stroke="#FF8400"/>
-  <path d="M184.942 54.0679H178.909V60.1016H184.942V54.0679Z" fill="none" stroke="none"/>
-  <path d="M190.976 54.0679H184.942V60.1016H190.976V54.0679Z" fill="none" stroke="none"/>
-  <path d="M197.009 54.0679H190.976V60.1016H197.009V54.0679Z" fill="none" stroke="none"/>
-  <path d="M203.043 54.0679H197.009V60.1016H203.043V54.0679Z" fill="none" stroke="none"/>
-  <path d="M58.2356 54.0679H52.2019V60.1016H58.2356V54.0679Z" fill="none" stroke="none"/>
-  <path d="M64.2688 54.0679H58.2351V60.1016H64.2688V54.0679Z" fill="none" stroke="none"/>
-  <path d="M46.1682 54.0679H40.1345V60.1016H46.1682V54.0679Z" fill="none" stroke="none"/>
-  <path d="M52.2014 54.0679H46.1677V60.1016H52.2014V54.0679Z" fill="none" stroke="none"/>
-  <path d="M34.1009 54.0679H28.0671V60.1016H34.1009V54.0679Z" fill="none" stroke="none"/>
-  <path d="M40.1345 54.0679H34.1008V60.1016H40.1345V54.0679Z" fill="none" stroke="none"/>
-  <path d="M22.0335 54.0679H15.9998V60.1016H22.0335V54.0679Z" fill="none" stroke="none"/>
-  <path d="M28.0671 54.0679H22.0334V60.1016H28.0671V54.0679Z" fill="none" stroke="none"/>
-  <path d="M209.077 54.0679H203.043V60.1016H209.077V54.0679Z" fill="none" stroke="none"/>
-  <path d="M215.11 54.0679H209.077V60.1016H215.11V54.0679Z" fill="none" stroke="none"/>
-  <path d="M221.144 54.0679H215.111V60.1016H221.144V54.0679Z" fill="none" stroke="none"/>
-  <path d="M227.178 54.0679H221.144V60.1016H227.178V54.0679Z" fill="none" stroke="none"/>
-  <path d="M233.211 54.0679H227.178V60.1016H233.211V54.0679Z" fill="none" stroke="none"/>
-  <path d="M239.245 54.0679H233.211V60.1016H239.245V54.0679Z" fill="none" stroke="none"/>
-  <path d="M245.279 54.0679H239.245V60.1016H245.279V54.0679Z" fill="none" stroke="none"/>
-  <path d="M251.313 54.0679H245.279V60.1016H251.313V54.0679Z" fill="none" stroke="none"/>
   <path d="M70.3025 48.0342H64.2688V54.0679H70.3025V48.0342Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M76.3361 48.0342H70.3025V54.0679H76.3361V48.0342Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M82.3699 48.0342H76.3362V54.0679H82.3699V48.0342Z" fill="#FFD500" stroke="#FFD500"/>
@@ -1093,7 +626,6 @@
   <path d="M100.47 48.0342H94.4368V54.0679H100.47V48.0342Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M106.505 48.0342H100.471V54.0679H106.505V48.0342Z" fill="#FFD500" stroke="#FFD500"/>
   <path d="M112.538 48.0342H106.505V54.0679H112.538V48.0342Z" fill="#FFD500" stroke="#FFD500"/>
-  <path d="M118.572 48.0342H112.538V54.0679H118.572V48.0342Z" fill="none" stroke="none"/>
   <path d="M124.606 48.0342H118.572V54.0679H124.606V48.0342Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M130.639 48.0342H124.605V54.0679H130.639V48.0342Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M136.673 48.0342H130.639V54.0679H136.673V48.0342Z" fill="#FFD500" stroke="#FFD500"/>
@@ -1105,34 +637,11 @@
   <path d="M172.875 48.0342H166.841V54.0679H172.875V48.0342Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M178.909 48.0342H172.875V54.0679H178.909V48.0342Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M184.942 48.0342H178.909V54.0679H184.942V48.0342Z" fill="#FF8400" stroke="#FF8400"/>
-  <path d="M190.976 48.0342H184.942V54.0679H190.976V48.0342Z" fill="none" stroke="none"/>
-  <path d="M197.009 48.0342H190.976V54.0679H197.009V48.0342Z" fill="none" stroke="none"/>
-  <path d="M203.043 48.0342H197.009V54.0679H203.043V48.0342Z" fill="none" stroke="none"/>
-  <path d="M58.2356 48.0342H52.2019V54.0679H58.2356V48.0342Z" fill="none" stroke="none"/>
-  <path d="M64.2688 48.0342H58.2351V54.0679H64.2688V48.0342Z" fill="none" stroke="none"/>
-  <path d="M46.1682 48.0342H40.1345V54.0679H46.1682V48.0342Z" fill="none" stroke="none"/>
-  <path d="M52.2014 48.0342H46.1677V54.0679H52.2014V48.0342Z" fill="none" stroke="none"/>
-  <path d="M34.1009 48.0342H28.0671V54.0679H34.1009V48.0342Z" fill="none" stroke="none"/>
-  <path d="M40.1345 48.0342H34.1008V54.0679H40.1345V48.0342Z" fill="none" stroke="none"/>
-  <path d="M22.0335 48.0342H15.9998V54.0679H22.0335V48.0342Z" fill="none" stroke="none"/>
-  <path d="M28.0671 48.0342H22.0334V54.0679H28.0671V48.0342Z" fill="none" stroke="none"/>
-  <path d="M209.077 48.0342H203.043V54.0679H209.077V48.0342Z" fill="none" stroke="none"/>
-  <path d="M215.11 48.0342H209.077V54.0679H215.11V48.0342Z" fill="none" stroke="none"/>
-  <path d="M221.144 48.0342H215.111V54.0679H221.144V48.0342Z" fill="none" stroke="none"/>
-  <path d="M227.178 48.0342H221.144V54.0679H227.178V48.0342Z" fill="none" stroke="none"/>
-  <path d="M233.211 48.0342H227.178V54.0679H233.211V48.0342Z" fill="none" stroke="none"/>
-  <path d="M239.245 48.0342H233.211V54.0679H239.245V48.0342Z" fill="none" stroke="none"/>
-  <path d="M245.279 48.0342H239.245V54.0679H245.279V48.0342Z" fill="none" stroke="none"/>
-  <path d="M251.313 48.0342H245.279V54.0679H251.313V48.0342Z" fill="none" stroke="none"/>
   <path d="M70.3025 42.0005H64.2688V48.0342H70.3025V42.0005Z" fill="#FF8400" stroke="#FF8400"/>
-  <path d="M76.3361 42.0005H70.3025V48.0342H76.3361V42.0005Z" fill="none" stroke="none"/>
-  <path d="M82.3699 42.0005H76.3362V48.0342H82.3699V42.0005Z" fill="none" stroke="none"/>
-  <path d="M88.4036 42.0005H82.3699V48.0342H88.4036V42.0005Z" fill="none" stroke="none"/>
-  <path d="M94.4372 42.0005H88.4036V48.0342H94.4372V42.0005Z" fill="none" stroke="none"/>
   <path d="M100.47 42.0005H94.4368V48.0342H100.47V42.0005Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M106.505 42.0005H100.471V48.0342H106.505V42.0005Z" fill="#FFD500" stroke="#FFD500"/>
-  <path d="M112.538 42.0005H106.505V48.0342H112.538V42.0005Z" fill="none" stroke="none"/>
-  <path d="M118.572 42.0005H112.538V48.0342H118.572V42.0005Z" fill="none" stroke="none"/>
+<!--  <path d="M112.538 42.0005H106.505V48.0342H112.538V42.0005Z" fill="none" stroke="none"/>-->
+<!--  <path d="M118.572 42.0005H112.538V48.0342H118.572V42.0005Z" fill="none" stroke="none"/>-->
   <path d="M124.606 42.0005H118.572V48.0342H124.606V42.0005Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M130.639 42.0005H124.605V48.0342H130.639V42.0005Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M136.673 42.0005H130.639V48.0342H136.673V42.0005Z" fill="#FF8400" stroke="#FF8400"/>
@@ -1140,39 +649,7 @@
   <path d="M148.741 42.0005H142.707V48.0342H148.741V42.0005Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M154.774 42.0005H148.74V48.0342H154.774V42.0005Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M160.808 42.0005H154.774V48.0342H160.808V42.0005Z" fill="#FF8400" stroke="#FF8400"/>
-  <path d="M166.841 42.0005H160.808V48.0342H166.841V42.0005Z" fill="none" stroke="none"/>
-  <path d="M172.875 42.0005H166.841V48.0342H172.875V42.0005Z" fill="none" stroke="none"/>
-  <path d="M178.909 42.0005H172.875V48.0342H178.909V42.0005Z" fill="none" stroke="none"/>
-  <path d="M184.942 42.0005H178.909V48.0342H184.942V42.0005Z" fill="none" stroke="none"/>
-  <path d="M190.976 42.0005H184.942V48.0342H190.976V42.0005Z" fill="none" stroke="none"/>
-  <path d="M197.009 42.0005H190.976V48.0342H197.009V42.0005Z" fill="none" stroke="none"/>
-  <path d="M203.043 42.0005H197.009V48.0342H203.043V42.0005Z" fill="none" stroke="none"/>
-  <path d="M58.2356 42.0005H52.2019V48.0342H58.2356V42.0005Z" fill="none" stroke="none"/>
-  <path d="M64.2688 42.0005H58.2351V48.0342H64.2688V42.0005Z" fill="none" stroke="none"/>
-  <path d="M46.1682 42.0005H40.1345V48.0342H46.1682V42.0005Z" fill="none" stroke="none"/>
-  <path d="M52.2014 42.0005H46.1677V48.0342H52.2014V42.0005Z" fill="none" stroke="none"/>
-  <path d="M34.1009 42.0005H28.0671V48.0342H34.1009V42.0005Z" fill="none" stroke="none"/>
-  <path d="M40.1345 42.0005H34.1008V48.0342H40.1345V42.0005Z" fill="none" stroke="none"/>
-  <path d="M22.0335 42.0005H15.9998V48.0342H22.0335V42.0005Z" fill="none" stroke="none"/>
-  <path d="M28.0671 42.0005H22.0334V48.0342H28.0671V42.0005Z" fill="none" stroke="none"/>
-  <path d="M209.077 42.0005H203.043V48.0342H209.077V42.0005Z" fill="none" stroke="none"/>
-  <path d="M215.11 42.0005H209.077V48.0342H215.11V42.0005Z" fill="none" stroke="none"/>
-  <path d="M221.144 42.0005H215.111V48.0342H221.144V42.0005Z" fill="none" stroke="none"/>
-  <path d="M227.178 42.0005H221.144V48.0342H227.178V42.0005Z" fill="none" stroke="none"/>
-  <path d="M233.211 42.0005H227.178V48.0342H233.211V42.0005Z" fill="none" stroke="none"/>
-  <path d="M239.245 42.0005H233.211V48.0342H239.245V42.0005Z" fill="none" stroke="none"/>
-  <path d="M245.279 42.0005H239.245V48.0342H245.279V42.0005Z" fill="none" stroke="none"/>
-  <path d="M251.313 42.0005H245.279V48.0342H251.313V42.0005Z" fill="none" stroke="none"/>
-  <path d="M70.3025 35.9668H64.2688V42.0005H70.3025V35.9668Z" fill="none" stroke="none"/>
-  <path d="M76.3361 35.9668H70.3025V42.0005H76.3361V35.9668Z" fill="none" stroke="none"/>
-  <path d="M82.3699 35.9668H76.3362V42.0005H82.3699V35.9668Z" fill="none" stroke="none"/>
-  <path d="M88.4036 35.9668H82.3699V42.0005H88.4036V35.9668Z" fill="none" stroke="none"/>
-  <path d="M94.4372 35.9668H88.4036V42.0005H94.4372V35.9668Z" fill="none" stroke="none"/>
   <path d="M100.47 35.9668H94.4368V42.0005H100.47V35.9668Z" fill="#FF8400" stroke="#FF8400"/>
-  <path d="M106.505 35.9668H100.471V42.0005H106.505V35.9668Z" fill="none" stroke="none"/>
-  <path d="M112.538 35.9668H106.505V42.0005H112.538V35.9668Z" fill="none" stroke="none"/>
-  <path d="M118.572 35.9668H112.538V42.0005H118.572V35.9668Z" fill="none" stroke="none"/>
-  <path d="M124.606 35.9668H118.572V42.0005H124.606V35.9668Z" fill="none" stroke="none"/>
   <path d="M130.639 35.9668H124.605V42.0005H130.639V35.9668Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M136.673 35.9668H130.639V42.0005H136.673V35.9668Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M142.706 35.9668H136.673V42.0005H142.706V35.9668Z" fill="#FF8400" stroke="#FF8400"/>
@@ -1181,267 +658,14 @@
   <path d="M160.808 35.9668H154.774V42.0005H160.808V35.9668Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M166.841 35.9668H160.808V42.0005H166.841V35.9668Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M172.875 35.9668H166.841V42.0005H172.875V35.9668Z" fill="#FF8400" stroke="#FF8400"/>
-  <path d="M178.909 35.9668H172.875V42.0005H178.909V35.9668Z" fill="none" stroke="none"/>
-  <path d="M184.942 35.9668H178.909V42.0005H184.942V35.9668Z" fill="none" stroke="none"/>
-  <path d="M190.976 35.9668H184.942V42.0005H190.976V35.9668Z" fill="none" stroke="none"/>
-  <path d="M197.009 35.9668H190.976V42.0005H197.009V35.9668Z" fill="none" stroke="none"/>
-  <path d="M203.043 35.9668H197.009V42.0005H203.043V35.9668Z" fill="none" stroke="none"/>
-  <path d="M58.2356 35.9668H52.2019V42.0005H58.2356V35.9668Z" fill="none" stroke="none"/>
-  <path d="M64.2688 35.9668H58.2351V42.0005H64.2688V35.9668Z" fill="none" stroke="none"/>
-  <path d="M46.1682 35.9668H40.1345V42.0005H46.1682V35.9668Z" fill="none" stroke="none"/>
-  <path d="M52.2014 35.9668H46.1677V42.0005H52.2014V35.9668Z" fill="none" stroke="none"/>
-  <path d="M34.1009 35.9668H28.0671V42.0005H34.1009V35.9668Z" fill="none" stroke="none"/>
-  <path d="M40.1345 35.9668H34.1008V42.0005H40.1345V35.9668Z" fill="none" stroke="none"/>
-  <path d="M22.0335 35.9668H15.9998V42.0005H22.0335V35.9668Z" fill="none" stroke="none"/>
-  <path d="M28.0671 35.9668H22.0334V42.0005H28.0671V35.9668Z" fill="none" stroke="none"/>
-  <path d="M209.077 35.9668H203.043V42.0005H209.077V35.9668Z" fill="none" stroke="none"/>
-  <path d="M215.11 35.9668H209.077V42.0005H215.11V35.9668Z" fill="none" stroke="none"/>
-  <path d="M221.144 35.9668H215.111V42.0005H221.144V35.9668Z" fill="none" stroke="none"/>
-  <path d="M227.178 35.9668H221.144V42.0005H227.178V35.9668Z" fill="none" stroke="none"/>
-  <path d="M233.211 35.9668H227.178V42.0005H233.211V35.9668Z" fill="none" stroke="none"/>
-  <path d="M239.245 35.9668H233.211V42.0005H239.245V35.9668Z" fill="none" stroke="none"/>
-  <path d="M245.279 35.9668H239.245V42.0005H245.279V35.9668Z" fill="none" stroke="none"/>
-  <path d="M251.313 35.9668H245.279V42.0005H251.313V35.9668Z" fill="none" stroke="none"/>
-  <path d="M70.3025 29.9331H64.2688V35.9668H70.3025V29.9331Z" fill="none" stroke="none"/>
-  <path d="M76.3361 29.9331H70.3025V35.9668H76.3361V29.9331Z" fill="none" stroke="none"/>
-  <path d="M82.3699 29.9331H76.3362V35.9668H82.3699V29.9331Z" fill="none" stroke="none"/>
-  <path d="M88.4036 29.9331H82.3699V35.9668H88.4036V29.9331Z" fill="none" stroke="none"/>
   <path d="M94.4372 29.9331H88.4036V35.9668H94.4372V29.9331Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M100.47 29.9331H94.4368V35.9668H100.47V29.9331Z" fill="#FF8400" stroke="#FF8400"/>
-  <path d="M106.505 29.9331H100.471V35.9668H106.505V29.9331Z" fill="none" stroke="none"/>
-  <path d="M112.538 29.9331H106.505V35.9668H112.538V29.9331Z" fill="none" stroke="none"/>
-  <path d="M118.572 29.9331H112.538V35.9668H118.572V29.9331Z" fill="none" stroke="none"/>
-  <path d="M124.606 29.9331H118.572V35.9668H124.606V29.9331Z" fill="none" stroke="none"/>
-  <path d="M130.639 29.9331H124.605V35.9668H130.639V29.9331Z" fill="none" stroke="none"/>
-  <path d="M136.673 29.9331H130.639V35.9668H136.673V29.9331Z" fill="none" stroke="none"/>
   <path d="M142.706 29.9331H136.673V35.9668H142.706V29.9331Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M148.741 29.9331H142.707V35.9668H148.741V29.9331Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M154.774 29.9331H148.74V35.9668H154.774V29.9331Z" fill="#FF8400" stroke="#FF8400"/>
   <path d="M160.808 29.9331H154.774V35.9668H160.808V29.9331Z" fill="#FFD500" stroke="#FFD500"/>
-  <path d="M166.841 29.9331H160.808V35.9668H166.841V29.9331Z" fill="none" stroke="none"/>
-  <path d="M172.875 29.9331H166.841V35.9668H172.875V29.9331Z" fill="none" stroke="none"/>
   <path d="M178.909 29.9331H172.875V35.9668H178.909V29.9331Z" fill="#FF8400" stroke="#FF8400"/>
-  <path d="M184.942 29.9331H178.909V35.9668H184.942V29.9331Z" fill="none" stroke="none"/>
-  <path d="M190.976 29.9331H184.942V35.9668H190.976V29.9331Z" fill="none" stroke="none"/>
-  <path d="M197.009 29.9331H190.976V35.9668H197.009V29.9331Z" fill="none" stroke="none"/>
-  <path d="M203.043 29.9331H197.009V35.9668H203.043V29.9331Z" fill="none" stroke="none"/>
-  <path d="M58.2356 29.9331H52.2019V35.9668H58.2356V29.9331Z" fill="none" stroke="none"/>
-  <path d="M64.2688 29.9331H58.2351V35.9668H64.2688V29.9331Z" fill="none" stroke="none"/>
-  <path d="M46.1682 29.9331H40.1345V35.9668H46.1682V29.9331Z" fill="none" stroke="none"/>
-  <path d="M52.2014 29.9331H46.1677V35.9668H52.2014V29.9331Z" fill="none" stroke="none"/>
-  <path d="M34.1009 29.9331H28.0671V35.9668H34.1009V29.9331Z" fill="none" stroke="none"/>
-  <path d="M40.1345 29.9331H34.1008V35.9668H40.1345V29.9331Z" fill="none" stroke="none"/>
-  <path d="M22.0335 29.9331H15.9998V35.9668H22.0335V29.9331Z" fill="none" stroke="none"/>
-  <path d="M28.0671 29.9331H22.0334V35.9668H28.0671V29.9331Z" fill="none" stroke="none"/>
-  <path d="M209.077 29.9331H203.043V35.9668H209.077V29.9331Z" fill="none" stroke="none"/>
-  <path d="M215.11 29.9331H209.077V35.9668H215.11V29.9331Z" fill="none" stroke="none"/>
-  <path d="M221.144 29.9331H215.111V35.9668H221.144V29.9331Z" fill="none" stroke="none"/>
-  <path d="M227.178 29.9331H221.144V35.9668H227.178V29.9331Z" fill="none" stroke="none"/>
-  <path d="M233.211 29.9331H227.178V35.9668H233.211V29.9331Z" fill="none" stroke="none"/>
-  <path d="M239.245 29.9331H233.211V35.9668H239.245V29.9331Z" fill="none" stroke="none"/>
-  <path d="M245.279 29.9331H239.245V35.9668H245.279V29.9331Z" fill="none" stroke="none"/>
-  <path d="M251.313 29.9331H245.279V35.9668H251.313V29.9331Z" fill="none" stroke="none"/>
-  <path d="M70.3025 23.8994H64.2688V29.9331H70.3025V23.8994Z" fill="none" stroke="none"/>
-  <path d="M76.3361 23.8994H70.3025V29.9331H76.3361V23.8994Z" fill="none" stroke="none"/>
-  <path d="M82.3699 23.8994H76.3362V29.9331H82.3699V23.8994Z" fill="none" stroke="none"/>
-  <path d="M88.4036 23.8994H82.3699V29.9331H88.4036V23.8994Z" fill="none" stroke="none"/>
-  <path d="M94.4372 23.8994H88.4036V29.9331H94.4372V23.8994Z" fill="none" stroke="none"/>
-  <path d="M100.47 23.8994H94.4368V29.9331H100.47V23.8994Z" fill="none" stroke="none"/>
-  <path d="M106.505 23.8994H100.471V29.9331H106.505V23.8994Z" fill="none" stroke="none"/>
-  <path d="M112.538 23.8994H106.505V29.9331H112.538V23.8994Z" fill="none" stroke="none"/>
-  <path d="M118.572 23.8994H112.538V29.9331H118.572V23.8994Z" fill="none" stroke="none"/>
-  <path d="M124.606 23.8994H118.572V29.9331H124.606V23.8994Z" fill="none" stroke="none"/>
-  <path d="M130.639 23.8994H124.605V29.9331H130.639V23.8994Z" fill="none" stroke="none"/>
-  <path d="M136.673 23.8994H130.639V29.9331H136.673V23.8994Z" fill="none" stroke="none"/>
-  <path d="M142.706 23.8994H136.673V29.9331H142.706V23.8994Z" fill="none" stroke="none"/>
-  <path d="M148.741 23.8994H142.707V29.9331H148.741V23.8994Z" fill="none" stroke="none"/>
   <path d="M154.774 23.8994H148.74V29.9331H154.774V23.8994Z" fill="#FF8400" stroke="#FF8400"/>
-  <path d="M160.808 23.8994H154.774V29.9331H160.808V23.8994Z" fill="none" stroke="none"/>
-  <path d="M166.841 23.8994H160.808V29.9331H166.841V23.8994Z" fill="none" stroke="none"/>
-  <path d="M172.875 23.8994H166.841V29.9331H172.875V23.8994Z" fill="none" stroke="none"/>
-  <path d="M178.909 23.8994H172.875V29.9331H178.909V23.8994Z" fill="none" stroke="none"/>
-  <path d="M184.942 23.8994H178.909V29.9331H184.942V23.8994Z" fill="none" stroke="none"/>
-  <path d="M190.976 23.8994H184.942V29.9331H190.976V23.8994Z" fill="none" stroke="none"/>
-  <path d="M197.009 23.8994H190.976V29.9331H197.009V23.8994Z" fill="none" stroke="none"/>
-  <path d="M203.043 23.8994H197.009V29.9331H203.043V23.8994Z" fill="none" stroke="none"/>
-  <path d="M58.2356 23.8994H52.2019V29.9331H58.2356V23.8994Z" fill="none" stroke="none"/>
-  <path d="M64.2688 23.8994H58.2351V29.9331H64.2688V23.8994Z" fill="none" stroke="none"/>
-  <path d="M46.1682 23.8994H40.1345V29.9331H46.1682V23.8994Z" fill="none" stroke="none"/>
-  <path d="M52.2014 23.8994H46.1677V29.9331H52.2014V23.8994Z" fill="none" stroke="none"/>
-  <path d="M34.1009 23.8994H28.0671V29.9331H34.1009V23.8994Z" fill="none" stroke="none"/>
-  <path d="M40.1345 23.8994H34.1008V29.9331H40.1345V23.8994Z" fill="none" stroke="none"/>
-  <path d="M22.0335 23.8994H15.9998V29.9331H22.0335V23.8994Z" fill="none" stroke="none"/>
-  <path d="M28.0671 23.8994H22.0334V29.9331H28.0671V23.8994Z" fill="none" stroke="none"/>
-  <path d="M209.077 23.8994H203.043V29.9331H209.077V23.8994Z" fill="none" stroke="none"/>
-  <path d="M215.11 23.8994H209.077V29.9331H215.11V23.8994Z" fill="none" stroke="none"/>
-  <path d="M221.144 23.8994H215.111V29.9331H221.144V23.8994Z" fill="none" stroke="none"/>
-  <path d="M227.178 23.8994H221.144V29.9331H227.178V23.8994Z" fill="none" stroke="none"/>
-  <path d="M233.211 23.8994H227.178V29.9331H233.211V23.8994Z" fill="none" stroke="none"/>
-  <path d="M239.245 23.8994H233.211V29.9331H239.245V23.8994Z" fill="none" stroke="none"/>
-  <path d="M245.279 23.8994H239.245V29.9331H245.279V23.8994Z" fill="none" stroke="none"/>
-  <path d="M251.313 23.8994H245.279V29.9331H251.313V23.8994Z" fill="none" stroke="none"/>
-  <path d="M70.3025 17.8657H64.2688V23.8994H70.3025V17.8657Z" fill="none" stroke="none"/>
-  <path d="M76.3361 17.8657H70.3025V23.8994H76.3361V17.8657Z" fill="none" stroke="none"/>
-  <path d="M82.3699 17.8657H76.3362V23.8994H82.3699V17.8657Z" fill="none" stroke="none"/>
-  <path d="M88.4036 17.8657H82.3699V23.8994H88.4036V17.8657Z" fill="none" stroke="none"/>
-  <path d="M94.4372 17.8657H88.4036V23.8994H94.4372V17.8657Z" fill="none" stroke="none"/>
-  <path d="M100.47 17.8657H94.4368V23.8994H100.47V17.8657Z" fill="none" stroke="none"/>
-  <path d="M106.505 17.8657H100.471V23.8994H106.505V17.8657Z" fill="none" stroke="none"/>
-  <path d="M112.538 17.8657H106.505V23.8994H112.538V17.8657Z" fill="none" stroke="none"/>
-  <path d="M118.572 17.8657H112.538V23.8994H118.572V17.8657Z" fill="none" stroke="none"/>
-  <path d="M124.606 17.8657H118.572V23.8994H124.606V17.8657Z" fill="none" stroke="none"/>
-  <path d="M130.639 17.8657H124.605V23.8994H130.639V17.8657Z" fill="none" stroke="none"/>
-  <path d="M136.673 17.8657H130.639V23.8994H136.673V17.8657Z" fill="none" stroke="none"/>
-  <path d="M142.706 17.8657H136.673V23.8994H142.706V17.8657Z" fill="none" stroke="none"/>
-  <path d="M148.741 17.8657H142.707V23.8994H148.741V17.8657Z" fill="none" stroke="none"/>
-  <path d="M154.774 17.8657H148.74V23.8994H154.774V17.8657Z" fill="none" stroke="none"/>
-  <path d="M160.808 17.8657H154.774V23.8994H160.808V17.8657Z" fill="none" stroke="none"/>
-  <path d="M166.841 17.8657H160.808V23.8994H166.841V17.8657Z" fill="none" stroke="none"/>
-  <path d="M172.875 17.8657H166.841V23.8994H172.875V17.8657Z" fill="none" stroke="none"/>
-  <path d="M178.909 17.8657H172.875V23.8994H178.909V17.8657Z" fill="none" stroke="none"/>
-  <path d="M184.942 17.8657H178.909V23.8994H184.942V17.8657Z" fill="none" stroke="none"/>
-  <path d="M190.976 17.8657H184.942V23.8994H190.976V17.8657Z" fill="none" stroke="none"/>
-  <path d="M197.009 17.8657H190.976V23.8994H197.009V17.8657Z" fill="none" stroke="none"/>
-  <path d="M203.043 17.8657H197.009V23.8994H203.043V17.8657Z" fill="none" stroke="none"/>
-  <path d="M58.2356 17.8657H52.2019V23.8994H58.2356V17.8657Z" fill="none" stroke="none"/>
-  <path d="M64.2688 17.8657H58.2351V23.8994H64.2688V17.8657Z" fill="none" stroke="none"/>
-  <path d="M46.1682 17.8657H40.1345V23.8994H46.1682V17.8657Z" fill="none" stroke="none"/>
-  <path d="M52.2014 17.8657H46.1677V23.8994H52.2014V17.8657Z" fill="none" stroke="none"/>
-  <path d="M34.1009 17.8657H28.0671V23.8994H34.1009V17.8657Z" fill="none" stroke="none"/>
-  <path d="M40.1345 17.8657H34.1008V23.8994H40.1345V17.8657Z" fill="none" stroke="none"/>
-  <path d="M22.0335 17.8657H15.9998V23.8994H22.0335V17.8657Z" fill="none" stroke="none"/>
-  <path d="M28.0671 17.8657H22.0334V23.8994H28.0671V17.8657Z" fill="none" stroke="none"/>
-  <path d="M209.077 17.8657H203.043V23.8994H209.077V17.8657Z" fill="none" stroke="none"/>
-  <path d="M215.11 17.8657H209.077V23.8994H215.11V17.8657Z" fill="none" stroke="none"/>
-  <path d="M221.144 17.8657H215.111V23.8994H221.144V17.8657Z" fill="none" stroke="none"/>
-  <path d="M227.178 17.8657H221.144V23.8994H227.178V17.8657Z" fill="none" stroke="none"/>
-  <path d="M233.211 17.8657H227.178V23.8994H233.211V17.8657Z" fill="none" stroke="none"/>
-  <path d="M239.245 17.8657H233.211V23.8994H239.245V17.8657Z" fill="none" stroke="none"/>
-  <path d="M245.279 17.8657H239.245V23.8994H245.279V17.8657Z" fill="none" stroke="none"/>
-  <path d="M251.313 17.8657H245.279V23.8994H251.313V17.8657Z" fill="none" stroke="none"/>
-  <path d="M70.3025 11.832H64.2688V17.8657H70.3025V11.832Z" fill="none" stroke="none"/>
-  <path d="M76.3361 11.832H70.3025V17.8657H76.3361V11.832Z" fill="none" stroke="none"/>
-  <path d="M82.3699 11.832H76.3362V17.8657H82.3699V11.832Z" fill="none" stroke="none"/>
-  <path d="M88.4036 11.832H82.3699V17.8657H88.4036V11.832Z" fill="none" stroke="none"/>
-  <path d="M94.4372 11.832H88.4036V17.8657H94.4372V11.832Z" fill="none" stroke="none"/>
-  <path d="M100.47 11.832H94.4368V17.8657H100.47V11.832Z" fill="none" stroke="none"/>
-  <path d="M106.505 11.832H100.471V17.8657H106.505V11.832Z" fill="none" stroke="none"/>
-  <path d="M112.538 11.832H106.505V17.8657H112.538V11.832Z" fill="none" stroke="none"/>
-  <path d="M118.572 11.832H112.538V17.8657H118.572V11.832Z" fill="none" stroke="none"/>
-  <path d="M124.606 11.832H118.572V17.8657H124.606V11.832Z" fill="none" stroke="none"/>
-  <path d="M130.639 11.832H124.605V17.8657H130.639V11.832Z" fill="none" stroke="none"/>
-  <path d="M136.673 11.832H130.639V17.8657H136.673V11.832Z" fill="none" stroke="none"/>
-  <path d="M142.706 11.832H136.673V17.8657H142.706V11.832Z" fill="none" stroke="none"/>
-  <path d="M148.741 11.832H142.707V17.8657H148.741V11.832Z" fill="none" stroke="none"/>
-  <path d="M154.774 11.832H148.74V17.8657H154.774V11.832Z" fill="none" stroke="none"/>
-  <path d="M160.808 11.832H154.774V17.8657H160.808V11.832Z" fill="none" stroke="none"/>
-  <path d="M166.841 11.832H160.808V17.8657H166.841V11.832Z" fill="none" stroke="none"/>
-  <path d="M172.875 11.832H166.841V17.8657H172.875V11.832Z" fill="none" stroke="none"/>
-  <path d="M178.909 11.832H172.875V17.8657H178.909V11.832Z" fill="none" stroke="none"/>
-  <path d="M184.942 11.832H178.909V17.8657H184.942V11.832Z" fill="none" stroke="none"/>
-  <path d="M190.976 11.832H184.942V17.8657H190.976V11.832Z" fill="none" stroke="none"/>
-  <path d="M197.009 11.832H190.976V17.8657H197.009V11.832Z" fill="none" stroke="none"/>
-  <path d="M203.043 11.832H197.009V17.8657H203.043V11.832Z" fill="none" stroke="none"/>
-  <path d="M58.2356 11.832H52.2019V17.8657H58.2356V11.832Z" fill="none" stroke="none"/>
-  <path d="M64.2688 11.832H58.2351V17.8657H64.2688V11.832Z" fill="none" stroke="none"/>
-  <path d="M46.1682 11.832H40.1345V17.8657H46.1682V11.832Z" fill="none" stroke="none"/>
-  <path d="M52.2014 11.832H46.1677V17.8657H52.2014V11.832Z" fill="none" stroke="none"/>
-  <path d="M34.1009 11.832H28.0671V17.8657H34.1009V11.832Z" fill="none" stroke="none"/>
-  <path d="M40.1345 11.832H34.1008V17.8657H40.1345V11.832Z" fill="none" stroke="none"/>
-  <path d="M22.0335 11.832H15.9998V17.8657H22.0335V11.832Z" fill="none" stroke="none"/>
-  <path d="M28.0671 11.832H22.0334V17.8657H28.0671V11.832Z" fill="none" stroke="none"/>
-  <path d="M209.077 11.832H203.043V17.8657H209.077V11.832Z" fill="none" stroke="none"/>
-  <path d="M215.11 11.832H209.077V17.8657H215.11V11.832Z" fill="none" stroke="none"/>
-  <path d="M221.144 11.832H215.111V17.8657H221.144V11.832Z" fill="none" stroke="none"/>
-  <path d="M227.178 11.832H221.144V17.8657H227.178V11.832Z" fill="none" stroke="none"/>
-  <path d="M233.211 11.832H227.178V17.8657H233.211V11.832Z" fill="none" stroke="none"/>
-  <path d="M239.245 11.832H233.211V17.8657H239.245V11.832Z" fill="none" stroke="none"/>
-  <path d="M245.279 11.832H239.245V17.8657H245.279V11.832Z" fill="none" stroke="none"/>
-  <path d="M251.313 11.832H245.279V17.8657H251.313V11.832Z" fill="none" stroke="none"/>
-  <path d="M70.3025 5.79834H64.2688V11.832H70.3025V5.79834Z" fill="none" stroke="none"/>
-  <path d="M76.3361 5.79834H70.3025V11.832H76.3361V5.79834Z" fill="none" stroke="none"/>
-  <path d="M82.3699 5.79834H76.3362V11.832H82.3699V5.79834Z" fill="none" stroke="none"/>
-  <path d="M88.4036 5.79834H82.3699V11.832H88.4036V5.79834Z" fill="none" stroke="none"/>
-  <path d="M94.4372 5.79834H88.4036V11.832H94.4372V5.79834Z" fill="none" stroke="none"/>
-  <path d="M100.47 5.79834H94.4368V11.832H100.47V5.79834Z" fill="none" stroke="none"/>
-  <path d="M106.505 5.79834H100.471V11.832H106.505V5.79834Z" fill="none" stroke="none"/>
-  <path d="M112.538 5.79834H106.505V11.832H112.538V5.79834Z" fill="none" stroke="none"/>
-  <path d="M118.572 5.79834H112.538V11.832H118.572V5.79834Z" fill="none" stroke="none"/>
-  <path d="M124.606 5.79834H118.572V11.832H124.606V5.79834Z" fill="none" stroke="none"/>
-  <path d="M130.639 5.79834H124.605V11.832H130.639V5.79834Z" fill="none" stroke="none"/>
-  <path d="M136.673 5.79834H130.639V11.832H136.673V5.79834Z" fill="none" stroke="none"/>
-  <path d="M142.706 5.79834H136.673V11.832H142.706V5.79834Z" fill="none" stroke="none"/>
-  <path d="M148.741 5.79834H142.707V11.832H148.741V5.79834Z" fill="none" stroke="none"/>
-  <path d="M154.774 5.79834H148.74V11.832H154.774V5.79834Z" fill="none" stroke="none"/>
-  <path d="M160.808 5.79834H154.774V11.832H160.808V5.79834Z" fill="none" stroke="none"/>
-  <path d="M166.841 5.79834H160.808V11.832H166.841V5.79834Z" fill="none" stroke="none"/>
-  <path d="M172.875 5.79834H166.841V11.832H172.875V5.79834Z" fill="none" stroke="none"/>
-  <path d="M178.909 5.79834H172.875V11.832H178.909V5.79834Z" fill="none" stroke="none"/>
-  <path d="M184.942 5.79834H178.909V11.832H184.942V5.79834Z" fill="none" stroke="none"/>
-  <path d="M190.976 5.79834H184.942V11.832H190.976V5.79834Z" fill="none" stroke="none"/>
-  <path d="M197.009 5.79834H190.976V11.832H197.009V5.79834Z" fill="none" stroke="none"/>
-  <path d="M203.043 5.79834H197.009V11.832H203.043V5.79834Z" fill="none" stroke="none"/>
-  <path d="M58.2356 5.79834H52.2019V11.832H58.2356V5.79834Z" fill="none" stroke="none"/>
-  <path d="M64.2688 5.79834H58.2351V11.832H64.2688V5.79834Z" fill="none" stroke="none"/>
-  <path d="M46.1682 5.79834H40.1345V11.832H46.1682V5.79834Z" fill="none" stroke="none"/>
-  <path d="M52.2014 5.79834H46.1677V11.832H52.2014V5.79834Z" fill="none" stroke="none"/>
-  <path d="M34.1009 5.79834H28.0671V11.832H34.1009V5.79834Z" fill="none" stroke="none"/>
-  <path d="M40.1345 5.79834H34.1008V11.832H40.1345V5.79834Z" fill="none" stroke="none"/>
-  <path d="M22.0337 5.79834H16V11.832H22.0337V5.79834Z" fill="none" stroke="none"/>
-  <path d="M28.0671 5.79834H22.0334V11.832H28.0671V5.79834Z" fill="none" stroke="none"/>
-  <path d="M209.077 5.79834H203.043V11.832H209.077V5.79834Z" fill="none" stroke="none"/>
-  <path d="M215.11 5.79834H209.077V11.832H215.11V5.79834Z" fill="none" stroke="none"/>
-  <path d="M221.144 5.79834H215.111V11.832H221.144V5.79834Z" fill="none" stroke="none"/>
-  <path d="M227.178 5.79834H221.144V11.832H227.178V5.79834Z" fill="none" stroke="none"/>
-  <path d="M233.211 5.79834H227.178V11.832H233.211V5.79834Z" fill="none" stroke="none"/>
-  <path d="M239.245 5.79834H233.211V11.832H239.245V5.79834Z" fill="none" stroke="none"/>
-  <path d="M245.279 5.79834H239.245V11.832H245.279V5.79834Z" fill="none" stroke="none"/>
-  <path d="M251.313 5.79834H245.279V11.832H251.313V5.79834Z" fill="none" stroke="none"/>
-  <path d="M245.279 84.2358H239.245V90.2695H245.279V84.2358Z" fill="none" stroke="none"/>
-  <path d="M251.313 84.2358H245.279V90.2695H251.313V84.2358Z" fill="none" stroke="none"/>
-  <path d="M245.279 90.2695H239.245V96.3032H245.279V90.2695Z" fill="none" stroke="none"/>
-  <path d="M251.313 90.2695H245.279V96.3032H251.313V90.2695Z" fill="none" stroke="none"/>
-  <path d="M245.279 114.404H239.245V120.438H245.279V114.404Z" fill="none" stroke="none"/>
-  <path d="M251.313 114.404H245.279V120.438H251.313V114.404Z" fill="none" stroke="none"/>
-  <path d="M245.279 120.438H239.245V126.472H245.279V120.438Z" fill="none" stroke="none"/>
-  <path d="M251.313 120.438H245.279V126.472H251.313V120.438Z" fill="none" stroke="none"/>
-  <path d="M245.279 126.471H239.245V132.505H245.279V126.471Z" fill="none" stroke="none"/>
-  <path d="M251.313 126.471H245.279V132.505H251.313V126.471Z" fill="none" stroke="none"/>
-  <path d="M245.279 132.505H239.245V138.539H245.279V132.505Z" fill="none" stroke="none"/>
-  <path d="M251.313 132.505H245.279V138.539H251.313V132.505Z" fill="none" stroke="none"/>
-  <path d="M245.279 138.539H239.245V144.572H245.279V138.539Z" fill="none" stroke="none"/>
-  <path d="M251.313 138.539H245.279V144.572H251.313V138.539Z" fill="none" stroke="none"/>
-  <path d="M245.279 144.572H239.245V150.606H245.279V144.572Z" fill="none" stroke="none"/>
-  <path d="M251.313 144.572H245.279V150.606H251.313V144.572Z" fill="none" stroke="none"/>
-  <path d="M245.279 150.606H239.245V156.64H245.279V150.606Z" fill="none" stroke="none"/>
-  <path d="M251.313 150.606H245.279V156.64H251.313V150.606Z" fill="none" stroke="none"/>
-  <path d="M245.279 156.639H239.245V162.673H245.279V156.639Z" fill="none" stroke="none"/>
-  <path d="M251.313 156.639H245.279V162.673H251.313V156.639Z" fill="none" stroke="none"/>
-  <path d="M245.279 162.673H239.245V168.707H245.279V162.673Z" fill="none" stroke="none"/>
-  <path d="M251.313 162.673H245.279V168.707H251.313V162.673Z" fill="none" stroke="none"/>
-  <path d="M245.279 168.707H239.245V174.741H245.279V168.707Z" fill="none" stroke="none"/>
-  <path d="M251.313 168.707H245.279V174.741H251.313V168.707Z" fill="none" stroke="none"/>
-  <path d="M245.279 174.741H239.245V180.774H245.279V174.741Z" fill="none" stroke="none"/>
-  <path d="M251.313 174.741H245.279V180.774H251.313V174.741Z" fill="none" stroke="none"/>
-  <path d="M245.279 180.774H239.245V186.808H245.279V180.774Z" fill="none" stroke="none"/>
-  <path d="M251.313 180.774H245.279V186.808H251.313V180.774Z" fill="none" stroke="none"/>
-  <path d="M245.279 186.808H239.245V192.842H245.279V186.808Z" fill="none" stroke="none"/>
-  <path d="M251.313 186.808H245.279V192.842H251.313V186.808Z" fill="none" stroke="none"/>
-  <path d="M245.279 192.841H239.245V198.875H245.279V192.841Z" fill="none" stroke="none"/>
-  <path d="M251.313 192.841H245.279V198.875H251.313V192.841Z" fill="none" stroke="none"/>
-  <path d="M245.279 198.875H239.245V204.909H245.279V198.875Z" fill="none" stroke="none"/>
-  <path d="M251.313 198.875H245.279V204.909H251.313V198.875Z" fill="none" stroke="none"/>
-  <path d="M245.279 204.909H239.245V210.942H245.279V204.909Z" fill="none" stroke="none"/>
-  <path d="M251.313 204.909H245.279V210.942H251.313V204.909Z" fill="none" stroke="none"/>
-  <path d="M245.279 210.942H239.245V216.976H245.279V210.942Z" fill="none" stroke="none"/>
-  <path d="M251.313 210.942H245.279V216.976H251.313V210.942Z" fill="none" stroke="none"/>
-  <path d="M245.279 216.976H239.245V223.01H245.279V216.976Z" fill="none" stroke="none"/>
-  <path d="M251.313 216.976H245.279V223.01H251.313V216.976Z" fill="none" stroke="none"/>
-  <path d="M245.279 223.01H239.245V229.043H245.279V223.01Z" fill="none" stroke="none"/>
-  <path d="M251.313 223.01H245.279V229.043H251.313V223.01Z" fill="none" stroke="none"/>
-  <path d="M245.279 229.043H239.245V235.077H245.279V229.043Z" fill="none" stroke="none"/>
-  <path d="M251.313 229.043H245.279V235.077H251.313V229.043Z" fill="none" stroke="none"/>
-  <path d="M251.313 235.077H245.279V241.11H251.313V235.077Z" fill="none" stroke="none"/>
   <path d="M118.572 132.505H112.538V138.539H118.572V132.505Z" fill="#5CFF00" stroke="#5CFF00"/>
   <path d="M160.808 132.505H154.774V138.539H160.808V132.505Z" fill="#5CFF00" stroke="#5CFF00"/>
   <path d="M94.4372 198.875H88.4036V204.909H94.4372V198.875Z" fill="#FFD500" stroke="#FFD500"/>
