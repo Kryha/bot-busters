@@ -1,7 +1,9 @@
-import { type FC, useEffect } from "react";
+import { type FC, useEffect, useRef } from "react";
+import { useRouter } from "next/router.js";
 
 import { useBBWallet } from "~/service/bb-wallet.js";
 import { type LoggedUserData } from "~/types/index.js";
+import { pages } from "~/router.js";
 
 import { LoginLoading } from "./login-loading.jsx";
 import { type LoginStage } from "./types.js";
@@ -19,22 +21,37 @@ export const ConnectWallet: FC<ConnectWalletProps> = ({
   setSignature,
   setLoginStage,
 }) => {
-  const { connect, isConnecting, getSignature, address } = useBBWallet();
+  const router = useRouter();
+
+  const { connect, isConnecting, isSigning, getSignature, address } =
+    useBBWallet();
+
+  const isAuthenticating = useRef(false);
 
   useEffect(() => {
-    if (isConnecting) return;
-
     const authenticate = async () => {
+      if (isConnecting || isSigning || isAuthenticating.current) return;
+
+      isAuthenticating.current = true;
+
       if (!address) {
         await connect();
       } else {
         const signature = await getSignature();
 
         setAddress(address);
-        setSignature(signature);
+
+        if (signature) {
+          setSignature(signature);
+        } else {
+          // TODO: redirect to an error page
+          await router.push(pages.home);
+        }
 
         setLoginStage(loggedUser ? "verify" : "signIn");
       }
+
+      isAuthenticating.current = false;
     };
 
     authenticate().catch((err) => console.error(err));
@@ -43,7 +60,9 @@ export const ConnectWallet: FC<ConnectWalletProps> = ({
     connect,
     getSignature,
     isConnecting,
+    isSigning,
     loggedUser,
+    router,
     setAddress,
     setLoginStage,
     setSignature,

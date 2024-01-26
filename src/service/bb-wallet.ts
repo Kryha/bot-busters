@@ -29,23 +29,25 @@ export const useBBWallet = () => {
     select(LeoWalletName);
   }, [select]);
 
-  const [signature, setSignature] = useState<string>();
+  const [isSigning, setIsSigning] = useState(false);
 
   const getSignature = useCallback(async () => {
-    if (!wallet) throw new Error("Wallet not initialised.");
+    setIsSigning(true);
+    try {
+      if (!wallet) throw new Error("Wallet not initialised.");
 
-    if (signature) return signature;
+      const adapter = wallet.adapter as LeoWalletAdapter;
 
-    const adapter = wallet.adapter as LeoWalletAdapter;
+      const bytes = new TextEncoder().encode(AUTH_SIGN_MESSAGE);
+      const signatureMessageBytes = await adapter.signMessage(bytes);
+      const newSignature = new TextDecoder().decode(signatureMessageBytes);
 
-    const bytes = new TextEncoder().encode(AUTH_SIGN_MESSAGE);
-    const signatureMessageBytes = await adapter.signMessage(bytes);
-    const newSignature = new TextDecoder().decode(signatureMessageBytes);
-
-    setSignature(newSignature);
-
-    return newSignature;
-  }, [signature, wallet]);
+      return newSignature;
+    } catch (error) {
+      console.error(error);
+    }
+    setIsSigning(false);
+  }, [wallet]);
 
   const connectWallet = useCallback(async () => {
     if (connected || connecting) return;
@@ -74,6 +76,7 @@ export const useBBWallet = () => {
     isConnected: connected,
     isConnecting: connecting,
     isDisconnecting: disconnecting,
+    isSigning,
     connect: connectWallet,
     disconnect: disconnectWallet,
     getSignature,
