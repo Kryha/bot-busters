@@ -1,5 +1,7 @@
-import { z } from "zod";
 import { count, eq } from "drizzle-orm";
+import { z } from "zod";
+
+import { POINTS_ACHIEVEMENTS } from "~/constants/index.js";
 
 import {
   createTRPCRouter,
@@ -8,11 +10,14 @@ import {
 } from "~/server/api/trpc.js";
 import { db } from "~/server/db/index.js";
 import { ranks, users, usersToMatches } from "~/server/db/schema.js";
+import { deleteUser, selectMatchPlayedByUser } from "~/server/db/user.js";
+import {
+  alreadyReceivedAchievement,
+  leaderboard,
+} from "~/server/service/index.js";
+import { profanityFilter } from "~/service/index.js";
 import { isValidSession } from "~/utils/session.js";
 import { verifySignature } from "~/utils/wallet.js";
-import { profanityFilter } from "~/service/index.js";
-import { leaderboard } from "~/server/service/index.js";
-import { deleteUser } from "~/server/db/user.js";
 
 export const userRouter = createTRPCRouter({
   mergeScore: protectedProcedure
@@ -49,6 +54,23 @@ export const userRouter = createTRPCRouter({
 
         const [firstUser, ...usersToDelete] = duplicateUsers;
 
+        // This section makes sure the logged in user does not get the beginner's luck achievement twice.
+        const matchesPlayedByUser = await selectMatchPlayedByUser(
+          firstUser!.id,
+          tx,
+        );
+
+        const matchRooms = matchesPlayedByUser.map((match) => match.match.room);
+
+        const hasAchievement = alreadyReceivedAchievement(
+          firstUser!.id,
+          matchRooms,
+          "firstTimer",
+        );
+
+        if (hasAchievement) {
+          loggedUser.score -= POINTS_ACHIEVEMENTS.firstTimer;
+        }
         usersToDelete.push(loggedUser);
 
         await tx
@@ -113,7 +135,7 @@ export const userRouter = createTRPCRouter({
       });
     }),
 
-  getUserById: protectedProcedure.query(async ({ ctx }) => {
+  getLoggedUser: protectedProcedure.query(async ({ ctx }) => {
     const { id } = ctx.session.user;
 
     const [selectedUser] = await db

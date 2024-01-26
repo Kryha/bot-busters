@@ -1,1 +1,6 @@
-// TODO: define z-index values to be used within styles
+export const zIndex = {
+  back: -1,
+  /*default: 0;*/
+  middle: 1,
+  front: 2,
+} as const;

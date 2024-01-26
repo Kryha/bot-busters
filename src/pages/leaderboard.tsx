@@ -1,8 +1,6 @@
 import { useEffect, useMemo } from "react";
-import { useSession } from "next-auth/react";
 import { CircularProgress, Typography } from "@mui/material";
 
-import { isValidSession } from "~/utils/session.js";
 import { AddScoreTable, LeaderboardTable } from "~/components/tables/index.js";
 import { text } from "~/assets/text/index.js";
 import { styles } from "~/styles/pages/leaderboard.js";
@@ -13,8 +11,9 @@ import { isClient } from "~/utils/client.js";
 const USERS_PER_PAGE = 20;
 
 const LeaderBoard = () => {
-  const { data: sessionData } = useSession();
-  const isAuthenticated = isValidSession(sessionData);
+  const loggedUser = api.user.getLoggedUser.useQuery(undefined, {
+    retry: false,
+  });
 
   const isGamePlayed = true;
 
@@ -77,7 +76,7 @@ const LeaderBoard = () => {
 
       {/*TODO: delete this component after refactoring username creation */}
       <AddScoreTable
-        isAuthenticated={isAuthenticated}
+        isAuthenticated={!!loggedUser.data}
         isGamePlayed={isGamePlayed}
         countdown={fakeCountdown}
       />

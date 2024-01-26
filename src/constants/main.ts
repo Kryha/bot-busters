@@ -12,6 +12,8 @@ export const VOTING_TIME_MS = 60000;
 
 export const SPLASH_SCREEN_DURATION = 3000; // 3 seconds
 
+export const DEFAULT_MAX_PLAYERS_PER_ROOM = 5;
+
 /* MATERIAL UI  */
 export const FONT_SIZE = 16;
 export const COEFFICIENT = 14;
@@ -21,10 +23,10 @@ export const CHIP_TIMEOUT = 4000;
 export const POINTS_BOT_BUSTED = 11;
 export const POINTS_HUMAN_BUSTED = 10;
 export const POINTS_ACHIEVEMENTS: Record<AchievementId, number> = {
-  "11": 1,
-  "12": 5,
-  "13": 5,
-  "101": 9,
-  "201": 5,
-  "202": 5,
+  goodBust: 5,
+  doubleAgent: 5,
+  busterStreak: 9,
+  firstTimer: 5,
+  beginnersLuck: 5,
+  realHuman: 5,
 };
