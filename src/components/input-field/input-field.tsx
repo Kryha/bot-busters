@@ -41,6 +41,7 @@ export const InputField: FC<Props> = ({ onClick, disabled, ...rest }) => {
 
 type TextInputFieldProps = TextFieldProps & {
   heading: string;
+  validationError?: string;
   container?: SxProps;
 };
 
@@ -50,6 +51,7 @@ export const TextInputField: FC<TextInputFieldProps> = ({
   heading,
   multiline,
   fullWidth,
+  validationError,
   container,
   ...rest
 }) => {
@@ -59,12 +61,20 @@ export const TextInputField: FC<TextInputFieldProps> = ({
       <TextField
         placeholder={placeholder}
         InputProps={{ sx: styles.textInputFieldProps }}
-        sx={styles.textInputField}
+        sx={{
+          ...(validationError
+            ? styles.textInputFieldError
+            : styles.textInputField),
+        }}
         disabled={disabled}
         fullWidth={fullWidth}
         multiline={multiline}
+        rows={14}
         {...rest}
       />
+      <Typography variant="body1" sx={styles.errorText}>
+        {validationError}
+      </Typography>
     </Stack>
   );
 };
