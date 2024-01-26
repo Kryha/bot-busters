@@ -1,11 +1,13 @@
-import { useRef, type FC, useEffect } from "react";
+import { useRef, type FC, useEffect, useState } from "react";
 import { Stack } from "@mui/material";
+import { useRouter } from "next/router.js";
 
 import { api } from "~/utils/api.js";
 import { RowCreateUsername } from "~/components/tables/components/index.js";
 
 import { type LoginStage } from "./types.js";
 import { LoginLoading } from "./login-loading.jsx";
+import { pages } from "~/router.js";
 
 interface UsernameSelectProps {
   address: string;
@@ -19,8 +21,12 @@ export const UsernameSelect: FC<UsernameSelectProps> = ({
   signature,
   setLoginStage,
 }) => {
+  const router = useRouter();
+
   const verify = api.user.verify.useMutation();
   const merge = api.user.mergeScore.useMutation();
+
+  const [isAskingUsername, setIsAskingUsername] = useState(false);
 
   const shouldMerge = useRef(true);
 
@@ -29,15 +35,22 @@ export const UsernameSelect: FC<UsernameSelectProps> = ({
       if (!shouldMerge.current) return;
       shouldMerge.current = false;
 
-      const res = await merge.mutateAsync({ address, signature });
+      try {
+        const res = await merge.mutateAsync({ address, signature });
 
-      if (res.isUsernameSet) {
-        setLoginStage("signIn");
+        if (res.isUsernameSet) {
+          setLoginStage("signIn");
+        } else {
+          setIsAskingUsername(true);
+        }
+      } catch (error) {
+        // TODO: use a generic error page
+        await router.push(pages.home);
       }
     };
 
     attemptMerge().catch((err) => console.error(err));
-  }, [address, merge, setLoginStage, signature]);
+  }, [address, merge, router, setLoginStage, signature]);
 
   const handleVerification = async (username: string) => {
     try {
@@ -48,7 +61,7 @@ export const UsernameSelect: FC<UsernameSelectProps> = ({
     }
   };
 
-  if (merge.isLoading) return <LoginLoading />;
+  if (!isAskingUsername) return <LoginLoading />;
 
   return (
     <Stack>
