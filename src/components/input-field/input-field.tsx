@@ -69,6 +69,7 @@ export const TextInputField: FC<TextInputFieldProps> = ({
         disabled={disabled}
         fullWidth={fullWidth}
         multiline={multiline}
+        rows={14}
         {...rest}
       />
       <Typography variant="body1" sx={styles.errorText}>

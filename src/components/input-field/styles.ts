@@ -44,7 +44,6 @@ export const styles = {
     flexGrow: 1,
     backgroundColor: "common.black",
     mt: "20px",
-    // mb: "40px",
     textTransform: "capitalize",
   },
   textInputFieldError: {
