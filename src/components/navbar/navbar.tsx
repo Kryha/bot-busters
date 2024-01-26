@@ -1,6 +1,5 @@
 import { type FC, useState } from "react";
 import { Button, Stack, Typography } from "@mui/material";
-import { signOut } from "next-auth/react";
 import { useRouter } from "next/router";
 
 import { text } from "~/assets/text/index.js";
@@ -26,18 +25,11 @@ interface Props {
 }
 
 export const Navbar: FC<Props> = ({
-  isVerifiedUser,
   open,
   setOpen,
-  disconnectWallet,
 }) => {
   const router = useRouter();
   const [soundOn, setSoundOn] = useState(true);
-
-  const logOut = async () => {
-    await signOut();
-    await disconnectWallet();
-  };
 
   const onSoundClick = () => {
     setSoundOn(!soundOn);
@@ -65,17 +57,6 @@ export const Navbar: FC<Props> = ({
         >
           <BotBustersIcon />
         </Button>
-        {/*TODO: Move this to the menu*/}
-        {isVerifiedUser && (
-          <Button
-            variant="contained"
-            color="blueGrey"
-            onClick={() => void logOut()}
-            sx={styles.button}
-          >
-            {text.general.signOut}
-          </Button>
-        )}
         <Stack direction={"row"} rowGap={2} sx={styles.navbarEnd}>
           <Button variant="text" onClick={onSoundClick}>
             {soundOn ? <SoundOnIcon /> : <SoundOffIcon />}
