@@ -1,11 +1,12 @@
 import { type SxProps } from "@mui/material";
 
 import { breakpoints, theme } from "~/styles/theme.js";
+import { zIndex } from "~/styles/z-index";
 
 export const styles = {
   container: {
     position: "relative",
-    zIndex: 2,
+    zIndex: zIndex.middle,
     flex: "0 1 auto",
   },
   statsWrapper: {

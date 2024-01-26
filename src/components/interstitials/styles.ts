@@ -1,4 +1,5 @@
 import { type SxProps } from "@mui/material";
+import { zIndex } from "~/styles/z-index";
 
 export const styles = {
   avatar: {
@@ -7,7 +8,7 @@ export const styles = {
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    zIndex: -1,
+    zIndex: zIndex.absoluteFront,
     width: "auto",
     height: "100vh",
     "& > img": {

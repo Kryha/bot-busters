@@ -1,4 +1,5 @@
 import { type SxProps } from "@mui/material";
+import { zIndex } from "~/styles/z-index";
 
 export const styles = {
   tableRow: {
@@ -9,7 +10,7 @@ export const styles = {
     position: "absolute",
     top: "50%",
     transform: "translateY(-50%)",
-    zIndex: 1,
+    zIndex: zIndex.front,
     left: "8.6%",
     alignItems: "center",
     height: "100vh",
@@ -20,7 +21,7 @@ export const styles = {
     gap: 1,
     flexDirection: "row",
     position: "absolute",
-    zIndex: 1,
+    zIndex: zIndex.front,
     left: "8.6%",
     alignItems: "center",
     top: "50%",

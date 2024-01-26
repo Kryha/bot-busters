@@ -1,4 +1,5 @@
 import { type SxProps } from "@mui/material";
+import { zIndex } from "~/styles/z-index";
 
 export const styles = {
   container: (backgroundColor?: string) => {
@@ -6,7 +7,7 @@ export const styles = {
       position: "fixed",
       inset: 0,
       backgroundColor: backgroundColor,
-      zIndex: 2,
+      zIndex: zIndex.middle,
       alignItems: "center",
       justifyContent: "center",
     } satisfies SxProps;
