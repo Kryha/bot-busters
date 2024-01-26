@@ -1,5 +1,5 @@
 import { type SxProps } from "@mui/material";
-import { zIndex } from "~/styles/z-index";
+import { zIndex } from "~/styles/z-index.js";
 
 export const styles = {
   avatar: {
