@@ -18,13 +18,17 @@ import { useBBWallet } from "~/service/bb-wallet.js";
 
 interface Props {
   isVerifiedUser: boolean;
-  username: string;
+  username?: string | null;
   open: boolean;
   setOpen: (open: boolean) => void;
-  points: number;
 }
 
-export const Navbar: FC<Props> = ({ isVerifiedUser, open, setOpen }) => {
+export const Navbar: FC<Props> = ({
+  isVerifiedUser,
+  open,
+  setOpen,
+  username,
+}) => {
   const router = useRouter();
   const { disconnect: disconnectWallet } = useBBWallet();
 
@@ -52,7 +56,7 @@ export const Navbar: FC<Props> = ({ isVerifiedUser, open, setOpen }) => {
             <UserIcon />
           </Stack>
           <Typography variant="h3" sx={styles.userNameText}>
-            {text.general.username}
+            {username ?? text.general.username}
           </Typography>
         </Stack>
         <Button
