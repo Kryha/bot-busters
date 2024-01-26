@@ -1,4 +1,4 @@
-import { Stack, Typography } from "@mui/material";
+import { CircularProgress, Stack, Typography } from "@mui/material";
 import React from "react";
 import { useRouter } from "next/router.js";
 
@@ -15,10 +15,18 @@ const PlayerProfile = () => {
 
   const isVerifiedUser = !!user.data?.address && !!user.data.username;
 
+  if (user.isLoading) {
+    return (
+      <Stack sx={styles.mainContainer}>
+        <CircularProgress />
+      </Stack>
+    );
+  }
+
   return (
     <Stack sx={styles.mainContainer}>
       <Typography variant="h1" color="common.black">
-        {text.playerProfile.profile}
+        {user.data?.username ?? text.playerProfile.profile}
       </Typography>
 
       {/* <Stack sx={styles.table}>

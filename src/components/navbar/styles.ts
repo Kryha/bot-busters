@@ -59,6 +59,10 @@ export const styles = {
     justifyContent: "center",
     color: theme.palette.primary.main,
     gap: 1,
+    cursor: "pointer",
+    "&:hover": {
+      color: theme.palette.secondary.main,
+    },
   } satisfies SxProps,
   userNameText: {
     overflow: "hidden",

@@ -50,7 +50,10 @@ export const Navbar: FC<Props> = ({
   return (
     <Stack sx={styles.container}>
       <Stack sx={styles.wrapper}>
-        <Stack sx={{ ...styles.userName, ...styles.navbarStart }}>
+        <Stack
+          onClick={() => handleNavigation(pages.playerProfile)}
+          sx={{ ...styles.userName, ...styles.navbarStart }}
+        >
           <Stack sx={styles.userIcon}>
             <UserIcon />
           </Stack>

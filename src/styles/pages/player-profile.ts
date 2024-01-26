@@ -2,7 +2,7 @@ import { type SxProps } from "@mui/material";
 
 export const styles = {
   mainContainer: {
-    pt: 30,
+    pt: 10,
     alignItems: "center",
     gap: 2,
   } satisfies SxProps,
