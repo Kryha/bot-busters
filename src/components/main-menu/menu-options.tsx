@@ -18,7 +18,11 @@ interface Props {
 export const MenuOptions: FC<Props> = ({ handleClose }) => {
   const router = useRouter();
   const join = api.lobby.join.useMutation();
-  const { isConnected, isConnecting, disconnect: disconnectWallet } = useBBWallet();
+  const {
+    isConnected,
+    isConnecting,
+    disconnect: disconnectWallet,
+  } = useBBWallet();
 
   const logOut = async () => {
     await signOut();
@@ -48,13 +52,15 @@ export const MenuOptions: FC<Props> = ({ handleClose }) => {
       <MenuOptionsButton onClick={() => handleNavigation(pages.howToPlay)}>
         {text.general.howToPlay}
       </MenuOptionsButton>
-      { isConnected || isConnecting 
-      ? <MenuOptionsButton onClick={() => handleNavigation(pages.login)}>
+      {isConnected || isConnecting ? (
+        <MenuOptionsButton onClick={() => void logOut()}>
+          {text.general.signOut}
+        </MenuOptionsButton>
+      ) : (
+        <MenuOptionsButton onClick={() => handleNavigation(pages.login)}>
           {text.general.connectWallet}
         </MenuOptionsButton>
-      : <MenuOptionsButton onClick={() => void logOut()}>
-          {text.general.signOut}
-        </MenuOptionsButton>}
+      )}
       <MenuOptionsButton onClick={() => handleNavigation(pages.about)}>
         {text.general.about}
       </MenuOptionsButton>

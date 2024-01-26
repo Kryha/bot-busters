@@ -5,7 +5,7 @@ export const general = {
   play: "Play",
   close: "close",
   home: "Home",
-  signOut: "sign out (disconnect wallet)",
+  signOut: "sign out",
   decision: "Decision",
   leaderboard: "Leaderboard",
   about: "About",
