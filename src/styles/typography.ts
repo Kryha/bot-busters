@@ -54,14 +54,14 @@ export const typography = (): Typography => {
     pxToRem: pxToRem,
     h1: {
       fontFamily: headingsFont.style.fontFamily,
-      fontSize: "clamp(3.0rem, 7.4vw + 1rem, 7rem);", //150px
-      lineHeight: "clamp(5rem, 9.4vw + 1rem, 8rem);", //
+      fontSize: "clamp(3.0rem, 7.4vw + 1rem, 7rem)", //150px
+      lineHeight: "clamp(5rem, 9.4vw + 1rem, 8rem)", //
       color: "#FF8400 !important",
       textTransform: "uppercase" as const,
     },
     h2: {
-      fontSize: "clamp(3.0rem, 7.4vw + 1rem, 7rem);", //110px
-      lineHeight: "clamp(5rem, 9.4vw + 1rem, 8rem);",
+      fontSize: "clamp(3rem, 7.2vw + 1rem, 7rem)", //110px
+      lineHeight: "clamp(3rem, 7.2vw + 1rem, 8rem)",
       fontFamily: headingsFont.style.fontFamily,
       fontWeight: 400,
       textTransform: "uppercase" as const,
