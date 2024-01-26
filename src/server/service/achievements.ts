@@ -89,7 +89,7 @@ const realHumanAchievement: Achievement = {
   },
 };
 
-export const MATCH_ACHIEVEMENTS: Record<AchievementId, Achievement> = {
+export const matchAchievements: Record<AchievementId, Achievement> = {
   goodBust: goodBustAchievement,
   doubleAgent: doubleAgentAchievement,
   busterStreak: busterStreakAchievement,
