@@ -34,21 +34,25 @@ export const ConnectWallet: FC<ConnectWalletProps> = ({
 
       isAuthenticating.current = true;
 
-      if (!address) {
-        await connect();
-      } else {
-        const signature = await getSignature();
-
-        setAddress(address);
-
-        if (signature) {
-          setSignature(signature);
+      try {
+        if (!address) {
+          await connect();
         } else {
-          // TODO: redirect to an error page
-          await router.push(pages.home);
-        }
+          const signature = await getSignature();
 
-        setLoginStage(loggedUser ? "verify" : "signIn");
+          setAddress(address);
+
+          if (signature) {
+            setSignature(signature);
+          } else {
+            // TODO: redirect to an error page
+            await router.push(pages.home);
+          }
+          setLoginStage(loggedUser ? "verify" : "signIn");
+        }
+      } catch (error) {
+        // TODO: redirect to an error page
+        await router.push(pages.home);
       }
 
       isAuthenticating.current = false;
