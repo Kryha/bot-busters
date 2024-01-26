@@ -6,7 +6,6 @@ export const pages = {
   leaderboard: "/leaderboard",
   about: "/about",
   login: "/login",
-  usernameSelect: "/username-select",
   playerProfile: "/player-profile",
   howToPlay: "/how-to-play",
   support: "/support",

@@ -135,7 +135,7 @@ export const userRouter = createTRPCRouter({
       });
     }),
 
-  getUserById: protectedProcedure.query(async ({ ctx }) => {
+  getLoggedUser: protectedProcedure.query(async ({ ctx }) => {
     const { id } = ctx.session.user;
 
     const [selectedUser] = await db
