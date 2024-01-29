@@ -8,6 +8,7 @@ import { styles } from "~/styles/pages/player-profile.js";
 import { api } from "~/utils/api.js";
 import { PrimaryButton } from "~/components/primary-button/index.js";
 import { PlayerTable } from "~/components/index.js";
+import { isVerifiedUser } from "~/utils/user.js";
 
 const PlayerProfile = () => {
   const router = useRouter();
@@ -15,8 +16,6 @@ const PlayerProfile = () => {
   const user = api.user.getLoggedUserProfile.useQuery(undefined, {
     retry: false,
   });
-
-  const isVerifiedUser = !!user.data?.address && !!user.data.username;
 
   if (user.isLoading) {
     return (
@@ -38,7 +37,7 @@ const PlayerProfile = () => {
         </Stack>
       )}
 
-      {!isVerifiedUser && (
+      {!isVerifiedUser(user.data) && (
         <Stack alignItems="center" gap={4}>
           <Stack alignItems="center" gap={2}>
             <Typography variant="body1">
