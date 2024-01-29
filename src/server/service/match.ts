@@ -23,7 +23,7 @@ import {
   type PlayerType,
 } from "~/types/index.js";
 import { getRandomInt } from "~/utils/math.js";
-import { MATCH_ACHIEVEMENTS } from "./achievements.js";
+import { matchAchievements } from "./achievements.js";
 
 export class Match {
   private _id: string;
@@ -242,7 +242,7 @@ export class Match {
 
       if (!player.isBot) {
         // Check achievements
-        const achievementPoints = Object.entries(MATCH_ACHIEVEMENTS)
+        const achievementPoints = Object.entries(matchAchievements)
           .filter(([_, achievement]) => {
             return achievement.calculate({
               player,
