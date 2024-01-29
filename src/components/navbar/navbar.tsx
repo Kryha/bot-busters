@@ -21,11 +21,7 @@ interface Props {
   setOpen: (open: boolean) => void;
 }
 
-export const Navbar: FC<Props> = ({
-  open,
-  setOpen,
-  username,
-}) => {
+export const Navbar: FC<Props> = ({ open, setOpen, username }) => {
   const router = useRouter();
   const [soundOn, setSoundOn] = useState(true);
 
