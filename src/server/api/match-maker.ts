@@ -32,20 +32,21 @@ const makeMatch = () => {
   const humansInMatch = env.PLAYERS_PER_MATCH - botsInMatch;
 
   // TODO: Make the players per match random within the range 1-4
-  if (lobbyQueue.length < humansInMatch) return;
+  // TODO: Benchmark and check what's the maximum amount of matches we can handle at a time
+  while (lobbyQueue.length >= humansInMatch) {
+    const playerIds = lobbyQueue.splice(0, humansInMatch);
+    const roomId = uuid();
 
-  const playerIds = lobbyQueue.splice(0, humansInMatch);
-  const roomId = uuid();
+    const match = new Match(roomId, playerIds, botsInMatch);
 
-  const match = new Match(roomId, playerIds, botsInMatch);
+    matches.set(roomId, match);
 
-  matches.set(roomId, match);
-
-  ee.emit("readyToPlay", {
-    roomId,
-    players: playerIds,
-  } satisfies ReadyToPlayPayload);
-  ee.emit("queueUpdate");
+    ee.emit("readyToPlay", {
+      roomId,
+      players: playerIds,
+    } satisfies ReadyToPlayPayload);
+    ee.emit("queueUpdate");
+  }
 };
 
 const matchLoop = () => {
