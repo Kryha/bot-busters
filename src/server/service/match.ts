@@ -1,6 +1,7 @@
 import { TRPCError } from "@trpc/server";
 import { eq, sql } from "drizzle-orm";
 import lodash from "lodash";
+import { v4 as uuid } from "uuid";
 
 import { matchPrompts } from "~/assets/text/match-prompts.js";
 import {
@@ -8,6 +9,7 @@ import {
   POINTS_ACHIEVEMENTS,
   POINTS_BOT_BUSTED,
   POINTS_HUMAN_BUSTED,
+  VOTING_TIME_MS,
 } from "~/constants/index.js";
 import { ee, matchEvent } from "~/server/api/match-maker.js";
 import { db, type BBPgTransaction } from "~/server/db/index.js";
@@ -16,6 +18,7 @@ import { selectMatchPlayedByUser, selectUserById } from "~/server/db/user.js";
 import { Agent } from "~/server/service/index.js";
 import {
   achievementIdSchema,
+  type ReadyToPlayPayload,
   type CharacterId,
   type ChatMessagePayload,
   type MatchRoom,
@@ -23,7 +26,7 @@ import {
   type PlayerType,
 } from "~/types/index.js";
 import { getRandomInt } from "~/utils/math.js";
-import { matchAchievements } from "./achievements.js";
+import { matchAchievements } from "~/server/service/achievements.js";
 
 export class Match {
   private _id: string;
@@ -40,6 +43,8 @@ export class Match {
   private _players: PlayerType[];
   private _agents: Agent[];
   private _messageCountSinceLastTrigger = 0;
+  private _isInitialized = false;
+  private _intervalId: NodeJS.Timeout;
 
   //TODO: check for better solution
   private _playerPreviousMatches = new Map<string, MatchRoom[]>();
@@ -74,8 +79,8 @@ export class Match {
   }
 
   // TODO: Inject initial prompt as first chat message from "host"
-  constructor(roomId: string, playerIds: string[], botsInMatch: number) {
-    this._id = roomId;
+  constructor(playerIds: string[], botsInMatch: number) {
+    this._id = uuid();
 
     this._agents = lodash.range(0, botsInMatch).map(() => {
       const characterId = this.popCharacterId();
@@ -91,14 +96,46 @@ export class Match {
 
     this._players = lodash.shuffle([...botPlayers, ...humanPlayers]);
 
-    this.getPlayerPreviousMatches().catch((err) => {
-      console.error("Error loading player history:", err);
-    });
-
-    this.checkVerifiedPlayers().catch((err) => {
-      console.error("Error checking if player is verified: ", err);
-    });
     this.addPrompt();
+
+    this.initMatch(playerIds).catch((err) =>
+      console.error("Error initializing match: ", err),
+    );
+
+    this._intervalId = setInterval(() => {
+      if (!this._isInitialized) return;
+      this.matchLoop();
+    }, 5000);
+  }
+
+  private async initMatch(playerIds: string[]) {
+    await this.getPlayerPreviousMatches();
+    await this.checkVerifiedPlayers();
+
+    ee.emit("readyToPlay", {
+      roomId: this._id,
+      players: playerIds,
+    } satisfies ReadyToPlayPayload);
+    ee.emit("queueUpdate");
+
+    this._isInitialized = true;
+  }
+
+  private matchLoop() {
+    const roomAge = Date.now() - this.createdAt;
+
+    if (this.stage === "chat" && roomAge >= CHAT_TIME_MS) {
+      this.stage = "voting";
+      ee.emit(matchEvent(this.id, "stageChange"));
+    }
+
+    const votingTimeRanOut = roomAge >= CHAT_TIME_MS + VOTING_TIME_MS;
+
+    if (this.stage === "voting" && (this.allPlayersVoted || votingTimeRanOut)) {
+      this.stage = "results";
+      this.calculatePoints();
+      ee.emit(matchEvent(this.id, "stageChange"));
+    }
   }
 
   private addPrompt() {
@@ -303,6 +340,7 @@ export class Match {
   cleanup() {
     this._messages = [];
     this._agents.forEach((agent) => agent.cleanup());
+    clearInterval(this._intervalId);
   }
 
   toSerializable(): MatchRoom {

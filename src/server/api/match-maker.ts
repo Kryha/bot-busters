@@ -1,19 +1,10 @@
 import { EventEmitter } from "events";
-import { v4 as uuid } from "uuid";
 
-import {
-  CHAT_TIME_MS,
-  MATCH_TIME_MS,
-  VOTING_TIME_MS,
-} from "~/constants/main.js";
+import { MATCH_TIME_MS } from "~/constants/main.js";
 import { env } from "~/env.mjs";
 import { db } from "~/server/db/index.js";
 import { Match, leaderboard } from "~/server/service/index.js";
-import type {
-  MatchEventType,
-  MatchRoom,
-  ReadyToPlayPayload,
-} from "~/types/index.js";
+import type { MatchEventType, MatchRoom } from "~/types/index.js";
 import { insertMatches } from "~/server/db/match.js";
 
 export const ee = new EventEmitter();
@@ -35,41 +26,18 @@ const makeMatch = () => {
   // TODO: Benchmark and check what's the maximum amount of matches we can handle at a time
   while (lobbyQueue.length >= humansInMatch) {
     const playerIds = lobbyQueue.splice(0, humansInMatch);
-    const roomId = uuid();
+    const match = new Match(playerIds, botsInMatch);
 
-    const match = new Match(roomId, playerIds, botsInMatch);
-
-    matches.set(roomId, match);
-
-    ee.emit("readyToPlay", {
-      roomId,
-      players: playerIds,
-    } satisfies ReadyToPlayPayload);
-    ee.emit("queueUpdate");
+    matches.set(match.id, match);
   }
 };
 
-const matchLoop = () => {
+const deleteStaleMatches = () => {
   matches.forEach((room, roomId) => {
     const roomAge = Date.now() - room.createdAt;
 
     if (roomAge >= MATCH_TIME_MS) {
       matches.delete(roomId);
-      return;
-    }
-
-    if (room.stage === "chat" && roomAge >= CHAT_TIME_MS) {
-      room.stage = "voting";
-      ee.emit(matchEvent(roomId, "stageChange"));
-    }
-
-    if (
-      room.stage === "voting" &&
-      (room.allPlayersVoted || roomAge >= CHAT_TIME_MS + VOTING_TIME_MS)
-    ) {
-      room.stage = "results";
-      room.calculatePoints();
-      ee.emit(matchEvent(roomId, "stageChange"));
     }
   });
 };
@@ -108,12 +76,12 @@ const storeScoresAndMatches = async () => {
 
 setInterval(() => {
   try {
-    matchLoop();
+    makeMatch();
+    deleteStaleMatches();
+
     storeScoresAndMatches().catch((error) =>
       console.error("Error storing matches:", error),
     );
-
-    makeMatch();
   } catch (error) {
     console.error("Main loop error:", error);
   }
