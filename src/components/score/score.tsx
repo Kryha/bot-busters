@@ -1,12 +1,12 @@
 import { type FC } from "react";
 import { Stack, Tooltip, Typography } from "@mui/material";
 
-import { MATCH_ACHIEVEMENTS } from "~/server/service/achievements.js";
 import { type AchievementId } from "~/types/index.js";
 import { POINTS_ACHIEVEMENTS } from "~/constants/main.js";
 import { text } from "~/assets/text/index.js";
 
 import { styles } from "./styles.js";
+import { matchAchievements } from "~/server/service/achievements.js";
 
 interface Props {
   gainedScore: number;
@@ -29,7 +29,7 @@ export const Score: FC<Props> = ({ gainedScore, achievements }) => {
           </Typography>
         ) : (
           achievements.map((achievementResult) => {
-            const { name, description } = MATCH_ACHIEVEMENTS[
+            const { name, description } = matchAchievements[
               achievementResult
             ] ?? {
               name: "Achievement",
