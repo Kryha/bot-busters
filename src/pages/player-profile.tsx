@@ -15,7 +15,6 @@ const PlayerProfile = () => {
   const user = api.user.getLoggedUserProfile.useQuery(undefined, {
     retry: false,
   });
-  console.log("🚀 ~ PlayerProfile ~ user:", user);
 
   const isVerifiedUser = !!user.data?.address && !!user.data.username;
 

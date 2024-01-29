@@ -28,19 +28,19 @@ export const PlayerTable: FC<Props> = ({ playerProfile }) => {
 
         <TableBody>
           <TableRow sx={styles.tableRow}>
-            <TableCell>
+            <TableCell align="center">
               <Typography variant="body2" color="customGrey.main">
                 {playerProfile.rank}
               </Typography>
             </TableCell>
 
-            <TableCell>
+            <TableCell align="center">
               <Typography variant="body2" color="customGrey.main">
                 {playerProfile.matchesPlayed}
               </Typography>
             </TableCell>
 
-            <TableCell>
+            <TableCell align="center">
               <Typography variant="body2" color="customGrey.main">
                 {playerProfile.score}
               </Typography>
