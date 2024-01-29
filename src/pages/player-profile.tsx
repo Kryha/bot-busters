@@ -7,11 +7,15 @@ import { pages } from "~/router.js";
 import { styles } from "~/styles/pages/player-profile.js";
 import { api } from "~/utils/api.js";
 import { PrimaryButton } from "~/components/primary-button/index.js";
+import { PlayerTable } from "~/components/index.js";
 
 const PlayerProfile = () => {
   const router = useRouter();
 
-  const user = api.user.getLoggedUser.useQuery(undefined, { retry: false });
+  const user = api.user.getLoggedUserProfile.useQuery(undefined, {
+    retry: false,
+  });
+  console.log("🚀 ~ PlayerProfile ~ user:", user);
 
   const isVerifiedUser = !!user.data?.address && !!user.data.username;
 
@@ -29,9 +33,11 @@ const PlayerProfile = () => {
         {user.data?.username ?? text.playerProfile.profile}
       </Typography>
 
-      {/* <Stack sx={styles.table}>
-        <PlayerTable playerProfile={fakePlayerProfile} />
-      </Stack> */}
+      {user.data && (
+        <Stack sx={styles.table}>
+          <PlayerTable playerProfile={user.data} />
+        </Stack>
+      )}
 
       {!isVerifiedUser && (
         <Stack alignItems="center" gap={4}>

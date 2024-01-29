@@ -1,22 +1,15 @@
 import { useEffect, useMemo } from "react";
 import { CircularProgress, Typography } from "@mui/material";
 
-import { AddScoreTable, LeaderboardTable } from "~/components/tables/index.js";
+import { LeaderboardTable } from "~/components/tables/index.js";
 import { text } from "~/assets/text/index.js";
 import { styles } from "~/styles/pages/leaderboard.js";
-import { fakeCountdown } from "~/constants/fake-data/landing.js";
 import { api } from "~/utils/api.js";
 import { isClient } from "~/utils/client.js";
 
 const USERS_PER_PAGE = 20;
 
 const LeaderBoard = () => {
-  const loggedUser = api.user.getLoggedUser.useQuery(undefined, {
-    retry: false,
-  });
-
-  const isGamePlayed = true;
-
   const getRankedUsers = api.user.getRankedUsers.useInfiniteQuery(
     {
       limit: USERS_PER_PAGE,
@@ -73,13 +66,6 @@ const LeaderBoard = () => {
 
       {/* TODO: if user is logged in, pass their data as param to show their score on top */}
       <LeaderboardTable leaderboard={leaderboardData} />
-
-      {/*TODO: delete this component after refactoring username creation */}
-      <AddScoreTable
-        isAuthenticated={!!loggedUser.data}
-        isGamePlayed={isGamePlayed}
-        countdown={fakeCountdown}
-      />
     </>
   );
 };

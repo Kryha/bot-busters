@@ -15,7 +15,6 @@ export const leaderboard = {
     `${countdown} until today's payout`,
   addScoreToLeaderboard: "Add your score to leaderboard",
 
-  rankNumber: (val: number) => `#${val}`,
   aleoCredits: (val: number) =>
     `${val} ${val === 1 ? " Aleo credit" : "Aleo credits"}`,
   todaysLeaderboard: (date: string) => `Today's leaderboard (${date})`,

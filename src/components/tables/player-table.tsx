@@ -1,18 +1,23 @@
 import { type FC } from "react";
-import { Table, TableBody, TableContainer } from "@mui/material";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow,
+  Typography,
+} from "@mui/material";
 
-import { type PlayerProfileData } from "~/types/index.js";
+import { type LoggedUserProfileData } from "~/types/index.js";
 import { text } from "~/assets/text/index.js";
 
-import { Header } from "./components/header/index.js";
 import { styles } from "./styles.js";
-import { RowPlayerProfile } from "./components/index.js";
+import { Header } from "./components/index.js";
 
 interface Props {
-  playerProfile: PlayerProfileData[];
+  playerProfile: LoggedUserProfileData;
 }
 
-// TODO: update component or delete and use leaderboard one or just use one row of data
 export const PlayerTable: FC<Props> = ({ playerProfile }) => {
   if (!playerProfile) return;
 
@@ -20,10 +25,27 @@ export const PlayerTable: FC<Props> = ({ playerProfile }) => {
     <TableContainer sx={styles.wrapper}>
       <Table sx={styles.table} aria-label="simple table">
         <Header cells={text.playerProfile.profileColumns} />
+
         <TableBody>
-          {playerProfile.map((profile, index) => {
-            return <RowPlayerProfile key={index} playerProfile={profile} />;
-          })}
+          <TableRow sx={styles.tableRow}>
+            <TableCell>
+              <Typography variant="body2" color="customGrey.main">
+                {playerProfile.rank}
+              </Typography>
+            </TableCell>
+
+            <TableCell>
+              <Typography variant="body2" color="customGrey.main">
+                {playerProfile.matchesPlayed}
+              </Typography>
+            </TableCell>
+
+            <TableCell>
+              <Typography variant="body2" color="customGrey.main">
+                {playerProfile.score}
+              </Typography>
+            </TableCell>
+          </TableRow>
         </TableBody>
       </Table>
     </TableContainer>
