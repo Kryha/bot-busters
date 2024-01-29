@@ -176,7 +176,7 @@ export const userRouter = createTRPCRouter({
       .select({ ranksCount: count(ranks.position) })
       .from(ranks);
 
-    const rank = rankRes[0] ? rankRes[0].ranksCount : 0;
+    const rank = rankRes[0] ? rankRes[0].ranksCount + 1 : 0;
 
     return { ...unrankedUser, matchesPlayed: 0, rank };
   }),
