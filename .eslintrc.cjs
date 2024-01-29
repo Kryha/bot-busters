@@ -4,10 +4,10 @@ const config = {
   parserOptions: {
     project: true,
   },
-  plugins: ["@typescript-eslint", "eslint-plugin-jest", "jest", "require-extensions"],
+  plugins: ["@typescript-eslint", "eslint-plugin-jest", "jest", "import"],
   extends: [
-    "plugin:require-extensions/recommended",
     "next/core-web-vitals",
+    "plugin:import/recommended",
     "plugin:@typescript-eslint/recommended-type-checked",
     "plugin:@typescript-eslint/stylistic-type-checked",
   ],
@@ -25,6 +25,7 @@ const config = {
       },
     ],
     "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
+    "import/extensions": ["error", "ignorePackages"],
   },
   env: {
     "jest/globals": true,
