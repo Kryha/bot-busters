@@ -23,6 +23,6 @@ export const styles = {
     fontSize: theme.typography.h4.fontSize,
     textAlign: "end",
     color: theme.palette.primary.main,
-    pr: "10px"
+    pr: "10px",
   } satisfies SxProps,
 };

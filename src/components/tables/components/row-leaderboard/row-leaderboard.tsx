@@ -20,30 +20,18 @@ export const RowLeaderboard: FC<Props> = ({ leaderboard, isBlurred }) => {
       </TableCell>
       <TableCell>
         <Stack sx={styles.container}>
-          <Typography
-            variant="body2"
-            sx={styles.cell}
-            color="customGrey.main"
-          >
+          <Typography variant="body2" sx={styles.cell} color="customGrey.main">
             {leaderboard.username}
           </Typography>
         </Stack>
       </TableCell>
       <TableCell>
-        <Typography
-          variant="body2"
-          sx={styles.cell}
-          color="customGrey.main"
-        >
+        <Typography variant="body2" sx={styles.cell} color="customGrey.main">
           {leaderboard.matchesPlayed}
         </Typography>
       </TableCell>
       <TableCell>
-        <Typography
-          variant="body2"
-          sx={styles.cell}
-          color="customGrey.main"
-        >
+        <Typography variant="body2" sx={styles.cell} color="customGrey.main">
           {leaderboard.score}
         </Typography>
       </TableCell>
