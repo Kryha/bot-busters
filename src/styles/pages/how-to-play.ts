@@ -10,7 +10,6 @@ export const styles = {
     minHeight: "100vh",
     alignItems: "center",
     justifyContent: "start",
-    pt: "159px",
   },
   text: {
     width: "60vw",
