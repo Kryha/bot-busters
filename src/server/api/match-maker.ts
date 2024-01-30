@@ -3,13 +3,11 @@ import { EventEmitter } from "events";
 import { MATCH_TIME_MS } from "~/constants/main.js";
 import { env } from "~/env.mjs";
 import { db } from "~/server/db/index.js";
-import { Match, leaderboard } from "~/server/service/index.js";
+import { Match, leaderboard, lobbyQueue } from "~/server/service/index.js";
 import type { MatchEventType, MatchRoom } from "~/types/index.js";
 import { insertMatches } from "~/server/db/match.js";
 
 export const ee = new EventEmitter();
-
-export const lobbyQueue: string[] = [];
 
 export const matches = new Map<string, Match>();
 
@@ -24,8 +22,8 @@ const makeMatch = () => {
 
   // TODO: Make the players per match random within the range 1-4
   // TODO: Benchmark and check what's the maximum amount of matches we can handle at a time
-  while (lobbyQueue.length >= humansInMatch) {
-    const playerIds = lobbyQueue.splice(0, humansInMatch);
+  while (lobbyQueue.queue.length >= humansInMatch) {
+    const playerIds = lobbyQueue.pickPlayers(humansInMatch);
     const match = new Match(playerIds, botsInMatch);
 
     matches.set(match.id, match);

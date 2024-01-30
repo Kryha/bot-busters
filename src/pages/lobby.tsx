@@ -12,10 +12,13 @@ const Lobby: FC = () => {
     queueLength: 0,
   });
 
-  // TODO: consider deleting this listener and call join inside a `useEffect`
   api.lobby.onQueueUpdate.useSubscription(undefined, {
-    onStarted() {
-      join.mutate();
+    async onStarted() {
+      try {
+        await join.mutateAsync();
+      } catch (error) {
+        await push(pages.home);
+      }
     },
     onData({ playerQueuePosition, queueLength }) {
       setLobbyQueue({ playerQueuePosition, queueLength });
