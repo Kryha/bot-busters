@@ -1,11 +1,11 @@
 import { useEffect, useMemo } from "react";
-import { CircularProgress, Typography } from "@mui/material";
+import { CircularProgress } from "@mui/material";
 
 import { LeaderboardTable } from "~/components/tables/index.js";
 import { text } from "~/assets/text/index.js";
-import { styles } from "~/styles/pages/leaderboard.js";
 import { api } from "~/utils/api.js";
 import { isClient } from "~/utils/client.js";
+import { PageHeader } from "~/containers/page-header/index.js";
 
 const USERS_PER_PAGE = 20;
 
@@ -60,9 +60,7 @@ const LeaderBoard = () => {
 
   return (
     <>
-      <Typography variant="h1" color="common.black" sx={styles.text}>
-        {text.leaderboard.dailyLeaderboard}
-      </Typography>
+      <PageHeader text={text.leaderboard.dailyLeaderboard} />
 
       {/* TODO: if user is logged in, pass their data as param to show their score on top */}
       <LeaderboardTable leaderboard={leaderboardData} />

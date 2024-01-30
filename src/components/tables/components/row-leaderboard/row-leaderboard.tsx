@@ -1,9 +1,7 @@
 import { type FC } from "react";
-import { Avatar, Stack, TableCell, TableRow, Typography } from "@mui/material";
+import { Stack, TableCell, TableRow, Typography } from "@mui/material";
 
 import { type LeaderboardData } from "~/types/index.js";
-import { text } from "~/assets/text/index.js";
-import { calcPayout } from "~/utils/leaderboard.js";
 
 import { styles } from "./styles.js";
 
@@ -22,12 +20,9 @@ export const RowLeaderboard: FC<Props> = ({ leaderboard, isBlurred }) => {
       </TableCell>
       <TableCell>
         <Stack sx={styles.container}>
-          <Avatar alt="avatar" sx={styles.avatar}>
-            {text.leaderboard.avatarEmoji}
-          </Avatar>
           <Typography
             variant="body2"
-            sx={styles.tableText}
+            sx={styles.cell}
             color="customGrey.main"
           >
             {leaderboard.username}
@@ -37,7 +32,7 @@ export const RowLeaderboard: FC<Props> = ({ leaderboard, isBlurred }) => {
       <TableCell>
         <Typography
           variant="body2"
-          sx={styles.tableText}
+          sx={styles.cell}
           color="customGrey.main"
         >
           {leaderboard.matchesPlayed}
@@ -46,19 +41,10 @@ export const RowLeaderboard: FC<Props> = ({ leaderboard, isBlurred }) => {
       <TableCell>
         <Typography
           variant="body2"
-          sx={styles.tableText}
+          sx={styles.cell}
           color="customGrey.main"
         >
           {leaderboard.score}
-        </Typography>
-      </TableCell>
-      <TableCell>
-        <Typography
-          variant="body2"
-          sx={styles.tableText}
-          color="customGrey.main"
-        >
-          {calcPayout(leaderboard.rank)}
         </Typography>
       </TableCell>
     </TableRow>

@@ -12,20 +12,28 @@ interface Props {
   leaderboard?: LeaderboardData[];
 }
 
+// TODO: remove
+const fakeData = [1,2,3,4,5,6,7,8,9,10].map((_)=>({
+  id: _.toString(),
+  username: (Math.random() + 1).toString(36).substring(2),
+  score: Math.floor(Math.random()*1000),
+  matchesPlayed: Math.floor(Math.random()*100),
+  rank: _,
+} satisfies LeaderboardData));
+
 export const LeaderboardTable: FC<Props> = ({ leaderboard = [] }) => {
   return (
     <TableContainer sx={styles.wrapper}>
-      <Table sx={styles.table} aria-label="simple table">
+      <Table sx={styles.table} stickyHeader aria-label="simple table">
         <colgroup>
           <col width={COLUMN_WIDTH.sm} />
           <col width={COLUMN_WIDTH.lg} />
           <col width={COLUMN_WIDTH.md} />
           <col width={COLUMN_WIDTH.md} />
-          <col width={COLUMN_WIDTH.md} />
         </colgroup>
         <Header cells={text.leaderboard.leaderboardColumns} />
         <TableBody>
-          {leaderboard.map((leaderboard, index) => (
+          {fakeData.map((leaderboard, index) => (
             <RowLeaderboard key={index} leaderboard={leaderboard} />
           ))}
         </TableBody>
