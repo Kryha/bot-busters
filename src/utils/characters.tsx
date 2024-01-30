@@ -18,6 +18,21 @@ import {
 } from "~/assets/characters/index.js";
 
 import {
+  AshBlink,
+  AshBotBusted,
+  AshBotWin,
+  DotBlink,
+  DotBotBusted,
+  DotBotWin,
+  EveBlink,
+  EveBotBusted,
+  EveBotWin,
+  HalBlink,
+  HalBotBusted,
+  HalBotWin,
+  RoyBlink,
+  RoyBotBusted,
+  RoyBotWin,
   TransitionLinesAsh,
   TransitionLinesDot,
   TransitionLinesEve,
@@ -39,14 +54,66 @@ export const getCharacterAvatar = (characterName: CharacterName) => {
 };
 
 export const getCharacterAnimation = (
-  characterName: string,
+  characterName: CharacterName,
   isBot?: boolean,
   isSelected?: boolean,
 ) => {
-  if (isSelected) {
-    return isBot ? `${characterName}BotBusted` : `${characterName}Blink`;
-  } else {
-    return isBot ? `${characterName}BotWin` : `${characterName}Blink`;
+  switch (characterName) {
+    case "hal":
+      if (isSelected && isBot) {
+        return HalBotBusted;
+      }
+      if (isSelected && !isBot) {
+        return HalBlink;
+      }
+      if (!isSelected && isBot) {
+        return HalBotWin;
+      }
+      return HalBlink;
+    case "ash":
+      if (isSelected && isBot) {
+        return AshBotBusted;
+      }
+      if (isSelected && !isBot) {
+        return AshBlink;
+      }
+      if (!isSelected && isBot) {
+        return AshBotWin;
+      }
+      return AshBlink;
+    case "roy":
+      if (isSelected && isBot) {
+        return RoyBotBusted;
+      }
+      if (isSelected && !isBot) {
+        return RoyBlink;
+      }
+      if (!isSelected && isBot) {
+        return RoyBotWin;
+      }
+      return RoyBlink;
+    case "eve":
+      if (isSelected && isBot) {
+        return EveBotBusted;
+      }
+      if (isSelected && !isBot) {
+        return EveBlink;
+      }
+      if (!isSelected && isBot) {
+        return EveBotWin;
+      }
+      return EveBlink;
+    case "dot":
+      if (isSelected && isBot) {
+        return DotBotBusted;
+      }
+      if (isSelected && !isBot) {
+        return DotBlink;
+      }
+      if (!isSelected && isBot) {
+        return DotBotWin;
+      }
+      return DotBlink;
   }
 };
 
@@ -74,14 +141,19 @@ export const getCharacterTitle = (characterName: CharacterName) => {
   return titleMap[characterName];
 };
 
-export const getTransitionLines = (characterName: CharacterName) => {
-  const transitionLinesMap = {
-    hal: TransitionLinesHal,
-    ash: TransitionLinesAsh,
-    roy: TransitionLinesRoy,
-    eve: TransitionLinesEve,
-    dot: TransitionLinesDot,
-  };
-
-  return transitionLinesMap[characterName] || TransitionLinesVoting;
+export const getTransitionLines = (characterName: string | undefined) => {
+  switch (characterName) {
+    case "hal":
+      return TransitionLinesHal;
+    case "ash":
+      return TransitionLinesAsh;
+    case "roy":
+      return TransitionLinesRoy;
+    case "eve":
+      return TransitionLinesEve;
+    case "dot":
+      return TransitionLinesDot;
+    default:
+      return TransitionLinesVoting;
+  }
 };
