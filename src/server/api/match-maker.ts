@@ -16,6 +16,14 @@ export const matchEvent = (
   eventType: MatchEventType = "message",
 ) => `chat_${roomId}_${eventType}`;
 
+export const isUserPlaying = (userId: string) => {
+  for (const match of matches.values()) {
+    const isInMatch = !!match.players.find((p) => p.userId === userId);
+    if (isInMatch) return true;
+  }
+  return false;
+};
+
 const makeMatch = () => {
   const botsInMatch = 1; // TODO: use more options
   const humansInMatch = env.PLAYERS_PER_MATCH - botsInMatch;
