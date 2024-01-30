@@ -5,6 +5,11 @@ import {
   AvatarEve,
   AvatarHal,
   AvatarRoy,
+  SplashAsh,
+  SplashDot,
+  SplashEve,
+  SplashHal,
+  SplashRoy,
   TextAsh,
   TextDot,
   TextEve,
@@ -12,55 +17,71 @@ import {
   TextRoy,
 } from "~/assets/characters/index.js";
 
-// TODO: Change these to SVGs once received from designer
-import splashHal from "~/assets/characters/hal.png";
-import splashAsh from "~/assets/characters/ash.png";
-import splashRoy from "~/assets/characters/roy.png";
-import splashEve from "~/assets/characters/eve.png";
-import splashDot from "~/assets/characters/dot.png";
+import {
+  TransitionLinesAsh,
+  TransitionLinesDot,
+  TransitionLinesEve,
+  TransitionLinesHal,
+  TransitionLinesRoy,
+  TransitionLinesVoting,
+} from "~/assets/animations/index.js";
 
 export const getCharacterAvatar = (characterName: CharacterName) => {
-  switch (characterName) {
-    case "hal":
-      return <AvatarHal />;
-    case "ash":
-      return <AvatarAsh />;
-    case "roy":
-      return <AvatarRoy />;
-    case "eve":
-      return <AvatarEve />;
-    case "dot":
-      return <AvatarDot />;
+  const avatarMap = {
+    hal: <AvatarHal />,
+    ash: <AvatarAsh />,
+    roy: <AvatarRoy />,
+    eve: <AvatarEve />,
+    dot: <AvatarDot />,
+  };
+
+  return avatarMap[characterName];
+};
+
+export const getCharacterAnimation = (
+  characterName: string,
+  isBot?: boolean,
+  isSelected?: boolean,
+) => {
+  if (isSelected) {
+    return isBot ? `${characterName}BotBusted` : `${characterName}Blink`;
+  } else {
+    return isBot ? `${characterName}BotWin` : `${characterName}Blink`;
   }
 };
 
-// TODO: Change these to SVGs once received from designer
 export const getCharacterSplashScreen = (characterName: CharacterName) => {
-  switch (characterName) {
-    case "hal":
-      return splashHal;
-    case "ash":
-      return splashAsh;
-    case "roy":
-      return splashRoy;
-    case "eve":
-      return splashEve;
-    case "dot":
-      return splashDot;
-  }
+  const splashScreenMap = {
+    hal: <SplashHal />,
+    ash: <SplashAsh />,
+    roy: <SplashRoy />,
+    eve: <SplashEve />,
+    dot: <SplashDot />,
+  };
+
+  return splashScreenMap[characterName];
 };
 
 export const getCharacterTitle = (characterName: CharacterName) => {
-  switch (characterName) {
-    case "hal":
-      return <TextHal />;
-    case "ash":
-      return <TextAsh />;
-    case "roy":
-      return <TextRoy />;
-    case "eve":
-      return <TextEve />;
-    case "dot":
-      return <TextDot />;
-  }
+  const titleMap = {
+    hal: <TextHal />,
+    ash: <TextAsh />,
+    roy: <TextRoy />,
+    eve: <TextEve />,
+    dot: <TextDot />,
+  };
+
+  return titleMap[characterName];
+};
+
+export const getTransitionLines = (characterName: CharacterName) => {
+  const transitionLinesMap = {
+    hal: TransitionLinesHal,
+    ash: TransitionLinesAsh,
+    roy: TransitionLinesRoy,
+    eve: TransitionLinesEve,
+    dot: TransitionLinesDot,
+  };
+
+  return transitionLinesMap[characterName] || TransitionLinesVoting;
 };
