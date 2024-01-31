@@ -10,7 +10,8 @@ export interface Props {
   localPlayer: PlayerType;
   isSelected: boolean;
   color?: string;
-  onSelectPlayer: () => void;
+  onSelectPlayerVote: () => void;
+  onSelectPlayerResult: () => void;
 }
 
 export const PlayerData: FC<Props> = ({
@@ -18,7 +19,8 @@ export const PlayerData: FC<Props> = ({
   localPlayer,
   stage,
   isSelected,
-  onSelectPlayer,
+  onSelectPlayerVote,
+  onSelectPlayerResult,
 }) => {
   const character = CHARACTERS[player.characterId]!;
   const isVoted = !!localPlayer.votes?.includes(player.userId);
@@ -40,6 +42,7 @@ export const PlayerData: FC<Props> = ({
           player={player}
           hasGuessed={hasGuessed}
           isSelected={isSelected}
+          onSelectPlayer={onSelectPlayerResult}
         />
       );
 
