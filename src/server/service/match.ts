@@ -33,6 +33,7 @@ import {
   type MatchStage,
   type PlayerType,
   type ReadyToPlayPayload,
+  type StoredChatMessage,
 } from "~/types/index.js";
 import { getRandomInt } from "~/utils/math.js";
 
@@ -189,7 +190,7 @@ export class Match {
     }
 
     this._messageCountSinceLastTrigger++;
-    this.messages.push(message);
+    this._messages.push(message);
     ee.emit(matchEvent(this.id), message);
   }
 
@@ -374,6 +375,23 @@ export class Match {
     this._messages = [];
     this._agents.forEach((agent) => agent.cleanup());
     clearInterval(this._intervalId);
+  }
+
+  convertMessages(): StoredChatMessage[] {
+    return this._messages.flatMap((message) => {
+      if (message.sender === "host") {
+        return {
+          ...message,
+          sender: "host",
+          isBot: false,
+        } satisfies StoredChatMessage;
+      }
+
+      const player = this._players.find((p) => p.userId === message.sender);
+      if (!player) return [];
+
+      return { ...message, sender: player.characterId, isBot: !!player.isBot };
+    });
   }
 
   toSerializable(): MatchRoom {
