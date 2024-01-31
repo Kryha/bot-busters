@@ -61,30 +61,36 @@ const streakCountAchievements: Achievement = {
   name: "Streak Count",
   description: "Plus one on your streak count",
 
-  calculate: ({ playerHistory, player }) => {
-    if (!playerHistory || !player.isVerified) return false;
-    return !alreadyReceivedAchievement(player.userId, playerHistory, "1", 1);
+  calculate: ({ playerAchievements }) => {
+    if (!playerAchievements) return false;
+    return !alreadyReceivedAchievement(
+      playerAchievements,
+      "dailyStreakCounter",
+      1,
+    );
   },
 };
 
 const dailyStreakAchievement: Achievement = {
   name: "Daily Streak",
   description: "Play 5 days in a row",
-  calculate: ({ playerHistory, player }) => {
+  calculate: ({ playerHistory, player, playerAchievements }) => {
     if (
       !playerHistory ||
       playerHistory.length < 2 ||
-      alreadyReceivedAchievement(player.userId, playerHistory, "101", 5) ||
+      !playerAchievements ||
+      alreadyReceivedAchievement(playerAchievements, "fiveDayStreak", 5) ||
       !player
     )
       return false;
 
+    //TODO: revisit this logic to check if you can also use the the achievements table
     const playedFiveTimesInARow = playerHistory
       .sort((a, b) => b.createdAt - a.createdAt)
       .map((match) => {
         return match.players.find((p) => p.userId === player.userId);
       })
-      .filter((match) => match?.achievements.includes("1"));
+      .filter((match) => match?.achievements.includes("dailyStreakCounter"));
 
     return playedFiveTimesInARow.length === 5;
   },
@@ -112,15 +118,6 @@ const beginnersLuckAchievement: Achievement = {
 const realHumanAchievement: Achievement = {
   name: "Real Human",
   description: "First time played as a verified human",
-  calculate: ({ playerHistory, player }) => {
-    if (!playerHistory || !player.isVerified) return false;
-    return !alreadyReceivedAchievement(player.userId, playerHistory, "203");
-  },
-};
-
-const realHumanAchievement: Achievement = {
-  name: "Real Human",
-  description: "First time played as a verified human",
   calculate: ({ playerAchievements }) => {
     if (!playerAchievements) return false;
 
@@ -129,6 +126,8 @@ const realHumanAchievement: Achievement = {
 };
 
 export const matchAchievements: Record<AchievementId, Achievement> = {
+  dailyStreakCounter: streakCountAchievements,
+  fiveDayStreak: dailyStreakAchievement,
   goodBust: goodBustAchievement,
   doubleAgent: doubleAgentAchievement,
   busterStreak: busterStreakAchievement,
@@ -149,11 +148,6 @@ export const alreadyReceivedAchievement = (
     const timeStampToStart = Date.now() - days * 24 * 60 * 60 * 1000;
     // Filter playerHistory to only include matches from the past 24 hours
     achievements = playerAchievements.filter((achievement) => {
-      console.log(
-        "Difference: ",
-        achievement.achievedAt.getTime(),
-        timeStampToStart,
-      );
       return achievement.achievedAt.getTime() > timeStampToStart;
     });
   }

@@ -74,10 +74,13 @@ const storeScoresAndMatches = async () => {
 
     await Promise.all(promises);
 
-    const roomsToInsert = Array.from(roomsToArchive.values()).map((room) => ({
-      id: room.id,
-      room,
-    }));
+    const roomsToInsert = Array.from(roomsToArchive.values()).map(
+      ({ room, messages }) => ({
+        id: room.id,
+        room: room,
+        messages,
+      }),
+    );
 
     if (roomsToInsert.length) {
       await insertMatches(roomsToInsert, tx);
