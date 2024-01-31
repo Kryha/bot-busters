@@ -346,9 +346,17 @@ export class Match {
 
   convertMessages(): StoredChatMessage[] {
     return this._messages.flatMap((message) => {
-      // TODO: also add host message
+      if (message.sender === "host") {
+        return {
+          ...message,
+          sender: "host",
+          isBot: false,
+        } satisfies StoredChatMessage;
+      }
+
       const player = this._players.find((p) => p.userId === message.sender);
       if (!player) return [];
+
       return { ...message, sender: player.characterId, isBot: !!player.isBot };
     });
   }
