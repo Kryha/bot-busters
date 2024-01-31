@@ -9,7 +9,7 @@ import { styles } from "./styles.js";
 interface Props {
   player: PlayerType;
   hasGuessed: boolean;
-  isSelected: boolean;
+  isSelected?: boolean;
   onSelectPlayer?: () => void;
 }
 

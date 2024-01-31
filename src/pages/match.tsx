@@ -10,7 +10,7 @@ import { Chat } from "~/components/chat/chat.jsx";
 import { Results } from "~/components/results/index.js";
 import { ErrorView } from "~/components/error-view/index.jsx";
 import { PlayerLocal } from "~/components/players/player-local/index.js";
-import { PlayersOthers } from "~/components/players/players-others/index.js";
+import { PlayersOthers } from "~/components/players/player-others/index.js";
 
 const Match: FC = () => {
   const { query } = useRouter();
@@ -79,6 +79,7 @@ const MatchInternal: FC<Props> = ({ roomId, session }) => {
         isVoteEnabled={isVoteEnabled}
         onVote={handleVote}
       />
+
       {room.stage === "results" && (
         <Results
           gainedScore={localPlayer.score}
@@ -87,7 +88,6 @@ const MatchInternal: FC<Props> = ({ roomId, session }) => {
           achievements={localPlayer.achievements}
         />
       )}
-
       {room.stage !== "results" && <Chat roomId={roomId} room={room} />}
       {room.stage === "chat" && <PlayerLocal localPlayer={localPlayer} />}
     </Layout>

@@ -1,42 +1,40 @@
-import { type PlayerType } from "~/types/index.js";
 import { type FC } from "react";
+import { type PlayerType } from "~/types/index.js";
 import { CHARACTERS } from "~/constants/index.js";
 import { Box, Stack, Typography } from "@mui/material";
-import { text } from "~/assets/text/index.js";
 import { BotArrowIcon } from "~/assets/icons/index.js";
-
+import { ErrorView } from "~/components/error-view/index.jsx";
+import { text } from "~/assets/text/index.js";
 import { styles } from "./styles.js";
 
 interface Props {
   otherPlayers: PlayerType[];
-  viewResults: string | undefined;
+  showPlayerProof: string;
 }
-export const PlayerOthersResults: FC<Props> = ({
-  otherPlayers,
-  viewResults,
-}) => {
-  const playerResult = otherPlayers.find(
-    (player) => player.characterId === viewResults,
+
+export const PlayerProofs: FC<Props> = ({ otherPlayers, showPlayerProof }) => {
+  const playerProof = otherPlayers.find(
+    (player) => player.characterId === showPlayerProof,
   );
 
-  const isBot = playerResult?.isBot;
-  const character = playerResult
-    ? CHARACTERS[playerResult.characterId]
-    : undefined;
+  if (!playerProof) return <ErrorView />;
 
-  const textColor = `${character?.color}.main`;
+  const character = CHARACTERS[playerProof.characterId];
+  const textColor = `${character.color}.main`;
 
   return (
     <Stack sx={styles.playerResults}>
       <Stack sx={styles.resultsHeading}>
         <Typography variant="body1" color={textColor}>
-          <Box component={"span"}>{character?.name} </Box>
-          {isBot ? text.match.resultBotTitle : text.match.resultHumanTitle}
+          <Box component={"span"}>{character.name} </Box>
+          {playerProof.isBot
+            ? text.match.resultBotTitle
+            : text.match.resultHumanTitle}
         </Typography>
       </Stack>
       <Stack sx={styles.proof}>
         <Typography variant="body1">
-          {isBot ? text.match.resultBot : text.match.resultHuman}
+          {playerProof.isBot ? text.match.resultBot : text.match.resultHuman}
         </Typography>
         {/*// TODO: Add proof from server*/}
         <Stack sx={styles.verifyProof}>

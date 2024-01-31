@@ -3,9 +3,10 @@ import { Stack, Typography } from "@mui/material";
 
 import { type Character, type MatchStage } from "~/types/index.js";
 import { CharacterAvatar } from "~/components/character-avatar/index.js";
-import { text } from "~/assets/text/index.js";
 import { Skeleton } from "./skeleton.jsx";
 import { BotArrowIcon } from "~/assets/icons/index.js";
+import { text } from "~/assets/text/index.js";
+
 import { styles } from "./styles.js";
 
 interface Props {
@@ -18,7 +19,6 @@ interface Props {
   stage?: MatchStage;
 }
 
-//TODO get votes from server
 export const Player: FC<Props> = ({
   character,
   isLocalPlayer = false,
@@ -38,7 +38,7 @@ export const Player: FC<Props> = ({
   const getTextResult = () => {
     if (stage === "results") {
       if (isSelected) {
-        return isBot ? text.match.botBusted : text.match.isNotBot;
+        return isBot ? text.match.botBusted : text.match.wrongBust;
       }
       return isBot ? text.match.missedBot : text.match.isHuman;
     }

@@ -10,7 +10,7 @@ export const match = {
   bustTheBots: "Bust the bots",
   bustTheBotsDescription: "Click to vote for one or multiple suspected BOTS.",
   botBusted: "Bot busted!",
-  isNotBot: "Wrong Bust",
+  wrongBust: "Wrong Bust",
   missedBot: "Missed Bot",
   isBotSelect: "Bot?",
   busted: "Busted!",

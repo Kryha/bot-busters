@@ -1,5 +1,5 @@
-import { type SxProps } from "@mui/material";
 import { theme } from "~/styles/index.js";
+import { type SxStyleRecord } from "~/types/sx-style-record";
 
 export const styles = {
   playerResults: {
@@ -40,4 +40,4 @@ export const styles = {
       textDecoration: "underline",
     },
   },
-} satisfies SxProps;
+} satisfies SxStyleRecord;
