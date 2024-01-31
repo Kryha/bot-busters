@@ -26,6 +26,7 @@ export const PlayersOthers: FC<Props> = ({
 }) => {
   const [isLoadingVotes, setIsLoadingVotes] = useState(false);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [viewResults, setViewResults] = useState<string>("1");
   const { stage, players, votingAt } = room;
 
   const resultHeading =
