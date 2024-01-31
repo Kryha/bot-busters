@@ -61,8 +61,15 @@ const busterStreakAchievement: Achievement = {
 const firstTimerAchievement: Achievement = {
   name: "First Timer",
   description: "Played your first match",
-  calculate: ({ playerHistory }) => {
-    return !playerHistory || playerHistory.length === 0;
+  calculate: ({ playerHistory, playerAchievements }) => {
+    return (
+      !playerHistory ||
+      !playerAchievements ||
+      playerHistory.length === 0 ||
+      playerAchievements.some(
+        (achievement) => achievement.achievementId === "firstTimer",
+      )
+    );
   },
 };
 
@@ -79,13 +86,13 @@ const beginnersLuckAchievement: Achievement = {
 const realHumanAchievement: Achievement = {
   name: "Real Human",
   description: "First time played as a verified human",
-  calculate: ({ playerHistory, player }) => {
-    if (!playerHistory || !player.isVerified) return false;
-    return !alreadyReceivedAchievement(
-      player.userId,
-      playerHistory,
-      "realHuman",
+  calculate: ({ playerHistory, player, playerAchievements }) => {
+    if (!player.isVerified) return false;
+
+    const notAchieved = playerAchievements?.some(
+      (achievement) => achievement.achievementId == "realHuman",
     );
+    return notAchieved === undefined || notAchieved;
   },
 };
 
