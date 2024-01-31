@@ -53,7 +53,7 @@ export const LobbyCharacterLoader: FC<Props> = ({
               sx={styles.text}
               color={
                 activatedCharacters.has(Number(id))
-                  ? `${color}.dark`
+                  ? `${color}.main`
                   : theme.palette.customGrey.main
               }
             >
