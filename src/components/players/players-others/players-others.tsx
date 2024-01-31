@@ -5,6 +5,7 @@ import { VOTING_TIME_MS } from "~/constants/index.js";
 import { text } from "~/assets/text/index.js";
 import { type MatchRoom, type PlayerType } from "~/types/index.js";
 import { Timer } from "~/components/timer/index.js";
+import { PlayerOthersResults } from "../player-others-results/index.js";
 import { PlayerData } from "~/components/players/player-data/index.js";
 import { PrimaryButton } from "~/components/primary-button/index.js";
 
@@ -29,10 +30,6 @@ export const PlayersOthers: FC<Props> = ({
 
   const resultHeading =
     localPlayer.botsBusted === 0 ? text.match.bummer : text.match.busted;
-  const resultText =
-    localPlayer.botsBusted === 0
-      ? text.match.bustedResultFail
-      : text.match.bustedResultPass;
 
   const selectPlayer = (userId: string) => {
     setSelectedIds((prevIds) => {
@@ -75,11 +72,8 @@ export const PlayersOthers: FC<Props> = ({
       )}
       {stage === "results" && (
         <Stack sx={styles.results}>
-          <Typography variant="subtitle1" sx={styles.playerHeading}>
+          <Typography variant="h2" sx={styles.playerHeading}>
             {resultHeading}
-          </Typography>
-          <Typography variant="body1" sx={styles.playerSubHeading}>
-            {resultText}
           </Typography>
         </Stack>
       )}
@@ -90,7 +84,8 @@ export const PlayersOthers: FC<Props> = ({
               key={index}
               player={player}
               isSelected={selectedIds.includes(player.userId)}
-              onSelectPlayer={() => selectPlayer(player.userId)}
+              onSelectPlayerVote={() => selectPlayer(player.userId)}
+              onSelectPlayerResult={() => setViewResults(player.characterId)}
               stage={stage}
               localPlayer={localPlayer}
             />
@@ -108,6 +103,12 @@ export const PlayersOthers: FC<Props> = ({
             {text.general.confirm}
           </PrimaryButton>
         </Stack>
+      )}
+      {stage === "results" && (
+        <PlayerOthersResults
+          otherPlayers={otherPlayers}
+          viewResults={viewResults}
+        />
       )}
     </Stack>
   );
