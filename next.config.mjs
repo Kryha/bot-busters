@@ -30,7 +30,12 @@ const config = {
             svgo: false
           }
         }],
-    });
+      },
+      {
+        test: /\.lottie$/,
+        type: "asset/resource",
+      }
+    );
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     webpackConfig.resolve.extensionAlias = {
@@ -38,6 +43,7 @@ const config = {
       ".jsx": [".tsx", ".jsx"],
       ".mjs": [".mts", ".mjs"],
       ".cjs": [".cts", ".cjs"],
+      '.lottie':[".lottie"]
     };
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return webpackConfig;
