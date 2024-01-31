@@ -1,7 +1,7 @@
 import { eq } from "drizzle-orm";
 
 import { db, dbSchema, type BBPgTransaction } from "~/server/db/index.js";
-import { usersToMatches } from "./schema.js";
+import { userAchievements, usersToMatches } from "./schema.js";
 
 const { users, matches } = dbSchema;
 
@@ -57,6 +57,18 @@ export const selectMatchPlayedByUser = async (
   return matchesPlayed;
 };
 
+export const selectUserAchievements = async (
+  userId: string,
+  tx?: BBPgTransaction,
+) => {
+  const dbTx = tx ?? db;
+
+  const achievements = await dbTx
+    .select()
+    .from(userAchievements)
+    .where(eq(userAchievements.userId, userId));
+  return achievements;
+};
 export const insertVerifiedUser = async (address: string, username: string) => {
   const newVerifiedUser = await db
     .insert(users)
