@@ -13,7 +13,7 @@ import {
   SoundOnIcon,
   UserIcon,
 } from "~/assets/icons/index.js";
-import { api } from "~/utils/api";
+import { api } from "~/utils/api.js";
 
 interface Props {
   handleClose: () => void;
