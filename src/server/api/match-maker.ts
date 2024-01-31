@@ -4,7 +4,11 @@ import { MATCH_TIME_MS } from "~/constants/main.js";
 import { env } from "~/env.mjs";
 import { db } from "~/server/db/index.js";
 import { Match, leaderboard } from "~/server/service/index.js";
-import type { MatchEventType, MatchRoom } from "~/types/index.js";
+import type {
+  MatchEventType,
+  MatchRoom,
+  StoredChatMessage,
+} from "~/types/index.js";
 import { insertMatches } from "~/server/db/match.js";
 
 export const ee = new EventEmitter();
@@ -43,7 +47,10 @@ const deleteStaleMatches = () => {
 };
 
 const storeScoresAndMatches = async () => {
-  const roomsToArchive = new Map<string, MatchRoom>();
+  const roomsToArchive = new Map<
+    string,
+    { room: MatchRoom; messages: StoredChatMessage[] }
+  >();
 
   await db.transaction(async (tx) => {
     //TODO: Store stats of the match
@@ -53,17 +60,21 @@ const storeScoresAndMatches = async () => {
       const allScoresStored = await room.storeScore(tx);
 
       if (allScoresStored) {
+        const messages = room.convertMessages();
         room.cleanup();
-        roomsToArchive.set(room.id, room.toSerializable());
+        roomsToArchive.set(room.id, { room: room.toSerializable(), messages });
       }
     });
 
     await Promise.all(promises);
 
-    const roomsToInsert = Array.from(roomsToArchive.values()).map((room) => ({
-      id: room.id,
-      room,
-    }));
+    const roomsToInsert = Array.from(roomsToArchive.values()).map(
+      ({ room, messages }) => ({
+        id: room.id,
+        room: room,
+        messages,
+      }),
+    );
 
     if (roomsToInsert.length) {
       await insertMatches(roomsToInsert, tx);
