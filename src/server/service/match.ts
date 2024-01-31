@@ -321,8 +321,7 @@ export class Match {
 
     this.arePointsCalculated = true;
   }
-  //TODO: Rename function to account for achievements
-  async storeScore(tx?: BBPgTransaction) {
+  async storeMatchStats(tx?: BBPgTransaction) {
     const dbTx = tx ?? db;
 
     let allScoresStored = true;
