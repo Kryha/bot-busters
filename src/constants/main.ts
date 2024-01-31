@@ -30,3 +30,12 @@ export const POINTS_ACHIEVEMENTS: Record<AchievementId, number> = {
   beginnersLuck: 5,
   realHuman: 5,
 };
+
+export const BOT_BUSTED_ANIMATION_SEGMENT = [
+  [0, 120],
+  [58, 120],
+];
+export const BOT_WIN_ANIMATION_SEGMENT = [
+  [0, 96],
+  [47, 96],
+];
