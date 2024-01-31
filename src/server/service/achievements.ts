@@ -1,8 +1,5 @@
-import {
-  type Achievement,
-  type AchievementId,
-  type MatchRoom,
-} from "~/types/index.js";
+import { type Achievement, type AchievementId } from "~/types/index.js";
+import { type UserAchievements } from "../db/schema";
 
 const goodBustAchievement: Achievement = {
   name: "Good Bust",
@@ -31,17 +28,19 @@ const doubleAgentAchievement: Achievement = {
 const busterStreakAchievement: Achievement = {
   name: "Buster Streak",
   description: "Bust three bots in a row",
-  calculate: ({ player, playerHistory, otherPlayers, botsBusted }) => {
+  calculate: ({
+    player,
+    playerHistory,
+    otherPlayers,
+    botsBusted,
+    playerAchievements,
+  }) => {
     const isNotEligibleForNewAchievement =
       !playerHistory ||
+      !playerAchievements ||
       playerHistory.length < 2 ||
       !player ||
-      alreadyReceivedAchievement(
-        player.userId,
-        playerHistory,
-        "busterStreak",
-        1,
-      );
+      alreadyReceivedAchievement(playerAchievements, "busterStreak", 1);
 
     if (isNotEligibleForNewAchievement) return false;
 
@@ -61,15 +60,9 @@ const busterStreakAchievement: Achievement = {
 const firstTimerAchievement: Achievement = {
   name: "First Timer",
   description: "Played your first match",
-  calculate: ({ playerHistory, playerAchievements }) => {
-    return (
-      !playerHistory ||
-      !playerAchievements ||
-      playerHistory.length === 0 ||
-      playerAchievements.some(
-        (achievement) => achievement.achievementId === "firstTimer",
-      )
-    );
+  calculate: ({ playerAchievements }) => {
+    if (!playerAchievements) return false;
+    return !alreadyReceivedAchievement(playerAchievements, "firstTimer");
   },
 };
 
@@ -86,13 +79,10 @@ const beginnersLuckAchievement: Achievement = {
 const realHumanAchievement: Achievement = {
   name: "Real Human",
   description: "First time played as a verified human",
-  calculate: ({ playerHistory, player, playerAchievements }) => {
-    if (!player.isVerified) return false;
+  calculate: ({ playerAchievements }) => {
+    if (!playerAchievements) return false;
 
-    const notAchieved = playerAchievements?.some(
-      (achievement) => achievement.achievementId == "realHuman",
-    );
-    return notAchieved === undefined || notAchieved;
+    return !alreadyReceivedAchievement(playerAchievements, "realHuman");
   },
 };
 
@@ -106,28 +96,27 @@ export const matchAchievements: Record<AchievementId, Achievement> = {
 };
 
 export const alreadyReceivedAchievement = (
-  playerId: string,
-  playerMatchHistory: MatchRoom[],
+  playerAchievements: UserAchievements[],
   achievementId: AchievementId,
   days?: number,
 ): boolean => {
-  let playerHistory = playerMatchHistory;
+  let achievements = playerAchievements;
 
   if (days) {
     // Get the timestamp for 24 hours ago
     const timeStampToStart = Date.now() - days * 24 * 60 * 60 * 1000;
-
     // Filter playerHistory to only include matches from the past 24 hours
-    playerHistory = playerMatchHistory.filter(
-      (match) => match.createdAt > timeStampToStart,
-    );
+    achievements = playerAchievements.filter((achievement) => {
+      console.log(
+        "Difference: ",
+        achievement.achievedAt.getTime(),
+        timeStampToStart,
+      );
+      return achievement.achievedAt.getTime() > timeStampToStart;
+    });
   }
   // Check if the achievement is in the player's history
-  return playerHistory.some((match) =>
-    match.players.some(
-      (player) =>
-        player.userId === playerId &&
-        player.achievements.includes(achievementId),
-    ),
+  return achievements.some(
+    (achievement) => achievement.achievementId === achievementId,
   );
 };
