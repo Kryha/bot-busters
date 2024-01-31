@@ -31,7 +31,7 @@ export const PlayerData: FC<Props> = ({
       return (
         <PlayerVote
           character={character}
-          onSelectPlayer={onSelectPlayer}
+          onSelectPlayer={onSelectPlayerVote}
           isSelected={isSelected}
         />
       );
