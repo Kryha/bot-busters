@@ -10,9 +10,15 @@ interface Props {
   player: PlayerType;
   hasGuessed: boolean;
   isSelected: boolean;
+  onSelectPlayer?: () => void;
 }
 
-export const PlayerResult: FC<Props> = ({ player, hasGuessed, isSelected }) => {
+export const PlayerResult: FC<Props> = ({
+  player,
+  hasGuessed,
+  isSelected,
+  onSelectPlayer,
+}) => {
   const character = CHARACTERS[player.characterId]!;
 
   return (
@@ -23,6 +29,7 @@ export const PlayerResult: FC<Props> = ({ player, hasGuessed, isSelected }) => {
         hasGuessed={hasGuessed}
         isBot={player.isBot}
         isSelected={isSelected}
+        onSelectPlayer={onSelectPlayer}
       />
     </Stack>
   );
