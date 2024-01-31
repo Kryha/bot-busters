@@ -47,7 +47,7 @@ export const MenuOptions: FC<Props> = ({ handleClose }) => {
         {text.general.playerProfile}
       </MenuOptionsButton>
       <MenuOptionsButton onClick={() => handleNavigation(pages.leaderboard)}>
-        {text.general.dailyLeaderboard}
+        {text.general.leaderboard}
       </MenuOptionsButton>
       <MenuOptionsButton onClick={() => handleNavigation(pages.howToPlay)}>
         {text.general.howToPlay}
