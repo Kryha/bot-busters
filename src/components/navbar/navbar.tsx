@@ -13,17 +13,20 @@ import { MenuButton } from "~/components/main-menu/menu-button.jsx";
 import { MainMenu } from "~/components/main-menu/index.js";
 import { pages } from "~/router.js";
 import { styles } from "./styles.js";
+import { api } from "~/utils/api.js";
 
 interface Props {
-  isVerifiedUser: boolean;
-  username?: string | null;
   open: boolean;
   setOpen: (open: boolean) => void;
 }
 
-export const Navbar: FC<Props> = ({ open, setOpen, username }) => {
+export const Navbar: FC<Props> = ({ open, setOpen }) => {
   const router = useRouter();
   const [soundOn, setSoundOn] = useState(true);
+
+  const loggedUser = api.user.getLoggedUser.useQuery(undefined, {
+    retry: false,
+  });
 
   const onSoundClick = () => {
     setSoundOn(!soundOn);
@@ -44,7 +47,7 @@ export const Navbar: FC<Props> = ({ open, setOpen, username }) => {
             <UserIcon />
           </Stack>
           <Typography variant="h3" sx={styles.userNameText}>
-            {username ?? text.general.username}
+            {loggedUser.data?.username ?? text.general.username}
           </Typography>
         </Stack>
         <Button
