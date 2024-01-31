@@ -3,7 +3,11 @@ import { type FC, useState } from "react";
 
 import { VOTING_TIME_MS } from "~/constants/index.js";
 import { text } from "~/assets/text/index.js";
-import { type MatchRoom, type PlayerType } from "~/types/index.js";
+import {
+  type CharacterId,
+  type MatchRoom,
+  type PlayerType,
+} from "~/types/index.js";
 import { Timer } from "~/components/timer/index.js";
 import { PlayerProofs } from "~/components/players/player-proofs/index.js";
 import { PlayerData } from "~/components/players/player-data/index.js";
@@ -26,7 +30,7 @@ export const PlayersOthers: FC<Props> = ({
 }) => {
   const [isLoadingVotes, setIsLoadingVotes] = useState(false);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
-  const [showPlayerProof, setShowPlayerProof] = useState<string>("1");
+  const [proofCharacterId, setProofCharacterId] = useState<CharacterId>("1");
   const { stage, players, votingAt } = room;
 
   const resultHeading =
@@ -91,7 +95,7 @@ export const PlayersOthers: FC<Props> = ({
               onSelectPlayer={() => {
                 stage == "voting"
                   ? selectPlayer(player.userId)
-                  : setShowPlayerProof(player.characterId);
+                  : setProofCharacterId(player.characterId);
               }}
             />
           );
@@ -112,7 +116,7 @@ export const PlayersOthers: FC<Props> = ({
       {stage === "results" && (
         <PlayerProofs
           otherPlayers={otherPlayers}
-          showPlayerProof={showPlayerProof}
+          proofCharacterId={proofCharacterId}
         />
       )}
     </Stack>

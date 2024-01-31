@@ -1,5 +1,5 @@
 import { type FC } from "react";
-import { type PlayerType } from "~/types/index.js";
+import { type CharacterId, type PlayerType } from "~/types/index.js";
 import { CHARACTERS } from "~/constants/index.js";
 import { Box, Stack, Typography } from "@mui/material";
 import { BotArrowIcon } from "~/assets/icons/index.js";
@@ -9,12 +9,12 @@ import { styles } from "./styles.js";
 
 interface Props {
   otherPlayers: PlayerType[];
-  showPlayerProof: string;
+  proofCharacterId: CharacterId;
 }
 
-export const PlayerProofs: FC<Props> = ({ otherPlayers, showPlayerProof }) => {
+export const PlayerProofs: FC<Props> = ({ otherPlayers, proofCharacterId }) => {
   const playerProof = otherPlayers.find(
-    (player) => player.characterId === showPlayerProof,
+    (player) => player.characterId === proofCharacterId,
   );
 
   if (!playerProof) return <ErrorView />;
