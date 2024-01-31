@@ -7,7 +7,7 @@ import { styles } from "~/components/main-menu/styles.js";
 import { Footer } from "./footer.jsx";
 import { NavbarMenu } from "~/components/main-menu/navbar-menu.jsx";
 import { MenuOptions } from "~/components/main-menu/menu-options.jsx";
-import { pages } from "~/router";
+import { pages } from "~/router.js";
 import { BotBustersIcon } from "~/assets/icons/index.js";
 
 const Transition = forwardRef(function Transition(
