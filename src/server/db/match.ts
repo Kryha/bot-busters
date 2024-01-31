@@ -4,10 +4,10 @@ import {
   usersToMatches,
   type UserToMatch,
 } from "~/server/db/schema.js";
-import { type MatchRoom } from "~/types/index.js";
+import { type StoredChatMessage, type MatchRoom } from "~/types/index.js";
 
 export const insertMatches = async (
-  matches: { id: string; room: MatchRoom }[],
+  matches: { id: string; room: MatchRoom; messages: StoredChatMessage[] }[],
   tx?: BBPgTransaction,
 ) => {
   const dbTx = tx ?? db;
@@ -15,15 +15,11 @@ export const insertMatches = async (
 
   const promises = matches.map(async (match) => {
     const userMatch: UserToMatch[] = match.room.players
-      .filter((player) => {
-        return !player.isBot;
-      })
-      .map((player) => {
-        return {
-          userId: player.userId,
-          matchId: match.id,
-        };
-      });
+      .filter((player) => !player.isBot)
+      .map((player) => ({
+        userId: player.userId,
+        matchId: match.id,
+      }));
     await dbTx.insert(usersToMatches).values(userMatch);
   });
 

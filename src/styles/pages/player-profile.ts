@@ -1,18 +1,18 @@
 import { type SxProps } from "@mui/material";
 
 export const styles = {
-  textContainer: {
-    pt: "240px",
+  mainContainer: {
+    pt: 10,
     alignItems: "center",
-  },
+    gap: 2,
+  } satisfies SxProps,
+
   table: {
     mt: "120px",
     mb: 5,
     textAlign: "center",
-  },
-  openDailyButton: {
-    p: "12px 120px",
-  },
+  } satisfies SxProps,
+
   actions: {
     gap: 2,
     flexDirection: "column",

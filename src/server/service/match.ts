@@ -1,6 +1,7 @@
 import { TRPCError } from "@trpc/server";
 import { eq, sql } from "drizzle-orm";
 import lodash from "lodash";
+import { v4 as uuid } from "uuid";
 
 import { matchPrompts } from "~/assets/text/match-prompts.js";
 import {
@@ -8,11 +9,21 @@ import {
   POINTS_ACHIEVEMENTS,
   POINTS_BOT_BUSTED,
   POINTS_HUMAN_BUSTED,
+  VOTING_TIME_MS,
 } from "~/constants/index.js";
 import { ee, matchEvent } from "~/server/api/match-maker.js";
 import { db, type BBPgTransaction } from "~/server/db/index.js";
-import { users } from "~/server/db/schema.js";
-import { selectMatchPlayedByUser, selectUserById } from "~/server/db/user.js";
+import {
+  userAchievements,
+  users,
+  type UserAchievements,
+} from "~/server/db/schema.js";
+import {
+  selectMatchPlayedByUser,
+  selectUserAchievements,
+  selectUserById,
+} from "~/server/db/user.js";
+import { matchAchievements } from "~/server/service/achievements.js";
 import { Agent } from "~/server/service/index.js";
 import {
   achievementIdSchema,
@@ -21,9 +32,10 @@ import {
   type MatchRoom,
   type MatchStage,
   type PlayerType,
+  type ReadyToPlayPayload,
+  type StoredChatMessage,
 } from "~/types/index.js";
 import { getRandomInt } from "~/utils/math.js";
-import { MATCH_ACHIEVEMENTS } from "./achievements.js";
 
 export class Match {
   private _id: string;
@@ -40,9 +52,12 @@ export class Match {
   private _players: PlayerType[];
   private _agents: Agent[];
   private _messageCountSinceLastTrigger = 0;
+  private _isInitialized = false;
+  private _intervalId: NodeJS.Timeout;
 
   //TODO: check for better solution
   private _playerPreviousMatches = new Map<string, MatchRoom[]>();
+  private _playerAchievements = new Map<string, UserAchievements[]>();
 
   stage: MatchStage = "chat";
   arePointsCalculated = false;
@@ -74,8 +89,8 @@ export class Match {
   }
 
   // TODO: Inject initial prompt as first chat message from "host"
-  constructor(roomId: string, playerIds: string[], botsInMatch: number) {
-    this._id = roomId;
+  constructor(playerIds: string[], botsInMatch: number) {
+    this._id = uuid();
 
     this._agents = lodash.range(0, botsInMatch).map(() => {
       const characterId = this.popCharacterId();
@@ -99,6 +114,45 @@ export class Match {
       console.error("Error checking if player is verified: ", err);
     });
     this.addPrompt();
+
+    this.initMatch(playerIds).catch((err) =>
+      console.error("Error initializing match: ", err),
+    );
+
+    this._intervalId = setInterval(() => {
+      if (!this._isInitialized) return;
+      this.matchLoop();
+    }, 5000);
+  }
+
+  private async initMatch(playerIds: string[]) {
+    await this.getPlayerPreviousMatches();
+    await this.checkVerifiedPlayers();
+
+    ee.emit("readyToPlay", {
+      roomId: this._id,
+      players: playerIds,
+    } satisfies ReadyToPlayPayload);
+    ee.emit("queueUpdate");
+
+    this._isInitialized = true;
+  }
+
+  private matchLoop() {
+    const roomAge = Date.now() - this.createdAt;
+
+    if (this.stage === "chat" && roomAge >= CHAT_TIME_MS) {
+      this.stage = "voting";
+      ee.emit(matchEvent(this.id, "stageChange"));
+    }
+
+    const votingTimeRanOut = roomAge >= CHAT_TIME_MS + VOTING_TIME_MS;
+
+    if (this.stage === "voting" && (this.allPlayersVoted || votingTimeRanOut)) {
+      this.stage = "results";
+      this.calculatePoints();
+      ee.emit(matchEvent(this.id, "stageChange"));
+    }
   }
 
   private addPrompt() {
@@ -143,7 +197,7 @@ export class Match {
     }
 
     this._messageCountSinceLastTrigger++;
-    this.messages.push(message);
+    this._messages.push(message);
     ee.emit(matchEvent(this.id), message);
   }
 
@@ -197,17 +251,24 @@ export class Match {
   }
 
   // TODO: make a proper DB relation with user and matches instead of doing this
+  // TODO: rename to get player stats
   private async getPlayerPreviousMatches() {
     const promises = this.players
       .filter((player) => !player.isBot)
       .map(async (player) => {
         if (this._playerPreviousMatches.get(player.userId)) return;
+        if (this._playerAchievements.get(player.userId)) return;
 
         const matchRooms = (
           await selectMatchPlayedByUser(player.userId, 5)
         ).map((match) => match.match.room);
 
         this._playerPreviousMatches.set(player.userId, matchRooms);
+
+        this._playerAchievements.set(
+          player.userId,
+          await selectUserAchievements(player.userId),
+        );
       });
     await Promise.allSettled(promises);
     this.playerHistoryLoaded = true;
@@ -240,9 +301,9 @@ export class Match {
         });
       }
 
-      if (!player.isBot) {
+      if (!player.isBot && player.isVerified) {
         // Check achievements
-        const achievementPoints = Object.entries(MATCH_ACHIEVEMENTS)
+        const achievementPoints = Object.entries(matchAchievements)
           .filter(([_, achievement]) => {
             return achievement.calculate({
               player,
@@ -250,6 +311,7 @@ export class Match {
               botsBusted,
               otherPlayers,
               playerHistory: this._playerPreviousMatches.get(player.userId),
+              playerAchievements: this._playerAchievements.get(player.userId),
             });
           })
           .reduce((totalPoints, [id, _]) => {
@@ -267,8 +329,7 @@ export class Match {
 
     this.arePointsCalculated = true;
   }
-
-  async storeScore(tx?: BBPgTransaction) {
+  async storeMatchStats(tx?: BBPgTransaction) {
     const dbTx = tx ?? db;
 
     let allScoresStored = true;
@@ -287,6 +348,23 @@ export class Match {
             score: sql`${users.score} + ${player.score}`,
           })
           .where(eq(users.id, player.userId));
+
+        player.achievements
+          .filter((achievement) => {
+            return (
+              achievement === "beginnersLuck" ||
+              achievement === "realHuman" ||
+              achievement === "firstTimer" ||
+              achievement === "busterStreak"
+            );
+          })
+          .map(async (achievementId) => {
+            await dbTx.insert(userAchievements).values({
+              userId: player.userId,
+              achievementId: achievementId,
+              achievedAt: new Date(),
+            });
+          });
       } catch (error) {
         player.isScoreSaved = false;
         allScoresStored = false;
@@ -303,6 +381,24 @@ export class Match {
   cleanup() {
     this._messages = [];
     this._agents.forEach((agent) => agent.cleanup());
+    clearInterval(this._intervalId);
+  }
+
+  convertMessages(): StoredChatMessage[] {
+    return this._messages.flatMap((message) => {
+      if (message.sender === "host") {
+        return {
+          ...message,
+          sender: "host",
+          isBot: false,
+        } satisfies StoredChatMessage;
+      }
+
+      const player = this._players.find((p) => p.userId === message.sender);
+      if (!player) return [];
+
+      return { ...message, sender: player.characterId, isBot: !!player.isBot };
+    });
   }
 
   toSerializable(): MatchRoom {

@@ -10,37 +10,45 @@ export interface QueueUpdatePayload {
   queueLength: number;
 }
 
+export const characterIdSchema = z.enum(["1", "2", "3", "4", "5"]);
+export type CharacterId = z.infer<typeof characterIdSchema>;
+
 export const chatMessagePayloadSchema = z.object({
-  sender: z.string().uuid(),
+  sender: z.string().uuid().or(z.literal("host")),
   message: z.string(),
   sentAt: z.number(), // unix time
 });
+
 export type ChatMessagePayload = z.infer<typeof chatMessagePayloadSchema>;
+
+export const storedChatMessageSchema = z.object({
+  sender: characterIdSchema.or(z.literal("host")),
+  message: z.string(),
+  sentAt: z.number(), // unix time
+  isBot: z.boolean(),
+});
+export type StoredChatMessage = z.infer<typeof storedChatMessageSchema>;
 
 export const achievementIdSchema = z.enum([
   // Daily streak play
   "1",
-  // Match achievement - written last message
-  "11",
   // Match achievement - perfect score (all votes correct)
-  "12",
+  "goodBust",
   // Match achievement - two people selected you as a bot
-  "13",
+  "doubleAgent",
   // Day achievement - successfully bust all bots 3 consecutive games
-  "101",
+  "busterStreak",
+  // One time achievement - player plays his first game
+  "firstTimer",
   // Day achievement - play 5 days in a row
   "102",
-  // One time achievement - player plays his first game
-  "201",
   // One time achievement - player Bust at least one bot in his first game
-  "202",
+  "beginnersLuck",
   // One time achievement - player plays his first game as verified human
-  "203",
+  "realHuman",
 ]);
-export type AchievementId = z.infer<typeof achievementIdSchema>;
 
-export const characterIdSchema = z.enum(["1", "2", "3", "4", "5"]);
-export type CharacterId = z.infer<typeof characterIdSchema>;
+export type AchievementId = z.infer<typeof achievementIdSchema>;
 
 export const playerSchema = z.object({
   userId: z.string().uuid(),

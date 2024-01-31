@@ -1,6 +1,5 @@
 import { count, eq } from "drizzle-orm";
 import { z } from "zod";
-import { POINTS_ACHIEVEMENTS } from "~/constants/index.js";
 
 import {
   createTRPCRouter,
@@ -9,10 +8,9 @@ import {
 } from "~/server/api/trpc.js";
 import { db } from "~/server/db/index.js";
 import { ranks, users, usersToMatches } from "~/server/db/schema.js";
-import { deleteUser, selectMatchPlayedByUser } from "~/server/db/user.js";
+import { deleteUser } from "~/server/db/user.js";
 import { leaderboard } from "~/server/service/index.js";
 import { profanityFilter } from "~/service/index.js";
-import { alreadyReceivedAchievement } from "~/utils/achievements.js";
 import { isValidSession } from "~/utils/session.js";
 import { verifySignature } from "~/utils/wallet.js";
 
@@ -135,7 +133,7 @@ export const userRouter = createTRPCRouter({
       });
     }),
 
-  getUserById: protectedProcedure.query(async ({ ctx }) => {
+  getLoggedUser: protectedProcedure.query(async ({ ctx }) => {
     const { id } = ctx.session.user;
 
     const [selectedUser] = await db
@@ -146,6 +144,61 @@ export const userRouter = createTRPCRouter({
     if (!selectedUser) throw new Error("User not found");
 
     return selectedUser;
+  }),
+
+  getLoggedUserProfile: protectedProcedure.query(async ({ ctx }) => {
+    const { id } = ctx.session.user;
+
+    const [userWithMatches] = await db
+      .select({
+        id: users.id,
+        username: users.username,
+        address: users.address,
+        score: users.score,
+        matchesPlayed: count(usersToMatches.userId),
+        rank: ranks.position,
+      })
+      .from(users)
+      .where(eq(users.id, id))
+      .innerJoin(ranks, eq(users.id, ranks.userId))
+      .innerJoin(usersToMatches, eq(users.id, usersToMatches.userId))
+      .groupBy(users.id, ranks.position);
+
+    if (userWithMatches) return userWithMatches;
+
+    const [rankedUser] = await db
+      .select({
+        id: users.id,
+        username: users.username,
+        address: users.address,
+        score: users.score,
+        rank: ranks.position,
+      })
+      .from(users)
+      .where(eq(users.id, id))
+      .innerJoin(ranks, eq(users.id, ranks.userId));
+
+    if (rankedUser) return { ...rankedUser, matchesPlayed: 0 };
+
+    const [unrankedUser] = await db
+      .select({
+        id: users.id,
+        username: users.username,
+        address: users.address,
+        score: users.score,
+      })
+      .from(users)
+      .where(eq(users.id, id));
+
+    if (!unrankedUser) throw new Error("User not found");
+
+    const rankRes = await db
+      .select({ ranksCount: count(ranks.position) })
+      .from(ranks);
+
+    const rank = rankRes[0] ? rankRes[0].ranksCount + 1 : 0;
+
+    return { ...unrankedUser, matchesPlayed: 0, rank };
   }),
 
   getRankedUsers: publicProcedure

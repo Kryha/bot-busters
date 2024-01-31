@@ -1,19 +1,23 @@
+import { TRPCError } from "@trpc/server";
 import { observable } from "@trpc/server/observable";
 
 import type { QueueUpdatePayload, ReadyToPlayPayload } from "~/types/index.js";
+import { lobbyQueue } from "~/server/service/index.js";
 
 import { createTRPCRouter, protectedProcedure } from "../trpc.js";
-import { ee, lobbyQueue } from "../match-maker.js";
+import { ee, isUserPlaying } from "../match-maker.js";
 
 export const lobbyRouter = createTRPCRouter({
   onQueueUpdate: protectedProcedure.subscription(({ ctx }) => {
     return observable<QueueUpdatePayload>((emit) => {
       const handleEvent = () => {
-        const playerQueuePosition = lobbyQueue.indexOf(ctx.session.user.id) + 1;
+        const playerQueuePosition = lobbyQueue.getPlayerPosition(
+          ctx.session.user.id,
+        );
         // emit data to client
         emit.next({
           playerQueuePosition,
-          queueLength: lobbyQueue.length,
+          queueLength: lobbyQueue.queue.length,
         });
       };
 
@@ -24,25 +28,27 @@ export const lobbyRouter = createTRPCRouter({
 
         const { id } = ctx.session.user;
 
-        const index = lobbyQueue.indexOf(id);
-        if (index < 0) return;
-        lobbyQueue.splice(index, 1);
+        lobbyQueue.leave(id);
+
+        ee.emit("queueUpdate");
       };
     });
   }),
   join: protectedProcedure.mutation(({ ctx }) => {
     const { id } = ctx.session.user;
+    const joinCount = lobbyQueue.join(id);
+    const userIsPlaying = isUserPlaying(id);
 
-    const hasJoined = lobbyQueue.includes(id);
-
-    if (!hasJoined) {
-      lobbyQueue.push(id);
+    if (joinCount > 1 || userIsPlaying) {
+      throw new TRPCError({ code: "FORBIDDEN" });
     }
 
-    const playerQueuePosition = lobbyQueue.indexOf(ctx.session.user.id) + 1;
-
     ee.emit("queueUpdate");
-    return { playerQueuePosition, queueLength: lobbyQueue.length };
+
+    return {
+      playerQueuePosition: lobbyQueue.getPlayerPosition(id),
+      queueLength: lobbyQueue.queue.length,
+    };
   }),
 
   onReadyToPlay: protectedProcedure.subscription(({ ctx }) => {

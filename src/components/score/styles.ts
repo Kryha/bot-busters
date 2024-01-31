@@ -1,4 +1,4 @@
-import { type SxProps } from "@mui/material";
+import { type SxProps, tooltipClasses } from "@mui/material";
 import { theme } from "~/styles/theme.js";
 
 export const styles = {
@@ -10,17 +10,40 @@ export const styles = {
   heading: {
     textTransform: "uppercase",
     textAlign: "center",
-    pt: 4,
-    pb: 4,
-    pr: 2,
-    pl: 2,
+    padding: 4,
     borderBottom: `4px solid ${theme.palette.customGrey.main}`,
   },
   achievements: {
-    flex: "1 1 400px",
+    flex: "1 1 auto",
     overflowY: "scroll",
-    pl: 2,
-    pr: 2,
+  },
+  achievement: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    padding: "16px 16px",
+    borderBottom: `4px solid ${theme.palette.customGrey.main}`,
+    cursor: "pointer",
+    "&:hover": {
+      backgroundColor: theme.palette.customGrey.main,
+    },
+  },
+  toolTip: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    backgroundColor: theme.palette.customGrey.main,
+    color: theme.palette.common.white,
+    fontSize: 16,
+    p: 2,
+    borderRadius: 0,
+  },
+  toolTipPopper: {
+    [`&.${tooltipClasses.popper}[data-popper-placement*="left"] .${tooltipClasses.tooltip}`]:
+      {
+        marginTop: "-4px",
+        marginRight: "0px",
+        width: 300,
+      },
   },
   score: {
     textTransform: "uppercase",

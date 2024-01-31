@@ -37,6 +37,16 @@ spec:
             - containerPort: 5432
               name: http
               protocol: TCP
+
+        - name: adminer
+          image: adminer
+          ports:
+            - containerPort: 8080
+          env:
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
   volumeClaimTemplates:
     - metadata:
         name: postgres-data

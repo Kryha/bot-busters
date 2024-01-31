@@ -1,11 +1,12 @@
 import { type SxProps } from "@mui/material";
 
 import { breakpoints, theme } from "~/styles/theme.js";
+import { zIndex } from "~/styles/z-index.js";
 
 export const styles = {
   container: {
     position: "relative",
-    zIndex: 2,
+    zIndex: zIndex.front,
     flex: "0 1 auto",
   },
   statsWrapper: {
@@ -58,6 +59,10 @@ export const styles = {
     justifyContent: "center",
     color: theme.palette.primary.main,
     gap: 1,
+    cursor: "pointer",
+    "&:hover": {
+      color: theme.palette.secondary.main,
+    },
   } satisfies SxProps,
   userNameText: {
     overflow: "hidden",

@@ -1,5 +1,6 @@
 import { type SxProps } from "@mui/material";
 import { theme } from "~/styles/theme.js";
+import { zIndex } from "~/styles/z-index.js";
 
 export const styles = {
   container: {
@@ -18,7 +19,7 @@ export const styles = {
     position: "absolute",
   },
   avatarResult: {
-    zIndex: 1,
+    zIndex: zIndex.middle,
   },
   avatar: {
     width: 150,

@@ -13,6 +13,7 @@ import {
   SoundOnIcon,
   UserIcon,
 } from "~/assets/icons/index.js";
+import { api } from "~/utils/api.js";
 
 interface Props {
   handleClose: () => void;
@@ -22,6 +23,10 @@ interface Props {
 
 export const NavbarMenu: FC<Props> = ({ handleClose, soundOn, setSoundOn }) => {
   const router = useRouter();
+
+  const loggedUser = api.user.getLoggedUser.useQuery(undefined, {
+    retry: false,
+  });
 
   const onSoundClick = () => {
     setSoundOn(!soundOn);
@@ -39,7 +44,7 @@ export const NavbarMenu: FC<Props> = ({ handleClose, soundOn, setSoundOn }) => {
           <UserIcon />
         </Stack>
         <Typography variant="h3" sx={styles.userNameText}>
-          {text.general.username}
+          {loggedUser.data?.username ?? text.general.username}
         </Typography>
       </Stack>
       <Button

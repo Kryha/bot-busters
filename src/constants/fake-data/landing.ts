@@ -1,9 +1,5 @@
 import { type UserStatsData } from "~/types/index.js";
 
-export const fakeUsername = "CharlieBrown";
-
-export const fakeCountdown = "11:34:12";
-
 export const fakeStats: UserStatsData = {
   todaysPoints: 1000,
   todaysPosition: 990,

@@ -1,4 +1,3 @@
-export * from "./authentication/index.js";
 export * from "./error-view/index.jsx";
 export * from "./tables/index.js";
 export * from "./points-display/index.js";
@@ -15,3 +14,4 @@ export * from "./bullet-point/index.js";
 export * from "./player-profiles/index.js";
 export * from "./points-and-penalties/index.js";
 export * from "./game-rules/index.js";
+export * from "./authentication/index.js";

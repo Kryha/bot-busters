@@ -1,18 +1,5 @@
 import { type Achievement, type AchievementId } from "~/types/index.js";
-import { alreadyReceivedAchievement } from "~/utils/achievements.js";
-
-const lastOneAchievement: Achievement = {
-  name: "Last One",
-  description: "Write the last message in a match",
-  calculate: ({ player, messages }) => {
-    const lastMessage = messages[messages.length - 1];
-    if (!lastMessage) return false;
-
-    const lastSender = lastMessage.sender;
-    if (lastSender !== player.userId) return false;
-    return true;
-  },
-};
+import { type UserAchievements } from "../db/schema";
 
 const goodBustAchievement: Achievement = {
   name: "Good Bust",
@@ -41,20 +28,27 @@ const doubleAgentAchievement: Achievement = {
 const busterStreakAchievement: Achievement = {
   name: "Buster Streak",
   description: "Bust three bots in a row",
-  calculate: ({ player, playerHistory, otherPlayers, botsBusted }) => {
-    if (
+  calculate: ({
+    player,
+    playerHistory,
+    otherPlayers,
+    botsBusted,
+    playerAchievements,
+  }) => {
+    const isNotEligibleForNewAchievement =
       !playerHistory ||
+      !playerAchievements ||
       playerHistory.length < 2 ||
-      alreadyReceivedAchievement(player.userId, playerHistory, "101", 1) ||
-      !player
-    )
-      return false;
+      !player ||
+      alreadyReceivedAchievement(playerAchievements, "busterStreak", 1);
+
+    if (isNotEligibleForNewAchievement) return false;
 
     const allBotsBustedLastTwoMatches = playerHistory
       .sort((a, b) => b.createdAt - a.createdAt)
       .slice(0, 2)
       .map((match) => match.players.find((p) => p.userId === player.userId))
-      .every((p) => p?.achievements.includes("12"));
+      .every((p) => p?.achievements.includes("goodBust"));
 
     const perfectCurrentGame =
       botsBusted === otherPlayers.filter((p) => p.isBot).length;
@@ -99,8 +93,9 @@ const dailyStreakAchievement: Achievement = {
 const firstTimerAchievement: Achievement = {
   name: "First Timer",
   description: "Played your first match",
-  calculate: ({ playerHistory }) => {
-    return !playerHistory || playerHistory.length === 0;
+  calculate: ({ playerAchievements }) => {
+    if (!playerAchievements) return false;
+    return !alreadyReceivedAchievement(playerAchievements, "firstTimer");
   },
 };
 
@@ -123,14 +118,47 @@ const realHumanAchievement: Achievement = {
   },
 };
 
-export const MATCH_ACHIEVEMENTS: Record<AchievementId, Achievement> = {
-  "1": streakCountAchievements,
-  "11": lastOneAchievement,
-  "12": goodBustAchievement,
-  "13": doubleAgentAchievement,
-  "101": busterStreakAchievement,
-  "102": dailyStreakAchievement,
-  "201": firstTimerAchievement,
-  "202": beginnersLuckAchievement,
-  "203": realHumanAchievement,
+const realHumanAchievement: Achievement = {
+  name: "Real Human",
+  description: "First time played as a verified human",
+  calculate: ({ playerAchievements }) => {
+    if (!playerAchievements) return false;
+
+    return !alreadyReceivedAchievement(playerAchievements, "realHuman");
+  },
+};
+
+export const matchAchievements: Record<AchievementId, Achievement> = {
+  goodBust: goodBustAchievement,
+  doubleAgent: doubleAgentAchievement,
+  busterStreak: busterStreakAchievement,
+  firstTimer: firstTimerAchievement,
+  beginnersLuck: beginnersLuckAchievement,
+  realHuman: realHumanAchievement,
+};
+
+export const alreadyReceivedAchievement = (
+  playerAchievements: UserAchievements[],
+  achievementId: AchievementId,
+  days?: number,
+): boolean => {
+  let achievements = playerAchievements;
+
+  if (days) {
+    // Get the timestamp for 24 hours ago
+    const timeStampToStart = Date.now() - days * 24 * 60 * 60 * 1000;
+    // Filter playerHistory to only include matches from the past 24 hours
+    achievements = playerAchievements.filter((achievement) => {
+      console.log(
+        "Difference: ",
+        achievement.achievedAt.getTime(),
+        timeStampToStart,
+      );
+      return achievement.achievedAt.getTime() > timeStampToStart;
+    });
+  }
+  // Check if the achievement is in the player's history
+  return achievements.some(
+    (achievement) => achievement.achievementId === achievementId,
+  );
 };
