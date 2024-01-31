@@ -1,9 +1,10 @@
-import { type PlayerType } from "~/types";
+import { type PlayerType } from "~/types/index.js";
 import { type FC } from "react";
 import { CHARACTERS } from "~/constants/index.js";
 import { Box, Stack, Typography } from "@mui/material";
 import { text } from "~/assets/text/index.js";
 import { BotArrowIcon } from "~/assets/icons/index.js";
+
 import { styles } from "./styles.js";
 
 interface Props {
