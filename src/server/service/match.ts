@@ -292,7 +292,7 @@ export class Match {
         });
       }
 
-      if (!player.isBot) {
+      if (!player.isBot && player.isVerified) {
         // Check achievements
         const achievementPoints = Object.entries(matchAchievements)
           .filter(([_, achievement]) => {
@@ -346,7 +346,8 @@ export class Match {
             return (
               achievement === "beginnersLuck" ||
               achievement === "realHuman" ||
-              achievement === "firstTimer"
+              achievement === "firstTimer" ||
+              achievement === "busterStreak"
             );
           })
           .map(async (achievementId) => {
