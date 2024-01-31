@@ -18,7 +18,6 @@ import { api } from "~/utils/api.js";
 interface Props {
   handleClose: () => void;
   soundOn: boolean;
-  username?: string | null;
   setSoundOn: (value: boolean) => void;
 }
 
