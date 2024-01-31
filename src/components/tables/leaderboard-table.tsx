@@ -17,7 +17,7 @@ export const LeaderboardTable: FC<Props> = ({ leaderboard = [] }) => {
   const user = api.user.getLoggedUserProfile.useQuery(undefined, {
     retry: false,
   });
-  
+
   return (
     <TableContainer sx={styles.wrapper}>
       <Table sx={styles.table} stickyHeader aria-label="simple table">
@@ -29,7 +29,9 @@ export const LeaderboardTable: FC<Props> = ({ leaderboard = [] }) => {
         </colgroup>
         <Header cells={text.leaderboard.leaderboardColumns} />
         <TableBody>
-          {user.data?.username && <RowLeaderboard userRow leaderboard={user.data} />}
+          {user.data?.username && (
+            <RowLeaderboard userRow leaderboard={user.data} />
+          )}
           {leaderboard.map((entry, index) => (
             <RowLeaderboard key={index} leaderboard={entry} />
           ))}
