@@ -31,7 +31,7 @@ export type StoredChatMessage = z.infer<typeof storedChatMessageSchema>;
 
 export const achievementIdSchema = z.enum([
   // Daily streak play
-  "1",
+  "dailyStreakCounter",
   // Match achievement - perfect score (all votes correct)
   "goodBust",
   // Match achievement - two people selected you as a bot
@@ -41,7 +41,7 @@ export const achievementIdSchema = z.enum([
   // One time achievement - player plays his first game
   "firstTimer",
   // Day achievement - play 5 days in a row
-  "102",
+  "fiveDayStreak",
   // One time achievement - player Bust at least one bot in his first game
   "beginnersLuck",
   // One time achievement - player plays his first game as verified human
