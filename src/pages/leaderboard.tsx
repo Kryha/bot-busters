@@ -60,7 +60,7 @@ const LeaderBoard = () => {
 
   return (
     <>
-      <PageHeader text={text.leaderboard.dailyLeaderboard} />
+      <PageHeader text={text.leaderboard.leaderboard} />
 
       {/* TODO: if user is logged in, pass their data as param to show their score on top */}
       <LeaderboardTable leaderboard={leaderboardData} />

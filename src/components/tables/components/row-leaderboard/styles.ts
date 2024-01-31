@@ -18,6 +18,10 @@ export const styles = {
     textAlign: "center",
     color: theme.palette.primary.main,
   },
+  userCell: {
+    position: "sticky",
+    color: theme.palette.common.white,
+  },
   ranking: {
     fontFamily: theme.typography.h2.fontFamily,
     fontSize: theme.typography.h4.fontSize,
