@@ -3,11 +3,11 @@ import { Table, TableBody, TableContainer } from "@mui/material";
 
 import { type LeaderboardData } from "~/types/index.js";
 import { text } from "~/assets/text/index.js";
+import { api } from "~/utils/api.js";
 
 import { Header, RowLeaderboard } from "./components/index.js";
 import { COLUMN_WIDTH } from "./constants.js";
 import { styles } from "./styles.js";
-import { api } from "~/utils/api.js";
 
 interface Props {
   leaderboard?: LeaderboardData[];
