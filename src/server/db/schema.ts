@@ -12,7 +12,7 @@ import { createInsertSchema } from "drizzle-zod";
 import { type z } from "zod";
 
 import { PUBLIC_KEY_LENGTH } from "~/constants/index.js";
-import { type MatchRoom } from "~/types/index.js";
+import { type StoredChatMessage, type MatchRoom } from "~/types/index.js";
 
 export const bbPgTable = pgTableCreator((name) => `bot_busters_${name}`);
 
@@ -49,6 +49,7 @@ export type Rank = z.infer<typeof rankSchema>;
 export const matches = bbPgTable("match", {
   id: uuid("id").primaryKey(),
   room: json("room").notNull().$type<MatchRoom>(),
+  messages: json("messages").notNull().$type<StoredChatMessage[]>().default([]),
 });
 
 export const usersToMatches = bbPgTable(
