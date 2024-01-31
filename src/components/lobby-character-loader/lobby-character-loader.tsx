@@ -1,11 +1,11 @@
 import { type FC, useEffect, useState } from "react";
-import { Avatar, Box, Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import { getCharacterAvatar } from "~/utils/characters.jsx";
 import { CHARACTERS, DEFAULT_MAX_PLAYERS_PER_ROOM } from "~/constants/index.js";
 import { text } from "~/assets/text/index.js";
 import { LobbyProgressBar } from "~/components/lobby-progress-bar/index.js";
-
-import hostAvatar from "~/assets/characters/host-character.png";
+import { MatchMakingBot } from "~/assets/animations/index.js";
+import { AnimationPlayer } from "~/components/animation/index.js";
 import { theme } from "~/styles/theme.js";
 import { styles } from "./styles.js";
 
@@ -67,7 +67,9 @@ export const LobbyCharacterLoader: FC<Props> = ({
       </Stack>
       <LobbyProgressBar progress={activatedCharacters.size} />
       <Stack sx={styles.hostContainer}>
-        <Avatar sx={styles.hostAvatar} src={hostAvatar.src} />
+        <Stack sx={styles.hostAvatar}>
+          <AnimationPlayer animationData={MatchMakingBot} play loop />
+        </Stack>
         <Stack sx={styles.hostParagraph}>
           <Typography variant="body1" sx={styles.hostText}>
             {text.lobby.hostParagraph1}
