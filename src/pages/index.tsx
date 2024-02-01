@@ -7,8 +7,8 @@ import { TopRanked } from "~/components/index.js";
 import { api } from "~/utils/api.js";
 import { pages } from "~/router.js";
 import { TOP_RANKED_PLAYERS } from "~/constants/index.js";
+import { PlayButton } from "~/components/play-button/index.js";
 import { PixelButton } from "~/components/pixel-button/index.js";
-import { PrimaryButton } from "~/components/primary-button/index.js";
 import { BotBusterLogoAnimation } from "~/components/bot-buster-logo/index.js";
 
 import { styles } from "~/styles/pages/homepage.js";
@@ -45,16 +45,10 @@ const Homepage = () => {
         <BotBusterLogoAnimation />
       </Stack>
       <Stack sx={styles.actions}>
-        <PrimaryButton
-          aria-label="Start"
+        <PlayButton
           disabled={loggedUser.isLoading}
           onClick={() => void handleGameStart()}
-          sx={styles.startGameButton}
-        >
-          <Typography variant="h3" sx={styles.buttonText}>
-            {text.homepage.startNewGame}
-          </Typography>
-        </PrimaryButton>
+        />
         <PixelButton
           onClick={openDailyHandler}
           text={text.homepage.openDaily}
