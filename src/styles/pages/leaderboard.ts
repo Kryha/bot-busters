@@ -1,5 +1,9 @@
-import { type SxProps } from "@mui/material";
+import type { SxStyleRecord } from "~/types/sx-style-record.js";
 
 export const styles = {
-  text: { textAlign: "center", mb: "120px", pt: "172px" } satisfies SxProps,
-};
+  text: {
+    textAlign: "center",
+    mb: "80px",
+    pt: "80px",
+  },
+} satisfies SxStyleRecord;

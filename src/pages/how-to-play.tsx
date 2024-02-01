@@ -8,15 +8,14 @@ import {
   PlayerProfiles,
   PointsAndPenalties,
 } from "~/components/index.js";
+import { PageHeader } from "~/containers/page-header/index.js";
 import { styles } from "~/styles/pages/how-to-play.js";
 
 const HowToPlay: FC = () => {
   const pageContent = copywrite.howToPlay;
   return (
     <Stack sx={styles.container}>
-      <Typography variant="h1" sx={styles.heading}>
-        {pageContent.headings.howToPlay}
-      </Typography>
+      <PageHeader text={pageContent.headings.howToPlay} />
       <Typography variant="body1" textAlign="center" sx={styles.text}>
         {pageContent.main[0]}
         <br />

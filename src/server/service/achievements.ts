@@ -1,5 +1,5 @@
 import { type Achievement, type AchievementId } from "~/types/index.js";
-import { type UserAchievements } from "../db/schema";
+import { type UserAchievements } from "../db/schema.js";
 
 const goodBustAchievement: Achievement = {
   name: "Good Bust",
@@ -120,7 +120,6 @@ const realHumanAchievement: Achievement = {
   description: "First time played as a verified human",
   calculate: ({ playerAchievements }) => {
     if (!playerAchievements) return false;
-
     return !alreadyReceivedAchievement(playerAchievements, "realHuman");
   },
 };
@@ -146,12 +145,12 @@ export const alreadyReceivedAchievement = (
   if (days) {
     // Get the timestamp for 24 hours ago
     const timeStampToStart = Date.now() - days * 24 * 60 * 60 * 1000;
-    // Filter playerHistory to only include matches from the past 24 hours
+    // Filter achievements to only include matches from the past 24 hours
     achievements = playerAchievements.filter((achievement) => {
       return achievement.achievedAt.getTime() > timeStampToStart;
     });
   }
-  // Check if the achievement is in the player's history
+  // Check if the achievement is in the player's achievements history
   return achievements.some(
     (achievement) => achievement.achievementId === achievementId,
   );

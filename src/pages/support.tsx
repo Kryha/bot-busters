@@ -18,6 +18,7 @@ import {
   validation,
 } from "~/constants/index.js";
 import { SUPPORT_TOPIC, type SupportTopic } from "~/constants/support.js";
+import { PageHeader } from "~/containers/page-header/index.js";
 import { styles } from "~/styles/pages/support.js";
 import { api } from "~/utils/api.js";
 
@@ -85,9 +86,7 @@ function Support() {
 
   return (
     <Stack sx={styles.container}>
-      <Typography variant="h1" color="common.black" pt={10} textAlign="center">
-        {text.general.support}
-      </Typography>
+      <PageHeader text={text.general.support} />
       <Typography variant="body1" sx={styles.text}>
         {copywrite.main[0]}
         <br />

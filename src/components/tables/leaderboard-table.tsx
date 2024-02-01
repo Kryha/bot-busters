@@ -3,6 +3,7 @@ import { Table, TableBody, TableContainer } from "@mui/material";
 
 import { type LeaderboardData } from "~/types/index.js";
 import { text } from "~/assets/text/index.js";
+import { api } from "~/utils/api.js";
 
 import { Header, RowLeaderboard } from "./components/index.js";
 import { COLUMN_WIDTH } from "./constants.js";
@@ -13,20 +14,26 @@ interface Props {
 }
 
 export const LeaderboardTable: FC<Props> = ({ leaderboard = [] }) => {
+  const user = api.user.getLoggedUserProfile.useQuery(undefined, {
+    retry: false,
+  });
+
   return (
     <TableContainer sx={styles.wrapper}>
-      <Table sx={styles.table} aria-label="simple table">
+      <Table sx={styles.table} stickyHeader aria-label="simple table">
         <colgroup>
           <col width={COLUMN_WIDTH.sm} />
           <col width={COLUMN_WIDTH.lg} />
           <col width={COLUMN_WIDTH.md} />
           <col width={COLUMN_WIDTH.md} />
-          <col width={COLUMN_WIDTH.md} />
         </colgroup>
         <Header cells={text.leaderboard.leaderboardColumns} />
         <TableBody>
-          {leaderboard.map((leaderboard, index) => (
-            <RowLeaderboard key={index} leaderboard={leaderboard} />
+          {user.data?.username && (
+            <RowLeaderboard userRow leaderboard={user.data} />
+          )}
+          {leaderboard.map((entry, index) => (
+            <RowLeaderboard key={index} leaderboard={entry} />
           ))}
         </TableBody>
       </Table>

@@ -301,7 +301,7 @@ export class Match {
         });
       }
 
-      if (!player.isBot && player.isVerified) {
+      if (player.isVerified) {
         // Check achievements
         const achievementPoints = Object.entries(matchAchievements)
           .filter(([_, achievement]) => {
