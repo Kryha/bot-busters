@@ -1,5 +1,5 @@
 import { type FC } from "react";
-import { Stack } from "@mui/material";
+import { Slide, Stack } from "@mui/material";
 import { type PlayerType } from "~/types/index.js";
 
 import { SplashScreen } from "~/components/index.js";
@@ -32,18 +32,24 @@ export const Interstitials: FC<Props> = ({
   return (
     <>
       {splashScreenVariant === "chat" && (
-        <SplashScreen backgroundColor={backgroundColor}>
-          <Stack sx={styles.avatar}>{characterSplashScreen}</Stack>
-          <Stack sx={styles.splashText}>
-            <StartChatting aria-label={"start-chatting"} />
-            <Stack sx={styles.splashHeading}>{characterTitle}</Stack>
+        <SplashScreen characterName={name} backgroundColor={backgroundColor}>
+          <Stack sx={styles.splashSection}>
+            <Slide direction="right" in={true} mountOnEnter unmountOnExit>
+              <Stack sx={styles.splashText}>
+                <StartChatting aria-label={"start-chatting"} />
+                <Stack sx={styles.splashHeading}>{characterTitle}</Stack>
+              </Stack>
+            </Slide>
+            <Stack sx={styles.avatar}>{characterSplashScreen}</Stack>
           </Stack>
         </SplashScreen>
       )}
       {splashScreenVariant === "voting" && (
         <SplashScreen backgroundColor={theme.palette.purple.dark}>
-          <Stack sx={styles.splashText}>
-            <LetsBustSomeBots aria-label={"voting-stage"} />
+          <Stack sx={styles.splashSection}>
+            <Stack sx={styles.letsBustSomeBots}>
+              <LetsBustSomeBots aria-label={"voting-stage"} />
+            </Stack>
           </Stack>
         </SplashScreen>
       )}
