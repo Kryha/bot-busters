@@ -43,26 +43,6 @@ export const userRouter = createTRPCRouter({
           return { isUsernameSet: !!loggedUser.username };
         }
 
-        const verifiedAccount = duplicateUsers.find(
-          (user) => user.address === address,
-        );
-
-        if (verifiedAccount) {
-          const matchesPlayed = (
-            await selectMatchPlayedByUser(verifiedAccount.id)
-          ).map((match) => match.match.room);
-
-          const hasAchievement = alreadyReceivedAchievement(
-            verifiedAccount.id,
-            matchesPlayed,
-            "201",
-          );
-
-          if (hasAchievement) {
-            loggedUser.score -= POINTS_ACHIEVEMENTS["201"];
-          }
-        }
-
         const score =
           duplicateUsers.reduce((acc, user) => acc + user.score, 0) +
           loggedUser.score;
