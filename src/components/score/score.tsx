@@ -23,7 +23,7 @@ export const Score: FC<Props> = ({ gainedScore, achievements }) => {
         {achievements.length === 0 ? (
           <Typography
             variant="body2"
-            sx={{ margin: "auto", textTransform: "uppercase" }}
+            sx={{ margin: "auto", textTransform: "uppercase", p: 4 }}
           >
             {text.achievements.betterLuckNextTime}
           </Typography>

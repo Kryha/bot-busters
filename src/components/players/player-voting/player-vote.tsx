@@ -7,7 +7,7 @@ import { styles } from "./styles.js";
 
 interface Props {
   character: Character;
-  isSelected: boolean;
+  isSelected?: boolean;
   onSelectPlayer: () => void;
 }
 
