@@ -25,8 +25,10 @@ export const styles = {
     flexDirection: "row",
   },
   letsBustSomeBots: {
+    justifyContent: "center",
+    alignItems: "center",
     "& > svg": {
-      width: "100%",
+      width: "100vw",
       height: "auto",
     },
   },

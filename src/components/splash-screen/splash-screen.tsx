@@ -33,7 +33,7 @@ export const SplashScreen: FC<Props> = ({
   if (!showSplashScreen) return;
 
   return (
-    <Slide direction="left" in={true} mountOnEnter unmountOnExit>
+    <Slide direction="left" in={showSplashScreen} mountOnEnter unmountOnExit>
       <Stack sx={styles.container}>
         <Stack sx={styles.transitionLines(backgroundColor)}>
           <AnimationPlayer
