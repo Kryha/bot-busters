@@ -12,8 +12,11 @@ export const styles = {
   character: {
     textTransform: "uppercase",
   },
-  selectBot: {
-    textTransform: "uppercase",
+  selectBot: (isBotSelected?: boolean) => {
+    return {
+      textTransform: "uppercase",
+      opacity: isBotSelected ? 1 : 0,
+    };
   },
   text: {
     flexDirection: "row",

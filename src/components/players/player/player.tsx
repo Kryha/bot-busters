@@ -75,9 +75,9 @@ export const Player: FC<Props> = ({
           )}
         </>
       )}
-      {stage === "voting" && isBotSelected && (
+      {stage === "voting" && (
         <Stack direction={"row"} gap={1}>
-          <Typography variant="caption" sx={styles.selectBot}>
+          <Typography variant="caption" sx={styles.selectBot(isBotSelected)}>
             {text.match.isBotSelect}
           </Typography>
         </Stack>

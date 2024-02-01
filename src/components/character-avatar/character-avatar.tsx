@@ -42,24 +42,24 @@ export const CharacterAvatar: FC<Props> = ({
   }, [isBot, isSelected]);
 
   return (
-    <>
+    <Stack
+      sx={
+        stage == "voting"
+          ? styles.avatar(stage, isSelected, isBot)
+          : styles.animation(stage, isSelected, isBot)
+      }
+      onClick={onSelectPlayer}
+    >
       {stage === "voting" ? (
-        <Stack
-          sx={styles.avatar(stage, isSelected, isBot)}
-          onClick={onSelectPlayer}
-        >
-          {getCharacterAvatar(character.name)}
-        </Stack>
+        getCharacterAvatar(character.name)
       ) : (
-        <Stack sx={styles.animation(stage, isSelected, isBot)}>
-          <AnimationPlayer
-            animationData={animation}
-            segments={segments}
-            play
-            loop
-          />
-        </Stack>
+        <AnimationPlayer
+          animationData={animation}
+          segments={segments}
+          play
+          loop
+        />
       )}
-    </>
+    </Stack>
   );
 };
