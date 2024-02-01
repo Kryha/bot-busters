@@ -74,25 +74,22 @@ const streakCountAchievements: Achievement = {
 const dailyStreakAchievement: Achievement = {
   name: "Daily Streak",
   description: "Play 5 days in a row",
-  calculate: ({ playerHistory, player, playerAchievements }) => {
+  calculate: ({ player, playerAchievements }) => {
     if (
-      !playerHistory ||
-      playerHistory.length < 2 ||
       !playerAchievements ||
       alreadyReceivedAchievement(playerAchievements, "fiveDayStreak", 5) ||
       !player
     )
       return false;
 
-    //TODO: revisit this logic to check if you can also use the the achievements table
-    const playedFiveTimesInARow = playerHistory
-      .sort((a, b) => b.createdAt - a.createdAt)
-      .map((match) => {
-        return match.players.find((p) => p.userId === player.userId);
-      })
-      .filter((match) => match?.achievements.includes("dailyStreakCounter"));
+    const dailyStreaks = playerAchievements.filter((achievement) => {
+      return (
+        achievement.achievementId === "dailyStreakCounter" &&
+        achievement.achievedAt.getTime() > Date.now() - 5 * 24 * 60 * 60 * 1000
+      );
+    }).length;
 
-    return playedFiveTimesInARow.length === 5;
+    return dailyStreaks === 5;
   },
 };
 
@@ -143,7 +140,7 @@ export const alreadyReceivedAchievement = (
   let achievements = playerAchievements;
 
   if (days) {
-    // Get the timestamp for 24 hours ago
+    // Get the timestamp for x amount of days ago
     const timeStampToStart = Date.now() - days * 24 * 60 * 60 * 1000;
     // Filter achievements to only include matches from the past 24 hours
     achievements = playerAchievements.filter((achievement) => {

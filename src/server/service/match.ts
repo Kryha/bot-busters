@@ -355,7 +355,9 @@ export class Match {
               achievement === "beginnersLuck" ||
               achievement === "realHuman" ||
               achievement === "firstTimer" ||
-              achievement === "busterStreak"
+              achievement === "busterStreak" ||
+              achievement === "dailyStreakCounter" ||
+              achievement === "fiveDayStreak"
             );
           })
           .map(async (achievementId) => {
