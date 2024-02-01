@@ -1,5 +1,5 @@
 import { type FC } from "react";
-import { Avatar, Stack } from "@mui/material";
+import { Stack } from "@mui/material";
 import { type PlayerType } from "~/types/index.js";
 
 import { SplashScreen } from "~/components/index.js";
@@ -33,7 +33,7 @@ export const Interstitials: FC<Props> = ({
     <>
       {splashScreenVariant === "chat" && (
         <SplashScreen backgroundColor={backgroundColor}>
-          <Avatar src={characterSplashScreen.src} sx={styles.avatar} />
+          <Stack sx={styles.avatar}>{characterSplashScreen}</Stack>
           <Stack sx={styles.splashText}>
             <StartChatting aria-label={"start-chatting"} />
             <Stack sx={styles.splashHeading}>{characterTitle}</Stack>

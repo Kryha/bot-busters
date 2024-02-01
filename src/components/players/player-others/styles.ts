@@ -5,17 +5,20 @@ export const styles = {
   list: (isResults: boolean) => {
     return {
       justifyContent: "center",
-      gap: isResults ? 2 : 2,
+      gap: 2,
       flexDirection: isResults ? "row" : "column",
-      pr: 2,
-      pl: 2,
       [`@media (max-width: ${breakpoints.md}px)`]: {
         flexDirection: "row",
+        mt: 10,
       },
     };
   },
   container: {
     gap: 4,
+    pr: 2,
+    [`@media (max-width: ${breakpoints.md}px)`]: {
+      pr: 0,
+    },
   },
   playerHeading: {
     textAlign: "center",

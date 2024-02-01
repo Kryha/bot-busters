@@ -64,16 +64,13 @@ export const styles = {
     flex: 1,
   },
   hostAvatar: {
-    alignSelf: "flex-end",
-    width: "auto",
-    height: 250,
-    [theme.breakpoints.up("lg")]: {
-      height: 400,
-    },
-    "& > img": {
-      width: "inherit",
-      height: "inherit",
-    },
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    maxHeight: "300px",
+    maxWidth: "300px",
+    minHeight: "200px",
+    minWidth: "200px",
   },
   hostParagraph: {
     flexDirection: "column",

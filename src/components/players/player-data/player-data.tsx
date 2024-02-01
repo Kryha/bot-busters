@@ -8,7 +8,7 @@ export interface Props {
   stage: MatchStage;
   player: PlayerType;
   localPlayer: PlayerType;
-  isSelected: boolean;
+  isSelected?: boolean;
   color?: string;
   onSelectPlayer: () => void;
 }
@@ -40,6 +40,7 @@ export const PlayerData: FC<Props> = ({
           player={player}
           hasGuessed={hasGuessed}
           isSelected={isSelected}
+          onSelectPlayer={onSelectPlayer}
         />
       );
 
