@@ -59,7 +59,6 @@ export const styles = {
       }
       return "6px solid black";
     };
-
     const determineBorderArrow = () => {
       if (isSelected) {
         if (isBot) {

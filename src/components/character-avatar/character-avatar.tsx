@@ -33,24 +33,24 @@ export const CharacterAvatar: FC<Props> = ({
 
   useEffect(() => {
     if (isBot) {
-      const animationSegments = isSelected
-        ? BOT_BUSTED_ANIMATION_SEGMENT
-        : BOT_WIN_ANIMATION_SEGMENT;
+      const animationSegments =
+        isSelected && isBot
+          ? BOT_BUSTED_ANIMATION_SEGMENT
+          : BOT_WIN_ANIMATION_SEGMENT;
       setSegments(animationSegments);
     }
   }, [isBot, isSelected]);
 
   return (
     <>
-      {stage === "voting" && (
+      {stage === "voting" ? (
         <Stack
           sx={styles.avatar(stage, isSelected, isBot)}
           onClick={onSelectPlayer}
         >
           {getCharacterAvatar(character.name)}
         </Stack>
-      )}
-      {stage !== "voting" && (
+      ) : (
         <Stack sx={styles.animation(stage, isSelected, isBot)}>
           <AnimationPlayer
             animationData={animation}

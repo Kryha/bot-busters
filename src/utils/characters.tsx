@@ -1,4 +1,5 @@
 import { type CharacterName } from "~/types/index.js";
+import { ErrorView } from "~/components/error-view/index.jsx";
 import {
   AvatarAsh,
   AvatarDot,
@@ -58,63 +59,27 @@ export const getCharacterAnimation = (
   isBot?: boolean,
   isSelected?: boolean,
 ) => {
-  switch (characterName) {
-    case "hal":
-      if (isSelected && isBot) {
-        return HalBotBusted;
-      }
-      if (isSelected && !isBot) {
-        return HalBlink;
-      }
-      if (!isSelected && isBot) {
-        return HalBotWin;
-      }
-      return HalBlink;
-    case "ash":
-      if (isSelected && isBot) {
-        return AshBotBusted;
-      }
-      if (isSelected && !isBot) {
-        return AshBlink;
-      }
-      if (!isSelected && isBot) {
-        return AshBotWin;
-      }
-      return AshBlink;
-    case "roy":
-      if (isSelected && isBot) {
-        return RoyBotBusted;
-      }
-      if (isSelected && !isBot) {
-        return RoyBlink;
-      }
-      if (!isSelected && isBot) {
-        return RoyBotWin;
-      }
-      return RoyBlink;
-    case "eve":
-      if (isSelected && isBot) {
-        return EveBotBusted;
-      }
-      if (isSelected && !isBot) {
-        return EveBlink;
-      }
-      if (!isSelected && isBot) {
-        return EveBotWin;
-      }
-      return EveBlink;
-    case "dot":
-      if (isSelected && isBot) {
-        return DotBotBusted;
-      }
-      if (isSelected && !isBot) {
-        return DotBlink;
-      }
-      if (!isSelected && isBot) {
-        return DotBotWin;
-      }
-      return DotBlink;
+  const animations = {
+    hal: { botBusted: HalBotBusted, blink: HalBlink, botWin: HalBotWin },
+    ash: { botBusted: AshBotBusted, blink: AshBlink, botWin: AshBotWin },
+    roy: { botBusted: RoyBotBusted, blink: RoyBlink, botWin: RoyBotWin },
+    eve: { botBusted: EveBotBusted, blink: EveBlink, botWin: EveBotWin },
+    dot: { botBusted: DotBotBusted, blink: DotBlink, botWin: DotBotWin },
+  };
+
+  if (!animations[characterName]) {
+    return <ErrorView />; // Handle invalid characterName
   }
+
+  if (isSelected) {
+    return isBot
+      ? animations[characterName].botBusted
+      : animations[characterName].blink;
+  }
+
+  return isBot
+    ? animations[characterName].botWin
+    : animations[characterName].blink;
 };
 
 export const getCharacterSplashScreen = (characterName: CharacterName) => {
