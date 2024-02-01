@@ -1,11 +1,11 @@
-import { Slide, Stack } from "@mui/material";
 import { type FC, type ReactNode, useEffect, useState } from "react";
 import { type CharacterName } from "~/types/index.js";
+import { Slide, Stack } from "@mui/material";
 import { AnimationPlayer } from "~/components/animation/index.js";
+import { getTransitionLines } from "~/utils/characters.jsx";
+import { SPLASH_SCREEN_DURATION } from "~/constants/index.js";
 import { theme } from "~/styles/theme.js";
 import { styles } from "./styles.js";
-import { SPLASH_SCREEN_DURATION } from "~/constants";
-import { getTransitionLines } from "~/utils/characters";
 
 interface Props {
   children: ReactNode;

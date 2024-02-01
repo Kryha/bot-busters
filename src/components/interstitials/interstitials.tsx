@@ -19,6 +19,7 @@ interface Props {
   localPlayer: PlayerType;
 }
 
+// TODO: works. To be refactored
 export const Interstitials: FC<Props> = ({
   splashScreenVariant,
   localPlayer,
