@@ -84,7 +84,7 @@ export const PlayersOthers: FC<Props> = ({
       )}
       <Stack sx={styles.list(stage !== "chat")}>
         {otherPlayers.map((player, index) => {
-          const isSelected = localPlayer?.votes?.includes(player.userId);
+          const isSelected = localPlayer.votes?.includes(player.userId);
           return (
             <PlayerData
               key={index}

@@ -1,5 +1,5 @@
 import { theme } from "~/styles/index.js";
-import { type SxStyleRecord } from "~/types/sx-style-record";
+import { type SxStyleRecord } from "~/types/sx-style-record.js";
 
 export const styles = {
   playerResults: {
