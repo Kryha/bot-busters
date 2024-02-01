@@ -9,6 +9,7 @@ import { api } from "~/utils/api.js";
 import { PrimaryButton } from "~/components/primary-button/index.js";
 import { PlayerTable } from "~/components/index.js";
 import { isVerifiedUser } from "~/utils/user.js";
+import { PageHeader } from "~/containers/page-header/index.js";
 
 const PlayerProfile = () => {
   const router = useRouter();
@@ -27,9 +28,7 @@ const PlayerProfile = () => {
 
   return (
     <Stack sx={styles.mainContainer}>
-      <Typography variant="h1" color="common.black">
-        {user.data?.username ?? text.playerProfile.profile}
-      </Typography>
+      <PageHeader text={user.data?.username ?? text.playerProfile.profile} />
 
       {user.data && (
         <Stack sx={styles.table}>

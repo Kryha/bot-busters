@@ -6,11 +6,10 @@ export const leaderboard = {
     "Buster",
     "Games",
     "Score",
-    "Daily Top 10 Earn Aleo Credits",
   ],
   leaderboardRank: "#5",
   allTimeLeaderboard: "All time leaderboard",
-  dailyLeaderboard: "Daily leaderboard",
+  leaderboard: "leaderboard",
   countdown: (countdown: string | number) =>
     `${countdown} until today's payout`,
   addScoreToLeaderboard: "Add your score to leaderboard",

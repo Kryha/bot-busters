@@ -1,13 +1,16 @@
-import { type SxProps } from "@mui/material";
 import { theme } from "~/styles/theme";
+import type { SxStyleRecord } from "~/types/sx-style-record.js";
 
 export const styles = {
   tableRow: {
     "& .MuiTableCell-root": { pl: 0 },
-  } satisfies SxProps,
+  },
   tableHeader: {
     textAlign: "center",
     textTransform: "uppercase",
     color: theme.palette.secondary.main,
   },
-};
+  busterCell: {
+    textAlign: "start",
+  },
+} satisfies SxStyleRecord;
