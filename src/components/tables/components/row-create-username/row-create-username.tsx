@@ -2,11 +2,11 @@ import { useState, type FC, useEffect } from "react";
 import { Stack } from "@mui/material";
 
 import { getRandomUsername } from "~/utils/username.js";
-
-import { styles } from "./styles.js";
 import { validUsername, validation } from "~/constants/validation.js";
 import { profanityFilter } from "~/service/index.js";
 import { UsernameInputField } from "~/components/input-field/input-field.jsx";
+
+import { styles } from "./styles.js";
 
 interface RowCreateUsernameProps {
   submitUsername: (username: string) => Promise<void>;
