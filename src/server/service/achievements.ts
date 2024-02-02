@@ -1,5 +1,6 @@
 import { type UserAchievements } from "~/server/db/schema.js";
 import { type Achievement, type AchievementId } from "~/types/index.js";
+import { getRelativeTimeStamp } from "~/utils/date.js";
 
 const goodBustAchievement: Achievement = {
   name: "Good Bust",
@@ -80,7 +81,7 @@ const dailyStreakAchievement: Achievement = {
     const dailyStreaks = playerAchievements.filter((achievement) => {
       return (
         achievement.achievementId === "dailyStreakCounter" &&
-        achievement.achievedAt.getTime() > Date.now() - 5 * 24 * 60 * 60 * 1000
+        achievement.achievedAt.getTime() > getRelativeTimeStamp(5)
       );
     }).length;
 
@@ -134,11 +135,8 @@ export const alreadyReceivedAchievement = (
   let achievements = playerAchievements;
 
   if (days) {
-    // Get the timestamp for x amount of days ago
-    const timeStampToStart = Date.now() - days * 24 * 60 * 60 * 1000;
-    // Filter achievements to only include matches from the past 24 hours
     achievements = playerAchievements.filter((achievement) => {
-      return achievement.achievedAt.getTime() > timeStampToStart;
+      return achievement.achievedAt.getTime() > getRelativeTimeStamp(days);
     });
   }
   // Check if the achievement is in the player's achievements history
