@@ -29,7 +29,7 @@ export const general = {
   username: "AnonymousBuster",
   newCredits: "new",
   enterUsername: "enter username",
-  usernameRules: "Max 12 Characters, no spaces.",
+  usernameRules: "Max 12 Characters, no spaces, no special characters.",
   usernameDisclaimer: [
     "Your username will be public on the leaderboard but privately linked to your wallet",
     "Offensive names will be banned.",

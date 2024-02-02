@@ -1,7 +1,6 @@
 import { z } from "zod";
 
 import { TOPICS } from "./support.js";
-import { profanityFilter } from "~/service/index.js";
 
 const invalidTextLength = (min: number, max: number) =>
   `Input must be between ${min} and ${max} characters`;
