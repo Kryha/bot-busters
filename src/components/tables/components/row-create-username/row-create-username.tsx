@@ -44,7 +44,7 @@ export const RowCreateUsername: FC<RowCreateUsernameProps> = ({
         id="username"
         value={username}
         onChange={handleUsername}
-        onSubmit={() => void submitUsername(username)}
+        onClick={() => void submitUsername(username)}
       />
     </Stack>
   );
