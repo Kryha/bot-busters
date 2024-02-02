@@ -49,10 +49,8 @@ export const selectMatchPlayedByUser = async (
   tx?: BBPgTransaction,
 ) => {
   const dbTx = tx ?? db;
-  let timestamp = 0;
-  if (days) {
-    timestamp = Date.now() - days * 24 * 60 * 60 * 1000;
-  }
+  const timestamp = days ? Date.now() - days * 24 * 60 * 60 * 1000 : 0;
+
   const matchesPlayed = await dbTx
     .select()
     .from(usersToMatches)

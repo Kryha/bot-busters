@@ -356,6 +356,7 @@ export class Match {
             botsBusted: sql`${users.botsBusted} + ${player.botsBusted}`,
           })
           .where(eq(users.id, player.userId));
+
         const playerAchievements = player.achievements
           .filter((achievement) => {
             return ACHIEVEMENTS_TO_STORE.includes(achievement);
