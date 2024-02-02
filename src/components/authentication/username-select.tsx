@@ -56,7 +56,6 @@ export const UsernameSelect: FC<UsernameSelectProps> = ({
   }, [address, merge, router, setLoginStage, signature]);
 
   const handleVerification = async (username: string) => {
-    console.log("ATEMPTING VERIFY: ", username)
     try {
       await verify.mutateAsync({ username, signature, address });
       setLoginStage("signIn");

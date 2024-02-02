@@ -9,8 +9,10 @@ export const validation = {
   username: {
     error: {
       space: "Spaces are not allowed",
-      length: invalidTextLength(3, 12),
-      profanity: "Username contains bad language please choose a different one",
+      tooLong: "Max 12 characters",
+      tooShort: "Min 3 characters",
+      specialCharacters: "Special characters are not allowed",
+      profanity: "Username contains bad language",
     },
     max: 12,
     min: 3,
@@ -50,4 +52,5 @@ export const validIssue = z
 export const validUsername = z
   .string()
   .min(validation.username.min)
-  .max(validation.username.max);
+  .max(validation.username.max)
+  .regex(/^[a-zA-Z0-9_\-.]*$/);

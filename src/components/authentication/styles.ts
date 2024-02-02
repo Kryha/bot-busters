@@ -34,6 +34,5 @@ export const styles = {
     textAlign: "center",
     lineHeight: "24px",
     alignSelf: "center",
-    mt: "-20px",
   },
 } satisfies SxStyleRecord;
