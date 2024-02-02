@@ -1,6 +1,8 @@
 CREATE TABLE IF NOT EXISTS "bot_busters_match" (
 	"id" uuid PRIMARY KEY NOT NULL,
-	"room" json NOT NULL
+	"created_at" timestamp,
+	"room" json NOT NULL,
+	"messages" json DEFAULT '[]'::json NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "bot_busters_rank" (
@@ -9,11 +11,18 @@ CREATE TABLE IF NOT EXISTS "bot_busters_rank" (
 	CONSTRAINT "bot_busters_rank_position_unique" UNIQUE("position")
 );
 --> statement-breakpoint
+CREATE TABLE IF NOT EXISTS "bot_busters_user_achievement" (
+	"user_id" uuid NOT NULL,
+	"achievement_id" varchar(32) NOT NULL,
+	"achieved_at" timestamp NOT NULL
+);
+--> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "bot_busters_user" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"username" varchar(32),
 	"address" varchar(63),
 	"score" integer DEFAULT 0 NOT NULL,
+	"bots_busted" integer DEFAULT 0 NOT NULL,
 	"created_at" timestamp DEFAULT CURRENT_TIMESTAMP,
 	CONSTRAINT "bot_busters_user_username_unique" UNIQUE("username")
 );
@@ -26,6 +35,12 @@ CREATE TABLE IF NOT EXISTS "bot_busters_user_match" (
 --> statement-breakpoint
 DO $$ BEGIN
  ALTER TABLE "bot_busters_rank" ADD CONSTRAINT "bot_busters_rank_user_id_bot_busters_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "bot_busters_user"("id") ON DELETE no action ON UPDATE no action;
+EXCEPTION
+ WHEN duplicate_object THEN null;
+END $$;
+--> statement-breakpoint
+DO $$ BEGIN
+ ALTER TABLE "bot_busters_user_achievement" ADD CONSTRAINT "bot_busters_user_achievement_user_id_bot_busters_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "bot_busters_user"("id") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
