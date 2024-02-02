@@ -5,6 +5,7 @@ import { v4 as uuid } from "uuid";
 
 import { matchPrompts } from "~/assets/text/match-prompts.js";
 import {
+  ACHIEVEMENTS_TO_STORE,
   CHAT_TIME_MS,
   POINTS_ACHIEVEMENTS,
   POINTS_BOT_BUSTED,
@@ -12,7 +13,7 @@ import {
   VOTING_TIME_MS,
 } from "~/constants/index.js";
 import { ee, matchEvent } from "~/server/api/match-maker.js";
-import { db, type BBPgTransaction } from "~/server/db/index.js";
+import { type BBPgTransaction } from "~/server/db/index.js";
 import {
   userAchievements,
   users,
@@ -321,9 +322,8 @@ export class Match {
 
     this.arePointsCalculated = true;
   }
-  async storeMatchStats(tx?: BBPgTransaction) {
-    const dbTx = tx ?? db;
 
+  async storeMatchStats(tx: BBPgTransaction) {
     let allScoresStored = true;
 
     const promises = this._players.map(async (player) => {
@@ -334,29 +334,26 @@ export class Match {
 
         if (player.isBot) return;
 
-        await dbTx
+        await tx
           .update(users)
           .set({
             score: sql`${users.score} + ${player.score}`,
           })
           .where(eq(users.id, player.userId));
 
-        player.achievements
+        const playerAchievements = player.achievements
           .filter((achievement) => {
-            return (
-              achievement === "beginnersLuck" ||
-              achievement === "realHuman" ||
-              achievement === "firstTimer" ||
-              achievement === "busterStreak"
-            );
+            ACHIEVEMENTS_TO_STORE.includes(achievement);
           })
-          .map(async (achievementId) => {
-            await dbTx.insert(userAchievements).values({
+          .map((achievementId) => {
+            return {
               userId: player.userId,
               achievementId: achievementId,
               achievedAt: new Date(),
-            });
+            };
           });
+
+        await tx.insert(userAchievements).values(playerAchievements);
       } catch (error) {
         player.isScoreSaved = false;
         allScoresStored = false;
