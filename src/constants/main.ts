@@ -31,6 +31,7 @@ export const POINTS_ACHIEVEMENTS: Record<AchievementId, number> = {
   firstTimer: 5,
   beginnersLuck: 5,
   realHuman: 5,
+  masterBuster: 9,
 };
 
 // run the entire animation once, then infinitely loop the second half

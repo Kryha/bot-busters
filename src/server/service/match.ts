@@ -261,13 +261,17 @@ export class Match {
           this._playerAchievements.get(player.userId)
         )
           return;
-
+        // Getting last 5 played games of the player
         const matchRooms = (
           await selectMatchPlayedByUser(player.userId, 5)
         ).map((match) => match.match.room);
-
         this._playerPreviousMatches.set(player.userId, matchRooms);
 
+        // getting total amount of bots busted by the player
+        const bots = await selectUserById(player.userId);
+        player.totalBotsBusted = bots?.botsBusted;
+
+        // getting the achievements earned by the player
         const userAchievements = await selectUserAchievements(player.userId);
         this._playerAchievements.set(player.userId, userAchievements);
       });
@@ -308,7 +312,6 @@ export class Match {
           .filter(([_, achievement]) => {
             return achievement.calculate({
               player,
-              messages: this._messages,
               botsBusted,
               otherPlayers,
               playerHistory: this._playerPreviousMatches.get(player.userId),
@@ -346,6 +349,7 @@ export class Match {
           .update(users)
           .set({
             score: sql`${users.score} + ${player.score}`,
+            botsBusted: sql`${users.botsBusted} + ${player.botsBusted}`,
           })
           .where(eq(users.id, player.userId));
 

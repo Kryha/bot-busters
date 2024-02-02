@@ -3,7 +3,7 @@ import { type Achievement, type AchievementId } from "~/types/index.js";
 
 const goodBustAchievement: Achievement = {
   name: "Good Bust",
-  description: "Get all votes correct in a match",
+  description: "Bust all bots in 1 match (no humans)",
   calculate: ({ player, botsBusted, otherPlayers }) => {
     const agents = otherPlayers.filter((p) => p.isBot);
     const wrongVotes = player.votes?.some(
@@ -16,7 +16,7 @@ const goodBustAchievement: Achievement = {
 
 const doubleAgentAchievement: Achievement = {
   name: "Double Agent",
-  description: "Convince 2 or more humans that you are a bot in a match",
+  description: "Convince >1 human(s) that you are a bot in a match",
   calculate: ({ otherPlayers, player }) => {
     const isVotedAgainst = otherPlayers.filter(
       (p) => p.votes?.includes(player.userId),
@@ -27,7 +27,7 @@ const doubleAgentAchievement: Achievement = {
 
 const busterStreakAchievement: Achievement = {
   name: "Buster Streak",
-  description: "Bust three bots in a row",
+  description: "Successfully bust all bots in (3) consecutive games",
   calculate: ({
     player,
     playerHistory,
@@ -94,8 +94,8 @@ const dailyStreakAchievement: Achievement = {
 };
 
 const firstTimerAchievement: Achievement = {
-  name: "First Timer",
-  description: "Played your first match",
+  name: "First-Timer",
+  description: "Played BotBusters for the first time",
   calculate: ({ playerAchievements }) => {
     if (!playerAchievements) return false;
     return !alreadyReceivedAchievement(playerAchievements, "firstTimer");
@@ -114,10 +114,23 @@ const beginnersLuckAchievement: Achievement = {
 
 const realHumanAchievement: Achievement = {
   name: "Real Human",
-  description: "First time played as a verified human",
+  description: "Play first match as a verified human",
   calculate: ({ playerAchievements }) => {
     if (!playerAchievements) return false;
     return !alreadyReceivedAchievement(playerAchievements, "realHuman");
+  },
+};
+
+const masterBusterAchievement: Achievement = {
+  name: "Master Buster",
+  description: "Busted (100) bots over multiple matches",
+  calculate: ({ player, playerAchievements }) => {
+    if (
+      !playerAchievements ||
+      alreadyReceivedAchievement(playerAchievements, "masterBuster")
+    )
+      return false;
+    return player.totalBotsBusted === 100;
   },
 };
 
@@ -130,6 +143,7 @@ export const matchAchievements: Record<AchievementId, Achievement> = {
   firstTimer: firstTimerAchievement,
   beginnersLuck: beginnersLuckAchievement,
   realHuman: realHumanAchievement,
+  masterBuster: masterBusterAchievement,
 };
 
 export const alreadyReceivedAchievement = (
