@@ -107,7 +107,7 @@ export class Match {
 
     this._players = lodash.shuffle([...botPlayers, ...humanPlayers]);
 
-    this.getPlayerPreviousMatches().catch((err) => {
+    this.getPlayerStats().catch((err) => {
       console.error("Error loading player history:", err);
     });
 
