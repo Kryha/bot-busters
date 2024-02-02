@@ -352,8 +352,9 @@ export class Match {
               achievedAt: new Date(),
             };
           });
-
-        await tx.insert(userAchievements).values(playerAchievements);
+        if (playerAchievements.length !== 0) {
+          await tx.insert(userAchievements).values(playerAchievements);
+        }
       } catch (error) {
         player.isScoreSaved = false;
         allScoresStored = false;
