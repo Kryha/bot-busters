@@ -69,6 +69,7 @@ export const selectUserAchievements = async (
     .where(eq(userAchievements.userId, userId));
   return achievements;
 };
+
 export const insertVerifiedUser = async (address: string, username: string) => {
   const newVerifiedUser = await db
     .insert(users)
