@@ -344,7 +344,6 @@ export class Match {
         player.isScoreSaved = true;
 
         if (player.isBot) return;
-
         await tx
           .update(users)
           .set({
@@ -352,7 +351,6 @@ export class Match {
             botsBusted: sql`${users.botsBusted} + ${player.botsBusted}`,
           })
           .where(eq(users.id, player.userId));
-
         const playerAchievements = player.achievements
           .filter((achievement) => {
             ACHIEVEMENTS_TO_STORE.includes(achievement);
@@ -364,8 +362,9 @@ export class Match {
               achievedAt: new Date(),
             };
           });
-
-        await tx.insert(userAchievements).values(playerAchievements);
+        if (playerAchievements.length !== 0) {
+          await tx.insert(userAchievements).values(playerAchievements);
+        }
       } catch (error) {
         player.isScoreSaved = false;
         allScoresStored = false;
