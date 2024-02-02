@@ -311,8 +311,10 @@ export class Match {
               messages: this._messages,
               botsBusted,
               otherPlayers,
-              playerHistory: this._playerPreviousMatches.get(player.userId),
-              playerAchievements: this._playerAchievements.get(player.userId),
+              playerHistory:
+                this._playerPreviousMatches.get(player.userId) ?? [],
+              playerAchievements:
+                this._playerAchievements.get(player.userId) ?? [],
             });
           })
           .reduce((totalPoints, [id, _]) => {
@@ -347,6 +349,7 @@ export class Match {
             score: sql`${users.score} + ${player.score}`,
           })
           .where(eq(users.id, player.userId));
+
         const playerAchievements = player.achievements
           .filter((achievement) => {
             ACHIEVEMENTS_TO_STORE.includes(achievement);
