@@ -119,7 +119,7 @@ export class Match {
   }
 
   private async initMatch(playerIds: string[]) {
-    await this.getPlayerPreviousMatches();
+    await this.getPlayerStats();
     await this.checkVerifiedPlayers();
 
     ee.emit("readyToPlay", {
@@ -244,23 +244,23 @@ export class Match {
   }
 
   // TODO: make a proper DB relation with user and matches instead of doing this
-  // TODO: rename to get player stats
-  private async getPlayerPreviousMatches() {
+  private async getPlayerStats() {
     const promises = this.players
       .filter((player) => !player.isBot)
       .map(async (player) => {
-        if (this._playerPreviousMatches.get(player.userId)) return;
-        if (this._playerAchievements.get(player.userId)) return;
+        if (
+          this._playerPreviousMatches.get(player.userId) ??
+          this._playerAchievements.get(player.userId)
+        )
+          return;
 
         const matchRooms = (await selectMatchPlayedByUser(player.userId)).map(
           (match) => match.match.room,
         );
         this._playerPreviousMatches.set(player.userId, matchRooms);
 
-        this._playerAchievements.set(
-          player.userId,
-          await selectUserAchievements(player.userId),
-        );
+        const userAchievements = await selectUserAchievements(player.userId);
+        this._playerAchievements.set(player.userId, userAchievements);
       });
     await Promise.allSettled(promises);
     this.playerHistoryLoaded = true;
