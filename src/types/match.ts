@@ -18,7 +18,6 @@ export const chatMessagePayloadSchema = z.object({
   message: z.string(),
   sentAt: z.number(), // unix time
 });
-
 export type ChatMessagePayload = z.infer<typeof chatMessagePayloadSchema>;
 
 export const storedChatMessageSchema = z.object({
@@ -47,7 +46,6 @@ export const achievementIdSchema = z.enum([
   // One time achievement - player plays his first game as verified human
   "realHuman",
 ]);
-
 export type AchievementId = z.infer<typeof achievementIdSchema>;
 
 export const playerSchema = z.object({

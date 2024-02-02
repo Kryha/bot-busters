@@ -128,8 +128,8 @@ export const typography = (): Typography => {
       textTransform: "uppercase" as const,
     },
     caption: {
-      fontFamily: bodyFont.style.fontFamily,
-      fontSize: "12px",
+      fontFamily: subHeadingsFont.style.fontFamily,
+      fontSize: "16px",
       fontWeight: 400,
       lineHeight: "20px",
     },

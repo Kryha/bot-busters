@@ -1,5 +1,5 @@
+import { type UserAchievements } from "~/server/db/schema.js";
 import { type Achievement, type AchievementId } from "~/types/index.js";
-import { type UserAchievements } from "../db/schema.js";
 
 const goodBustAchievement: Achievement = {
   name: "Good Bust",
