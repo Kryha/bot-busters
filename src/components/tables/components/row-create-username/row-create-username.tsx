@@ -1,69 +1,51 @@
 import { useState, type FC, useEffect } from "react";
-import {
-  Alert,
-  Avatar,
-  Button,
-  Stack,
-  TableCell,
-  TableRow,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Stack } from "@mui/material";
 
-import { text } from "~/assets/text/index.js";
 import { getRandomUsername } from "~/utils/username.js";
 
 import { styles } from "./styles.js";
+import { validUsername, validation } from "~/constants/validation.js";
+import { profanityFilter } from "~/service/index.js";
+import { UsernameInputField } from "~/components/input-field/input-field.jsx";
 
 interface RowCreateUsernameProps {
-  onSetUsername: (username: string) => Promise<void>;
-  error?: string;
+  submitUsername: (username: string) => Promise<void>;
 }
 
 export const RowCreateUsername: FC<RowCreateUsernameProps> = ({
-  onSetUsername,
-  error,
+  submitUsername,
 }) => {
   const [username, setUsername] = useState("");
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const name = getRandomUsername();
     setUsername(name.replace(/[0-9]/g, ""));
   }, []);
 
+  const validateUsername = (name: string) => {
+    let err = "";
+    if (!validUsername.safeParse(name).success)
+      err = validation.username.error.length;
+    if (profanityFilter.exists(name)) err = validation.username.error.profanity;
+    if (!(name.indexOf(" ") === -1)) err = validation.username.error.space;
+    setError(err);
+  };
+
+  const handleUsername = (event: { target: { value: string } }) => {
+    validateUsername(event.target.value);
+    setUsername(event.target.value);
+  };
+
   return (
-    <>
-      <TableRow sx={styles.tableRow}>
-        <TableCell component="th" scope="row" sx={styles.tableCell}>
-          <Typography variant="body1" color="secondary.dark">
-            {text.leaderboard.leaderboardRank}
-          </Typography>
-        </TableCell>
-        <TableCell sx={styles.select}>
-          <Stack sx={styles.wrapper}>
-            {error && <Alert severity="error">{error}</Alert>}
-            <Avatar alt="avatar" sx={styles.avatar}>
-              {text.leaderboard.avatarEmoji}
-            </Avatar>
-            <TextField
-              id="outlined"
-              value={username}
-              sx={styles.input}
-              onChange={(e) => setUsername(e.target.value)}
-            />
-            <Button
-              variant="contained"
-              sx={styles.button}
-              color="info"
-              onClick={() => void onSetUsername(username)}
-            >
-              <Typography variant="button" sx={styles.buttonText}>
-                {text.leaderboard.useNickname}
-              </Typography>
-            </Button>
-          </Stack>
-        </TableCell>
-      </TableRow>
-    </>
+    <Stack sx={styles.wrapper}>
+      <UsernameInputField
+        validationError={error}
+        id="username"
+        value={username}
+        onChange={handleUsername}
+        onSubmit={() => void submitUsername(username)}
+      />
+    </Stack>
   );
 };

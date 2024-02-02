@@ -1,13 +1,12 @@
-import { type SxProps } from "@mui/material";
-
-import { breakpoints } from "~/styles/theme.js";
+import { breakpoints, theme } from "~/styles/theme.js";
+import type { SxStyleRecord } from "~/types/sx-style-record";
 
 export const styles = {
   wrapper: {
     alignItems: "center",
     justifyContent: "flex-end",
     height: "100vh",
-  } satisfies SxProps,
+  },
   container: {
     justifyContent: "space-between",
     height: "62.4%",
@@ -15,10 +14,26 @@ export const styles = {
       pl: 4,
       pr: 4,
     },
-  } satisfies SxProps,
+  },
   progress: {
     gap: 10,
     alignItems: "center",
-  } satisfies SxProps,
-  text: { alignItems: "center", mb: 10 } satisfies SxProps,
-};
+  },
+  text: { alignItems: "center", mb: 10 },
+  textOrange: {
+    width: "50vw",
+    textAlign: "center",
+    lineHeight: "24px",
+    alignSelf: "center",
+    color: theme.palette.secondary.main,
+    mt: "-40px",
+    mb: "30px",
+  },
+  textWhite: {
+    width: "50vw",
+    textAlign: "center",
+    lineHeight: "24px",
+    alignSelf: "center",
+    mt: "-20px",
+  },
+} satisfies SxStyleRecord;

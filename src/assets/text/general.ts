@@ -28,6 +28,12 @@ export const general = {
   clickChat: "Click on the chat to open messages",
   username: "AnonymousBuster",
   newCredits: "new",
+  enterUsername: "enter username",
+  usernameRules: "Max 12 Characters, no spaces.",
+  usernameDisclaimer: [
+    "Your username will be public on the leaderboard but privately linked to your wallet",
+    "Offensive names will be banned.",
+  ],
   todaysPosition: "Today's position",
   allTimeScore: "All time score",
   allTimePosition: "All time position",

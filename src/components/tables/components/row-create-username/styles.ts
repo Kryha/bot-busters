@@ -18,21 +18,13 @@ export const styles = {
   tableCell: { filter: "blur(2.5px)" },
   select: { borderBottom: "none" },
   wrapper: {
-    gap: 1,
-    flexDirection: "row",
-    position: "absolute",
-    zIndex: zIndex.middle,
-    left: "8.6%",
     alignItems: "center",
-    top: "50%",
-    transform: "translateY(-50%)",
   },
   avatar: {
     bgcolor: "common.white",
   },
   input: {
-    bgcolor: "common.white",
-    minWidth: "19.5vw",
+    minWidth: "90vw",
     boxShadow:
       "0px 1px 5px 0px rgba(0, 0, 0, 0.12), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 1px 0px rgba(0, 0, 0, 0.20)",
     borderRadius: 1,
