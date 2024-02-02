@@ -314,8 +314,10 @@ export class Match {
               player,
               botsBusted,
               otherPlayers,
-              playerHistory: this._playerPreviousMatches.get(player.userId),
-              playerAchievements: this._playerAchievements.get(player.userId),
+              playerHistory:
+                this._playerPreviousMatches.get(player.userId) ?? [],
+              playerAchievements:
+                this._playerAchievements.get(player.userId) ?? [],
             });
           })
           .reduce((totalPoints, [id, _]) => {

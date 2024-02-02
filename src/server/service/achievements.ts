@@ -37,7 +37,6 @@ const busterStreakAchievement: Achievement = {
   }) => {
     const isNotEligibleForNewAchievement =
       !playerHistory ||
-      !playerAchievements ||
       playerHistory.length < 2 ||
       !player ||
       alreadyReceivedAchievement(playerAchievements, "busterStreak", 1);
@@ -62,7 +61,6 @@ const streakCountAchievements: Achievement = {
   description: "Plus one on your streak count",
 
   calculate: ({ playerAchievements }) => {
-    if (!playerAchievements) return false;
     return !alreadyReceivedAchievement(
       playerAchievements,
       "dailyStreakCounter",
@@ -116,7 +114,6 @@ const realHumanAchievement: Achievement = {
   name: "Real Human",
   description: "Play first match as a verified human",
   calculate: ({ playerAchievements }) => {
-    if (!playerAchievements) return false;
     return !alreadyReceivedAchievement(playerAchievements, "realHuman");
   },
 };
@@ -125,12 +122,11 @@ const masterBusterAchievement: Achievement = {
   name: "Master Buster",
   description: "Busted (100) bots over multiple matches",
   calculate: ({ player, playerAchievements }) => {
-    if (
-      !playerAchievements ||
-      alreadyReceivedAchievement(playerAchievements, "masterBuster")
-    )
+    if (alreadyReceivedAchievement(playerAchievements, "masterBuster"))
       return false;
-    return player.totalBotsBusted === 100;
+    console.log(player.totalBotsBusted);
+
+    return player.totalBotsBusted > 99;
   },
 };
 

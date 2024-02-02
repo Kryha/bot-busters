@@ -57,7 +57,7 @@ export const playerSchema = z.object({
   isBot: z.boolean().optional(), // `optional` makes sure we can hide this value when not in `results` stage
   isScoreSaved: z.boolean(),
   botsBusted: z.number(),
-  totalBotsBusted: z.number().optional(),
+  totalBotsBusted: z.number(),
   correctGuesses: z.number(),
   votes: z.array(z.string().uuid()).optional(), // array of voted ids
   isVerified: z.boolean().optional(),

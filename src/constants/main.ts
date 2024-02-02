@@ -56,4 +56,5 @@ export const ACHIEVEMENTS_TO_STORE: AchievementId[] = [
   "busterStreak",
   "dailyStreakCounter",
   "fiveDayStreak",
+  "masterBuster",
 ];
