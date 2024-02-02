@@ -40,7 +40,7 @@ export const InputField: FC<Props> = ({ onClick, disabled, ...rest }) => {
 };
 
 type TextInputFieldProps = TextFieldProps & {
-  heading: string;
+  heading?: string;
   validationError?: string;
   container?: SxProps;
 };
@@ -72,6 +72,49 @@ export const TextInputField: FC<TextInputFieldProps> = ({
         rows={14}
         {...rest}
       />
+      <Typography variant="body1" sx={styles.errorText}>
+        {validationError}
+      </Typography>
+    </Stack>
+  );
+};
+
+export const UsernameInputField: FC<TextInputFieldProps> = ({
+  onClick,
+  disabled,
+  validationError,
+  ...rest
+}) => {
+  return (
+    <Stack>
+      <Stack
+        sx={{
+          ...(validationError
+            ? styles.usernameWrapperError
+            : styles.usernameWrapper),
+        }}
+      >
+        <TextField
+          aria-label="chat-input"
+          placeholder={text.chat.inputFieldPlaceholder}
+          InputProps={{ sx: styles.inputFieldProps }}
+          sx={{
+            ...(validationError
+              ? styles.usernameInputFieldError
+              : styles.usernameInputField),
+          }}
+          disabled={disabled}
+          fullWidth
+          {...rest}
+        />
+        <PrimaryButton
+          onClick={onClick}
+          aria-label={"send-button"}
+          disabled={!!validationError}
+        >
+          Confirm
+        </PrimaryButton>
+      </Stack>
       <Typography variant="body1" sx={styles.errorText}>
         {validationError}
       </Typography>
