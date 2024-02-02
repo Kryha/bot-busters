@@ -36,10 +36,7 @@ const busterStreakAchievement: Achievement = {
     playerAchievements,
   }) => {
     const isNotEligibleForNewAchievement =
-      !playerHistory ||
-      !playerAchievements ||
       playerHistory.length < 2 ||
-      !player ||
       alreadyReceivedAchievement(playerAchievements, "busterStreak", 1);
 
     if (isNotEligibleForNewAchievement) return false;
@@ -58,11 +55,10 @@ const busterStreakAchievement: Achievement = {
 };
 
 const streakCountAchievements: Achievement = {
-  name: "Streak Count",
+  name: "Streak Counter",
   description: "Plus one on your streak count",
 
   calculate: ({ playerAchievements }) => {
-    if (!playerAchievements) return false;
     return !alreadyReceivedAchievement(
       playerAchievements,
       "dailyStreakCounter",
@@ -76,7 +72,6 @@ const dailyStreakAchievement: Achievement = {
   description: "Play 5 days in a row",
   calculate: ({ player, playerAchievements }) => {
     if (
-      !playerAchievements ||
       alreadyReceivedAchievement(playerAchievements, "fiveDayStreak", 5) ||
       !player
     )
@@ -97,7 +92,6 @@ const firstTimerAchievement: Achievement = {
   name: "First Timer",
   description: "Played your first match",
   calculate: ({ playerAchievements }) => {
-    if (!playerAchievements) return false;
     return !alreadyReceivedAchievement(playerAchievements, "firstTimer");
   },
 };
@@ -106,7 +100,7 @@ const beginnersLuckAchievement: Achievement = {
   name: "Beginners Luck",
   description: "Player busts at least one bot in the first match",
   calculate: ({ playerHistory, botsBusted }) => {
-    const isFirstMatch = !playerHistory || playerHistory.length === 0;
+    const isFirstMatch = playerHistory.length === 0;
 
     return isFirstMatch && botsBusted > 0;
   },
