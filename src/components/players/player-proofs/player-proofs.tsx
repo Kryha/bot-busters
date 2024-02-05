@@ -10,7 +10,7 @@ import { styles } from "./styles.js";
 
 interface Props {
   otherPlayers: PlayerType[];
-  proofCharacterId: CharacterId;
+  proofCharacterId?: CharacterId;
 }
 
 export const PlayerProofs: FC<Props> = ({ otherPlayers, proofCharacterId }) => {

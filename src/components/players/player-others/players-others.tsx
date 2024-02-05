@@ -30,7 +30,7 @@ export const PlayersOthers: FC<Props> = ({
 }) => {
   const [isLoadingVotes, setIsLoadingVotes] = useState(false);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
-  const [proofCharacterId, setProofCharacterId] = useState<CharacterId>("1");
+  const [proofCharacterId, setProofCharacterId] = useState<CharacterId>();
   const { stage, players, votingAt } = room;
 
   const resultHeading =
@@ -66,42 +66,22 @@ export const PlayersOthers: FC<Props> = ({
   return (
     <Stack sx={styles.container}>
       {stage === "voting" && (
-        <>
-          <Stack sx={styles.voting}>
-            <Typography variant="subtitle1" sx={styles.playerHeading}>
-              {text.match.bustTheBots}
-            </Typography>
-            <Typography variant="body1" sx={styles.playerSubHeading}>
-              {text.match.bustTheBotsDescription}
-            </Typography>
-          </Stack>
-
-          <Stack sx={styles.timeSection}>
-            <Timer time={votingAt} duration={VOTING_TIME_MS} />
-            <PrimaryButton
-              sx={styles.button}
-              disabled={!isVoteEnabled || isLoadingVotes}
-              onClick={() => void handleVote()}
-            >
-              {text.general.confirm}
-            </PrimaryButton>
-          </Stack>
-        </>
+        <Stack sx={styles.voting}>
+          <Typography variant="subtitle1" sx={styles.playerHeading}>
+            {text.match.bustTheBots}
+          </Typography>
+          <Typography variant="body1" sx={styles.playerSubHeading}>
+            {text.match.bustTheBotsDescription}
+          </Typography>
+        </Stack>
       )}
 
       {stage === "results" && (
-        <>
-          <Stack sx={styles.results}>
-            <Typography variant="h2" sx={styles.playerHeading}>
-              {resultHeading}
-            </Typography>
-          </Stack>
-
-          <PlayerProofs
-            otherPlayers={otherPlayers}
-            proofCharacterId={proofCharacterId}
-          />
-        </>
+        <Stack sx={styles.results}>
+          <Typography variant="h2" sx={styles.playerHeading}>
+            {resultHeading}
+          </Typography>
+        </Stack>
       )}
 
       <Stack sx={styles.list(stage !== "chat")}>
@@ -127,6 +107,26 @@ export const PlayersOthers: FC<Props> = ({
           );
         })}
       </Stack>
+
+      {stage === "voting" && (
+        <Stack sx={styles.timeSection}>
+          <Timer time={votingAt} duration={VOTING_TIME_MS} />
+          <PrimaryButton
+            sx={styles.button}
+            disabled={!isVoteEnabled || isLoadingVotes}
+            onClick={() => void handleVote()}
+          >
+            {text.general.confirm}
+          </PrimaryButton>
+        </Stack>
+      )}
+
+      {stage === "results" && (
+        <PlayerProofs
+          otherPlayers={otherPlayers}
+          proofCharacterId={proofCharacterId}
+        />
+      )}
     </Stack>
   );
 };
