@@ -15,7 +15,6 @@ export const styles = {
     width: "60vw",
     overflow: "wrap",
     textAlign: "start",
-    lineHeight: "35px",
     pt: "50px",
   },
   gameRulesSection: {
