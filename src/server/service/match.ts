@@ -5,7 +5,6 @@ import { v4 as uuid } from "uuid";
 
 import { matchPrompts } from "~/assets/text/match-prompts.js";
 import {
-  ACHIEVEMENTS_TO_STORE,
   CHAT_TIME_MS,
   POINTS_ACHIEVEMENTS,
   POINTS_BOT_BUSTED,
@@ -343,6 +342,7 @@ export class Match {
         player.isScoreSaved = true;
 
         if (player.isBot) return;
+
         await tx
           .update(users)
           .set({
@@ -351,9 +351,7 @@ export class Match {
           .where(eq(users.id, player.userId));
 
         const playerAchievements = player.achievements
-          .filter((achievement) => {
-            ACHIEVEMENTS_TO_STORE.includes(achievement);
-          })
+          .filter((achievement) => ONE_TIME_ACHIEVEMENTS.includes(achievement))
           .map((achievementId) => {
             return {
               userId: player.userId,
