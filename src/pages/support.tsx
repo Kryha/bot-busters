@@ -1,7 +1,6 @@
 import {
   FormControl,
   type SelectChangeEvent,
-  Stack,
   Typography,
 } from "@mui/material";
 import { useState } from "react";
@@ -18,7 +17,6 @@ import {
   validation,
 } from "~/constants/index.js";
 import { SUPPORT_TOPIC, type SupportTopic } from "~/constants/support.js";
-import { PageHeader } from "~/containers/page-header/index.js";
 import { PageLayout } from "~/containers/page-layout";
 import { styles } from "~/styles/pages/support.js";
 import { api } from "~/utils/api.js";

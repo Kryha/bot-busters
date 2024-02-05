@@ -9,7 +9,7 @@ import { api } from "~/utils/api.js";
 import { PrimaryButton } from "~/components/primary-button/index.js";
 import { PlayerTable } from "~/components/index.js";
 import { isVerifiedUser } from "~/utils/user.js";
-import { PageHeader } from "~/containers/page-header/index.js";
+import { PageLayout } from "~/containers/page-layout/index.js";
 
 const PlayerProfile = () => {
   const router = useRouter();
@@ -20,16 +20,14 @@ const PlayerProfile = () => {
 
   if (user.isLoading) {
     return (
-      <Stack sx={styles.mainContainer}>
+      <Stack width="100%" pt="40vh" alignItems="center">
         <CircularProgress />
       </Stack>
     );
   }
 
   return (
-    <Stack sx={styles.mainContainer}>
-      <PageHeader text={user.data?.username ?? text.playerProfile.profile} />
-
+    <PageLayout title={user.data?.username ?? text.playerProfile.profile} >
       {user.data && (
         <Stack sx={styles.table}>
           <PlayerTable playerProfile={user.data} />
@@ -56,7 +54,7 @@ const PlayerProfile = () => {
           </PrimaryButton>
         </Stack>
       )}
-    </Stack>
+    </PageLayout>
   );
 };
 
