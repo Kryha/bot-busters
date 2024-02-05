@@ -51,6 +51,6 @@ export const validIssue = z
 
 export const validUsername = z
   .string()
-  .min(validation.username.min)
-  .max(validation.username.max)
-  .regex(/^[a-zA-Z0-9_\-.]*$/);
+  .min(validation.username.min, validation.username.error.tooShort)
+  .max(validation.username.max, validation.username.error.tooLong)
+  .regex(/^[a-zA-Z0-9_\-.]*$/, validation.username.error.specialCharacters);

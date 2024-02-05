@@ -1,10 +1,8 @@
 import { useState, type FC, useEffect } from "react";
 import { Stack } from "@mui/material";
-import { z } from "zod";
 
 import { getRandomUsername } from "~/utils/username.js";
-import { validUsername, validation } from "~/constants/validation.js";
-import { profanityFilter } from "~/service/index.js";
+import { validUsername } from "~/constants/validation.js";
 import { UsernameInputField } from "~/components/input-field/input-field.jsx";
 
 import { styles } from "./styles.js";
@@ -25,26 +23,16 @@ export const RowCreateUsername: FC<RowCreateUsernameProps> = ({
   }, []);
 
   const validateUsername = (name: string) => {
-    let err = "";
-    if (!validUsername.safeParse(name).success) {
-      if (
-        !z
-          .string()
-          .regex(/^[a-zA-Z0-9_\-.]*$/)
-          .safeParse(name).success
-      )
-        err = validation.username.error.specialCharacters;
-      if (!z.string().min(validation.username.min).safeParse(name).success)
-        err = validation.username.error.tooShort;
-      if (!z.string().max(validation.username.max).safeParse(name).success)
-        err = validation.username.error.tooLong;
+    const result = validUsername.safeParse(name);
+    if (!result.success && result.error.issues[0]) {
+      setError(result.error.issues[0].message);
+    } else {
+      setError("");
     }
-    if (profanityFilter.exists(name)) err = validation.username.error.profanity;
-    if (!(name.indexOf(" ") === -1)) err = validation.username.error.space;
-    setError(err);
   };
 
   const handleUsername = (event: { target: { value: string } }) => {
+    console.log(error, username);
     validateUsername(event.target.value);
     setUsername(event.target.value);
   };
