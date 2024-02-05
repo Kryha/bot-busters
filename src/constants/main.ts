@@ -46,7 +46,7 @@ export const BOTBUSTERS_LOGO_ANIMATION_SEGMENT = [
   [47, 96],
 ];
 
-export const ACHIEVEMENTS_TO_STORE = [
+export const ONE_TIME_ACHIEVEMENTS: AchievementId[] = [
   "beginnersLuck",
   "realHuman",
   "firstTimer",
