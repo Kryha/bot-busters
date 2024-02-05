@@ -45,3 +45,10 @@ export const BOTBUSTERS_LOGO_ANIMATION_SEGMENT = [
   [0, 96],
   [47, 96],
 ];
+
+export const ONE_TIME_ACHIEVEMENTS: AchievementId[] = [
+  "beginnersLuck",
+  "realHuman",
+  "firstTimer",
+  "busterStreak",
+];

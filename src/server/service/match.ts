@@ -6,28 +6,37 @@ import { v4 as uuid } from "uuid";
 import { matchPrompts } from "~/assets/text/match-prompts.js";
 import {
   CHAT_TIME_MS,
+  ONE_TIME_ACHIEVEMENTS,
   POINTS_ACHIEVEMENTS,
   POINTS_BOT_BUSTED,
   POINTS_HUMAN_BUSTED,
   VOTING_TIME_MS,
 } from "~/constants/index.js";
 import { ee, matchEvent } from "~/server/api/match-maker.js";
-import { db, type BBPgTransaction } from "~/server/db/index.js";
-import { users } from "~/server/db/schema.js";
-import { selectMatchPlayedByUser, selectUserById } from "~/server/db/user.js";
+import { type BBPgTransaction } from "~/server/db/index.js";
+import {
+  userAchievements,
+  users,
+  type UserAchievements,
+} from "~/server/db/schema.js";
+import {
+  selectMatchPlayedByUser,
+  selectUserAchievements,
+  selectUserById,
+} from "~/server/db/user.js";
+import { matchAchievements } from "~/server/service/achievements.js";
 import { Agent } from "~/server/service/index.js";
 import {
   achievementIdSchema,
-  type ReadyToPlayPayload,
   type CharacterId,
   type ChatMessagePayload,
   type MatchRoom,
   type MatchStage,
   type PlayerType,
+  type ReadyToPlayPayload,
   type StoredChatMessage,
 } from "~/types/index.js";
 import { getRandomInt } from "~/utils/math.js";
-import { matchAchievements } from "~/server/service/achievements.js";
 
 export class Match {
   private _id: string;
@@ -49,6 +58,7 @@ export class Match {
 
   //TODO: check for better solution
   private _playerPreviousMatches = new Map<string, MatchRoom[]>();
+  private _playerAchievements = new Map<string, UserAchievements[]>();
 
   stage: MatchStage = "chat";
   arePointsCalculated = false;
@@ -110,7 +120,7 @@ export class Match {
   }
 
   private async initMatch(playerIds: string[]) {
-    await this.getPlayerPreviousMatches();
+    await this.getPlayerStats();
     await this.checkVerifiedPlayers();
 
     ee.emit("readyToPlay", {
@@ -235,17 +245,23 @@ export class Match {
   }
 
   // TODO: make a proper DB relation with user and matches instead of doing this
-  private async getPlayerPreviousMatches() {
+  private async getPlayerStats() {
     const promises = this.players
       .filter((player) => !player.isBot)
       .map(async (player) => {
-        if (this._playerPreviousMatches.get(player.userId)) return;
+        if (
+          this._playerPreviousMatches.get(player.userId) ??
+          this._playerAchievements.get(player.userId)
+        )
+          return;
 
         const matchRooms = (await selectMatchPlayedByUser(player.userId)).map(
           (match) => match.match.room,
         );
-
         this._playerPreviousMatches.set(player.userId, matchRooms);
+
+        const userAchievements = await selectUserAchievements(player.userId);
+        this._playerAchievements.set(player.userId, userAchievements);
       });
     await Promise.allSettled(promises);
     this.playerHistoryLoaded = true;
@@ -278,7 +294,7 @@ export class Match {
         });
       }
 
-      if (!player.isBot) {
+      if (player.isVerified) {
         // Check achievements
         const achievementPoints = Object.entries(matchAchievements)
           .filter(([_, achievement]) => {
@@ -288,6 +304,7 @@ export class Match {
               botsBusted,
               otherPlayers,
               playerHistory: this._playerPreviousMatches.get(player.userId),
+              playerAchievements: this._playerAchievements.get(player.userId),
             });
           })
           .reduce((totalPoints, [id, _]) => {
@@ -306,9 +323,7 @@ export class Match {
     this.arePointsCalculated = true;
   }
 
-  async storeScore(tx?: BBPgTransaction) {
-    const dbTx = tx ?? db;
-
+  async storeMatchStats(tx: BBPgTransaction) {
     let allScoresStored = true;
 
     const promises = this._players.map(async (player) => {
@@ -319,12 +334,25 @@ export class Match {
 
         if (player.isBot) return;
 
-        await dbTx
+        await tx
           .update(users)
           .set({
             score: sql`${users.score} + ${player.score}`,
           })
           .where(eq(users.id, player.userId));
+
+        const playerAchievements = player.achievements
+          .filter((achievement) => ONE_TIME_ACHIEVEMENTS.includes(achievement))
+          .map((achievementId) => {
+            return {
+              userId: player.userId,
+              achievementId: achievementId,
+              achievedAt: new Date(),
+            };
+          });
+        if (playerAchievements.length !== 0) {
+          await tx.insert(userAchievements).values(playerAchievements);
+        }
       } catch (error) {
         player.isScoreSaved = false;
         allScoresStored = false;

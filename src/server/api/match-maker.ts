@@ -3,13 +3,13 @@ import { EventEmitter } from "events";
 import { MATCH_TIME_MS } from "~/constants/main.js";
 import { env } from "~/env.mjs";
 import { db } from "~/server/db/index.js";
+import { insertMatches } from "~/server/db/match.js";
 import { Match, leaderboard, lobbyQueue } from "~/server/service/index.js";
 import type {
   MatchEventType,
   MatchRoom,
   StoredChatMessage,
 } from "~/types/index.js";
-import { insertMatches } from "~/server/db/match.js";
 
 export const ee = new EventEmitter();
 
@@ -63,7 +63,7 @@ const storeScoresAndMatches = async () => {
     const promises = Array.from(matches.values()).map(async (room) => {
       if (room.stage !== "results" || !room.arePointsCalculated) return;
 
-      const allScoresStored = await room.storeScore(tx);
+      const allScoresStored = await room.storeMatchStats(tx);
 
       if (allScoresStored) {
         const messages = room.convertMessages();
