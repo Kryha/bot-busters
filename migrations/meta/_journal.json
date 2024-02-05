@@ -33,15 +33,8 @@
     {
       "idx": 4,
       "version": "5",
-      "when": 1707127120489,
-      "tag": "0004_furry_photon",
-      "breakpoints": true
-    },
-    {
-      "idx": 5,
-      "version": "5",
-      "when": 1707138743414,
-      "tag": "0005_strong_otto_octavius",
+      "when": 1707143410097,
+      "tag": "0004_glossy_lady_vermin",
       "breakpoints": true
     }
   ]

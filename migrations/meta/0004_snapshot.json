@@ -1,5 +1,5 @@
 {
-  "id": "c7d34300-ae35-4351-884d-3275dab246b9",
+  "id": "963431ac-da7d-40d4-ae82-721d2b009b92",
   "prevId": "5e720bad-9795-475f-946f-a08c5e1a16a5",
   "version": "5",
   "dialect": "pg",
@@ -19,7 +19,7 @@
           "type": "date",
           "primaryKey": false,
           "notNull": true,
-          "default": "'1707138743409'"
+          "default": "CURRENT_DATE"
         },
         "room": {
           "name": "room",

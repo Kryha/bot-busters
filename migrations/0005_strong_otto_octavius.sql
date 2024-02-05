@@ -1,1 +1,0 @@
-ALTER TABLE "bot_busters_match" ADD COLUMN "created_at" date DEFAULT '1707138743409' NOT NULL;
