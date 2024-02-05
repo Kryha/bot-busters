@@ -1,5 +1,5 @@
 import { useRef, type FC, useEffect, useState } from "react";
-import { Stack } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import { useRouter } from "next/router.js";
 
 import { api } from "~/utils/api.js";
@@ -8,6 +8,10 @@ import { pages } from "~/router.js";
 
 import { type LoginStage } from "./types.js";
 import { LoginLoading } from "./login-loading.jsx";
+import { PageHeader } from "~/containers/page-header/page-header.jsx";
+import { text } from "~/assets/text/index.js";
+
+import { styles } from "./styles.js";
 
 interface UsernameSelectProps {
   address: string;
@@ -15,7 +19,6 @@ interface UsernameSelectProps {
   setLoginStage: (stage: LoginStage) => void;
 }
 
-// TODO: make component appearance according to the designs
 export const UsernameSelect: FC<UsernameSelectProps> = ({
   address,
   signature,
@@ -64,11 +67,19 @@ export const UsernameSelect: FC<UsernameSelectProps> = ({
   if (!isAskingUsername) return <LoginLoading />;
 
   return (
-    <Stack>
-      <RowCreateUsername
-        onSetUsername={handleVerification}
-        error={verify.error?.message}
-      />
+    <Stack alignContent="center">
+      <PageHeader text={text.general.enterUsername} />
+      <Typography variant="body1" width="50vw" sx={styles.textOrange}>
+        {text.general.usernameRules}
+      </Typography>
+      <Stack alignContent="center" width="100%">
+        <RowCreateUsername submitUsername={handleVerification} />
+        <Typography variant="body1" sx={styles.textWhite}>
+          {text.general.usernameDisclaimer[0]}
+          <br />
+          {text.general.usernameDisclaimer[1]}
+        </Typography>
+      </Stack>
     </Stack>
   );
 };
