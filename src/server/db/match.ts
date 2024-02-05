@@ -11,7 +11,7 @@ export const insertMatches = async (
     id: string;
     room: MatchRoom;
     messages: StoredChatMessage[];
-    createdAt: Date;
+    createdAt: string;
   }[],
   tx?: BBPgTransaction,
 ) => {

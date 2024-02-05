@@ -79,7 +79,7 @@ const storeScoresAndMatches = async () => {
         id: room.id,
         room: room,
         messages,
-        createdAt: new Date(room.createdAt),
+        createdAt: new Date(room.createdAt).toISOString(),
       }),
     );
 

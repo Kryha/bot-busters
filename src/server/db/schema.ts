@@ -1,5 +1,6 @@
 import { relations, sql } from "drizzle-orm";
 import {
+  date,
   integer,
   json,
   pgTableCreator,
@@ -12,7 +13,7 @@ import { createInsertSchema } from "drizzle-zod";
 import { type z } from "zod";
 
 import { PUBLIC_KEY_LENGTH } from "~/constants/index.js";
-import { type StoredChatMessage, type MatchRoom } from "~/types/index.js";
+import { type MatchRoom, type StoredChatMessage } from "~/types/index.js";
 
 export const bbPgTable = pgTableCreator((name) => `bot_busters_${name}`);
 
@@ -59,7 +60,7 @@ export type Rank = z.infer<typeof rankSchema>;
 
 export const matches = bbPgTable("match", {
   id: uuid("id").primaryKey(),
-  createdAt: timestamp("created_at"),
+  createdAt: date("created_at").notNull().default(Date.now().toString()),
   room: json("room").notNull().$type<MatchRoom>(),
   messages: json("messages").notNull().$type<StoredChatMessage[]>().default([]),
 });

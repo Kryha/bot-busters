@@ -46,11 +46,11 @@ export const insertUserWithAddress = async (address: string) => {
 
 export const selectMatchPlayedByUser = async (
   userId: string,
-  days?: number,
+  daysAgo?: number,
   tx?: BBPgTransaction,
 ) => {
   const dbTx = tx ?? db;
-  const timestamp = days ? getRelativeTimeStamp(days) : 0;
+  const timestamp = daysAgo ? getRelativeTimeStamp(daysAgo) : 0;
 
   const matchesPlayed = await dbTx
     .select()
@@ -59,7 +59,7 @@ export const selectMatchPlayedByUser = async (
     .where(
       and(
         eq(usersToMatches.userId, userId),
-        gte(matches.createdAt, new Date(timestamp)),
+        gte(matches.createdAt, new Date(timestamp).toISOString()),
       ),
     );
   return matchesPlayed;
