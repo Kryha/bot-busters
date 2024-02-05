@@ -1,6 +1,7 @@
 import { and, eq, gte } from "drizzle-orm";
 
 import { db, dbSchema, type BBPgTransaction } from "~/server/db/index.js";
+import { getRelativeTimeStamp } from "~/utils/date.js";
 import { userAchievements, usersToMatches } from "./schema.js";
 
 const { users, matches } = dbSchema;
@@ -49,7 +50,7 @@ export const selectMatchPlayedByUser = async (
   tx?: BBPgTransaction,
 ) => {
   const dbTx = tx ?? db;
-  const timestamp = days ? Date.now() - days * 24 * 60 * 60 * 1000 : 0;
+  const timestamp = days ? Date.now() - getRelativeTimeStamp(days) : 0;
 
   const matchesPlayed = await dbTx
     .select()
