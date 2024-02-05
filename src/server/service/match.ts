@@ -107,13 +107,6 @@ export class Match {
 
     this._players = lodash.shuffle([...botPlayers, ...humanPlayers]);
 
-    this.getPlayerStats().catch((err) => {
-      console.error("Error loading player history:", err);
-    });
-
-    this.checkVerifiedPlayers().catch((err) => {
-      console.error("Error checking if player is verified: ", err);
-    });
     this.addPrompt();
 
     this.initMatch(playerIds).catch((err) =>
@@ -261,10 +254,12 @@ export class Match {
           this._playerAchievements.get(player.userId)
         )
           return;
+        const playerMatchHistory = await selectMatchPlayedByUser(
+          player.userId,
+          5,
+        );
 
-        const matchRooms = (
-          await selectMatchPlayedByUser(player.userId, 5)
-        ).map((match) => match.match.room);
+        const matchRooms = playerMatchHistory.map((match) => match.match.room);
 
         this._playerPreviousMatches.set(player.userId, matchRooms);
 
