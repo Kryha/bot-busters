@@ -13,6 +13,7 @@ const styles = {
     width: layout.width.relative,
     maxWidth: layout.width.max,
     minWidth: layout.width.min,
+    alignItems: "center"
   },
 };
 

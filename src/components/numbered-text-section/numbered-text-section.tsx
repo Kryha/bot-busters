@@ -21,7 +21,7 @@ export const NumberedSection: FC<Props> = ({ number, title, content }) => {
         <Typography variant="body1" sx={styles.title}>
           {title}
         </Typography>
-        {content}
+          <>{content}</>
       </Stack>
     </Stack>
   );
