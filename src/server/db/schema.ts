@@ -60,7 +60,9 @@ export type Rank = z.infer<typeof rankSchema>;
 
 export const matches = bbPgTable("match", {
   id: uuid("id").primaryKey(),
-  createdAt: date("created_at").notNull().default(Date.now().toString()),
+  createdAt: date("created_at")
+    .notNull()
+    .default(sql`CURRENT_DATE`),
   room: json("room").notNull().$type<MatchRoom>(),
   messages: json("messages").notNull().$type<StoredChatMessage[]>().default([]),
 });
