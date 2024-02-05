@@ -8,7 +8,12 @@ import { matches as matchesTable } from "~/server/db/schema.js";
 import { matchRoomSchema, type ChatMessagePayload } from "~/types/index.js";
 
 import { createTRPCRouter, protectedProcedure } from "../trpc.js";
-import { matchEvent, matches, ee } from "../match-maker.js";
+import {
+  matchEvent,
+  matches,
+  ee,
+  getOngoingMatchByUserId,
+} from "../match-maker.js";
 import { profanityFilter } from "~/service/index.js";
 
 const verifyPlayer = (userId: string, roomId: string) => {
@@ -92,13 +97,16 @@ export const matchRouter = createTRPCRouter({
   getRoom: protectedProcedure
     .input(z.object({ roomId: z.string().uuid() }))
     .query(async ({ ctx, input }) => {
-      let room = matches.get(input.roomId)?.toSerializable();
+      const { user } = ctx.session;
+      const { roomId } = input;
+
+      let room = matches.get(roomId)?.toSerializable();
 
       if (!room) {
         const [dbRes] = await db
           .select()
           .from(matchesTable)
-          .where(eq(matchesTable.id, input.roomId));
+          .where(eq(matchesTable.id, roomId));
 
         const parsed = await matchRoomSchema.spa(dbRes?.room);
 
@@ -108,9 +116,7 @@ export const matchRouter = createTRPCRouter({
         room = parsed.data;
       }
 
-      const player = room.players.find(
-        (player) => player.userId === ctx.session.user.id,
-      );
+      const player = room.players.find((player) => player.userId === user.id);
 
       if (!player) {
         throw new TRPCError({
@@ -121,6 +127,18 @@ export const matchRouter = createTRPCRouter({
 
       return room;
     }),
+
+  getOngoingMatch: protectedProcedure.query(({ ctx }) => {
+    const room = getOngoingMatchByUserId(ctx.session.user.id)?.toSerializable();
+
+    if (!room)
+      throw new TRPCError({
+        code: "NOT_FOUND",
+        message: "Room not found",
+      });
+
+    return room;
+  }),
 
   vote: protectedProcedure
     .input(

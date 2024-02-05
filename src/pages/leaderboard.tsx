@@ -6,10 +6,13 @@ import { text } from "~/assets/text/index.js";
 import { api } from "~/utils/api.js";
 import { isClient } from "~/utils/client.js";
 import { PageHeader } from "~/containers/page-header/index.js";
+import { useRedirectIfPlayingMatch } from "~/hooks/match.js";
 
 const USERS_PER_PAGE = 20;
 
 const LeaderBoard = () => {
+  useRedirectIfPlayingMatch();
+
   const getRankedUsers = api.user.getRankedUsers.useInfiniteQuery(
     {
       limit: USERS_PER_PAGE,

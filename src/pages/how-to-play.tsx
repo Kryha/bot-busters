@@ -10,9 +10,13 @@ import {
 } from "~/components/index.js";
 import { PageHeader } from "~/containers/page-header/index.js";
 import { styles } from "~/styles/pages/how-to-play.js";
+import { useRedirectIfPlayingMatch } from "~/hooks/match.js";
 
 const HowToPlay: FC = () => {
+  useRedirectIfPlayingMatch();
+
   const pageContent = copywrite.howToPlay;
+
   return (
     <Stack sx={styles.container}>
       <PageHeader text={pageContent.headings.howToPlay} />

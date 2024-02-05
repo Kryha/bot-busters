@@ -10,10 +10,13 @@ import { TOP_RANKED_PLAYERS } from "~/constants/index.js";
 import { PlayButton } from "~/components/play-button/index.js";
 import { PixelButton } from "~/components/pixel-button/index.js";
 import { BotBusterLogoAnimation } from "~/components/bot-buster-logo/index.js";
+import { useRedirectIfPlayingMatch } from "~/hooks/match.js";
 
 import { styles } from "~/styles/pages/homepage.js";
 
 const Homepage = () => {
+  useRedirectIfPlayingMatch();
+
   const { push } = useRouter();
 
   const loggedUser = api.user.getLoggedUser.useQuery(undefined, {
