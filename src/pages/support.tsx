@@ -19,10 +19,11 @@ import {
 } from "~/constants/index.js";
 import { SUPPORT_TOPIC, type SupportTopic } from "~/constants/support.js";
 import { PageHeader } from "~/containers/page-header/index.js";
+import { PageLayout } from "~/containers/page-layout";
 import { styles } from "~/styles/pages/support.js";
 import { api } from "~/utils/api.js";
 
-function Support() {
+const Support = () => {
   const copywrite = text.support;
   const { textLength } = validation;
 
@@ -85,8 +86,7 @@ function Support() {
   };
 
   return (
-    <Stack sx={styles.container}>
-      <PageHeader text={text.general.support} />
+    <PageLayout title={text.general.support} >
       <Typography variant="body1" sx={styles.text}>
         {copywrite.main[0]}
         <br />
@@ -128,7 +128,7 @@ function Support() {
           Send
         </PrimaryButton>
       </FormControl>
-    </Stack>
+    </PageLayout>
   );
 }
 

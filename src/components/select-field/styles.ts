@@ -1,3 +1,4 @@
+import { layout } from "~/constants/layout";
 import { theme } from "~/styles/theme.js";
 import type { SxStyleRecord } from "~/types/sx-style-record.js";
 
@@ -13,7 +14,9 @@ export const styles = {
     mt: "20px",
     mb: "40px",
     textTransform: "capitalize",
-    width: "63vw",
+    width: layout.width.relative,
+    maxWidth: layout.width.max,
+    minWidth: layout.width.min,
     "&:hover fieldset": {
       border: "none",
     },
@@ -23,7 +26,6 @@ export const styles = {
   },
   option: {
     textTransform: "capitalize",
-    width: "63vw",
     "&.Mui-selected": {
       background: "transparent",
       color: theme.palette.secondary.dark,

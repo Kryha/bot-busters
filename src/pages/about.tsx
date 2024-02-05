@@ -8,7 +8,11 @@ import { processTextToLink } from "~/utils/links.jsx";
 const About = () => 
   <PageLayout title={text.about.welcome}>
     {text.about.content.map((content: string, key: number) =>
-      <Typography key={key} variant="body1" pt={5} sx={styles.body}>
+      <Typography 
+      key={key} 
+      variant="body1" 
+      pt={key===0 ? 0: 5} 
+      sx={styles.body}>
         {processTextToLink(content, text.wordsToLinkAbout)}
       </Typography>
     )}
