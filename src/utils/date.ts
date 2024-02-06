@@ -70,12 +70,17 @@ const formattedDate = (date: Date) => {
   const options: Intl.DateTimeFormatOptions = { day: "numeric", month: "long" };
   return date.toLocaleDateString("en-US", options);
 };
+
 export const getRelativeDate = (daysAgo: number) => {
   const today = new Date();
   const date = new Date(today);
   date.setDate(today.getDate() - daysAgo);
 
   return formattedDate(date);
+};
+
+export const getRelativeTimeStamp = (daysAgo: number) => {
+  return Date.now() - daysAgo * 24 * 60 * 60 * 1000;
 };
 
 export const getTimeStamp = (time: number) => {

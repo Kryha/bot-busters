@@ -23,9 +23,11 @@ export const CHIP_TIMEOUT = 4000;
 export const POINTS_BOT_BUSTED = 11;
 export const POINTS_HUMAN_BUSTED = 10;
 export const POINTS_ACHIEVEMENTS: Record<AchievementId, number> = {
+  dailyStreakCounter: 0,
   goodBust: 5,
   doubleAgent: 5,
   busterStreak: 9,
+  fiveDayStreak: 9,
   firstTimer: 5,
   beginnersLuck: 5,
   realHuman: 5,
@@ -51,6 +53,8 @@ export const ONE_TIME_ACHIEVEMENTS: AchievementId[] = [
   "realHuman",
   "firstTimer",
   "busterStreak",
+  "dailyStreakCounter",
+  "fiveDayStreak",
 ];
 
 export const EMPTY_RES = "empty";

@@ -254,10 +254,13 @@ export class Match {
           this._playerAchievements.get(player.userId)
         )
           return;
-
-        const matchRooms = (await selectMatchPlayedByUser(player.userId)).map(
-          (match) => match.match.room,
+        const playerMatchHistory = await selectMatchPlayedByUser(
+          player.userId,
+          5,
         );
+
+        const matchRooms = playerMatchHistory.map((match) => match.match.room);
+
         this._playerPreviousMatches.set(player.userId, matchRooms);
 
         const userAchievements = await selectUserAchievements(player.userId);
@@ -303,8 +306,10 @@ export class Match {
               messages: this._messages,
               botsBusted,
               otherPlayers,
-              playerHistory: this._playerPreviousMatches.get(player.userId),
-              playerAchievements: this._playerAchievements.get(player.userId),
+              playerHistory:
+                this._playerPreviousMatches.get(player.userId) ?? [],
+              playerAchievements:
+                this._playerAchievements.get(player.userId) ?? [],
             });
           })
           .reduce((totalPoints, [id, _]) => {
