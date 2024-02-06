@@ -4,11 +4,8 @@ import { useRouter } from "next/router.js";
 import { api } from "~/utils/api.js";
 import { pages } from "~/router.js";
 import { LobbyCharacterLoader } from "~/components/lobby-character-loader/index.js";
-import { useRedirectIfPlayingMatch } from "~/hooks/match.js";
 
 const Lobby: FC = () => {
-  useRedirectIfPlayingMatch();
-
   const { push } = useRouter();
   const join = api.lobby.join.useMutation();
   const [lobbyQueue, setLobbyQueue] = useState({

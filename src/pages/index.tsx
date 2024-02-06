@@ -6,25 +6,24 @@ import { text } from "~/assets/text/index.js";
 import { TopRanked } from "~/components/index.js";
 import { api } from "~/utils/api.js";
 import { pages } from "~/router.js";
-import { TOP_RANKED_PLAYERS } from "~/constants/index.js";
+import { EMPTY_RES, TOP_RANKED_PLAYERS } from "~/constants/index.js";
 import { PlayButton } from "~/components/play-button/index.js";
 import { PixelButton } from "~/components/pixel-button/index.js";
 import { BotBusterLogoAnimation } from "~/components/bot-buster-logo/index.js";
-import { useRedirectIfPlayingMatch } from "~/hooks/match.js";
 
 import { styles } from "~/styles/pages/homepage.js";
 
 const Homepage = () => {
-  useRedirectIfPlayingMatch();
-
   const { push } = useRouter();
 
   const loggedUser = api.user.getLoggedUser.useQuery(undefined, {
     retry: false,
   });
+  const match = api.match.getOngoingMatch.useQuery();
 
   const handleGameStart = async () => {
-    if (loggedUser.isLoading) return;
+    if (loggedUser.isLoading || match.isLoading) return;
+
     try {
       if (loggedUser.isError) {
         await signIn("credentials", { callbackUrl: pages.lobby });
@@ -34,6 +33,15 @@ const Homepage = () => {
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const handleGoToMatch = async () => {
+    if (match.isLoading || !match.data || match.data === EMPTY_RES) return;
+
+    await push({
+      pathname: pages.match,
+      query: { roomId: match.data.id },
+    });
   };
 
   const openDailyHandler = () => void push(pages.leaderboard);
@@ -48,10 +56,18 @@ const Homepage = () => {
         <BotBusterLogoAnimation />
       </Stack>
       <Stack sx={styles.actions}>
-        <PlayButton
-          disabled={loggedUser.isLoading}
-          onClick={() => void handleGameStart()}
-        />
+        {match.data && match.data !== EMPTY_RES ? (
+          <PixelButton
+            disabled={loggedUser.isLoading || match.isLoading}
+            onClick={() => void handleGoToMatch()}
+            text={text.homepage.continueGame}
+          />
+        ) : (
+          <PlayButton
+            disabled={loggedUser.isLoading || match.isLoading}
+            onClick={() => void handleGameStart()}
+          />
+        )}
         <PixelButton
           onClick={openDailyHandler}
           text={text.homepage.openDaily}

@@ -10,11 +10,8 @@ import { PrimaryButton } from "~/components/primary-button/index.js";
 import { PlayerTable } from "~/components/index.js";
 import { isVerifiedUser } from "~/utils/user.js";
 import { PageHeader } from "~/containers/page-header/index.js";
-import { useRedirectIfPlayingMatch } from "~/hooks/match.js";
 
 const PlayerProfile = () => {
-  useRedirectIfPlayingMatch();
-
   const router = useRouter();
 
   const user = api.user.getLoggedUserProfile.useQuery(undefined, {

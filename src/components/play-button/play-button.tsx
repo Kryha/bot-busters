@@ -8,6 +8,7 @@ interface Props {
   onClick: () => void;
   disabled: boolean;
 }
+
 export const PlayButton: FC<Props> = ({ onClick, disabled }) => {
   return (
     <Box

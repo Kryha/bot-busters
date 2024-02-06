@@ -52,3 +52,5 @@ export const ONE_TIME_ACHIEVEMENTS: AchievementId[] = [
   "firstTimer",
   "busterStreak",
 ];
+
+export const EMPTY_RES = "empty";

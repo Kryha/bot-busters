@@ -19,13 +19,10 @@ import {
 } from "~/constants/index.js";
 import { SUPPORT_TOPIC, type SupportTopic } from "~/constants/support.js";
 import { PageHeader } from "~/containers/page-header/index.js";
-import { useRedirectIfPlayingMatch } from "~/hooks/match.js";
 import { styles } from "~/styles/pages/support.js";
 import { api } from "~/utils/api.js";
 
 function Support() {
-  useRedirectIfPlayingMatch();
-
   const copywrite = text.support;
   const { textLength } = validation;
 

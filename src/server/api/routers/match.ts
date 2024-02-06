@@ -15,6 +15,7 @@ import {
   getOngoingMatchByUserId,
 } from "../match-maker.js";
 import { profanityFilter } from "~/service/index.js";
+import { EMPTY_RES } from "~/constants/main.js";
 
 const verifyPlayer = (userId: string, roomId: string) => {
   const room = matches.get(roomId);
@@ -130,14 +131,7 @@ export const matchRouter = createTRPCRouter({
 
   getOngoingMatch: protectedProcedure.query(({ ctx }) => {
     const room = getOngoingMatchByUserId(ctx.session.user.id)?.toSerializable();
-
-    if (!room)
-      throw new TRPCError({
-        code: "NOT_FOUND",
-        message: "Room not found",
-      });
-
-    return room;
+    return room ?? EMPTY_RES;
   }),
 
   vote: protectedProcedure
