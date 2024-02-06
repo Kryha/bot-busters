@@ -276,6 +276,10 @@ export class Match {
         (p) => p.userId !== player.userId,
       );
 
+      // Checking if the player did send a message this match
+      if (!this._messages.some((message) => message.sender === player.userId))
+        return { ...player };
+
       if (player.votes) {
         otherPlayers.forEach((p) => {
           const isVoted = player.votes!.includes(p.userId);
