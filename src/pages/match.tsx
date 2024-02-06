@@ -55,11 +55,6 @@ const MatchInternal: FC<Props> = ({ roomId, session }) => {
 
   if (!localPlayer) return <ErrorView />;
 
-  const totalBots = room.players.reduce(
-    (acc, player) => (player.isBot ? acc + 1 : acc),
-    0,
-  );
-
   const isVoteEnabled = !!room.messages.find(
     (message) => message.sender === localPlayer.userId,
   );
@@ -80,14 +75,7 @@ const MatchInternal: FC<Props> = ({ roomId, session }) => {
         onVote={handleVote}
       />
 
-      {room.stage === "results" && (
-        <Results
-          gainedScore={localPlayer.score}
-          totalBots={totalBots}
-          botsBusted={localPlayer.botsBusted}
-          achievements={localPlayer.achievements}
-        />
-      )}
+      {room.stage === "results" && <Results player={localPlayer} />}
       {room.stage !== "results" && <Chat roomId={roomId} room={room} />}
       {room.stage === "chat" && <PlayerLocal localPlayer={localPlayer} />}
     </Layout>
