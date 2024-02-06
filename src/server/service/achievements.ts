@@ -118,7 +118,6 @@ const masterBusterAchievement: Achievement = {
   calculate: ({ player, playerAchievements }) => {
     if (alreadyReceivedAchievement(playerAchievements, "masterBuster"))
       return false;
-    console.log(player.totalBotsBusted);
 
     return player.totalBotsBusted > 99;
   },
