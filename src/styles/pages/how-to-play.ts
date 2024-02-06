@@ -18,6 +18,6 @@ export const styles = {
     textTransform: "uppercase",
     textAlign: "center",
     textWrap: "nowrap",
-    maxWidth: "100vw"
+    maxWidth: "100vw",
   },
 } satisfies SxStyleRecord;

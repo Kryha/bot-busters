@@ -27,7 +27,7 @@ const PlayerProfile = () => {
   }
 
   return (
-    <PageLayout title={user.data?.username ?? text.playerProfile.profile} >
+    <PageLayout title={user.data?.username ?? text.playerProfile.profile}>
       {user.data && (
         <Stack sx={styles.table}>
           <PlayerTable playerProfile={user.data} />

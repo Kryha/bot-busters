@@ -19,7 +19,7 @@ export const styles = {
     color: theme.palette.secondary.main,
     minWidth: "55px",
     fontSize: "80px",
-    justifySelf: "end"
+    justifySelf: "end",
   },
   title: {
     color: theme.palette.secondary.main,

@@ -69,7 +69,7 @@ const Login: FC = () => {
     }
   };
 
-  return <PageLayout title={pageHeader}>{pageContent()}</PageLayout>;
+  return <PageLayout>{pageContent()}</PageLayout>;
 };
 
 export default Login;

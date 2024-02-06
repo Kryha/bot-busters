@@ -59,7 +59,7 @@ const LeaderBoard = () => {
   if (getRankedUsers.isLoading) return <CircularProgress />;
 
   return (
-    <PageLayout title={text.leaderboard.leaderboard} >
+    <PageLayout title={text.leaderboard.leaderboard}>
       <LeaderboardTable leaderboard={leaderboardData} />
     </PageLayout>
   );

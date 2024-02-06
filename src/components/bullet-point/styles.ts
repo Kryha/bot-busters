@@ -7,7 +7,7 @@ export const styles = {
     alignItems: "start",
     minHeight: "50px",
     pb: "-30px",
-    ml: "-5px"
+    ml: "-5px",
   },
   transformPointToBullet: {
     width: "20px",

@@ -1,8 +1,4 @@
-import {
-  FormControl,
-  type SelectChangeEvent,
-  Typography,
-} from "@mui/material";
+import { FormControl, type SelectChangeEvent, Typography } from "@mui/material";
 import { useState } from "react";
 
 import { text } from "~/assets/text/index.js";
@@ -84,7 +80,7 @@ const Support = () => {
   };
 
   return (
-    <PageLayout title={text.general.support} >
+    <PageLayout title={text.general.support}>
       <Typography variant="body1" sx={styles.text}>
         {copywrite.main[0]}
         <br />
@@ -128,6 +124,6 @@ const Support = () => {
       </FormControl>
     </PageLayout>
   );
-}
+};
 
 export default Support;

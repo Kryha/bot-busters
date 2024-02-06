@@ -21,7 +21,7 @@ const HowToPlay: FC = () => {
         <br />
         {pageContent.main[1]}
       </Typography>
-      
+
       <Stack sx={{ ...styles.section, ml: "-50px" }}>
         <GameRules />
       </Stack>
@@ -48,7 +48,6 @@ const HowToPlay: FC = () => {
       <Stack sx={styles.section}>
         <PlayerProfiles />
       </Stack>
-
     </PageLayout>
   );
 };
