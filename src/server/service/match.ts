@@ -177,6 +177,10 @@ export class Match {
       isBot: false,
       isScoreSaved: false,
       botsBusted: 0,
+      totalBotsBusted: 0,
+      humansBusted: 0,
+      botsBustedScore: 0,
+      humansBustedScore: 0,
       correctGuesses: 0,
       achievements: [],
     };
@@ -254,6 +258,14 @@ export class Match {
           this._playerAchievements.get(player.userId)
         )
           return;
+
+        // getting total amount of bots busted by the player
+        const playerInfo = await selectUserById(player.userId);
+        if (playerInfo) {
+          player.totalBotsBusted = playerInfo.botsBusted;
+        }
+
+        // getting the achievements earned by the player
         const playerMatchHistory = await selectMatchPlayedByUser(
           player.userId,
           5,
@@ -272,57 +284,75 @@ export class Match {
 
   calculatePoints() {
     this._players = this.players.map((player) => {
-      let score = 0;
       let correctGuesses = 0;
       let botsBusted = 0;
+      let humansBusted = 0;
+      let score = 0;
+      let botsBustedScore = 0;
+      let humansBustedScore = 0;
+
       const otherPlayers = this.players.filter(
         (p) => p.userId !== player.userId,
       );
 
-      if (player.votes) {
-        otherPlayers.forEach((p) => {
-          const isVoted = player.votes!.includes(p.userId);
-          const hasGuessed = p.isBot ? isVoted : !isVoted;
+      // Checking if the player is entitled to get points
+      if (!player.votes) return { ...player };
 
-          if (hasGuessed) {
-            correctGuesses += 1;
+      otherPlayers.forEach((p) => {
+        const isVoted = player.votes!.includes(p.userId);
+        const hasGuessed = p.isBot ? isVoted : !isVoted;
 
-            if (p.isBot) {
-              botsBusted += 1;
-              score += POINTS_BOT_BUSTED;
-            } else {
-              score += POINTS_HUMAN_BUSTED;
-            }
+        if (hasGuessed) {
+          correctGuesses += 1;
+
+          if (p.isBot) {
+            botsBusted += 1;
+            score += POINTS_BOT_BUSTED;
+            botsBustedScore += POINTS_BOT_BUSTED;
+          } else {
+            humansBusted += 1;
+            score += POINTS_HUMAN_BUSTED;
+            humansBustedScore += POINTS_HUMAN_BUSTED;
           }
-        });
-      }
+        }
+      });
 
       if (player.isVerified) {
         // Check achievements
         const achievementPoints = Object.entries(matchAchievements)
-          .filter(([_, achievement]) => {
-            return achievement.calculate({
+          .filter(([_, achievement]) =>
+            achievement.calculate({
               player,
-              messages: this._messages,
               botsBusted,
               otherPlayers,
               playerHistory:
                 this._playerPreviousMatches.get(player.userId) ?? [],
               playerAchievements:
                 this._playerAchievements.get(player.userId) ?? [],
-            });
-          })
+            }),
+          )
           .reduce((totalPoints, [id, _]) => {
             const achievementId = achievementIdSchema.safeParse(id);
             if (!achievementId.success) return totalPoints;
+
+            // TODO: don't mutate attributes here
             player.achievements.push(achievementId.data);
 
-            return (totalPoints += POINTS_ACHIEVEMENTS[achievementId.data]);
+            return totalPoints + POINTS_ACHIEVEMENTS[achievementId.data];
           }, 0);
 
         score += achievementPoints;
       }
-      return { ...player, score, correctGuesses, botsBusted };
+
+      return {
+        ...player,
+        score,
+        correctGuesses,
+        botsBusted,
+        humansBusted,
+        botsBustedScore,
+        humansBustedScore,
+      };
     });
 
     this.arePointsCalculated = true;
@@ -343,6 +373,7 @@ export class Match {
           .update(users)
           .set({
             score: sql`${users.score} + ${player.score}`,
+            botsBusted: sql`${users.botsBusted} + ${player.botsBusted}`,
           })
           .where(eq(users.id, player.userId));
 

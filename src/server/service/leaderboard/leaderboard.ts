@@ -115,7 +115,7 @@ const storeOnChain = async () => {
     ).then((txs) => txs.filter((tx) => !tx.isSuccess));
   } while (tryCount > 0 && failedTransactions.length);
 
-  console.log("Executed transactions");
+  console.info("Executed transactions");
 };
 
 export const leaderboard = { calculate, storeOnChain };

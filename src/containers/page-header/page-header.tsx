@@ -7,8 +7,9 @@ export const PageHeader: FC<{ text: string }> = ({ text }) => (
     color="common.black"
     sx={{
       mt: "90px",
-      mb: "50px",
+      mb: "60px",
       textAlign: "center",
+      textWrap: "nowrap",
     }}
   >
     {text}

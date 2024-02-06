@@ -1,9 +1,4 @@
-import {
-  FormControl,
-  type SelectChangeEvent,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { FormControl, type SelectChangeEvent, Typography } from "@mui/material";
 import { useState } from "react";
 
 import { text } from "~/assets/text/index.js";
@@ -18,11 +13,11 @@ import {
   validation,
 } from "~/constants/index.js";
 import { SUPPORT_TOPIC, type SupportTopic } from "~/constants/support.js";
-import { PageHeader } from "~/containers/page-header/index.js";
+import { PageLayout } from "~/containers/page-layout/index.js";
 import { styles } from "~/styles/pages/support.js";
 import { api } from "~/utils/api.js";
 
-function Support() {
+const Support = () => {
   const copywrite = text.support;
   const { textLength } = validation;
 
@@ -85,8 +80,7 @@ function Support() {
   };
 
   return (
-    <Stack sx={styles.container}>
-      <PageHeader text={text.general.support} />
+    <PageLayout title={text.general.support}>
       <Typography variant="body1" sx={styles.text}>
         {copywrite.main[0]}
         <br />
@@ -128,8 +122,8 @@ function Support() {
           Send
         </PrimaryButton>
       </FormControl>
-    </Stack>
+    </PageLayout>
   );
-}
+};
 
 export default Support;

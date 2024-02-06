@@ -1,12 +1,7 @@
 import type { SxStyleRecord } from "~/types/sx-style-record.js";
 
 export const styles = {
-  mainContainer: {
-    alignItems: "center",
-    gap: 2,
-  },
   table: {
-    mt: "120px",
     mb: 5,
     textAlign: "center",
   },

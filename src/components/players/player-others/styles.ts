@@ -1,6 +1,6 @@
 import { type SxProps } from "@mui/material";
-import { breakpoints } from "~/styles/theme.js";
 import { type MatchStage } from "~/types/index.js";
+import { breakpoints, theme } from "~/styles/theme.js";
 
 export const styles = {
   container: (stage: MatchStage) => {
@@ -21,7 +21,6 @@ export const styles = {
       flexDirection: stage === "chat" ? "column" : "row",
       [`@media (max-width: ${breakpoints.md}px)`]: {
         flexDirection: "row",
-        width: "100%",
         mt: 10,
       },
     };
@@ -31,8 +30,13 @@ export const styles = {
     textAlign: "center",
     textTransform: "uppercase",
   },
-  playerSubHeading: {
-    textAlign: "center",
+  playerSubHeading: (isVotedEnabled: boolean) => {
+    return {
+      textAlign: "center",
+      color: isVotedEnabled
+        ? theme.palette.common.white
+        : theme.palette.error.main,
+    };
   },
   timeSection: {
     pr: 2,

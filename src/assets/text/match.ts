@@ -9,6 +9,9 @@ export const match = {
   localPlayer: "(YOU)",
   bustTheBots: "Bust the bots",
   bustTheBotsDescription: "Click to vote for one or multiple suspected BOTS.",
+  bustTheBotsDisabled: "Bust the bots",
+  bustTheBotsDisabledDescription:
+    "Voting is only available for players participating in the chat.",
   botBusted: "Bot busted!",
   wrongBust: "Wrong Bust",
   missedBot: "Missed Bot",
