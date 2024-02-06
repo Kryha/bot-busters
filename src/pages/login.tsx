@@ -12,6 +12,8 @@ import {
   type LoginStage,
   SignIn,
 } from "~/components/index.js";
+import { PageLayout } from "~/containers/page-layout";
+import { text } from "~/assets/text";
 
 const Login: FC = () => {
   const router = useRouter();
@@ -19,6 +21,7 @@ const Login: FC = () => {
   const [loginStage, setLoginStage] = useState<LoginStage>("userCheck");
   const [address, setAddress] = useState("");
   const [signature, setSignature] = useState("");
+  const [pageHeader, setPageHeader] = useState("");
 
   const loggedUser = api.user.getLoggedUser.useQuery();
 
@@ -48,6 +51,7 @@ const Login: FC = () => {
       case "userCheck":
         return <LoginLoading />;
       case "connectWallet":
+        setPageHeader(text.auth.connectYourWallet);
         return (
           <ConnectWallet
             setAddress={setAddress}
@@ -57,6 +61,7 @@ const Login: FC = () => {
           />
         );
       case "verify":
+
         return (
           <UsernameSelect
             address={address}
@@ -69,7 +74,7 @@ const Login: FC = () => {
     }
   };
 
-  return <Page>{pageContent()}</Page>;
+  return <PageLayout title={pageHeader}>{pageContent()}</PageLayout>;
 };
 
 export default Login;

@@ -17,10 +17,10 @@ const styles = {
   },
 };
 
-export const PageLayout: FC<{ title: string } & StackProps> = ({ title, children }) => (
-  <Stack sx={styles.container} >
+export const PageLayout: FC<{ title?: string } & StackProps> = ({ title, children }) => (
+  <Stack sx={styles.container}>
     <Stack sx={styles.content}>
-      <PageHeader text={title} />
+      {title && <PageHeader text={title} />}
       { children }
     </Stack>
   </Stack>

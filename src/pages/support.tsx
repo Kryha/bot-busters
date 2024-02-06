@@ -17,7 +17,7 @@ import {
   validation,
 } from "~/constants/index.js";
 import { SUPPORT_TOPIC, type SupportTopic } from "~/constants/support.js";
-import { PageLayout } from "~/containers/page-layout";
+import { PageLayout } from "~/containers/page-layout/index.js";
 import { styles } from "~/styles/pages/support.js";
 import { api } from "~/utils/api.js";
 

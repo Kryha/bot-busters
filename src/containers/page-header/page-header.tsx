@@ -9,6 +9,7 @@ export const PageHeader: FC<{ text: string }> = ({ text }) => (
       mt: "90px",
       mb: "60px",
       textAlign: "center",
+      textWrap: "nowrap"
     }}>
     {text}
   </Typography>

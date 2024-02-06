@@ -8,7 +8,7 @@ import {
   PlayerProfiles,
   PointsAndPenalties,
 } from "~/components/index.js";
-import { PageLayout } from "~/containers/page-layout";
+import { PageLayout } from "~/containers/page-layout/index.js";
 import { styles } from "~/styles/pages/how-to-play.js";
 
 const HowToPlay: FC = () => {

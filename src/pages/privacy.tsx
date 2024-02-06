@@ -1,9 +1,9 @@
 import { text } from "~/assets/text/index.js";
-import { PageHeader } from "~/containers/page-header/index.js";
+import { PageLayout } from "~/containers/page-layout/index.js";
 
-function Privacy() {
+const Privacy = () => {
   // TODO: update page
-  return <PageHeader text={text.general.privacy} />;
+  return <PageLayout title={text.general.privacy} />;
 }
 
 export default Privacy;
