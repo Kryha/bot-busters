@@ -23,7 +23,7 @@ export const styles: Record<string, SxProps> = {
   },
   buttonContainer: {
     flex: 0,
-    gap: 1,
+    gap: 2,
     mt: 2,
     mb: 2,
     width: "100%",

@@ -32,21 +32,27 @@ export const Results: FC<Props> = ({ player }) => {
       <Stack sx={styles.buttonContainer}>
         {loggedUser.isLoading || (
           <>
-            {!isConnectButtonHidden && (
+            <PrimaryButton
+              sx={styles.button}
+              onClick={() => void router.push(pages.lobby)}
+            >
+              {text.chat.playAgain}
+            </PrimaryButton>
+            {!isConnectButtonHidden ? (
               <PrimaryButton
                 sx={styles.button}
                 onClick={() => void router.push(pages.login)}
               >
                 {text.chat.addScore}
               </PrimaryButton>
+            ) : (
+              <PrimaryButton
+                sx={styles.button}
+                onClick={() => void router.push(pages.leaderboard)}
+              >
+                {text.chat.viewLeaderboard}
+              </PrimaryButton>
             )}
-
-            <PrimaryButton
-              sx={styles.button}
-              onClick={() => void router.push(pages.home)}
-            >
-              {text.chat.playNewGame}
-            </PrimaryButton>
           </>
         )}
       </Stack>
