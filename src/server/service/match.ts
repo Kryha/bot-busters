@@ -5,7 +5,6 @@ import { v4 as uuid } from "uuid";
 
 import { matchPrompts } from "~/assets/text/match-prompts.js";
 import {
-  ACHIEVEMENTS_TO_STORE,
   CHAT_TIME_MS,
   ONE_TIME_ACHIEVEMENTS,
   POINTS_ACHIEVEMENTS,
