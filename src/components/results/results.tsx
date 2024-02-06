@@ -38,6 +38,7 @@ export const Results: FC<Props> = ({ player }) => {
             >
               {text.chat.playAgain}
             </PrimaryButton>
+
             {!isConnectButtonHidden ? (
               <PrimaryButton
                 sx={styles.button}
