@@ -1,4 +1,4 @@
-import { CircularProgress, Stack, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import React from "react";
 import { useRouter } from "next/router.js";
 
@@ -10,6 +10,7 @@ import { PrimaryButton } from "~/components/primary-button/index.js";
 import { PlayerTable } from "~/components/index.js";
 import { isVerifiedUser } from "~/utils/user.js";
 import { PageLayout } from "~/containers/page-layout/index.js";
+import { LoadingPage } from "~/components/loading-page/index.js";
 
 const PlayerProfile = () => {
   const router = useRouter();
@@ -19,11 +20,7 @@ const PlayerProfile = () => {
   });
 
   if (user.isLoading) {
-    return (
-      <Stack width="100%" pt="40vh" alignItems="center">
-        <CircularProgress />
-      </Stack>
-    );
+    return <LoadingPage />;
   }
 
   return (
