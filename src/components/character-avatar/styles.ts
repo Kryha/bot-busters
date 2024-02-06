@@ -1,5 +1,5 @@
 import { type MatchStage } from "~/types/index.js";
-import { theme } from "~/styles/theme.js";
+import { breakpoints, theme } from "~/styles/theme.js";
 
 export const styles = {
   avatar: (stage: MatchStage, isSelected?: boolean, isBot?: boolean) => {
@@ -22,8 +22,12 @@ export const styles = {
     const fill = determineBorderFill();
 
     return {
-      width: stage === "chat" ? "140px" : "150px",
-      height: stage === "chat" ? "140px" : "150px",
+      width: stage !== "chat" ? "200px" : "140px",
+      height: stage !== "chat" ? "200px" : "140px",
+      [`@media (max-width: ${breakpoints.md}px)`]: {
+        width: "140px",
+        height: "140px",
+      },
       cursor: stage === "voting" ? "pointer" : "default",
       "& > svg": {
         width: "100%",
@@ -72,8 +76,12 @@ export const styles = {
     const fill = determineBorderFill();
 
     return {
-      width: "150px",
-      height: "150px",
+      width: stage !== "chat" ? "200px" : "140px",
+      height: stage !== "chat" ? "200px" : "140px",
+      [`@media (max-width: ${breakpoints.md}px)`]: {
+        width: "140px",
+        height: "140px",
+      },
       cursor: "default",
       "& > div": {
         border: "6px solid black",

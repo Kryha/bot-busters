@@ -52,7 +52,7 @@ export const Results: FC<Props> = ({ gainedScore, achievements }) => {
                 sx={styles.button}
                 onClick={() => void router.push(pages.leaderboard)}
               >
-                {text.chat.viewLeaderboard}
+                {text.chat.checkLeaderboard}
               </PrimaryButton>
             )}
           </>
