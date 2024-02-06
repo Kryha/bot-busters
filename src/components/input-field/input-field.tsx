@@ -2,14 +2,13 @@ import { type FC } from "react";
 import {
   type ButtonProps,
   Stack,
+  type SxProps,
   TextField,
   type TextFieldProps,
   Typography,
-  type SxProps,
 } from "@mui/material";
-
+import { SendButton } from "~/components/send-button/index.js";
 import { PrimaryButton } from "~/components/primary-button/index.js";
-
 import { text } from "~/assets/text/index.js";
 import { styles } from "./styles.js";
 
@@ -27,14 +26,15 @@ export const InputField: FC<Props> = ({ onClick, disabled, ...rest }) => {
         fullWidth
         multiline
         {...rest}
+        rows={3}
       />
-      <PrimaryButton
+      <SendButton
         onClick={onClick}
         aria-label={"send-button"}
         disabled={disabled}
       >
         {text.chat.send}
-      </PrimaryButton>
+      </SendButton>
     </Stack>
   );
 };
