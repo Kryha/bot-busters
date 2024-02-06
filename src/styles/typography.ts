@@ -111,7 +111,7 @@ export const typography = (): Typography => {
       fontFamily: bodyFont.style.fontFamily,
       fontSize: "16px",
       fontWeight: 400,
-      lineHeight: "normal",
+      lineHeight: "35px",
     },
     body2: {
       // larger normal text

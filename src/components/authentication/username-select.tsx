@@ -5,12 +5,11 @@ import { useRouter } from "next/router.js";
 import { api } from "~/utils/api.js";
 import { RowCreateUsername } from "~/components/tables/components/index.js";
 import { pages } from "~/router.js";
+import { text } from "~/assets/text/index.js";
+import { PageLayout } from "~/containers/page-layout/index.js";
 
 import { type LoginStage } from "./types.js";
 import { LoginLoading } from "./login-loading.jsx";
-import { PageHeader } from "~/containers/page-header/page-header.jsx";
-import { text } from "~/assets/text/index.js";
-
 import { styles } from "./styles.js";
 
 interface UsernameSelectProps {
@@ -67,8 +66,7 @@ export const UsernameSelect: FC<UsernameSelectProps> = ({
   if (!isAskingUsername) return <LoginLoading />;
 
   return (
-    <Stack alignContent="center">
-      <PageHeader text={text.general.enterUsername} />
+    <PageLayout title={text.general.enterUsername}>
       <Typography variant="body1" width="50vw" sx={styles.textOrange}>
         {text.general.usernameRules}
       </Typography>
@@ -80,6 +78,6 @@ export const UsernameSelect: FC<UsernameSelectProps> = ({
           {text.general.usernameDisclaimer[1]}
         </Typography>
       </Stack>
-    </Stack>
+    </PageLayout>
   );
 };

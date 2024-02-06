@@ -1,23 +1,24 @@
 import { Stack, Typography } from "@mui/material";
 
 import { text } from "~/assets/text/index.js";
-import { PageHeader } from "~/containers/page-header/index.js";
+import { PageLayout } from "~/containers/page-layout/index.js";
 import { styles } from "~/styles/pages/about.js";
 import { processTextToLink } from "~/utils/links.jsx";
 
-function About() {
-  return (
-    <Stack sx={styles.wrapper}>
-      <Stack sx={styles.container}>
-        <PageHeader text={text.about.welcome} />
-        {text.about.content.map((content: string, key: number) => (
-          <Typography key={key} variant="body1" pt={5} sx={styles.body}>
-            {processTextToLink(content, text.wordsToLinkAbout)}
-          </Typography>
-        ))}
-      </Stack>
-    </Stack>
-  );
-}
+const About = () => (
+  <PageLayout title={text.about.welcome}>
+    {text.about.content.map((content: string, key: number) => (
+      <Typography
+        key={key}
+        variant="body1"
+        pt={key === 0 ? 0 : 5}
+        sx={styles.body}
+      >
+        {processTextToLink(content, text.wordsToLinkAbout)}
+      </Typography>
+    ))}
+    <Stack pt="100px" />
+  </PageLayout>
+);
 
 export default About;
