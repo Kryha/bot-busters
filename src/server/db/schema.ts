@@ -22,6 +22,7 @@ export const users = bbPgTable("user", {
   username: varchar("username", { length: 32 }).unique(),
   address: varchar("address", { length: PUBLIC_KEY_LENGTH }),
   score: integer("score").default(0).notNull(),
+  botsBusted: integer("bots_busted").default(0).notNull(),
   // TODO: add zPass
   // zPass: json("zPass"),
   createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`),

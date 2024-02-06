@@ -177,6 +177,7 @@ export class Match {
       isBot: false,
       isScoreSaved: false,
       botsBusted: 0,
+      totalBotsBusted: 0,
       humansBusted: 0,
       botsBustedScore: 0,
       humansBustedScore: 0,
@@ -257,6 +258,14 @@ export class Match {
           this._playerAchievements.get(player.userId)
         )
           return;
+
+        // getting total amount of bots busted by the player
+        const playerInfo = await selectUserById(player.userId);
+        if (playerInfo) {
+          player.totalBotsBusted = playerInfo.botsBusted;
+        }
+
+        // getting the achievements earned by the player
         const playerMatchHistory = await selectMatchPlayedByUser(
           player.userId,
           5,
@@ -314,7 +323,6 @@ export class Match {
           .filter(([_, achievement]) =>
             achievement.calculate({
               player,
-              messages: this._messages,
               botsBusted,
               otherPlayers,
               playerHistory:
@@ -365,6 +373,7 @@ export class Match {
           .update(users)
           .set({
             score: sql`${users.score} + ${player.score}`,
+            botsBusted: sql`${users.botsBusted} + ${player.botsBusted}`,
           })
           .where(eq(users.id, player.userId));
 
