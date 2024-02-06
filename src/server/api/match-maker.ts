@@ -20,12 +20,12 @@ export const matchEvent = (
   eventType: MatchEventType = "message",
 ) => `chat_${roomId}_${eventType}`;
 
-export const isUserPlaying = (userId: string) => {
+// TODO: use a set to store players for faster check, make this service a class
+export const getOngoingMatchByUserId = (userId: string) => {
   for (const match of matches.values()) {
     const isInMatch = !!match.players.find((p) => p.userId === userId);
-    if (isInMatch) return true;
+    if (isInMatch) return match;
   }
-  return false;
 };
 
 const makeMatch = () => {
@@ -79,7 +79,7 @@ const storeScoresAndMatches = async () => {
         id: room.id,
         room: room,
         messages,
-        createdAt: new Date(room.createdAt),
+        createdAt: new Date(room.createdAt).toISOString(),
       }),
     );
 

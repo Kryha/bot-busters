@@ -71,11 +71,8 @@ const streakCountAchievements: Achievement = {
 const dailyStreakAchievement: Achievement = {
   name: "Daily Streak",
   description: "Play 5 days in a row",
-  calculate: ({ player, playerAchievements }) => {
-    if (
-      alreadyReceivedAchievement(playerAchievements, "fiveDayStreak", 5) ||
-      !player
-    )
+  calculate: ({ playerAchievements }) => {
+    if (alreadyReceivedAchievement(playerAchievements, "fiveDayStreak", 5))
       return false;
 
     const dailyStreaks = playerAchievements.filter((achievement) => {

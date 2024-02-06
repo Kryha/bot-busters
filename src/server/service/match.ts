@@ -7,6 +7,7 @@ import { matchPrompts } from "~/assets/text/match-prompts.js";
 import {
   ACHIEVEMENTS_TO_STORE,
   CHAT_TIME_MS,
+  ONE_TIME_ACHIEVEMENTS,
   POINTS_ACHIEVEMENTS,
   POINTS_BOT_BUSTED,
   POINTS_HUMAN_BUSTED,
@@ -262,11 +263,6 @@ export class Match {
           this._playerAchievements.get(player.userId)
         )
           return;
-        // Getting last 5 played games of the player
-        const matchRooms = (
-          await selectMatchPlayedByUser(player.userId, 5)
-        ).map((match) => match.match.room);
-        this._playerPreviousMatches.set(player.userId, matchRooms);
 
         // getting total amount of bots busted by the player
         const bots = await selectUserById(player.userId);
@@ -275,6 +271,15 @@ export class Match {
         }
 
         // getting the achievements earned by the player
+        const playerMatchHistory = await selectMatchPlayedByUser(
+          player.userId,
+          5,
+        );
+
+        const matchRooms = playerMatchHistory.map((match) => match.match.room);
+
+        this._playerPreviousMatches.set(player.userId, matchRooms);
+
         const userAchievements = await selectUserAchievements(player.userId);
         this._playerAchievements.set(player.userId, userAchievements);
       });
@@ -349,6 +354,7 @@ export class Match {
         player.isScoreSaved = true;
 
         if (player.isBot) return;
+
         await tx
           .update(users)
           .set({
@@ -358,9 +364,7 @@ export class Match {
           .where(eq(users.id, player.userId));
 
         const playerAchievements = player.achievements
-          .filter((achievement) => {
-            return ACHIEVEMENTS_TO_STORE.includes(achievement);
-          })
+          .filter((achievement) => ONE_TIME_ACHIEVEMENTS.includes(achievement))
           .map((achievementId) => {
             return {
               userId: player.userId,
