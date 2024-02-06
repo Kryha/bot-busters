@@ -114,8 +114,6 @@ const storeOnChain = async () => {
       slices.map((slice) => executeUpdateScores(slice)),
     ).then((txs) => txs.filter((tx) => !tx.isSuccess));
   } while (tryCount > 0 && failedTransactions.length);
-
-  console.log("Executed transactions");
 };
 
 export const leaderboard = { calculate, storeOnChain };
