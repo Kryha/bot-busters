@@ -1,17 +1,17 @@
 import { Stack, Typography } from "@mui/material";
-import { type FC, useState } from "react";
+import { useState, type FC } from "react";
 
-import { VOTING_TIME_MS } from "~/constants/index.js";
 import { text } from "~/assets/text/index.js";
+import { PlayerData } from "~/components/players/player-data/index.js";
+import { PlayerProofs } from "~/components/players/player-proofs/index.js";
+import { PrimaryButton } from "~/components/primary-button/index.js";
+import { Timer } from "~/components/timer/index.js";
+import { VOTING_TIME_MS } from "~/constants/index.js";
 import {
   type CharacterId,
   type MatchRoom,
   type PlayerType,
 } from "~/types/index.js";
-import { Timer } from "~/components/timer/index.js";
-import { PlayerProofs } from "~/components/players/player-proofs/index.js";
-import { PlayerData } from "~/components/players/player-data/index.js";
-import { PrimaryButton } from "~/components/primary-button/index.js";
 
 import { styles } from "./styles.js";
 
@@ -70,8 +70,13 @@ export const PlayersOthers: FC<Props> = ({
           <Typography variant="subtitle1" sx={styles.playerHeading}>
             {text.match.bustTheBots}
           </Typography>
-          <Typography variant="body1" sx={styles.playerSubHeading}>
-            {text.match.bustTheBotsDescription}
+          <Typography
+            variant="body1"
+            sx={styles.playerSubHeading(isVoteEnabled)}
+          >
+            {isVoteEnabled
+              ? text.match.bustTheBotsDescription
+              : text.match.bustTheBotsDisabledDescription}
           </Typography>
         </Stack>
       )}

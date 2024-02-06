@@ -286,26 +286,27 @@ export class Match {
         (p) => p.userId !== player.userId,
       );
 
-      if (player.votes) {
-        otherPlayers.forEach((p) => {
-          const isVoted = player.votes!.includes(p.userId);
-          const hasGuessed = p.isBot ? isVoted : !isVoted;
+      // Checking if the player is entitled to get points
+      if (!player.votes) return { ...player };
 
-          if (hasGuessed) {
-            correctGuesses += 1;
+      otherPlayers.forEach((p) => {
+        const isVoted = player.votes!.includes(p.userId);
+        const hasGuessed = p.isBot ? isVoted : !isVoted;
 
-            if (p.isBot) {
-              botsBusted += 1;
-              score += POINTS_BOT_BUSTED;
-              botsBustedScore += POINTS_BOT_BUSTED;
-            } else {
-              humansBusted += 1;
-              score += POINTS_HUMAN_BUSTED;
-              humansBustedScore += POINTS_HUMAN_BUSTED;
-            }
+        if (hasGuessed) {
+          correctGuesses += 1;
+
+          if (p.isBot) {
+            botsBusted += 1;
+            score += POINTS_BOT_BUSTED;
+            botsBustedScore += POINTS_BOT_BUSTED;
+          } else {
+            humansBusted += 1;
+            score += POINTS_HUMAN_BUSTED;
+            humansBustedScore += POINTS_HUMAN_BUSTED;
           }
-        });
-      }
+        }
+      });
 
       if (player.isVerified) {
         // Check achievements
