@@ -5,7 +5,7 @@ import { LeaderboardTable } from "~/components/tables/index.js";
 import { text } from "~/assets/text/index.js";
 import { api } from "~/utils/api.js";
 import { isClient } from "~/utils/client.js";
-import { PageHeader } from "~/containers/page-header/index.js";
+import { PageLayout } from "~/containers/page-layout/index.js";
 
 const USERS_PER_PAGE = 20;
 
@@ -59,12 +59,9 @@ const LeaderBoard = () => {
   if (getRankedUsers.isLoading) return <CircularProgress />;
 
   return (
-    <>
-      <PageHeader text={text.leaderboard.leaderboard} />
-
-      {/* TODO: if user is logged in, pass their data as param to show their score on top */}
+    <PageLayout title={text.leaderboard.leaderboard}>
       <LeaderboardTable leaderboard={leaderboardData} />
-    </>
+    </PageLayout>
   );
 };
 
