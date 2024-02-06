@@ -29,7 +29,6 @@ export const styles = {
   },
   playerDisabledSubHeading: {
     textAlign: "center",
-    textColor: "red",
   } satisfies SxProps,
   timeSection: {
     pr: 2,
