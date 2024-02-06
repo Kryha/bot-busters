@@ -5,7 +5,7 @@ import type { QueueUpdatePayload, ReadyToPlayPayload } from "~/types/index.js";
 import { lobbyQueue } from "~/server/service/index.js";
 
 import { createTRPCRouter, protectedProcedure } from "../trpc.js";
-import { ee, isUserPlaying } from "../match-maker.js";
+import { ee, getOngoingMatchByUserId } from "../match-maker.js";
 
 export const lobbyRouter = createTRPCRouter({
   onQueueUpdate: protectedProcedure.subscription(({ ctx }) => {
@@ -37,7 +37,7 @@ export const lobbyRouter = createTRPCRouter({
   join: protectedProcedure.mutation(({ ctx }) => {
     const { id } = ctx.session.user;
     const joinCount = lobbyQueue.join(id);
-    const userIsPlaying = isUserPlaying(id);
+    const userIsPlaying = !!getOngoingMatchByUserId(id);
 
     if (joinCount > 1 || userIsPlaying) {
       throw new TRPCError({ code: "FORBIDDEN" });

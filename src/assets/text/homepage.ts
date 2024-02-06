@@ -1,6 +1,7 @@
 export const homepage = {
   appName: "BotBuster Game",
   startNewGame: "Start new game",
+  continueGame: "Continue game",
   openDaily: "Daily leaderboard",
   descriptionPart1: "Who's a bot?, Who's a human?",
   descriptionPart2:
