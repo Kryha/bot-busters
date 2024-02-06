@@ -1,5 +1,6 @@
 import { type UserAchievements } from "~/server/db/schema.js";
 import { type Achievement, type AchievementId } from "~/types/index.js";
+import { getRelativeTimeStamp } from "~/utils/date.js";
 
 const goodBustAchievement: Achievement = {
   name: "Good Bust",
@@ -36,10 +37,7 @@ const busterStreakAchievement: Achievement = {
     playerAchievements,
   }) => {
     const isNotEligibleForNewAchievement =
-      !playerHistory ||
-      !playerAchievements ||
       playerHistory.length < 2 ||
-      !player ||
       alreadyReceivedAchievement(playerAchievements, "busterStreak", 1);
 
     if (isNotEligibleForNewAchievement) return false;
@@ -57,11 +55,41 @@ const busterStreakAchievement: Achievement = {
   },
 };
 
+const streakCountAchievements: Achievement = {
+  name: "Streak Counter",
+  description: "Plus one on your streak count",
+
+  calculate: ({ playerAchievements }) => {
+    return !alreadyReceivedAchievement(
+      playerAchievements,
+      "dailyStreakCounter",
+      1,
+    );
+  },
+};
+
+const dailyStreakAchievement: Achievement = {
+  name: "Daily Streak",
+  description: "Play 5 days in a row",
+  calculate: ({ playerAchievements }) => {
+    if (alreadyReceivedAchievement(playerAchievements, "fiveDayStreak", 5))
+      return false;
+
+    const dailyStreaks = playerAchievements.filter((achievement) => {
+      return (
+        achievement.achievementId === "dailyStreakCounter" &&
+        achievement.achievedAt.getTime() > getRelativeTimeStamp(5)
+      );
+    }).length;
+
+    return dailyStreaks === 5;
+  },
+};
+
 const firstTimerAchievement: Achievement = {
   name: "First Timer",
   description: "Played your first match",
   calculate: ({ playerAchievements }) => {
-    if (!playerAchievements) return false;
     return !alreadyReceivedAchievement(playerAchievements, "firstTimer");
   },
 };
@@ -70,7 +98,7 @@ const beginnersLuckAchievement: Achievement = {
   name: "Beginners Luck",
   description: "Player busts at least one bot in the first match",
   calculate: ({ playerHistory, botsBusted }) => {
-    const isFirstMatch = !playerHistory || playerHistory.length === 0;
+    const isFirstMatch = playerHistory.length === 0;
 
     return isFirstMatch && botsBusted > 0;
   },
@@ -86,6 +114,8 @@ const realHumanAchievement: Achievement = {
 };
 
 export const matchAchievements: Record<AchievementId, Achievement> = {
+  dailyStreakCounter: streakCountAchievements,
+  fiveDayStreak: dailyStreakAchievement,
   goodBust: goodBustAchievement,
   doubleAgent: doubleAgentAchievement,
   busterStreak: busterStreakAchievement,
@@ -102,11 +132,8 @@ export const alreadyReceivedAchievement = (
   let achievements = playerAchievements;
 
   if (days) {
-    // Get the timestamp for 24 hours ago
-    const timeStampToStart = Date.now() - days * 24 * 60 * 60 * 1000;
-    // Filter achievements to only include matches from the past 24 hours
     achievements = playerAchievements.filter((achievement) => {
-      return achievement.achievedAt.getTime() > timeStampToStart;
+      return achievement.achievedAt.getTime() > getRelativeTimeStamp(days);
     });
   }
   // Check if the achievement is in the player's achievements history

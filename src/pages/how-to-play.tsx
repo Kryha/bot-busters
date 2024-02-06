@@ -13,6 +13,7 @@ import { styles } from "~/styles/pages/how-to-play.js";
 
 const HowToPlay: FC = () => {
   const pageContent = copywrite.howToPlay;
+
   return (
     <Stack sx={styles.container}>
       <PageHeader text={pageContent.headings.howToPlay} />

@@ -11,8 +11,8 @@ export const achievementDataSchema = z.object({
   messages: z.array(chatMessagePayloadSchema),
   botsBusted: z.number(),
   otherPlayers: z.array(playerSchema),
-  playerHistory: z.array(matchRoomSchema).optional(),
-  playerAchievements: z.array(userAchievementsSchema).optional(),
+  playerHistory: z.array(matchRoomSchema),
+  playerAchievements: z.array(userAchievementsSchema),
 });
 export type AchievementDataType = z.infer<typeof achievementDataSchema>;
 
