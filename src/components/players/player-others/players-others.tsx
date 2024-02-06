@@ -13,7 +13,6 @@ import {
   type PlayerType,
 } from "~/types/index.js";
 
-import { theme } from "~/styles/theme.js";
 import { styles } from "./styles.js";
 
 interface Props {
@@ -71,19 +70,14 @@ export const PlayersOthers: FC<Props> = ({
           <Typography variant="subtitle1" sx={styles.playerHeading}>
             {text.match.bustTheBots}
           </Typography>
-          {isVoteEnabled ? (
-            <Typography variant="body1" sx={styles.playerSubHeading}>
-              {text.match.bustTheBotsDescription}
-            </Typography>
-          ) : (
-            <Typography
-              variant="body1"
-              sx={styles.playerSubHeading}
-              color={theme.palette.error.main}
-            >
-              {text.match.bustTheBotsDisabledDescription}
-            </Typography>
-          )}
+          <Typography
+            variant="body1"
+            sx={styles.playerSubHeading(isVoteEnabled)}
+          >
+            {isVoteEnabled
+              ? text.match.bustTheBotsDescription
+              : text.match.bustTheBotsDisabledDescription}
+          </Typography>
         </Stack>
       )}
       {stage === "results" && (
