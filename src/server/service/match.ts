@@ -177,6 +177,9 @@ export class Match {
       isBot: false,
       isScoreSaved: false,
       botsBusted: 0,
+      humansBusted: 0,
+      botsBustedScore: 0,
+      humansBustedScore: 0,
       correctGuesses: 0,
       achievements: [],
     };
@@ -272,9 +275,13 @@ export class Match {
 
   calculatePoints() {
     this._players = this.players.map((player) => {
-      let score = 0;
       let correctGuesses = 0;
       let botsBusted = 0;
+      let humansBusted = 0;
+      let score = 0;
+      let botsBustedScore = 0;
+      let humansBustedScore = 0;
+
       const otherPlayers = this.players.filter(
         (p) => p.userId !== player.userId,
       );
@@ -290,8 +297,11 @@ export class Match {
             if (p.isBot) {
               botsBusted += 1;
               score += POINTS_BOT_BUSTED;
+              botsBustedScore += POINTS_BOT_BUSTED;
             } else {
+              humansBusted += 1;
               score += POINTS_HUMAN_BUSTED;
+              humansBustedScore += POINTS_HUMAN_BUSTED;
             }
           }
         });
@@ -300,8 +310,8 @@ export class Match {
       if (player.isVerified) {
         // Check achievements
         const achievementPoints = Object.entries(matchAchievements)
-          .filter(([_, achievement]) => {
-            return achievement.calculate({
+          .filter(([_, achievement]) =>
+            achievement.calculate({
               player,
               messages: this._messages,
               botsBusted,
@@ -310,19 +320,30 @@ export class Match {
                 this._playerPreviousMatches.get(player.userId) ?? [],
               playerAchievements:
                 this._playerAchievements.get(player.userId) ?? [],
-            });
-          })
+            }),
+          )
           .reduce((totalPoints, [id, _]) => {
             const achievementId = achievementIdSchema.safeParse(id);
             if (!achievementId.success) return totalPoints;
+
+            // TODO: don't mutate attributes here
             player.achievements.push(achievementId.data);
 
-            return (totalPoints += POINTS_ACHIEVEMENTS[achievementId.data]);
+            return totalPoints + POINTS_ACHIEVEMENTS[achievementId.data];
           }, 0);
 
         score += achievementPoints;
       }
-      return { ...player, score, correctGuesses, botsBusted };
+
+      return {
+        ...player,
+        score,
+        correctGuesses,
+        botsBusted,
+        humansBusted,
+        botsBustedScore,
+        humansBustedScore,
+      };
     });
 
     this.arePointsCalculated = true;
