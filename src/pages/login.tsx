@@ -3,7 +3,6 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/router.js";
 
 import { pages } from "~/router.js";
-import Page from "~/components/page/page.jsx";
 import { api } from "~/utils/api.js";
 import {
   ConnectWallet,
@@ -12,8 +11,7 @@ import {
   type LoginStage,
   SignIn,
 } from "~/components/index.js";
-import { PageLayout } from "~/containers/page-layout";
-import { text } from "~/assets/text";
+import { PageLayout } from "~/containers/page-layout/page-layout.jsx";
 
 const Login: FC = () => {
   const router = useRouter();
@@ -21,7 +19,6 @@ const Login: FC = () => {
   const [loginStage, setLoginStage] = useState<LoginStage>("userCheck");
   const [address, setAddress] = useState("");
   const [signature, setSignature] = useState("");
-  const [pageHeader, setPageHeader] = useState("");
 
   const loggedUser = api.user.getLoggedUser.useQuery();
 
@@ -51,7 +48,6 @@ const Login: FC = () => {
       case "userCheck":
         return <LoginLoading />;
       case "connectWallet":
-        setPageHeader(text.auth.connectYourWallet);
         return (
           <ConnectWallet
             setAddress={setAddress}
@@ -61,7 +57,6 @@ const Login: FC = () => {
           />
         );
       case "verify":
-
         return (
           <UsernameSelect
             address={address}
