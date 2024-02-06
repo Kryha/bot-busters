@@ -1,5 +1,5 @@
 import { type SxProps } from "@mui/material";
-import { theme } from "~/styles/theme";
+import { theme } from "~/styles/theme.js";
 
 export const styles = {
   section: (isDisabled: boolean) => {
@@ -9,5 +9,8 @@ export const styles = {
       flexGrow: 1,
       maxWidth: !isDisabled ? "1100px" : undefined,
     } satisfies SxProps;
+  },
+  container: {
+    mb: 2,
   },
 };
