@@ -10,21 +10,23 @@ import { styles } from "./styles.js";
 
 interface Props {
   otherPlayers: PlayerType[];
-  proofCharacterId?: CharacterId;
+  proofCharacterId: CharacterId;
 }
 
-export const PlayerProofs: FC<Props> = ({ otherPlayers, proofCharacterId }) => {
-  const playerProof = otherPlayers.find(
-    (player) => player.characterId === proofCharacterId,
-  );
-
-  if (!playerProof) return <></>;
+export const PlayerProofs: FC<Props> = ({
+  otherPlayers,
+  proofCharacterId = "1",
+}) => {
+  // This can never be undefined, set to first player if not found
+  const playerProof =
+    otherPlayers.find((player) => player.characterId === proofCharacterId) ??
+    otherPlayers[0]!;
 
   const character = CHARACTERS[playerProof.characterId];
   const textColor = `${character.color}.main`;
 
   return (
-    <Stack sx={styles.playerResults}>
+    <Stack sx={styles.container}>
       <Stack sx={styles.resultsHeading}>
         <Typography variant="body1" color={textColor}>
           <Box component="span">{character.name} </Box>
