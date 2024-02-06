@@ -3,12 +3,15 @@ import type { SxStyleRecord } from "~/types/sx-style-record.js";
 export const styles = {
   container: {
     display: "flex",
-    width: "65vw",
-    minHeight: "53px",
+    flexDirection: "row",
+    alignItems: "start",
+    minHeight: "50px",
+    pb: "-30px",
+    ml: "-5px",
   },
   transformPointToBullet: {
     width: "20px",
-    transform: "scale(3) translate(-5px, 3.3px)",
+    transform: "scale(3) translate(-3px, -5px)",
   },
   text: {
     lineHeight: "35px",

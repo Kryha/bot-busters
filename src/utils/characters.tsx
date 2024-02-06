@@ -1,5 +1,4 @@
 import { type CharacterName } from "~/types/index.js";
-import { ErrorView } from "~/components/error-view/index.jsx";
 import {
   AvatarAsh,
   AvatarDot,
@@ -17,7 +16,6 @@ import {
   TextHal,
   TextRoy,
 } from "~/assets/characters/index.js";
-
 import {
   AshBlink,
   AshBotBusted,
@@ -67,19 +65,13 @@ export const getCharacterAnimation = (
     dot: { botBusted: DotBotBusted, blink: DotBlink, botWin: DotBotWin },
   };
 
-  if (!animations[characterName]) {
-    return <ErrorView />; // Handle invalid characterName
-  }
+  const characterAnimations = animations[characterName];
 
   if (isSelected) {
-    return isBot
-      ? animations[characterName].botBusted
-      : animations[characterName].blink;
+    return isBot ? characterAnimations.botBusted : characterAnimations.blink;
   }
 
-  return isBot
-    ? animations[characterName].botWin
-    : animations[characterName].blink;
+  return isBot ? characterAnimations.botWin : characterAnimations.blink;
 };
 
 export const getCharacterSplashScreen = (characterName: CharacterName) => {

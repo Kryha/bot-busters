@@ -35,16 +35,15 @@ export const styles = {
       backgroundColor: backgroundColor,
       "&:first-of-type": {
         marginBottom: 0.1,
-        borderTopRightRadius: isLocal ? 0 : "4px",
-        borderTopLeftRadius: isLocal ? "4px" : 0,
+        borderRadius: 0,
         "&::before": {
           content: '""',
           position: "absolute",
           inset: isLocal ? "0px 0px 0px 100%" : "0 0 0 0",
-          transform: isLocal ? "" : "translateX(-20px)",
+          transform: isLocal ? "" : "translateX(-19px)",
           backgroundColor: backgroundColor,
           width: "20px",
-          height: "20px",
+          height: "21px",
           clipPath: isLocal
             ? "polygon(0 0, 0 100%, 100% 0)"
             : "polygon(0 0, 100% 0, 100% 100%)",
@@ -56,6 +55,9 @@ export const styles = {
     pl: 2,
     pr: 1,
     overflowY: "scroll",
+    "&::-webkit-scrollbar": {
+      width: "18px",
+    },
     flexDirection: "column-reverse",
     flex: "1 1 500px",
   },

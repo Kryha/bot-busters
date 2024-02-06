@@ -32,7 +32,6 @@ export const RowCreateUsername: FC<RowCreateUsernameProps> = ({
   };
 
   const handleUsername = (event: { target: { value: string } }) => {
-    console.log(error, username);
     validateUsername(event.target.value);
     setUsername(event.target.value);
   };

@@ -2,7 +2,6 @@ import { count, eq } from "drizzle-orm";
 import { z } from "zod";
 
 import { validUsername } from "~/constants/index.js";
-
 import {
   createTRPCRouter,
   protectedProcedure,

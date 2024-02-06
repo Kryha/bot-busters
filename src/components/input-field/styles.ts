@@ -52,7 +52,15 @@ export const styles = {
   inputField: {
     borderRight: `4px solid ${theme.palette.primary.main}`,
     flexGrow: 1,
-    backgroundColor: "common.black",
+    pl: 0,
+    "textarea::placeholder": {
+      position: "absolute",
+      top: "50%",
+      left: "50%",
+      transform: "translate(-50%, -50%)",
+      opacity: 1,
+      textAlign: "center",
+    },
   },
   usernameInputField: {
     borderRight: `4px solid ${theme.palette.primary.main}`,
@@ -68,12 +76,24 @@ export const styles = {
   },
   inputFieldProps: {
     flexGrow: 1,
-    border: "none",
     "&:hover fieldset": {
       border: "none",
     },
+    "&.MuiInputBase-root": {
+      pl: 1,
+      pr: 0,
+      pt: 0,
+      pb: 0,
+      "&::-webkit-scrollbar-thumb ": {
+        backgroundColor: "common.black",
+      },
+    },
+    "&.MuiOutlinedInput-root": {
+      color: theme.palette.primary.main,
+    },
     "&.Mui-focused fieldset": {
       border: "none",
+      padding: "none",
     },
     "&:active": {
       border: "none",
@@ -91,6 +111,7 @@ export const styles = {
     border: `4px solid ${theme.palette.text.disabled}`,
     flexGrow: 1,
     backgroundColor: "common.black",
+    color: theme.palette.text.primary,
     mt: "20px",
     textTransform: "capitalize",
   },

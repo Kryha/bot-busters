@@ -1,5 +1,6 @@
 import { type FC, useState } from "react";
 import { useRouter } from "next/router.js";
+
 import { api } from "~/utils/api.js";
 import { pages } from "~/router.js";
 import { LobbyCharacterLoader } from "~/components/lobby-character-loader/index.js";

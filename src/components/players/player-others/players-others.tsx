@@ -30,7 +30,7 @@ export const PlayersOthers: FC<Props> = ({
 }) => {
   const [isLoadingVotes, setIsLoadingVotes] = useState(false);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
-  const [proofCharacterId, setProofCharacterId] = useState<CharacterId>("1");
+  const [proofCharacterId, setProofCharacterId] = useState<CharacterId>();
   const { stage, players, votingAt } = room;
 
   const resultHeading =
@@ -80,6 +80,7 @@ export const PlayersOthers: FC<Props> = ({
           </Typography>
         </Stack>
       )}
+
       {stage === "results" && (
         <Stack sx={styles.results}>
           <Typography variant="h2" sx={styles.playerHeading}>
@@ -87,6 +88,7 @@ export const PlayersOthers: FC<Props> = ({
           </Typography>
         </Stack>
       )}
+
       <Stack sx={styles.list(stage !== "chat")}>
         {otherPlayers.map((player, index) => {
           const isSelected =
@@ -110,6 +112,7 @@ export const PlayersOthers: FC<Props> = ({
           );
         })}
       </Stack>
+
       {stage === "voting" && (
         <Stack sx={styles.timeSection}>
           <Timer time={votingAt} duration={VOTING_TIME_MS} />
@@ -122,6 +125,7 @@ export const PlayersOthers: FC<Props> = ({
           </PrimaryButton>
         </Stack>
       )}
+
       {stage === "results" && (
         <PlayerProofs
           otherPlayers={otherPlayers}

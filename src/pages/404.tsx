@@ -1,23 +1,13 @@
-import { Stack, Typography } from "@mui/material";
+import { Stack } from "@mui/material";
 import React, { type FC } from "react";
 
 import { text } from "~/assets/text";
+import { PageLayout } from "~/containers/page-layout/index.js";
 
-const styles = {
-  container: {
-    height: "100vh",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-};
+const Custom404: FC = () => (
+  <Stack mt="20vh">
+    <PageLayout title={text.general.pageNotFound} />
+  </Stack>
+);
 
-const Custom404: FC = () => {
-  return (
-    <Stack sx={styles.container}>
-      <Typography variant="h1" textAlign="center">
-        {text.general.pageNotFound}
-      </Typography>
-    </Stack>
-  );
-};
 export default Custom404;
