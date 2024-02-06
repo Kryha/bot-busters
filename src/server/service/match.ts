@@ -107,13 +107,6 @@ export class Match {
 
     this._players = lodash.shuffle([...botPlayers, ...humanPlayers]);
 
-    this.getPlayerStats().catch((err) => {
-      console.error("Error loading player history:", err);
-    });
-
-    this.checkVerifiedPlayers().catch((err) => {
-      console.error("Error checking if player is verified: ", err);
-    });
     this.addPrompt();
 
     this.initMatch(playerIds).catch((err) =>
@@ -264,9 +257,9 @@ export class Match {
           return;
 
         // getting total amount of bots busted by the player
-        const bots = await selectUserById(player.userId);
-        if (bots) {
-          player.totalBotsBusted = bots.botsBusted;
+        const playerInfo = await selectUserById(player.userId);
+        if (playerInfo) {
+          player.totalBotsBusted = playerInfo.botsBusted;
         }
 
         // getting the achievements earned by the player
