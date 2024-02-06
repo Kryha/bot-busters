@@ -5,8 +5,15 @@
     {
       "idx": 0,
       "version": "5",
-      "when": 1706868438771,
-      "tag": "0000_next_puck",
+      "when": 1705492358521,
+      "tag": "0000_minor_bullseye",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1706696639762,
+      "tag": "0001_naive_toad",
       "breakpoints": true
     },
     {
@@ -28,13 +35,6 @@
       "version": "5",
       "when": 1707143410097,
       "tag": "0004_glossy_lady_vermin",
-      "breakpoints": true
-    },
-    {
-      "idx": 5,
-      "version": "5",
-      "when": 1707217064059,
-      "tag": "0005_true_justin_hammer",
       "breakpoints": true
     }
   ]

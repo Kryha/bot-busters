@@ -1,0 +1,1 @@
+ALTER TABLE "bot_busters_match" ADD COLUMN "messages" json DEFAULT '[]'::json NOT NULL;

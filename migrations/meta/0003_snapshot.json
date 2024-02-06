@@ -56,12 +56,8 @@
           "name": "bot_busters_rank_user_id_bot_busters_user_id_fk",
           "tableFrom": "bot_busters_rank",
           "tableTo": "bot_busters_user",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -71,9 +67,7 @@
         "bot_busters_rank_position_unique": {
           "name": "bot_busters_rank_position_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "position"
-          ]
+          "columns": ["position"]
         }
       }
     },
@@ -106,12 +100,8 @@
           "name": "bot_busters_user_achievement_user_id_bot_busters_user_id_fk",
           "tableFrom": "bot_busters_user_achievement",
           "tableTo": "bot_busters_user",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -164,9 +154,7 @@
         "bot_busters_user_username_unique": {
           "name": "bot_busters_user_username_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "username"
-          ]
+          "columns": ["username"]
         }
       }
     },
@@ -193,12 +181,8 @@
           "name": "bot_busters_user_match_user_id_bot_busters_user_id_fk",
           "tableFrom": "bot_busters_user_match",
           "tableTo": "bot_busters_user",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -206,12 +190,8 @@
           "name": "bot_busters_user_match_match_id_bot_busters_match_id_fk",
           "tableFrom": "bot_busters_user_match",
           "tableTo": "bot_busters_match",
-          "columnsFrom": [
-            "match_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["match_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -219,10 +199,7 @@
       "compositePrimaryKeys": {
         "id": {
           "name": "id",
-          "columns": [
-            "user_id",
-            "match_id"
-          ]
+          "columns": ["user_id", "match_id"]
         }
       },
       "uniqueConstraints": {}
