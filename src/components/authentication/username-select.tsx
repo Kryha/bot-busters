@@ -6,7 +6,7 @@ import { api } from "~/utils/api.js";
 import { RowCreateUsername } from "~/components/tables/components/index.js";
 import { pages } from "~/router.js";
 import { text } from "~/assets/text/index.js";
-import { PageLayout } from "~/containers/page-layout/page-layout.jsx";
+import { PageLayout } from "~/containers/page-layout/index.js";
 
 import { type LoginStage } from "./types.js";
 import { LoginLoading } from "./login-loading.jsx";
