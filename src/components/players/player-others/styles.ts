@@ -27,9 +27,6 @@ export const styles = {
   playerSubHeading: {
     textAlign: "center",
   },
-  playerDisabledSubHeading: {
-    textAlign: "center",
-  } satisfies SxProps,
   timeSection: {
     pr: 2,
     pl: 2,
