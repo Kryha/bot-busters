@@ -113,7 +113,7 @@ export const PlayersOthers: FC<Props> = ({
           <Timer time={votingAt} duration={VOTING_TIME_MS} />
           <PrimaryButton
             sx={styles.button}
-            disabled={!isVoteEnabled || isLoadingVotes}
+            disabled={!isVoteEnabled || isLoadingVotes || !selectedIds.length}
             onClick={() => void handleVote()}
           >
             {text.general.confirm}
