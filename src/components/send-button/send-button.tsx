@@ -8,7 +8,7 @@ interface Props extends React.ComponentProps<typeof Button> {
   children: React.ReactNode;
 }
 
-const PrimaryButtonStyle = styled(Button)({
+const SendButtonStyle = styled(Button)({
   background: "none",
   border: `4px solid ${theme.palette.primary.main}`,
   cursor: "pointer",
@@ -21,7 +21,10 @@ const PrimaryButtonStyle = styled(Button)({
   gap: 48,
   width: "320px",
   fontSize: "24px",
-  padding: "24px 24px",
+  paddingLeft: "16px",
+  paddingRight: "16px",
+  paddingTop: "24px",
+  paddingBottom: "24px",
   lineHeight: "normal",
   color: theme.palette.primary.main,
   fontFamily: theme.typography.h3.fontFamily,
@@ -30,6 +33,8 @@ const PrimaryButtonStyle = styled(Button)({
     flex: "1 1 auto",
   },
   "& > div > svg": {
+    width: "11px",
+    height: "23px",
     "& > path": {
       fill: theme.palette.primary.main,
       stroke: theme.palette.primary.main,
@@ -70,13 +75,13 @@ const PrimaryButtonStyle = styled(Button)({
   },
 });
 
-export const PrimaryButton: FC<Props> = ({ children, ...props }) => {
+export const SendButton: FC<Props> = ({ children, ...props }) => {
   return (
-    <PrimaryButtonStyle {...props}>
+    <SendButtonStyle {...props}>
       <div style={{ flex: "1 1 auto" }}>{children}</div>
       <div style={{ flex: "0" }}>
         <SelectIcon />
       </div>
-    </PrimaryButtonStyle>
+    </SendButtonStyle>
   );
 };
