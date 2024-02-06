@@ -1,12 +1,12 @@
 import { relations, sql } from "drizzle-orm";
 import {
   integer,
-  varchar,
-  uuid,
-  pgTableCreator,
-  timestamp,
   json,
+  pgTableCreator,
   primaryKey,
+  timestamp,
+  uuid,
+  varchar,
 } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { type z } from "zod";
@@ -35,6 +35,17 @@ export const usersRelations = relations(users, ({ one }) => ({
 
 export const userSchema = createInsertSchema(users);
 export type User = z.infer<typeof userSchema>;
+
+export const userAchievements = bbPgTable("user_achievement", {
+  userId: uuid("user_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  achievementId: varchar("achievement_id", { length: 32 }).notNull(),
+  achievedAt: timestamp("achieved_at").notNull(),
+});
+
+export const userAchievementsSchema = createInsertSchema(userAchievements);
+export type UserAchievements = z.infer<typeof userAchievementsSchema>;
 
 export const ranks = bbPgTable("rank", {
   userId: uuid("user_id")

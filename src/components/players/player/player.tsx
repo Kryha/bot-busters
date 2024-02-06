@@ -3,8 +3,9 @@ import { Stack, Typography } from "@mui/material";
 
 import { type Character, type MatchStage } from "~/types/index.js";
 import { CharacterAvatar } from "~/components/character-avatar/index.js";
-import { text } from "~/assets/text/index.js";
 import { Skeleton } from "./skeleton.jsx";
+import { BotArrowIcon } from "~/assets/icons/index.js";
+import { text } from "~/assets/text/index.js";
 
 import { styles } from "./styles.js";
 
@@ -28,7 +29,7 @@ export const Player: FC<Props> = ({
   stage = "chat",
 }) => {
   const { name, color } = character;
-  const textColor = `${color}.dark`;
+  const textColor = `${color}.main`;
 
   const isBotSelected = stage === "voting" && isSelected;
 
@@ -37,14 +38,9 @@ export const Player: FC<Props> = ({
   const getTextResult = () => {
     if (stage === "results") {
       if (isSelected) {
-        if (isBot) {
-          return text.match.botBusted;
-        } else {
-          return text.match.isNotBot;
-        }
-      } else if (!isBot) {
-        return text.match.isHuman;
+        return isBot ? text.match.botBusted : text.match.wrongBust;
       }
+      return isBot ? text.match.missedBot : text.match.isHuman;
     }
 
     return isBot ? text.match.isBot : text.match.isHuman;
@@ -79,21 +75,20 @@ export const Player: FC<Props> = ({
           )}
         </>
       )}
-      {stage === "voting" && isBotSelected && (
+      {stage === "voting" && (
         <Stack direction={"row"} gap={1}>
-          <Typography variant="body1" sx={styles.selectBot}>
+          <Typography variant="caption" sx={styles.selectBot(isBotSelected)}>
             {text.match.isBotSelect}
           </Typography>
         </Stack>
       )}
       {stage === "results" && (
-        <Stack direction={"row"} gap={1}>
-          <Typography
-            variant="caption"
-            sx={styles.botResult(stage, isBot, isSelected)}
-          >
-            {textResult}
-          </Typography>
+        <Stack
+          sx={styles.botResult(stage, isBot, isSelected)}
+          onClick={onSelectPlayer}
+        >
+          <Typography variant="caption">{textResult}</Typography>
+          <BotArrowIcon />
         </Stack>
       )}
     </Stack>

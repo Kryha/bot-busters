@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { userAchievementsSchema } from "~/server/db/schema.js";
 import {
   chatMessagePayloadSchema,
   matchRoomSchema,
@@ -11,6 +12,7 @@ export const achievementDataSchema = z.object({
   botsBusted: z.number(),
   otherPlayers: z.array(playerSchema),
   playerHistory: z.array(matchRoomSchema).optional(),
+  playerAchievements: z.array(userAchievementsSchema).optional(),
 });
 export type AchievementDataType = z.infer<typeof achievementDataSchema>;
 
