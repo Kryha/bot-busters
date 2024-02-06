@@ -1,7 +1,7 @@
 import { Stack, Typography } from "@mui/material";
 
 import { text } from "~/assets/text/index.js";
-import { PageLayout } from "~/containers/page-layout";
+import { PageLayout } from "~/containers/page-layout/index.js";
 import { styles } from "~/styles/pages/about.js";
 import { processTextToLink } from "~/utils/links.jsx";
 

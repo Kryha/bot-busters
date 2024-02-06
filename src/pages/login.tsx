@@ -11,7 +11,7 @@ import {
   type LoginStage,
   SignIn,
 } from "~/components/index.js";
-import { PageLayout } from "~/containers/page-layout/page-layout.jsx";
+import { PageLayout } from "~/containers/page-layout/index.js";
 
 const Login: FC = () => {
   const router = useRouter();
