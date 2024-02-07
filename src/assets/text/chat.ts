@@ -12,7 +12,9 @@ export const chat = {
     info: "Try and convince the other participants you are a bot",
   },
   chatHistory: "Chat History",
+  prompt: "Prompt:",
   checkLeaderboard: "Check Leaderboard",
+
   amountBotsBusted: (botsBusted: number, totalBots: number) =>
     `${botsBusted} out of ${totalBots} bots busted!`,
   pointsWon: (val: number) =>

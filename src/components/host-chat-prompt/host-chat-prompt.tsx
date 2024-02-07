@@ -1,29 +1,49 @@
 import { Stack, Typography } from "@mui/material";
-import { type FC } from "react";
+import { useState, type FC, useEffect } from "react";
 
 import { text } from "~/assets/text/index.js";
+import { wait } from "~/utils/timer.js";
 
 import { styles } from "./styles.js";
 
 interface Props {
   stage: string;
-  name?: string;
   message?: string;
 }
 
-export const HostChatPrompt: FC<Props> = ({ stage, name, message }) => {
+export const HostChatPrompt: FC<Props> = ({ stage, message }) => {
+  const [writtenMessage, setWrittenMessage] = useState("");
+
+  useEffect(() => {
+    const write = async () => {
+      if (!message) return;
+
+      if (writtenMessage.length < message.length) {
+        // wait time is longer in the beginning because of the character animation
+        await wait(writtenMessage.length === 0 ? 3000 : 80);
+        const nextChar = message[writtenMessage.length];
+
+        if (!nextChar) return;
+        setWrittenMessage(writtenMessage + nextChar);
+      }
+    };
+
+    void write();
+  }, [message, writtenMessage]);
+
   return (
     <Stack sx={styles.wrapper}>
-      {stage === "chat" && name && message && (
+      {stage === "chat" && (
         <Stack sx={styles.prompt}>
           <Typography variant="subtitle1" color="white">
-            {name}:
+            {text.chat.prompt}
           </Typography>
           <Typography variant="body1" color="white">
-            {message}
+            {writtenMessage}
           </Typography>
         </Stack>
       )}
+
       {stage === "voting" && (
         <Typography sx={styles.chatTitle} variant="h6" color="white">
           {text.chat.chatHistory}
