@@ -13,6 +13,8 @@ export const chat = {
   },
   chatHistory: "Chat History",
   viewLeaderboard: "View Leaderboard",
+  prompt: "Prompt:",
+
   amountBotsBusted: (botsBusted: number, totalBots: number) =>
     `${botsBusted} out of ${totalBots} bots busted!`,
   pointsWon: (val: number) =>

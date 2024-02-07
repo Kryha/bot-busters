@@ -95,14 +95,12 @@ export const Chat: FC<Props> = ({ roomId, room }) => {
   return (
     <Stack sx={styles.container}>
       <Stack component="section" sx={styles.section(isChatDisabled)}>
-        <HostChatPrompt
-          stage={stage}
-          name="prompt"
-          message={hostMessageData?.message}
-        />
+        <HostChatPrompt stage={stage} message={hostMessageData?.message} />
         <Messages messageData={messageData} />
       </Stack>
+
       <Timer time={room.createdAt} duration={CHAT_TIME_MS} />
+
       {!isChatDisabled && (
         <InputField
           value={message}

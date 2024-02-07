@@ -7,7 +7,8 @@ export const styles = {
       border: `4px solid ${theme.palette.divider}`,
       overflow: "hidden",
       flexGrow: 1,
-      maxWidth: !isDisabled ? "1100px" : undefined,
+      // don't use max-width or else text will make this component wider
+      width: !isDisabled ? "65vw" : undefined,
     } satisfies SxProps;
   },
   container: {
