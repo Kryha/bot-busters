@@ -1,6 +1,6 @@
 import { type SxProps } from "@mui/material";
-import { theme } from "~/styles";
-import { zIndex } from "~/styles/z-index";
+import { theme } from "~/styles/index.js";
+import { zIndex } from "~/styles/z-index.js";
 
 export const styles = {
   container: {
