@@ -33,21 +33,33 @@ export const Footer: FC<Props> = ({ handleClose }) => {
         <Typography
           variant="h4"
           sx={styles.textButton}
-          onClick={() => handleNavigation(pages.privacy)}
+          onClick={() => handleNavigation(pages.termsAndConditions)}
         >
           {text.general.termsAndConditions}
         </Typography>
-        <Link href={text.general.aleoWebsite} target="_blank">
+        <Link
+          href={text.general.aleoWebsite}
+          target="_blank"
+          style={{ textDecoration: "none" }}
+        >
           <Typography variant="h4" sx={styles.textButton}>
             {text.general.aleoOrg}
           </Typography>
         </Link>
-        <Link href={text.general.obscuraWebsite} target="_blank">
+        <Link
+          href={text.general.obscuraWebsite}
+          target="_blank"
+          style={{ textDecoration: "none" }}
+        >
           <Typography variant="h4" sx={styles.textButton}>
             {text.general.zPass}
           </Typography>
         </Link>
-        <Link href={text.general.obscuraWebsite} target="_blank">
+        <Link
+          href={text.general.obscuraWebsite}
+          target="_blank"
+          style={{ textDecoration: "none" }}
+        >
           <Typography variant="h4" sx={styles.textButton}>
             {text.general.obscura}
           </Typography>
