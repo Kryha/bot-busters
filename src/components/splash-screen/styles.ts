@@ -11,12 +11,14 @@ export const styles = {
       },
     } satisfies SxProps;
   },
-  container: {
-    position: "fixed",
-    inset: 0,
-    backgroundColor: "black",
-    zIndex: zIndex.front,
-    alignItems: "center",
-    justifyContent: "center",
+  container: (backgroundColor?: string) => {
+    return {
+      position: "fixed",
+      inset: 0,
+      backgroundColor: backgroundColor,
+      zIndex: zIndex.front,
+      alignItems: "center",
+      justifyContent: "center",
+    } satisfies SxProps;
   },
 };

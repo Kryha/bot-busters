@@ -1,13 +1,17 @@
-import { theme } from "~/styles/index.js";
+import { breakpoints, theme } from "~/styles/index.js";
 import { type SxStyleRecord } from "~/types/sx-style-record.js";
 
 export const styles = {
-  playerResults: {
-    mt: 4,
+  container: {
     mb: 2,
-    flex: 1,
+    mt: 2,
+    width: 850,
     flexDirection: "column",
     border: `4px solid ${theme.palette.customGrey.main}`,
+    [`@media (max-width: ${breakpoints.md}px)`]: {
+      mt: 4,
+      width: "100%",
+    },
   },
   resultsHeading: {
     p: 2,
@@ -23,7 +27,7 @@ export const styles = {
   },
   proof: {
     p: 2,
-    flex: 1,
+    height: "150px",
     justifyContent: "center",
     alignItems: "center",
     textAlign: "center",

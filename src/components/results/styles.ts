@@ -4,7 +4,7 @@ import { breakpoints } from "~/styles/index.js";
 export const styles: Record<string, SxProps> = {
   wrapper: {
     alignItems: "center",
-    width: "50%",
+    width: "700px",
     [`@media (max-width: ${breakpoints.md}px)`]: {
       width: "100%",
     },

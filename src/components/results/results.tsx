@@ -51,7 +51,7 @@ export const Results: FC<Props> = ({ player }) => {
                 sx={styles.button}
                 onClick={() => void router.push(pages.leaderboard)}
               >
-                {text.chat.viewLeaderboard}
+                {text.chat.checkLeaderboard}
               </PrimaryButton>
             )}
           </>

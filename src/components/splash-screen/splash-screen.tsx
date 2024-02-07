@@ -34,7 +34,7 @@ export const SplashScreen: FC<Props> = ({
 
   return (
     <Slide direction="left" in={showSplashScreen} mountOnEnter unmountOnExit>
-      <Stack sx={styles.container}>
+      <Stack sx={styles.container(backgroundColor)}>
         <Stack sx={styles.transitionLines(backgroundColor)}>
           <AnimationPlayer
             rendererSettings={{ preserveAspectRatio: "xMidYMid slice" }}

@@ -56,6 +56,7 @@ export const styles = {
     pr: 1,
     overflowY: "scroll",
     "&::-webkit-scrollbar": {
+      "-webkit-appearance": "scrollbartrack-vertical",
       width: "18px",
     },
     flexDirection: "column-reverse",
