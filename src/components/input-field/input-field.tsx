@@ -111,7 +111,7 @@ export const UsernameInputField: FC<TextInputFieldProps> = ({
           onClick={onClick}
           aria-label={"send-button"}
           disabled={!!validationError}
-          sx={{ "&:disabled": { border: "none" }}}
+          sx={{ "&:disabled": { border: "none" } }}
         >
           Confirm
         </PrimaryButton>
