@@ -13,6 +13,17 @@ export const styles = {
       pl: 0,
     },
   },
+  wrapperError: {
+    flexDirection: "row",
+    mt: 1,
+    border: `4px solid ${theme.palette.error.main}`,
+    "& > button": {
+      border: "none",
+      width: "150px",
+      gap: 0,
+      pl: 0,
+    },
+  },
   usernameWrapper: {
     flexDirection: "row",
     mt: 1,
@@ -51,6 +62,19 @@ export const styles = {
   },
   inputField: {
     borderRight: `4px solid ${theme.palette.primary.main}`,
+    flexGrow: 1,
+    pl: 0,
+    "textarea::placeholder": {
+      position: "absolute",
+      top: "50%",
+      left: "50%",
+      transform: "translate(-50%, -50%)",
+      opacity: 1,
+      textAlign: "center",
+    },
+  },
+  inputFieldError: {
+    borderRight: `4px solid ${theme.palette.error.main}`,
     flexGrow: 1,
     pl: 0,
     "textarea::placeholder": {
