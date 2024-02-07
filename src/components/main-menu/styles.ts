@@ -92,7 +92,6 @@ export const styles = {
   textButton: {
     cursor: "pointer",
     color: theme.palette.primary.main,
-    textDecoration: "none",
     "&:hover": {
       color: theme.palette.secondary.main,
     },
