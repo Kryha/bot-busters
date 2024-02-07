@@ -16,15 +16,14 @@ export const TopRanked: FC<Props> = ({ players }) => {
 
   return (
     <Stack sx={styles.container}>
+      <Typography
+        variant="subtitle1"
+        sx={styles.title}
+        >
+        {text.homepage.topRankedTitle}
+      </Typography>
       {animationStyles.map((sx, index) => (
         <Stack sx={{ ...styles.textContainer, ...sx }} key={index}>
-          <Typography
-            variant="subtitle1"
-            sx={styles.title}
-            color={theme.palette.common.black}
-          >
-            {text.homepage.topRankedTitle}
-          </Typography>
           {players.map(({ username, score }, index) => (
             <Typography
               variant="subtitle2"

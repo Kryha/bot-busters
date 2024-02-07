@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { text } from "~/assets/text/index.js";
 import { BulletPoint } from "~/components/index.js";
 import { theme } from "~/styles/theme.js";
-import { pages } from "~/router/index.js";
+import { pages } from "~/router.js";
 
 const sectionContent = text.howToPlay.playerProfiles;
 
