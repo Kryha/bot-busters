@@ -1,9 +1,6 @@
 import { z } from "zod";
 import { userAchievementsSchema } from "~/server/db/schema.js";
-import {
-  matchRoomSchema,
-  playerSchema,
-} from "./match.js";
+import { matchRoomSchema, playerSchema } from "./match.js";
 
 export const achievementDataSchema = z.object({
   player: playerSchema,

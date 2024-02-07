@@ -35,6 +35,6 @@ export const PlayerProfiles: FC = () => {
           {sectionContent[1].highlight}
         </a>
       </Typography>
-    </BulletPoint>
+    </BulletPoint>,
   ];
 };
