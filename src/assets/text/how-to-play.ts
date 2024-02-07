@@ -59,7 +59,7 @@ export const howToPlay = {
   ],
   playerProfiles: [
     {
-      regular: "Anon players are ineligible for leaderboard position.",
+      regular: "Anonymous players are ineligible for leaderboard position.",
       highlight: "",
       link: "",
     },
