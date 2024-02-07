@@ -9,6 +9,7 @@ import { styles } from "./styles.js";
 interface Props {
   player: PlayerType;
   hasGuessed: boolean;
+  isProofSelected: boolean;
   isSelected?: boolean;
   onSelectPlayer?: () => void;
 }
@@ -16,6 +17,7 @@ interface Props {
 export const PlayerResult: FC<Props> = ({
   player,
   hasGuessed,
+  isProofSelected,
   isSelected,
   onSelectPlayer,
 }) => {
@@ -28,6 +30,7 @@ export const PlayerResult: FC<Props> = ({
         character={character}
         hasGuessed={hasGuessed}
         isBot={player.isBot}
+        isProofSelected={isProofSelected}
         isSelected={isSelected}
         onSelectPlayer={onSelectPlayer}
       />

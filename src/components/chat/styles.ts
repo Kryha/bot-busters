@@ -1,5 +1,6 @@
 import { type SxProps } from "@mui/material";
 import { theme } from "~/styles/theme.js";
+import { type MatchStage } from "~/types/index.js";
 
 export const styles = {
   section: (isDisabled: boolean) => {
@@ -10,7 +11,10 @@ export const styles = {
       maxWidth: !isDisabled ? "1100px" : undefined,
     } satisfies SxProps;
   },
-  container: {
-    mb: 2,
+  container: (stage: MatchStage) => {
+    return {
+      mb: 2,
+      width: stage === "chat" ? "1100px" : "750px",
+    };
   },
 };

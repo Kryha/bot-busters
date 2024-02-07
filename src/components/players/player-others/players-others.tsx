@@ -30,7 +30,7 @@ export const PlayersOthers: FC<Props> = ({
 }) => {
   const [isLoadingVotes, setIsLoadingVotes] = useState(false);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
-  const [proofCharacterId, setProofCharacterId] = useState<CharacterId>();
+  const [proofCharacterId, setProofCharacterId] = useState<CharacterId>("1");
   const { stage, players, votingAt } = room;
 
   const resultHeading =
@@ -64,10 +64,10 @@ export const PlayersOthers: FC<Props> = ({
   );
 
   return (
-    <Stack sx={styles.container}>
+    <Stack sx={styles.container(stage)}>
       {stage === "voting" && (
         <Stack sx={styles.voting}>
-          <Typography variant="subtitle1" sx={styles.playerHeading}>
+          <Typography variant="h2" sx={styles.playerHeading}>
             {text.match.bustTheBots}
           </Typography>
           <Typography
@@ -89,7 +89,7 @@ export const PlayersOthers: FC<Props> = ({
         </Stack>
       )}
 
-      <Stack sx={styles.list(stage !== "chat")}>
+      <Stack sx={styles.list(stage)}>
         {otherPlayers.map((player, index) => {
           const isSelected =
             stage !== "results"
@@ -103,6 +103,7 @@ export const PlayersOthers: FC<Props> = ({
               player={player}
               localPlayer={localPlayer}
               isSelected={isSelected}
+              isProofSelected={player.characterId === proofCharacterId}
               onSelectPlayer={() => {
                 stage === "voting"
                   ? selectPlayer(player.userId)

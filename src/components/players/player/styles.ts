@@ -43,7 +43,12 @@ export const styles = {
     },
     cursor: "pointer",
   } satisfies SxProps,
-  botResult: (stage: string, isBot?: boolean, isSelected?: boolean) => {
+  botResult: (
+    stage: string,
+    isBot?: boolean,
+    isSelected?: boolean,
+    isProofSelected?: boolean,
+  ) => {
     let textColor = theme.palette.common.white;
 
     if (stage === "voting") {
@@ -77,6 +82,7 @@ export const styles = {
       textTransform: "uppercase",
       cursor: "pointer",
       color: textColor,
+      textDecoration: isProofSelected ? "underline" : "none",
       "&:hover": {
         textDecoration: "underline",
       },
