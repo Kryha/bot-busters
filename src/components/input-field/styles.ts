@@ -34,7 +34,7 @@ export const styles = {
     "& > button": {
       color: theme.palette.error.main,
       border: "none",
-      minWidth: "150px",
+      minWidth: "200px",
       gap: 0,
       pl: 0,
     },
