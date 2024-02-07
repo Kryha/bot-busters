@@ -1,11 +1,11 @@
 import { type SxProps } from "@mui/material";
-import { theme } from "~/styles/index.js";
+import { breakpoints } from "~/styles/index.js";
 
 export const styles: Record<string, SxProps> = {
   wrapper: {
     alignItems: "center",
-    width: "50%",
-    [theme.breakpoints.down("md")]: {
+    width: "700px",
+    [`@media (max-width: ${breakpoints.md}px)`]: {
       width: "100%",
     },
   },
@@ -23,7 +23,7 @@ export const styles: Record<string, SxProps> = {
   },
   buttonContainer: {
     flex: 0,
-    gap: 1,
+    gap: 2,
     mt: 2,
     mb: 2,
     width: "100%",

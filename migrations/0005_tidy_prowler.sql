@@ -1,0 +1,1 @@
+ALTER TABLE "bot_busters_user" ADD COLUMN "bots_busted" integer DEFAULT 0 NOT NULL;

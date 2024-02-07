@@ -1,7 +1,7 @@
-import { type FC } from "react";
 import { Box, Stack, Typography } from "@mui/material";
 import Link from "next/link.js";
 import { useRouter } from "next/router.js";
+import { type FC } from "react";
 
 import { text } from "~/assets/text/index.js";
 import { pages } from "~/router.js";
@@ -30,24 +30,40 @@ export const Footer: FC<Props> = ({ handleClose }) => {
         >
           {text.general.support}
         </Typography>
-        <Typography variant="h4" sx={styles.textButton}>
-          {text.general.discord}
+        <Typography
+          variant="h4"
+          sx={styles.textButton}
+          onClick={() => handleNavigation(pages.termsAndConditions)}
+        >
+          {text.general.termsAndConditions}
         </Typography>
-        <Link href={text.general.aleoWebsite} target="_blank">
+        <Link
+          href={text.general.aleoWebsite}
+          target="_blank"
+          style={{ textDecoration: "none" }}
+        >
           <Typography variant="h4" sx={styles.textButton}>
             {text.general.aleoOrg}
           </Typography>
         </Link>
-        <Typography variant="h4" sx={styles.textButton}>
-          {text.general.zPass}
-        </Typography>
-        <Typography
-          variant="h4"
-          onClick={() => handleNavigation(pages.privacy)}
-          sx={styles.textButton}
+        <Link
+          href={text.general.obscuraWebsite}
+          target="_blank"
+          style={{ textDecoration: "none" }}
         >
-          {text.general.legal}
-        </Typography>
+          <Typography variant="h4" sx={styles.textButton}>
+            {text.general.zPass}
+          </Typography>
+        </Link>
+        <Link
+          href={text.general.obscuraWebsite}
+          target="_blank"
+          style={{ textDecoration: "none" }}
+        >
+          <Typography variant="h4" sx={styles.textButton}>
+            {text.general.obscura}
+          </Typography>
+        </Link>
       </Box>
     </Stack>
   );

@@ -1,10 +1,5 @@
 import type { SxStyleRecord } from "~/types/sx-style-record.js";
 
-const sectionPadding = {
-  pt: "30px",
-  pb: "100px",
-};
-
 export const styles = {
   container: {
     minHeight: "100vh",
@@ -12,33 +7,17 @@ export const styles = {
     justifyContent: "start",
   },
   text: {
-    width: "60vw",
     overflow: "wrap",
     textAlign: "start",
-    lineHeight: "35px",
-    pt: "50px",
   },
-  gameRulesSection: {
-    pt: "100px",
-    pb: "30px",
-  },
-  listElement: {
-    mb: "-40px",
-  },
-  pointsAndPenaltiesSection: {
-    width: "62vw",
-    ...sectionPadding,
-  },
-  dailyLeaderboard: {
-    width: "62vw",
-    ...sectionPadding,
-  },
-  playerProfiles: {
-    width: "62vw",
-    ...sectionPadding,
+  section: {
+    pt: "70px",
+    pb: "100px",
   },
   heading: {
     textTransform: "uppercase",
     textAlign: "center",
+    textWrap: "nowrap",
+    maxWidth: "100vw",
   },
 } satisfies SxStyleRecord;

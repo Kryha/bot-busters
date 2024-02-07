@@ -24,7 +24,7 @@ const PrimaryButtonStyle = styled(Button)({
   padding: "24px 24px",
   lineHeight: "normal",
   color: theme.palette.primary.main,
-  fontFamily: theme.typography.h2.fontFamily,
+  fontFamily: theme.typography.h3.fontFamily,
   textTransform: "uppercase",
   "& > (first-child)": {
     flex: "1 1 auto",

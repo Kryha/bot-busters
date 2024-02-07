@@ -2,7 +2,7 @@ import { faker } from "@faker-js/faker";
 
 export const getRandomUsername = () => {
   const usernamePart1 = faker.helpers.arrayElement([
-    faker.word.adjective(5),
+    faker.word.adjective(3),
     faker.animal.horse(),
     faker.internet.domainWord(),
   ]);

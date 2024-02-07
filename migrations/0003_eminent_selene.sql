@@ -1,0 +1,1 @@
+ALTER TABLE "bot_busters_match" DROP COLUMN IF EXISTS "created_at";

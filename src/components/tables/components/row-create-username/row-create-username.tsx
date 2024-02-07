@@ -1,69 +1,50 @@
 import { useState, type FC, useEffect } from "react";
-import {
-  Alert,
-  Avatar,
-  Button,
-  Stack,
-  TableCell,
-  TableRow,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Stack } from "@mui/material";
 
-import { text } from "~/assets/text/index.js";
 import { getRandomUsername } from "~/utils/username.js";
+import { validUsername } from "~/constants/validation.js";
+import { UsernameInputField } from "~/components/input-field/input-field.jsx";
 
 import { styles } from "./styles.js";
 
 interface RowCreateUsernameProps {
-  onSetUsername: (username: string) => Promise<void>;
-  error?: string;
+  submitUsername: (username: string) => Promise<void>;
 }
 
 export const RowCreateUsername: FC<RowCreateUsernameProps> = ({
-  onSetUsername,
-  error,
+  submitUsername,
 }) => {
   const [username, setUsername] = useState("");
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const name = getRandomUsername();
     setUsername(name.replace(/[0-9]/g, ""));
   }, []);
 
+  const validateUsername = (name: string) => {
+    const result = validUsername.safeParse(name);
+    if (!result.success && result.error.issues[0]) {
+      setError(result.error.issues[0].message);
+    } else {
+      setError("");
+    }
+  };
+
+  const handleUsername = (event: { target: { value: string } }) => {
+    validateUsername(event.target.value);
+    setUsername(event.target.value);
+  };
+
   return (
-    <>
-      <TableRow sx={styles.tableRow}>
-        <TableCell component="th" scope="row" sx={styles.tableCell}>
-          <Typography variant="body1" color="secondary.dark">
-            {text.leaderboard.leaderboardRank}
-          </Typography>
-        </TableCell>
-        <TableCell sx={styles.select}>
-          <Stack sx={styles.wrapper}>
-            {error && <Alert severity="error">{error}</Alert>}
-            <Avatar alt="avatar" sx={styles.avatar}>
-              {text.leaderboard.avatarEmoji}
-            </Avatar>
-            <TextField
-              id="outlined"
-              value={username}
-              sx={styles.input}
-              onChange={(e) => setUsername(e.target.value)}
-            />
-            <Button
-              variant="contained"
-              sx={styles.button}
-              color="info"
-              onClick={() => void onSetUsername(username)}
-            >
-              <Typography variant="button" sx={styles.buttonText}>
-                {text.leaderboard.useNickname}
-              </Typography>
-            </Button>
-          </Stack>
-        </TableCell>
-      </TableRow>
-    </>
+    <Stack sx={styles.wrapper}>
+      <UsernameInputField
+        validationError={error}
+        id="username"
+        value={username}
+        onChange={handleUsername}
+        onClick={() => void submitUsername(username)}
+      />
+    </Stack>
   );
 };

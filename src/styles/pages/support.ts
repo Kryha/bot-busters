@@ -1,20 +1,12 @@
 export const styles = {
-  container: {
-    minHeight: "100vh",
-    alignItems: "center",
-    justifyContent: "start",
-  },
   text: {
-    width: "60vw",
+    maxWidth: "850px",
     overflow: "wrap",
     textAlign: "center",
-    lineHeight: "35px",
-    pt: "30px",
   },
   formContainer: {
     alignItems: "start",
     justifyContent: "start",
-    width: "63vw",
     pt: "70px",
   },
   issueInput: {
@@ -22,6 +14,7 @@ export const styles = {
   },
   button: {
     mt: "10px",
+    mb: "100px",
     width: "180px",
     alignItems: "center",
     gap: "10px",

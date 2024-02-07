@@ -111,7 +111,7 @@ export const typography = (): Typography => {
       fontFamily: bodyFont.style.fontFamily,
       fontSize: "16px",
       fontWeight: 400,
-      lineHeight: "normal",
+      lineHeight: "35px",
     },
     body2: {
       // larger normal text
@@ -128,8 +128,8 @@ export const typography = (): Typography => {
       textTransform: "uppercase" as const,
     },
     caption: {
-      fontFamily: bodyFont.style.fontFamily,
-      fontSize: "12px",
+      fontFamily: subHeadingsFont.style.fontFamily,
+      fontSize: "16px",
       fontWeight: 400,
       lineHeight: "20px",
     },

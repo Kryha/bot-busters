@@ -9,10 +9,18 @@ import { styles } from "./styles.js";
 interface Props {
   player: PlayerType;
   hasGuessed: boolean;
-  isSelected: boolean;
+  isProofSelected: boolean;
+  isSelected?: boolean;
+  onSelectPlayer?: () => void;
 }
 
-export const PlayerResult: FC<Props> = ({ player, hasGuessed, isSelected }) => {
+export const PlayerResult: FC<Props> = ({
+  player,
+  hasGuessed,
+  isProofSelected,
+  isSelected,
+  onSelectPlayer,
+}) => {
   const character = CHARACTERS[player.characterId]!;
 
   return (
@@ -22,7 +30,9 @@ export const PlayerResult: FC<Props> = ({ player, hasGuessed, isSelected }) => {
         character={character}
         hasGuessed={hasGuessed}
         isBot={player.isBot}
+        isProofSelected={isProofSelected}
         isSelected={isSelected}
+        onSelectPlayer={onSelectPlayer}
       />
     </Stack>
   );

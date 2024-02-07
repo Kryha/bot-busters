@@ -3,7 +3,6 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/router.js";
 
 import { pages } from "~/router.js";
-import Page from "~/components/page/page.jsx";
 import { api } from "~/utils/api.js";
 import {
   ConnectWallet,
@@ -12,6 +11,7 @@ import {
   type LoginStage,
   SignIn,
 } from "~/components/index.js";
+import { PageLayout } from "~/containers/page-layout/index.js";
 
 const Login: FC = () => {
   const router = useRouter();
@@ -69,7 +69,7 @@ const Login: FC = () => {
     }
   };
 
-  return <Page>{pageContent()}</Page>;
+  return <PageLayout>{pageContent()}</PageLayout>;
 };
 
 export default Login;

@@ -1,7 +1,8 @@
-import { eq } from "drizzle-orm";
+import { and, eq, gte } from "drizzle-orm";
 
 import { db, dbSchema, type BBPgTransaction } from "~/server/db/index.js";
-import { usersToMatches } from "./schema.js";
+import { getRelativeTimeStamp } from "~/utils/date.js";
+import { userAchievements, usersToMatches } from "./schema.js";
 
 const { users, matches } = dbSchema;
 
@@ -45,16 +46,36 @@ export const insertUserWithAddress = async (address: string) => {
 
 export const selectMatchPlayedByUser = async (
   userId: string,
+  daysAgo?: number,
   tx?: BBPgTransaction,
 ) => {
   const dbTx = tx ?? db;
+  const timestamp = daysAgo ? getRelativeTimeStamp(daysAgo) : 0;
 
   const matchesPlayed = await dbTx
     .select()
     .from(usersToMatches)
     .innerJoin(matches, eq(matches.id, usersToMatches.matchId))
-    .where(eq(usersToMatches.userId, userId));
+    .where(
+      and(
+        eq(usersToMatches.userId, userId),
+        gte(matches.createdAt, new Date(timestamp).toISOString()),
+      ),
+    );
   return matchesPlayed;
+};
+
+export const selectUserAchievements = async (
+  userId: string,
+  tx?: BBPgTransaction,
+) => {
+  const dbTx = tx ?? db;
+
+  const achievements = await dbTx
+    .select()
+    .from(userAchievements)
+    .where(eq(userAchievements.userId, userId));
+  return achievements;
 };
 
 export const insertVerifiedUser = async (address: string, username: string) => {

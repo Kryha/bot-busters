@@ -23,10 +23,40 @@ export const CHIP_TIMEOUT = 4000;
 export const POINTS_BOT_BUSTED = 11;
 export const POINTS_HUMAN_BUSTED = 10;
 export const POINTS_ACHIEVEMENTS: Record<AchievementId, number> = {
+  dailyStreakCounter: 0,
   goodBust: 5,
   doubleAgent: 5,
   busterStreak: 9,
+  fiveDayStreak: 9,
   firstTimer: 5,
   beginnersLuck: 5,
   realHuman: 5,
+  masterBuster: 9,
 };
+
+// run the entire animation once, then infinitely loop the second half
+export const BOT_BUSTED_ANIMATION_SEGMENT = [
+  [0, 120],
+  [58, 120],
+];
+export const BOT_WIN_ANIMATION_SEGMENT = [
+  [0, 96],
+  [47, 96],
+];
+
+export const BOTBUSTERS_LOGO_ANIMATION_SEGMENT = [
+  [0, 96],
+  [47, 96],
+];
+
+export const ONE_TIME_ACHIEVEMENTS: AchievementId[] = [
+  "beginnersLuck",
+  "realHuman",
+  "firstTimer",
+  "busterStreak",
+  "dailyStreakCounter",
+  "fiveDayStreak",
+  "masterBuster",
+];
+
+export const EMPTY_RES = "empty";

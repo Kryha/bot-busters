@@ -4,10 +4,15 @@ import {
   usersToMatches,
   type UserToMatch,
 } from "~/server/db/schema.js";
-import { type StoredChatMessage, type MatchRoom } from "~/types/index.js";
+import { type MatchRoom, type StoredChatMessage } from "~/types/index.js";
 
 export const insertMatches = async (
-  matches: { id: string; room: MatchRoom; messages: StoredChatMessage[] }[],
+  matches: {
+    id: string;
+    room: MatchRoom;
+    messages: StoredChatMessage[];
+    createdAt: string;
+  }[],
   tx?: BBPgTransaction,
 ) => {
   const dbTx = tx ?? db;

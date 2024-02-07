@@ -1,7 +1,7 @@
 import { type SxProps } from "@mui/material";
 
-import { breakpoints, theme } from "~/styles/theme.js";
 import { styles as navbarStyles } from "~/components/navbar/styles.js";
+import { breakpoints, theme } from "~/styles/theme.js";
 
 export const styles = {
   dialog: {

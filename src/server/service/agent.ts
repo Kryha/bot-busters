@@ -1,5 +1,8 @@
 import { v4 as uuid } from "uuid";
 
+import { env } from "~/env.mjs";
+import { ee, matchEvent } from "~/server/api/match-maker.js";
+import { type Match } from "~/server/service/index.js";
 import type {
   CharacterId,
   // CharacterName,
@@ -8,9 +11,6 @@ import type {
   PromptMessage,
   SenderRole,
 } from "~/types/index.js";
-import { type Match } from "~/server/service/index.js";
-import { ee, matchEvent } from "~/server/api/match-maker.js";
-import { env } from "~/env.mjs";
 import { wait } from "~/utils/timer.js";
 // import { CHARACTERS } from "~/constants/index.js";
 
@@ -145,6 +145,10 @@ export class Agent {
       isBot: true,
       isScoreSaved: false,
       botsBusted: 0,
+      totalBotsBusted: 0,
+      humansBusted: 0,
+      botsBustedScore: 0,
+      humansBustedScore: 0,
       correctGuesses: 0,
       votes: [],
       achievements: [],

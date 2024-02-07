@@ -1,17 +1,19 @@
 export const chat = {
   usernameLocal: "you - username",
   send: "SEND",
-  inputFieldPlaceholder: "Type your message",
+  inputFieldPlaceholder: "Start typing...",
   chatEnded: "chat ended - voting time!",
   addScoreToLeaderboard:
     "Add your score to the leaderboard. The daily top 100 gets Aleo credits!",
   addScore: "add score to leaderboard",
-  playNewGame: "Play new game",
+  playAgain: "Play again",
   firstPrompt: {
     title: "25 bonus points for every vote on you as a bot",
     info: "Try and convince the other participants you are a bot",
   },
   chatHistory: "Chat History",
+  prompt: "Prompt:",
+  checkLeaderboard: "Check Leaderboard",
 
   amountBotsBusted: (botsBusted: number, totalBots: number) =>
     `${botsBusted} out of ${totalBots} bots busted!`,

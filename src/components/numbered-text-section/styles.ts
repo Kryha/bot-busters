@@ -5,23 +5,26 @@ export const styles = {
   container: {
     display: "flex",
     flexDirection: "row",
-    pb: "100px",
+    pb: "60px",
+    transform: "translateX(50px)",
   },
   column: {
+    transform: "translateX(-40px)",
     display: "flex",
     flexDirection: "column",
-    gap: 4,
+    gap: 2,
   },
   number: {
-    transform: "translate(-52px, -35px)",
+    transform: "translate(-90px, -35px)",
     color: theme.palette.secondary.main,
-    width: "63px",
+    minWidth: "55px",
     fontSize: "80px",
+    justifySelf: "end",
   },
   title: {
     color: theme.palette.secondary.main,
     textTransform: "capitalize",
-    transform: "translateX(-30px)",
-    mb: "-30px",
+    transform: "translateX(-20px)",
+    mb: "10px",
   },
 } satisfies SxStyleRecord;

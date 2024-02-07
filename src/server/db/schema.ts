@@ -1,18 +1,19 @@
 import { relations, sql } from "drizzle-orm";
 import {
+  date,
   integer,
-  varchar,
-  uuid,
-  pgTableCreator,
-  timestamp,
   json,
+  pgTableCreator,
   primaryKey,
+  timestamp,
+  uuid,
+  varchar,
 } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { type z } from "zod";
 
 import { PUBLIC_KEY_LENGTH } from "~/constants/index.js";
-import { type StoredChatMessage, type MatchRoom } from "~/types/index.js";
+import { type MatchRoom, type StoredChatMessage } from "~/types/index.js";
 
 export const bbPgTable = pgTableCreator((name) => `bot_busters_${name}`);
 
@@ -21,6 +22,7 @@ export const users = bbPgTable("user", {
   username: varchar("username", { length: 32 }).unique(),
   address: varchar("address", { length: PUBLIC_KEY_LENGTH }),
   score: integer("score").default(0).notNull(),
+  botsBusted: integer("bots_busted").default(0).notNull(),
   // TODO: add zPass
   // zPass: json("zPass"),
   createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`),
@@ -36,6 +38,17 @@ export const usersRelations = relations(users, ({ one }) => ({
 export const userSchema = createInsertSchema(users);
 export type User = z.infer<typeof userSchema>;
 
+export const userAchievements = bbPgTable("user_achievement", {
+  userId: uuid("user_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  achievementId: varchar("achievement_id", { length: 32 }).notNull(),
+  achievedAt: timestamp("achieved_at").notNull(),
+});
+
+export const userAchievementsSchema = createInsertSchema(userAchievements);
+export type UserAchievements = z.infer<typeof userAchievementsSchema>;
+
 export const ranks = bbPgTable("rank", {
   userId: uuid("user_id")
     .references(() => users.id)
@@ -48,6 +61,9 @@ export type Rank = z.infer<typeof rankSchema>;
 
 export const matches = bbPgTable("match", {
   id: uuid("id").primaryKey(),
+  createdAt: date("created_at")
+    .notNull()
+    .default(sql`CURRENT_DATE`),
   room: json("room").notNull().$type<MatchRoom>(),
   messages: json("messages").notNull().$type<StoredChatMessage[]>().default([]),
 });

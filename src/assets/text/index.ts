@@ -4,14 +4,15 @@ import { auth } from "./auth.js";
 import { chat } from "./chat.js";
 import { general } from "./general.js";
 import { homepage } from "./homepage.js";
+import { howToPlay } from "./how-to-play.js";
 import { leaderboard } from "./leaderboard.js";
 import { lobby } from "./lobby.js";
 import { matchPrompts } from "./match-prompts.js";
 import { match } from "./match.js";
 import { navigation } from "./navigation.js";
 import { playerProfile } from "./player-profile.js";
-import { howToPlay } from "./how-to-play.js";
 import { support } from "./support.js";
+import { termsAndConditions } from "./terms-and-conditions.js";
 
 export const text = {
   auth,
@@ -20,6 +21,7 @@ export const text = {
   navigation,
   wordsToLinkAbout,
   lobby,
+  termsAndConditions,
   match,
   leaderboard,
   homepage,

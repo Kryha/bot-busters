@@ -29,11 +29,11 @@ export const styles = {
       justifyContent: "center",
       alignItems: "center",
       flexDirection: "column",
-      width: "200px",
-      height: "200px",
+      width: "270px",
+      height: "270px",
       [theme.breakpoints.up("xl")]: {
-        width: "250px",
-        height: "250px",
+        width: "270px",
+        height: "270px",
       },
       [theme.breakpoints.down("md")]: {
         width: "150px",
@@ -51,7 +51,7 @@ export const styles = {
   },
   text: {
     textTransform: "uppercase",
-    fontSize: "16px",
+    fontSize: "20px",
     [`@media (min-width: ${breakpoints.lg}px)`]: {
       fontSize: "24px",
     },
@@ -61,29 +61,26 @@ export const styles = {
   },
   hostContainer: {
     flexDirection: "row",
-    flex: 1,
+    justifyContent: "center",
+    marginLeft: "auto",
+    marginRight: "auto",
   },
   hostAvatar: {
-    alignSelf: "flex-end",
-    width: "auto",
-    height: 250,
-    [theme.breakpoints.up("lg")]: {
-      height: 400,
-    },
-    "& > img": {
-      width: "inherit",
-      height: "inherit",
-    },
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    maxHeight: "300px",
+    maxWidth: "300px",
+    minHeight: "200px",
+    minWidth: "200px",
   },
   hostParagraph: {
     flexDirection: "column",
     justifyContent: "center",
+    width: "60%",
   },
   hostText: {
     lineHeight: "24px",
-    justifyContent: "flex-end",
-    alignSelf: "center",
-    width: "70%",
     "& > span": {
       color: theme.palette.secondary.main,
       textTransform: "uppercase",

@@ -10,7 +10,7 @@ import { Chat } from "~/components/chat/chat.jsx";
 import { Results } from "~/components/results/index.js";
 import { ErrorView } from "~/components/error-view/index.jsx";
 import { PlayerLocal } from "~/components/players/player-local/index.js";
-import { PlayersOthers } from "~/components/players/players-others/index.js";
+import { PlayersOthers } from "~/components/players/player-others/index.js";
 
 const Match: FC = () => {
   const { query } = useRouter();
@@ -55,11 +55,6 @@ const MatchInternal: FC<Props> = ({ roomId, session }) => {
 
   if (!localPlayer) return <ErrorView />;
 
-  const totalBots = room.players.reduce(
-    (acc, player) => (player.isBot ? acc + 1 : acc),
-    0,
-  );
-
   const isVoteEnabled = !!room.messages.find(
     (message) => message.sender === localPlayer.userId,
   );
@@ -79,15 +74,8 @@ const MatchInternal: FC<Props> = ({ roomId, session }) => {
         isVoteEnabled={isVoteEnabled}
         onVote={handleVote}
       />
-      {room.stage === "results" && (
-        <Results
-          gainedScore={localPlayer.score}
-          totalBots={totalBots}
-          botsBusted={localPlayer.botsBusted}
-          achievements={localPlayer.achievements}
-        />
-      )}
 
+      {room.stage === "results" && <Results player={localPlayer} />}
       {room.stage !== "results" && <Chat roomId={roomId} room={room} />}
       {room.stage === "chat" && <PlayerLocal localPlayer={localPlayer} />}
     </Layout>

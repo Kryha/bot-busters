@@ -1,12 +1,17 @@
 import { Stack, Typography } from "@mui/material";
 import { type FC, useState } from "react";
 
-import { VOTING_TIME_MS } from "~/constants/index.js";
 import { text } from "~/assets/text/index.js";
-import { type MatchRoom, type PlayerType } from "~/types/index.js";
-import { Timer } from "~/components/timer/index.js";
 import { PlayerData } from "~/components/players/player-data/index.js";
+import { PlayerProofs } from "~/components/players/player-proofs/index.js";
 import { PrimaryButton } from "~/components/primary-button/index.js";
+import { Timer } from "~/components/timer/index.js";
+import { VOTING_TIME_MS } from "~/constants/index.js";
+import {
+  type CharacterId,
+  type MatchRoom,
+  type PlayerType,
+} from "~/types/index.js";
 
 import { styles } from "./styles.js";
 
@@ -25,14 +30,11 @@ export const PlayersOthers: FC<Props> = ({
 }) => {
   const [isLoadingVotes, setIsLoadingVotes] = useState(false);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [proofCharacterId, setProofCharacterId] = useState<CharacterId>("1");
   const { stage, players, votingAt } = room;
 
   const resultHeading =
     localPlayer.botsBusted === 0 ? text.match.bummer : text.match.busted;
-  const resultText =
-    localPlayer.botsBusted === 0
-      ? text.match.bustedResultFail
-      : text.match.bustedResultPass;
 
   const selectPlayer = (userId: string) => {
     setSelectedIds((prevIds) => {
@@ -62,52 +64,74 @@ export const PlayersOthers: FC<Props> = ({
   );
 
   return (
-    <Stack sx={styles.container}>
+    <Stack sx={styles.container(stage)}>
       {stage === "voting" && (
         <Stack sx={styles.voting}>
-          <Typography variant="subtitle1" sx={styles.playerHeading}>
+          <Typography variant="h2" sx={styles.playerHeading}>
             {text.match.bustTheBots}
           </Typography>
-          <Typography variant="body1" sx={styles.playerSubHeading}>
-            {text.match.bustTheBotsDescription}
+          <Typography
+            variant="body1"
+            sx={styles.playerSubHeading(isVoteEnabled)}
+          >
+            {isVoteEnabled
+              ? text.match.bustTheBotsDescription
+              : text.match.bustTheBotsDisabledDescription}
           </Typography>
         </Stack>
       )}
+
       {stage === "results" && (
         <Stack sx={styles.results}>
-          <Typography variant="subtitle1" sx={styles.playerHeading}>
+          <Typography variant="h2" sx={styles.playerHeading}>
             {resultHeading}
-          </Typography>
-          <Typography variant="body1" sx={styles.playerSubHeading}>
-            {resultText}
           </Typography>
         </Stack>
       )}
-      <Stack sx={styles.list(stage !== "chat")}>
+
+      <Stack sx={styles.list(stage)}>
         {otherPlayers.map((player, index) => {
+          const isSelected =
+            stage !== "results"
+              ? selectedIds.includes(player.userId)
+              : localPlayer.votes?.includes(player.userId);
+
           return (
             <PlayerData
               key={index}
-              player={player}
-              isSelected={selectedIds.includes(player.userId)}
-              onSelectPlayer={() => selectPlayer(player.userId)}
               stage={stage}
+              player={player}
               localPlayer={localPlayer}
+              isSelected={isSelected}
+              isProofSelected={player.characterId === proofCharacterId}
+              onSelectPlayer={() => {
+                stage === "voting"
+                  ? selectPlayer(player.userId)
+                  : setProofCharacterId(player.characterId);
+              }}
             />
           );
         })}
       </Stack>
+
       {stage === "voting" && (
         <Stack sx={styles.timeSection}>
           <Timer time={votingAt} duration={VOTING_TIME_MS} />
           <PrimaryButton
             sx={styles.button}
-            disabled={!isVoteEnabled || isLoadingVotes}
+            disabled={!isVoteEnabled || isLoadingVotes || !selectedIds.length}
             onClick={() => void handleVote()}
           >
             {text.general.confirm}
           </PrimaryButton>
         </Stack>
+      )}
+
+      {stage === "results" && (
+        <PlayerProofs
+          otherPlayers={otherPlayers}
+          proofCharacterId={proofCharacterId}
+        />
       )}
     </Stack>
   );

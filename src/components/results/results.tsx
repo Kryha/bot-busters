@@ -7,17 +7,14 @@ import { api } from "~/utils/api.js";
 import { text } from "~/assets/text/index.js";
 import { PrimaryButton } from "~/components/primary-button/index.js";
 import { Score } from "~/components/score/index.js";
-import { type AchievementId } from "~/types/index.js";
+import { type PlayerType } from "~/types/index.js";
 import { styles } from "./styles.js";
 
 interface Props {
-  gainedScore: number;
-  botsBusted: number;
-  totalBots: number;
-  achievements: AchievementId[];
+  player: PlayerType;
 }
 
-export const Results: FC<Props> = ({ gainedScore, achievements }) => {
+export const Results: FC<Props> = ({ player }) => {
   const router = useRouter();
 
   const loggedUser = api.user.getLoggedUser.useQuery(undefined, {
@@ -30,25 +27,33 @@ export const Results: FC<Props> = ({ gainedScore, achievements }) => {
 
   return (
     <Stack sx={styles.wrapper}>
-      <Score gainedScore={gainedScore} achievements={achievements} />
+      <Score player={player} />
+
       <Stack sx={styles.buttonContainer}>
         {loggedUser.isLoading || (
           <>
-            {!isConnectButtonHidden && (
+            <PrimaryButton
+              sx={styles.button}
+              onClick={() => void router.push(pages.lobby)}
+            >
+              {text.chat.playAgain}
+            </PrimaryButton>
+
+            {!isConnectButtonHidden ? (
               <PrimaryButton
                 sx={styles.button}
                 onClick={() => void router.push(pages.login)}
               >
                 {text.chat.addScore}
               </PrimaryButton>
+            ) : (
+              <PrimaryButton
+                sx={styles.button}
+                onClick={() => void router.push(pages.leaderboard)}
+              >
+                {text.chat.checkLeaderboard}
+              </PrimaryButton>
             )}
-
-            <PrimaryButton
-              sx={styles.button}
-              onClick={() => void router.push(pages.home)}
-            >
-              {text.chat.playNewGame}
-            </PrimaryButton>
           </>
         )}
       </Stack>

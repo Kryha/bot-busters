@@ -1,5 +1,5 @@
-import { type SxProps } from "@mui/material";
 import { theme } from "~/styles/theme.js";
+import { type SxStyleRecord } from "~/types/sx-style-record.js";
 
 export const styles = {
   wrapper: {
@@ -9,7 +9,8 @@ export const styles = {
     justifyContent: "center",
     gap: 5,
     borderBottom: `4px solid ${theme.palette.divider}`,
-  } satisfies SxProps,
+  },
+
   chatTitle: {
     textTransform: "uppercase",
     textAlign: "center",
@@ -18,11 +19,13 @@ export const styles = {
     pr: 2,
     pl: 2,
   },
+
   prompt: {
+    width: "100%",
     flexDirection: "row",
-    justifyContent: "center",
+    justifyContent: "flex-start",
     alignItems: "center",
     p: 2,
     gap: 5,
   },
-};
+} satisfies SxStyleRecord;

@@ -6,28 +6,37 @@ import { v4 as uuid } from "uuid";
 import { matchPrompts } from "~/assets/text/match-prompts.js";
 import {
   CHAT_TIME_MS,
+  ONE_TIME_ACHIEVEMENTS,
   POINTS_ACHIEVEMENTS,
   POINTS_BOT_BUSTED,
   POINTS_HUMAN_BUSTED,
   VOTING_TIME_MS,
 } from "~/constants/index.js";
 import { ee, matchEvent } from "~/server/api/match-maker.js";
-import { db, type BBPgTransaction } from "~/server/db/index.js";
-import { users } from "~/server/db/schema.js";
-import { selectMatchPlayedByUser, selectUserById } from "~/server/db/user.js";
+import { type BBPgTransaction } from "~/server/db/index.js";
+import {
+  userAchievements,
+  users,
+  type UserAchievements,
+} from "~/server/db/schema.js";
+import {
+  selectMatchPlayedByUser,
+  selectUserAchievements,
+  selectUserById,
+} from "~/server/db/user.js";
+import { matchAchievements } from "~/server/service/achievements.js";
 import { Agent } from "~/server/service/index.js";
 import {
   achievementIdSchema,
-  type ReadyToPlayPayload,
   type CharacterId,
   type ChatMessagePayload,
   type MatchRoom,
   type MatchStage,
   type PlayerType,
+  type ReadyToPlayPayload,
   type StoredChatMessage,
 } from "~/types/index.js";
 import { getRandomInt } from "~/utils/math.js";
-import { matchAchievements } from "~/server/service/achievements.js";
 
 export class Match {
   private _id: string;
@@ -49,6 +58,7 @@ export class Match {
 
   //TODO: check for better solution
   private _playerPreviousMatches = new Map<string, MatchRoom[]>();
+  private _playerAchievements = new Map<string, UserAchievements[]>();
 
   stage: MatchStage = "chat";
   arePointsCalculated = false;
@@ -110,7 +120,7 @@ export class Match {
   }
 
   private async initMatch(playerIds: string[]) {
-    await this.getPlayerPreviousMatches();
+    await this.getPlayerStats();
     await this.checkVerifiedPlayers();
 
     ee.emit("readyToPlay", {
@@ -167,6 +177,10 @@ export class Match {
       isBot: false,
       isScoreSaved: false,
       botsBusted: 0,
+      totalBotsBusted: 0,
+      humansBusted: 0,
+      botsBustedScore: 0,
+      humansBustedScore: 0,
       correctGuesses: 0,
       achievements: [],
     };
@@ -235,17 +249,34 @@ export class Match {
   }
 
   // TODO: make a proper DB relation with user and matches instead of doing this
-  private async getPlayerPreviousMatches() {
+  private async getPlayerStats() {
     const promises = this.players
       .filter((player) => !player.isBot)
       .map(async (player) => {
-        if (this._playerPreviousMatches.get(player.userId)) return;
+        if (
+          this._playerPreviousMatches.get(player.userId) ??
+          this._playerAchievements.get(player.userId)
+        )
+          return;
 
-        const matchRooms = (await selectMatchPlayedByUser(player.userId)).map(
-          (match) => match.match.room,
+        // getting total amount of bots busted by the player
+        const playerInfo = await selectUserById(player.userId);
+        if (playerInfo) {
+          player.totalBotsBusted = playerInfo.botsBusted;
+        }
+
+        // getting the achievements earned by the player
+        const playerMatchHistory = await selectMatchPlayedByUser(
+          player.userId,
+          5,
         );
 
+        const matchRooms = playerMatchHistory.map((match) => match.match.room);
+
         this._playerPreviousMatches.set(player.userId, matchRooms);
+
+        const userAchievements = await selectUserAchievements(player.userId);
+        this._playerAchievements.set(player.userId, userAchievements);
       });
     await Promise.allSettled(promises);
     this.playerHistoryLoaded = true;
@@ -253,62 +284,81 @@ export class Match {
 
   calculatePoints() {
     this._players = this.players.map((player) => {
-      let score = 0;
       let correctGuesses = 0;
       let botsBusted = 0;
+      let humansBusted = 0;
+      let score = 0;
+      let botsBustedScore = 0;
+      let humansBustedScore = 0;
+
       const otherPlayers = this.players.filter(
         (p) => p.userId !== player.userId,
       );
 
-      if (player.votes) {
-        otherPlayers.forEach((p) => {
-          const isVoted = player.votes!.includes(p.userId);
-          const hasGuessed = p.isBot ? isVoted : !isVoted;
+      // Checking if the player is entitled to get points
+      if (!player.votes) return { ...player };
 
-          if (hasGuessed) {
-            correctGuesses += 1;
+      otherPlayers.forEach((p) => {
+        const isVoted = player.votes!.includes(p.userId);
+        const hasGuessed = p.isBot ? isVoted : !isVoted;
 
-            if (p.isBot) {
-              botsBusted += 1;
-              score += POINTS_BOT_BUSTED;
-            } else {
-              score += POINTS_HUMAN_BUSTED;
-            }
+        if (hasGuessed) {
+          correctGuesses += 1;
+
+          if (p.isBot) {
+            botsBusted += 1;
+            score += POINTS_BOT_BUSTED;
+            botsBustedScore += POINTS_BOT_BUSTED;
+          } else {
+            humansBusted += 1;
+            score += POINTS_HUMAN_BUSTED;
+            humansBustedScore += POINTS_HUMAN_BUSTED;
           }
-        });
-      }
+        }
+      });
 
-      if (!player.isBot) {
+      if (player.isVerified) {
         // Check achievements
         const achievementPoints = Object.entries(matchAchievements)
-          .filter(([_, achievement]) => {
-            return achievement.calculate({
+          .filter(([_, achievement]) =>
+            achievement.calculate({
               player,
-              messages: this._messages,
               botsBusted,
               otherPlayers,
-              playerHistory: this._playerPreviousMatches.get(player.userId),
-            });
-          })
+              playerHistory:
+                this._playerPreviousMatches.get(player.userId) ?? [],
+              playerAchievements:
+                this._playerAchievements.get(player.userId) ?? [],
+            }),
+          )
           .reduce((totalPoints, [id, _]) => {
             const achievementId = achievementIdSchema.safeParse(id);
             if (!achievementId.success) return totalPoints;
+
+            // TODO: don't mutate attributes here
             player.achievements.push(achievementId.data);
 
-            return (totalPoints += POINTS_ACHIEVEMENTS[achievementId.data]);
+            return totalPoints + POINTS_ACHIEVEMENTS[achievementId.data];
           }, 0);
 
         score += achievementPoints;
       }
-      return { ...player, score, correctGuesses, botsBusted };
+
+      return {
+        ...player,
+        score,
+        correctGuesses,
+        botsBusted,
+        humansBusted,
+        botsBustedScore,
+        humansBustedScore,
+      };
     });
 
     this.arePointsCalculated = true;
   }
 
-  async storeScore(tx?: BBPgTransaction) {
-    const dbTx = tx ?? db;
-
+  async storeMatchStats(tx: BBPgTransaction) {
     let allScoresStored = true;
 
     const promises = this._players.map(async (player) => {
@@ -319,12 +369,26 @@ export class Match {
 
         if (player.isBot) return;
 
-        await dbTx
+        await tx
           .update(users)
           .set({
             score: sql`${users.score} + ${player.score}`,
+            botsBusted: sql`${users.botsBusted} + ${player.botsBusted}`,
           })
           .where(eq(users.id, player.userId));
+
+        const playerAchievements = player.achievements
+          .filter((achievement) => ONE_TIME_ACHIEVEMENTS.includes(achievement))
+          .map((achievementId) => {
+            return {
+              userId: player.userId,
+              achievementId: achievementId,
+              achievedAt: new Date(),
+            };
+          });
+        if (playerAchievements.length !== 0) {
+          await tx.insert(userAchievements).values(playerAchievements);
+        }
       } catch (error) {
         player.isScoreSaved = false;
         allScoresStored = false;

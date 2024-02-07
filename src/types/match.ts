@@ -29,6 +29,8 @@ export const storedChatMessageSchema = z.object({
 export type StoredChatMessage = z.infer<typeof storedChatMessageSchema>;
 
 export const achievementIdSchema = z.enum([
+  // Daily streak play
+  "dailyStreakCounter",
   // Match achievement - perfect score (all votes correct)
   "goodBust",
   // Match achievement - two people selected you as a bot
@@ -37,10 +39,14 @@ export const achievementIdSchema = z.enum([
   "busterStreak",
   // One time achievement - player plays his first game
   "firstTimer",
+  // Day achievement - play 5 days in a row
+  "fiveDayStreak",
   // One time achievement - player Bust at least one bot in his first game
   "beginnersLuck",
   // One time achievement - player plays his first game as verified human
   "realHuman",
+  // One time achievement - bust a total of 100 bots
+  "masterBuster",
 ]);
 export type AchievementId = z.infer<typeof achievementIdSchema>;
 
@@ -51,6 +57,10 @@ export const playerSchema = z.object({
   isBot: z.boolean().optional(), // `optional` makes sure we can hide this value when not in `results` stage
   isScoreSaved: z.boolean(),
   botsBusted: z.number(),
+  totalBotsBusted: z.number(),
+  humansBusted: z.number(),
+  botsBustedScore: z.number(),
+  humansBustedScore: z.number(),
   correctGuesses: z.number(),
   votes: z.array(z.string().uuid()).optional(), // array of voted ids
   isVerified: z.boolean().optional(),

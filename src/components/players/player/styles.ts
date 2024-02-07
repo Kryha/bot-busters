@@ -12,8 +12,21 @@ export const styles = {
   character: {
     textTransform: "uppercase",
   },
-  selectBot: {
-    textTransform: "uppercase",
+  selectBot: (isBotSelected?: boolean) => {
+    return {
+      textTransform: "uppercase",
+      opacity: isBotSelected ? 1 : 0,
+    };
+  },
+  text: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    cursor: "pointer",
+    "& > svg": {
+      width: 15,
+      height: 10,
+    },
   },
   avatarContainer: {
     position: "absolute",
@@ -30,7 +43,12 @@ export const styles = {
     },
     cursor: "pointer",
   } satisfies SxProps,
-  botResult: (stage: string, isBot?: boolean, isSelected?: boolean) => {
+  botResult: (
+    stage: string,
+    isBot?: boolean,
+    isSelected?: boolean,
+    isProofSelected?: boolean,
+  ) => {
     let textColor = theme.palette.common.white;
 
     if (stage === "voting") {
@@ -38,19 +56,36 @@ export const styles = {
         ? theme.palette.success.main
         : theme.palette.common.white;
     } else if (stage === "results") {
-      if (isSelected === false && isBot === false) {
-        textColor = theme.palette.common.white;
-      } else if (isSelected === true && isBot === false) {
-        textColor = theme.palette.error.main;
-      } else if (isSelected === true && isBot === true) {
+      if (isSelected === isBot) {
         textColor = theme.palette.success.main;
+      } else {
+        textColor = theme.palette.error.main;
       }
     }
+
     return {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "center",
+      marginTop: 1,
+      "& > svg": {
+        width: 15,
+        height: 10,
+        "& > path": {
+          fill: textColor,
+          stroke: textColor,
+        },
+      },
+      "& > span": {
+        lineHeight: "normal",
+      },
       textTransform: "uppercase",
-      textDecoration: isBot ? "underline" : "none",
-      cursor: isBot ? "pointer" : "default",
+      cursor: "pointer",
       color: textColor,
+      textDecoration: isProofSelected ? "underline" : "none",
+      "&:hover": {
+        textDecoration: "underline",
+      },
     };
   },
 };

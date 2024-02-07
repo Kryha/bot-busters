@@ -13,7 +13,6 @@ export const LoginLoading = () => (
   <Stack sx={styles.wrapper}>
     <Stack sx={styles.container}>
       <Stack sx={styles.progress}>
-        <Typography variant="h5">{text.auth.connectYourWallet}</Typography>
         <Image
           src={spinner}
           alt="spinner"

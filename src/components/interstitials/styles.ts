@@ -1,38 +1,42 @@
 import { type SxProps } from "@mui/material";
-import { zIndex } from "~/styles/z-index.js";
 
 export const styles = {
   avatar: {
-    position: "absolute",
-    background: "transparent",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    zIndex: zIndex.back,
-    width: "auto",
-    height: "100vh",
-    "& > img": {
-      width: "inherit",
-      height: "inherit",
-      objectFit: "contain",
+    "& > svg": {
+      width: "100%",
+      height: "100%",
     },
   },
   splashText: {
+    position: "absolute",
+    inset: 0,
     flexDirection: "column",
-    marginTop: "46px",
-    paddingLeft: 2,
-    paddingRight: 2,
+    mt: 12,
     gap: 4,
     justifyContent: "center",
     alignItems: "center",
     "& > svg": {
-      width: "80vw",
+      width: "60%",
+      height: "auto",
+    },
+  },
+  splashSection: {
+    position: "absolute",
+    inset: 0,
+  },
+  letsBustSomeBots: {
+    position: "absolute",
+    inset: 0,
+    justifyContent: "center",
+    alignItems: "center",
+    "& > svg": {
+      width: "60%",
       height: "auto",
     },
   },
   splashHeading: {
     "& > svg": {
-      width: "40vw",
+      width: "100%",
       height: "auto",
     },
   },
