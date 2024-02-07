@@ -11,6 +11,10 @@ a {
   text-decoration: underline;
 }
 
+button {
+  cursor: pointer;
+}
+
 /* Animations */
 
 @keyframes infinite_text_primary {
