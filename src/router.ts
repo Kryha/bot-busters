@@ -11,4 +11,5 @@ export const pages = {
   support: "/support",
   privacy: "/privacy",
   animationLab: "/animation-lab",
+  termsAndConditions: "/terms-and-conditions",
 };
