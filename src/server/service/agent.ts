@@ -5,7 +5,7 @@ import { ee, matchEvent } from "~/server/api/match-maker.js";
 import { type Match } from "~/server/service/index.js";
 import type {
   CharacterId,
-  // CharacterName,
+  // CharacterName, // TODO: Implement CharacterNames in payload
   ChatMessagePayload,
   PlayerType,
   PromptMessage,
@@ -13,7 +13,6 @@ import type {
 } from "~/types/index.js";
 import { wait } from "~/utils/timer.js";
 // import { CHARACTERS } from "~/constants/index.js";
-
 export class Agent {
   private _id: string;
   private _characterId: CharacterId;
