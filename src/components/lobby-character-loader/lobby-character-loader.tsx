@@ -4,8 +4,7 @@ import { getCharacterAvatar } from "~/utils/characters.jsx";
 import { CHARACTERS, DEFAULT_MAX_PLAYERS_PER_ROOM } from "~/constants/index.js";
 import { text } from "~/assets/text/index.js";
 import { LobbyProgressBar } from "~/components/lobby-progress-bar/index.js";
-import { MatchMakingBot } from "~/assets/animations/index.js";
-import { AnimationPlayer } from "~/components/animation/index.js";
+import { HostAvatar } from "~/assets/characters/index.js";
 import { theme } from "~/styles/theme.js";
 import { styles } from "./styles.js";
 
@@ -68,7 +67,7 @@ export const LobbyCharacterLoader: FC<Props> = ({
       <LobbyProgressBar progress={activatedCharacters.size} />
       <Stack sx={styles.hostContainer}>
         <Stack sx={styles.hostAvatar}>
-          <AnimationPlayer animationData={MatchMakingBot} play loop />
+          <HostAvatar />
         </Stack>
         <Stack sx={styles.hostParagraph}>
           <Typography variant="body1" sx={styles.hostText}>

@@ -1,5 +1,5 @@
 import { Stack, Typography } from "@mui/material";
-import { useState, type FC } from "react";
+import { type FC, useState } from "react";
 
 import { text } from "~/assets/text/index.js";
 import { PlayerData } from "~/components/players/player-data/index.js";
