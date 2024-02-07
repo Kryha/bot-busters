@@ -20,9 +20,10 @@ export const general = {
   privacy: "Privacy",
   cookies: "Cookies",
   support: "Support",
-  discord: "Discord",
+  termsAndConditions: "Terms and Conditions",
   aleoOrg: "Aleo.org",
   zPass: "zPass",
+  obscura: "Obscura",
   dailyScore: "Daily score",
   aleoCreditsPayout: "Aleo credits payouts",
   clickChat: "Click on the chat to open messages",
@@ -43,6 +44,8 @@ export const general = {
   bot: "bot",
   confirm: "Confirm",
   aleoWebsite: "https://aleo.org/",
+  zpassWebsite: "https://zpass.aleo.org/",
+  obscuraWebsite: "https://obscura.build/",
   pageNotFound: "404:Page not found",
   formattedCountdown: (minutes: number, seconds: number): string =>
     `${minutes.toString().padStart(2, "0")}:${seconds
