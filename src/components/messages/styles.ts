@@ -1,22 +1,8 @@
 import { type SxProps } from "@mui/material";
-import { theme } from "~/styles/theme.js";
+import { getAvatarColor } from "~/utils/characters.jsx";
 
 export const styles = {
   avatar: (color: string) => {
-    const getAvatarColor = (color: string) => {
-      switch (color) {
-        case "orange":
-          return theme.palette.orange.main;
-        case "green":
-          return theme.palette.green.main;
-        case "pink":
-          return theme.palette.pink.main;
-        case "blue":
-          return theme.palette.blue.main;
-        case "yellow":
-          return theme.palette.yellow.main;
-      }
-    };
     return {
       "& > svg": {
         height: "24px",
@@ -45,21 +31,6 @@ export const styles = {
     };
   },
   messageSingle: (color: string, isLocal?: boolean) => {
-    const getAvatarColor = (color: string) => {
-      switch (color) {
-        case "orange":
-          return theme.palette.orange.main;
-        case "green":
-          return theme.palette.green.main;
-        case "pink":
-          return theme.palette.pink.main;
-        case "blue":
-          return theme.palette.blue.main;
-        case "yellow":
-          return theme.palette.yellow.main;
-      }
-    };
-
     const backgroundColor = getAvatarColor(color);
     return {
       padding: 1.5,
@@ -69,7 +40,7 @@ export const styles = {
       color: "common.black",
       textAlign: "left",
       position: "relative",
-      backgroundColor: getAvatarColor(color),
+      backgroundColor: backgroundColor,
 
       "&:first-of-type": {
         marginBottom: 0.1,

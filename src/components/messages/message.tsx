@@ -2,8 +2,8 @@ import { type FC } from "react";
 import { Stack, Typography } from "@mui/material";
 import { type CharacterName, type ChatMessage } from "~/types/index.js";
 
-import { styles } from "./styles.js";
 import { UserIcon } from "~/assets/icons/index.js";
+import { styles } from "./styles.js";
 
 interface Props {
   message: ChatMessage;
