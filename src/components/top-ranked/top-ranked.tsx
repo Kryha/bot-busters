@@ -6,6 +6,7 @@ import { type TopRankedPlayer } from "~/types/index.js";
 
 import { styles } from "./styles.js";
 import { theme } from "~/styles/theme.js";
+// import { api } from "~/utils/api.js";
 
 interface Props {
   players: TopRankedPlayer[];
@@ -14,17 +15,20 @@ interface Props {
 export const TopRanked: FC<Props> = ({ players }) => {
   const animationStyles = [styles.topRankedBanner1, styles.topRankedBanner2];
 
+  // TODO: integrate with db instead of fake data prop
+  // const getRankedUsers = api.user.getRankedUsers.useQuery(
+  //   {
+  //     limit: 10,
+  //   },
+  // );
+
   return (
     <Stack sx={styles.container}>
+      <Typography variant="subtitle1" sx={styles.title}>
+        {text.homepage.topRankedTitle}
+      </Typography>
       {animationStyles.map((sx, index) => (
         <Stack sx={{ ...styles.textContainer, ...sx }} key={index}>
-          <Typography
-            variant="subtitle1"
-            sx={styles.title}
-            color={theme.palette.common.black}
-          >
-            {text.homepage.topRankedTitle}
-          </Typography>
           {players.map(({ username, score }, index) => (
             <Typography
               variant="subtitle2"
