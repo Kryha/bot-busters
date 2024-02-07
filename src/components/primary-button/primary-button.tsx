@@ -19,7 +19,7 @@ const PrimaryButtonStyle = styled(Button)({
   justifyContent: "center",
   textAlign: "center",
   gap: 48,
-  width: "320px",
+  minWidth: "320px",
   fontSize: "24px",
   padding: "24px 24px",
   lineHeight: "normal",
