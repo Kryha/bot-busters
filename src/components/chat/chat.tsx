@@ -94,7 +94,7 @@ export const Chat: FC<Props> = ({ roomId, room }) => {
 
   return (
     <Stack sx={styles.container(stage)}>
-      <Stack component="section" sx={styles.section(isChatDisabled)}>
+      <Stack component="section" sx={styles.section}>
         <HostChatPrompt stage={stage} message={hostMessageData?.message} />
         <Messages messageData={messageData} />
       </Stack>
