@@ -2,7 +2,6 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-  scrollbar-width: none; /* Hide the default scrollbar for Firefox */
 }
 
 a {
