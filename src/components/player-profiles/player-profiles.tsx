@@ -35,18 +35,6 @@ export const PlayerProfiles: FC = () => {
           {sectionContent[1].highlight}
         </a>
       </Typography>
-    </BulletPoint>,
-    <BulletPoint key="playerProfile3">
-      <Typography variant="body1">
-        {sectionContent[2].regular}
-        <a
-          href={sectionContent[2].link}
-          style={{ color: theme.palette.secondary.main }}
-          target="_blank"
-        >
-          {sectionContent[2].highlight}
-        </a>
-      </Typography>
-    </BulletPoint>,
+    </BulletPoint>
   ];
 };
