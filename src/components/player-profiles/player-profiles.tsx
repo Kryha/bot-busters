@@ -1,11 +1,11 @@
 import React, { type FC } from "react";
 import { Typography } from "@mui/material";
+import { useRouter } from "next/router";
 
 import { text } from "~/assets/text/index.js";
 import { BulletPoint } from "~/components/index.js";
 import { theme } from "~/styles/theme.js";
-import { useRouter } from "next/router";
-import { pages } from "~/router";
+import { pages } from "~/router/index.js";
 
 const sectionContent = text.howToPlay.playerProfiles;
 

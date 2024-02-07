@@ -1,4 +1,3 @@
-// TODO: add missing links
 export const howToPlay = {
   headings: {
     howToPlay: "how to play",
