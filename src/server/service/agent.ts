@@ -22,6 +22,7 @@ export class Agent {
   private _systemPrompt: string;
 
   private _triggeredAt = Date.now();
+  private _silenceToken = "001001";
 
   get id() {
     return this._id;
@@ -44,7 +45,7 @@ export class Agent {
       "You're a normal person. Always reply as a normal person would do.",
       "You don't have a lot of knowledge of the world.",
       "You always reply with short sentences that don't excede 150 characters.",
-      // "If you decided not to reply to the last message just say '001001'.",
+      `If you decided not to reply to the last message just say ${this._silenceToken}.`,
       "exclude any stage directions, action lines, parentheticals, or descriptive text that provides contextual emotional background or physical actions. The dialogue should be straightforward, without annotations on how something is said or any character's non-verbal reactions.",
     ].join(" ");
 
@@ -70,8 +71,8 @@ export class Agent {
     const message = await this.requestMessageFromLLM();
 
     // If inference failed or bot decided not to reply, let the agent be silent
-    if (!!!message || message.includes("001001")) {
-      console.log("Response skipped...");
+    if (!message || message.includes(this._silenceToken)) {
+      console.info("Response skipped...");
       return;
     }
 
@@ -105,14 +106,13 @@ export class Agent {
     // TODO Limit amount of messages sent for inference
     // TODO define parameters as constants
     const prompt = this.generatePrompt(promptDialog);
-    console.log("🚀 ~ Agent ~ requestMessageFromLLM ~ prompt:", prompt);
 
     const body = JSON.stringify({
       inputs: prompt,
       parameters: { max_new_tokens: 52, top_p: 0.5, temperature: 0.8 },
     });
 
-    const response = await fetch(env.AWS_INFERENCE_ENDPOINT, {
+    const response = await fetch(env.AWS_INFERENCE_URL, {
       headers: {
         "Content-Type": "application/json",
         // Authorization: `Bearer ${env.HUGGING_FACE_TOKEN}`,
@@ -125,7 +125,7 @@ export class Agent {
     const textRes = await response.text();
 
     // TODO Improve error management for fetch
-    if (!textRes) return "";
+    if (!textRes) return this._silenceToken;
 
     const result = JSON.parse(textRes) as { body: string };
     const responseBody = JSON.parse(result.body) as string;
