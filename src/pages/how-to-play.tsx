@@ -23,7 +23,7 @@ const HowToPlay: FC = () => {
         {pageContent.main[1]}
       </Typography>
 
-      <Stack sx={{ ...styles.section, ml: "-50px" }}>
+      <Stack sx={{ ...styles.section, ml: "-90px" }}>
         <GameRules />
       </Stack>
 
@@ -35,10 +35,10 @@ const HowToPlay: FC = () => {
       </Stack>
 
       <Typography variant="h1" sx={styles.heading}>
-        {pageContent.headings.dailyLeaderboard}
+        {pageContent.headings.leaderboard}
       </Typography>
       <Stack sx={styles.section}>
-        {pageContent.dailyLeaderboard.map((content, idx) => (
+        {pageContent.leaderboard.map((content, idx) => (
           <BulletPoint key={"leaderboard" + idx} text={content} />
         ))}
       </Stack>
