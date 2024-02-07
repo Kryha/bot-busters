@@ -2,19 +2,24 @@ import { v4 as uuid } from "uuid";
 
 import type {
   CharacterId,
+  // CharacterName,
   ChatMessagePayload,
   PlayerType,
+  PromptMessage,
+  SenderRole,
 } from "~/types/index.js";
 import { type Match } from "~/server/service/index.js";
 import { ee, matchEvent } from "~/server/api/match-maker.js";
 import { env } from "~/env.mjs";
 import { wait } from "~/utils/timer.js";
+// import { CHARACTERS } from "~/constants/index.js";
 
 export class Agent {
   private _id: string;
   private _characterId: CharacterId;
   private _match: Match;
-  private _sentMessages: string[] = [];
+  // private _sentMessages: string[] = [];
+  private _systemPrompt: string;
 
   private _triggeredAt = Date.now();
 
@@ -34,6 +39,14 @@ export class Agent {
     this._id = uuid();
     this._match = match;
     this._characterId = characterId;
+    // TODO Add character Name & Personality
+    this._systemPrompt = [
+      "You're a normal person. Always reply as a normal person would do.",
+      "You don't have a lot of knowledge of the world.",
+      "You always reply with short sentences that don't excede 150 characters.",
+      // "If you decided not to reply to the last message just say '001001'.",
+      "exclude any stage directions, action lines, parentheticals, or descriptive text that provides contextual emotional background or physical actions. The dialogue should be straightforward, without annotations on how something is said or any character's non-verbal reactions.",
+    ].join(" ");
 
     ee.on(matchEvent(match.id), this.handleMessageEvent);
   }
@@ -56,6 +69,12 @@ export class Agent {
 
     const message = await this.requestMessageFromLLM();
 
+    // If inference failed or bot decided not to reply, let the agent be silent
+    if (!!!message || message.includes("001001")) {
+      console.log("Response skipped...");
+      return;
+    }
+
     const payload: ChatMessagePayload = {
       sender: this.id,
       message,
@@ -65,49 +84,53 @@ export class Agent {
     // TODO: remove artificial wait in favour of something more inteligent
     await wait(1500);
 
-    this._sentMessages.push(payload.message);
+    // this._sentMessages.push(payload.message);
     this._match.addMessage(payload);
   }
 
-  // TODO: consider that there are multiple players sending messages in the same chat
   private async requestMessageFromLLM() {
     const { messages } = this._match;
 
-    // TODO: Inject Character name as prefix of each message "Ash: {message}"
-    const pastInputs = messages
-      .slice(0, messages.length - 1)
-      .filter((payload) => payload.sender !== this._id)
-      .map((msg) => msg.message);
+    // const latestMessage = messages[messages.length - 1]?.message;
+    const promptDialog = messages.map((message): PromptMessage => {
+      const promptMessage = {
+        role: this.getMessageRole(message.sender),
+        // characterName: this.getCharacterName(message.sender as CharacterId),
+        content: message.message,
+      };
 
-    // TODO: remove default since we'll always have at least the first prompt as message
-    const latestMessage =
-      messages[messages.length - 1]?.message ?? "Who are you?";
-
-    const body = JSON.stringify({
-      inputs: {
-        past_user_inputs: pastInputs,
-        generated_responses: this._sentMessages,
-        text: latestMessage,
-      },
+      return promptMessage;
     });
 
-    const response = await fetch(
-      // TODO: use our own API
-      "https://api-inference.huggingface.co/models/facebook/blenderbot-400M-distill",
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${env.HUGGING_FACE_TOKEN}`,
-        },
-        method: "POST",
-        body,
+    // TODO Limit amount of messages sent for inference
+    // TODO define parameters as constants
+    const prompt = this.generatePrompt(promptDialog);
+    console.log("🚀 ~ Agent ~ requestMessageFromLLM ~ prompt:", prompt);
+
+    const body = JSON.stringify({
+      inputs: prompt,
+      parameters: { max_new_tokens: 52, top_p: 0.5, temperature: 0.8 },
+    });
+
+    const response = await fetch(env.AWS_INFERENCE_ENDPOINT, {
+      headers: {
+        "Content-Type": "application/json",
+        // Authorization: `Bearer ${env.HUGGING_FACE_TOKEN}`,
       },
-    );
+      method: "POST",
+      body,
+      signal: AbortSignal.timeout(10000),
+    });
 
     const textRes = await response.text();
-    const result = JSON.parse(textRes) as { generated_text: string };
 
-    return result.generated_text;
+    // TODO Improve error management for fetch
+    if (!textRes) return "";
+
+    const result = JSON.parse(textRes) as { body: string };
+    const responseBody = JSON.parse(result.body) as string;
+
+    return responseBody;
   }
 
   cleanup() {
@@ -126,5 +149,39 @@ export class Agent {
       votes: [],
       achievements: [],
     };
+  }
+
+  private getMessageRole(sender: string): SenderRole {
+    if (sender == this.characterId) return "assistant";
+    else return "user";
+  }
+
+  // TODO: fix case where sender is "host"
+  // private getCharacterName(sender: CharacterId): CharacterName {
+  //   const characterName = CHARACTERS[sender]?.name;
+  //   return !!characterName ? characterName : "roy";
+  // }
+
+  // TODO: Add character name
+  generatePrompt(messages: PromptMessage[]): string {
+    const hostMessage = messages.shift();
+    const systemPrompt = `
+    <s>[INST] <<SYS>>
+    ${this._systemPrompt}
+    <</SYS>>
+    ${hostMessage?.content} [/INST]
+    `;
+
+    // TODO: Improve prompt construction
+    const promptString = messages.reduce((acc, currentMessage) => {
+      const nextMessageContent =
+        currentMessage.role === "user"
+          ? `[INST] ${currentMessage.content} [/INST]`
+          : `${currentMessage.content}`;
+
+      return `${acc}${nextMessageContent}\n`;
+    }, systemPrompt);
+
+    return `${promptString}</s>`;
   }
 }

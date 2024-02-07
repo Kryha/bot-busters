@@ -42,3 +42,5 @@ spec:
               value: http://localhost:3030
             - name: ALEO_PRIVATE_KEY
               value: APrivateKey1zkp8CZNn3yeCseEtxuVPbDCwSyhGW6yZKUYKfgXmcpoGPWH # not a real account
+            - name: AWS_INFERENCE_ENDPOINT
+              value: https://nez5g29b86.execute-api.eu-central-1.amazonaws.com/staging/generate

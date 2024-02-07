@@ -30,6 +30,7 @@ export const env = createEnv({
     BB_EMAIL: z.string().email().default("bot-busters@kryha.io"),
     AWS_ACCESS_KEY: z.string(),
     AWS_SECRET: z.string(),
+    AWS_INFERENCE_ENDPOINT: z.string().url(),
   },
 
   /**
@@ -71,6 +72,7 @@ export const env = createEnv({
     BB_EMAIL: process.env.BB_EMAIL,
     AWS_ACCESS_KEY: process.env.AWS_ACCESS_KEY,
     AWS_SECRET: process.env.AWS_SECRET,
+    AWS_INFERENCE_ENDPOINT: process.env.AWS_INFERENCE_ENDPOINT,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.
