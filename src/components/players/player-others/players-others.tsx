@@ -30,11 +30,35 @@ export const PlayersOthers: FC<Props> = ({
 }) => {
   const [isLoadingVotes, setIsLoadingVotes] = useState(false);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
-  const [proofCharacterId, setProofCharacterId] = useState<CharacterId>("1");
+  const [proofCharacterId, setProofCharacterId] = useState<
+    CharacterId | undefined
+  >(room.players[0]?.characterId);
   const { stage, players, votingAt } = room;
 
-  const resultHeading =
-    localPlayer.botsBusted === 0 ? text.match.bummer : text.match.busted;
+  const [resultHeading, resultSubheading] = (() => {
+    if (room.stage !== "results") return ["", ""];
+
+    if (localPlayer.botsBusted === 0 && localPlayer.humansBusted === 0) {
+      return [text.match.bummer, text.match.bustedResultFail];
+    }
+
+    const [totalBots, totalHumans] = room.players
+      .filter((p) => p.userId !== localPlayer.userId)
+      .reduce(
+        ([bots, humans], p) =>
+          p.isBot ? [bots + 1, humans] : [bots, humans + 1],
+        [0, 0],
+      );
+
+    if (
+      localPlayer.botsBusted === totalBots &&
+      localPlayer.humansBusted === totalHumans
+    ) {
+      return [text.match.busted, ""];
+    }
+
+    return [text.match.goodJobKinda, text.match.bustedResultPass];
+  })();
 
   const selectPlayer = (userId: string) => {
     setSelectedIds((prevIds) => {
@@ -85,6 +109,9 @@ export const PlayersOthers: FC<Props> = ({
         <Stack sx={styles.results}>
           <Typography variant="h2" sx={styles.playerHeading}>
             {resultHeading}
+          </Typography>
+          <Typography variant="body1" textAlign="center">
+            {resultSubheading}
           </Typography>
         </Stack>
       )}
