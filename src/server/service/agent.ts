@@ -71,10 +71,7 @@ export class Agent {
     const message = await this.requestMessageFromLLM();
 
     // If inference failed or bot decided not to reply, let the agent be silent
-    if (!message || message.includes(this._silenceToken)) {
-      console.info("Response skipped...");
-      return;
-    }
+    if (!message || message.includes(this._silenceToken)) return;
 
     const payload: ChatMessagePayload = {
       sender: this.id,
