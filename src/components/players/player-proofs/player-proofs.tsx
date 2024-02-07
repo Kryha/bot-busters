@@ -10,13 +10,10 @@ import { styles } from "./styles.js";
 
 interface Props {
   otherPlayers: PlayerType[];
-  proofCharacterId: CharacterId;
+  proofCharacterId?: CharacterId;
 }
 
-export const PlayerProofs: FC<Props> = ({
-  otherPlayers,
-  proofCharacterId = "1",
-}) => {
+export const PlayerProofs: FC<Props> = ({ otherPlayers, proofCharacterId }) => {
   // This can never be undefined, set to first player if not found
   const playerProof =
     otherPlayers.find((player) => player.characterId === proofCharacterId) ??
