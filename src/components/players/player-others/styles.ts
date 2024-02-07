@@ -1,26 +1,31 @@
 import { type SxProps } from "@mui/material";
+import { type MatchStage } from "~/types/index.js";
 import { breakpoints, theme } from "~/styles/theme.js";
 
 export const styles = {
-  list: (isResults: boolean) => {
+  container: (stage: MatchStage) => {
     return {
+      pr: stage === "chat" ? 2 : 3,
+      [`@media (max-width: ${breakpoints.md}px)`]: {
+        pr: 0,
+      },
+    };
+  },
+  list: (stage: MatchStage) => {
+    return {
+      width: stage === "chat" ? "auto" : "850px",
       justifyContent: "center",
-      gap: 2,
-      flexDirection: isResults ? "row" : "column",
+      mt: stage === "results" ? "auto" : 2,
+      mb: stage === "voting" ? 2 : "auto",
+      flexDirection: stage === "chat" ? "column" : "row",
       [`@media (max-width: ${breakpoints.md}px)`]: {
         flexDirection: "row",
         mt: 10,
       },
     };
   },
-  container: {
-    gap: 4,
-    pr: 2,
-    [`@media (max-width: ${breakpoints.md}px)`]: {
-      pr: 0,
-    },
-  },
   playerHeading: {
+    fontSize: "5.5rem",
     textAlign: "center",
     textTransform: "uppercase",
   },
@@ -35,9 +40,10 @@ export const styles = {
   timeSection: {
     pr: 2,
     pl: 2,
-    gap: 0.5,
+    gap: 2,
     justifyContent: "center",
     alignItems: "center",
+    mb: 2,
   } satisfies SxProps,
   button: {
     mt: 2,
@@ -48,6 +54,7 @@ export const styles = {
     pr: 2,
     pl: 2,
     gap: 4,
+    mb: 3,
   },
   results: {
     mt: 4,

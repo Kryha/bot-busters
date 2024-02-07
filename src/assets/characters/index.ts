@@ -13,6 +13,8 @@ import SplashDot from "./splash-dot.svg";
 import SplashEve from "./splash-eve.svg";
 import SplashHal from "./splash-hal.svg";
 import SplashRoy from "./splash-roy.svg";
+import HostAvatar from "./host.svg";
+import BotAvatar from "./bot-character.svg";
 
 export {
   AvatarHal,
@@ -30,4 +32,6 @@ export {
   SplashEve,
   SplashHal,
   SplashRoy,
+  HostAvatar,
+  BotAvatar,
 };
