@@ -62,7 +62,6 @@ export const Chat: FC<Props> = ({ roomId, room }) => {
     const error = !validMessage.safeParse(newMessage).success
       ? textLength.chatMessage.error
       : "";
-    console.log(error, newMessage);
     setValidation(error);
   };
 
