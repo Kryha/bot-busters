@@ -39,6 +39,7 @@ import {
   TransitionLinesRoy,
   TransitionLinesVoting,
 } from "~/assets/animations/index.js";
+import { theme } from "~/styles/index.js";
 
 export const getCharacterAvatar = (characterName: CharacterName) => {
   const avatarMap = {
@@ -112,5 +113,20 @@ export const getTransitionLines = (characterName: string | undefined) => {
       return TransitionLinesDot;
     default:
       return TransitionLinesVoting;
+  }
+};
+
+export const getAvatarColor = (color: string) => {
+  switch (color) {
+    case "orange":
+      return theme.palette.orange.main;
+    case "green":
+      return theme.palette.green.main;
+    case "pink":
+      return theme.palette.pink.main;
+    case "blue":
+      return theme.palette.blue.main;
+    case "yellow":
+      return theme.palette.yellow.main;
   }
 };

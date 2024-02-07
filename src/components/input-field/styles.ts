@@ -63,7 +63,10 @@ export const styles = {
   inputField: {
     borderRight: `4px solid ${theme.palette.primary.main}`,
     flexGrow: 1,
-    pl: 0,
+    pt: 1,
+    pb: 1,
+    pl: 2,
+    pr: 2,
     "textarea::placeholder": {
       position: "absolute",
       top: "50%",
