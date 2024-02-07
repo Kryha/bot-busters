@@ -11,6 +11,7 @@ import { styles } from "./styles.js";
 
 interface Props {
   character: Character;
+  isProofSelected?: boolean;
   isSelected?: boolean;
   isLocalPlayer?: boolean;
   hasGuessed?: boolean;
@@ -23,6 +24,7 @@ export const Player: FC<Props> = ({
   character,
   isLocalPlayer = false,
   isSelected,
+  isProofSelected,
   hasGuessed,
   isBot,
   onSelectPlayer,
@@ -84,7 +86,7 @@ export const Player: FC<Props> = ({
       )}
       {stage === "results" && (
         <Stack
-          sx={styles.botResult(stage, isBot, isSelected)}
+          sx={styles.botResult(stage, isBot, isSelected, isProofSelected)}
           onClick={onSelectPlayer}
         >
           <Typography variant="caption">{textResult}</Typography>
