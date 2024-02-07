@@ -28,6 +28,11 @@ export const validation = {
       min: 1,
       error: invalidTextLength(1, 320),
     },
+    chatMessage: {
+      max: 150,
+      min: 1,
+      error: "max 150 characters",
+    },
   },
   invalid: {
     topic: "Please select a valid topic",
@@ -48,6 +53,10 @@ export const validIssue = z
   .string()
   .min(validation.textLength.long.min)
   .max(validation.textLength.long.max);
+
+export const validMessage = z
+  .string()
+  .max(validation.textLength.chatMessage.max);
 
 export const validUsername = z
   .string()

@@ -1,4 +1,4 @@
-import { FormControl, type SelectChangeEvent, Typography } from "@mui/material";
+import { FormControl, Typography, type SelectChangeEvent } from "@mui/material";
 import { useState } from "react";
 
 import { text } from "~/assets/text/index.js";

@@ -1,7 +1,7 @@
-import { type FC, type KeyboardEvent, useMemo, useState } from "react";
 import { Stack } from "@mui/material";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router.js";
+import { useMemo, useState, type FC, type KeyboardEvent } from "react";
 
 import {
   type CharacterId,
@@ -10,12 +10,17 @@ import {
   type MessageData,
 } from "~/types/index.js";
 
-import { CHARACTERS, CHAT_TIME_MS } from "~/constants/index.js";
-import { pages } from "~/router.js";
-import { Messages } from "~/components/messages/index.js";
 import { HostChatPrompt } from "~/components/host-chat-prompt/index.js";
 import { InputField } from "~/components/input-field/index.js";
+import { Messages } from "~/components/messages/index.js";
 import { Timer } from "~/components/timer/index.js";
+import {
+  CHARACTERS,
+  CHAT_TIME_MS,
+  validMessage,
+  validation,
+} from "~/constants/index.js";
+import { pages } from "~/router.js";
 import { api } from "~/utils/api.js";
 
 import { styles } from "./styles.js";
@@ -29,6 +34,7 @@ export const Chat: FC<Props> = ({ roomId, room }) => {
   const { data: session } = useSession();
   const { players, stage } = room;
   const { push } = useRouter();
+  const { textLength } = validation;
 
   const sendMessage = api.match.sendMessage.useMutation();
 
@@ -36,6 +42,28 @@ export const Chat: FC<Props> = ({ roomId, room }) => {
   const [messages, setMessages] = useState<ChatMessagePayload[]>(room.messages);
   const appendMessage = (newMessage: ChatMessagePayload) => {
     setMessages((prev) => [...prev, newMessage]);
+  };
+
+  const handleMessage = (event: { target: { value: string } }) => {
+    const inputValue = event.target.value;
+
+    validateForm(inputValue);
+
+    if (!messageError && inputValue.length <= 150) {
+      setMessage(inputValue);
+    } else if (inputValue.length > 150) {
+      setMessage(inputValue.slice(0, 150));
+    }
+  };
+
+  const [messageError, setValidation] = useState("");
+
+  const validateForm = (newMessage: string) => {
+    const error = !validMessage.safeParse(newMessage).success
+      ? textLength.chatMessage.error
+      : "";
+    console.log(error, newMessage);
+    setValidation(error);
   };
 
   api.match.onMessage.useSubscription(
@@ -106,9 +134,10 @@ export const Chat: FC<Props> = ({ roomId, room }) => {
       {!isChatDisabled && (
         <InputField
           value={message}
-          onChange={(e) => setMessage(e.target.value)}
+          onChange={handleMessage}
           onClick={() => handleSend(message)}
           disabled={isChatDisabled}
+          validationError={messageError}
           onKeyDown={(e) => handleKeyDown(e)}
         />
       )}

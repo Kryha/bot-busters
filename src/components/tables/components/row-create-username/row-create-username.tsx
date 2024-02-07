@@ -1,9 +1,9 @@
-import { useState, type FC, useEffect } from "react";
 import { Stack } from "@mui/material";
+import { useEffect, useState, type FC } from "react";
 
-import { getRandomUsername } from "~/utils/username.js";
+import { UsernameInputField } from "~/components/input-field/index.js";
 import { validUsername } from "~/constants/validation.js";
-import { UsernameInputField } from "~/components/input-field/input-field.jsx";
+import { getRandomUsername } from "~/utils/username.js";
 
 import { styles } from "./styles.js";
 
