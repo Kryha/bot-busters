@@ -106,7 +106,7 @@ export class Agent {
     const response = await fetch(env.AWS_INFERENCE_URL, {
       headers: {
         "Content-Type": "application/json",
-        // Authorization: `Bearer ${env.HUGGING_FACE_TOKEN}`,
+        // Authorization: `Bearer ${env.AWS_TOKEN}`,
       },
       method: "POST",
       body,
