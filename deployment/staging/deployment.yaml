@@ -61,5 +61,10 @@ spec:
                 secretKeyRef:
                   name: backend-secrets
                   key: aws_secret
+            - name: LAMBDA_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets
+                  key: lambda_token
             - name: AWS_INFERENCE_URL
               value: https://nez5g29b86.execute-api.eu-central-1.amazonaws.com/staging/generate
