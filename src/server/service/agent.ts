@@ -146,7 +146,6 @@ export class Agent {
     };
   }
 
-  // Fix: get the correct assistant Role based on ID
   private getMessageRole(sender: string): SenderRole {
     if (sender == this._id) return "assistant";
     else return "user";
@@ -182,7 +181,7 @@ export class Agent {
   }
 
   parseResponse(input: string): string {
-    // Remove //ufffd || </s> || *some expresion* || [INST]
+    // Removes //ufffd || </s> || *some expresion* || [INST]
     return input.replace(/(\ufffd|<\/s>|(\*[^*]*\*)|\[INST\]|\[\/INST\])/g, "");
   }
 }
