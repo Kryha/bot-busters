@@ -76,9 +76,8 @@ export class Agent {
     };
 
     // TODO: remove artificial wait in favour of something more inteligent
-    if (this._match.messages.length === 1)
-      await wait(4500); // Wait longer if replying to Host Prompt
-    else await wait(1500);
+    const waitTime = this._match.messages.length === 1 ? 4500 : 1500;
+    await wait(waitTime);
 
     this._match.addMessage(payload);
   }
