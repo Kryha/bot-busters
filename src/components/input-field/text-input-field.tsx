@@ -84,7 +84,7 @@ export const UsernameInputField: FC<TextInputFieldProps> = ({
           disabled={!!validationError}
           sx={{ "&:disabled": { border: "none" } }}
         >
-          Confirm
+          {text.general.confirm}
         </PrimaryButton>
       </Stack>
       <Typography variant="body1" sx={styles.errorText}>
