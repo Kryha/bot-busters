@@ -132,8 +132,8 @@ export const Chat: FC<Props> = ({ roomId, room }) => {
       {!isChatDisabled && (
         <InputField
           value={message}
-          sendMessage={handleMessageChange}
-          onSubmit={() => handleSend(message)}
+          onChange={handleMessageChange}
+          sendMessage={() => handleSend(message)}
           disabled={isChatDisabled}
           validationError={messageError}
           onKeyDown={handleKeyDown}
