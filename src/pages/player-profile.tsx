@@ -37,9 +37,6 @@ const PlayerProfile = () => {
             <Typography variant="body1">
               {text.playerProfile.createProfile}
             </Typography>
-            <Typography variant="body1">
-              {text.playerProfile.top10ReceiveCredits}
-            </Typography>
           </Stack>
 
           <PrimaryButton

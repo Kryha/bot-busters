@@ -13,6 +13,7 @@ export const styles = {
   section: {
     pt: "70px",
     pb: "100px",
+    width: "100%",
   },
   heading: {
     textTransform: "uppercase",

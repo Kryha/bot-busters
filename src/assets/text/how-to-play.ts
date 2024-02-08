@@ -1,9 +1,8 @@
-// TODO: add missing links
 export const howToPlay = {
   headings: {
     howToPlay: "how to play",
     pointsAndPenalties: "points and penalties",
-    dailyLeaderboard: "daily leaderboard",
+    leaderboard: "leaderboard",
     playerProfiles: "player profiles",
   },
   main: [
@@ -46,7 +45,7 @@ export const howToPlay = {
     },
     {
       regular: "No messages sent or no selection submitted: ",
-      highlight: "Results invalidated.",
+      highlight: "0 points.",
     },
     {
       regular:
@@ -54,14 +53,13 @@ export const howToPlay = {
       highlight: "",
     },
   ],
-  dailyLeaderboard: [
-    "Ranks are based on daily total scores.",
-    "Aleo credits are awarded to top 10 players automatically when the leaderboard resets.",
-    "Leaderboard resets daily at 00:00 PST.",
+  leaderboard: [
+    "Ranks are based on total scores.",
+    "Scores in each round make up a players total score",
   ],
   playerProfiles: [
     {
-      regular: "Anon players are ineligible for leaderboard/credits.",
+      regular: "Anonymous players are ineligible for leaderboard position.",
       highlight: "",
       link: "",
     },
@@ -70,17 +68,10 @@ export const howToPlay = {
       highlight: "connecting your wallet.",
       link: "",
     },
-    {
-      regular:
-        "KYC (Know Your Customer) process required for credit eligibility via ",
-      highlight: "zPass.",
-      link: "https://zpass.aleo.org/",
-    },
   ],
   link: {
     connectingYourWallet: {
       text: "connecting your wallet.",
-      link: "",
     },
   },
 } as const;

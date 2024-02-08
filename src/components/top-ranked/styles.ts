@@ -1,4 +1,6 @@
 import { type SxProps } from "@mui/material";
+import { theme } from "~/styles/index.js";
+import { zIndex } from "~/styles/z-index.js";
 
 export const styles = {
   container: {
@@ -8,8 +10,7 @@ export const styles = {
     height: 62,
     flexDirection: "row",
     alignItems: "center",
-    // TODO: Add color to theme
-    backgroundColor: "#FE1BEF",
+    backgroundColor: theme.palette.pink.main,
   },
   points: {
     fontSize: "60%",
@@ -31,9 +32,13 @@ export const styles = {
     animationDelay: "10s",
   },
   title: {
-    ml: 2,
+    pl: 4,
+    pr: 6,
     textTransform: "uppercase",
     whiteSpace: "nowrap",
+    color: theme.palette.common.black,
+    background: theme.palette.pink.main,
+    zIndex: zIndex.front,
   },
   text: {
     ml: 2,

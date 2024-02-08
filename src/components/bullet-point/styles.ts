@@ -11,7 +11,7 @@ export const styles = {
   },
   transformPointToBullet: {
     width: "20px",
-    transform: "scale(3) translate(-3px, -5px)",
+    transform: "scale(3) translate(-3px, -4px)",
   },
   text: {
     lineHeight: "35px",
