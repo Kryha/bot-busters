@@ -15,19 +15,17 @@ interface Props {
 export const TopRanked: FC<Props> = () => {
   const animationStyles = [styles.topRankedBanner1, styles.topRankedBanner2];
 
-  const getRankedUsers = api.user.getRankedUsers.useQuery(
-    {
-      limit: 20,
-    },
-  );
+  const getRankedUsers = api.user.getRankedUsers.useQuery({
+    limit: 20,
+  });
 
   const rankList = getRankedUsers.data?.players;
-  
+
   // Hide banner if no data available
-  if(!rankList) return <></>
+  if (!rankList) return <></>;
 
   // Use sliding animation if more than 2 entries
-  if(rankList.length > 2){
+  if (rankList.length > 2) {
     return (
       <Stack sx={styles.container}>
         <Typography variant="subtitle1" sx={styles.title}>
@@ -59,22 +57,25 @@ export const TopRanked: FC<Props> = () => {
         <Typography variant="subtitle1" sx={styles.title}>
           {text.homepage.topRankedTitle}
         </Typography>
-        <Stack sx={{ ...styles.textContainer, ...styles.textContainer }} width="100vw">
-            {rankList.map(({ rank, username, score }, index) => (
-              <Typography
-                variant="subtitle2"
-                sx={styles.text}
-                color={theme.palette.common.black}
-                key={index}
-              >
-                {text.homepage.topRanked(rank, username!, score)}
-                <Box component={"span"} sx={styles.points}>
-                  {text.homepage.points}
-                </Box>
-              </Typography>
-            ))}
-            </Stack>
+        <Stack
+          sx={{ ...styles.textContainer, ...styles.textContainer }}
+          width="100vw"
+        >
+          {rankList.map(({ rank, username, score }, index) => (
+            <Typography
+              variant="subtitle2"
+              sx={styles.text}
+              color={theme.palette.common.black}
+              key={index}
+            >
+              {text.homepage.topRanked(rank, username!, score)}
+              <Box component={"span"} sx={styles.points}>
+                {text.homepage.points}
+              </Box>
+            </Typography>
+          ))}
+        </Stack>
       </Stack>
-    )
+    );
   }
 };
