@@ -14,6 +14,8 @@ export const SPLASH_SCREEN_DURATION = 3000; // 3 seconds
 
 export const DEFAULT_MAX_PLAYERS_PER_ROOM = 5;
 
+export const MAX_CHARACTERS_CHAT_MESSAGE = 150;
+
 /* MATERIAL UI  */
 export const FONT_SIZE = 16;
 export const COEFFICIENT = 14;

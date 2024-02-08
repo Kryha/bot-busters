@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+import { MAX_CHARACTERS_CHAT_MESSAGE } from "./main.js";
 import { TOPICS } from "./support.js";
 
 const invalidTextLength = (min: number, max: number) =>
@@ -28,6 +29,11 @@ export const validation = {
       min: 1,
       error: invalidTextLength(1, 320),
     },
+    chatMessage: {
+      max: MAX_CHARACTERS_CHAT_MESSAGE,
+      min: 1,
+      error: `max ${MAX_CHARACTERS_CHAT_MESSAGE} characters`,
+    },
   },
   invalid: {
     topic: "Please select a valid topic",
@@ -37,19 +43,23 @@ export const validation = {
 
 export const knownTopic = (topic: string) => TOPICS.includes(topic);
 
-export const validTopic = z
+export const validTopicSchema = z
   .string()
   .min(validation.textLength.short.min)
   .max(validation.textLength.short.max);
 
-export const validEmail = z.string().email();
+export const validEmailSchema = z.string().email();
 
-export const validIssue = z
+export const validIssueSchema = z
   .string()
   .min(validation.textLength.long.min)
   .max(validation.textLength.long.max);
 
-export const validUsername = z
+export const validMessageSchema = z
+  .string()
+  .max(validation.textLength.chatMessage.max);
+
+export const validUsernameSchema = z
   .string()
   .min(validation.username.min, validation.username.error.tooShort)
   .max(validation.username.max, validation.username.error.tooLong)

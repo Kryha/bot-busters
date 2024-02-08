@@ -1,7 +1,7 @@
 import { count, eq } from "drizzle-orm";
 import { z } from "zod";
 
-import { validUsername } from "~/constants/index.js";
+import { validUsernameSchema } from "~/constants/index.js";
 import {
   createTRPCRouter,
   protectedProcedure,
@@ -72,7 +72,7 @@ export const userRouter = createTRPCRouter({
   verify: protectedProcedure
     .input(
       z.object({
-        username: validUsername,
+        username: validUsernameSchema,
         address: z.string().optional(),
         signature: z.string().optional(),
       }),
