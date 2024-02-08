@@ -1,16 +1,16 @@
 import { Stack, TextField, type TextFieldProps } from "@mui/material";
-import { type FC, type MouseEventHandler } from "react";
+import { type FC } from "react";
 import { text } from "~/assets/text/index.js";
 import { SendButton } from "~/components/send-button/index.js";
 import { styles } from "./styles.js";
 
 type Props = TextFieldProps & {
   validationError?: string;
-  onSubmit: MouseEventHandler<HTMLButtonElement>;
+  sendMessage: (event: { target: { value: string } }) => void;
 };
 
 export const InputField: FC<Props> = ({
-  onSubmit,
+  sendMessage,
   disabled,
   validationError,
   ...rest
@@ -32,7 +32,7 @@ export const InputField: FC<Props> = ({
         rows={3}
       />
       <SendButton
-        onClick={onSubmit}
+        onClick={sendMessage}
         aria-label={"send-button"}
         disabled={!!validationError}
       >
