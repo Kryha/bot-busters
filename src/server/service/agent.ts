@@ -5,19 +5,16 @@ import { ee, matchEvent } from "~/server/api/match-maker.js";
 import { type Match } from "~/server/service/index.js";
 import type {
   CharacterId,
-  // CharacterName, // TODO: Implement CharacterNames in payload
   ChatMessagePayload,
   PlayerType,
   PromptMessage,
   SenderRole,
 } from "~/types/index.js";
 import { wait } from "~/utils/timer.js";
-// import { CHARACTERS } from "~/constants/index.js";
 export class Agent {
   private _id: string;
   private _characterId: CharacterId;
   private _match: Match;
-  // private _sentMessages: string[] = [];
   private _systemPrompt: string;
 
   private _triggeredAt = Date.now();
@@ -81,7 +78,6 @@ export class Agent {
     // TODO: remove artificial wait in favour of something more inteligent
     await wait(1500);
 
-    // this._sentMessages.push(payload.message);
     this._match.addMessage(payload);
   }
 
