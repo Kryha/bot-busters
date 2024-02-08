@@ -106,7 +106,7 @@ export class Agent {
     const response = await fetch(env.AWS_INFERENCE_URL, {
       headers: {
         "Content-Type": "application/json",
-        // Authorization: `Bearer ${env.AWS_TOKEN}`,
+        authorizationToken: env.LAMBDA_TOKEN,
       },
       method: "POST",
       body,

@@ -30,6 +30,7 @@ export const env = createEnv({
     AWS_ACCESS_KEY: z.string(),
     AWS_SECRET: z.string(),
     AWS_INFERENCE_URL: z.string().url(),
+    LAMBDA_TOKEN: z.string(),
   },
 
   /**
@@ -71,6 +72,7 @@ export const env = createEnv({
     AWS_ACCESS_KEY: process.env.AWS_ACCESS_KEY,
     AWS_SECRET: process.env.AWS_SECRET,
     AWS_INFERENCE_URL: process.env.AWS_INFERENCE_URL,
+    LAMBDA_TOKEN: process.env.LAMBDA_TOKEN,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.
