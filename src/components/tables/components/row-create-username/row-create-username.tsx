@@ -2,7 +2,7 @@ import { Stack } from "@mui/material";
 import { useEffect, useState, type FC } from "react";
 
 import { UsernameInputField } from "~/components/input-field/index.js";
-import { validUsername } from "~/constants/validation.js";
+import { validUsernameSchema } from "~/constants/validation.js";
 import { getRandomUsername } from "~/utils/username.js";
 
 import { styles } from "./styles.js";
@@ -23,7 +23,7 @@ export const RowCreateUsername: FC<RowCreateUsernameProps> = ({
   }, []);
 
   const validateUsername = (name: string) => {
-    const result = validUsername.safeParse(name);
+    const result = validUsernameSchema.safeParse(name);
     if (!result.success && result.error.issues[0]) {
       setError(result.error.issues[0].message);
     } else {

@@ -42,23 +42,23 @@ export const validation = {
 
 export const knownTopic = (topic: string) => TOPICS.includes(topic);
 
-export const validTopic = z
+export const validTopicSchema = z
   .string()
   .min(validation.textLength.short.min)
   .max(validation.textLength.short.max);
 
-export const validEmail = z.string().email();
+export const validEmailSchema = z.string().email();
 
-export const validIssue = z
+export const validIssueSchema = z
   .string()
   .min(validation.textLength.long.min)
   .max(validation.textLength.long.max);
 
-export const validMessage = z
+export const validMessageSchema = z
   .string()
   .max(validation.textLength.chatMessage.max);
 
-export const validUsername = z
+export const validUsernameSchema = z
   .string()
   .min(validation.username.min, validation.username.error.tooShort)
   .max(validation.username.max, validation.username.error.tooLong)

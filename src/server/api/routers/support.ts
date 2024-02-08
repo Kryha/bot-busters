@@ -1,10 +1,14 @@
-import { z } from "zod";
 import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
+import { z } from "zod";
 
 import { env } from "~/env.mjs";
 
+import {
+  validEmailSchema,
+  validIssueSchema,
+  validTopicSchema,
+} from "~/constants/validation.js";
 import { createTRPCRouter, publicProcedure } from "../trpc.js";
-import { validEmail, validIssue, validTopic } from "~/constants/validation.js";
 
 const ses = new SESClient({
   region: env.AWS_REGION,
@@ -18,9 +22,9 @@ export const supportRouter = createTRPCRouter({
   sendEmail: publicProcedure
     .input(
       z.object({
-        email: validEmail,
-        issue: validIssue,
-        topic: validTopic,
+        email: validEmailSchema,
+        issue: validIssueSchema,
+        topic: validTopicSchema,
       }),
     )
     .mutation(async ({ input }) => {

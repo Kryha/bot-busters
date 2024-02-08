@@ -7,9 +7,9 @@ import { PrimaryButton } from "~/components/primary-button/index.js";
 import { SelectField } from "~/components/select-field/index.js";
 import {
   knownTopic,
-  validEmail,
-  validIssue,
-  validTopic,
+  validEmailSchema,
+  validIssueSchema,
+  validTopicSchema,
   validation,
 } from "~/constants/index.js";
 import { SUPPORT_TOPIC, type SupportTopic } from "~/constants/support.js";
@@ -53,7 +53,7 @@ const Support = () => {
       setValidation((prevState) => ({
         ...prevState,
         topic:
-          !validTopic.safeParse(topic).success && knownTopic(topic)
+          !validTopicSchema.safeParse(topic).success && knownTopic(topic)
             ? validation.invalid.topic
             : "",
       })),
@@ -61,7 +61,7 @@ const Support = () => {
     email: () =>
       setValidation((prevState) => ({
         ...prevState,
-        email: !validEmail.safeParse(email).success
+        email: !validEmailSchema.safeParse(email).success
           ? validation.invalid.email
           : "",
       })),
@@ -69,7 +69,7 @@ const Support = () => {
     issue: () =>
       setValidation((prevState) => ({
         ...prevState,
-        issue: !validIssue.safeParse(issue).success
+        issue: !validIssueSchema.safeParse(issue).success
           ? textLength.long.error
           : "",
       })),

@@ -17,7 +17,7 @@ import { Timer } from "~/components/timer/index.js";
 import {
   CHARACTERS,
   CHAT_TIME_MS,
-  validMessage,
+  validMessageSchema,
   validation,
 } from "~/constants/index.js";
 import { pages } from "~/router.js";
@@ -59,7 +59,7 @@ export const Chat: FC<Props> = ({ roomId, room }) => {
   const [messageError, setValidation] = useState("");
 
   const validateForm = (newMessage: string) => {
-    const error = !validMessage.safeParse(newMessage).success
+    const error = !validMessageSchema.safeParse(newMessage).success
       ? textLength.chatMessage.error
       : "";
     setValidation(error);
