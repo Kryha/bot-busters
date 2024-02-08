@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 import { TOPICS } from "./support.js";
+import { MAX_CHARACTERS_CHAT_MESSAGE } from "./main.js";
 
 const invalidTextLength = (min: number, max: number) =>
   `Input must be between ${min} and ${max} characters`;
@@ -29,7 +30,7 @@ export const validation = {
       error: invalidTextLength(1, 320),
     },
     chatMessage: {
-      max: 150,
+      max: MAX_CHARACTERS_CHAT_MESSAGE,
       min: 1,
       error: "max 150 characters",
     },

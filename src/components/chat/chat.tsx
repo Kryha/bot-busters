@@ -17,6 +17,7 @@ import { Timer } from "~/components/timer/index.js";
 import {
   CHARACTERS,
   CHAT_TIME_MS,
+  MAX_CHARACTERS_CHAT_MESSAGE,
   validMessageSchema,
   validation,
 } from "~/constants/index.js";
@@ -40,28 +41,28 @@ export const Chat: FC<Props> = ({ roomId, room }) => {
 
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState<ChatMessagePayload[]>(room.messages);
+  const [messageError, setValidation] = useState("");
+
   const appendMessage = (newMessage: ChatMessagePayload) => {
     setMessages((prev) => [...prev, newMessage]);
   };
 
-  const handleMessage = (event: { target: { value: string } }) => {
+  const handleMessageChange = (event: { target: { value: string } }) => {
     const inputValue = event.target.value;
 
     validateForm(inputValue);
 
-    if (!messageError && inputValue.length <= 150) {
+    if (!messageError && inputValue.length <= MAX_CHARACTERS_CHAT_MESSAGE) {
       setMessage(inputValue);
-    } else if (inputValue.length > 150) {
-      setMessage(inputValue.slice(0, 150));
+    } else if (inputValue.length > MAX_CHARACTERS_CHAT_MESSAGE) {
+      setMessage(inputValue.slice(0, MAX_CHARACTERS_CHAT_MESSAGE));
     }
   };
 
-  const [messageError, setValidation] = useState("");
-
   const validateForm = (newMessage: string) => {
-    const error = !validMessageSchema.safeParse(newMessage).success
-      ? textLength.chatMessage.error
-      : "";
+    const error = validMessageSchema.safeParse(newMessage).success
+      ? ""
+      : textLength.chatMessage.error;
     setValidation(error);
   };
 
@@ -131,7 +132,7 @@ export const Chat: FC<Props> = ({ roomId, room }) => {
       {!isChatDisabled && (
         <InputField
           value={message}
-          onChange={handleMessage}
+          onChange={handleMessageChange}
           onClick={() => handleSend(message)}
           disabled={isChatDisabled}
           validationError={messageError}
