@@ -112,7 +112,7 @@ export const Chat: FC<Props> = ({ roomId, room }) => {
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     const isEnter = event.code === "Enter" || event.code === "NumpadEnter";
 
-    if (isEnter) {
+    if (isEnter && !messageError) {
       event.preventDefault();
       handleSend(message);
     }
