@@ -41,8 +41,7 @@ export class Agent {
       "You're a normal person. Always reply as a normal person would do.",
       "You don't have a lot of knowledge of the world.",
       "You always reply with short sentences that don't excede 150 characters.",
-      `If you decided not to reply to the last message just say ${this._silenceToken}.`,
-      "exclude any stage directions, action lines, parentheticals, or descriptive text that provides contextual emotional background or physical actions. The dialogue should be straightforward, without annotations on how something is said or any character's non-verbal reactions.",
+      // `If you decided not to reply to the last message just say ${this._silenceToken}.`,
     ].join(" ");
 
     ee.on(matchEvent(match.id), this.handleMessageEvent);
@@ -59,24 +58,27 @@ export class Agent {
   async triggerResponse() {
     // TODO: perform actual logic to understand if response should be triggered or not
     const shouldTrigger = true;
-
     if (!shouldTrigger) return;
 
     this._triggeredAt = Date.now();
 
-    const message = await this.requestMessageFromLLM();
+    const response = await this.requestMessageFromLLM();
 
     // If inference failed or bot decided not to reply, let the agent be silent
-    if (!message || message.includes(this._silenceToken)) return;
+    if (!response || response.includes(this._silenceToken)) return;
+
+    const cleanResponse = this.parseResponse(response);
 
     const payload: ChatMessagePayload = {
       sender: this.id,
-      message,
+      message: cleanResponse,
       sentAt: Date.now(),
     };
 
     // TODO: remove artificial wait in favour of something more inteligent
-    await wait(1500);
+    if (this._match.messages.length === 1)
+      await wait(4500); // Wait longer if replying to Host Prompt
+    else await wait(1500);
 
     this._match.addMessage(payload);
   }
@@ -95,12 +97,11 @@ export class Agent {
     });
 
     // TODO Limit amount of messages sent for inference
-    // TODO define parameters as constants
     const prompt = this.generatePrompt(promptDialog);
 
     const body = JSON.stringify({
       inputs: prompt,
-      parameters: { max_new_tokens: 52, top_p: 0.5, temperature: 0.8 },
+      parameters: { max_new_tokens: 58, top_p: 1, temperature: 0.8 }, // TODO define final parameters as constants
     });
 
     const response = await fetch(env.AWS_INFERENCE_URL, {
@@ -146,8 +147,9 @@ export class Agent {
     };
   }
 
+  // Fix: get the correct assistant Role based on ID
   private getMessageRole(sender: string): SenderRole {
-    if (sender == this.characterId) return "assistant";
+    if (sender == this._id) return "assistant";
     else return "user";
   }
 
@@ -157,26 +159,32 @@ export class Agent {
   //   return !!characterName ? characterName : "roy";
   // }
 
+  // FIX: message rol for assisant is never correct always shows "user"
   // TODO: Add character name
   generatePrompt(messages: PromptMessage[]): string {
+    // First message is always from Host
     const hostMessage = messages.shift();
+
+    const chatHistoryPrompt = messages.reduce(
+      (acc, currentMessage) => {
+        const nextMessageContent =
+          currentMessage.role === "assistant"
+            ? `${currentMessage.content}`
+            : `[INST] ${currentMessage.content} [/INST]`;
+
+        return `${acc}\n${nextMessageContent}`;
+      },
+      `[INST]${hostMessage?.content}[/INST]`,
+    );
+
     const systemPrompt = `
-    <s>[INST] <<SYS>>
-    ${this._systemPrompt}
-    <</SYS>>
-    ${hostMessage?.content} [/INST]
-    `;
+    <s>[INST] <<SYS>>\n${this._systemPrompt}\n<</SYS>>\n${chatHistoryPrompt}`; // TODO: add <charName>:  as ending for the instruction
 
-    // TODO: Improve prompt construction
-    const promptString = messages.reduce((acc, currentMessage) => {
-      const nextMessageContent =
-        currentMessage.role === "user"
-          ? `[INST] ${currentMessage.content} [/INST]`
-          : `${currentMessage.content}`;
+    return systemPrompt;
+  }
 
-      return `${acc}${nextMessageContent}\n`;
-    }, systemPrompt);
-
-    return `${promptString}</s>`;
+  parseResponse(input: string): string {
+    // Remove //ufffd || </s> || *some expresion* || [INST]
+    return input.replace(/(\ufffd|<\/s>|(\*[^*]*\*)|\[INST\]|\[\/INST\])/g, "");
   }
 }
