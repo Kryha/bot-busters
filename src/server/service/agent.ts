@@ -116,7 +116,6 @@ export class Agent {
 
     const textRes = await response.text();
 
-    // TODO Improve error management for fetch
     if (!textRes) return this._silenceToken;
 
     const result = JSON.parse(textRes) as { body: string };
@@ -159,7 +158,6 @@ export class Agent {
   //   return !!characterName ? characterName : "roy";
   // }
 
-  // FIX: message rol for assisant is never correct always shows "user"
   // TODO: Add character name
   generatePrompt(messages: PromptMessage[]): string {
     // First message is always from Host
