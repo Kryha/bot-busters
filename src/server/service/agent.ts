@@ -84,7 +84,6 @@ export class Agent {
   private async requestMessageFromLLM() {
     const { messages } = this._match;
 
-    // const latestMessage = messages[messages.length - 1]?.message;
     const promptDialog = messages.map((message): PromptMessage => {
       const promptMessage = {
         role: this.getMessageRole(message.sender),
