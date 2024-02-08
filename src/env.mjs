@@ -22,7 +22,6 @@ export const env = createEnv({
       .string()
       .default("5")
       .transform((val) => Number(val)),
-    HUGGING_FACE_TOKEN: z.string(),
     ALEO_NETWORK_URL: z.string().url(),
     ALEO_PRIVATE_KEY: z.string().nonempty(),
     LEADERBOARD_PROGRAM_NAME: z.string().default("leaderboard.aleo"),
@@ -30,6 +29,7 @@ export const env = createEnv({
     BB_EMAIL: z.string().email().default("bot-busters@kryha.io"),
     AWS_ACCESS_KEY: z.string(),
     AWS_SECRET: z.string(),
+    AWS_INFERENCE_URL: z.string().url(),
   },
 
   /**
@@ -63,7 +63,6 @@ export const env = createEnv({
     NEXT_PUBLIC_WS_URL: process.env.NEXT_PUBLIC_WS_URL,
     NEXT_PUBLIC_MOCK_AUTH: process.env.NEXT_PUBLIC_MOCK_AUTH,
     PLAYERS_PER_MATCH: process.env.PLAYERS_PER_MATCH,
-    HUGGING_FACE_TOKEN: process.env.HUGGING_FACE_TOKEN,
     ALEO_NETWORK_URL: process.env.ALEO_NETWORK_URL,
     ALEO_PRIVATE_KEY: process.env.ALEO_PRIVATE_KEY,
     LEADERBOARD_PROGRAM_NAME: process.env.LEADERBOARD_PROGRAM_NAME,
@@ -71,6 +70,7 @@ export const env = createEnv({
     BB_EMAIL: process.env.BB_EMAIL,
     AWS_ACCESS_KEY: process.env.AWS_ACCESS_KEY,
     AWS_SECRET: process.env.AWS_SECRET,
+    AWS_INFERENCE_URL: process.env.AWS_INFERENCE_URL,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.
