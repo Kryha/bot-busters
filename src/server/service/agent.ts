@@ -63,7 +63,7 @@ export class Agent {
 
   async triggerResponse() {
     // TODO: perform actual logic to understand if response should be triggered or not
-    const shouldTrigger = true;
+    const shouldTrigger = Math.random() < 0.5;
     if (!shouldTrigger) return;
 
     this._triggeredAt = Date.now();
@@ -82,7 +82,7 @@ export class Agent {
     };
 
     // TODO: remove artificial wait in favour of something more inteligent
-    const waitTime = this._match.messages.length === 1 ? 8500 : 6500;
+    const waitTime = this._match.messages.length === 1 ? 9000 : 6500;
     await wait(waitTime);
 
     this._match.addMessage(payload);
