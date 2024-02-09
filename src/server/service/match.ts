@@ -89,7 +89,6 @@ export class Match {
     return this._agents;
   }
 
-  // TODO: Inject initial prompt as first chat message from "host"
   constructor(playerIds: string[], botsInMatch: number) {
     this._id = uuid();
 
@@ -420,6 +419,7 @@ export class Match {
       }
 
       const player = this._players.find((p) => p.userId === message.sender);
+
       if (!player) return [];
 
       return { ...message, sender: player.characterId, isBot: !!player.isBot };

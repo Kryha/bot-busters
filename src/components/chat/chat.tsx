@@ -86,7 +86,7 @@ export const Chat: FC<Props> = ({ roomId, room }) => {
   const messageData: MessageData[] = useMemo(() => {
     return messages
       .filter((message) => {
-        return message.sender !== "host";
+        return message.sender !== "0";
       })
       .map((message) => {
         const isLocalSender = message.sender === session?.user?.id;
