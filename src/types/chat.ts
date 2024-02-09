@@ -19,14 +19,7 @@ export const feCharacterNameSchema = z.enum([
 ]);
 export type FECharacterName = z.infer<typeof feCharacterNameSchema>;
 
-export const characterNameSchema = z.enum([
-  "hal",
-  "dot",
-  "ash",
-  "eve",
-  "roy",
-  "host",
-]);
+export const characterNameSchema = feCharacterNameSchema.or(z.literal("host"));
 export type CharacterName = z.infer<typeof characterNameSchema>;
 
 export interface Character {
