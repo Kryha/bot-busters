@@ -11,7 +11,6 @@ export interface QueueUpdatePayload {
 }
 
 export const characterIdSchema = z.enum(["1", "2", "3", "4", "5"]);
-// .or(z.literal("0"));
 export type CharacterId = z.infer<typeof characterIdSchema>;
 
 export const chatMessagePayloadSchema = z.object({
