@@ -1,3 +1,4 @@
+import { type ReactNode } from "react";
 import { type CharacterName } from "~/types/index.js";
 import {
   AvatarAsh,
@@ -77,7 +78,7 @@ export const getCharacterAnimation = (
 
 export const getCharacterSplashScreen = (
   characterName: CharacterName,
-): JSX.Element => {
+): ReactNode => {
   const splashScreenMap = {
     hal: <SplashHal />,
     ash: <SplashAsh />,
