@@ -1,10 +1,12 @@
 import { v4 as uuid } from "uuid";
+import { CHARACTERS } from "~/constants/index.js";
 
 import { env } from "~/env.mjs";
 import { ee, matchEvent } from "~/server/api/match-maker.js";
 import { type Match } from "~/server/service/index.js";
 import type {
   CharacterId,
+  CharacterName,
   ChatMessagePayload,
   PlayerType,
   PromptMessage,
@@ -14,6 +16,7 @@ import { wait } from "~/utils/timer.js";
 export class Agent {
   private _id: string;
   private _characterId: CharacterId;
+  private _characterName: CharacterName;
   private _match: Match;
   private _systemPrompt: string;
 
@@ -36,12 +39,14 @@ export class Agent {
     this._id = uuid();
     this._match = match;
     this._characterId = characterId;
-    // TODO Add character Name & Personality
+    this._characterName = this.getCharacterName(characterId);
     this._systemPrompt = [
+      `Your name is ${this._characterName}.`,
+      "You're participating in a group chat.",
       "You're a normal person. Always reply as a normal person would do.",
       "You don't have a lot of knowledge of the world.",
       "You always reply with short sentences that don't excede 150 characters.",
-      // `If you decided not to reply to the last message just say ${this._silenceToken}.`,
+      // `Consider if you have anything interesting to say otherwise reply to the last message saying ${this._silenceToken}.`,
     ].join(" ");
 
     ee.on(matchEvent(match.id), this.handleMessageEvent);
@@ -71,12 +76,13 @@ export class Agent {
 
     const payload: ChatMessagePayload = {
       sender: this.id,
+      characterId: this._characterId,
       message: cleanResponse,
       sentAt: Date.now(),
     };
 
     // TODO: remove artificial wait in favour of something more inteligent
-    const waitTime = this._match.messages.length === 1 ? 4500 : 1500;
+    const waitTime = this._match.messages.length === 1 ? 8500 : 6500;
     await wait(waitTime);
 
     this._match.addMessage(payload);
@@ -88,7 +94,7 @@ export class Agent {
     const promptDialog = messages.map((message): PromptMessage => {
       const promptMessage = {
         role: this.getMessageRole(message.sender),
-        // characterName: this.getCharacterName(message.sender as CharacterId),
+        characterName: this.getCharacterName(message.characterId),
         content: message.message,
       };
 
@@ -145,16 +151,13 @@ export class Agent {
     };
   }
 
-  private getMessageRole(sender: string): SenderRole {
-    if (sender == this._id) return "assistant";
-    else return "user";
+  private getMessageRole(senderID: string): SenderRole {
+    return senderID === this._id ? "assistant" : "user";
   }
 
-  // TODO: fix case where sender is "host"
-  // private getCharacterName(sender: CharacterId): CharacterName {
-  //   const characterName = CHARACTERS[sender]?.name;
-  //   return !!characterName ? characterName : "roy";
-  // }
+  private getCharacterName(characterId: CharacterId): CharacterName {
+    return CHARACTERS[characterId]?.name;
+  }
 
   // TODO: Add character name
   generatePrompt(messages: PromptMessage[]): string {
@@ -165,8 +168,8 @@ export class Agent {
       (acc, currentMessage) => {
         const nextMessageContent =
           currentMessage.role === "assistant"
-            ? `${currentMessage.content}`
-            : `[INST] ${currentMessage.content} [/INST]`;
+            ? `${currentMessage.characterName}: ${currentMessage.content}`
+            : `[INST] ${currentMessage.characterName}: ${currentMessage.content} [/INST]`;
 
         return `${acc}\n${nextMessageContent}`;
       },
@@ -174,7 +177,7 @@ export class Agent {
     );
 
     const systemPrompt = `
-    <s>[INST] <<SYS>>\n${this._systemPrompt}\n<</SYS>>\n${chatHistoryPrompt}`; // TODO: add <charName>:  as ending for the instruction
+    <s>[INST] <<SYS>>\n${this._systemPrompt}\n<</SYS>>\n${chatHistoryPrompt}\n${this._characterName}: `; // TODO: add <charName>:  as ending for the instruction
 
     return systemPrompt;
   }

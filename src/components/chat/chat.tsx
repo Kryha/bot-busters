@@ -52,7 +52,7 @@ export const Chat: FC<Props> = ({ roomId, room }) => {
   );
 
   const hostMessageData: ChatMessagePayload | undefined = useMemo(() => {
-    return messages.findLast((message) => message.sender === "host");
+    return messages.findLast((message) => message.sender === "0");
   }, [messages]);
 
   const messageData: MessageData[] = useMemo(() => {
@@ -75,8 +75,17 @@ export const Chat: FC<Props> = ({ roomId, room }) => {
   }, [messages, session, players]);
 
   const handleSend = (value: string) => {
+    const characterId: CharacterId = players.find(
+      (player) => player.userId === session?.user.id,
+    )!.characterId;
+
     if (message) {
-      sendMessage.mutate({ message: value, sentAt: Date.now(), roomId });
+      sendMessage.mutate({
+        message: value,
+        sentAt: Date.now(),
+        roomId,
+        characterId,
+      });
       setMessage("");
     }
   };

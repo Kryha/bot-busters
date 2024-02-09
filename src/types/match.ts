@@ -10,18 +10,19 @@ export interface QueueUpdatePayload {
   queueLength: number;
 }
 
-export const characterIdSchema = z.enum(["1", "2", "3", "4", "5"]);
+export const characterIdSchema = z.enum(["0", "1", "2", "3", "4", "5"]);
 export type CharacterId = z.infer<typeof characterIdSchema>;
 
 export const chatMessagePayloadSchema = z.object({
-  sender: z.string().uuid().or(z.literal("host")),
+  sender: z.string().uuid().or(z.literal("0")),
+  characterId: characterIdSchema,
   message: z.string(),
   sentAt: z.number(), // unix time
 });
 export type ChatMessagePayload = z.infer<typeof chatMessagePayloadSchema>;
 
 export const storedChatMessageSchema = z.object({
-  sender: characterIdSchema.or(z.literal("host")),
+  sender: characterIdSchema.or(z.literal("0")),
   message: z.string(),
   sentAt: z.number(), // unix time
   isBot: z.boolean(),

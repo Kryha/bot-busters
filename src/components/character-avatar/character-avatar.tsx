@@ -1,6 +1,10 @@
 import { type FC, useEffect, useState } from "react";
 import { Stack } from "@mui/material";
-import { type Character, type MatchStage } from "~/types/index.js";
+import {
+  type Character,
+  type MatchStage,
+  type FECharacterName,
+} from "~/types/index.js";
 import {
   getCharacterAnimation,
   getCharacterAvatar,
@@ -28,7 +32,8 @@ export const CharacterAvatar: FC<Props> = ({
   isBot,
   onSelectPlayer,
 }) => {
-  const animation = getCharacterAnimation(character.name, isBot, isSelected);
+  const characterName = character.name as FECharacterName;
+  const animation = getCharacterAnimation(characterName, isBot, isSelected);
   const [segments, setSegments] = useState<number[][]>([[]]);
 
   useEffect(() => {
@@ -51,7 +56,7 @@ export const CharacterAvatar: FC<Props> = ({
       onClick={onSelectPlayer}
     >
       {stage === "voting" ? (
-        getCharacterAvatar(character.name)
+        getCharacterAvatar(character.name as FECharacterName)
       ) : (
         <AnimationPlayer
           animationData={animation}

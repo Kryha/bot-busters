@@ -1,5 +1,5 @@
 import { type FC, type ReactNode, useEffect, useState } from "react";
-import { type CharacterName } from "~/types/index.js";
+import { type FECharacterName } from "~/types/index.js";
 import { Slide, Stack } from "@mui/material";
 import { AnimationPlayer } from "~/components/animation/index.js";
 import { getTransitionLines } from "~/utils/characters.jsx";
@@ -9,7 +9,7 @@ import { styles } from "./styles.js";
 
 interface Props {
   children: ReactNode;
-  characterName?: CharacterName;
+  characterName?: FECharacterName;
   backgroundColor?: string;
 }
 

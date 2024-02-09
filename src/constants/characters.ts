@@ -1,6 +1,7 @@
 import type { Character, CharacterId } from "~/types/index.js";
 
 export const CHARACTERS: Record<CharacterId, Character> = {
+  0: { id: "0", name: "host", color: "white" },
   1: { id: "1", name: "ash", color: "orange" },
   2: { id: "2", name: "eve", color: "yellow" },
   3: { id: "3", name: "hal", color: "green" },

@@ -154,8 +154,9 @@ export class Match {
     if (!randomPrompt) throw new Error("No random prompt found");
 
     this.addMessage({
-      sender: "host",
+      sender: "0",
       message: randomPrompt,
+      characterId: "0",
       sentAt: Date.now(),
     });
   }
@@ -410,10 +411,10 @@ export class Match {
 
   convertMessages(): StoredChatMessage[] {
     return this._messages.flatMap((message) => {
-      if (message.sender === "host") {
+      if (message.sender === "0") {
         return {
           ...message,
-          sender: "host",
+          sender: "0",
           isBot: false,
         } satisfies StoredChatMessage;
       }

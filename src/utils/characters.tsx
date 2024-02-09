@@ -1,4 +1,4 @@
-import { type CharacterName } from "~/types/index.js";
+import { type FECharacterName } from "~/types/index.js";
 import {
   AvatarAsh,
   AvatarDot,
@@ -41,7 +41,7 @@ import {
 } from "~/assets/animations/index.js";
 import { theme } from "~/styles/index.js";
 
-export const getCharacterAvatar = (characterName: CharacterName) => {
+export const getCharacterAvatar = (characterName: FECharacterName) => {
   const avatarMap = {
     hal: <AvatarHal />,
     ash: <AvatarAsh />,
@@ -54,7 +54,7 @@ export const getCharacterAvatar = (characterName: CharacterName) => {
 };
 
 export const getCharacterAnimation = (
-  characterName: CharacterName,
+  characterName: FECharacterName,
   isBot?: boolean,
   isSelected?: boolean,
 ) => {
@@ -75,7 +75,7 @@ export const getCharacterAnimation = (
   return isBot ? characterAnimations.botWin : characterAnimations.blink;
 };
 
-export const getCharacterSplashScreen = (characterName: CharacterName) => {
+export const getCharacterSplashScreen = (characterName: FECharacterName) => {
   const splashScreenMap = {
     hal: <SplashHal />,
     ash: <SplashAsh />,
@@ -87,7 +87,7 @@ export const getCharacterSplashScreen = (characterName: CharacterName) => {
   return splashScreenMap[characterName];
 };
 
-export const getCharacterTitle = (characterName: CharacterName) => {
+export const getCharacterTitle = (characterName: FECharacterName) => {
   const titleMap = {
     hal: <TextHal />,
     ash: <TextAsh />,
@@ -99,7 +99,9 @@ export const getCharacterTitle = (characterName: CharacterName) => {
   return titleMap[characterName];
 };
 
-export const getTransitionLines = (characterName: string | undefined) => {
+export const getTransitionLines = (
+  characterName: FECharacterName | undefined,
+) => {
   switch (characterName) {
     case "hal":
       return TransitionLinesHal;

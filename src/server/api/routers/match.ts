@@ -5,7 +5,11 @@ import { TRPCError } from "@trpc/server";
 
 import { db } from "~/server/db/index.js";
 import { matches as matchesTable } from "~/server/db/schema.js";
-import { matchRoomSchema, type ChatMessagePayload } from "~/types/index.js";
+import {
+  matchRoomSchema,
+  characterIdSchema,
+  type ChatMessagePayload,
+} from "~/types/index.js";
 
 import { createTRPCRouter, protectedProcedure } from "../trpc.js";
 import {
@@ -56,10 +60,11 @@ export const matchRouter = createTRPCRouter({
         message: z.string(),
         sentAt: z.number(),
         roomId: z.string().uuid(),
+        characterId: characterIdSchema,
       }),
     )
     .mutation(({ ctx, input }) => {
-      const { sentAt, roomId } = input;
+      const { sentAt, roomId, characterId } = input;
       let { message } = input;
       const sender = ctx.session.user.id;
 
@@ -69,7 +74,12 @@ export const matchRouter = createTRPCRouter({
         message = profanityFilter.censor(message);
       }
 
-      const payload: ChatMessagePayload = { sender, message, sentAt };
+      const payload: ChatMessagePayload = {
+        sender,
+        characterId,
+        message,
+        sentAt,
+      };
 
       room.addMessage(payload);
 
