@@ -21,9 +21,10 @@ export const RowCreateUsername: FC<RowCreateUsernameProps> = ({
     let name: string;
     do {
       name = getRandomUsername();
-    } while (name.length < 14);
-
-    setUsername(name.replace(/[0-9 ]/g, ""));
+    } while (name.length >= 12);
+    name = name.replace(/[0-9 ]/g, "");
+    name = name.replace(/[_\.]/g, "-");
+    setUsername(name);
   }, []);
 
   const validateUsername = (name: string) => {
