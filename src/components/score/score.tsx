@@ -1,9 +1,9 @@
-import { type FC } from "react";
 import { Stack, Tooltip, Typography } from "@mui/material";
+import { type FC } from "react";
 
-import { type PlayerType } from "~/types/index.js";
-import { POINTS_ACHIEVEMENTS } from "~/constants/main.js";
 import { text } from "~/assets/text/index.js";
+import { POINTS_ACHIEVEMENTS } from "~/constants/main.js";
+import { type PlayerType } from "~/types/index.js";
 // TODO: decouple from server
 import { matchAchievements } from "~/server/service/achievements.js";
 
@@ -78,7 +78,12 @@ export const Score: FC<ScoreProps> = ({ player }) => {
             score={player.humansBustedScore}
           />
         )}
-
+        {player.humansFooled > 0 && (
+          <ScoreRow
+            title={text.achievements.humansFooled(player.humansFooled)}
+            score={player.humansFooledScore}
+          />
+        )}
         {player.achievements.map((achievement) => {
           const { name, description } = matchAchievements[achievement];
 
