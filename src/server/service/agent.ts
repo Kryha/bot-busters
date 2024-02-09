@@ -18,7 +18,7 @@ export class Agent {
   private _systemPrompt: string;
 
   private _triggeredAt = Date.now();
-  private _silenceToken = "001001";
+  private readonly _silenceToken = "001001";
 
   get id() {
     return this._id;
@@ -103,24 +103,29 @@ export class Agent {
       parameters: { max_new_tokens: 58, top_p: 1, temperature: 0.8 }, // TODO define final parameters as constants
     });
 
-    const response = await fetch(env.AWS_INFERENCE_URL, {
-      headers: {
-        "Content-Type": "application/json",
-        // Authorization: `Bearer ${env.AWS_TOKEN}`,
-      },
-      method: "POST",
-      body,
-      signal: AbortSignal.timeout(10000),
-    });
+    try {
+      const response = await fetch(env.AWS_INFERENCE_URL, {
+        headers: {
+          "Content-Type": "application/json",
+          authorizationToken: env.LAMBDA_TOKEN,
+        },
+        method: "POST",
+        body,
+        signal: AbortSignal.timeout(10000),
+      });
 
-    const textRes = await response.text();
+      const textRes = await response.text();
 
-    if (!textRes) return this._silenceToken;
+      if (!textRes) return this._silenceToken;
 
-    const result = JSON.parse(textRes) as { body: string };
-    const responseBody = JSON.parse(result.body) as string;
+      const result = JSON.parse(textRes) as { body: string };
+      const responseBody = JSON.parse(result.body) as string;
 
-    return responseBody;
+      return responseBody;
+    } catch (error) {
+      console.error(error);
+      return this._silenceToken;
+    }
   }
 
   cleanup() {
