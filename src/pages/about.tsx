@@ -14,7 +14,7 @@ const About = () => (
         pt={key === 0 ? 0 : 5}
         sx={styles.body}
       >
-        {processTextToLink(content, text.wordsToLinkAbout)}
+        {processTextToLink(content, text.wordsToLink)}
       </Typography>
     ))}
     <Stack pt="100px" />

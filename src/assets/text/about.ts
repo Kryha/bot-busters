@@ -10,9 +10,3 @@ export const about = {
     `Happy hunting, recruit.`,
   ],
 };
-export const wordsToLinkAbout: Record<string, string> = {
-  "Kryha Labs": "https://kryha.io",
-  Aleo: "https://aleo.org",
-  zPass: "https://zpass.aleo.org/",
-  Obscura: "htpps://https://obscura.build/",
-};

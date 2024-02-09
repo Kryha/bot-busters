@@ -6,7 +6,7 @@ export const homepage = {
   descriptionPart1: "Who's a bot?, Who's a human?",
   topRankedTitle: "Top 10",
   topRanked: (position: number, username: string, score: number) =>
-    ` / ${position + 1}. ${username} ${score}`,
+    ` / ${position}. ${username} ${score}`,
   points: "pts",
   about: "About",
 };
