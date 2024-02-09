@@ -63,7 +63,7 @@ export class Agent {
 
   async triggerResponse() {
     // TODO: perform actual logic to understand if response should be triggered or not
-    const shouldTrigger = true;
+    const shouldTrigger = Math.random() < 0.5;
     if (!shouldTrigger) return;
 
     this._triggeredAt = Date.now();
