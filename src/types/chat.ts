@@ -1,13 +1,7 @@
 import { z } from "zod";
 import type { CharacterId, ChatMessagePayload } from "~/types/index.js";
 
-export type CharacterColor =
-  | "orange"
-  | "yellow"
-  | "green"
-  | "pink"
-  | "blue"
-  | "white";
+export type CharacterColor = "orange" | "yellow" | "green" | "pink" | "blue";
 
 // TODO: Find a better way to define Character Names for FE that don't include Host
 export const characterNameSchema = z.enum(["hal", "dot", "ash", "eve", "roy"]);
