@@ -82,7 +82,7 @@ export class Agent {
     };
 
     // TODO: remove artificial wait in favour of something more inteligent
-    const waitTime = this._match.messages.length === 1 ? 8500 : 6500;
+    const waitTime = this._match.messages.length === 1 ? 9000 : 6500;
     await wait(waitTime);
 
     this._match.addMessage(payload);
