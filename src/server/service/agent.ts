@@ -1,4 +1,5 @@
 import { v4 as uuid } from "uuid";
+import fetch from "node-fetch";
 
 import { env } from "~/env.mjs";
 import { ee, matchEvent } from "~/server/api/match-maker.js";
@@ -19,6 +20,7 @@ export class Agent {
 
   private _triggeredAt = Date.now();
   private readonly _silenceToken = "001001";
+  private _isGeneratingResponse = false;
 
   get id() {
     return this._id;
@@ -48,14 +50,21 @@ export class Agent {
   }
 
   handleMessageEvent = (latestMessage: ChatMessagePayload) => {
-    if (latestMessage.sender === this._id) return;
+    if (latestMessage.sender === this._id || this._isGeneratingResponse) return;
 
-    this.triggerResponse().catch((error) => {
-      console.error("Error handling agent message:", error);
-    });
+    this._isGeneratingResponse = true;
+
+    this.triggerResponse()
+      .then(() => {
+        this._isGeneratingResponse = false;
+      })
+      .catch((error) => {
+        this._isGeneratingResponse = false;
+        console.error("Error handling agent message:", error);
+      });
   };
 
-  async triggerResponse() {
+  private async triggerResponse() {
     // TODO: perform actual logic to understand if response should be triggered or not
     const shouldTrigger = true;
     if (!shouldTrigger) return;

@@ -42,10 +42,15 @@ const makeMatch = () => {
     const playerIds = lobbyQueue.pickPlayers(humansInMatch);
 
     if (playerIds.length < humansInMatch) {
-      botsInMatch = humansInMatch - playerIds.length;
+      botsInMatch = env.PLAYERS_PER_MATCH - playerIds.length;
     }
 
-    if (botsInMatch <= MAX_BOTS_PER_MATCH) {
+    const totalPlayers = playerIds.length + botsInMatch;
+
+    if (
+      botsInMatch <= MAX_BOTS_PER_MATCH &&
+      totalPlayers === env.PLAYERS_PER_MATCH
+    ) {
       const match = new Match(playerIds, botsInMatch);
 
       matches.set(match.id, match);
