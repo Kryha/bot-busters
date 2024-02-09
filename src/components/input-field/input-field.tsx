@@ -1,124 +1,43 @@
+import { Stack, TextField, type TextFieldProps } from "@mui/material";
 import { type FC } from "react";
-import {
-  type ButtonProps,
-  Stack,
-  type SxProps,
-  TextField,
-  type TextFieldProps,
-  Typography,
-} from "@mui/material";
-import { SendButton } from "~/components/send-button/index.js";
-import { PrimaryButton } from "~/components/primary-button/index.js";
 import { text } from "~/assets/text/index.js";
+import { SendButton } from "~/components/send-button/index.js";
 import { styles } from "./styles.js";
 
-type Props = Pick<ButtonProps, "onClick"> & Omit<TextFieldProps, "onClick">;
+type Props = TextFieldProps & {
+  validationError?: string;
+  sendMessage: (event: { target: { value: string } }) => void;
+};
 
-export const InputField: FC<Props> = ({ onClick, disabled, ...rest }) => {
+export const InputField: FC<Props> = ({
+  sendMessage,
+  disabled,
+  validationError,
+  ...rest
+}) => {
   return (
-    <Stack sx={styles.wrapper}>
+    <Stack sx={{ ...(validationError ? styles.wrapperError : styles.wrapper) }}>
       <TextField
         aria-label="chat-input"
         placeholder={text.chat.inputFieldPlaceholder}
         InputProps={{ sx: styles.inputFieldProps }}
-        sx={styles.inputField}
+        sx={{
+          ...(validationError ? styles.inputFieldError : styles.inputField),
+        }}
         disabled={disabled}
+        helperText={validationError}
         fullWidth
         multiline
         {...rest}
         rows={3}
       />
       <SendButton
-        onClick={onClick}
+        onClick={sendMessage}
         aria-label={"send-button"}
-        disabled={disabled}
+        disabled={!!validationError}
       >
         {text.chat.send}
       </SendButton>
-    </Stack>
-  );
-};
-
-type TextInputFieldProps = TextFieldProps & {
-  heading?: string;
-  validationError?: string;
-  container?: SxProps;
-};
-
-export const TextInputField: FC<TextInputFieldProps> = ({
-  disabled,
-  placeholder,
-  heading,
-  multiline,
-  fullWidth,
-  validationError,
-  container,
-  ...rest
-}) => {
-  return (
-    <Stack sx={{ ...styles.wrapperTextField, ...container }}>
-      <Typography variant="body1">{heading}</Typography>
-      <TextField
-        placeholder={placeholder}
-        InputProps={{ sx: styles.textInputFieldProps }}
-        sx={{
-          ...(validationError
-            ? styles.textInputFieldError
-            : styles.textInputField),
-        }}
-        disabled={disabled}
-        fullWidth={fullWidth}
-        multiline={multiline}
-        rows={14}
-        {...rest}
-      />
-      <Typography variant="body1" sx={styles.errorText}>
-        {validationError}
-      </Typography>
-    </Stack>
-  );
-};
-
-export const UsernameInputField: FC<TextInputFieldProps> = ({
-  onClick,
-  disabled,
-  validationError,
-  ...rest
-}) => {
-  return (
-    <Stack>
-      <Stack
-        sx={{
-          ...(validationError
-            ? styles.usernameWrapperError
-            : styles.usernameWrapper),
-        }}
-      >
-        <TextField
-          aria-label="chat-input"
-          placeholder={text.chat.inputFieldPlaceholder}
-          InputProps={{ sx: styles.inputFieldProps }}
-          sx={{
-            ...(validationError
-              ? styles.usernameInputFieldError
-              : styles.usernameInputField),
-          }}
-          disabled={disabled}
-          fullWidth
-          {...rest}
-        />
-        <PrimaryButton
-          onClick={onClick}
-          aria-label={"send-button"}
-          disabled={!!validationError}
-          sx={{ "&:disabled": { border: "none" } }}
-        >
-          Confirm
-        </PrimaryButton>
-      </Stack>
-      <Typography variant="body1" sx={styles.errorText}>
-        {validationError}
-      </Typography>
     </Stack>
   );
 };

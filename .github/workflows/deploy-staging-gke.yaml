@@ -48,6 +48,7 @@ jobs:
           OBSCURA_API_KEY: ${{ secrets.OBSCURA_API_KEY }}
           AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
           AWS_SECRET: ${{ secrets.AWS_SECRET }}
+          LAMBDA_TOKEN: ${{ secrets.LAMBDA_TOKEN }}
         run: |-
           envsubst < deployment/staging/secrets.template.yaml > deployment/staging/secrets.yaml
           skaffold run --filename skaffold.staging.yml --cache-artifacts=false
