@@ -77,7 +77,6 @@ export class Agent {
 
     const payload: ChatMessagePayload = {
       sender: this.id,
-      characterId: this._characterId,
       message: cleanResponse,
       sentAt: Date.now(),
     };
@@ -93,9 +92,17 @@ export class Agent {
     const { messages } = this._match;
 
     const promptDialog = messages.map((message): PromptMessage => {
-      const promptMessage = {
+      const characterId =
+        this._match.players.find((p) => p.userId === message.sender)
+          ?.characterId ?? "0";
+
+      // TODO: fix "host" sender
+      const characterName =
+        characterId === "0" ? "host" : this.getCharacterName(characterId);
+
+      const promptMessage: PromptMessage = {
         role: this.getMessageRole(message.sender),
-        characterName: this.getCharacterName(message.characterId),
+        characterName,
         content: message.message,
       };
 
@@ -162,7 +169,7 @@ export class Agent {
   }
 
   private getCharacterName(characterId: CharacterId): CharacterName {
-    return CHARACTERS[characterId]?.name;
+    return CHARACTERS[characterId].name;
   }
 
   // TODO: Add character name

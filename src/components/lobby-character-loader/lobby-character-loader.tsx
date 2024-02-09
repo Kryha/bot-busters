@@ -8,8 +8,6 @@ import { HostAvatar } from "~/assets/characters/index.js";
 import { theme } from "~/styles/theme.js";
 import { styles } from "./styles.js";
 
-import { type FECharacterName } from "~/types/index.js";
-
 interface Props {
   playerQueuePosition: number;
   queueLength: number;
@@ -62,7 +60,7 @@ export const LobbyCharacterLoader: FC<Props> = ({
                 ? name
                 : text.lobby.searching}
             </Typography>
-            {getCharacterAvatar(name as FECharacterName)}
+            {getCharacterAvatar(name)}
           </Stack>
         ))}
       </Stack>

@@ -103,16 +103,11 @@ export const Chat: FC<Props> = ({ roomId, room }) => {
   }, [messages, session, players]);
 
   const handleSend = (value: string) => {
-    const characterId: CharacterId = players.find(
-      (player) => player.userId === session?.user.id,
-    )!.characterId;
-
     if (message) {
       sendMessage.mutate({
         message: value,
         sentAt: Date.now(),
         roomId,
-        characterId,
       });
       setMessage("");
     }

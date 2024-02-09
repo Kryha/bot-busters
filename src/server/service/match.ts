@@ -155,7 +155,6 @@ export class Match {
     this.addMessage({
       sender: "0",
       message: randomPrompt,
-      characterId: "0",
       sentAt: Date.now(),
     });
   }

@@ -1,6 +1,6 @@
 import { type FC } from "react";
 import { Slide, Stack } from "@mui/material";
-import { type PlayerType, type FECharacterName } from "~/types/index.js";
+import { type PlayerType } from "~/types/index.js";
 
 import { SplashScreen } from "~/components/index.js";
 import { LetsBustSomeBots, StartChatting } from "~/assets/icons/index.js";
@@ -26,18 +26,14 @@ export const Interstitials: FC<Props> = ({
 }) => {
   const character = CHARACTERS[localPlayer.characterId];
   const { name, color } = character;
-  const characterName = name as FECharacterName;
   const backgroundColor = `${color}.main`;
-  const characterSplashScreen = getCharacterSplashScreen(characterName);
-  const characterTitle = getCharacterTitle(characterName);
+  const characterSplashScreen = getCharacterSplashScreen(name);
+  const characterTitle = getCharacterTitle(name);
 
   return (
     <>
       {splashScreenVariant === "chat" && (
-        <SplashScreen
-          characterName={characterName}
-          backgroundColor={backgroundColor}
-        >
+        <SplashScreen characterName={name} backgroundColor={backgroundColor}>
           <Stack sx={styles.splashSection}>
             <Slide direction="right" in={true} mountOnEnter unmountOnExit>
               <Stack sx={styles.splashText}>

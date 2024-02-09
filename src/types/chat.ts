@@ -10,16 +10,7 @@ export type CharacterColor =
   | "white";
 
 // TODO: Find a better way to define Character Names for FE that don't include Host
-export const feCharacterNameSchema = z.enum([
-  "hal",
-  "dot",
-  "ash",
-  "eve",
-  "roy",
-]);
-export type FECharacterName = z.infer<typeof feCharacterNameSchema>;
-
-export const characterNameSchema = feCharacterNameSchema.or(z.literal("host"));
+export const characterNameSchema = z.enum(["hal", "dot", "ash", "eve", "roy"]);
 export type CharacterName = z.infer<typeof characterNameSchema>;
 
 export interface Character {
