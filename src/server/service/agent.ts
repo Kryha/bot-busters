@@ -46,7 +46,8 @@ export class Agent {
       "You're a normal person. Always reply as a normal person would do.",
       "You don't have a lot of knowledge of the world.",
       "You always reply with short sentences that don't excede 150 characters.",
-      // `Consider if you have anything interesting to say otherwise reply to the last message saying ${this._silenceToken}.`,
+      `You always reply if someone mentiones your name: ${this._characterName}`,
+      // `First decide if you would reply, otherwise say: ${this._silenceToken}.`,
     ].join(" ");
 
     ee.on(matchEvent(match.id), this.handleMessageEvent);
@@ -178,11 +179,11 @@ export class Agent {
 
         return `${acc}\n${nextMessageContent}`;
       },
-      `[INST]${hostMessage?.content}[/INST]`,
+      `${hostMessage?.content}[/INST]`,
     );
 
     const systemPrompt = `
-    <s>[INST] <<SYS>>\n${this._systemPrompt}\n<</SYS>>\n${chatHistoryPrompt}\n${this._characterName}: `; // TODO: add <charName>:  as ending for the instruction
+    <s>[INST] <<SYS>>\n${this._systemPrompt}\n<</SYS>>\n${chatHistoryPrompt}\n${this._characterName}: `;
 
     return systemPrompt;
   }
