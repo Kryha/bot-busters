@@ -62,3 +62,8 @@ export const ONE_TIME_ACHIEVEMENTS: AchievementId[] = [
 ];
 
 export const EMPTY_RES = "empty";
+
+export const AUDIO_ON = 1;
+export const AUDIO_OFF = 0;
+
+export const DEFAULT_VOLUME = 0.5;

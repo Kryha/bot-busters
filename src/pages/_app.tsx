@@ -14,6 +14,7 @@ import { APP_NAME } from "~/constants/index.js";
 import { useRouter } from "next/router.js";
 import { pages } from "~/router.js";
 import { AppContainer } from "~/containers/app-container/index.js";
+import { SoundProvider } from "~/containers/sound-provider/index.js";
 
 const headTitle = "Bot Busters";
 
@@ -44,13 +45,15 @@ const MyApp: AppType<{ session: Session | null }> = ({
         <WalletModalProvider>
           <ThemeProvider>
             <SessionProvider session={session}>
-              {animationLab ? (
-                <Component {...pageProps} />
-              ) : (
-                <AppContainer>
+              <SoundProvider>
+                {animationLab ? (
                   <Component {...pageProps} />
-                </AppContainer>
-              )}
+                ) : (
+                  <AppContainer>
+                    <Component {...pageProps} />
+                  </AppContainer>
+                )}
+              </SoundProvider>
             </SessionProvider>
           </ThemeProvider>
         </WalletModalProvider>

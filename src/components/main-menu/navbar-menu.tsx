@@ -4,33 +4,21 @@ import { Button, Stack, Typography } from "@mui/material";
 import { useRouter } from "next/router.js";
 import { pages } from "~/router.js";
 import { NavbarMenuButton } from "~/components/main-menu/index.js";
+import { AudioSettings } from "~/components/audio-settings/index.js";
 import { text } from "~/assets/text/index.js";
-import { styles } from "~/components/main-menu/styles.js";
-
-import {
-  BotBustersIcon,
-  SoundOffIcon,
-  SoundOnIcon,
-  UserIcon,
-} from "~/assets/icons/index.js";
+import { BotBustersIcon, UserIcon } from "~/assets/icons/index.js";
 import { api } from "~/utils/api.js";
+import { styles } from "~/components/main-menu/styles.js";
 
 interface Props {
   handleClose: () => void;
-  soundOn: boolean;
-  setSoundOn: (value: boolean) => void;
 }
 
-export const NavbarMenu: FC<Props> = ({ handleClose, soundOn, setSoundOn }) => {
+export const NavbarMenu: FC<Props> = ({ handleClose }) => {
   const router = useRouter();
-
   const loggedUser = api.user.getLoggedUser.useQuery(undefined, {
     retry: false,
   });
-
-  const onSoundClick = () => {
-    setSoundOn(!soundOn);
-  };
 
   const handleNavigation = (path: string) => {
     void router.push(path);
@@ -55,9 +43,7 @@ export const NavbarMenu: FC<Props> = ({ handleClose, soundOn, setSoundOn }) => {
         <BotBustersIcon />
       </Button>
       <Stack direction={"row"} rowGap={2} sx={styles.navbarEnd}>
-        <Button variant="text" onClick={onSoundClick}>
-          {soundOn ? <SoundOnIcon /> : <SoundOffIcon />}
-        </Button>
+        <AudioSettings />
         <NavbarMenuButton sx={styles.button} onClick={handleClose} />
       </Stack>
     </Stack>

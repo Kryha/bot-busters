@@ -10,6 +10,10 @@ interface Props {
 }
 
 export const PlayButton: FC<Props> = ({ onClick, disabled }) => {
+  const segments = [
+    [0, 96],
+    [24, 96],
+  ];
   return (
     <Box
       component={"button"}
@@ -18,7 +22,12 @@ export const PlayButton: FC<Props> = ({ onClick, disabled }) => {
       aria-label={"Start"}
       sx={styles.playButton}
     >
-      <AnimationPlayer animationData={PlayButtonAnimation} play loop />
+      <AnimationPlayer
+        animationData={PlayButtonAnimation}
+        segments={segments}
+        play
+        loop
+      />
     </Box>
   );
 };
