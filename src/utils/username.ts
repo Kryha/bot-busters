@@ -8,7 +8,7 @@ export const getRandomUsername = () => {
   ]);
 
   const usernamePart2 = faker.helpers.arrayElement([
-    faker.word.adverb(5),
+    faker.word.adverb(3),
     faker.animal.cat(),
     faker.music.genre(),
   ]);

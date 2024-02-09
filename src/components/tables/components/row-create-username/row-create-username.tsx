@@ -18,8 +18,12 @@ export const RowCreateUsername: FC<RowCreateUsernameProps> = ({
   const [error, setError] = useState("");
 
   useEffect(() => {
-    const name = getRandomUsername();
-    setUsername(name.replace(/[0-9]/g, ""));
+    let name: string;
+    do {
+      name = getRandomUsername();
+    } while (name.length < 14);
+
+    setUsername(name.replace(/[0-9 ]/g, ""));
   }, []);
 
   const validateUsername = (name: string) => {
