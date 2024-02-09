@@ -1,6 +1,7 @@
 import { type SxProps } from "@mui/material";
 import { theme } from "~/styles/index.js";
 import { zIndex } from "~/styles/z-index.js";
+import type { SxStyleRecord } from "~/types/sx-style-record.js";
 
 export const styles = {
   container: {
@@ -46,4 +47,4 @@ export const styles = {
     position: "relative",
     whiteSpace: "nowrap",
   } satisfies SxProps,
-};
+} satisfies SxStyleRecord;

@@ -6,7 +6,7 @@ import { text } from "~/assets/text/index.js";
 import { TopRanked } from "~/components/index.js";
 import { api } from "~/utils/api.js";
 import { pages } from "~/router.js";
-import { EMPTY_RES, TOP_RANKED_PLAYERS } from "~/constants/index.js";
+import { EMPTY_RES } from "~/constants/index.js";
 import { PlayButton } from "~/components/play-button/index.js";
 import { PixelButton } from "~/components/pixel-button/index.js";
 import { BotBusterLogoAnimation } from "~/components/bot-buster-logo/index.js";
@@ -74,7 +74,7 @@ const Homepage = () => {
         />
         <PixelButton onClick={openAboutHandler} text={text.homepage.about} />
       </Stack>
-      <TopRanked players={TOP_RANKED_PLAYERS} />
+      <TopRanked />
     </Stack>
   );
 };
