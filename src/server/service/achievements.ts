@@ -15,17 +15,6 @@ const goodBustAchievement: Achievement = {
   },
 };
 
-const doubleAgentAchievement: Achievement = {
-  name: "Double Agent",
-  description: "Convince >1 human(s) that you are a bot in a match",
-  calculate: ({ otherPlayers, player }) => {
-    const isVotedAgainst = otherPlayers.filter(
-      (p) => p.votes?.includes(player.userId),
-    ).length;
-    return isVotedAgainst >= 2;
-  },
-};
-
 const busterStreakAchievement: Achievement = {
   name: "Buster Streak",
   description: "Successfully bust all bots in (3) consecutive games",
@@ -127,7 +116,6 @@ export const matchAchievements: Record<AchievementId, Achievement> = {
   dailyStreakCounter: streakCountAchievements,
   fiveDayStreak: dailyStreakAchievement,
   goodBust: goodBustAchievement,
-  doubleAgent: doubleAgentAchievement,
   busterStreak: busterStreakAchievement,
   firstTimer: firstTimerAchievement,
   beginnersLuck: beginnersLuckAchievement,
