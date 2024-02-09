@@ -142,6 +142,8 @@ export class Agent {
       botsBusted: 0,
       totalBotsBusted: 0,
       humansBusted: 0,
+      humansFooled: 0,
+      humansFooledScore: 0,
       botsBustedScore: 0,
       humansBustedScore: 0,
       correctGuesses: 0,
