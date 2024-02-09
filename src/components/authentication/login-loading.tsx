@@ -1,29 +1,30 @@
 import { Stack, Typography } from "@mui/material";
-import Image from "next/image";
-
+import { useRouter } from "next/router";
 import { text } from "~/assets/text/index.js";
-import { default as spinner } from "~/assets/images/spinner.gif";
+import { PrimaryButton } from "~/components/primary-button/index.js";
+import { PageLayout } from "~/containers/page-layout/index.js";
+import { processTextToLink } from "~/utils/links.jsx";
 
-import { styles } from "./styles.js";
+export const LoginLoading = () => {
+  const router = useRouter();
 
-const SPINNER_SIZE = 34;
+  return (
+    <PageLayout title={text.auth.connectWallet}>
+      <Stack alignItems="center" gap={4}>
+        <Stack alignItems="center" gap={2}>
+          <Typography variant="body1">
+            {processTextToLink(text.auth.loginDescription, text.wordsToLink)}
+          </Typography>
+        </Stack>
 
-// TODO: update styles
-export const LoginLoading = () => (
-  <Stack sx={styles.wrapper}>
-    <Stack sx={styles.container}>
-      <Stack sx={styles.progress}>
-        <Image
-          src={spinner}
-          alt="spinner"
-          width={SPINNER_SIZE}
-          height={SPINNER_SIZE}
-        />
+        <PrimaryButton
+          variant="contained"
+          color="blueGrey"
+          onClick={() => void router.reload()}
+        >
+          {text.playerProfile.connectWallet}
+        </PrimaryButton>
       </Stack>
-      <Stack sx={styles.text}>
-        <Typography variant="h5">{text.auth.weUseYourWallet}</Typography>
-        <Typography variant="h5">{text.auth.weTransferToYourWallet}</Typography>
-      </Stack>
-    </Stack>
-  </Stack>
-);
+    </PageLayout>
+  );
+};
