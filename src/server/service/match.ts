@@ -89,7 +89,6 @@ export class Match {
     return this._agents;
   }
 
-  // TODO: Inject initial prompt as first chat message from "host"
   constructor(playerIds: string[], botsInMatch: number) {
     this._id = uuid();
 
@@ -154,7 +153,7 @@ export class Match {
     if (!randomPrompt) throw new Error("No random prompt found");
 
     this.addMessage({
-      sender: "host",
+      sender: "0",
       message: randomPrompt,
       sentAt: Date.now(),
     });
@@ -410,15 +409,16 @@ export class Match {
 
   convertMessages(): StoredChatMessage[] {
     return this._messages.flatMap((message) => {
-      if (message.sender === "host") {
+      if (message.sender === "0") {
         return {
           ...message,
-          sender: "host",
+          sender: "0",
           isBot: false,
         } satisfies StoredChatMessage;
       }
 
       const player = this._players.find((p) => p.userId === message.sender);
+
       if (!player) return [];
 
       return { ...message, sender: player.characterId, isBot: !!player.isBot };

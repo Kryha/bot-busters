@@ -1,3 +1,4 @@
+import { type ReactNode } from "react";
 import { type CharacterName } from "~/types/index.js";
 import {
   AvatarAsh,
@@ -75,7 +76,9 @@ export const getCharacterAnimation = (
   return isBot ? characterAnimations.botWin : characterAnimations.blink;
 };
 
-export const getCharacterSplashScreen = (characterName: CharacterName) => {
+export const getCharacterSplashScreen = (
+  characterName: CharacterName,
+): ReactNode => {
   const splashScreenMap = {
     hal: <SplashHal />,
     ash: <SplashAsh />,
@@ -99,7 +102,9 @@ export const getCharacterTitle = (characterName: CharacterName) => {
   return titleMap[characterName];
 };
 
-export const getTransitionLines = (characterName: string | undefined) => {
+export const getTransitionLines = (
+  characterName: CharacterName | undefined,
+) => {
   switch (characterName) {
     case "hal":
       return TransitionLinesHal;

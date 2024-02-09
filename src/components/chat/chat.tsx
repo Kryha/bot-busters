@@ -80,13 +80,13 @@ export const Chat: FC<Props> = ({ roomId, room }) => {
   );
 
   const hostMessageData: ChatMessagePayload | undefined = useMemo(() => {
-    return messages.findLast((message) => message.sender === "host");
+    return messages.findLast((message) => message.sender === "0");
   }, [messages]);
 
   const messageData: MessageData[] = useMemo(() => {
     return messages
       .filter((message) => {
-        return message.sender !== "host";
+        return message.sender !== "0";
       })
       .map((message) => {
         const isLocalSender = message.sender === session?.user?.id;
@@ -104,7 +104,11 @@ export const Chat: FC<Props> = ({ roomId, room }) => {
 
   const handleSend = (value: string) => {
     if (message) {
-      sendMessage.mutate({ message: value, sentAt: Date.now(), roomId });
+      sendMessage.mutate({
+        message: value,
+        sentAt: Date.now(),
+        roomId,
+      });
       setMessage("");
     }
   };
