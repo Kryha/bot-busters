@@ -2,17 +2,12 @@ import { type FC } from "react";
 import { Box, Stack, Typography } from "@mui/material";
 
 import { text } from "~/assets/text/index.js";
-import { type TopRankedPlayer } from "~/types/index.js";
 
 import { styles } from "./styles.js";
 import { theme } from "~/styles/theme.js";
 import { api } from "~/utils/api.js";
 
-interface Props {
-  players: TopRankedPlayer[];
-}
-
-export const TopRanked: FC<Props> = () => {
+export const TopRanked: FC = () => {
   const animationStyles = [styles.topRankedBanner1, styles.topRankedBanner2];
 
   const getRankedUsers = api.user.getRankedUsers.useQuery({
