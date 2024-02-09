@@ -25,6 +25,7 @@ export const styles = {
     flexDirection: "row",
     justifyContent: "flex-start",
     alignItems: "center",
+    lineHeight: "24px",
     p: 2,
     gap: 5,
   },

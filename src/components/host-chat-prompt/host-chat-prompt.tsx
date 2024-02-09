@@ -20,7 +20,7 @@ export const HostChatPrompt: FC<Props> = ({ stage, message }) => {
 
       if (writtenMessage.length < message.length) {
         // wait time is longer in the beginning because of the character animation
-        await wait(writtenMessage.length === 0 ? 3000 : 40);
+        await wait(writtenMessage.length === 0 ? 3000 : 50);
         const nextChar = message[writtenMessage.length];
 
         if (!nextChar) return;
