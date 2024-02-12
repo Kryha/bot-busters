@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { Box, Button, Slider, Stack } from "@mui/material";
 import { VolumeDown, VolumeUp } from "@mui/icons-material";
-import { AUDIO_OFF, AUDIO_ON, DEFAULT_VOLUME } from "~/constants/index.js";
+import { AUDIO_OFF, AUDIO_ON } from "~/constants/index.js";
 
 interface Props {
   volume: number;
@@ -22,7 +22,6 @@ export const VolumeSlider: FC<Props> = ({ volume, changeVolume }) => {
           aria-label="Volume"
           value={volume}
           onChange={handleChange}
-          defaultValue={DEFAULT_VOLUME}
           min={AUDIO_OFF}
           max={AUDIO_ON}
           step={0.1}

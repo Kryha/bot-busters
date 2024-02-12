@@ -32,17 +32,6 @@ const config = {
         }],
       },
       {
-        test: /\.mp3$/,
-        type: "asset/resource",
-        use: {
-          loader: "url-loader",
-          options: {
-            fallback: "file-loader",
-            name: "[path][name].[ext]",
-          }
-        },
-      },
-      {
         test: /\.lottie$/,
         type: "asset/resource",
       }
