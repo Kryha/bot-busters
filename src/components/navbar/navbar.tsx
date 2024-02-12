@@ -27,6 +27,8 @@ export const Navbar: FC<Props> = ({ open, setOpen }) => {
     void router.push(path);
   };
 
+  const isHomePage = router.pathname === pages.home;
+
   return (
     <Stack sx={styles.container}>
       <Stack sx={styles.wrapper}>
@@ -41,13 +43,15 @@ export const Navbar: FC<Props> = ({ open, setOpen }) => {
             {loggedUser.data?.username ?? text.general.username}
           </Typography>
         </Stack>
-        <Button
-          variant="text"
-          sx={styles.mainLogo}
-          onClick={() => handleNavigation(pages.home)}
-        >
-          <BotBustersIcon />
-        </Button>
+        {!isHomePage && (
+          <Button
+            variant="text"
+            sx={styles.mainLogo}
+            onClick={() => handleNavigation(pages.home)}
+          >
+            <BotBustersIcon />
+          </Button>
+        )}
         <Stack direction={"row"} rowGap={2} sx={styles.navbarEnd}>
           <AudioSettings />
           <MenuButton sx={styles.button} onClick={() => setOpen(true)} />

@@ -3,8 +3,10 @@ import { theme } from "~/styles/theme.js";
 import { Button } from "@mui/base";
 import { type FC } from "react";
 import { SelectIcon } from "~/assets/icons/index.js";
+import { usePlaySFX } from "~/hooks/sounds";
 
 interface Props extends React.ComponentProps<typeof Button> {
+  onClick: () => void;
   text: string;
 }
 
@@ -49,9 +51,15 @@ const PixelButtonStyle = styled(Button)({
   },
 });
 
-export const PixelButton: FC<Props> = ({ text, ...props }) => {
+export const PixelButton: FC<Props> = ({ text, onClick, ...props }) => {
+  const playSfx = usePlaySFX();
+  const handleClick = () => {
+    void playSfx("./sounds/BB_UI_Nav_Click.mp3");
+    onClick();
+  };
+
   return (
-    <PixelButtonStyle {...props}>
+    <PixelButtonStyle {...props} onClick={handleClick}>
       <SelectIcon />
       {text}
     </PixelButtonStyle>

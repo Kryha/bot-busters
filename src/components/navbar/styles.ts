@@ -6,6 +6,7 @@ import { zIndex } from "~/styles/z-index.js";
 export const styles = {
   container: {
     position: "relative",
+    backgroundColor: "transparent",
     zIndex: zIndex.front,
     flex: "0 1 auto",
   },

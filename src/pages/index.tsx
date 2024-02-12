@@ -1,19 +1,21 @@
+import { useState } from "react";
+import { useRouter } from "next/router.js";
 import { Stack, Typography } from "@mui/material";
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/router.js";
-
-import { text } from "~/assets/text/index.js";
-import { TopRanked } from "~/components/index.js";
-import { api } from "~/utils/api.js";
-import { pages } from "~/router.js";
-import { EMPTY_RES } from "~/constants/index.js";
+import { Navbar, TopRanked } from "~/components/index.js";
 import { PlayButton } from "~/components/play-button/index.js";
 import { PixelButton } from "~/components/pixel-button/index.js";
 import { BotBusterLogoAnimation } from "~/components/bot-buster-logo/index.js";
+import { LandingPageAnimation } from "~/components/landing-page-animation/index.js";
+import { api } from "~/utils/api.js";
+import { pages } from "~/router.js";
+import { EMPTY_RES } from "~/constants/index.js";
+import { text } from "~/assets/text/index.js";
 import { styles } from "~/styles/pages/homepage.js";
 
 const Homepage = () => {
   const { push } = useRouter();
+  const [menuIsOpen, setMenuIsOpen] = useState(false);
 
   const loggedUser = api.user.getLoggedUser.useQuery(undefined, {
     retry: false,
@@ -47,31 +49,44 @@ const Homepage = () => {
   const openAboutHandler = () => void push(pages.about);
 
   return (
-    <Stack sx={styles.textContainer}>
-      <Stack sx={styles.description}>
-        <Typography variant="body1">
-          {text.homepage.descriptionPart1}
-        </Typography>
-        <BotBusterLogoAnimation />
-      </Stack>
-      <Stack sx={styles.actions}>
-        {match.data && match.data !== EMPTY_RES ? (
-          <PixelButton
-            disabled={loggedUser.isLoading || match.isLoading}
-            onClick={() => void handleGoToMatch()}
-            text={text.homepage.continueGame}
-          />
-        ) : (
-          <PlayButton
-            disabled={loggedUser.isLoading || match.isLoading}
-            onClick={() => void handleGameStart()}
-          />
-        )}
-        <PixelButton
-          onClick={openDailyHandler}
-          text={text.homepage.openDaily}
-        />
-        <PixelButton onClick={openAboutHandler} text={text.homepage.about} />
+    <Stack sx={styles.wrapper}>
+      <Navbar open={menuIsOpen} setOpen={setMenuIsOpen} />
+      <LandingPageAnimation />
+      <Stack sx={styles.container}>
+        <Stack sx={styles.logo}>
+          <Typography variant="body1">
+            {text.homepage.descriptionPart1}
+          </Typography>
+          <BotBusterLogoAnimation />
+          <Typography variant="body1" sx={styles.aleoSystems}>
+            {text.homepage.aleoSystems()}
+          </Typography>
+        </Stack>
+        <Stack sx={styles.actions}>
+          {match.data && match.data !== EMPTY_RES ? (
+            <PixelButton
+              disabled={loggedUser.isLoading || match.isLoading}
+              onClick={() => void handleGoToMatch()}
+              text={text.homepage.continueGame}
+            />
+          ) : (
+            <PlayButton
+              disabled={loggedUser.isLoading || match.isLoading}
+              onClick={() => void handleGameStart()}
+            />
+          )}
+          <Stack sx={styles.menuActions}>
+            <PixelButton
+              onClick={openDailyHandler}
+              text={text.homepage.leaderboard}
+            />
+            <PixelButton
+              onClick={openAboutHandler}
+              text={text.homepage.about}
+              sx={styles.aboutButton}
+            />
+          </Stack>
+        </Stack>
       </Stack>
       <TopRanked />
     </Stack>
