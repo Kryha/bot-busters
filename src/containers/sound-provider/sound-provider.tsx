@@ -1,5 +1,9 @@
 import { createContext, type FC, useEffect, useMemo, useState } from "react";
-import { DEFAULT_VOLUME } from "~/constants/index.js";
+import {
+  DEFAULT_MASTER_VOLUME,
+  DEFAULT_MUSIC_VOLUME,
+  DEFAULT_SFX_VOLUME,
+} from "~/constants/index.js";
 
 interface Context {
   audioContext?: AudioContext;
@@ -24,29 +28,31 @@ export const SoundProvider: FC<Props> = ({ children }) => {
   const [masterGainNode, setMasterGainNode] = useState<GainNode>();
   const [sfxGainNode, setSFXGainNode] = useState<GainNode>();
   const [musicGainNode, setMusicGainNode] = useState<GainNode>();
-  const [masterVolume, setMasterVolume] = useState<number>(DEFAULT_VOLUME);
-  const [sfxVolume, setSFXVolume] = useState<number>(DEFAULT_VOLUME);
-  const [musicVolume, setMusicVolume] = useState<number>(DEFAULT_VOLUME);
+
+  const [masterVolume, setMasterVolume] = useState<number>(
+    DEFAULT_MASTER_VOLUME,
+  );
+  const [sfxVolume, setSFXVolume] = useState<number>(DEFAULT_SFX_VOLUME);
+  const [musicVolume, setMusicVolume] = useState<number>(DEFAULT_MUSIC_VOLUME);
 
   useEffect(() => {
-    const initializeAudioContext = () => {
+    const initializeAudio = () => {
       const audioContext = new AudioContext();
-      const masterGainNode = audioContext.createGain();
-      const musicGainNode = audioContext.createGain();
-      const sfxGainNode = audioContext.createGain();
-      musicGainNode.connect(masterGainNode);
-      sfxGainNode.connect(masterGainNode);
-      masterGainNode.connect(audioContext.destination);
-      setAudioContext(audioContext);
-      setMasterGainNode(masterGainNode);
-      setMusicGainNode(musicGainNode);
-      setSFXGainNode(sfxGainNode);
-    };
+      const masterGain = audioContext.createGain();
+      const musicGain = audioContext.createGain();
+      const sfxGain = audioContext.createGain();
 
-    if (!audioContext) {
-      initializeAudioContext();
-    }
-  }, [audioContext]);
+      musicGain.connect(masterGain);
+      sfxGain.connect(masterGain);
+      masterGain.connect(audioContext.destination);
+
+      setAudioContext(audioContext);
+      setMasterGainNode(masterGain);
+      setMusicGainNode(musicGain);
+      setSFXGainNode(sfxGain);
+    };
+    initializeAudio();
+  }, []);
 
   const contextValue = useMemo(
     () => ({
