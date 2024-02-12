@@ -1,19 +1,16 @@
-import { type FC, useState } from "react";
+import { type FC } from "react";
 import { Button, Stack, Typography } from "@mui/material";
 import { useRouter } from "next/router";
-import { text } from "~/assets/text/index.js";
-
-import {
-  BotBustersIcon,
-  SoundOffIcon,
-  SoundOnIcon,
-  UserIcon,
-} from "~/assets/icons/index.js";
 import { MenuButton } from "~/components/main-menu/menu-button.jsx";
 import { MainMenu } from "~/components/main-menu/index.js";
+import { AudioSettings } from "~/components/audio-settings/index.js";
+
+import { BotBustersIcon, UserIcon } from "~/assets/icons/index.js";
 import { pages } from "~/router.js";
-import { styles } from "./styles.js";
+import { text } from "~/assets/text/index.js";
 import { api } from "~/utils/api.js";
+
+import { styles } from "./styles.js";
 
 interface Props {
   open: boolean;
@@ -22,15 +19,9 @@ interface Props {
 
 export const Navbar: FC<Props> = ({ open, setOpen }) => {
   const router = useRouter();
-  const [soundOn, setSoundOn] = useState(true);
-
   const loggedUser = api.user.getLoggedUser.useQuery(undefined, {
     retry: false,
   });
-
-  const onSoundClick = () => {
-    setSoundOn(!soundOn);
-  };
 
   const handleNavigation = (path: string) => {
     void router.push(path);
@@ -58,18 +49,11 @@ export const Navbar: FC<Props> = ({ open, setOpen }) => {
           <BotBustersIcon />
         </Button>
         <Stack direction={"row"} rowGap={2} sx={styles.navbarEnd}>
-          <Button variant="text" onClick={onSoundClick}>
-            {soundOn ? <SoundOnIcon /> : <SoundOffIcon />}
-          </Button>
+          <AudioSettings />
           <MenuButton sx={styles.button} onClick={() => setOpen(true)} />
         </Stack>
       </Stack>
-      <MainMenu
-        soundOn={soundOn}
-        setSoundOn={setSoundOn}
-        open={open}
-        setOpen={setOpen}
-      />
+      <MainMenu open={open} setOpen={setOpen} />
     </Stack>
   );
 };

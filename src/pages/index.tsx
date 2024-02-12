@@ -10,7 +10,6 @@ import { EMPTY_RES } from "~/constants/index.js";
 import { PlayButton } from "~/components/play-button/index.js";
 import { PixelButton } from "~/components/pixel-button/index.js";
 import { BotBusterLogoAnimation } from "~/components/bot-buster-logo/index.js";
-
 import { styles } from "~/styles/pages/homepage.js";
 
 const Homepage = () => {
