@@ -1,4 +1,5 @@
 import { createContext, type FC, useEffect, useMemo, useState } from "react";
+import { isClient } from "~/utils/client.js";
 import {
   DEFAULT_MASTER_VOLUME,
   DEFAULT_MUSIC_VOLUME,
@@ -51,7 +52,8 @@ export const SoundProvider: FC<Props> = ({ children }) => {
       setMusicGainNode(musicGain);
       setSFXGainNode(sfxGain);
     };
-    initializeAudio();
+
+    isClient() && initializeAudio();
   }, []);
 
   const contextValue = useMemo(

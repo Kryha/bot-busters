@@ -9,7 +9,11 @@ interface Props {
 }
 export const VolumeSlider: FC<Props> = ({ volume, changeVolume }) => {
   const handleChange = (event: Event, newValue: number | number[]) => {
-    changeVolume(newValue as number);
+    if (typeof newValue === "number") {
+      changeVolume(newValue);
+    } else {
+      return; // will never be an array
+    }
   };
 
   return (

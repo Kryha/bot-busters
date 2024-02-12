@@ -1,6 +1,7 @@
-import { useAndRequireContext } from "~/hooks/use-and-require-context.js";
 import { useEffect } from "react";
+import { useAndRequireContext } from "~/hooks/use-and-require-context.js";
 import { ContextRef } from "~/containers/sound-provider/index.js";
+import { isClient } from "~/utils/client.js";
 import {
   DEFAULT_MASTER_VOLUME,
   DEFAULT_MUSIC_VOLUME,
@@ -12,7 +13,7 @@ export const useChangeMasterVolume = () => {
     useAndRequireContext(ContextRef, "useChangeMasterVolume", "sound-provider");
 
   useEffect(() => {
-    if (!audioContext || !masterGainNode) {
+    if (!isClient() || !audioContext || !masterGainNode) {
       return;
     }
     const storedMasterVolume = localStorage.getItem("MASTER_VOLUME");
@@ -20,13 +21,14 @@ export const useChangeMasterVolume = () => {
       storedMasterVolume !== null
         ? Number(storedMasterVolume)
         : DEFAULT_MASTER_VOLUME;
+
     setMasterVolume(value);
-    masterGainNode.gain.setValueAtTime(Number(value), 0);
+    masterGainNode.gain.setValueAtTime(Number(value), audioContext.currentTime);
     masterGainNode.connect(audioContext.destination);
-  }, [audioContext, masterGainNode, masterVolume]);
+  }, [audioContext, masterGainNode]);
 
   const changeMasterVolume = (volume: number) => {
-    localStorage.setItem("MASTER_VOLUME", String(volume));
+    isClient() && localStorage.setItem("MASTER_VOLUME", String(volume));
     setMasterVolume(volume);
   };
 
@@ -38,7 +40,7 @@ export const useChangeSFXVolume = () => {
     useAndRequireContext(ContextRef, "useChangeSFXVolume", "sound-provider");
 
   useEffect(() => {
-    if (!masterGainNode || !sfxGainNode) {
+    if (!isClient() || !masterGainNode || !sfxGainNode) {
       return;
     }
     const storedSFXVolume = localStorage.getItem("SFX_VOLUME");
@@ -47,10 +49,10 @@ export const useChangeSFXVolume = () => {
     setSFXVolume(value);
     sfxGainNode.gain.setValueAtTime(Number(value), 0);
     sfxGainNode.connect(masterGainNode);
-  }, [sfxVolume, masterGainNode, sfxGainNode]);
+  }, [masterGainNode, sfxGainNode]);
 
   const changeSFXVolume = (volume: number) => {
-    localStorage.setItem("SFX_VOLUME", String(volume));
+    isClient() && localStorage.setItem("SFX_VOLUME", String(volume));
     setSFXVolume(volume);
   };
 
@@ -62,7 +64,7 @@ export const useChangeMusicVolume = () => {
     useAndRequireContext(ContextRef, "useChangeMusicVolume", "sound-provider");
 
   useEffect(() => {
-    if (!masterGainNode || !musicGainNode) {
+    if (!isClient() || !masterGainNode || !musicGainNode) {
       return;
     }
     const storedMusicVolume = localStorage.getItem("MUSIC_VOLUME");
@@ -73,10 +75,10 @@ export const useChangeMusicVolume = () => {
     setMusicVolume(value);
     musicGainNode.gain.setValueAtTime(Number(value), 0);
     musicGainNode.connect(masterGainNode);
-  }, [masterGainNode, musicGainNode, musicVolume]);
+  }, [masterGainNode, musicGainNode]);
 
   const changeMusicVolume = (volume: number) => {
-    localStorage.setItem("MUSIC_VOLUME", String(volume));
+    isClient() && localStorage.setItem("MUSIC_VOLUME", String(volume));
     setMusicVolume(volume);
   };
 

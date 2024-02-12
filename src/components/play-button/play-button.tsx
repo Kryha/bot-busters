@@ -3,7 +3,7 @@ import { type FC } from "react";
 import { PlayButtonAnimation } from "~/assets/animations/index.js";
 import { AnimationPlayer } from "~/components/animation/index.js";
 import { styles } from "./styles.js";
-import { usePlaySFX } from "~/hooks/use-play-sfx.js";
+import { usePlaySFX } from "~/hooks/sounds.js";
 
 interface Props {
   onClick: () => void;
