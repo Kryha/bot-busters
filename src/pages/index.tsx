@@ -1,5 +1,4 @@
 import { Stack, Typography } from "@mui/material";
-import { useEffect } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/router.js";
 
@@ -11,22 +10,15 @@ import { EMPTY_RES } from "~/constants/index.js";
 import { PlayButton } from "~/components/play-button/index.js";
 import { PixelButton } from "~/components/pixel-button/index.js";
 import { BotBusterLogoAnimation } from "~/components/bot-buster-logo/index.js";
-import { usePlayMusic } from "~/hooks/use-play-music.js";
 import { styles } from "~/styles/pages/homepage.js";
 
 const Homepage = () => {
   const { push } = useRouter();
-  const playSound = usePlayMusic();
 
   const loggedUser = api.user.getLoggedUser.useQuery(undefined, {
     retry: false,
   });
   const match = api.match.getOngoingMatch.useQuery();
-
-  // TODO: use variables
-  useEffect(() => {
-    void playSound("./music/botbusters-theme-song.mp3");
-  }, [playSound]);
 
   const handleGameStart = async () => {
     if (loggedUser.isLoading || match.isLoading) return;

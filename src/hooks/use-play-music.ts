@@ -9,7 +9,7 @@ export const usePlayMusic = () => {
     "sound-provider",
   );
   return useCallback(
-    async (audioFile: string) => {
+    async (audioFile: string, loop?: boolean) => {
       if (!audioContext || !masterGainNode || !musicGainNode) {
         return;
       }
@@ -21,6 +21,7 @@ export const usePlayMusic = () => {
           (audioBuffer) => {
             const source = audioContext.createBufferSource();
             source.buffer = audioBuffer;
+            source.loop = !!loop;
             source.connect(musicGainNode);
             musicGainNode.connect(masterGainNode);
             masterGainNode.connect(audioContext.destination);

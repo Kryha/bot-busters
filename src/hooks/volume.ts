@@ -1,7 +1,11 @@
 import { useAndRequireContext } from "~/hooks/use-and-require-context.js";
 import { useEffect } from "react";
 import { ContextRef } from "~/containers/sound-provider/index.js";
-import { DEFAULT_VOLUME } from "~/constants/index.js";
+import {
+  DEFAULT_MASTER_VOLUME,
+  DEFAULT_MUSIC_VOLUME,
+  DEFAULT_SFX_VOLUME,
+} from "~/constants/index.js";
 
 export const useChangeMasterVolume = () => {
   const { audioContext, masterGainNode, masterVolume, setMasterVolume } =
@@ -13,7 +17,10 @@ export const useChangeMasterVolume = () => {
     }
     const storedMasterVolume = localStorage.getItem("MASTER_VOLUME");
     const value =
-      storedMasterVolume !== null ? Number(storedMasterVolume) : DEFAULT_VOLUME;
+      storedMasterVolume !== null
+        ? Number(storedMasterVolume)
+        : DEFAULT_MASTER_VOLUME;
+    setMasterVolume(value);
     masterGainNode.gain.setValueAtTime(Number(value), 0);
     masterGainNode.connect(audioContext.destination);
   }, [audioContext, masterGainNode, masterVolume]);
@@ -36,7 +43,8 @@ export const useChangeSFXVolume = () => {
     }
     const storedSFXVolume = localStorage.getItem("SFX_VOLUME");
     const value =
-      storedSFXVolume !== null ? Number(storedSFXVolume) : DEFAULT_VOLUME;
+      storedSFXVolume !== null ? Number(storedSFXVolume) : DEFAULT_SFX_VOLUME;
+    setSFXVolume(value);
     sfxGainNode.gain.setValueAtTime(Number(value), 0);
     sfxGainNode.connect(masterGainNode);
   }, [sfxVolume, masterGainNode, sfxGainNode]);
@@ -59,7 +67,10 @@ export const useChangeMusicVolume = () => {
     }
     const storedMusicVolume = localStorage.getItem("MUSIC_VOLUME");
     const value =
-      storedMusicVolume !== null ? Number(storedMusicVolume) : DEFAULT_VOLUME;
+      storedMusicVolume !== null
+        ? Number(storedMusicVolume)
+        : DEFAULT_MUSIC_VOLUME;
+    setMusicVolume(value);
     musicGainNode.gain.setValueAtTime(Number(value), 0);
     musicGainNode.connect(masterGainNode);
   }, [masterGainNode, musicGainNode, musicVolume]);

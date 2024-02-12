@@ -10,7 +10,7 @@ export const usePlaySFX = () => {
   );
 
   return useCallback(
-    async (audioFile: string) => {
+    async (audioFile: string, loop?: boolean) => {
       if (!audioContext || !masterGainNode || !sfxGainNode) {
         return;
       }
@@ -22,6 +22,7 @@ export const usePlaySFX = () => {
           (audioBuffer) => {
             const source = audioContext.createBufferSource();
             source.buffer = audioBuffer;
+            source.loop = !!loop;
             source.connect(sfxGainNode);
             sfxGainNode.connect(masterGainNode);
             masterGainNode.connect(audioContext.destination);
