@@ -10,6 +10,9 @@ import type {
   MatchRoom,
   StoredChatMessage,
 } from "~/types/index.js";
+import { getRandomInt } from "~/utils/math.js";
+
+const MAX_BOTS_PER_MATCH = env.PLAYERS_PER_MATCH > 3 ? 3 : 2;
 
 export const ee = new EventEmitter();
 
@@ -29,16 +32,29 @@ export const getOngoingMatchByUserId = (userId: string) => {
 };
 
 const makeMatch = () => {
-  const botsInMatch = 1; // TODO: use more options
-  const humansInMatch = env.PLAYERS_PER_MATCH - botsInMatch;
+  const minHumansInMatch = env.PLAYERS_PER_MATCH - MAX_BOTS_PER_MATCH;
 
-  // TODO: Make the players per match random within the range 1-4
   // TODO: Benchmark and check what's the maximum amount of matches we can handle at a time
-  while (lobbyQueue.queue.length >= humansInMatch) {
-    const playerIds = lobbyQueue.pickPlayers(humansInMatch);
-    const match = new Match(playerIds, botsInMatch);
+  while (lobbyQueue.queue.length >= minHumansInMatch) {
+    let botsInMatch = getRandomInt({ max: MAX_BOTS_PER_MATCH });
+    const humansInMatch = env.PLAYERS_PER_MATCH - botsInMatch;
 
-    matches.set(match.id, match);
+    const playerIds = lobbyQueue.pickPlayers(humansInMatch);
+
+    if (playerIds.length < humansInMatch) {
+      botsInMatch = env.PLAYERS_PER_MATCH - playerIds.length;
+    }
+
+    const totalPlayers = playerIds.length + botsInMatch;
+
+    if (
+      botsInMatch <= MAX_BOTS_PER_MATCH &&
+      totalPlayers === env.PLAYERS_PER_MATCH
+    ) {
+      const match = new Match(playerIds, botsInMatch);
+
+      matches.set(match.id, match);
+    }
   }
 };
 

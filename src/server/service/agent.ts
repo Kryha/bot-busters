@@ -1,6 +1,7 @@
 import { v4 as uuid } from "uuid";
-import { CHARACTERS } from "~/constants/index.js";
+import fetch from "node-fetch";
 
+import { CHARACTERS } from "~/constants/index.js";
 import { env } from "~/env.mjs";
 import { ee, matchEvent } from "~/server/api/match-maker.js";
 import { type Match } from "~/server/service/index.js";
@@ -13,6 +14,7 @@ import type {
   SenderRole,
 } from "~/types/index.js";
 import { wait } from "~/utils/timer.js";
+
 export class Agent {
   private _id: string;
   private _characterId: CharacterId;
@@ -22,6 +24,7 @@ export class Agent {
 
   private _triggeredAt = Date.now();
   private readonly _silenceToken = "001001";
+  private _isGeneratingResponse = false;
 
   get id() {
     return this._id;
@@ -54,16 +57,23 @@ export class Agent {
   }
 
   handleMessageEvent = (latestMessage: ChatMessagePayload) => {
-    if (latestMessage.sender === this._id) return;
+    if (latestMessage.sender === this._id || this._isGeneratingResponse) return;
 
-    this.triggerResponse().catch((error) => {
-      console.error("Error handling agent message:", error);
-    });
+    this._isGeneratingResponse = true;
+
+    this.triggerResponse()
+      .then(() => {
+        this._isGeneratingResponse = false;
+      })
+      .catch((error) => {
+        this._isGeneratingResponse = false;
+        console.error("Error handling agent message:", error);
+      });
   };
 
-  async triggerResponse() {
+  private async triggerResponse() {
     // TODO: perform actual logic to understand if response should be triggered or not
-    const shouldTrigger = true;
+    const shouldTrigger = Math.random() < 0.5;
     if (!shouldTrigger) return;
 
     this._triggeredAt = Date.now();
@@ -82,7 +92,7 @@ export class Agent {
     };
 
     // TODO: remove artificial wait in favour of something more inteligent
-    const waitTime = this._match.messages.length === 1 ? 8500 : 6500;
+    const waitTime = this._match.messages.length === 1 ? 9000 : 6500;
     await wait(waitTime);
 
     this._match.addMessage(payload);
@@ -156,6 +166,8 @@ export class Agent {
       botsBusted: 0,
       totalBotsBusted: 0,
       humansBusted: 0,
+      humansFooled: 0,
+      humansFooledScore: 0,
       botsBustedScore: 0,
       humansBustedScore: 0,
       correctGuesses: 0,

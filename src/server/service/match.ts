@@ -10,6 +10,7 @@ import {
   POINTS_ACHIEVEMENTS,
   POINTS_BOT_BUSTED,
   POINTS_HUMAN_BUSTED,
+  POINTS_HUMAN_FOOLED,
   VOTING_TIME_MS,
 } from "~/constants/index.js";
 import { ee, matchEvent } from "~/server/api/match-maker.js";
@@ -149,7 +150,8 @@ export class Match {
   }
 
   private addPrompt() {
-    const randomPrompt = matchPrompts[getRandomInt(matchPrompts.length)];
+    const randomPrompt =
+      matchPrompts[getRandomInt({ max: matchPrompts.length })];
     if (!randomPrompt) throw new Error("No random prompt found");
 
     this.addMessage({
@@ -178,8 +180,10 @@ export class Match {
       botsBusted: 0,
       totalBotsBusted: 0,
       humansBusted: 0,
+      humansFooled: 0,
       botsBustedScore: 0,
       humansBustedScore: 0,
+      humansFooledScore: 0,
       correctGuesses: 0,
       achievements: [],
     };
@@ -286,9 +290,11 @@ export class Match {
       let correctGuesses = 0;
       let botsBusted = 0;
       let humansBusted = 0;
+      let humansFooled = 0;
       let score = 0;
       let botsBustedScore = 0;
       let humansBustedScore = 0;
+      let humansFooledScore = 0;
 
       const otherPlayers = this.players.filter(
         (p) => p.userId !== player.userId,
@@ -299,7 +305,15 @@ export class Match {
 
       otherPlayers.forEach((p) => {
         const isVoted = player.votes!.includes(p.userId);
+        const fooledHuman = p.votes?.includes(player.userId);
+
         const hasGuessed = p.isBot ? isVoted : !isVoted;
+
+        if (fooledHuman) {
+          humansFooled += 1;
+          score += POINTS_HUMAN_FOOLED;
+          humansFooledScore += POINTS_HUMAN_FOOLED;
+        }
 
         if (hasGuessed) {
           correctGuesses += 1;
@@ -349,8 +363,10 @@ export class Match {
         correctGuesses,
         botsBusted,
         humansBusted,
+        humansFooled,
         botsBustedScore,
         humansBustedScore,
+        humansFooledScore,
       };
     });
 

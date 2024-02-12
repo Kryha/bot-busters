@@ -21,7 +21,11 @@ export const env = createEnv({
     PLAYERS_PER_MATCH: z
       .string()
       .default("5")
-      .transform((val) => Number(val)),
+      .transform((val) => {
+        const numVal = Number(val);
+        if (isNaN(numVal) || numVal < 3) return 3;
+        return numVal;
+      }),
     ALEO_NETWORK_URL: z.string().url(),
     ALEO_PRIVATE_KEY: z.string().nonempty(),
     LEADERBOARD_PROGRAM_NAME: z.string().default("leaderboard.aleo"),
