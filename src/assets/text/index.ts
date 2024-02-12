@@ -14,7 +14,7 @@ import { navigation } from "./navigation.js";
 import { playerProfile } from "./player-profile.js";
 import { support } from "./support.js";
 import { termsAndConditions } from "./terms-and-conditions.js";
-import { audio } from "~/assets/text/audio";
+import { audio } from "~/assets/text/audio.js";
 
 export const text = {
   auth,
