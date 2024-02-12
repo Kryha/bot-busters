@@ -150,7 +150,8 @@ export class Match {
   }
 
   private addPrompt() {
-    const randomPrompt = matchPrompts[getRandomInt(matchPrompts.length)];
+    const randomPrompt =
+      matchPrompts[getRandomInt({ max: matchPrompts.length })];
     if (!randomPrompt) throw new Error("No random prompt found");
 
     this.addMessage({
