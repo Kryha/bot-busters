@@ -6,9 +6,15 @@ import {
   useChangeMasterVolume,
   useChangeMusicVolume,
   useChangeSFXVolume,
-} from "~/hooks/use-change-volume.js";
-import { AUDIO_OFF } from "~/constants/main.js";
+} from "~/hooks/volume.js";
+import {
+  AUDIO_OFF,
+  DEFAULT_MASTER_VOLUME,
+  DEFAULT_MUSIC_VOLUME,
+  DEFAULT_SFX_VOLUME,
+} from "~/constants/main.js";
 import { styles } from "./styles.js";
+import { text } from "~/assets/text/index.js";
 
 export const AudioSettings: FC = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -23,6 +29,12 @@ export const AudioSettings: FC = () => {
   const { changeMasterVolume, masterVolume } = useChangeMasterVolume();
   const { changeSFXVolume, sfxVolume } = useChangeSFXVolume();
   const { changeMusicVolume, musicVolume } = useChangeMusicVolume();
+
+  const handleReset = () => {
+    changeMasterVolume(DEFAULT_MASTER_VOLUME);
+    changeSFXVolume(DEFAULT_SFX_VOLUME);
+    changeMusicVolume(DEFAULT_MUSIC_VOLUME);
+  };
 
   return (
     <>
@@ -40,19 +52,30 @@ export const AudioSettings: FC = () => {
         }}
       >
         <Stack sx={styles.menuItem}>
-          <Typography>Master Audio</Typography>
+          <Typography variant="caption" sx={styles.text}>
+            {text.audio.master}
+          </Typography>
           <VolumeSlider
             volume={masterVolume}
             changeVolume={changeMasterVolume}
           />
         </Stack>
         <Stack sx={styles.menuItem}>
-          <Typography>Music Audio</Typography>
+          <Typography variant="caption" sx={styles.text}>
+            {text.audio.music}
+          </Typography>
           <VolumeSlider volume={musicVolume} changeVolume={changeMusicVolume} />
         </Stack>
         <Stack sx={styles.menuItem}>
-          <Typography>SFX Audio</Typography>
+          <Typography variant="caption" sx={styles.text}>
+            {text.audio.sfx}
+          </Typography>
           <VolumeSlider volume={sfxVolume} changeVolume={changeSFXVolume} />
+        </Stack>
+        <Stack sx={styles.resetButton}>
+          <Button variant="text" sx={styles.button} onClick={handleReset}>
+            Reset to Default
+          </Button>
         </Stack>
       </Menu>
     </>
