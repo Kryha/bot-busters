@@ -7,3 +7,5 @@ export const CHARACTERS: Record<CharacterId, Character> = {
   4: { id: "4", name: "dot", color: "pink" },
   5: { id: "5", name: "roy", color: "blue" },
 };
+
+export const HOST_TYPING_SPEED = 50;

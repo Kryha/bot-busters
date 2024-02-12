@@ -1,7 +1,10 @@
+import { z } from "zod";
 import type { CharacterId, ChatMessagePayload } from "~/types/index.js";
 
 export type CharacterColor = "orange" | "yellow" | "green" | "pink" | "blue";
-export type CharacterName = "ash" | "hal" | "roy" | "eve" | "dot";
+
+export const characterNameSchema = z.enum(["hal", "dot", "ash", "eve", "roy"]);
+export type CharacterName = z.infer<typeof characterNameSchema>;
 
 export interface Character {
   id: CharacterId;
