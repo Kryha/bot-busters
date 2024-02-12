@@ -135,7 +135,7 @@ export class Agent {
         },
         method: "POST",
         body,
-        signal: AbortSignal.timeout(10000),
+        signal: AbortSignal.timeout(60000),
       });
 
       const textRes = await response.text();
