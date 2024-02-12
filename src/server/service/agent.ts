@@ -130,7 +130,7 @@ export class Agent {
     try {
       const response = await fetch(env.AWS_INFERENCE_URL, {
         headers: {
-          "Content-Type": "application/json",
+          "content-type": "application/json",
           authorizationToken: env.LAMBDA_TOKEN,
         },
         method: "POST",
