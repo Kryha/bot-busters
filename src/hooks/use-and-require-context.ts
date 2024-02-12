@@ -1,5 +1,6 @@
 import { type Context, useContext, useMemo } from "react";
 
+// TODO: send this to error boundary
 export function useAndRequireContext<T>(
   context: Context<T | undefined>,
   objectName = "hook",
