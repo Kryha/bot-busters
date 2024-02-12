@@ -127,13 +127,7 @@ export class Agent {
       parameters: { max_new_tokens: 58, top_p: 1, temperature: 0.8 }, // TODO define final parameters as constants
     });
 
-    console.log("TK:", env.LAMBDA_TOKEN);
-
     const authorizationToken = env.LAMBDA_TOKEN.replace(/\r?\n|\r/g, "");
-    console.log(
-      "🚀 ~ Agent ~ requestMessageFromLLM ~ authorizationToken:",
-      authorizationToken,
-    );
 
     try {
       const response = await fetch(env.AWS_INFERENCE_URL, {
