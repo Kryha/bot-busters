@@ -1,9 +1,9 @@
-import { styled } from "@mui/material/styles";
-import { theme } from "~/styles/theme.js";
-import { Button } from "@mui/base";
 import { type FC } from "react";
+import { styled } from "@mui/material/styles";
+import { Button } from "@mui/base";
+import { usePlaySFX } from "~/hooks/sounds.js";
 import { SelectIcon } from "~/assets/icons/index.js";
-import { usePlaySFX } from "~/hooks/sounds";
+import { theme } from "~/styles/theme.js";
 
 interface Props extends React.ComponentProps<typeof Button> {
   onClick: () => void;
