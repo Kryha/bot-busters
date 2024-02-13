@@ -12,13 +12,13 @@ import { Results } from "~/components/results/index.js";
 import { PlayerLocal } from "~/components/players/player-local/index.js";
 import { PlayersOthers } from "~/components/players/player-others/index.js";
 import { errorMessage } from "~/constants/error-messages";
+import dynamic from "next/dynamic";
 
 const Match: FC = () => {
   const { showBoundary } = useErrorBoundary();
   const { query } = useRouter();
   const { data: session } = useSession();
   const roomId = z.string().safeParse(query.roomId);
-  
 
   if (!roomId.success || !session) {
     showBoundary(new Error(errorMessage.match.lostConnection));
@@ -97,4 +97,4 @@ const MatchInternal: FC<Props> = ({ roomId, session }) => {
   );
 };
 
-export default Match;
+export default dynamic(Promise.resolve(Match), { ssr: false });
