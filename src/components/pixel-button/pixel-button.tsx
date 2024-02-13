@@ -6,7 +6,6 @@ import { SelectIcon } from "~/assets/icons/index.js";
 import { theme } from "~/styles/theme.js";
 
 interface Props extends React.ComponentProps<typeof Button> {
-  onClick: () => void;
   text: string;
 }
 
@@ -51,11 +50,14 @@ const PixelButtonStyle = styled(Button)({
   },
 });
 
-export const PixelButton: FC<Props> = ({ text, onClick, ...props }) => {
+export const PixelButton: FC<Props> = ({ text, ...props }) => {
   const playSfx = usePlaySFX();
-  const handleClick = () => {
-    void playSfx("./sounds/BB_UI_Nav_Click.mp3");
-    onClick();
+  const handleClick = async () => {
+    try {
+      await playSfx("./sounds/BB_UI_Nav_Click.mp3");
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

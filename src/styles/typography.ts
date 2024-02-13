@@ -32,7 +32,7 @@ const subHeadingsFont = localFont({
 const bodyFont = localFont({
   src: [
     {
-      path: "./fonts/Apple II Pro.otf",
+      path: "./fonts/Apple_II_Pro.otf",
       weight: "400",
       style: "normal",
     },

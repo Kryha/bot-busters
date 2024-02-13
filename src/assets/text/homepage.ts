@@ -6,8 +6,7 @@ export const homepage = {
   descriptionPart1: "Who's a bot?, Who's a human?",
   topRankedTitle: "Top 10",
   aleoSystems: () => {
-    const currentYear = new Date().getFullYear();
-    return `© ${currentYear} Aleo Systems, Inc.`;
+    return `© 2023 Aleo Systems, Inc.`;
   },
   topRanked: (position: number, username: string, score: number) =>
     ` / ${position}. ${username} ${score}`,

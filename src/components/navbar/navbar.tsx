@@ -1,4 +1,4 @@
-import { type FC } from "react";
+import { type FC, useState } from "react";
 import { Button, Stack, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import { MenuButton } from "~/components/main-menu/menu-button.jsx";
@@ -12,12 +12,9 @@ import { api } from "~/utils/api.js";
 
 import { styles } from "./styles.js";
 
-interface Props {
-  open: boolean;
-  setOpen: (open: boolean) => void;
-}
+export const Navbar: FC = () => {
+  const [menuIsOpen, setMenuIsOpen] = useState(false);
 
-export const Navbar: FC<Props> = ({ open, setOpen }) => {
   const router = useRouter();
   const loggedUser = api.user.getLoggedUser.useQuery(undefined, {
     retry: false,
@@ -52,12 +49,12 @@ export const Navbar: FC<Props> = ({ open, setOpen }) => {
             <BotBustersIcon />
           </Button>
         )}
-        <Stack direction={"row"} rowGap={2} sx={styles.navbarEnd}>
+        <Stack direction={"row"} rowGap={4} sx={styles.navbarEnd}>
           <AudioSettings />
-          <MenuButton sx={styles.button} onClick={() => setOpen(true)} />
+          <MenuButton sx={styles.button} onClick={() => setMenuIsOpen(true)} />
         </Stack>
       </Stack>
-      <MainMenu open={open} setOpen={setOpen} />
+      <MainMenu open={menuIsOpen} setOpen={setMenuIsOpen} />
     </Stack>
   );
 };

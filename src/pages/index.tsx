@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useRouter } from "next/router.js";
 import { Stack, Typography } from "@mui/material";
 import { signIn } from "next-auth/react";
@@ -15,7 +14,6 @@ import { styles } from "~/styles/pages/homepage.js";
 
 const Homepage = () => {
   const { push } = useRouter();
-  const [menuIsOpen, setMenuIsOpen] = useState(false);
 
   const loggedUser = api.user.getLoggedUser.useQuery(undefined, {
     retry: false,
@@ -50,7 +48,7 @@ const Homepage = () => {
 
   return (
     <Stack sx={styles.wrapper}>
-      <Navbar open={menuIsOpen} setOpen={setMenuIsOpen} />
+      <Navbar />
       <LandingPageAnimation />
       <Stack sx={styles.container}>
         <Stack sx={styles.logo}>
