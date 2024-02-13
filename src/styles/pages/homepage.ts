@@ -3,7 +3,7 @@ import { type SxProps } from "@mui/material";
 export const styles = {
   textContainer: {
     alignItems: "center",
-  },
+  } satisfies SxProps,
   description: {
     mt: 3,
     mb: 5,

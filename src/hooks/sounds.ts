@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ContextRef } from "~/containers/sound-provider/index.js";
 import { useAndRequireContext } from "~/hooks/use-and-require-context.js";
 
@@ -8,35 +8,66 @@ export const usePlayMusic = () => {
     "usePlayMusic",
     "sound-provider",
   );
-  return useCallback(
+
+  const [source, setSource] = useState<AudioBufferSourceNode | null>(null);
+
+  const playMusic = useCallback(
     async (audioFile: string, loop?: boolean) => {
       if (!audioContext || !masterGainNode || !musicGainNode) {
         return;
       }
+
+      // Stop currently playing music if any
+      if (source) {
+        source.stop();
+        setSource(null);
+      }
+
       try {
         const response = await fetch(audioFile);
         const arrayBuffer = await response.arrayBuffer();
         await audioContext.decodeAudioData(
           arrayBuffer,
           (audioBuffer) => {
-            const source = audioContext.createBufferSource();
-            source.buffer = audioBuffer;
-            source.loop = !!loop;
-            source.connect(musicGainNode);
+            const newSource = audioContext.createBufferSource();
+            newSource.buffer = audioBuffer;
+            newSource.loop = !!loop;
+            newSource.connect(musicGainNode);
             musicGainNode.connect(masterGainNode);
             masterGainNode.connect(audioContext.destination);
-            source.start(0);
+            newSource.start(audioContext.currentTime);
+            setSource(newSource);
           },
-          (e) => {
-            console.error("Error decoding audio:", e);
+          (error) => {
+            console.error("Error decoding audio:", error);
           },
         );
       } catch (error) {
         console.error("Error playing sound: ", error);
       }
     },
-    [audioContext, masterGainNode, musicGainNode],
+    [audioContext, masterGainNode, musicGainNode, source],
   );
+
+  // Function to stop the music
+  const stopMusic = useCallback(() => {
+    if (source) {
+      source.stop();
+      setSource(null); // Ensure to clear the source after stopping
+    }
+  }, [source]);
+
+  // Ensure to clean up when the component using this hook unmounts or the source changes
+  useEffect(() => {
+    return () => {
+      if (source) {
+        source.disconnect(); // Disconnect the source on cleanup
+        setSource(null);
+      }
+    };
+  }, [source]);
+
+  return { playMusic, stopMusic, audioContext };
 };
 
 export const usePlaySFX = () => {
@@ -63,7 +94,7 @@ export const usePlaySFX = () => {
             source.connect(sfxGainNode);
             sfxGainNode.connect(masterGainNode);
             masterGainNode.connect(audioContext.destination);
-            source.start(0);
+            source.start(audioContext.currentTime);
           },
           (e) => {
             console.error("Error decoding audio:", e);

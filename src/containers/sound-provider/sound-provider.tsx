@@ -1,4 +1,11 @@
-import { createContext, type FC, useEffect, useMemo, useState } from "react";
+import {
+  createContext,
+  type FC,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { isClient } from "~/utils/client.js";
 import {
   DEFAULT_MASTER_VOLUME,
@@ -7,6 +14,7 @@ import {
 } from "~/constants/index.js";
 
 interface Context {
+  mainContainerRef: React.MutableRefObject<HTMLDivElement | null>;
   audioContext?: AudioContext;
   masterGainNode?: GainNode;
   musicGainNode?: GainNode;
@@ -25,6 +33,7 @@ interface Props {
 }
 
 export const SoundProvider: FC<Props> = ({ children }) => {
+  const mainContainerRef = useRef<HTMLDivElement | null>(null);
   const [audioContext, setAudioContext] = useState<AudioContext>();
   const [masterGainNode, setMasterGainNode] = useState<GainNode>();
   const [sfxGainNode, setSFXGainNode] = useState<GainNode>();
@@ -56,8 +65,28 @@ export const SoundProvider: FC<Props> = ({ children }) => {
     isClient() && initializeAudio();
   }, []);
 
+  useEffect(() => {
+    if (mainContainerRef.current === null) return;
+    const mainContainer = mainContainerRef.current;
+
+    mainContainer.addEventListener("click", () => {
+      if (audioContext && audioContext.state === "suspended") {
+        void audioContext.resume();
+      }
+    });
+
+    return () => {
+      mainContainer.addEventListener("click", () => {
+        if (audioContext && audioContext.state === "suspended") {
+          void audioContext.resume();
+        }
+      });
+    };
+  }, [audioContext]);
+
   const contextValue = useMemo(
     () => ({
+      mainContainerRef,
       audioContext,
       masterGainNode,
       musicGainNode,
@@ -70,6 +99,7 @@ export const SoundProvider: FC<Props> = ({ children }) => {
       setMusicVolume,
     }),
     [
+      mainContainerRef,
       audioContext,
       masterGainNode,
       musicGainNode,

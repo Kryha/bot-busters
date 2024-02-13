@@ -1,10 +1,13 @@
-import { type FC, useEffect, useState } from "react";
+import { type FC, useEffect, useRef, useState } from "react";
 import { Box, Stack, Typography } from "@mui/material";
+import { useRouter } from "next/router.js";
 import { getCharacterAvatar } from "~/utils/characters.jsx";
 import { CHARACTERS, DEFAULT_MAX_PLAYERS_PER_ROOM } from "~/constants/index.js";
-import { text } from "~/assets/text/index.js";
 import { LobbyProgressBar } from "~/components/lobby-progress-bar/index.js";
+import { usePlayMusic, usePlaySFX } from "~/hooks/sounds.js";
 import { HostAvatar } from "~/assets/characters/index.js";
+import { text } from "~/assets/text/index.js";
+import { pages } from "~/router.js";
 import { theme } from "~/styles/theme.js";
 import { styles } from "./styles.js";
 
@@ -20,6 +23,12 @@ export const LobbyCharacterLoader: FC<Props> = ({
   const [activatedCharacters, setActivatedCharacters] = useState(
     new Set<number>(),
   );
+
+  const router = useRouter();
+  const { playMusic, stopMusic, audioContext } = usePlayMusic();
+  const playSFX = usePlaySFX();
+
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (
@@ -38,6 +47,27 @@ export const LobbyCharacterLoader: FC<Props> = ({
 
     setActivatedCharacters(newSet);
   }, [playerQueuePosition, queueLength]);
+
+  useEffect(() => {
+    if (router.pathname !== pages.lobby) {
+      stopMusic();
+    }
+    const playMusicOnMouseEnter = () => {
+      void audioContext?.resume().then(() => {
+        void playSFX("./music/LonelyBot_Loop.mp3", true);
+      });
+    };
+
+    document.addEventListener("mouseenter", playMusicOnMouseEnter, {
+      once: true,
+    });
+    document.addEventListener("mouseleave", stopMusic);
+
+    return () => {
+      document.removeEventListener("mouseenter", playMusicOnMouseEnter);
+      document.removeEventListener("mouseleave", stopMusic);
+    };
+  }, [audioContext, router.pathname]);
 
   return (
     <Stack sx={styles.container}>

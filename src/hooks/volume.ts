@@ -23,7 +23,7 @@ export const useChangeMasterVolume = () => {
         : DEFAULT_MASTER_VOLUME;
 
     setMasterVolume(value);
-    masterGainNode.gain.setValueAtTime(Number(value), audioContext.currentTime);
+    masterGainNode.gain.setValueAtTime(Number(value), 0);
     masterGainNode.connect(audioContext.destination);
   }, [audioContext, masterGainNode]);
 
