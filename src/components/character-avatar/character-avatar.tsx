@@ -1,15 +1,16 @@
-import { type FC, useEffect, useState } from "react";
 import { Stack } from "@mui/material";
-import { type Character, type MatchStage } from "~/types/index.js";
-import {
-  getCharacterAnimation,
-  getCharacterAvatar,
-} from "~/utils/characters.jsx";
+import { useEffect, useState, type FC } from "react";
 import { AnimationPlayer } from "~/components/animation/index.js";
 import {
   BOT_BUSTED_ANIMATION_SEGMENT,
   BOT_WIN_ANIMATION_SEGMENT,
 } from "~/constants/index.js";
+import { usePlaySFX } from "~/hooks/sounds.js";
+import { type Character, type MatchStage } from "~/types/index.js";
+import {
+  getCharacterAnimation,
+  getCharacterAvatar,
+} from "~/utils/characters.jsx";
 import { styles } from "./styles.js";
 
 interface Props {
@@ -31,15 +32,19 @@ export const CharacterAvatar: FC<Props> = ({
   const animation = getCharacterAnimation(character.name, isBot, isSelected);
   const [segments, setSegments] = useState<number[][]>([[]]);
 
+  const playSfx = usePlaySFX();
+
   useEffect(() => {
     if (isBot) {
-      const animationSegments =
-        isSelected && isBot
-          ? BOT_BUSTED_ANIMATION_SEGMENT
-          : BOT_WIN_ANIMATION_SEGMENT;
-      setSegments(animationSegments);
+      if (isSelected && isBot) {
+        setSegments(BOT_BUSTED_ANIMATION_SEGMENT);
+        void playSfx("./music/voice-over/BotBusted_HeadPop.mp3");
+      } else {
+        setSegments(BOT_WIN_ANIMATION_SEGMENT);
+        void playSfx("./music/voice-over/BotWins.mp3");
+      }
     }
-  }, [isBot, isSelected]);
+  }, [isBot, isSelected, playSfx]);
 
   return (
     <Stack
