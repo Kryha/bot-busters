@@ -52,6 +52,11 @@ export const BOTBUSTERS_LOGO_ANIMATION_SEGMENT = [
   [47, 96],
 ];
 
+export const LANDING_PAGE_ANIMATION_SEGMENT = [
+  [0, 480],
+  [240, 480],
+];
+
 export const ONE_TIME_ACHIEVEMENTS: AchievementId[] = [
   "beginnersLuck",
   "realHuman",
