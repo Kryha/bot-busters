@@ -57,7 +57,7 @@ const Homepage = () => {
           </Typography>
           <BotBusterLogoAnimation />
           <Typography variant="body1" sx={styles.aleoSystems}>
-            {text.homepage.aleoSystems()}
+            {text.homepage.aleoSystems}
           </Typography>
         </Stack>
         <Stack sx={styles.actions}>
