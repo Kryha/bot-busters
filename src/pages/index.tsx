@@ -81,7 +81,6 @@ const Homepage = () => {
             <PixelButton
               onClick={openAboutHandler}
               text={text.homepage.about}
-              sx={styles.aboutButton}
             />
           </Stack>
         </Stack>

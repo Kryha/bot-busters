@@ -1,6 +1,7 @@
 import { type SxProps } from "@mui/material";
+import { type SxStyleRecord } from "~/types/sx-style-record.js";
 import { zIndex } from "~/styles/z-index.js";
-import { theme } from "~/styles";
+import { theme } from "~/styles/index.js";
 
 export const styles = {
   wrapper: {
@@ -56,9 +57,9 @@ export const styles = {
     "& > button": {
       transform: "skew(15deg)",
     },
-  },
-  aboutButton: {
-    ml: 2,
+    "& > button:last-of-type": {
+      ml: 2,
+    },
   },
   buttonText: { textTransform: "none" } satisfies SxProps,
-};
+} satisfies SxStyleRecord;
