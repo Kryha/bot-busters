@@ -1,9 +1,9 @@
-import { type FC } from "react";
 import { Slide, Stack } from "@mui/material";
+import { useEffect, type FC } from "react";
 import { type PlayerType } from "~/types/index.js";
 
-import { SplashScreen } from "~/components/index.js";
 import { LetsBustSomeBots, StartChatting } from "~/assets/icons/index.js";
+import { SplashScreen } from "~/components/index.js";
 import { CHARACTERS } from "~/constants/index.js";
 
 import {
@@ -11,6 +11,7 @@ import {
   getCharacterTitle,
 } from "~/utils/characters.jsx";
 
+import { usePlaySFX } from "~/hooks/sounds.js";
 import { theme } from "~/styles/index.js";
 import { styles } from "./styles.js";
 
@@ -29,6 +30,16 @@ export const Interstitials: FC<Props> = ({
   const backgroundColor = `${color}.main`;
   const characterSplashScreen = getCharacterSplashScreen(name);
   const characterTitle = getCharacterTitle(name);
+  const playSfx = usePlaySFX();
+
+  useEffect(() => {
+    if (splashScreenVariant === "chat") {
+      void playSfx("./music/voice-over/StartChating.mp3");
+    }
+    if (splashScreenVariant == "voting") {
+      void playSfx("./music/voice-over/LetsBustSomeBots.mp3");
+    }
+  }, [playSfx, splashScreenVariant]);
 
   return (
     <>
