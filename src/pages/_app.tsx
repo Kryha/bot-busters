@@ -6,6 +6,7 @@ import { LeoWalletAdapter } from "@demox-labs/aleo-wallet-adapter-leo";
 import { WalletModalProvider } from "@demox-labs/aleo-wallet-adapter-reactui";
 import { WalletProvider } from "@demox-labs/aleo-wallet-adapter-react";
 import Head from "next/head.js";
+import { ErrorBoundary } from 'react-error-boundary'
 
 import "~/styles/globals.css";
 import { api } from "~/utils/api.js";
@@ -14,6 +15,7 @@ import { APP_NAME } from "~/constants/index.js";
 import { useRouter } from "next/router.js";
 import { pages } from "~/router.js";
 import { AppContainer } from "~/containers/app-container/index.js";
+import { ErrorFallback } from "~/components";
 
 const headTitle = "Bot Busters";
 
@@ -39,18 +41,20 @@ const MyApp: AppType<{ session: Session | null }> = ({
         <title>{headTitle}</title>
         <meta name="description" content="Bust the bots!" />
         <link rel="icon" href="/favicon.ico" />
-      </Head>
+      </Head> 
       <WalletProvider wallets={wallets}>
         <WalletModalProvider>
           <ThemeProvider>
             <SessionProvider session={session}>
-              {animationLab ? (
-                <Component {...pageProps} />
-              ) : (
-                <AppContainer>
+              <ErrorBoundary FallbackComponent={ErrorFallback}>
+                {animationLab ? (
                   <Component {...pageProps} />
-                </AppContainer>
-              )}
+                ) : (
+                  <AppContainer>
+                    <Component {...pageProps} />
+                  </AppContainer>
+                )}
+              </ErrorBoundary>
             </SessionProvider>
           </ThemeProvider>
         </WalletModalProvider>

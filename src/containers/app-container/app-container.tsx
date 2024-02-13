@@ -9,8 +9,8 @@ export const AppContainer: FC<StackProps> = ({ children }) => {
 
   return (
     <Container component="main" sx={styles.container}>
-      <Navbar open={menuIsOpen} setOpen={setMenuIsOpen} />
-      {children}
+        <Navbar open={menuIsOpen} setOpen={setMenuIsOpen} />
+        {children}
     </Container>
   );
 };
