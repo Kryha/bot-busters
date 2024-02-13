@@ -1,4 +1,4 @@
-import { type FC } from "react";
+import { type FC, useState } from "react";
 import { Button, Stack, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import { MenuButton } from "~/components/main-menu/menu-button.jsx";
@@ -12,12 +12,9 @@ import { api } from "~/utils/api.js";
 
 import { styles } from "./styles.js";
 
-interface Props {
-  open: boolean;
-  setOpen: (open: boolean) => void;
-}
+export const Navbar: FC = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-export const Navbar: FC<Props> = ({ open, setOpen }) => {
   const router = useRouter();
   const loggedUser = api.user.getLoggedUser.useQuery(undefined, {
     retry: false,
@@ -26,6 +23,8 @@ export const Navbar: FC<Props> = ({ open, setOpen }) => {
   const handleNavigation = (path: string) => {
     void router.push(path);
   };
+
+  const isHomePage = router.pathname === pages.home;
 
   return (
     <Stack sx={styles.container}>
@@ -41,19 +40,21 @@ export const Navbar: FC<Props> = ({ open, setOpen }) => {
             {loggedUser.data?.username ?? text.general.username}
           </Typography>
         </Stack>
-        <Button
-          variant="text"
-          sx={styles.mainLogo}
-          onClick={() => handleNavigation(pages.home)}
-        >
-          <BotBustersIcon />
-        </Button>
-        <Stack direction={"row"} rowGap={2} sx={styles.navbarEnd}>
+        {!isHomePage && (
+          <Button
+            variant="text"
+            sx={styles.mainLogo}
+            onClick={() => handleNavigation(pages.home)}
+          >
+            <BotBustersIcon />
+          </Button>
+        )}
+        <Stack direction={"row"} rowGap={4} sx={styles.navbarEnd}>
           <AudioSettings />
-          <MenuButton sx={styles.button} onClick={() => setOpen(true)} />
+          <MenuButton sx={styles.button} onClick={() => setIsMenuOpen(true)} />
         </Stack>
       </Stack>
-      <MainMenu open={open} setOpen={setOpen} />
+      <MainMenu open={isMenuOpen} setOpen={setIsMenuOpen} />
     </Stack>
   );
 };
