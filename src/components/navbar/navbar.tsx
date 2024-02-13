@@ -13,7 +13,7 @@ import { api } from "~/utils/api.js";
 import { styles } from "./styles.js";
 
 export const Navbar: FC = () => {
-  const [menuIsOpen, setMenuIsOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const router = useRouter();
   const loggedUser = api.user.getLoggedUser.useQuery(undefined, {
@@ -51,10 +51,10 @@ export const Navbar: FC = () => {
         )}
         <Stack direction={"row"} rowGap={4} sx={styles.navbarEnd}>
           <AudioSettings />
-          <MenuButton sx={styles.button} onClick={() => setMenuIsOpen(true)} />
+          <MenuButton sx={styles.button} onClick={() => setIsMenuOpen(true)} />
         </Stack>
       </Stack>
-      <MainMenu open={menuIsOpen} setOpen={setMenuIsOpen} />
+      <MainMenu open={isMenuOpen} setOpen={setIsMenuOpen} />
     </Stack>
   );
 };
