@@ -3,21 +3,27 @@ import { useRouter } from "next/router.js";
 import { useSession } from "next-auth/react";
 import { type Session } from "next-auth";
 import { z } from "zod";
+import { useErrorBoundary } from "react-error-boundary";
 
 import { MatchLayout as Layout } from "~/components/match-layout/index.js";
 import { api } from "~/utils/api.js";
 import { Chat } from "~/components/chat/chat.jsx";
 import { Results } from "~/components/results/index.js";
-import { ErrorView } from "~/components/error-view/index.jsx";
 import { PlayerLocal } from "~/components/players/player-local/index.js";
 import { PlayersOthers } from "~/components/players/player-others/index.js";
+import { errorMessage } from "~/constants/error-messages";
 
 const Match: FC = () => {
+  const { showBoundary } = useErrorBoundary();
   const { query } = useRouter();
   const { data: session } = useSession();
   const roomId = z.string().safeParse(query.roomId);
+  
 
-  if (!roomId.success || !session) return <ErrorView />;
+  if (!roomId.success || !session) {
+    showBoundary(new Error(errorMessage.match.lostConnection));
+    return;
+  }
 
   return <MatchInternal roomId={roomId.data} session={session} />;
 };
@@ -28,6 +34,7 @@ interface Props {
 }
 
 const MatchInternal: FC<Props> = ({ roomId, session }) => {
+  const { showBoundary } = useErrorBoundary();
   const vote = api.match.vote.useMutation();
   const roomData = api.match.getRoom.useQuery({ roomId });
 
@@ -38,14 +45,16 @@ const MatchInternal: FC<Props> = ({ roomId, session }) => {
         void roomData.refetch();
       },
       onError(error) {
-        console.error(error);
+        showBoundary(error);
       },
       enabled: roomData.data && !roomData.data.arePointsCalculated,
     },
   );
 
-  if (roomData.isError) return <ErrorView />;
-  if (!roomData.data) return;
+  if (roomData.isError || !roomData.data) {
+    showBoundary(new Error(errorMessage.match.matchMaking));
+    return;
+  }
 
   const room = roomData.data;
 
@@ -53,14 +62,20 @@ const MatchInternal: FC<Props> = ({ roomId, session }) => {
     (player) => player.userId === session.user.id,
   );
 
-  if (!localPlayer) return <ErrorView />;
+  if (!localPlayer) {
+    // showBoundary(new Error(errorMessage.match.matchMaking));
+    return;
+  }
 
   const isVoteEnabled = !!room.messages.find(
     (message) => message.sender === localPlayer.userId,
   );
 
   const handleVote = async (selectedUserIds: string[]) => {
-    if (!isVoteEnabled) return;
+    if (!isVoteEnabled) {
+      // showBoundary(new Error(errorMessage.match.votingDisabled));
+      return;
+    }
     await vote.mutateAsync({ selectedUserIds, roomId });
   };
 

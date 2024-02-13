@@ -1,5 +1,6 @@
 import { FormControl, Typography, type SelectChangeEvent } from "@mui/material";
 import { useState } from "react";
+import { useErrorBoundary } from "react-error-boundary";
 
 import { text } from "~/assets/text/index.js";
 import { TextInputField } from "~/components/input-field/index.js";
@@ -24,6 +25,7 @@ const Support = () => {
   const [topic, setTopic] = useState<(typeof SUPPORT_TOPIC)[number]>("");
   const [email, setEmail] = useState<string>("");
   const [issue, setIssue] = useState<string>("");
+  const { showBoundary } = useErrorBoundary();
 
   const supportForm = api.support.sendEmail.useMutation();
 
@@ -75,6 +77,11 @@ const Support = () => {
       })),
   };
 
+  const t = ()=>{
+    const ranError = new Error("hm");
+    showBoundary(ranError);
+  };
+
   const handleSubmit = () => {
     supportForm.mutate({ email, issue, topic });
   };
@@ -121,6 +128,7 @@ const Support = () => {
         >
           Send
         </PrimaryButton>
+        <PrimaryButton onClick={()=>t()}>Throw</PrimaryButton>
       </FormControl>
     </PageLayout>
   );
