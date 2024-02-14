@@ -1,7 +1,7 @@
 import { Stack } from "@mui/material";
 import React, { type FC } from "react";
 
-import { errorMessage } from "~/constants/error-messages";
+import { errorMessage } from "~/constants/error-messages.js";
 import { PageLayout } from "~/containers/page-layout/index.js";
 
 const Custom404: FC = () => (
