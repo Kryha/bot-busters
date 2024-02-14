@@ -1,109 +1,97 @@
-import { useCallback, useEffect, useState } from "react";
-import { ContextRef } from "~/containers/sound-provider/index.js";
+import { useCallback, useEffect, useRef } from "react";
+import { type MatchStage } from "~/types/index.js";
+import { type TrackId } from "~/constants/sounds.js";
+import { SoundContextRef } from "~/containers/sound-provider/index.js";
 import { useAndRequireContext } from "~/hooks/use-and-require-context.js";
+import { useRouter } from "next/router.js";
 
-export const usePlayMusic = () => {
-  const { audioContext, masterGainNode, musicGainNode } = useAndRequireContext(
-    ContextRef,
-    "usePlayMusic",
-    "sound-provider",
-  );
+export const usePlayMusic = (
+  audioFile: TrackId,
+  loop?: boolean,
+  pathname?: string,
+  delayInSeconds = 0,
+  stage?: MatchStage,
+  definedStage?: MatchStage,
+  offset?: number,
+  duration?: number,
+) => {
+  const { audioContext, audioBuffers, masterGainNode, musicGainNode } =
+    useAndRequireContext(SoundContextRef, "usePlayMusic", "sound-provider");
 
-  const [source, setSource] = useState<AudioBufferSourceNode | null>(null);
+  const sourceNodeRef = useRef<AudioBufferSourceNode | null>(null);
+  const router = useRouter();
 
-  const playMusic = useCallback(
-    async (audioFile: string, loop?: boolean) => {
-      if (!audioContext || !masterGainNode || !musicGainNode) {
-        return;
-      }
-
-      // Stop currently playing music if any
-      if (source) {
-        source.stop();
-        setSource(null);
-      }
-
-      try {
-        const response = await fetch(audioFile);
-        const arrayBuffer = await response.arrayBuffer();
-        await audioContext.decodeAudioData(
-          arrayBuffer,
-          (audioBuffer) => {
-            const newSource = audioContext.createBufferSource();
-            newSource.buffer = audioBuffer;
-            newSource.loop = !!loop;
-            newSource.connect(musicGainNode);
-            musicGainNode.connect(masterGainNode);
-            masterGainNode.connect(audioContext.destination);
-            newSource.start(audioContext.currentTime);
-            setSource(newSource);
-          },
-          (error) => {
-            console.error("Error decoding audio:", error);
-          },
-        );
-      } catch (error) {
-        console.error("Error playing sound: ", error);
-      }
-    },
-    [audioContext, masterGainNode, musicGainNode, source],
-  );
-
-  // Function to stop the music
-  const stopMusic = useCallback(() => {
-    if (source) {
-      source.stop();
-      setSource(null); // Ensure to clear the source after stopping
-    }
-  }, [source]);
-
-  // Ensure to clean up when the component using this hook unmounts or the source changes
   useEffect(() => {
-    return () => {
-      if (source) {
-        source.disconnect(); // Disconnect the source on cleanup
-        setSource(null);
+    const playAudio = () => {
+      if (!audioContext || !masterGainNode || !musicGainNode) return;
+      const audioBuffer = audioBuffers.current.get(audioFile);
+      if (audioBuffer) {
+        const sourceNode = audioContext.createBufferSource();
+        sourceNode.buffer = audioBuffer;
+        sourceNode.loop = !!loop;
+        sourceNode.connect(musicGainNode);
+        musicGainNode.connect(masterGainNode);
+        masterGainNode.connect(audioContext.destination);
+        sourceNode.start(
+          audioContext.currentTime + delayInSeconds,
+          offset,
+          duration,
+        );
+        sourceNodeRef.current = sourceNode;
       }
     };
-  }, [source]);
 
-  return { playMusic, stopMusic, audioContext };
+    // Function to stop the music
+    const stopAudio = () => {
+      if (sourceNodeRef.current) {
+        sourceNodeRef.current.stop();
+        sourceNodeRef.current = null;
+      }
+    };
+
+    router.pathname === pathname || stage === definedStage
+      ? playAudio()
+      : stopAudio();
+
+    return () => stopAudio();
+  }, [
+    audioBuffers,
+    audioContext,
+    audioFile,
+    definedStage,
+    delayInSeconds,
+    duration,
+    loop,
+    masterGainNode,
+    musicGainNode,
+    offset,
+    pathname,
+    router.pathname,
+    stage,
+  ]);
 };
 
 export const usePlaySFX = () => {
-  const { audioContext, masterGainNode, sfxGainNode } = useAndRequireContext(
-    ContextRef,
-    "usePlaySFX",
-    "sound-provider",
-  );
+  const { audioContext, audioBuffers, masterGainNode, sfxGainNode } =
+    useAndRequireContext(SoundContextRef, "usePlaySFX", "sound-provider");
+
+  const sourceNodeRef = useRef<AudioBufferSourceNode | null>(null);
 
   return useCallback(
-    async (audioFile: string, loop?: boolean) => {
-      if (!audioContext || !masterGainNode || !sfxGainNode) {
-        return;
-      }
-      try {
-        const response = await fetch(audioFile);
-        const arrayBuffer = await response.arrayBuffer();
-        await audioContext.decodeAudioData(
-          arrayBuffer,
-          (audioBuffer) => {
-            const source = audioContext.createBufferSource();
-            source.buffer = audioBuffer;
-            source.loop = !!loop;
-            source.connect(sfxGainNode);
-            sfxGainNode.connect(masterGainNode);
-            masterGainNode.connect(audioContext.destination);
-            source.start(audioContext.currentTime);
-          },
-          (e) => {
-            console.error("Error decoding audio:", e);
-          },
-        );
-      } catch (error) {
-        console.error("Error playing sound: ", error);
+    (audioFile: TrackId, loop?: boolean) => {
+      if (!audioContext || !masterGainNode || !sfxGainNode) return;
+      const audioBuffer = audioBuffers.current.get(audioFile);
+      if (audioBuffer) {
+        const sourceNode = audioContext.createBufferSource();
+        sourceNode.buffer = audioBuffer;
+        sourceNode.loop = !!loop;
+        sourceNode.connect(sfxGainNode);
+        sfxGainNode.connect(masterGainNode);
+        masterGainNode.connect(audioContext.destination);
+        sourceNode.start(audioContext.currentTime);
+        sourceNodeRef.current = sourceNode;
       }
     },
-    [audioContext, masterGainNode, sfxGainNode],
+    [audioBuffers, audioContext, masterGainNode, sfxGainNode],
   );
 };
