@@ -6,6 +6,7 @@ import { LeoWalletAdapter } from "@demox-labs/aleo-wallet-adapter-leo";
 import { WalletModalProvider } from "@demox-labs/aleo-wallet-adapter-reactui";
 import { WalletProvider } from "@demox-labs/aleo-wallet-adapter-react";
 import Head from "next/head.js";
+import { ErrorBoundary } from "react-error-boundary";
 
 import { api } from "~/utils/api.js";
 import { ThemeProvider } from "~/styles/index.js";
@@ -13,6 +14,7 @@ import { APP_NAME } from "~/constants/index.js";
 import { useRouter } from "next/router.js";
 import { pages } from "~/router.js";
 import { AppContainer } from "~/containers/app-container/index.js";
+import { ErrorFallback } from "~/components/index.js";
 import { SoundProvider } from "~/containers/sound-provider/index.js";
 
 import "~/styles/globals.css";
@@ -47,13 +49,15 @@ const MyApp: AppType<{ session: Session | null }> = ({
           <ThemeProvider>
             <SessionProvider session={session}>
               <SoundProvider>
-                {isHomePage ? (
-                  <Component {...pageProps} />
-                ) : (
-                  <AppContainer>
+                <ErrorBoundary FallbackComponent={ErrorFallback}>
+                  {isHomePage ? (
                     <Component {...pageProps} />
-                  </AppContainer>
-                )}
+                  ) : (
+                    <AppContainer>
+                      <Component {...pageProps} />
+                    </AppContainer>
+                  )}
+                </ErrorBoundary>
               </SoundProvider>
             </SessionProvider>
           </ThemeProvider>
