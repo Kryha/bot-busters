@@ -78,7 +78,7 @@ const Support = () => {
       })),
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     try {
       await supportForm.mutateAsync({ email, issue, topic });
     } catch (e) {
