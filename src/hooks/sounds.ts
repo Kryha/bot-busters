@@ -24,7 +24,10 @@ export const usePlayMusic = (
   useEffect(() => {
     const playAudio = () => {
       if (!audioContext || !masterGainNode || !musicGainNode) return;
+
+      void audioContext.resume();
       const audioBuffer = audioBuffers.current.get(audioFile);
+
       if (audioBuffer) {
         const sourceNode = audioContext.createBufferSource();
         sourceNode.buffer = audioBuffer;
@@ -43,10 +46,8 @@ export const usePlayMusic = (
 
     // Function to stop the music
     const stopAudio = () => {
-      if (sourceNodeRef.current) {
-        sourceNodeRef.current.stop();
-        sourceNodeRef.current = null;
-      }
+      sourceNodeRef.current?.stop();
+      sourceNodeRef.current = null;
     };
 
     router.pathname === pathname || stage === definedStage
@@ -81,6 +82,7 @@ export const usePlaySFX = () => {
     (audioFile: TrackId, loop?: boolean) => {
       if (!audioContext || !masterGainNode || !sfxGainNode) return;
       const audioBuffer = audioBuffers.current.get(audioFile);
+
       if (audioBuffer) {
         const sourceNode = audioContext.createBufferSource();
         sourceNode.buffer = audioBuffer;
