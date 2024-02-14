@@ -19,12 +19,14 @@ const Lobby: FC = () => {
   api.lobby.onQueueUpdate.useSubscription(undefined, {
     async onStarted() {
       try {
+        console.log("lobby:22");
         await join.mutateAsync();
       } catch (e) {
         e instanceof Error
           ? console.error(`[${errorMessage.match.general}]: ${e.message}`, e)
           : console.error(e);
 
+        console.log("lobby:29");
         showBoundary(errorMessage.match.general);
       }
     },
@@ -32,6 +34,8 @@ const Lobby: FC = () => {
       setLobbyQueue({ playerQueuePosition, queueLength });
     },
     onError(e) {
+      console.log("lobby:36");
+
       e instanceof Error
         ? console.error(`[${errorMessage.match.general}]: ${e.message}`, e)
         : console.error(e);
@@ -49,6 +53,7 @@ const Lobby: FC = () => {
         ? console.error(`[${errorMessage.match.general}]: ${e.message}`, e)
         : console.error(e);
 
+      console.log("lobby:56");
       showBoundary(errorMessage.match.general);
     },
   });

@@ -31,15 +31,14 @@ const Homepage = () => {
       if (loggedUser.isError) {
         await signIn("credentials", { callbackUrl: pages.lobby });
       } else {
-        showBoundary(errorMessage.match);
         await push(pages.lobby);
       }
     } catch (e) {
       e instanceof Error
-        ? console.error(`[${errorMessage.support}]: ${e.message}`, e)
+        ? console.error(`[${errorMessage.match.general}]: ${e.message}`, e)
         : console.error(e);
 
-      showBoundary(errorMessage.support);
+      showBoundary(errorMessage.match.general);
     }
   };
 

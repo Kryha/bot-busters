@@ -1,4 +1,5 @@
 import { type FC } from "react";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/router.js";
 import { useSession } from "next-auth/react";
 import { type Session } from "next-auth";
@@ -12,16 +13,17 @@ import { Results } from "~/components/results/index.js";
 import { PlayerLocal } from "~/components/players/player-local/index.js";
 import { PlayersOthers } from "~/components/players/player-others/index.js";
 import { errorMessage } from "~/constants/error-messages.js";
-import dynamic from "next/dynamic";
 
 const Match: FC = () => {
   const { showBoundary } = useErrorBoundary();
   const { query } = useRouter();
-  const { data: session } = useSession();
+  const { data: session, status: sessionStatus } = useSession();
   const roomId = z.string().safeParse(query.roomId);
-
+  
+  if (sessionStatus === "loading") return;
+  
   if (!roomId.success || !session) {
-    showBoundary(new Error(errorMessage.match.lostConnection));
+    showBoundary(errorMessage.match.lostConnection);
     return;
   }
 
@@ -51,10 +53,12 @@ const MatchInternal: FC<Props> = ({ roomId, session }) => {
     },
   );
 
-  if (!roomData.data || roomData.isError) {
+  if(!roomData.data) return;
+
+  if(roomData.isError) {
     const error = roomData.error?.message ?? errorMessage.match.lostConnection;
     console.error(error);
-    showBoundary(new Error(error));
+    showBoundary(error);
     return;
   }
 
@@ -65,7 +69,7 @@ const MatchInternal: FC<Props> = ({ roomId, session }) => {
   );
 
   if (!localPlayer) {
-    showBoundary(new Error(errorMessage.match.lostConnection));
+    showBoundary(errorMessage.match.lostConnection);
     return;
   }
 
@@ -75,7 +79,7 @@ const MatchInternal: FC<Props> = ({ roomId, session }) => {
 
   const handleVote = async (selectedUserIds: string[]) => {
     if (!isVoteEnabled) {
-      showBoundary(new Error(errorMessage.match.votingDisabled));
+      showBoundary(errorMessage.match.votingDisabled);
       return;
     }
     await vote.mutateAsync({ selectedUserIds, roomId });

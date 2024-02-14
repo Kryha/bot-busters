@@ -48,8 +48,8 @@ const MyApp: AppType<{ session: Session | null }> = ({
         <WalletModalProvider>
           <ThemeProvider>
             <SessionProvider session={session}>
-              <ErrorBoundary FallbackComponent={ErrorFallback}>
-                <SoundProvider>
+              <SoundProvider>
+                <ErrorBoundary FallbackComponent={ErrorFallback}>
                   {isHomePage ? (
                     <Component {...pageProps} />
                   ) : (
@@ -57,8 +57,8 @@ const MyApp: AppType<{ session: Session | null }> = ({
                       <Component {...pageProps} />
                     </AppContainer>
                   )}
-                </SoundProvider>
-              </ErrorBoundary>
+                </ErrorBoundary>
+              </SoundProvider>
             </SessionProvider>
           </ThemeProvider>
         </WalletModalProvider>
