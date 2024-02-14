@@ -47,6 +47,9 @@ export const Chat: FC<Props> = ({ roomId, room }) => {
   const [messageError, setValidation] = useState("");
 
   const appendMessage = (newMessage: ChatMessagePayload) => {
+    if (newMessage.sender !== session?.user?.id) {
+      void playSfx("./sounds/BB_UI_TextRecieved.mp3");
+    }
     setMessages((prev) => [...prev, newMessage]);
   };
 
@@ -74,7 +77,6 @@ export const Chat: FC<Props> = ({ roomId, room }) => {
     {
       onData(payload) {
         appendMessage(payload);
-        void playSfx("./sounds/BB_UI_TextRecieved.mp3");
       },
       onError(error) {
         console.error("Chat message error:", error);
