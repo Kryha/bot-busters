@@ -14,7 +14,10 @@ export type TrackId =
   | "StartChatting"
   | "LetsBustSomeBots"
   | "PlayButton"
-  | "NavClick";
+  | "NavClick"
+  | "BotBustedHeadPop"
+  | "BotBusters"
+  | "BotWins";
 
 export const soundtracks: Record<TrackId, string> = {
   HomePage: "./music/botbusters-theme-song.mp3",
@@ -26,8 +29,11 @@ export const soundtracks: Record<TrackId, string> = {
   Transition: "./music/Transition_Music.mp3",
   StartChatting: "./music/voice-overs/StartChating.mp3",
   LetsBustSomeBots: "./music/voice-overs/LetsBustSomeBots.mp3",
+  BotBustedHeadPop: "./music/voice-overs/BotBusted_HeadPop.mp3",
+  BotBusters: "./music/voice-overs/BotBusters.mp3",
+  BotWins: "./music/voice-overs/BotWins.mp3",
   PlayButton: "./sounds/BB_UI_Play.mp3",
-  NavClick: "./sounds/BB_UI_NavClick.mp3",
+  NavClick: "./sounds/BB_UI_Nav_Click.mp3",
 };
 
 //TODO: play randomly based on achievements

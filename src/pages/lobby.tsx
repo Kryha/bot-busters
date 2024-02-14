@@ -6,6 +6,7 @@ import { usePlayMusic } from "~/hooks/sounds.js";
 import { api } from "~/utils/api.js";
 import { pages } from "~/router.js";
 import { LobbyCharacterLoader } from "~/components/lobby-character-loader/index.js";
+import { MATCHMAKING_DELAY } from "~/constants/index.js";
 
 const Lobby: FC = () => {
   const { push } = useRouter();
@@ -36,7 +37,7 @@ const Lobby: FC = () => {
       setTrack("MatchMakingOutro");
       setTimeout(() => {
         void push({ pathname: pages.match, query: { roomId } });
-      }, 2000);
+      }, MATCHMAKING_DELAY);
     },
     onError(error) {
       console.error("Ready to play error:", error);

@@ -67,25 +67,6 @@ export const SoundProvider: FC<Props> = ({ children }) => {
     }
   }, []);
 
-  useEffect(() => {
-    if (mainContainerRef.current === null) return;
-    const mainContainer = mainContainerRef.current;
-
-    mainContainer.addEventListener("click", () => {
-      if (audioContext && audioContext.state === "suspended") {
-        void audioContext.resume();
-      }
-    });
-
-    return () => {
-      mainContainer.addEventListener("click", () => {
-        if (audioContext && audioContext.state === "suspended") {
-          void audioContext.resume();
-        }
-      });
-    };
-  }, [audioContext]);
-
   const contextValue = useMemo(
     () => ({
       mainContainerRef,
