@@ -1,10 +1,10 @@
-import { type FC } from "react";
 import { Box, Stack, Typography } from "@mui/material";
+import { type FC } from "react";
 
-import { type CharacterId, type PlayerType } from "~/types/index.js";
-import { CHARACTERS } from "~/constants/index.js";
 import { BotArrowIcon } from "~/assets/icons/index.js";
 import { text } from "~/assets/text/index.js";
+import { CHARACTERS } from "~/constants/index.js";
+import { type CharacterId, type PlayerType } from "~/types/index.js";
 
 import { styles } from "./styles.js";
 
@@ -22,6 +22,17 @@ export const PlayerProofs: FC<Props> = ({ otherPlayers, proofCharacterId }) => {
   const character = CHARACTERS[playerProof.characterId];
   const textColor = `${character.color}.main`;
 
+  if (!playerProof.isVerified && !playerProof.isBot)
+    return (
+      <Stack sx={styles.container}>
+        <Stack sx={styles.resultsHeading}>
+          <Typography variant="body1" color={textColor}>
+            <Box component="span">{character.name} </Box>
+            {"was played by an unverified human!"}
+          </Typography>
+        </Stack>
+      </Stack>
+    );
   return (
     <Stack sx={styles.container}>
       <Stack sx={styles.resultsHeading}>
