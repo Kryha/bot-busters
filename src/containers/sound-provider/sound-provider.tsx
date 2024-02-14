@@ -15,6 +15,7 @@ import {
 
 interface Context {
   mainContainerRef: React.MutableRefObject<HTMLDivElement | null>;
+  audioBuffers: React.MutableRefObject<Map<string, AudioBuffer>>;
   audioContext?: AudioContext;
   masterGainNode?: GainNode;
   musicGainNode?: GainNode;
@@ -27,7 +28,7 @@ interface Context {
   setMusicVolume: (volume: number) => void;
 }
 
-export const ContextRef = createContext<Context | undefined>(undefined);
+export const SoundContextRef = createContext<Context | undefined>(undefined);
 interface Props {
   children: React.ReactNode;
 }
@@ -45,8 +46,11 @@ export const SoundProvider: FC<Props> = ({ children }) => {
   const [sfxVolume, setSFXVolume] = useState<number>(DEFAULT_SFX_VOLUME);
   const [musicVolume, setMusicVolume] = useState<number>(DEFAULT_MUSIC_VOLUME);
 
+  // Store for loaded audio buffers
+  const audioBuffers = useRef<Map<string, AudioBuffer>>(new Map());
+
   useEffect(() => {
-    const initializeAudio = () => {
+    if (isClient()) {
       const audioContext = new AudioContext();
       const masterGain = audioContext.createGain();
       const musicGain = audioContext.createGain();
@@ -60,9 +64,7 @@ export const SoundProvider: FC<Props> = ({ children }) => {
       setMasterGainNode(masterGain);
       setMusicGainNode(musicGain);
       setSFXGainNode(sfxGain);
-    };
-
-    isClient() && initializeAudio();
+    }
   }, []);
 
   useEffect(() => {
@@ -87,6 +89,7 @@ export const SoundProvider: FC<Props> = ({ children }) => {
   const contextValue = useMemo(
     () => ({
       mainContainerRef,
+      audioBuffers,
       audioContext,
       masterGainNode,
       musicGainNode,
@@ -100,6 +103,7 @@ export const SoundProvider: FC<Props> = ({ children }) => {
     }),
     [
       mainContainerRef,
+      audioBuffers,
       audioContext,
       masterGainNode,
       musicGainNode,
@@ -111,6 +115,8 @@ export const SoundProvider: FC<Props> = ({ children }) => {
   );
 
   return (
-    <ContextRef.Provider value={contextValue}>{children}</ContextRef.Provider>
+    <SoundContextRef.Provider value={contextValue}>
+      {children}
+    </SoundContextRef.Provider>
   );
 };

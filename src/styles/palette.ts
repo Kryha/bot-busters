@@ -108,5 +108,10 @@ export const palette = (theme: Theme): Palette => {
       },
       name: "darkBlue",
     }),
+    disabled: theme.palette.augmentColor({
+      color: {
+        main: "#BDBDBD",
+      },
+    }),
   };
 };
