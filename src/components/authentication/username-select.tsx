@@ -57,13 +57,7 @@ export const UsernameSelect: FC<UsernameSelectProps> = ({
       }
     };
 
-    attemptMerge().catch((e) => {
-      e instanceof Error
-        ? console.error(`[${errorMessage.support}]: ${e.message}`, e)
-        : console.error(e);
-
-      showBoundary(errorMessage.support);
-    });
+    void attemptMerge()
   }, [address, merge, router, setLoginStage, signature, showBoundary]);
 
   const handleVerification = async (username: string) => {
