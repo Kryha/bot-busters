@@ -12,9 +12,12 @@ import {
   SignIn,
 } from "~/components/index.js";
 import { PageLayout } from "~/containers/page-layout/index.js";
+import { useErrorBoundary } from "react-error-boundary";
+import { errorMessage } from "~/constants/error-messages";
 
 const Login: FC = () => {
   const router = useRouter();
+  const { showBoundary } = useErrorBoundary();
 
   const [loginStage, setLoginStage] = useState<LoginStage>("userCheck");
   const [address, setAddress] = useState("");
@@ -40,8 +43,14 @@ const Login: FC = () => {
       }
     };
 
-    check().catch((err) => console.error(err));
-  }, [loggedUser, loginStage, router]);
+    check().catch((e) => {
+      (e instanceof Error)
+        ? console.error(`[${errorMessage.walletConnection}]: ${e.message}`, e)
+        : console.error(e)
+
+      showBoundary(errorMessage.walletConnection);
+    });
+  }, [loggedUser, loginStage, router, showBoundary]);
 
   const pageContent = () => {
     switch (loginStage) {

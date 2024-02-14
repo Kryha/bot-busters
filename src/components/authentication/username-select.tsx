@@ -1,16 +1,17 @@
 import { useRef, type FC, useEffect, useState } from "react";
 import { Stack, Typography } from "@mui/material";
 import { useRouter } from "next/router.js";
+import { useErrorBoundary } from "react-error-boundary";
 
 import { api } from "~/utils/api.js";
 import { RowCreateUsername } from "~/components/tables/components/index.js";
-import { pages } from "~/router.js";
 import { text } from "~/assets/text/index.js";
 import { PageLayout } from "~/containers/page-layout/index.js";
 
 import { type LoginStage } from "./types.js";
 import { LoginLoading } from "./login-loading.jsx";
 import { styles } from "./styles.js";
+import { errorMessage } from "~/constants/error-messages.js";
 
 interface UsernameSelectProps {
   address: string;
@@ -24,6 +25,7 @@ export const UsernameSelect: FC<UsernameSelectProps> = ({
   setLoginStage,
 }) => {
   const router = useRouter();
+  const { showBoundary } = useErrorBoundary();
 
   const verify = api.user.verify.useMutation();
   const merge = api.user.mergeScore.useMutation();
@@ -34,7 +36,11 @@ export const UsernameSelect: FC<UsernameSelectProps> = ({
 
   useEffect(() => {
     const attemptMerge = async () => {
-      if (!shouldMerge.current) return;
+      if (!shouldMerge.current) {
+        console.error(errorMessage.account.shouldNotMerge);
+        showBoundary(errorMessage.account.shouldNotMerge);
+        return;
+      }
       shouldMerge.current = false;
 
       try {
@@ -45,21 +51,39 @@ export const UsernameSelect: FC<UsernameSelectProps> = ({
         } else {
           setIsAskingUsername(true);
         }
-      } catch (error) {
-        // TODO: use a generic error page
-        await router.push(pages.home);
-      }
+      } catch(e) {
+        (e instanceof Error)
+          ? console.error(`[${errorMessage.account.general}]: ${e.message}`, e)
+          : console.error(e)
+
+        showBoundary(errorMessage.account.general);
+      };
     };
 
-    attemptMerge().catch((err) => console.error(err));
-  }, [address, merge, router, setLoginStage, signature]);
+    attemptMerge().catch((e) => {
+      (e instanceof Error)
+        ? console.error(`[${errorMessage.support}]: ${e.message}`, e)
+        : console.error(e)
+
+      showBoundary(errorMessage.support);
+    });
+
+  }, [address, merge, router, setLoginStage, signature, showBoundary]);
 
   const handleVerification = async (username: string) => {
     try {
       await verify.mutateAsync({ username, signature, address });
       setLoginStage("signIn");
-    } catch (error) {
-      console.error(error);
+
+    } catch(e) {
+      if(e instanceof Error) {
+        console.error(`[${errorMessage.account.setUsername}]: ${e.message}`, e)
+        showBoundary(e.message);
+        
+      } else {
+        console.error(e)
+        showBoundary(errorMessage.account.setUsername);
+      }
     }
   };
 

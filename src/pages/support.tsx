@@ -6,6 +6,7 @@ import { text } from "~/assets/text/index.js";
 import { TextInputField } from "~/components/input-field/index.js";
 import { PrimaryButton } from "~/components/primary-button/index.js";
 import { SelectField } from "~/components/select-field/index.js";
+import { errorMessage } from "~/constants/error-messages";
 import {
   knownTopic,
   validEmailSchema,
@@ -83,7 +84,16 @@ const Support = () => {
   };
 
   const handleSubmit = () => {
-    supportForm.mutate({ email, issue, topic });
+    try {
+      supportForm.mutate({ email, issue, topic });
+      
+    } catch(e) {
+      (e instanceof Error)
+        ? console.error(`[${errorMessage.support}]: ${e.message}`, e)
+        : console.error(e)
+
+      showBoundary(errorMessage.support);
+    }
   };
 
   return (

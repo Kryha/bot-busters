@@ -51,8 +51,10 @@ const MatchInternal: FC<Props> = ({ roomId, session }) => {
     },
   );
 
-  if (roomData.isError || !roomData.data) {
-    showBoundary(new Error(errorMessage.match.matchMaking));
+  if(!roomData.data || roomData.isError) {
+    const error = roomData.error?.message ?? errorMessage.match.lostConnection
+    console.error(error);
+    showBoundary(new Error(error));
     return;
   }
 
@@ -63,7 +65,7 @@ const MatchInternal: FC<Props> = ({ roomId, session }) => {
   );
 
   if (!localPlayer) {
-    // showBoundary(new Error(errorMessage.match.matchMaking));
+    showBoundary(new Error(errorMessage.match.lostConnection));
     return;
   }
 
@@ -73,7 +75,7 @@ const MatchInternal: FC<Props> = ({ roomId, session }) => {
 
   const handleVote = async (selectedUserIds: string[]) => {
     if (!isVoteEnabled) {
-      // showBoundary(new Error(errorMessage.match.votingDisabled));
+      showBoundary(new Error(errorMessage.match.votingDisabled));
       return;
     }
     await vote.mutateAsync({ selectedUserIds, roomId });
