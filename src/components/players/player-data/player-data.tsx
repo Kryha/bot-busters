@@ -11,7 +11,7 @@ export interface Props {
   isProofSelected: boolean;
   isSelected?: boolean;
   color?: string;
-  onSelectPlayer: () => void;
+  onSelectPlayer: (hovered?: boolean) => void;
 }
 
 export const PlayerData: FC<Props> = ({

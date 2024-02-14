@@ -15,9 +15,11 @@ interface Props {
 
 export const PlayerProofs: FC<Props> = ({ otherPlayers, proofCharacterId }) => {
   // This can never be undefined, set to first player if not found
-  const playerProof =
-    otherPlayers.find((player) => player.characterId === proofCharacterId) ??
-    otherPlayers[0]!;
+  const playerProof = otherPlayers.find(
+    (player) => player.characterId === proofCharacterId,
+  );
+
+  if (!playerProof) return <></>;
 
   const character = CHARACTERS[playerProof.characterId];
   const textColor = `${character.color}.main`;

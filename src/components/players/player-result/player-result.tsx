@@ -11,7 +11,7 @@ interface Props {
   hasGuessed: boolean;
   isProofSelected: boolean;
   isSelected?: boolean;
-  onSelectPlayer?: () => void;
+  onSelectPlayer: (hovered?: boolean) => void;
 }
 
 export const PlayerResult: FC<Props> = ({

@@ -1,11 +1,11 @@
+import { type FC, useEffect, useRef } from "react";
 import { Stack, Typography } from "@mui/material";
-import { type FC } from "react";
 
+import { type Character, type MatchStage } from "~/types/index.js";
+import { CharacterAvatar } from "~/components/character-avatar/index.js";
+import { Skeleton } from "./skeleton.jsx";
 import { BotArrowIcon } from "~/assets/icons/index.js";
 import { text } from "~/assets/text/index.js";
-import { CharacterAvatar } from "~/components/character-avatar/index.js";
-import { type Character, type MatchStage } from "~/types/index.js";
-import { Skeleton } from "./skeleton.jsx";
 
 import { styles } from "./styles.js";
 
@@ -16,7 +16,7 @@ interface Props {
   isLocalPlayer?: boolean;
   hasGuessed?: boolean;
   isBot?: boolean;
-  onSelectPlayer?: () => void;
+  onSelectPlayer?: (hovered?: boolean) => void;
   stage?: MatchStage;
 }
 
@@ -35,6 +35,33 @@ export const Player: FC<Props> = ({
 
   const isBotSelected = stage === "voting" && isSelected;
 
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const onMouseEnter = () => {
+      if (onSelectPlayer) {
+        onSelectPlayer(false);
+      }
+    };
+
+    const onMouseLeave = () => {
+      if (onSelectPlayer) {
+        onSelectPlayer(true);
+      }
+    };
+
+    if (containerRef.current) {
+      const container = containerRef.current;
+      container.addEventListener("mouseenter", onMouseEnter);
+      container.addEventListener("mouseleave", onMouseLeave);
+
+      return () => {
+        container.removeEventListener("mouseenter", onMouseEnter);
+        container.removeEventListener("mouseleave", onMouseLeave);
+      };
+    }
+  }, [onSelectPlayer]);
+
   if (!name) return <Skeleton />;
 
   const getTextResult = () => {
@@ -51,7 +78,7 @@ export const Player: FC<Props> = ({
   const textResult = getTextResult();
 
   return (
-    <Stack sx={styles.container}>
+    <Stack ref={containerRef} sx={styles.container}>
       {stage !== "chat" && (
         <Typography variant="body1" sx={styles.character} color={textColor}>
           {name}
@@ -85,10 +112,7 @@ export const Player: FC<Props> = ({
         </Stack>
       )}
       {stage === "results" && (
-        <Stack
-          sx={styles.botResult(stage, isBot, isSelected, isProofSelected)}
-          onClick={onSelectPlayer}
-        >
+        <Stack sx={styles.botResult(stage, isBot, isSelected, isProofSelected)}>
           <Typography variant="caption">{textResult}</Typography>
           <BotArrowIcon />
         </Stack>
