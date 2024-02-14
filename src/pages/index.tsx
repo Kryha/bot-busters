@@ -3,17 +3,19 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/router.js";
 
 import { text } from "~/assets/text/index.js";
-import { TopRanked } from "~/components/index.js";
-import { api } from "~/utils/api.js";
-import { pages } from "~/router.js";
-import { EMPTY_RES } from "~/constants/index.js";
-import { PlayButton } from "~/components/play-button/index.js";
-import { PixelButton } from "~/components/pixel-button/index.js";
 import { BotBusterLogoAnimation } from "~/components/bot-buster-logo/index.js";
+import { TopRanked } from "~/components/index.js";
+import { PixelButton } from "~/components/pixel-button/index.js";
+import { PlayButton } from "~/components/play-button/index.js";
+import { EMPTY_RES } from "~/constants/index.js";
+import { usePlaySFX } from "~/hooks/sounds.js";
+import { pages } from "~/router.js";
 import { styles } from "~/styles/pages/homepage.js";
+import { api } from "~/utils/api.js";
 
 const Homepage = () => {
   const { push } = useRouter();
+  const playSfx = usePlaySFX();
 
   const loggedUser = api.user.getLoggedUser.useQuery(undefined, {
     retry: false,
@@ -43,8 +45,10 @@ const Homepage = () => {
     });
   };
 
-  const openDailyHandler = () => void push(pages.leaderboard);
-  const openAboutHandler = () => void push(pages.about);
+  const openHandler = (path: string) => {
+    void playSfx("./sounds/BB_UI_Blip_Up.mp3");
+    void push(path);
+  };
 
   return (
     <Stack sx={styles.textContainer}>
@@ -68,10 +72,13 @@ const Homepage = () => {
           />
         )}
         <PixelButton
-          onClick={openDailyHandler}
+          onClick={() => openHandler(pages.leaderboard)}
           text={text.homepage.openDaily}
         />
-        <PixelButton onClick={openAboutHandler} text={text.homepage.about} />
+        <PixelButton
+          onClick={() => openHandler(pages.about)}
+          text={text.homepage.about}
+        />
       </Stack>
       <TopRanked />
     </Stack>
