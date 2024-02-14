@@ -1,11 +1,14 @@
 import { type FC, useState } from "react";
 import { useRouter } from "next/router.js";
+import { useErrorBoundary } from "react-error-boundary";
 
 import { api } from "~/utils/api.js";
 import { pages } from "~/router.js";
 import { LobbyCharacterLoader } from "~/components/lobby-character-loader/index.js";
+import { errorMessage } from "~/constants/error-messages.js";
 
 const Lobby: FC = () => {
+  const { showBoundary } = useErrorBoundary();
   const { push } = useRouter();
   const join = api.lobby.join.useMutation();
   const [lobbyQueue, setLobbyQueue] = useState({
@@ -17,15 +20,23 @@ const Lobby: FC = () => {
     async onStarted() {
       try {
         await join.mutateAsync();
-      } catch (error) {
-        await push(pages.home);
+      } catch (e) {
+        e instanceof Error
+          ? console.error(`[${errorMessage.match.general}]: ${e.message}`, e)
+          : console.error(e);
+
+        showBoundary(errorMessage.match.general);
       }
     },
     onData({ playerQueuePosition, queueLength }) {
       setLobbyQueue({ playerQueuePosition, queueLength });
     },
-    onError(error) {
-      console.error("Queue update error:", error);
+    onError(e) {
+      e instanceof Error
+        ? console.error(`[${errorMessage.match.general}]: ${e.message}`, e)
+        : console.error(e);
+
+      showBoundary(errorMessage.match.general);
     },
   });
 
@@ -33,8 +44,12 @@ const Lobby: FC = () => {
     onData({ roomId }) {
       void push({ pathname: pages.match, query: { roomId } });
     },
-    onError(error) {
-      console.error("Ready to play error:", error);
+    onError(e) {
+      e instanceof Error
+        ? console.error(`[${errorMessage.match.general}]: ${e.message}`, e)
+        : console.error(e);
+
+      showBoundary(errorMessage.match.general);
     },
   });
 

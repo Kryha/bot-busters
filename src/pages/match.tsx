@@ -11,7 +11,7 @@ import { Chat } from "~/components/chat/chat.jsx";
 import { Results } from "~/components/results/index.js";
 import { PlayerLocal } from "~/components/players/player-local/index.js";
 import { PlayersOthers } from "~/components/players/player-others/index.js";
-import { errorMessage } from "~/constants/error-messages";
+import { errorMessage } from "~/constants/error-messages.js";
 import dynamic from "next/dynamic";
 
 const Match: FC = () => {

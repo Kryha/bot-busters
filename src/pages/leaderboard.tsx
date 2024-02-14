@@ -7,7 +7,7 @@ import { text } from "~/assets/text/index.js";
 import { api } from "~/utils/api.js";
 import { isClient } from "~/utils/client.js";
 import { PageLayout } from "~/containers/page-layout/index.js";
-import { errorMessage } from "~/constants/error-messages";
+import { errorMessage } from "~/constants/error-messages.js";
 
 const USERS_PER_PAGE = 20;
 

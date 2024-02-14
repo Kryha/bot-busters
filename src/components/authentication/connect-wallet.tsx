@@ -1,12 +1,13 @@
 import { type FC, useEffect, useRef } from "react";
 import { useRouter } from "next/router.js";
+import { useErrorBoundary } from "react-error-boundary";
 
 import { useBBWallet } from "~/service/bb-wallet.js";
 import { type LoggedUserData } from "~/types/index.js";
-import { pages } from "~/router.js";
 
 import { LoginLoading } from "./login-loading.jsx";
 import { type LoginStage } from "./types.js";
+import { errorMessage } from "~/constants/error-messages.js";
 
 interface ConnectWalletProps {
   loggedUser?: LoggedUserData;
@@ -23,6 +24,7 @@ export const ConnectWallet: FC<ConnectWalletProps> = ({
 }) => {
   const router = useRouter();
 
+  const { showBoundary } = useErrorBoundary();
   const { connect, isConnecting, isSigning, getSignature, address } =
     useBBWallet();
 
@@ -45,20 +47,21 @@ export const ConnectWallet: FC<ConnectWalletProps> = ({
           if (signature) {
             setSignature(signature);
           } else {
-            // TODO: redirect to an error page
-            await router.push(pages.home);
+            showBoundary(errorMessage.walletConnection);
           }
           setLoginStage(loggedUser ? "verify" : "signIn");
         }
-      } catch (error) {
-        // TODO: redirect to an error page
-        await router.push(pages.home);
-      }
+      } catch (e) {
+        e instanceof Error
+          ? console.error(`[${errorMessage.walletConnection}]: ${e.message}`, e)
+          : console.error(e);
 
+        showBoundary(errorMessage.walletConnection);
+      }
       isAuthenticating.current = false;
     };
 
-    authenticate().catch((err) => console.error(err));
+    void authenticate();
   }, [
     address,
     connect,
@@ -70,6 +73,7 @@ export const ConnectWallet: FC<ConnectWalletProps> = ({
     setAddress,
     setLoginStage,
     setSignature,
+    showBoundary,
   ]);
 
   return <LoginLoading />;

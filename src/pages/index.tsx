@@ -1,6 +1,7 @@
 import { Stack, Typography } from "@mui/material";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/router.js";
+import { useErrorBoundary } from "react-error-boundary";
 
 import { text } from "~/assets/text/index.js";
 import { TopRanked } from "~/components/index.js";
@@ -12,10 +13,12 @@ import { PixelButton } from "~/components/pixel-button/index.js";
 import { BotBusterLogoAnimation } from "~/components/bot-buster-logo/index.js";
 
 import { styles } from "~/styles/pages/homepage.js";
+import { errorMessage } from "~/constants/error-messages.js";
 
 const Homepage = () => {
   const { push } = useRouter();
 
+  const { showBoundary } = useErrorBoundary();
   const loggedUser = api.user.getLoggedUser.useQuery(undefined, {
     retry: false,
   });
@@ -28,10 +31,15 @@ const Homepage = () => {
       if (loggedUser.isError) {
         await signIn("credentials", { callbackUrl: pages.lobby });
       } else {
+        showBoundary(errorMessage.match);
         await push(pages.lobby);
       }
-    } catch (error) {
-      console.error(error);
+    } catch (e) {
+      e instanceof Error
+        ? console.error(`[${errorMessage.support}]: ${e.message}`, e)
+        : console.error(e);
+
+      showBoundary(errorMessage.support);
     }
   };
 

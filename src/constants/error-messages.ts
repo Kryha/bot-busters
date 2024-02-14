@@ -16,6 +16,7 @@ export const errorMessage = {
     playerLeftChat: (player: string) => `${player} left the chat`,
     selectBotError: "Selection confirmation failed",
     scoreCalculation: "Score calculation failed",
+    voting: "An error occurred while voting",
   },
   account: {
     general: "An error ocurred while loading the account",

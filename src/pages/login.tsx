@@ -1,6 +1,7 @@
 import { type FC, useEffect, useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/router.js";
+import { useErrorBoundary } from "react-error-boundary";
 
 import { pages } from "~/router.js";
 import { api } from "~/utils/api.js";
@@ -12,8 +13,7 @@ import {
   SignIn,
 } from "~/components/index.js";
 import { PageLayout } from "~/containers/page-layout/index.js";
-import { useErrorBoundary } from "react-error-boundary";
-import { errorMessage } from "~/constants/error-messages";
+import { errorMessage } from "~/constants/error-messages.js";
 
 const Login: FC = () => {
   const router = useRouter();
