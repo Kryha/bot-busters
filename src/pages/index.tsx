@@ -1,15 +1,15 @@
-import { useRouter } from "next/router.js";
 import { Stack, Typography } from "@mui/material";
 import { signIn } from "next-auth/react";
+import { useRouter } from "next/router.js";
 
 import { text } from "~/assets/text/index.js";
 import { BotBusterLogoAnimation } from "~/components/bot-buster-logo/index.js";
-import { NavBar, TopRanked } from "~/components/index.js";
+import { Navbar, TopRanked } from "~/components/index.js";
+import { LandingPageAnimation } from "~/components/landing-page-animation/index.js";
 import { PixelButton } from "~/components/pixel-button/index.js";
 import { PlayButton } from "~/components/play-button/index.js";
 import { EMPTY_RES } from "~/constants/index.js";
 import { usePlaySFX } from "~/hooks/sounds.js";
-import { LandingPageAnimation } from "~/components/landing-page-animation/index.js";
 import { pages } from "~/router.js";
 import { styles } from "~/styles/pages/homepage.js";
 import { api } from "~/utils/api.js";
@@ -79,14 +79,14 @@ const Homepage = () => {
             />
           )}
           <Stack sx={styles.menuActions}>
-        <PixelButton
-          onClick={() => openHandler(pages.leaderboard)}
-          text={text.homepage.openDaily}
-        />
-        <PixelButton
-          onClick={() => openHandler(pages.about)}
-          text={text.homepage.about}
-        />
+            <PixelButton
+              onClick={() => openHandler(pages.leaderboard)}
+              text={text.homepage.leaderboard}
+            />
+            <PixelButton
+              onClick={() => openHandler(pages.about)}
+              text={text.homepage.about}
+            />
           </Stack>
         </Stack>
       </Stack>

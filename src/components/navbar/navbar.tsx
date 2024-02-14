@@ -1,7 +1,6 @@
-import { type FC, useState } from "react";
 import { Button, Stack, Typography } from "@mui/material";
 import { useRouter } from "next/router";
-import { type FC } from "react";
+import { useState, type FC } from "react";
 import { AudioSettings } from "~/components/audio-settings/index.js";
 import { MainMenu } from "~/components/main-menu/index.js";
 import { MenuButton } from "~/components/main-menu/menu-button.jsx";
@@ -59,7 +58,7 @@ export const Navbar: FC = () => {
             sx={styles.button}
             onClick={() => {
               void playSfx("./sounds/BB_UI_Blip_Up.mp3");
-              setIsMenuOpen(true)
+              setIsMenuOpen(true);
             }}
           />
         </Stack>
