@@ -51,37 +51,34 @@ export const UsernameSelect: FC<UsernameSelectProps> = ({
         } else {
           setIsAskingUsername(true);
         }
-      } catch(e) {
-        (e instanceof Error)
+      } catch (e) {
+        e instanceof Error
           ? console.error(`[${errorMessage.account.general}]: ${e.message}`, e)
-          : console.error(e)
+          : console.error(e);
 
         showBoundary(errorMessage.account.general);
-      };
+      }
     };
 
     attemptMerge().catch((e) => {
-      (e instanceof Error)
+      e instanceof Error
         ? console.error(`[${errorMessage.support}]: ${e.message}`, e)
-        : console.error(e)
+        : console.error(e);
 
       showBoundary(errorMessage.support);
     });
-
   }, [address, merge, router, setLoginStage, signature, showBoundary]);
 
   const handleVerification = async (username: string) => {
     try {
       await verify.mutateAsync({ username, signature, address });
       setLoginStage("signIn");
-
-    } catch(e) {
-      if(e instanceof Error) {
-        console.error(`[${errorMessage.account.setUsername}]: ${e.message}`, e)
+    } catch (e) {
+      if (e instanceof Error) {
+        console.error(`[${errorMessage.account.setUsername}]: ${e.message}`, e);
         showBoundary(e.message);
-        
       } else {
-        console.error(e)
+        console.error(e);
         showBoundary(errorMessage.account.setUsername);
       }
     }

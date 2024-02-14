@@ -6,7 +6,7 @@ import { LeoWalletAdapter } from "@demox-labs/aleo-wallet-adapter-leo";
 import { WalletModalProvider } from "@demox-labs/aleo-wallet-adapter-reactui";
 import { WalletProvider } from "@demox-labs/aleo-wallet-adapter-react";
 import Head from "next/head.js";
-import { ErrorBoundary } from 'react-error-boundary'
+import { ErrorBoundary } from "react-error-boundary";
 
 import "~/styles/globals.css";
 import { api } from "~/utils/api.js";
@@ -41,7 +41,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
         <title>{headTitle}</title>
         <meta name="description" content="Bust the bots!" />
         <link rel="icon" href="/favicon.ico" />
-      </Head> 
+      </Head>
       <WalletProvider wallets={wallets}>
         <WalletModalProvider>
           <ThemeProvider>

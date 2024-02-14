@@ -47,15 +47,13 @@ const LeaderBoard = () => {
       }
 
       if (scrollTop + clientHeight >= scrollHeight - 5 && !allFetched) {
-        getRankedUsers
-          .fetchNextPage()
-          .catch((e) => {
-            (e instanceof Error)
-              ? console.error(`[${errorMessage.support}]: ${e.message}`, e)
-              : console.error(e)
-      
-            showBoundary(errorMessage.support);
-          });
+        getRankedUsers.fetchNextPage().catch((e) => {
+          e instanceof Error
+            ? console.error(`[${errorMessage.support}]: ${e.message}`, e)
+            : console.error(e);
+
+          showBoundary(errorMessage.support);
+        });
       }
     };
 

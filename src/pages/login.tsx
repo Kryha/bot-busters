@@ -44,9 +44,9 @@ const Login: FC = () => {
     };
 
     check().catch((e) => {
-      (e instanceof Error)
+      e instanceof Error
         ? console.error(`[${errorMessage.walletConnection}]: ${e.message}`, e)
-        : console.error(e)
+        : console.error(e);
 
       showBoundary(errorMessage.walletConnection);
     });

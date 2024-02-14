@@ -7,11 +7,17 @@ import { errorMessage } from "~/constants/error-messages";
 import { PrimaryButton } from "../primary-button";
 import { styles } from "./style.js";
 
-export function ErrorFallback({ error, resetErrorBoundary }: { error: Error, resetErrorBoundary: () => void }) {
+export function ErrorFallback({
+  error,
+  resetErrorBoundary,
+}: {
+  error: Error;
+  resetErrorBoundary: () => void;
+}) {
   return (
     <AppContainer>
       <PageLayout title={errorMessage.generalHeading} />
-      <Stack sx={styles.container} >
+      <Stack sx={styles.container}>
         <Typography variant="body1" sx={styles.errorMessage}>
           {error.message}
         </Typography>
@@ -21,4 +27,4 @@ export function ErrorFallback({ error, resetErrorBoundary }: { error: Error, res
       </Stack>
     </AppContainer>
   );
-};
+}

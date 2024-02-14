@@ -51,8 +51,8 @@ const MatchInternal: FC<Props> = ({ roomId, session }) => {
     },
   );
 
-  if(!roomData.data || roomData.isError) {
-    const error = roomData.error?.message ?? errorMessage.match.lostConnection
+  if (!roomData.data || roomData.isError) {
+    const error = roomData.error?.message ?? errorMessage.match.lostConnection;
     console.error(error);
     showBoundary(new Error(error));
     return;
