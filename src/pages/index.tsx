@@ -1,14 +1,15 @@
+import { useRouter } from "next/router.js";
 import { Stack, Typography } from "@mui/material";
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/router.js";
 
 import { text } from "~/assets/text/index.js";
 import { BotBusterLogoAnimation } from "~/components/bot-buster-logo/index.js";
-import { TopRanked } from "~/components/index.js";
+import { NavBar, TopRanked } from "~/components/index.js";
 import { PixelButton } from "~/components/pixel-button/index.js";
 import { PlayButton } from "~/components/play-button/index.js";
 import { EMPTY_RES } from "~/constants/index.js";
 import { usePlaySFX } from "~/hooks/sounds.js";
+import { LandingPageAnimation } from "~/components/landing-page-animation/index.js";
 import { pages } from "~/router.js";
 import { styles } from "~/styles/pages/homepage.js";
 import { api } from "~/utils/api.js";
@@ -51,26 +52,33 @@ const Homepage = () => {
   };
 
   return (
-    <Stack sx={styles.textContainer}>
-      <Stack sx={styles.description}>
-        <Typography variant="body1">
-          {text.homepage.descriptionPart1}
-        </Typography>
-        <BotBusterLogoAnimation />
-      </Stack>
-      <Stack sx={styles.actions}>
-        {match.data && match.data !== EMPTY_RES ? (
-          <PixelButton
-            disabled={loggedUser.isLoading || match.isLoading}
-            onClick={() => void handleGoToMatch()}
-            text={text.homepage.continueGame}
-          />
-        ) : (
-          <PlayButton
-            disabled={loggedUser.isLoading || match.isLoading}
-            onClick={() => void handleGameStart()}
-          />
-        )}
+    <Stack sx={styles.wrapper}>
+      <Navbar />
+      <LandingPageAnimation />
+      <Stack sx={styles.container}>
+        <Stack sx={styles.logo}>
+          <Typography variant="body1">
+            {text.homepage.descriptionPart1}
+          </Typography>
+          <BotBusterLogoAnimation />
+          <Typography variant="body1" sx={styles.aleoSystems}>
+            {text.homepage.aleoSystems}
+          </Typography>
+        </Stack>
+        <Stack sx={styles.actions}>
+          {match.data && match.data !== EMPTY_RES ? (
+            <PixelButton
+              disabled={loggedUser.isLoading || match.isLoading}
+              onClick={() => void handleGoToMatch()}
+              text={text.homepage.continueGame}
+            />
+          ) : (
+            <PlayButton
+              disabled={loggedUser.isLoading || match.isLoading}
+              onClick={() => void handleGameStart()}
+            />
+          )}
+          <Stack sx={styles.menuActions}>
         <PixelButton
           onClick={() => openHandler(pages.leaderboard)}
           text={text.homepage.openDaily}
@@ -79,6 +87,8 @@ const Homepage = () => {
           onClick={() => openHandler(pages.about)}
           text={text.homepage.about}
         />
+          </Stack>
+        </Stack>
       </Stack>
       <TopRanked />
     </Stack>

@@ -1,11 +1,15 @@
-import { styled } from "@mui/material/styles";
-import { theme } from "~/styles/theme.js";
-import { Button } from "@mui/base";
 import { type FC } from "react";
-import { SelectIcon } from "~/assets/icons/index.js";
+import { styled } from "@mui/material/styles";
+import { Button } from "@mui/base";
 
-interface Props extends React.ComponentProps<typeof Button> {
+import { usePlaySFX } from "~/hooks/sounds.js";
+import { SelectIcon } from "~/assets/icons/index.js";
+import { theme } from "~/styles/theme.js";
+
+interface Props {
   text: string;
+  onClick: () => void;
+  disabled?: boolean;
 }
 
 const PixelButtonStyle = styled(Button)({
@@ -49,9 +53,19 @@ const PixelButtonStyle = styled(Button)({
   },
 });
 
-export const PixelButton: FC<Props> = ({ text, ...props }) => {
+export const PixelButton: FC<Props> = ({ text, onClick, disabled }) => {
+  const playSfx = usePlaySFX();
+  const handleClick = async () => {
+    try {
+      await playSfx("./sounds/BB_UI_Nav_Click.mp3");
+      onClick();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
-    <PixelButtonStyle {...props}>
+    <PixelButtonStyle disabled={disabled} onClick={handleClick}>
       <SelectIcon />
       {text}
     </PixelButtonStyle>
