@@ -1,11 +1,11 @@
-import { type FC } from "react";
 import { Stack, Typography } from "@mui/material";
+import { type FC } from "react";
 
-import { type Character, type MatchStage } from "~/types/index.js";
-import { CharacterAvatar } from "~/components/character-avatar/index.js";
-import { Skeleton } from "./skeleton.jsx";
 import { BotArrowIcon } from "~/assets/icons/index.js";
 import { text } from "~/assets/text/index.js";
+import { CharacterAvatar } from "~/components/character-avatar/index.js";
+import { type Character, type MatchStage } from "~/types/index.js";
+import { Skeleton } from "./skeleton.jsx";
 
 import { styles } from "./styles.js";
 
