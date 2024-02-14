@@ -36,7 +36,7 @@ const makeMatch = () => {
 
   // TODO: Benchmark and check what's the maximum amount of matches we can handle at a time
   while (lobbyQueue.queue.length >= minHumansInMatch) {
-    let botsInMatch = getRandomInt({ max: MAX_BOTS_PER_MATCH });
+    let botsInMatch = getRandomInt({ max: MAX_BOTS_PER_MATCH, min: 1 });
     const humansInMatch = env.PLAYERS_PER_MATCH - botsInMatch;
 
     const playerIds = lobbyQueue.pickPlayers(humansInMatch);
