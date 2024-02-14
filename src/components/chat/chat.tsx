@@ -129,6 +129,7 @@ export const Chat: FC<Props> = ({ roomId, room }) => {
     if (isEnter && !messageError) {
       setTypingSoundPlayed(false);
       event.preventDefault();
+      void playSfx("./sounds/BB_UI_TextSent.mp3");
       handleSend(message);
     }
   };
