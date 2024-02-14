@@ -19,9 +19,9 @@ const Match: FC = () => {
   const { query } = useRouter();
   const { data: session, status: sessionStatus } = useSession();
   const roomId = z.string().safeParse(query.roomId);
-  
+
   if (sessionStatus === "loading") return;
-  
+
   if (!roomId.success || !session) {
     showBoundary(errorMessage.match.lostConnection);
     return;
@@ -53,9 +53,9 @@ const MatchInternal: FC<Props> = ({ roomId, session }) => {
     },
   );
 
-  if(!roomData.data) return;
+  if (!roomData.data) return;
 
-  if(roomData.isError) {
+  if (roomData.isError) {
     const error = roomData.error?.message ?? errorMessage.match.lostConnection;
     console.error(error);
     showBoundary(error);

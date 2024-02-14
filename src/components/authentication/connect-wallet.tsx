@@ -4,10 +4,10 @@ import { useErrorBoundary } from "react-error-boundary";
 
 import { useBBWallet } from "~/service/bb-wallet.js";
 import { type LoggedUserData } from "~/types/index.js";
+import { errorMessage } from "~/constants/error-messages.js";
 
 import { LoginLoading } from "./login-loading.jsx";
 import { type LoginStage } from "./types.js";
-import { errorMessage } from "~/constants/error-messages.js";
 
 interface ConnectWalletProps {
   loggedUser?: LoggedUserData;

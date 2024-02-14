@@ -14,7 +14,7 @@ import { APP_NAME } from "~/constants/index.js";
 import { useRouter } from "next/router.js";
 import { pages } from "~/router.js";
 import { AppContainer } from "~/containers/app-container/index.js";
-import { ErrorFallback } from "~/components";
+import { ErrorFallback } from "~/components/index.js";
 import { SoundProvider } from "~/containers/sound-provider/index.js";
 
 import "~/styles/globals.css";

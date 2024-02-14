@@ -7,11 +7,11 @@ import { api } from "~/utils/api.js";
 import { RowCreateUsername } from "~/components/tables/components/index.js";
 import { text } from "~/assets/text/index.js";
 import { PageLayout } from "~/containers/page-layout/index.js";
+import { errorMessage } from "~/constants/error-messages.js";
 
 import { type LoginStage } from "./types.js";
 import { LoginLoading } from "./login-loading.jsx";
 import { styles } from "./styles.js";
-import { errorMessage } from "~/constants/error-messages.js";
 
 interface UsernameSelectProps {
   address: string;
@@ -36,11 +36,8 @@ export const UsernameSelect: FC<UsernameSelectProps> = ({
 
   useEffect(() => {
     const attemptMerge = async () => {
-      if (!shouldMerge.current) {
-        console.error(errorMessage.account.shouldNotMerge);
-        showBoundary(errorMessage.account.shouldNotMerge);
-        return;
-      }
+      if (!shouldMerge.current) return;
+
       shouldMerge.current = false;
 
       try {

@@ -1,11 +1,11 @@
 import { Stack, Typography } from "@mui/material";
 
-import { PageLayout } from "~/containers/page-layout";
-import { AppContainer } from "~/containers";
-import { errorMessage } from "~/constants/error-messages";
+import { PageLayout } from "~/containers/page-layout/index.js";
+import { AppContainer } from "~/containers/index.js";
+import { errorMessage } from "~/constants/error-messages.js";
 
-import { PrimaryButton } from "../primary-button";
 import { styles } from "./style.js";
+import { PrimaryButton } from "../primary-button/index.js";
 
 export function ErrorFallback({
   error,
