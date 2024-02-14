@@ -28,6 +28,7 @@ const config = {
   env: {
     "jest/globals": true,
   },
+  ignorePatterns: ["load-tests/"],
 };
 
 module.exports = config;

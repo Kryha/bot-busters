@@ -101,7 +101,8 @@
     "react-fps": "^1.0.6",
     "rimraf": "^5.0.5",
     "tsc-alias": "^1.8.8",
-    "typescript": "^5.1.6"
+    "typescript": "^5.1.6",
+    "vitest": "^1.2.2"
   },
   "ct3aMetadata": {
     "initVersion": "7.20.2"
