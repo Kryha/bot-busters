@@ -32,7 +32,7 @@ export const PlayersOthers: FC<Props> = ({
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [proofCharacterId, setProofCharacterId] = useState<
     CharacterId | undefined
-  >(room.players[0]?.characterId);
+  >();
   const { stage, players, votingAt } = room;
 
   const [resultHeading, resultSubheading] = (() => {
@@ -131,10 +131,11 @@ export const PlayersOthers: FC<Props> = ({
               localPlayer={localPlayer}
               isSelected={isSelected}
               isProofSelected={player.characterId === proofCharacterId}
-              onSelectPlayer={() => {
+              onSelectPlayer={(hovered?: boolean) => {
                 stage === "voting"
                   ? selectPlayer(player.userId)
                   : setProofCharacterId(player.characterId);
+                if (hovered) setProofCharacterId(undefined);
               }}
             />
           );
@@ -143,7 +144,10 @@ export const PlayersOthers: FC<Props> = ({
 
       {stage === "voting" && (
         <Stack sx={styles.timeSection}>
-          <Timer time={votingAt} duration={VOTING_TIME_MS} />
+          <Timer
+            time={votingAt}
+            duration={VOTING_TIME_MS}
+          />
           <PrimaryButton
             sx={styles.button}
             disabled={!isVoteEnabled || isLoadingVotes || !selectedIds.length}

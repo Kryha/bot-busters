@@ -15,8 +15,8 @@ export const styles = {
     return {
       width: stage === "chat" ? "auto" : "850px",
       justifyContent: "center",
-      mt: stage === "results" ? "auto" : 2,
-      mb: stage === "voting" ? 2 : "auto",
+      mt: 2,
+      mb: 2,
       flexDirection: stage === "chat" ? "column" : "row",
       [`@media (max-width: ${breakpoints.md}px)`]: {
         flexDirection: "row",
