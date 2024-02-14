@@ -1,7 +1,7 @@
 // TODO: update error copywrite based on design updates
 export const errorMessage = {
   500: "The server returned an error :(",
-  404: "404:Page not found",
+  404: "404: Page not found",
   pageDoesNotExist: "Hmmmm... Looks like this page doesn't exist",
   unauthenticated:
     "Stop right there! This page is only for authenticated humans.",

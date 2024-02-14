@@ -13,9 +13,9 @@ import {
   type MatchRoom,
   type PlayerType,
 } from "~/types/index.js";
+import { errorMessage } from "~/constants/error-messages.js";
 
 import { styles } from "./styles.js";
-import { errorMessage } from "~/constants/error-messages.js";
 
 interface Props {
   room: MatchRoom;
@@ -86,8 +86,8 @@ export const PlayersOthers: FC<Props> = ({
         ? console.error(`[${errorMessage.match.voting}]: ${e.message}`, e)
         : console.error(e);
 
-      showBoundary(errorMessage.support);
-      setIsLoadingVotes(false);
+        setIsLoadingVotes(false);
+        showBoundary(errorMessage.support);
     }
   };
 
