@@ -55,13 +55,9 @@ const PixelButtonStyle = styled(Button)({
 
 export const PixelButton: FC<Props> = ({ text, onClick, disabled }) => {
   const playSfx = usePlaySFX();
-  const handleClick = async () => {
-    try {
-      await playSfx("./sounds/BB_UI_Nav_Click.mp3");
-      onClick();
-    } catch (error) {
-      console.error(error);
-    }
+  const handleClick = () => {
+    playSfx("NavClick");
+    onClick();
   };
 
   return (

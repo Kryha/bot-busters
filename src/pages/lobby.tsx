@@ -1,5 +1,7 @@
 import { type FC, useState } from "react";
+import { type TrackId } from "~/constants/sounds.js";
 import { useRouter } from "next/router.js";
+import { usePlayMusic } from "~/hooks/sounds.js";
 
 import { api } from "~/utils/api.js";
 import { pages } from "~/router.js";
@@ -8,10 +10,9 @@ import { LobbyCharacterLoader } from "~/components/lobby-character-loader/index.
 const Lobby: FC = () => {
   const { push } = useRouter();
   const join = api.lobby.join.useMutation();
-  const [lobbyQueue, setLobbyQueue] = useState({
-    playerQueuePosition: 0,
-    queueLength: 0,
-  });
+  const [playerQueuePosition, setPlayerQueuePosition] = useState(0);
+  const [queueLength, setQueueLength] = useState(0);
+  const [track, setTrack] = useState<TrackId>("MatchMaking");
 
   api.lobby.onQueueUpdate.useSubscription(undefined, {
     async onStarted() {
@@ -22,7 +23,8 @@ const Lobby: FC = () => {
       }
     },
     onData({ playerQueuePosition, queueLength }) {
-      setLobbyQueue({ playerQueuePosition, queueLength });
+      setPlayerQueuePosition(playerQueuePosition);
+      setQueueLength(queueLength);
     },
     onError(error) {
       console.error("Queue update error:", error);
@@ -31,17 +33,27 @@ const Lobby: FC = () => {
 
   api.lobby.onReadyToPlay.useSubscription(undefined, {
     onData({ roomId }) {
-      void push({ pathname: pages.match, query: { roomId } });
+      setTrack("MatchMakingOutro");
+      setTimeout(() => {
+        void push({ pathname: pages.match, query: { roomId } });
+      }, 2000);
     },
     onError(error) {
       console.error("Ready to play error:", error);
     },
   });
 
+  usePlayMusic(
+    track,
+    track !== "MatchMakingOutro",
+    pages.lobby,
+    track === "MatchMakingOutro" ? 0 : 1,
+  );
+
   return (
     <LobbyCharacterLoader
-      playerQueuePosition={lobbyQueue.playerQueuePosition}
-      queueLength={lobbyQueue.queueLength}
+      playerQueuePosition={playerQueuePosition}
+      queueLength={queueLength}
     />
   );
 };

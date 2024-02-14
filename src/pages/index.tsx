@@ -6,6 +6,7 @@ import { PlayButton } from "~/components/play-button/index.js";
 import { PixelButton } from "~/components/pixel-button/index.js";
 import { BotBusterLogoAnimation } from "~/components/bot-buster-logo/index.js";
 import { LandingPageAnimation } from "~/components/landing-page-animation/index.js";
+import { usePlayMusic } from "~/hooks/sounds.js";
 import { api } from "~/utils/api.js";
 import { pages } from "~/router.js";
 import { EMPTY_RES } from "~/constants/index.js";
@@ -44,7 +45,10 @@ const Homepage = () => {
   };
 
   const openDailyHandler = () => void push(pages.leaderboard);
+
   const openAboutHandler = () => void push(pages.about);
+
+  usePlayMusic("HomePage", true, pages.home);
 
   return (
     <Stack sx={styles.wrapper}>
