@@ -33,12 +33,13 @@ export const Interstitials: FC<Props> = ({
   const playSfx = usePlaySFX();
 
   useEffect(() => {
-    if (splashScreenVariant === "chat") {
-      void playSfx("./music/voice-over/StartChating.mp3");
-    }
-    if (splashScreenVariant == "voting") {
-      void playSfx("./music/voice-over/LetsBustSomeBots.mp3");
-    }
+    //TODO: change hardcoded filepath
+    const filepath =
+      splashScreenVariant === "chat"
+        ? "./music/voice-over/StartChating.mp3"
+        : "./music/voice-over/LetsBustSomeBots.mp3";
+
+    if (filepath) void playSfx(filepath);
   }, [playSfx, splashScreenVariant]);
 
   return (

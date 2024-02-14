@@ -38,6 +38,7 @@ export const CharacterAvatar: FC<Props> = ({
     if (isBot) {
       if (isSelected && isBot) {
         setSegments(BOT_BUSTED_ANIMATION_SEGMENT);
+        //TODO: Remove hardcoded values
         void playSfx("./music/voice-over/BotBusted_HeadPop.mp3");
       } else {
         setSegments(BOT_WIN_ANIMATION_SEGMENT);
