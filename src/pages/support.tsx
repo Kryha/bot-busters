@@ -78,11 +78,6 @@ const Support = () => {
       })),
   };
 
-  const t = () => {
-    const ranError = new Error("hm");
-    showBoundary(ranError);
-  };
-
   const handleSubmit = () => {
     try {
       supportForm.mutate({ email, issue, topic });
@@ -137,7 +132,6 @@ const Support = () => {
         >
           Send
         </PrimaryButton>
-        <PrimaryButton onClick={() => t()}>Throw</PrimaryButton>
       </FormControl>
     </PageLayout>
   );
