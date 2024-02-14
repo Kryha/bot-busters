@@ -6,6 +6,7 @@ import { zIndex } from "~/styles/z-index.js";
 export const styles = {
   container: {
     position: "relative",
+    backgroundColor: "transparent",
     zIndex: zIndex.front,
     flex: "0 1 auto",
   },
@@ -74,9 +75,16 @@ export const styles = {
     fontStyle: "italic",
   } satisfies SxProps,
   navbarEnd: {
+    zIndex: zIndex.front,
+    transform: " skew(-15deg)",
+    backgroundColor: "common.black",
+    "& > button": {
+      transform: "skew(15deg)",
+    },
     fontStyle: "italic",
-    width: 300,
-    justifyContent: "flex-end",
+    width: 200,
+    gap: 3,
+    justifyContent: "center",
   } satisfies SxProps,
   navbarStart: {
     fontStyle: "italic",

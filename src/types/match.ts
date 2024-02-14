@@ -14,14 +14,14 @@ export const characterIdSchema = z.enum(["1", "2", "3", "4", "5"]);
 export type CharacterId = z.infer<typeof characterIdSchema>;
 
 export const chatMessagePayloadSchema = z.object({
-  sender: z.string().uuid().or(z.literal("host")),
+  sender: z.string().uuid().or(z.literal("0")),
   message: z.string(),
   sentAt: z.number(), // unix time
 });
 export type ChatMessagePayload = z.infer<typeof chatMessagePayloadSchema>;
 
 export const storedChatMessageSchema = z.object({
-  sender: characterIdSchema.or(z.literal("host")),
+  sender: characterIdSchema.or(z.literal("0")),
   message: z.string(),
   sentAt: z.number(), // unix time
   isBot: z.boolean(),
@@ -33,8 +33,6 @@ export const achievementIdSchema = z.enum([
   "dailyStreakCounter",
   // Match achievement - perfect score (all votes correct)
   "goodBust",
-  // Match achievement - two people selected you as a bot
-  "doubleAgent",
   // Day achievement - successfully bust all bots 3 consecutive games
   "busterStreak",
   // One time achievement - player plays his first game
@@ -59,8 +57,10 @@ export const playerSchema = z.object({
   botsBusted: z.number(),
   totalBotsBusted: z.number(),
   humansBusted: z.number(),
+  humansFooled: z.number(),
   botsBustedScore: z.number(),
   humansBustedScore: z.number(),
+  humansFooledScore: z.number(),
   correctGuesses: z.number(),
   votes: z.array(z.string().uuid()).optional(), // array of voted ids
   isVerified: z.boolean().optional(),

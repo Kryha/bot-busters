@@ -22,6 +22,7 @@ import TransitionLinesDot from "./transition-lines-dot.json" assert { type: "jso
 import TransitionLinesEve from "./transition-lines-eve.json" assert { type: "json" };
 import TransitionLinesHal from "./transition-lines-hal.json" assert { type: "json" };
 import TransitionLinesVoting from "./transition-lines-voting.json" assert { type: "json" };
+import LandingPage from "./landing-page.json" assert { type: "json" };
 
 export {
   AshBlink,
@@ -48,4 +49,5 @@ export {
   TransitionLinesEve,
   TransitionLinesHal,
   TransitionLinesVoting,
+  LandingPage,
 };

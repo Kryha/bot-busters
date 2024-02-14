@@ -24,10 +24,11 @@ export const CHIP_TIMEOUT = 4000;
 
 export const POINTS_BOT_BUSTED = 11;
 export const POINTS_HUMAN_BUSTED = 10;
+export const POINTS_HUMAN_FOOLED = 5;
+
 export const POINTS_ACHIEVEMENTS: Record<AchievementId, number> = {
   dailyStreakCounter: 0,
   goodBust: 5,
-  doubleAgent: 5,
   busterStreak: 9,
   fiveDayStreak: 9,
   firstTimer: 5,
@@ -51,6 +52,11 @@ export const BOTBUSTERS_LOGO_ANIMATION_SEGMENT = [
   [47, 96],
 ];
 
+export const LANDING_PAGE_ANIMATION_SEGMENT = [
+  [0, 480],
+  [240, 480],
+];
+
 export const ONE_TIME_ACHIEVEMENTS: AchievementId[] = [
   "beginnersLuck",
   "realHuman",
@@ -62,3 +68,10 @@ export const ONE_TIME_ACHIEVEMENTS: AchievementId[] = [
 ];
 
 export const EMPTY_RES = "empty";
+
+export const AUDIO_ON = 1;
+export const AUDIO_OFF = 0;
+
+export const DEFAULT_MASTER_VOLUME = 1;
+export const DEFAULT_MUSIC_VOLUME = 0.5;
+export const DEFAULT_SFX_VOLUME = 1;

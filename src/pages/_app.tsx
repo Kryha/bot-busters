@@ -8,7 +8,6 @@ import { WalletProvider } from "@demox-labs/aleo-wallet-adapter-react";
 import Head from "next/head.js";
 import { ErrorBoundary } from "react-error-boundary";
 
-import "~/styles/globals.css";
 import { api } from "~/utils/api.js";
 import { ThemeProvider } from "~/styles/index.js";
 import { APP_NAME } from "~/constants/index.js";
@@ -16,6 +15,9 @@ import { useRouter } from "next/router.js";
 import { pages } from "~/router.js";
 import { AppContainer } from "~/containers/app-container/index.js";
 import { ErrorFallback } from "~/components";
+import { SoundProvider } from "~/containers/sound-provider/index.js";
+
+import "~/styles/globals.css";
 
 const headTitle = "Bot Busters";
 
@@ -33,7 +35,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
   );
 
   const router = useRouter();
-  const animationLab = router.pathname === pages.animationLab;
+  const isHomePage = router.pathname === pages.home;
 
   return (
     <>
@@ -47,13 +49,15 @@ const MyApp: AppType<{ session: Session | null }> = ({
           <ThemeProvider>
             <SessionProvider session={session}>
               <ErrorBoundary FallbackComponent={ErrorFallback}>
-                {animationLab ? (
-                  <Component {...pageProps} />
-                ) : (
-                  <AppContainer>
+                <SoundProvider>
+                  {isHomePage ? (
                     <Component {...pageProps} />
-                  </AppContainer>
-                )}
+                  ) : (
+                    <AppContainer>
+                      <Component {...pageProps} />
+                    </AppContainer>
+                  )}
+                </SoundProvider>
               </ErrorBoundary>
             </SessionProvider>
           </ThemeProvider>

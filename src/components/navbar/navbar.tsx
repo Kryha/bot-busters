@@ -1,40 +1,30 @@
 import { type FC, useState } from "react";
 import { Button, Stack, Typography } from "@mui/material";
 import { useRouter } from "next/router";
-import { text } from "~/assets/text/index.js";
-
-import {
-  BotBustersIcon,
-  SoundOffIcon,
-  SoundOnIcon,
-  UserIcon,
-} from "~/assets/icons/index.js";
 import { MenuButton } from "~/components/main-menu/menu-button.jsx";
 import { MainMenu } from "~/components/main-menu/index.js";
+import { AudioSettings } from "~/components/audio-settings/index.js";
+
+import { BotBustersIcon, UserIcon } from "~/assets/icons/index.js";
 import { pages } from "~/router.js";
-import { styles } from "./styles.js";
+import { text } from "~/assets/text/index.js";
 import { api } from "~/utils/api.js";
 
-interface Props {
-  open: boolean;
-  setOpen: (open: boolean) => void;
-}
+import { styles } from "./styles.js";
 
-export const Navbar: FC<Props> = ({ open, setOpen }) => {
+export const Navbar: FC = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   const router = useRouter();
-  const [soundOn, setSoundOn] = useState(true);
-
   const loggedUser = api.user.getLoggedUser.useQuery(undefined, {
     retry: false,
   });
 
-  const onSoundClick = () => {
-    setSoundOn(!soundOn);
-  };
-
   const handleNavigation = (path: string) => {
     void router.push(path);
   };
+
+  const isHomePage = router.pathname === pages.home;
 
   return (
     <Stack sx={styles.container}>
@@ -50,26 +40,21 @@ export const Navbar: FC<Props> = ({ open, setOpen }) => {
             {loggedUser.data?.username ?? text.general.username}
           </Typography>
         </Stack>
-        <Button
-          variant="text"
-          sx={styles.mainLogo}
-          onClick={() => handleNavigation(pages.home)}
-        >
-          <BotBustersIcon />
-        </Button>
-        <Stack direction={"row"} rowGap={2} sx={styles.navbarEnd}>
-          <Button variant="text" onClick={onSoundClick}>
-            {soundOn ? <SoundOnIcon /> : <SoundOffIcon />}
+        {!isHomePage && (
+          <Button
+            variant="text"
+            sx={styles.mainLogo}
+            onClick={() => handleNavigation(pages.home)}
+          >
+            <BotBustersIcon />
           </Button>
-          <MenuButton sx={styles.button} onClick={() => setOpen(true)} />
+        )}
+        <Stack direction={"row"} rowGap={4} sx={styles.navbarEnd}>
+          <AudioSettings />
+          <MenuButton sx={styles.button} onClick={() => setIsMenuOpen(true)} />
         </Stack>
       </Stack>
-      <MainMenu
-        soundOn={soundOn}
-        setSoundOn={setSoundOn}
-        open={open}
-        setOpen={setOpen}
-      />
+      <MainMenu open={isMenuOpen} setOpen={setIsMenuOpen} />
     </Stack>
   );
 };

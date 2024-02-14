@@ -3,6 +3,7 @@ import { type FC } from "react";
 import { PlayButtonAnimation } from "~/assets/animations/index.js";
 import { AnimationPlayer } from "~/components/animation/index.js";
 import { styles } from "./styles.js";
+import { usePlaySFX } from "~/hooks/sounds.js";
 
 interface Props {
   onClick: () => void;
@@ -10,15 +11,31 @@ interface Props {
 }
 
 export const PlayButton: FC<Props> = ({ onClick, disabled }) => {
+  const segments = [
+    [0, 96],
+    [24, 96],
+  ];
+  const playSfx = usePlaySFX();
+
+  const handleClick = () => {
+    void playSfx("./sounds/BB_UI_Play.mp3");
+    onClick();
+  };
+
   return (
     <Box
       component={"button"}
-      onClick={onClick}
+      onClick={handleClick}
       disabled={disabled}
       aria-label={"Start"}
       sx={styles.playButton}
     >
-      <AnimationPlayer animationData={PlayButtonAnimation} play loop />
+      <AnimationPlayer
+        animationData={PlayButtonAnimation}
+        segments={segments}
+        play
+        loop
+      />
     </Box>
   );
 };

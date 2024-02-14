@@ -69,7 +69,11 @@ export const matchRouter = createTRPCRouter({
         message = profanityFilter.censor(message);
       }
 
-      const payload: ChatMessagePayload = { sender, message, sentAt };
+      const payload: ChatMessagePayload = {
+        sender,
+        message,
+        sentAt,
+      };
 
       room.addMessage(payload);
 

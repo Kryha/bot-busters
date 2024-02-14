@@ -22,11 +22,9 @@ const Transition = forwardRef(function Transition(
 interface Props {
   open: boolean;
   setOpen: (open: boolean) => void;
-  soundOn: boolean;
-  setSoundOn: (value: boolean) => void;
 }
 
-export const MainMenu: FC<Props> = ({ open, setOpen, soundOn, setSoundOn }) => {
+export const MainMenu: FC<Props> = ({ open, setOpen }) => {
   const router = useRouter();
   const handleClose = () => {
     setOpen(false);
@@ -45,11 +43,7 @@ export const MainMenu: FC<Props> = ({ open, setOpen, soundOn, setSoundOn }) => {
       TransitionComponent={Transition}
       sx={styles.dialog}
     >
-      <NavbarMenu
-        soundOn={soundOn}
-        setSoundOn={setSoundOn}
-        handleClose={handleClose}
-      />
+      <NavbarMenu handleClose={handleClose} />
       <Button
         variant="text"
         sx={styles.dialogLogo}
