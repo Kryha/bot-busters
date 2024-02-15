@@ -1,6 +1,7 @@
 import { Stack, Typography } from "@mui/material";
 import React from "react";
 import { useRouter } from "next/router.js";
+import { usePlaySFX } from "~/hooks/sounds.js";
 
 import { text } from "~/assets/text/index.js";
 import { pages } from "~/router.js";
@@ -14,6 +15,11 @@ import { LoadingPage } from "~/components/loading-page/index.js";
 
 const PlayerProfile = () => {
   const router = useRouter();
+  const playSfx = usePlaySFX();
+  const handleClick = (path: string) => {
+    playSfx("BlipUp");
+    void router.push(path);
+  };
 
   const user = api.user.getLoggedUserProfile.useQuery(undefined, {
     retry: false,
@@ -42,7 +48,7 @@ const PlayerProfile = () => {
           <PrimaryButton
             variant="contained"
             color="blueGrey"
-            onClick={() => void router.push(pages.login)}
+            onClick={() => handleClick(pages.login)}
           >
             {text.playerProfile.connectWallet}
           </PrimaryButton>

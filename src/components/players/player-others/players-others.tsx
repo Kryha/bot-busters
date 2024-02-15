@@ -1,7 +1,7 @@
 import { Stack, Typography } from "@mui/material";
 import { type FC, useState } from "react";
 import { useErrorBoundary } from "react-error-boundary";
-
+import { usePlaySFX } from "~/hooks/sounds.js";
 import { text } from "~/assets/text/index.js";
 import { PlayerData } from "~/components/players/player-data/index.js";
 import { PlayerProofs } from "~/components/players/player-proofs/index.js";
@@ -33,6 +33,7 @@ export const PlayersOthers: FC<Props> = ({
   const { showBoundary } = useErrorBoundary();
   const [isLoadingVotes, setIsLoadingVotes] = useState(false);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const playSfx = usePlaySFX();
   const [proofCharacterId, setProofCharacterId] = useState<
     CharacterId | undefined
   >(room.players[0]?.characterId);
@@ -80,14 +81,15 @@ export const PlayersOthers: FC<Props> = ({
   const handleVote = async () => {
     try {
       setIsLoadingVotes(true);
+      playSfx("BlipUp");
       await onVote(selectedIds);
     } catch (e) {
       e instanceof Error
         ? console.error(`[${errorMessage.match.voting}]: ${e.message}`, e)
         : console.error(e);
 
-        setIsLoadingVotes(false);
-        showBoundary(errorMessage.support);
+      setIsLoadingVotes(false);
+      showBoundary(errorMessage.support);
     }
   };
 
