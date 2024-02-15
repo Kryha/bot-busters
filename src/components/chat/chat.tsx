@@ -142,18 +142,23 @@ export const Chat: FC<Props> = ({ roomId, room }) => {
         <HostChatPrompt stage={stage} message={hostMessageData?.message} />
         <Messages messageData={messageData} />
       </Stack>
-
-      <Timer time={room.createdAt} duration={CHAT_TIME_MS} />
-
       {!isChatDisabled && (
-        <InputField
-          value={message}
-          onChange={handleMessageChange}
-          sendMessage={() => handleSend(message)}
-          disabled={isChatDisabled}
-          validationError={messageError}
-          onKeyDown={handleKeyDown}
-        />
+        <>
+          <Timer
+            time={room.createdAt}
+            duration={CHAT_TIME_MS}
+            stage={room.stage}
+            definedStage={"chat"}
+          />
+          <InputField
+            value={message}
+            onChange={handleMessageChange}
+            sendMessage={() => handleSend(message)}
+            disabled={isChatDisabled}
+            validationError={messageError}
+            onKeyDown={handleKeyDown}
+          />
+        </>
       )}
     </Stack>
   );
