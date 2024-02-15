@@ -27,7 +27,7 @@ export const Results: FC<Props> = ({ player }) => {
   );
 
   const handleClick = (path: string) => {
-    void playSfx("BlipUp");
+    playSfx("BlipUp");
     void router.push(path);
   };
 
