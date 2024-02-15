@@ -24,6 +24,7 @@ import {
 import { pages } from "~/router.js";
 import { api } from "~/utils/api.js";
 
+import { usePlaySFX } from "~/hooks/sounds.js";
 import { styles } from "./styles.js";
 
 interface Props {
@@ -36,14 +37,19 @@ export const Chat: FC<Props> = ({ roomId, room }) => {
   const { players, stage } = room;
   const { push } = useRouter();
   const { textLength } = validation;
+  const playSfx = usePlaySFX();
 
   const sendMessage = api.match.sendMessage.useMutation();
 
   const [message, setMessage] = useState("");
+  const [typingSoundPlayed, setTypingSoundPlayed] = useState(false);
   const [messages, setMessages] = useState<ChatMessagePayload[]>(room.messages);
   const [messageError, setValidation] = useState("");
 
   const appendMessage = (newMessage: ChatMessagePayload) => {
+    if (newMessage.sender !== session?.user?.id) {
+      void playSfx("./sounds/BB_UI_TextRecieved.mp3");
+    }
     setMessages((prev) => [...prev, newMessage]);
   };
 
@@ -114,10 +120,16 @@ export const Chat: FC<Props> = ({ roomId, room }) => {
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (!typingSoundPlayed) {
+      void playSfx("./sounds/BB_UI_Texting.mp3");
+      setTypingSoundPlayed(true);
+    }
     const isEnter = event.code === "Enter" || event.code === "NumpadEnter";
 
     if (isEnter && !messageError) {
+      setTypingSoundPlayed(false);
       event.preventDefault();
+      void playSfx("./sounds/BB_UI_TextSent.mp3");
       handleSend(message);
     }
   };
