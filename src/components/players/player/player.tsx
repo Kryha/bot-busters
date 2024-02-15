@@ -1,11 +1,11 @@
-import { type FC, useEffect, useRef } from "react";
 import { Stack, Typography } from "@mui/material";
+import { useEffect, useRef, type FC } from "react";
 
-import { type Character, type MatchStage } from "~/types/index.js";
-import { CharacterAvatar } from "~/components/character-avatar/index.js";
-import { Skeleton } from "./skeleton.jsx";
 import { BotArrowIcon } from "~/assets/icons/index.js";
 import { text } from "~/assets/text/index.js";
+import { CharacterAvatar } from "~/components/character-avatar/index.js";
+import { type Character, type MatchStage } from "~/types/index.js";
+import { Skeleton } from "./skeleton.jsx";
 
 import { styles } from "./styles.js";
 
@@ -16,8 +16,9 @@ interface Props {
   isLocalPlayer?: boolean;
   hasGuessed?: boolean;
   isBot?: boolean;
-  onSelectPlayer?: (hovered?: boolean) => void;
+  onSelectPlayer?: () => void;
   stage?: MatchStage;
+  onHoverPlayer?: (hovering: boolean) => void;
 }
 
 export const Player: FC<Props> = ({
@@ -28,6 +29,7 @@ export const Player: FC<Props> = ({
   hasGuessed,
   isBot,
   onSelectPlayer,
+  onHoverPlayer,
   stage = "chat",
 }) => {
   const { name, color } = character;
@@ -39,14 +41,14 @@ export const Player: FC<Props> = ({
 
   useEffect(() => {
     const onMouseEnter = () => {
-      if (onSelectPlayer) {
-        onSelectPlayer(false);
+      if (onHoverPlayer) {
+        onHoverPlayer(true);
       }
     };
 
     const onMouseLeave = () => {
-      if (onSelectPlayer) {
-        onSelectPlayer(true);
+      if (onHoverPlayer) {
+        onHoverPlayer(false);
       }
     };
 
@@ -60,7 +62,7 @@ export const Player: FC<Props> = ({
         container.removeEventListener("mouseleave", onMouseLeave);
       };
     }
-  }, [onSelectPlayer]);
+  }, [onHoverPlayer]);
 
   if (!name) return <Skeleton />;
 

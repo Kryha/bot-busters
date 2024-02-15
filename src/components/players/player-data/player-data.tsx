@@ -1,8 +1,8 @@
 import { type FC } from "react";
 
 import { Player, PlayerResult, PlayerVote } from "~/components/index.js";
-import { type MatchStage, type PlayerType } from "~/types/index.js";
 import { CHARACTERS } from "~/constants/index.js";
+import { type MatchStage, type PlayerType } from "~/types/index.js";
 
 export interface Props {
   stage: MatchStage;
@@ -11,7 +11,8 @@ export interface Props {
   isProofSelected: boolean;
   isSelected?: boolean;
   color?: string;
-  onSelectPlayer: (hovered?: boolean) => void;
+  onSelectPlayer: () => void;
+  onHoverPlayer?: (hovering: boolean) => void;
 }
 
 export const PlayerData: FC<Props> = ({
@@ -21,6 +22,7 @@ export const PlayerData: FC<Props> = ({
   isProofSelected,
   isSelected,
   onSelectPlayer,
+  onHoverPlayer,
 }) => {
   const character = CHARACTERS[player.characterId]!;
   const isVoted = !!localPlayer.votes?.includes(player.userId);
@@ -44,6 +46,7 @@ export const PlayerData: FC<Props> = ({
           isSelected={isSelected}
           isProofSelected={isProofSelected}
           onSelectPlayer={onSelectPlayer}
+          onHoverPlayer={onHoverPlayer}
         />
       );
 

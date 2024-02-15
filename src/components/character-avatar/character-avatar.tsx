@@ -19,7 +19,7 @@ interface Props {
   isSelected?: boolean;
   hasGuessed?: boolean;
   isBot?: boolean;
-  onSelectPlayer?: (notSelected: boolean) => void;
+  onSelectPlayer?: () => void;
 }
 
 export const CharacterAvatar: FC<Props> = ({
