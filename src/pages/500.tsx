@@ -4,10 +4,10 @@ import React, { type FC } from "react";
 import { errorMessage } from "~/constants/error-messages.js";
 import { PageLayout } from "~/containers/page-layout/index.js";
 
-const Custom404: FC = () => (
+const Custom500: FC = () => (
   <Stack mt="20vh">
-    <PageLayout title={errorMessage[404]} />
+    <PageLayout title={errorMessage[500]} />
   </Stack>
 );
 
-export default Custom404;
+export default Custom500;

@@ -1,5 +1,6 @@
 import { Stack, Typography } from "@mui/material";
 import { type FC, useState } from "react";
+import { useErrorBoundary } from "react-error-boundary";
 
 import { text } from "~/assets/text/index.js";
 import { PlayerData } from "~/components/players/player-data/index.js";
@@ -12,6 +13,7 @@ import {
   type MatchRoom,
   type PlayerType,
 } from "~/types/index.js";
+import { errorMessage } from "~/constants/error-messages.js";
 
 import { styles } from "./styles.js";
 
@@ -28,6 +30,7 @@ export const PlayersOthers: FC<Props> = ({
   isVoteEnabled,
   onVote,
 }) => {
+  const { showBoundary } = useErrorBoundary();
   const [isLoadingVotes, setIsLoadingVotes] = useState(false);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [proofCharacterId, setProofCharacterId] = useState<
@@ -78,8 +81,13 @@ export const PlayersOthers: FC<Props> = ({
     try {
       setIsLoadingVotes(true);
       await onVote(selectedIds);
-    } catch (error) {
-      setIsLoadingVotes(false);
+    } catch (e) {
+      e instanceof Error
+        ? console.error(`[${errorMessage.match.voting}]: ${e.message}`, e)
+        : console.error(e);
+
+        setIsLoadingVotes(false);
+        showBoundary(errorMessage.support);
     }
   };
 

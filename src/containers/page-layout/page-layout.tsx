@@ -2,7 +2,6 @@ import { type FC } from "react";
 import { Stack, type StackProps } from "@mui/material";
 
 import { layout } from "~/constants/layout.js";
-
 import { PageHeader } from "../page-header/index.js";
 
 const styles = {

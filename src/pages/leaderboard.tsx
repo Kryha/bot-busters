@@ -1,15 +1,19 @@
 import { useEffect, useMemo } from "react";
 import { CircularProgress } from "@mui/material";
+import { useErrorBoundary } from "react-error-boundary";
 
 import { LeaderboardTable } from "~/components/tables/index.js";
 import { text } from "~/assets/text/index.js";
 import { api } from "~/utils/api.js";
 import { isClient } from "~/utils/client.js";
 import { PageLayout } from "~/containers/page-layout/index.js";
+import { errorMessage } from "~/constants/error-messages.js";
 
 const USERS_PER_PAGE = 20;
 
 const LeaderBoard = () => {
+  const { showBoundary } = useErrorBoundary();
+
   const getRankedUsers = api.user.getRankedUsers.useInfiniteQuery(
     {
       limit: USERS_PER_PAGE,
@@ -43,9 +47,13 @@ const LeaderBoard = () => {
       }
 
       if (scrollTop + clientHeight >= scrollHeight - 5 && !allFetched) {
-        getRankedUsers
-          .fetchNextPage()
-          .catch((err) => console.error("Fetching page:", err));
+        getRankedUsers.fetchNextPage().catch((e) => {
+          e instanceof Error
+            ? console.error(`[${errorMessage.support}]: ${e.message}`, e)
+            : console.error(e);
+
+          showBoundary(errorMessage.support);
+        });
       }
     };
 
@@ -54,7 +62,7 @@ const LeaderBoard = () => {
     return () => {
       window.removeEventListener("scroll", handleScrollEvent);
     };
-  }, [getRankedUsers]);
+  }, [getRankedUsers, showBoundary]);
 
   if (getRankedUsers.isLoading) return <CircularProgress />;
 

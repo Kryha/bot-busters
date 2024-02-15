@@ -1,10 +1,12 @@
 import { FormControl, Typography, type SelectChangeEvent } from "@mui/material";
 import { useState } from "react";
+import { useErrorBoundary } from "react-error-boundary";
 
 import { text } from "~/assets/text/index.js";
 import { TextInputField } from "~/components/input-field/index.js";
 import { PrimaryButton } from "~/components/primary-button/index.js";
 import { SelectField } from "~/components/select-field/index.js";
+import { errorMessage } from "~/constants/error-messages.js";
 import {
   knownTopic,
   validEmailSchema,
@@ -24,6 +26,7 @@ const Support = () => {
   const [topic, setTopic] = useState<(typeof SUPPORT_TOPIC)[number]>("");
   const [email, setEmail] = useState<string>("");
   const [issue, setIssue] = useState<string>("");
+  const { showBoundary } = useErrorBoundary();
 
   const supportForm = api.support.sendEmail.useMutation();
 
@@ -75,8 +78,16 @@ const Support = () => {
       })),
   };
 
-  const handleSubmit = () => {
-    supportForm.mutate({ email, issue, topic });
+  const handleSubmit = async () => {
+    try {
+      await supportForm.mutateAsync({ email, issue, topic });
+    } catch (e) {
+      e instanceof Error
+        ? console.error(`[${errorMessage.support}]: ${e.message}`, e)
+        : console.error(e);
+
+      showBoundary(errorMessage.support);
+    }
   };
 
   return (

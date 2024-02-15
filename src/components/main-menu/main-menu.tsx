@@ -1,14 +1,15 @@
-import { type FC, forwardRef, type ReactElement, type Ref } from "react";
 import { Button, Dialog, Slide } from "@mui/material";
 import { type TransitionProps } from "@mui/material/transitions";
 import { useRouter } from "next/router";
+import { forwardRef, type FC, type ReactElement, type Ref } from "react";
 
-import { styles } from "~/components/main-menu/styles.js";
-import { Footer } from "./footer.jsx";
-import { NavbarMenu } from "~/components/main-menu/navbar-menu.jsx";
-import { MenuOptions } from "~/components/main-menu/menu-options.jsx";
-import { pages } from "~/router.js";
 import { BotBustersIcon } from "~/assets/icons/index.js";
+import { MenuOptions } from "~/components/main-menu/menu-options.jsx";
+import { NavbarMenu } from "~/components/main-menu/navbar-menu.jsx";
+import { styles } from "~/components/main-menu/styles.js";
+import { usePlaySFX } from "~/hooks/sounds.js";
+import { pages } from "~/router.js";
+import { Footer } from "./footer.jsx";
 
 const Transition = forwardRef(function Transition(
   props: TransitionProps & {
@@ -26,8 +27,11 @@ interface Props {
 
 export const MainMenu: FC<Props> = ({ open, setOpen }) => {
   const router = useRouter();
+  const playSfx = usePlaySFX();
+
   const handleClose = () => {
     setOpen(false);
+    void playSfx("./sounds/BB_UI_Blip_Up.mp3");
   };
 
   const handleNavigation = (path: string) => {
@@ -47,7 +51,10 @@ export const MainMenu: FC<Props> = ({ open, setOpen }) => {
       <Button
         variant="text"
         sx={styles.dialogLogo}
-        onClick={() => handleNavigation(pages.home)}
+        onClick={() => {
+          void playSfx("./sounds/BB_UI_Blip_Up.mp3");
+          handleNavigation(pages.home);
+        }}
       >
         <BotBustersIcon />
       </Button>

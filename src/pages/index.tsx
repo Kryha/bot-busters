@@ -1,20 +1,26 @@
-import { useRouter } from "next/router.js";
 import { Stack, Typography } from "@mui/material";
 import { signIn } from "next-auth/react";
-import { Navbar, TopRanked } from "~/components/index.js";
-import { PlayButton } from "~/components/play-button/index.js";
-import { PixelButton } from "~/components/pixel-button/index.js";
-import { BotBusterLogoAnimation } from "~/components/bot-buster-logo/index.js";
-import { LandingPageAnimation } from "~/components/landing-page-animation/index.js";
-import { api } from "~/utils/api.js";
-import { pages } from "~/router.js";
-import { EMPTY_RES } from "~/constants/index.js";
+import { useRouter } from "next/router.js";
+import { useErrorBoundary } from "react-error-boundary";
+
 import { text } from "~/assets/text/index.js";
+import { BotBusterLogoAnimation } from "~/components/bot-buster-logo/index.js";
+import { Navbar, TopRanked } from "~/components/index.js";
+import { LandingPageAnimation } from "~/components/landing-page-animation/index.js";
+import { PixelButton } from "~/components/pixel-button/index.js";
+import { PlayButton } from "~/components/play-button/index.js";
+import { errorMessage } from "~/constants/error-messages.js";
+import { EMPTY_RES } from "~/constants/index.js";
+import { usePlaySFX } from "~/hooks/sounds.js";
+import { pages } from "~/router.js";
 import { styles } from "~/styles/pages/homepage.js";
+import { api } from "~/utils/api.js";
 
 const Homepage = () => {
   const { push } = useRouter();
+  const playSfx = usePlaySFX();
 
+  const { showBoundary } = useErrorBoundary();
   const loggedUser = api.user.getLoggedUser.useQuery(undefined, {
     retry: false,
   });
@@ -29,8 +35,12 @@ const Homepage = () => {
       } else {
         await push(pages.lobby);
       }
-    } catch (error) {
-      console.error(error);
+    } catch (e) {
+      e instanceof Error
+        ? console.error(`[${errorMessage.match.general}]: ${e.message}`, e)
+        : console.error(e);
+
+      showBoundary(errorMessage.match.general);
     }
   };
 
@@ -43,8 +53,10 @@ const Homepage = () => {
     });
   };
 
-  const openDailyHandler = () => void push(pages.leaderboard);
-  const openAboutHandler = () => void push(pages.about);
+  const openHandler = (path: string) => {
+    void playSfx("./sounds/BB_UI_Blip_Up.mp3");
+    void push(path);
+  };
 
   return (
     <Stack sx={styles.wrapper}>
@@ -75,11 +87,11 @@ const Homepage = () => {
           )}
           <Stack sx={styles.menuActions}>
             <PixelButton
-              onClick={openDailyHandler}
+              onClick={() => openHandler(pages.leaderboard)}
               text={text.homepage.leaderboard}
             />
             <PixelButton
-              onClick={openAboutHandler}
+              onClick={() => openHandler(pages.about)}
               text={text.homepage.about}
             />
           </Stack>

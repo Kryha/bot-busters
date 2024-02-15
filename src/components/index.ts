@@ -1,4 +1,4 @@
-export * from "./error-view/index.jsx";
+export * from "./error-view/index.js";
 export * from "./tables/index.js";
 export * from "./points-display/index.js";
 export * from "./top-ranked/index.js";
