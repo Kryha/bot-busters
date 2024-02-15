@@ -13,8 +13,9 @@ import {
   DEFAULT_MUSIC_VOLUME,
   DEFAULT_SFX_VOLUME,
 } from "~/constants/main.js";
-import { styles } from "./styles.js";
+
 import { text } from "~/assets/text/index.js";
+import { styles } from "./styles.js";
 
 export const AudioSettings: FC = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
