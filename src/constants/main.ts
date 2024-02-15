@@ -10,7 +10,9 @@ export const MATCH_TIME_MS = 600000; // 10 minutes
 export const ALERT_TIME_MS = 30000;
 export const VOTING_TIME_MS = 60000;
 
-export const SPLASH_SCREEN_DURATION = 3000; // 3 seconds
+export const SPLASH_SCREEN_DURATION = 7000; // 7 seconds
+
+export const MATCHMAKING_DELAY = 1800;
 
 export const DEFAULT_MAX_PLAYERS_PER_ROOM = 5;
 
@@ -75,5 +77,3 @@ export const AUDIO_OFF = 0;
 export const DEFAULT_MASTER_VOLUME = 1;
 export const DEFAULT_MUSIC_VOLUME = 0.5;
 export const DEFAULT_SFX_VOLUME = 1;
-
-export const MATCHMAKING_DELAY = 2000;
