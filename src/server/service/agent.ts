@@ -79,7 +79,6 @@ export class Agent {
     this._triggeredAt = Date.now();
 
     const response = await this.requestMessageFromLLM();
-    console.log("🚀 ~ Agent ~ triggerResponse ~ response:", response);
 
     // If inference failed or bot decided not to reply, let the agent be silent
     if (!response || response.includes(this._silenceToken)) return;
@@ -124,7 +123,6 @@ export class Agent {
 
     // TODO Limit amount of messages sent for inference
     const prompt = this.generatePrompt(promptDialog);
-    console.log("🚀 ~ Agent ~ Generated prompt:", prompt);
 
     const body = JSON.stringify({
       inputs: prompt,
