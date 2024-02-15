@@ -1,9 +1,9 @@
-import { type FC } from "react";
 import { Slide, Stack } from "@mui/material";
+import { useEffect, type FC } from "react";
 import { type PlayerType } from "~/types/index.js";
 
-import { SplashScreen } from "~/components/index.js";
 import { LetsBustSomeBots, StartChatting } from "~/assets/icons/index.js";
+import { SplashScreen } from "~/components/index.js";
 import { CHARACTERS } from "~/constants/index.js";
 
 import {
@@ -11,6 +11,7 @@ import {
   getCharacterTitle,
 } from "~/utils/characters.jsx";
 
+import { usePlaySFX } from "~/hooks/sounds.js";
 import { theme } from "~/styles/index.js";
 import { styles } from "./styles.js";
 
@@ -29,6 +30,17 @@ export const Interstitials: FC<Props> = ({
   const backgroundColor = `${color}.main`;
   const characterSplashScreen = getCharacterSplashScreen(name);
   const characterTitle = getCharacterTitle(name);
+  const playSfx = usePlaySFX();
+
+  useEffect(() => {
+    //TODO: change hardcoded filepath
+    const filepath =
+      splashScreenVariant === "chat"
+        ? "./music/voice-over/StartChating.mp3"
+        : "./music/voice-over/LetsBustSomeBots.mp3";
+
+    if (filepath) void playSfx(filepath);
+  }, [playSfx, splashScreenVariant]);
 
   return (
     <>
