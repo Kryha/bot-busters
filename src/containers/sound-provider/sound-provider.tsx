@@ -1,12 +1,22 @@
-import { createContext, type FC, useEffect, useMemo, useState } from "react";
+import {
+  createContext,
+  type FC,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { isClient } from "~/utils/client.js";
 import {
   DEFAULT_MASTER_VOLUME,
   DEFAULT_MUSIC_VOLUME,
   DEFAULT_SFX_VOLUME,
 } from "~/constants/index.js";
+import { type MusicTrack, soundtracks } from "~/constants/sounds";
 
 interface Context {
+  mainContainerRef: React.MutableRefObject<HTMLDivElement | null>;
+  audioBuffers: React.MutableRefObject<Map<string, AudioBuffer>>;
   audioContext?: AudioContext;
   masterGainNode?: GainNode;
   musicGainNode?: GainNode;
@@ -25,6 +35,7 @@ interface Props {
 }
 
 export const SoundProvider: FC<Props> = ({ children }) => {
+  const mainContainerRef = useRef<HTMLDivElement | null>(null);
   const [audioContext, setAudioContext] = useState<AudioContext>();
   const [masterGainNode, setMasterGainNode] = useState<GainNode>();
   const [sfxGainNode, setSFXGainNode] = useState<GainNode>();
@@ -36,8 +47,11 @@ export const SoundProvider: FC<Props> = ({ children }) => {
   const [sfxVolume, setSFXVolume] = useState<number>(DEFAULT_SFX_VOLUME);
   const [musicVolume, setMusicVolume] = useState<number>(DEFAULT_MUSIC_VOLUME);
 
+  // Store for loaded audio buffers
+  const audioBuffers = useRef<Map<string, AudioBuffer>>(new Map());
+
   useEffect(() => {
-    const initializeAudio = () => {
+    if (isClient()) {
       const audioContext = new AudioContext();
       const masterGain = audioContext.createGain();
       const musicGain = audioContext.createGain();
@@ -51,13 +65,69 @@ export const SoundProvider: FC<Props> = ({ children }) => {
       setMasterGainNode(masterGain);
       setMusicGainNode(musicGain);
       setSFXGainNode(sfxGain);
+    }
+  }, []);
+
+  const trackEntries = useRef(
+    Object.entries(soundtracks).map(([trackId, url]) => ({
+      trackId,
+      url,
+    })),
+  ).current;
+
+  useEffect(() => {
+    const loadMusicTracks = async (tracks: MusicTrack[]) => {
+      if (!audioContext) return;
+
+      const loadTrack = async ({ trackId, url }: MusicTrack) => {
+        try {
+          const response = await fetch(url);
+          const arrayBuffer = await response.arrayBuffer();
+          const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+          audioBuffers.current.set(trackId, audioBuffer);
+        } catch (decodeError) {
+          console.error(
+            `Error decoding audio data for track ${trackId}:`,
+            decodeError,
+          );
+        }
+      };
+
+      try {
+        await Promise.all(tracks.map(loadTrack));
+      } catch (error) {
+        console.error("Error loading all tracks", error);
+      }
     };
 
-    isClient() && initializeAudio();
-  }, []);
+    if (audioContext) {
+      void loadMusicTracks(trackEntries);
+    }
+  }, [audioBuffers, audioContext, trackEntries]);
+
+  useEffect(() => {
+    if (mainContainerRef.current === null) return;
+    const mainContainer = mainContainerRef.current;
+
+    mainContainer.addEventListener("click", () => {
+      if (audioContext && audioContext.state === "suspended") {
+        void audioContext.resume();
+      }
+    });
+
+    return () => {
+      mainContainer.addEventListener("click", () => {
+        if (audioContext && audioContext.state === "suspended") {
+          void audioContext.resume();
+        }
+      });
+    };
+  }, [audioContext]);
 
   const contextValue = useMemo(
     () => ({
+      mainContainerRef,
+      audioBuffers,
       audioContext,
       masterGainNode,
       musicGainNode,
@@ -70,6 +140,8 @@ export const SoundProvider: FC<Props> = ({ children }) => {
       setMusicVolume,
     }),
     [
+      mainContainerRef,
+      audioBuffers,
       audioContext,
       masterGainNode,
       musicGainNode,
