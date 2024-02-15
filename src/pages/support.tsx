@@ -78,9 +78,9 @@ const Support = () => {
       })),
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     try {
-      supportForm.mutate({ email, issue, topic });
+      await supportForm.mutateAsync({ email, issue, topic });
     } catch (e) {
       e instanceof Error
         ? console.error(`[${errorMessage.support}]: ${e.message}`, e)
