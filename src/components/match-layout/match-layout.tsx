@@ -1,7 +1,8 @@
 import { Container } from "@mui/material";
-import { type FC, type ReactNode } from "react";
+import { type FC, type ReactNode, useEffect, useState } from "react";
 import { type PlayerType } from "~/types/index.js";
-import { Interstitials } from "~/components/interstitials/index.js";
+import { Transitions } from "~/components/transitions/index.js";
+import { SPLASH_SCREEN_DURATION } from "~/constants/index.js";
 import { styles } from "./styles.js";
 
 interface Props {
@@ -15,13 +16,27 @@ export const MatchLayout: FC<Props> = ({
   splashScreenVariant,
   localPlayer,
 }) => {
+  const [showSplashScreen, setShowSplashScreen] = useState(false);
+
+  useEffect(() => {
+    if (!splashScreenVariant) return;
+    setShowSplashScreen(true);
+    setTimeout(() => {
+      setShowSplashScreen(false);
+    }, SPLASH_SCREEN_DURATION);
+  }, [splashScreenVariant]);
+
   return (
     <Container component="section" sx={styles.container}>
-      <Interstitials
-        splashScreenVariant={splashScreenVariant}
-        localPlayer={localPlayer}
-      />
-      {children}
+      {showSplashScreen ? (
+        <Transitions
+          splashScreenVariant={splashScreenVariant}
+          localPlayer={localPlayer}
+          showSplashScreen={showSplashScreen}
+        />
+      ) : (
+        children
+      )}
     </Container>
   );
 };
