@@ -1,11 +1,14 @@
 import { type FC, useState } from "react";
 import { useRouter } from "next/router.js";
 import { useErrorBoundary } from "react-error-boundary";
+import { usePlayMusic } from "~/hooks/sounds.js";
+import { type TrackId } from "~/constants/sounds.js";
 
 import { api } from "~/utils/api.js";
 import { pages } from "~/router.js";
 import { LobbyCharacterLoader } from "~/components/lobby-character-loader/index.js";
 import { errorMessage } from "~/constants/error-messages.js";
+import { MATCHMAKING_DELAY } from "~/constants/index.js";
 
 const Lobby: FC = () => {
   const { showBoundary } = useErrorBoundary();
@@ -15,6 +18,18 @@ const Lobby: FC = () => {
     playerQueuePosition: 0,
     queueLength: 0,
   });
+
+  const [track, setTrack] = useState<TrackId>("MatchMaking");
+  const [matchReady, setMatchReady] = useState(false);
+
+  const delayInSeconds = track === "MatchMakingOutro" ? 0 : 1;
+
+  usePlayMusic(
+    track,
+    track !== "MatchMakingOutro",
+    pages.lobby,
+    delayInSeconds,
+  );
 
   api.lobby.onQueueUpdate.useSubscription(undefined, {
     async onStarted() {
@@ -42,7 +57,11 @@ const Lobby: FC = () => {
 
   api.lobby.onReadyToPlay.useSubscription(undefined, {
     onData({ roomId }) {
-      void push({ pathname: pages.match, query: { roomId } });
+      setTrack("MatchMakingOutro");
+      setMatchReady(true);
+      setTimeout(() => {
+        void push({ pathname: pages.match, query: { roomId } });
+      }, MATCHMAKING_DELAY);
     },
     onError(e) {
       e instanceof Error
@@ -57,6 +76,7 @@ const Lobby: FC = () => {
     <LobbyCharacterLoader
       playerQueuePosition={lobbyQueue.playerQueuePosition}
       queueLength={lobbyQueue.queueLength}
+      matchReady={matchReady}
     />
   );
 };
