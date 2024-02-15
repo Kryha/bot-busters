@@ -11,17 +11,26 @@ import { styles } from "./styles.js";
 interface Props {
   playerQueuePosition: number;
   queueLength: number;
+  matchReady: boolean;
 }
+
+const MATCH_READY_SET = new Set<number>([1, 2, 3, 4, 5]);
 
 export const LobbyCharacterLoader: FC<Props> = ({
   playerQueuePosition,
   queueLength,
+  matchReady,
 }) => {
   const [activatedCharacters, setActivatedCharacters] = useState(
     new Set<number>(),
   );
 
   useEffect(() => {
+    if (matchReady) {
+      setActivatedCharacters(MATCH_READY_SET);
+      return;
+    }
+
     if (
       playerQueuePosition === 0 ||
       playerQueuePosition > DEFAULT_MAX_PLAYERS_PER_ROOM
@@ -37,7 +46,7 @@ export const LobbyCharacterLoader: FC<Props> = ({
     }
 
     setActivatedCharacters(newSet);
-  }, [playerQueuePosition, queueLength]);
+  }, [matchReady, playerQueuePosition, queueLength]);
 
   return (
     <Stack sx={styles.container}>
