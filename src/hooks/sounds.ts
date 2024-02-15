@@ -7,13 +7,11 @@ import { useRouter } from "next/router.js";
 
 export const usePlayMusic = (
   audioFile: TrackId,
-  loop?: boolean,
-  pathname?: string,
+  loop: boolean,
+  pathname: string,
   delayInSeconds = 0,
   stage?: MatchStage,
   definedStage?: MatchStage,
-  offset?: number,
-  duration?: number,
 ) => {
   const { audioContext, audioBuffers, masterGainNode, musicGainNode } =
     useAndRequireContext(SoundContextRef, "usePlayMusic", "sound-provider");
@@ -31,15 +29,11 @@ export const usePlayMusic = (
       if (audioBuffer) {
         const sourceNode = audioContext.createBufferSource();
         sourceNode.buffer = audioBuffer;
-        sourceNode.loop = !!loop;
+        sourceNode.loop = loop;
         sourceNode.connect(musicGainNode);
         musicGainNode.connect(masterGainNode);
         masterGainNode.connect(audioContext.destination);
-        sourceNode.start(
-          audioContext.currentTime + delayInSeconds,
-          offset,
-          duration,
-        );
+        sourceNode.start(audioContext.currentTime + delayInSeconds);
         sourceNodeRef.current = sourceNode;
       }
     };
@@ -50,9 +44,13 @@ export const usePlayMusic = (
       sourceNodeRef.current = null;
     };
 
-    router.pathname === pathname || stage === definedStage
-      ? playAudio()
-      : stopAudio();
+    if (router.pathname === pathname) {
+      if (stage === definedStage) {
+        playAudio();
+      }
+    } else {
+      stopAudio();
+    }
 
     return () => stopAudio();
   }, [
@@ -61,11 +59,9 @@ export const usePlayMusic = (
     audioFile,
     definedStage,
     delayInSeconds,
-    duration,
     loop,
     masterGainNode,
     musicGainNode,
-    offset,
     pathname,
     router.pathname,
     stage,
