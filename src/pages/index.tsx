@@ -1,5 +1,6 @@
 import { Stack, Typography } from "@mui/material";
 import { signIn } from "next-auth/react";
+import { useErrorBoundary } from "react-error-boundary";
 import { useRouter } from "next/router.js";
 
 import { text } from "~/assets/text/index.js";
@@ -18,6 +19,7 @@ const Homepage = () => {
   const { push } = useRouter();
   const playSfx = usePlaySFX();
 
+  const { showBoundary } = useErrorBoundary();
   const loggedUser = api.user.getLoggedUser.useQuery(undefined, {
     retry: false,
   });
@@ -32,8 +34,12 @@ const Homepage = () => {
       } else {
         await push(pages.lobby);
       }
-    } catch (error) {
-      console.error(error);
+    } catch (e) {
+      e instanceof Error
+        ? console.error(`[${errorMessage.match.general}]: ${e.message}`, e)
+        : console.error(e);
+
+      showBoundary(errorMessage.match.general);
     }
   };
 
