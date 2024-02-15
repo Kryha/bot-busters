@@ -71,10 +71,11 @@ const PrimaryButtonStyle = styled(Button)({
   },
 });
 
-export const PrimaryButton: FC<Props> = ({ children, ...props }) => {
+export const PrimaryButton: FC<Props> = ({ children, onClick, ...props }) => {
   const playSfx = usePlaySFX();
   const handleClick = () => {
     playSfx("BlipUp");
+    onClick();
   };
 
   return (
