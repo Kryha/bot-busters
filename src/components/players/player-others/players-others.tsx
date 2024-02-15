@@ -86,8 +86,8 @@ export const PlayersOthers: FC<Props> = ({
         ? console.error(`[${errorMessage.match.voting}]: ${e.message}`, e)
         : console.error(e);
 
-        setIsLoadingVotes(false);
-        showBoundary(errorMessage.support);
+      setIsLoadingVotes(false);
+      showBoundary(errorMessage.support);
     }
   };
 

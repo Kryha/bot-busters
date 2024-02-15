@@ -40,11 +40,10 @@ const MatchInternal: FC<Props> = ({ roomId, session }) => {
   const vote = api.match.vote.useMutation();
   const roomData = api.match.getRoom.useQuery({ roomId });
 
-  useEffect(()=>{
-    // TODO: Handle showing whether players are 
+  useEffect(() => {
+    // TODO: Handle showing whether players are
     //  online or have left the chat
     console.info("Player status", roomData.data?.players);
-
   }, [roomData.data?.players]);
 
   api.match.onStageChange.useSubscription(

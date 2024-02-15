@@ -39,8 +39,10 @@ export const matchRouter = createTRPCRouter({
       verifyPlayer(ctx.session.user.id, input.roomId);
 
       const match = matches.get(input.roomId);
-      const player = match?.players.find((user) => user.userId === ctx.session.user.id)
-      if(player) player.isOnline = true;
+      const player = match?.players.find(
+        (user) => user.userId === ctx.session.user.id,
+      );
+      if (player) player.isOnline = true;
 
       return observable<ChatMessagePayload>((emit) => {
         const handleEvent = (payload: ChatMessagePayload) => {
@@ -49,7 +51,7 @@ export const matchRouter = createTRPCRouter({
 
         ee.on(matchEvent(input.roomId), handleEvent);
         return () => {
-          if(player) player.isOnline = false;
+          if (player) player.isOnline = false;
           ee.off(matchEvent(input.roomId), handleEvent);
         };
       });

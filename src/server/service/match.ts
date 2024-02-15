@@ -186,7 +186,7 @@ export class Match {
       humansFooledScore: 0,
       correctGuesses: 0,
       achievements: [],
-      isOnline: true
+      isOnline: true,
     };
   }
 
