@@ -1,8 +1,7 @@
 import { Stack } from "@mui/material";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router.js";
-import { useMemo, useState, type FC, type KeyboardEvent } from "react";
-
+import { type FC, type KeyboardEvent, useMemo, useState } from "react";
 import {
   type CharacterId,
   type ChatMessagePayload,
@@ -18,8 +17,8 @@ import {
   CHARACTERS,
   CHAT_TIME_MS,
   MAX_CHARACTERS_CHAT_MESSAGE,
-  validMessageSchema,
   validation,
+  validMessageSchema,
 } from "~/constants/index.js";
 import { pages } from "~/router.js";
 import { api } from "~/utils/api.js";
@@ -130,9 +129,12 @@ export const Chat: FC<Props> = ({ roomId, room }) => {
         <HostChatPrompt stage={stage} message={hostMessageData?.message} />
         <Messages messageData={messageData} />
       </Stack>
-
-      <Timer time={room.createdAt} duration={CHAT_TIME_MS} />
-
+      <Timer
+        time={room.createdAt}
+        duration={CHAT_TIME_MS}
+        stage={stage}
+        definedStage={"chat"}
+      />
       {!isChatDisabled && (
         <InputField
           value={message}
