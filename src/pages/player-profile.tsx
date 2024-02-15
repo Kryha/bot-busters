@@ -11,9 +11,15 @@ import { PlayerTable } from "~/components/index.js";
 import { isVerifiedUser } from "~/utils/user.js";
 import { PageLayout } from "~/containers/page-layout/index.js";
 import { LoadingPage } from "~/components/loading-page/index.js";
+import { usePlaySFX } from "~/hooks/sounds";
 
 const PlayerProfile = () => {
   const router = useRouter();
+  const playSfx = usePlaySFX();
+  const handleClick = (path: string) => {
+    playSfx("BlipUp");
+    void router.push(path);
+  };
 
   const user = api.user.getLoggedUserProfile.useQuery(undefined, {
     retry: false,
@@ -42,7 +48,7 @@ const PlayerProfile = () => {
           <PrimaryButton
             variant="contained"
             color="blueGrey"
-            onClick={() => void router.push(pages.login)}
+            onClick={() => handleClick(pages.login)}
           >
             {text.playerProfile.connectWallet}
           </PrimaryButton>

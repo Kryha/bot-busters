@@ -1,4 +1,4 @@
-import { FormControl, Typography, type SelectChangeEvent } from "@mui/material";
+import { FormControl, type SelectChangeEvent, Typography } from "@mui/material";
 import { useState } from "react";
 import { useErrorBoundary } from "react-error-boundary";
 
@@ -9,15 +9,16 @@ import { SelectField } from "~/components/select-field/index.js";
 import { errorMessage } from "~/constants/error-messages.js";
 import {
   knownTopic,
+  validation,
   validEmailSchema,
   validIssueSchema,
   validTopicSchema,
-  validation,
 } from "~/constants/index.js";
 import { SUPPORT_TOPIC, type SupportTopic } from "~/constants/support.js";
 import { PageLayout } from "~/containers/page-layout/index.js";
 import { styles } from "~/styles/pages/support.js";
 import { api } from "~/utils/api.js";
+import { usePlaySFX } from "~/hooks/sounds";
 
 const Support = () => {
   const copywrite = text.support;
@@ -29,6 +30,7 @@ const Support = () => {
   const { showBoundary } = useErrorBoundary();
 
   const supportForm = api.support.sendEmail.useMutation();
+  const playSfx = usePlaySFX();
 
   // TODO: casting unknown as string is not ideal but Mui types seem to require it
   // https://stackoverflow.com/questions/58675993/typescript-react-select-onchange-handler-type-error
@@ -80,6 +82,7 @@ const Support = () => {
 
   const handleSubmit = async () => {
     try {
+      playSfx("BlipUp");
       await supportForm.mutateAsync({ email, issue, topic });
     } catch (e) {
       e instanceof Error

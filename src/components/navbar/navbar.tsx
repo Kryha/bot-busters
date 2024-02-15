@@ -23,7 +23,7 @@ export const Navbar: FC = () => {
   });
 
   const handleNavigation = (path: string) => {
-    void playSfx("NavClick");
+    playSfx("NavClick");
     void router.push(path);
   };
 
