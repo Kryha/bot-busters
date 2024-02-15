@@ -10,12 +10,16 @@ interface Props {
   time: number;
   duration: number;
   alertTime?: number;
+  stage?: MatchStage;
+  definedStage?: MatchStage;
 }
 
 export const Timer: FC<Props> = ({
   time,
   duration,
   alertTime = ALERT_TIME_MS,
+  stage,
+  definedStage,
 }) => {
   const [remainingTime, setRemainingTime] = useState<number | null>(duration);
 
