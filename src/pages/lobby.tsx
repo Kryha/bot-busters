@@ -19,7 +19,6 @@ const Lobby: FC = () => {
   api.lobby.onQueueUpdate.useSubscription(undefined, {
     async onStarted() {
       try {
-        console.log("lobby:22");
         await join.mutateAsync();
       } catch (e) {
         e instanceof Error
