@@ -1,5 +1,5 @@
 import { Stack, Typography } from "@mui/material";
-import { type FC, useState } from "react";
+import { useState, type FC } from "react";
 import { useErrorBoundary } from "react-error-boundary";
 
 import { text } from "~/assets/text/index.js";
@@ -7,13 +7,13 @@ import { PlayerData } from "~/components/players/player-data/index.js";
 import { PlayerProofs } from "~/components/players/player-proofs/index.js";
 import { PrimaryButton } from "~/components/primary-button/index.js";
 import { Timer } from "~/components/timer/index.js";
+import { errorMessage } from "~/constants/error-messages.js";
 import { VOTING_TIME_MS } from "~/constants/index.js";
 import {
   type CharacterId,
   type MatchRoom,
   type PlayerType,
 } from "~/types/index.js";
-import { errorMessage } from "~/constants/error-messages.js";
 
 import { styles } from "./styles.js";
 
@@ -86,8 +86,8 @@ export const PlayersOthers: FC<Props> = ({
         ? console.error(`[${errorMessage.match.voting}]: ${e.message}`, e)
         : console.error(e);
 
-        setIsLoadingVotes(false);
-        showBoundary(errorMessage.support);
+      setIsLoadingVotes(false);
+      showBoundary(errorMessage.support);
     }
   };
 
@@ -139,12 +139,16 @@ export const PlayersOthers: FC<Props> = ({
               localPlayer={localPlayer}
               isSelected={isSelected}
               isProofSelected={player.characterId === proofCharacterId}
-              onSelectPlayer={(hovered?: boolean) => {
+              onSelectPlayer={() => {
                 stage === "voting"
                   ? selectPlayer(player.userId)
                   : setProofCharacterId(player.characterId);
-                if (hovered) setProofCharacterId(undefined);
               }}
+              onHoverPlayer={(hovering: boolean) =>
+                hovering
+                  ? setProofCharacterId(player.characterId)
+                  : setProofCharacterId(undefined)
+              }
             />
           );
         })}
@@ -152,10 +156,7 @@ export const PlayersOthers: FC<Props> = ({
 
       {stage === "voting" && (
         <Stack sx={styles.timeSection}>
-          <Timer
-            time={votingAt}
-            duration={VOTING_TIME_MS}
-          />
+          <Timer time={votingAt} duration={VOTING_TIME_MS} />
           <PrimaryButton
             sx={styles.button}
             disabled={!isVoteEnabled || isLoadingVotes || !selectedIds.length}

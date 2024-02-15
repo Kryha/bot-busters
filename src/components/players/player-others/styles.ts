@@ -1,6 +1,6 @@
 import { type SxProps } from "@mui/material";
-import { type MatchStage } from "~/types/index.js";
 import { breakpoints, theme } from "~/styles/theme.js";
+import { type MatchStage } from "~/types/index.js";
 
 export const styles = {
   container: (stage: MatchStage) => {
@@ -9,6 +9,7 @@ export const styles = {
       [`@media (max-width: ${breakpoints.md}px)`]: {
         pr: 0,
       },
+      width: stage === "chat" ? "auto" : "50%",
     };
   },
   list: (stage: MatchStage) => {
