@@ -31,6 +31,9 @@ export const AudioSettings: FC = () => {
   const { changeSFXVolume, sfxVolume } = useChangeSFXVolume();
   const { changeMusicVolume, musicVolume } = useChangeMusicVolume();
 
+  // disable music and sfx sliders when master volume is off
+  const disabled = masterVolume === AUDIO_OFF;
+
   const handleReset = () => {
     changeMasterVolume(DEFAULT_MASTER_VOLUME);
     changeSFXVolume(DEFAULT_SFX_VOLUME);
@@ -65,13 +68,21 @@ export const AudioSettings: FC = () => {
           <Typography variant="caption" sx={styles.text}>
             {text.audio.music}
           </Typography>
-          <VolumeSlider volume={musicVolume} changeVolume={changeMusicVolume} />
+          <VolumeSlider
+            volume={musicVolume}
+            changeVolume={changeMusicVolume}
+            disabled={disabled}
+          />
         </Stack>
         <Stack sx={styles.menuItem}>
           <Typography variant="caption" sx={styles.text}>
             {text.audio.sfx}
           </Typography>
-          <VolumeSlider volume={sfxVolume} changeVolume={changeSFXVolume} />
+          <VolumeSlider
+            volume={sfxVolume}
+            changeVolume={changeSFXVolume}
+            disabled={disabled}
+          />
         </Stack>
         <Stack sx={styles.resetButton}>
           <Button variant="text" sx={styles.button} onClick={handleReset}>
