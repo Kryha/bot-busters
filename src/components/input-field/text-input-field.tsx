@@ -9,7 +9,6 @@ import { type FC } from "react";
 import { text } from "~/assets/text/index.js";
 import { PrimaryButton } from "~/components/primary-button/index.js";
 import { styles } from "./styles.js";
-import { usePlaySFX } from "~/hooks/sounds";
 
 type TextInputFieldProps = TextFieldProps & {
   heading?: string;
@@ -57,12 +56,6 @@ export const UsernameInputField: FC<TextInputFieldProps> = ({
   validationError,
   ...rest
 }) => {
-  const playSfx = usePlaySFX();
-  const handleClick = () => {
-    playSfx("BlipUp");
-    onClick();
-  };
-
   return (
     <Stack>
       <Stack
@@ -86,7 +79,7 @@ export const UsernameInputField: FC<TextInputFieldProps> = ({
           {...rest}
         />
         <PrimaryButton
-          onClick={() => handleClick}
+          onClick={onClick}
           aria-label={"send-button"}
           disabled={!!validationError}
           sx={{ "&:disabled": { border: "none" } }}
