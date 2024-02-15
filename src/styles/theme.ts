@@ -17,6 +17,7 @@ declare module "@mui/material/styles" {
     blue: Palette["primary"];
     purple: Palette["primary"];
     darkBlue: Palette["primary"];
+    disabled: Palette["primary"];
   }
 
   interface PaletteOptions {

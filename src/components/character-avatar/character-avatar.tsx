@@ -1,5 +1,5 @@
 import { Stack } from "@mui/material";
-import { useEffect, useState, type FC } from "react";
+import { type FC, useEffect, useState } from "react";
 import { AnimationPlayer } from "~/components/animation/index.js";
 import {
   BOT_BUSTED_ANIMATION_SEGMENT,
@@ -34,15 +34,21 @@ export const CharacterAvatar: FC<Props> = ({
 
   const playSfx = usePlaySFX();
 
+  const handleSelectPlayer = () => {
+    if (onSelectPlayer) {
+      playSfx("BlipSelection");
+      onSelectPlayer();
+    }
+  };
+
   useEffect(() => {
     if (isBot) {
       if (isSelected && isBot) {
         setSegments(BOT_BUSTED_ANIMATION_SEGMENT);
-        //TODO: Remove hardcoded values
-        void playSfx("./music/voice-over/BotBusted_HeadPop.mp3");
+        playSfx("BotBustedHeadPop");
       } else {
         setSegments(BOT_WIN_ANIMATION_SEGMENT);
-        void playSfx("./music/voice-over/BotWins.mp3");
+        playSfx("BotWins");
       }
     }
   }, [isBot, isSelected, playSfx]);
@@ -54,7 +60,7 @@ export const CharacterAvatar: FC<Props> = ({
           ? styles.avatar(stage, isSelected, isBot)
           : styles.animation(stage, isSelected, isBot)
       }
-      onClick={onSelectPlayer}
+      onClick={handleSelectPlayer}
     >
       {stage === "voting" ? (
         getCharacterAvatar(character.name)

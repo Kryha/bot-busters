@@ -23,9 +23,9 @@ export const useChangeMasterVolume = () => {
         : DEFAULT_MASTER_VOLUME;
 
     setMasterVolume(value);
-    masterGainNode.gain.setValueAtTime(Number(value), audioContext.currentTime);
+    masterGainNode.gain.setValueAtTime(masterVolume, audioContext.currentTime);
     masterGainNode.connect(audioContext.destination);
-  }, [audioContext, masterGainNode]);
+  }, [audioContext, masterGainNode, masterVolume, setMasterVolume]);
 
   const changeMasterVolume = (volume: number) => {
     isClient() && localStorage.setItem("MASTER_VOLUME", String(volume));
@@ -47,9 +47,9 @@ export const useChangeSFXVolume = () => {
     const value =
       storedSFXVolume !== null ? Number(storedSFXVolume) : DEFAULT_SFX_VOLUME;
     setSFXVolume(value);
-    sfxGainNode.gain.setValueAtTime(Number(value), 0);
+    sfxGainNode.gain.setValueAtTime(sfxVolume, 0);
     sfxGainNode.connect(masterGainNode);
-  }, [masterGainNode, sfxGainNode]);
+  }, [masterGainNode, setSFXVolume, sfxGainNode, sfxVolume]);
 
   const changeSFXVolume = (volume: number) => {
     isClient() && localStorage.setItem("SFX_VOLUME", String(volume));
@@ -73,9 +73,9 @@ export const useChangeMusicVolume = () => {
         ? Number(storedMusicVolume)
         : DEFAULT_MUSIC_VOLUME;
     setMusicVolume(value);
-    musicGainNode.gain.setValueAtTime(Number(value), 0);
+    musicGainNode.gain.setValueAtTime(musicVolume, 0);
     musicGainNode.connect(masterGainNode);
-  }, [masterGainNode, musicGainNode]);
+  }, [masterGainNode, musicGainNode, musicVolume, setMusicVolume]);
 
   const changeMusicVolume = (volume: number) => {
     isClient() && localStorage.setItem("MUSIC_VOLUME", String(volume));

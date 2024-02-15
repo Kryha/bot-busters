@@ -54,7 +54,7 @@ const Homepage = () => {
   };
 
   const openHandler = (path: string) => {
-    void playSfx("./sounds/BB_UI_Blip_Up.mp3");
+    playSfx("BlipUp");
     void push(path);
   };
 
