@@ -17,23 +17,35 @@ export type TrackId =
   | "NavClick"
   | "BotBustedHeadPop"
   | "BotBusters"
-  | "BotWins";
+  | "BotWins"
+  | "BlipUp"
+  | "BlipDown"
+  | "Blip"
+  | "Texting"
+  | "TextReceived"
+  | "TextSent";
 
 export const soundtracks: Record<TrackId, string> = {
-  HomePage: "./music/botbusters-theme-song.mp3",
+  HomePage: "./music/BotBusters_Theme_Instrumental.mp3",
   MatchMaking: "./music/LonelyBot_Loop.mp3",
   MatchMakingOutro: "./music/LonelyBot_EndTag.mp3",
   GamePlay: "./music/BB_Game_Groove.mp3",
   GameDoubleTime: "./music/BB_Game_DoubleTime.mp3",
   GameDoubleTimeOutro: "./music/BB_Game_DoubleTime_Outro.mp3",
   Transition: "./music/Transition_Music.mp3",
-  StartChatting: "./music/voice-overs/StartChating.mp3",
-  LetsBustSomeBots: "./music/voice-overs/LetsBustSomeBots.mp3",
-  BotBustedHeadPop: "./music/voice-overs/BotBusted_HeadPop.mp3",
-  BotBusters: "./music/voice-overs/BotBusters.mp3",
-  BotWins: "./music/voice-overs/BotWins.mp3",
+  StartChatting: "./music/voice-over/StartChating.mp3",
+  LetsBustSomeBots: "./music/voice-over/LetsBustSomeBots.mp3",
+  BotBustedHeadPop: "./music/voice-over/BotBusted_HeadPop.mp3",
+  BotBusters: "./music/voice-over/BotBusters.mp3",
+  BotWins: "./music/voice-over/BotWins.mp3",
   PlayButton: "./sounds/BB_UI_Play.mp3",
   NavClick: "./sounds/BB_UI_Nav_Click.mp3",
+  BlipUp: "./sounds/BB_UI_Blip_Up.mp3",
+  BlipDown: "./sounds/BB_UI_Blip_Down.mp3",
+  Blip: "./sounds/BB_UI_Blip.mp3",
+  Texting: "./sounds/BB_UI_Texting.mp3",
+  TextReceived: "./sounds/BB_UI_Text_Received.mp3",
+  TextSent: "./sounds/BB_UI_Text_Sent.mp3",
 };
 
 //TODO: play randomly based on achievements
