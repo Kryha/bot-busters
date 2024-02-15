@@ -1,6 +1,7 @@
 import { Stack } from "@mui/material";
 import { useRouter } from "next/router.js";
 import { type FC } from "react";
+import { usePlaySFX } from "~/hooks/sounds.js";
 
 import { pages } from "~/router.js";
 import { api } from "~/utils/api.js";
@@ -9,7 +10,6 @@ import { PrimaryButton } from "~/components/primary-button/index.js";
 import { Score } from "~/components/score/index.js";
 import { type PlayerType } from "~/types/index.js";
 import { styles } from "./styles.js";
-import { usePlaySFX } from "~/hooks/sounds";
 
 interface Props {
   player: PlayerType;

@@ -1,6 +1,8 @@
 import { Button, Stack, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import { type FC, useState } from "react";
+import { usePlaySFX } from "~/hooks/sounds.js";
+
 import { AudioSettings } from "~/components/audio-settings/index.js";
 import { MainMenu } from "~/components/main-menu/index.js";
 import { MenuButton } from "~/components/main-menu/menu-button.jsx";
@@ -10,7 +12,6 @@ import { text } from "~/assets/text/index.js";
 import { pages } from "~/router.js";
 import { api } from "~/utils/api.js";
 
-import { usePlaySFX } from "~/hooks/sounds.js";
 import { styles } from "./styles.js";
 
 export const Navbar: FC = () => {

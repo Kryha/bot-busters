@@ -1,6 +1,7 @@
 import { Stack, Typography } from "@mui/material";
 import React from "react";
 import { useRouter } from "next/router.js";
+import { usePlaySFX } from "~/hooks/sounds.js";
 
 import { text } from "~/assets/text/index.js";
 import { pages } from "~/router.js";
@@ -11,7 +12,6 @@ import { PlayerTable } from "~/components/index.js";
 import { isVerifiedUser } from "~/utils/user.js";
 import { PageLayout } from "~/containers/page-layout/index.js";
 import { LoadingPage } from "~/components/loading-page/index.js";
-import { usePlaySFX } from "~/hooks/sounds";
 
 const PlayerProfile = () => {
   const router = useRouter();

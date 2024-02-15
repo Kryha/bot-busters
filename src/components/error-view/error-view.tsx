@@ -1,4 +1,5 @@
 import { Stack, Typography } from "@mui/material";
+import { usePlaySFX } from "~/hooks/sounds.js";
 
 import { PageLayout } from "~/containers/page-layout/index.js";
 import { AppContainer } from "~/containers/index.js";
@@ -6,7 +7,6 @@ import { errorMessage } from "~/constants/error-messages.js";
 
 import { styles } from "./style.js";
 import { PrimaryButton } from "../primary-button/index.js";
-import { usePlaySFX } from "~/hooks/sounds";
 
 export function ErrorFallback({
   error,

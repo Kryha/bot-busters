@@ -1,6 +1,7 @@
 import { FormControl, type SelectChangeEvent, Typography } from "@mui/material";
 import { useState } from "react";
 import { useErrorBoundary } from "react-error-boundary";
+import { usePlaySFX } from "~/hooks/sounds.js";
 
 import { text } from "~/assets/text/index.js";
 import { TextInputField } from "~/components/input-field/index.js";
@@ -18,7 +19,6 @@ import { SUPPORT_TOPIC, type SupportTopic } from "~/constants/support.js";
 import { PageLayout } from "~/containers/page-layout/index.js";
 import { styles } from "~/styles/pages/support.js";
 import { api } from "~/utils/api.js";
-import { usePlaySFX } from "~/hooks/sounds";
 
 const Support = () => {
   const copywrite = text.support;
