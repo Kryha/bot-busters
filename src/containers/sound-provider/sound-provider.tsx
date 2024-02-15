@@ -12,6 +12,7 @@ import {
   DEFAULT_MUSIC_VOLUME,
   DEFAULT_SFX_VOLUME,
 } from "~/constants/index.js";
+import { type MusicTrack, soundtracks } from "~/constants/sounds.js";
 
 interface Context {
   mainContainerRef: React.MutableRefObject<HTMLDivElement | null>;
@@ -66,6 +67,63 @@ export const SoundProvider: FC<Props> = ({ children }) => {
       setSFXGainNode(sfxGain);
     }
   }, []);
+
+  useEffect(() => {
+    if (mainContainerRef.current) {
+      const mainContainer = mainContainerRef.current;
+
+      mainContainer.addEventListener("pointermove", () => {
+        if (audioContext?.state === "suspended") {
+          void audioContext.resume();
+        }
+      });
+
+      return () => {
+        mainContainer.removeEventListener("pointermove", () => {
+          if (audioContext?.state === "suspended") {
+            void audioContext.resume();
+          }
+        });
+      };
+    }
+  }, [audioContext]);
+
+  const trackEntries = useRef(
+    Object.entries(soundtracks).map(([trackId, url]) => ({
+      trackId,
+      url,
+    })),
+  ).current;
+
+  useEffect(() => {
+    const loadMusicTracks = async (tracks: MusicTrack[]) => {
+      if (!audioContext) return;
+
+      const loadTrack = async ({ trackId, url }: MusicTrack) => {
+        try {
+          const response = await fetch(url);
+          const arrayBuffer = await response.arrayBuffer();
+          const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+          audioBuffers.current.set(trackId, audioBuffer);
+        } catch (decodeError) {
+          console.error(
+            `Error decoding audio data for track ${trackId}:`,
+            decodeError,
+          );
+        }
+      };
+
+      try {
+        await Promise.all(tracks.map(loadTrack));
+      } catch (error) {
+        console.error("Error loading all tracks", error);
+      }
+    };
+
+    if (audioContext) {
+      void loadMusicTracks(trackEntries);
+    }
+  }, [audioBuffers, audioContext, trackEntries]);
 
   const contextValue = useMemo(
     () => ({
