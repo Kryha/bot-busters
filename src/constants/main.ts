@@ -11,6 +11,7 @@ export const ALERT_TIME_MS = 30000;
 export const VOTING_TIME_MS = 60000;
 
 export const SPLASH_SCREEN_DURATION = 3000; // 3 seconds
+export const MATCHMAKING_DELAY = 1800;
 
 export const DEFAULT_MAX_PLAYERS_PER_ROOM = 5;
 

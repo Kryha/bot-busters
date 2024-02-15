@@ -11,14 +11,17 @@ import { PixelButton } from "~/components/pixel-button/index.js";
 import { PlayButton } from "~/components/play-button/index.js";
 import { errorMessage } from "~/constants/error-messages.js";
 import { EMPTY_RES } from "~/constants/index.js";
-import { usePlaySFX } from "~/hooks/sounds.js";
+import { usePlayMusic, usePlaySFX } from "~/hooks/sounds.js";
+
+import { api } from "~/utils/api.js";
 import { pages } from "~/router.js";
 import { styles } from "~/styles/pages/homepage.js";
-import { api } from "~/utils/api.js";
 
 const Homepage = () => {
   const { push } = useRouter();
   const playSfx = usePlaySFX();
+
+  usePlayMusic("HomePage", true, pages.home);
 
   const { showBoundary } = useErrorBoundary();
   const loggedUser = api.user.getLoggedUser.useQuery(undefined, {
