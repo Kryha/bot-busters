@@ -1,6 +1,6 @@
 import { Stack } from "@mui/material";
-import { useEffect, useState, type FC } from "react";
-
+import { type FC, useEffect, useState } from "react";
+import { usePlaySFX } from "~/hooks/sounds.js";
 import { UsernameInputField } from "~/components/input-field/index.js";
 import { validUsernameSchema } from "~/constants/validation.js";
 import { getRandomUsername } from "~/utils/username.js";
@@ -16,6 +16,7 @@ export const RowCreateUsername: FC<RowCreateUsernameProps> = ({
 }) => {
   const [username, setUsername] = useState("");
   const [error, setError] = useState("");
+  const playSfx = usePlaySFX();
 
   useEffect(() => {
     let name: string;
@@ -48,7 +49,10 @@ export const RowCreateUsername: FC<RowCreateUsernameProps> = ({
         id="username"
         value={username}
         onChange={handleUsername}
-        onClick={() => void submitUsername(username)}
+        onClick={() => {
+          playSfx("BlipUp");
+          void submitUsername(username);
+        }}
       />
     </Stack>
   );

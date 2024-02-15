@@ -1,4 +1,5 @@
 import { Stack, Typography } from "@mui/material";
+import { usePlaySFX } from "~/hooks/sounds.js";
 
 import { PageLayout } from "~/containers/page-layout/index.js";
 import { AppContainer } from "~/containers/index.js";
@@ -14,6 +15,11 @@ export function ErrorFallback({
   error: Error;
   resetErrorBoundary: () => void;
 }) {
+  const playSfx = usePlaySFX();
+  const handleClick = () => {
+    playSfx("BlipUp");
+    resetErrorBoundary();
+  };
   return (
     <AppContainer>
       <PageLayout title={errorMessage.generalHeading} />
@@ -21,7 +27,7 @@ export function ErrorFallback({
         <Typography variant="body1" sx={styles.errorMessage}>
           {error.message}
         </Typography>
-        <PrimaryButton onClick={resetErrorBoundary}>
+        <PrimaryButton onClick={handleClick}>
           {errorMessage.tryAgain}
         </PrimaryButton>
       </Stack>

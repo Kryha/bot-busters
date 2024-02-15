@@ -48,7 +48,7 @@ export const Chat: FC<Props> = ({ roomId, room }) => {
 
   const appendMessage = (newMessage: ChatMessagePayload) => {
     if (newMessage.sender !== session?.user?.id) {
-      void playSfx("TextReceived");
+      playSfx("TextReceived");
     }
     setMessages((prev) => [...prev, newMessage]);
   };
@@ -121,7 +121,7 @@ export const Chat: FC<Props> = ({ roomId, room }) => {
 
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     if (!typingSoundPlayed) {
-      void playSfx("Texting");
+      playSfx("Texting");
       setTypingSoundPlayed(true);
     }
     const isEnter = event.code === "Enter" || event.code === "NumpadEnter";
@@ -129,7 +129,7 @@ export const Chat: FC<Props> = ({ roomId, room }) => {
     if (isEnter && !messageError) {
       setTypingSoundPlayed(false);
       event.preventDefault();
-      void playSfx("TextSent");
+      playSfx("TextSent");
       handleSend(message);
     }
   };
