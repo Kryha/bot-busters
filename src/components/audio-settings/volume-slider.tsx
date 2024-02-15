@@ -1,19 +1,25 @@
 import type { FC } from "react";
 import { Box, Button, Slider, Stack } from "@mui/material";
 import { VolumeDown, VolumeUp } from "@mui/icons-material";
+import { useChangeMasterVolume } from "~/hooks/volume.js";
 import { AUDIO_OFF, AUDIO_ON } from "~/constants/index.js";
 
 interface Props {
   volume: number;
-  disabled?: boolean;
   changeVolume: (volume: number) => void;
 }
 
-export const VolumeSlider: FC<Props> = ({ volume, changeVolume, disabled }) => {
+export const VolumeSlider: FC<Props> = ({ volume, changeVolume }) => {
+  const { masterVolume } = useChangeMasterVolume();
   const handleChange = (event: Event, newValue: number | number[]) => {
-    changeVolume(newValue as number);
+    if (typeof newValue === "number") {
+      changeVolume(newValue);
+    } else {
+      return;
+    }
   };
 
+  const disabled = masterVolume === AUDIO_OFF;
   const color = disabled ? "disabled" : "primary";
 
   return (
