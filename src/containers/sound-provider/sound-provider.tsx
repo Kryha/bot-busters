@@ -100,29 +100,29 @@ export const SoundProvider: FC<Props> = ({ children }) => {
       }
     };
 
-    if (audioContext) {
-      void loadMusicTracks(trackEntries);
-    }
+    void loadMusicTracks(trackEntries);
   }, [audioBuffers, audioContext, trackEntries]);
 
   useEffect(() => {
-    if (mainContainerRef.current === null) return;
-    const mainContainer = mainContainerRef.current;
+    if (mainContainerRef.current) {
+      const mainContainer = mainContainerRef.current;
 
-    mainContainer.addEventListener("click", () => {
-      if (audioContext && audioContext.state === "suspended") {
-        void audioContext.resume();
-      }
-    });
-
-    return () => {
-      mainContainer.addEventListener("click", () => {
+      // Define the function that will be called on pointermove.
+      const handlePointerMove = () => {
         if (audioContext && audioContext.state === "suspended") {
           void audioContext.resume();
         }
-      });
-    };
-  }, [audioContext]);
+      };
+
+      // Add the event listener.
+      mainContainer.addEventListener("pointermove", handlePointerMove);
+
+      // Return the cleanup function that removes the event listener.
+      return () => {
+        mainContainer.removeEventListener("pointermove", handlePointerMove);
+      };
+    }
+  }, [audioContext, mainContainerRef]);
 
   const contextValue = useMemo(
     () => ({
