@@ -1,5 +1,5 @@
 import { Slide, Stack } from "@mui/material";
-import { useEffect, type FC } from "react";
+import { type FC, useEffect } from "react";
 import { type PlayerType } from "~/types/index.js";
 
 import { LetsBustSomeBots, StartChatting } from "~/assets/icons/index.js";
@@ -33,11 +33,8 @@ export const Interstitials: FC<Props> = ({
   const playSfx = usePlaySFX();
 
   useEffect(() => {
-    //TODO: change hardcoded filepath
     const filepath =
-      splashScreenVariant === "chat"
-        ? "./music/voice-over/StartChating.mp3"
-        : "./music/voice-over/LetsBustSomeBots.mp3";
+      splashScreenVariant === "chat" ? "StartChatting" : "LetsBustSomeBots";
 
     if (filepath) void playSfx(filepath);
   }, [playSfx, splashScreenVariant]);

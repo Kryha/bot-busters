@@ -57,7 +57,7 @@ export const PixelButton: FC<Props> = ({ text, onClick, disabled }) => {
   const playSfx = usePlaySFX();
   const handleClick = async () => {
     try {
-      await playSfx("./sounds/BB_UI_Nav_Click.mp3");
+      await playSfx("NavClick");
       onClick();
     } catch (error) {
       console.error(error);

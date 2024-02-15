@@ -1,7 +1,7 @@
 import { Button, Dialog, Slide } from "@mui/material";
 import { type TransitionProps } from "@mui/material/transitions";
 import { useRouter } from "next/router";
-import { forwardRef, type FC, type ReactElement, type Ref } from "react";
+import { type FC, forwardRef, type ReactElement, type Ref } from "react";
 
 import { BotBustersIcon } from "~/assets/icons/index.js";
 import { MenuOptions } from "~/components/main-menu/menu-options.jsx";
@@ -31,7 +31,7 @@ export const MainMenu: FC<Props> = ({ open, setOpen }) => {
 
   const handleClose = () => {
     setOpen(false);
-    void playSfx("./sounds/BB_UI_Blip_Up.mp3");
+    void playSfx("Blip");
   };
 
   const handleNavigation = (path: string) => {
@@ -52,7 +52,7 @@ export const MainMenu: FC<Props> = ({ open, setOpen }) => {
         variant="text"
         sx={styles.dialogLogo}
         onClick={() => {
-          void playSfx("./sounds/BB_UI_Blip_Up.mp3");
+          void playSfx("Blip");
           handleNavigation(pages.home);
         }}
       >

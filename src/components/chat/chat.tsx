@@ -1,7 +1,7 @@
 import { Stack } from "@mui/material";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router.js";
-import { useMemo, useState, type FC, type KeyboardEvent } from "react";
+import { type FC, type KeyboardEvent, useMemo, useState } from "react";
 
 import {
   type CharacterId,
@@ -18,8 +18,8 @@ import {
   CHARACTERS,
   CHAT_TIME_MS,
   MAX_CHARACTERS_CHAT_MESSAGE,
-  validMessageSchema,
   validation,
+  validMessageSchema,
 } from "~/constants/index.js";
 import { pages } from "~/router.js";
 import { api } from "~/utils/api.js";
@@ -48,7 +48,7 @@ export const Chat: FC<Props> = ({ roomId, room }) => {
 
   const appendMessage = (newMessage: ChatMessagePayload) => {
     if (newMessage.sender !== session?.user?.id) {
-      void playSfx("./sounds/BB_UI_TextRecieved.mp3");
+      void playSfx("TextReceived");
     }
     setMessages((prev) => [...prev, newMessage]);
   };
@@ -121,7 +121,7 @@ export const Chat: FC<Props> = ({ roomId, room }) => {
 
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     if (!typingSoundPlayed) {
-      void playSfx("./sounds/BB_UI_Texting.mp3");
+      void playSfx("Texting");
       setTypingSoundPlayed(true);
     }
     const isEnter = event.code === "Enter" || event.code === "NumpadEnter";
@@ -129,7 +129,7 @@ export const Chat: FC<Props> = ({ roomId, room }) => {
     if (isEnter && !messageError) {
       setTypingSoundPlayed(false);
       event.preventDefault();
-      void playSfx("./sounds/BB_UI_TextSent.mp3");
+      void playSfx("TextSent");
       handleSend(message);
     }
   };

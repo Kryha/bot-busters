@@ -1,6 +1,6 @@
 import { Button, Stack, Typography } from "@mui/material";
 import { useRouter } from "next/router";
-import { useState, type FC } from "react";
+import { type FC, useState } from "react";
 import { AudioSettings } from "~/components/audio-settings/index.js";
 import { MainMenu } from "~/components/main-menu/index.js";
 import { MenuButton } from "~/components/main-menu/menu-button.jsx";
@@ -23,7 +23,7 @@ export const Navbar: FC = () => {
   });
 
   const handleNavigation = (path: string) => {
-    void playSfx("./sounds/BB_UI_Blip_Up.mp3");
+    void playSfx("NavClick");
     void router.push(path);
   };
 
@@ -57,7 +57,7 @@ export const Navbar: FC = () => {
           <MenuButton
             sx={styles.button}
             onClick={() => {
-              void playSfx("./sounds/BB_UI_Blip_Up.mp3");
+              void playSfx("Blip");
               setIsMenuOpen(true);
             }}
           />
