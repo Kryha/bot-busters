@@ -80,7 +80,6 @@ export const Transitions: FC<Props> = ({
                 <LetsBustSomeBots aria-label={"voting-stage"} />
               </Stack>
             </Slide>
-            ,
           </Stack>
         </SplashScreen>
       )}
