@@ -26,7 +26,7 @@ export const Results: FC<Props> = ({ player }) => {
     loggedUser.data?.address && loggedUser.data.username
   );
 
-  const handleClick = (path: string) => {
+  const handleNavigation = (path: string) => {
     playSfx("BlipUp");
     void router.push(path);
   };
@@ -40,7 +40,7 @@ export const Results: FC<Props> = ({ player }) => {
           <>
             <PrimaryButton
               sx={styles.button}
-              onClick={() => handleClick(pages.lobby)}
+              onClick={() => handleNavigation(pages.lobby)}
             >
               {text.chat.playAgain}
             </PrimaryButton>
@@ -48,14 +48,14 @@ export const Results: FC<Props> = ({ player }) => {
             {!isConnectButtonHidden ? (
               <PrimaryButton
                 sx={styles.button}
-                onClick={() => handleClick(pages.login)}
+                onClick={() => handleNavigation(pages.login)}
               >
                 {text.chat.addScore}
               </PrimaryButton>
             ) : (
               <PrimaryButton
                 sx={styles.button}
-                onClick={() => handleClick(pages.leaderboard)}
+                onClick={() => handleNavigation(pages.leaderboard)}
               >
                 {text.chat.checkLeaderboard}
               </PrimaryButton>
