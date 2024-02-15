@@ -5,6 +5,7 @@ import { text } from "~/assets/text/index.js";
 import { ALERT_TIME_MS } from "~/constants/main.js";
 
 import { styles } from "./styles.js";
+import { MatchStage } from "~/types";
 
 interface Props {
   time: number;
