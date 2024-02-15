@@ -75,7 +75,7 @@ export const styles = {
       width: "18px",
     },
     flexDirection: "column-reverse",
-    flex: "1 1 500px",
+    flex: "1 1 450px",
   },
   username: {
     fontSize: "12px",

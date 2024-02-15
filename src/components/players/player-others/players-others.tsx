@@ -153,7 +153,12 @@ export const PlayersOthers: FC<Props> = ({
 
       {stage === "voting" && (
         <Stack sx={styles.timeSection}>
-          <Timer time={votingAt} duration={VOTING_TIME_MS} />
+          <Timer
+            time={votingAt}
+            duration={VOTING_TIME_MS}
+            stage={room.stage}
+            definedStage={"voting"}
+          />
           <PrimaryButton
             sx={styles.button}
             disabled={!isVoteEnabled || isLoadingVotes || !selectedIds.length}

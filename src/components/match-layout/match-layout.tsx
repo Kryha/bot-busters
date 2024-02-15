@@ -2,7 +2,7 @@ import { Container } from "@mui/material";
 import { type FC, type ReactNode, useEffect, useState } from "react";
 import { type PlayerType } from "~/types/index.js";
 import { Transitions } from "~/components/transitions/index.js";
-import { SPLASH_SCREEN_DURATION } from "~/constants/index.js";
+import { SPLASH_SCREEN_TIME_MS } from "~/constants/index.js";
 import { styles } from "./styles.js";
 
 interface Props {
@@ -23,7 +23,7 @@ export const MatchLayout: FC<Props> = ({
     setShowSplashScreen(true);
     setTimeout(() => {
       setShowSplashScreen(false);
-    }, SPLASH_SCREEN_DURATION);
+    }, SPLASH_SCREEN_TIME_MS);
   }, [splashScreenVariant]);
 
   return (
