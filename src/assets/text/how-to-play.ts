@@ -44,6 +44,10 @@ export const howToPlay = {
       highlight: "+10 points.",
     },
     {
+      regular: "Fool another human: ",
+      highlight: "+5 points.",
+    },
+    {
       regular: "No messages sent or no selection submitted: ",
       highlight: "0 points.",
     },
