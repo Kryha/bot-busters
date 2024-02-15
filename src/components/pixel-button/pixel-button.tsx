@@ -55,13 +55,9 @@ const PixelButtonStyle = styled(Button)({
 
 export const PixelButton: FC<Props> = ({ text, onClick, disabled }) => {
   const playSfx = usePlaySFX();
-  const handleClick = async () => {
-    try {
-      await playSfx("NavClick");
-      onClick();
-    } catch (error) {
-      console.error(error);
-    }
+  const handleClick = () => {
+    playSfx("BlipUp");
+    onClick();
   };
 
   return (

@@ -18,7 +18,7 @@ export const PlayButton: FC<Props> = ({ onClick, disabled }) => {
   const playSfx = usePlaySFX();
 
   const handleClick = () => {
-    void playSfx("PlayButton");
+    playSfx("PlayButton");
     onClick();
   };
 

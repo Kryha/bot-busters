@@ -34,14 +34,21 @@ export const CharacterAvatar: FC<Props> = ({
 
   const playSfx = usePlaySFX();
 
+  const handleSelectPlayer = () => {
+    if (onSelectPlayer) {
+      playSfx("BlipSelection");
+      onSelectPlayer();
+    }
+  };
+
   useEffect(() => {
     if (isBot) {
       if (isSelected && isBot) {
         setSegments(BOT_BUSTED_ANIMATION_SEGMENT);
-        void playSfx("BotBustedHeadPop");
+        playSfx("BotBustedHeadPop");
       } else {
         setSegments(BOT_WIN_ANIMATION_SEGMENT);
-        void playSfx("BotWins");
+        playSfx("BotWins");
       }
     }
   }, [isBot, isSelected, playSfx]);
@@ -53,7 +60,7 @@ export const CharacterAvatar: FC<Props> = ({
           ? styles.avatar(stage, isSelected, isBot)
           : styles.animation(stage, isSelected, isBot)
       }
-      onClick={onSelectPlayer}
+      onClick={handleSelectPlayer}
     >
       {stage === "voting" ? (
         getCharacterAvatar(character.name)

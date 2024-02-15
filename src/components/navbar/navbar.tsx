@@ -47,7 +47,10 @@ export const Navbar: FC = () => {
           <Button
             variant="text"
             sx={styles.mainLogo}
-            onClick={() => handleNavigation(pages.home)}
+            onClick={() => {
+              playSfx("BlipUp");
+              void router.push(pages.home);
+            }}
           >
             <BotBustersIcon />
           </Button>
@@ -57,7 +60,7 @@ export const Navbar: FC = () => {
           <MenuButton
             sx={styles.button}
             onClick={() => {
-              void playSfx("Blip");
+              playSfx("BlipUp");
               setIsMenuOpen(true);
             }}
           />

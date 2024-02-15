@@ -1,11 +1,13 @@
 import { type FC } from "react";
 import { Button } from "@mui/base";
 import { styled } from "@mui/material/styles";
-import { theme } from "~/styles/theme.js";
+import { usePlaySFX } from "~/hooks/sounds.js";
 import { SelectIcon } from "~/assets/icons/index.js";
+import { theme } from "~/styles/theme.js";
 
 interface Props extends React.ComponentProps<typeof Button> {
   children: React.ReactNode;
+  onClick: (event: MouseEvent<HTMLButtonElement>) => void;
 }
 
 const PrimaryButtonStyle = styled(Button)({
@@ -70,9 +72,14 @@ const PrimaryButtonStyle = styled(Button)({
   },
 });
 
-export const PrimaryButton: FC<Props> = ({ children, ...props }) => {
+export const PrimaryButton: FC<Props> = ({ children, onClick, ...props }) => {
+  const playSfx = usePlaySFX();
+  const handleClick = () => {
+    playSfx("BlipUp");
+    onClick();
+  };
   return (
-    <PrimaryButtonStyle {...props}>
+    <PrimaryButtonStyle {...props} onClick={handleClick}>
       <div style={{ flex: "1 1 auto" }}>{children}</div>
       <div style={{ flex: "0" }}>
         <SelectIcon />

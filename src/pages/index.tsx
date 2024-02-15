@@ -54,7 +54,7 @@ const Homepage = () => {
   };
 
   const openHandler = (path: string) => {
-    void playSfx("Blip");
+    playSfx("BlipUp");
     void push(path);
   };
 

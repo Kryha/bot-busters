@@ -52,7 +52,7 @@ export const MainMenu: FC<Props> = ({ open, setOpen }) => {
         variant="text"
         sx={styles.dialogLogo}
         onClick={() => {
-          void playSfx("Blip");
+          playSfx("BlipUp");
           handleNavigation(pages.home);
         }}
       >
