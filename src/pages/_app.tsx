@@ -15,7 +15,6 @@ import { useRouter } from "next/router.js";
 import { pages } from "~/router.js";
 import { AppContainer } from "~/containers/app-container/index.js";
 import { SoundProvider } from "~/containers/sound-provider/index.js";
-import { GameLoader } from "~/containers/game-loader";
 
 const headTitle = "Bot Busters";
 
@@ -47,15 +46,13 @@ const MyApp: AppType<{ session: Session | null }> = ({
           <ThemeProvider>
             <SessionProvider session={session}>
               <SoundProvider>
-                <GameLoader>
-                  {isHomePage ? (
+                {isHomePage ? (
+                  <Component {...pageProps} />
+                ) : (
+                  <AppContainer>
                     <Component {...pageProps} />
-                  ) : (
-                    <AppContainer>
-                      <Component {...pageProps} />
-                    </AppContainer>
-                  )}
-                </GameLoader>
+                  </AppContainer>
+                )}
               </SoundProvider>
             </SessionProvider>
           </ThemeProvider>

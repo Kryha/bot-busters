@@ -16,6 +16,8 @@ import { styles } from "~/styles/pages/homepage.js";
 const Homepage = () => {
   const { push } = useRouter();
 
+  usePlayMusic("HomePage", true, pages.home);
+
   const loggedUser = api.user.getLoggedUser.useQuery(undefined, {
     retry: false,
   });
@@ -47,8 +49,6 @@ const Homepage = () => {
   const openDailyHandler = () => void push(pages.leaderboard);
 
   const openAboutHandler = () => void push(pages.about);
-
-  usePlayMusic("HomePage", true, pages.home);
 
   return (
     <Stack sx={styles.wrapper}>
