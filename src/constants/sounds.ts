@@ -29,7 +29,7 @@ export type TrackId =
   | "Denied";
 
 export const soundtracks: Record<TrackId, string> = {
-  HomePage: "./music/botbusters-theme-song.mp3",
+  HomePage: "./music/BotBusters_Theme_Instrumental.mp3",
   MatchMaking: "./music/LonelyBot_Loop.mp3",
   MatchMakingOutro: "./music/LonelyBot_EndTag.mp3",
   GamePlay: "./music/BB_Game_Groove.mp3",
