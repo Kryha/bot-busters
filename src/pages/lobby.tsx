@@ -1,7 +1,7 @@
 import { type FC, useState } from "react";
-import { type TrackId } from "~/constants/sounds.js";
 import { useRouter } from "next/router.js";
 import { usePlayMusic } from "~/hooks/sounds.js";
+import { type TrackId } from "~/constants/sounds.js";
 
 import { api } from "~/utils/api.js";
 import { pages } from "~/router.js";
@@ -14,6 +14,16 @@ const Lobby: FC = () => {
   const [playerQueuePosition, setPlayerQueuePosition] = useState(0);
   const [queueLength, setQueueLength] = useState(0);
   const [track, setTrack] = useState<TrackId>("MatchMaking");
+  const [matchReady, setMatchReady] = useState(false);
+
+  const delayInSeconds = track === "MatchMakingOutro" ? 0 : 1;
+
+  usePlayMusic(
+    track,
+    track !== "MatchMakingOutro",
+    pages.lobby,
+    delayInSeconds,
+  );
 
   api.lobby.onQueueUpdate.useSubscription(undefined, {
     async onStarted() {
@@ -35,6 +45,7 @@ const Lobby: FC = () => {
   api.lobby.onReadyToPlay.useSubscription(undefined, {
     onData({ roomId }) {
       setTrack("MatchMakingOutro");
+      setMatchReady(true);
       setTimeout(() => {
         void push({ pathname: pages.match, query: { roomId } });
       }, MATCHMAKING_DELAY);
@@ -44,17 +55,11 @@ const Lobby: FC = () => {
     },
   });
 
-  usePlayMusic(
-    track,
-    track !== "MatchMakingOutro",
-    pages.lobby,
-    track === "MatchMakingOutro" ? 0 : 1,
-  );
-
   return (
     <LobbyCharacterLoader
       playerQueuePosition={playerQueuePosition}
       queueLength={queueLength}
+      matchReady={matchReady}
     />
   );
 };
