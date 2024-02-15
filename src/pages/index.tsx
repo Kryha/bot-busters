@@ -1,7 +1,7 @@
 import { Stack, Typography } from "@mui/material";
 import { signIn } from "next-auth/react";
-import { useErrorBoundary } from "react-error-boundary";
 import { useRouter } from "next/router.js";
+import { useErrorBoundary } from "react-error-boundary";
 
 import { text } from "~/assets/text/index.js";
 import { BotBusterLogoAnimation } from "~/components/bot-buster-logo/index.js";
@@ -9,6 +9,7 @@ import { Navbar, TopRanked } from "~/components/index.js";
 import { LandingPageAnimation } from "~/components/landing-page-animation/index.js";
 import { PixelButton } from "~/components/pixel-button/index.js";
 import { PlayButton } from "~/components/play-button/index.js";
+import { errorMessage } from "~/constants/error-messages.js";
 import { EMPTY_RES } from "~/constants/index.js";
 import { usePlaySFX } from "~/hooks/sounds.js";
 import { pages } from "~/router.js";
