@@ -15,6 +15,10 @@ export const styles = {
     alignItems: "flex-end",
     flexDirection: "row",
     flex: 1,
+    [theme.breakpoints.up("xl")]: {
+      alignItems: "center",
+      flex: 0,
+    },
   },
   character: (activatedIndices: Set<number>, index: number) => {
     const isActivated = activatedIndices.has(index);

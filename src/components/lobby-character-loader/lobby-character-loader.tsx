@@ -11,33 +11,42 @@ import { styles } from "./styles.js";
 interface Props {
   playerQueuePosition: number;
   queueLength: number;
+  matchReady: boolean;
 }
+
+const ACTIVATE_ALL_CHARACTERS = new Set([1, 2, 3, 4, 5]);
 
 export const LobbyCharacterLoader: FC<Props> = ({
   playerQueuePosition,
   queueLength,
+  matchReady,
 }) => {
   const [activatedCharacters, setActivatedCharacters] = useState(
     new Set<number>(),
   );
 
   useEffect(() => {
-    if (
-      playerQueuePosition === 0 ||
-      playerQueuePosition > DEFAULT_MAX_PLAYERS_PER_ROOM
-    ) {
-      setActivatedCharacters(new Set());
+    if (matchReady) {
+      // the user should see all characters if the match is ready
+      setActivatedCharacters(ACTIVATE_ALL_CHARACTERS);
       return;
-    }
+    } else {
+      if (
+        playerQueuePosition === 0 ||
+        playerQueuePosition > DEFAULT_MAX_PLAYERS_PER_ROOM
+      ) {
+        setActivatedCharacters(new Set());
+      }
 
-    const newSet = new Set<number>();
-    const upperLimit = Math.min(queueLength, DEFAULT_MAX_PLAYERS_PER_ROOM);
-    for (let i = 1; i <= upperLimit; i++) {
-      newSet.add(i);
-    }
+      const newSet = new Set<number>();
+      const upperLimit = Math.min(queueLength, DEFAULT_MAX_PLAYERS_PER_ROOM);
+      for (let i = 1; i <= upperLimit; i++) {
+        newSet.add(i);
+      }
 
-    setActivatedCharacters(newSet);
-  }, [playerQueuePosition, queueLength]);
+      setActivatedCharacters(newSet);
+    }
+  }, [playerQueuePosition, queueLength, matchReady]);
 
   return (
     <Stack sx={styles.container}>
