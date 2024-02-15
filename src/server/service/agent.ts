@@ -14,6 +14,7 @@ import type {
   SenderRole,
 } from "~/types/index.js";
 import { wait } from "~/utils/timer.js";
+import { getRandomInt } from "~/utils/math.js";
 
 export class Agent {
   private _id: string;
@@ -45,11 +46,9 @@ export class Agent {
     this._characterName = this.getCharacterName(characterId);
     this._systemPrompt = [
       `Your name is ${this._characterName}.`,
-      `You always reply back if someone mentiones your name`,
-      "You should never disclose that you're a bot, nor a computer program, nor an AI assistant. ",
       "You should never say that you're a bot, nor a computer program, nor an AI assistant.",
       "Addopt a random personality with its own traits and ways of talking, mantain it through out the entire conversation.",
-      "You always reply with short sentences that don't excede 150 characters.",
+      "Always reply with short sentences that don't excede 150 characters.",
       // `First decide if you would reply, otherwise say: ${this._silenceToken}.`,
     ].join(" ");
 
@@ -72,13 +71,15 @@ export class Agent {
   };
 
   private async triggerResponse() {
-    // TODO: perform actual logic to understand if response should be triggered or not
-    const shouldTrigger = Math.random() < 0.5;
+    // TODO: Add time based trigger if player hasen't replyed in a while
+    const shouldTrigger =
+      getRandomInt({ min: 1, max: 10 }) < getRandomInt({ min: 4, max: 6 });
     if (!shouldTrigger) return;
 
     this._triggeredAt = Date.now();
 
     const response = await this.requestMessageFromLLM();
+    console.log("🚀 ~ Agent ~ triggerResponse ~ response:", response);
 
     // If inference failed or bot decided not to reply, let the agent be silent
     if (!response || response.includes(this._silenceToken)) return;
@@ -91,8 +92,11 @@ export class Agent {
       sentAt: Date.now(),
     };
 
-    // TODO: remove artificial wait in favour of something more inteligent
-    const waitTime = this._match.messages.length === 1 ? 9000 : 6500;
+    const waitTime =
+      this._match.messages.length === 1
+        ? getRandomInt({ min: 9500, max: 14000 }) // First reply would be longer in response to host prompt
+        : getRandomInt({ min: 6500, max: 13000 }); // Otherwise replying to ongoing conversation
+
     await wait(waitTime);
 
     this._match.addMessage(payload);
@@ -106,7 +110,6 @@ export class Agent {
         this._match.players.find((p) => p.userId === message.sender)
           ?.characterId ?? "0";
 
-      // TODO: fix "host" sender
       const characterName =
         characterId === "0" ? "host" : this.getCharacterName(characterId);
 
