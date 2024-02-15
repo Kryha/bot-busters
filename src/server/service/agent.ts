@@ -45,11 +45,11 @@ export class Agent {
     this._characterName = this.getCharacterName(characterId);
     this._systemPrompt = [
       `Your name is ${this._characterName}.`,
-      "You're participating in a group chat.",
-      "You're a normal person. Always reply as a normal person would do.",
-      "You don't have a lot of knowledge of the world.",
+      `You always reply back if someone mentiones your name`,
+      "You should never disclose that you're a bot, nor a computer program, nor an AI assistant. ",
+      "You should never say that you're a bot, nor a computer program, nor an AI assistant.",
+      "Addopt a random personality with its own traits and ways of talking, mantain it through out the entire conversation.",
       "You always reply with short sentences that don't excede 150 characters.",
-      `You always reply if someone mentiones your name: ${this._characterName}`,
       // `First decide if you would reply, otherwise say: ${this._silenceToken}.`,
     ].join(" ");
 
@@ -121,10 +121,15 @@ export class Agent {
 
     // TODO Limit amount of messages sent for inference
     const prompt = this.generatePrompt(promptDialog);
+    console.log("🚀 ~ Agent ~ Generated prompt:", prompt);
 
     const body = JSON.stringify({
       inputs: prompt,
-      parameters: { max_new_tokens: 58, top_p: 1, temperature: 0.8 }, // TODO define final parameters as constants
+      parameters: {
+        max_new_tokens: 58, // amount of words generated
+        top_p: 0.9, // higher value = more varied answers
+        temperature: 1, // higher value = more creative answers
+      },
     });
 
     const authorizationToken = env.LAMBDA_TOKEN.replace(/\r?\n|\r/g, "");
@@ -186,7 +191,6 @@ export class Agent {
     return CHARACTERS[characterId].name;
   }
 
-  // TODO: Add character name
   generatePrompt(messages: PromptMessage[]): string {
     // First message is always from Host
     const hostMessage = messages.shift();
@@ -200,17 +204,20 @@ export class Agent {
 
         return `${acc}\n${nextMessageContent}`;
       },
-      `${hostMessage?.content}[/INST]`,
+      `host: ${hostMessage?.content}[/INST]`,
     );
 
-    const systemPrompt = `
-    <s>[INST] <<SYS>>\n${this._systemPrompt}\n<</SYS>>\n${chatHistoryPrompt}\n${this._characterName}: `;
+    const prompt = `
+    <s>[INST] <<SYS>>\n${this._systemPrompt}\n<</SYS>>\n\n${chatHistoryPrompt}\n${this._characterName}: `;
 
-    return systemPrompt;
+    return prompt;
   }
 
   parseResponse(input: string): string {
     // Removes //ufffd || </s> || *some expresion* || [INST]
-    return input.replace(/(\ufffd|<\/s>|(\*[^*]*\*)|\[INST\]|\[\/INST\])/g, "");
+    return input.replace(
+      /(\ufffd|<\/s>|(\*[^*]*\*)|\[INST\]|\[\/INST\]|\[INST(?:\])?)/g,
+      "",
+    );
   }
 }
