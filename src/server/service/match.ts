@@ -31,6 +31,7 @@ import { matchAchievements } from "~/server/service/achievements.js";
 import { Agent } from "~/server/service/index.js";
 import {
   achievementIdSchema,
+  type TypingPayload,
   type CharacterId,
   type ChatMessagePayload,
   type MatchRoom,
@@ -62,6 +63,7 @@ export class Match {
   //TODO: check for better solution
   private _playerPreviousMatches = new Map<string, MatchRoom[]>();
   private _playerAchievements = new Map<string, UserAchievements[]>();
+  private _typingTimers = new Map<string, NodeJS.Timeout>();
 
   stage: MatchStage = "chat";
   arePointsCalculated = false;
@@ -206,6 +208,25 @@ export class Match {
     this._messageCountSinceLastTrigger++;
     this._messages.push(message);
     ee.emit(matchEvent(this.id), message);
+  }
+
+  setTyping(sender: string) {
+    const prevTimer = this._typingTimers.get(sender);
+    if (prevTimer) clearTimeout(prevTimer);
+
+    const timeoutId = setTimeout(() => {
+      ee.emit(matchEvent(this._id, "typing"), {
+        isTyping: false,
+        sender,
+      } satisfies TypingPayload);
+    }, 3000);
+
+    this._typingTimers.set(sender, timeoutId);
+
+    ee.emit(matchEvent(this._id, "typing"), {
+      isTyping: true,
+      sender,
+    } satisfies TypingPayload);
   }
 
   vote(playerId: string, selectedPlayerIds: string[]) {

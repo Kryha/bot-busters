@@ -20,6 +20,12 @@ export const chatMessagePayloadSchema = z.object({
 });
 export type ChatMessagePayload = z.infer<typeof chatMessagePayloadSchema>;
 
+export const typingPayload = z.object({
+  sender: z.string().uuid(),
+  isTyping: z.boolean(),
+});
+export type TypingPayload = z.infer<typeof typingPayload>;
+
 export const storedChatMessageSchema = z.object({
   sender: characterIdSchema.or(z.literal("0")),
   message: z.string(),
@@ -83,4 +89,4 @@ export const matchRoomSchema = z.object({
 });
 export type MatchRoom = z.infer<typeof matchRoomSchema>;
 
-export type MatchEventType = "message" | "stageChange";
+export type MatchEventType = "message" | "stageChange" | "typing";
