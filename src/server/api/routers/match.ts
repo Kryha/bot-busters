@@ -36,7 +36,9 @@ export const matchRouter = createTRPCRouter({
   onMessage: protectedProcedure
     .input(z.object({ roomId: z.string().uuid() }))
     .subscription(({ ctx, input }) => {
-      verifyPlayer(ctx.session.user.id, input.roomId);
+      const { player }= verifyPlayer(ctx.session.user.id, input.roomId);
+     
+      if (player) player.isOnline = true;
 
       return observable<ChatMessagePayload>((emit) => {
         const handleEvent = (payload: ChatMessagePayload) => {
@@ -45,6 +47,7 @@ export const matchRouter = createTRPCRouter({
 
         ee.on(matchEvent(input.roomId), handleEvent);
         return () => {
+          if (player) player.isOnline = false;
           ee.off(matchEvent(input.roomId), handleEvent);
         };
       });

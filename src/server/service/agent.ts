@@ -181,6 +181,7 @@ export class Agent {
       correctGuesses: 0,
       votes: [],
       achievements: [],
+      isOnline: true,
     };
   }
 

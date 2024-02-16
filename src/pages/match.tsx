@@ -1,4 +1,4 @@
-import { type FC } from "react";
+import { type FC, useEffect } from "react";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router.js";
 import { useSession } from "next-auth/react";
@@ -40,6 +40,12 @@ const MatchInternal: FC<Props> = ({ roomId, session }) => {
   const { showBoundary } = useErrorBoundary();
   const vote = api.match.vote.useMutation();
   const roomData = api.match.getRoom.useQuery({ roomId });
+
+  useEffect(() => {
+    // TODO: Handle showing whether players are
+    //  online or have left the chat
+    console.info("Player status", roomData.data?.players);
+  }, [roomData.data?.players]);
 
   api.match.onStageChange.useSubscription(
     { roomId },

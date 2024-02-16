@@ -65,6 +65,7 @@ export const playerSchema = z.object({
   votes: z.array(z.string().uuid()).optional(), // array of voted ids
   isVerified: z.boolean().optional(),
   achievements: z.array(achievementIdSchema), // array of achievement ids
+  isOnline: z.boolean(),
 });
 export type PlayerType = z.infer<typeof playerSchema>;
 
