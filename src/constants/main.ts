@@ -10,8 +10,8 @@ export const MATCH_TIME_MS = 600000; // 10 minutes
 export const ALERT_TIME_MS = 30000; // 30 seconds
 export const VOTING_TIME_MS = 60000; // 1 minute
 export const SPLASH_SCREEN_TIME_MS = 6500; // 6.5 seconds
-export const SPLASH_SCREEN_TEXT_DELAY = 500; // 0.5 seconds
-export const MATCHMAKING_DELAY = 1800; // 1.8 seconds
+export const SPLASH_SCREEN_TEXT_DELAY_MS = 500; // 0.5 seconds
+export const MATCHMAKING_DELAY_MS = 1800; // 1.8 seconds
 
 export const DEFAULT_MAX_PLAYERS_PER_ROOM = 5;
 
