@@ -8,7 +8,7 @@ import { styles } from "./styles.js";
 interface Props {
   character: Character;
   isSelected?: boolean;
-  onSelectPlayer: () => void;
+  onSelectPlayer: (hovered?: boolean) => void;
 }
 
 export const PlayerVote: FC<Props> = ({

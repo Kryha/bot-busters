@@ -1,29 +1,65 @@
-import { type FC } from "react";
 import { Box, Stack, Typography } from "@mui/material";
+import { useEffect, useRef, type FC } from "react";
 
-import { type CharacterId, type PlayerType } from "~/types/index.js";
-import { CHARACTERS } from "~/constants/index.js";
 import { BotArrowIcon } from "~/assets/icons/index.js";
 import { text } from "~/assets/text/index.js";
+import { CHARACTERS } from "~/constants/index.js";
+import { type CharacterId, type PlayerType } from "~/types/index.js";
 
 import { styles } from "./styles.js";
 
 interface Props {
   otherPlayers: PlayerType[];
   proofCharacterId?: CharacterId;
+  onHoverPlayer: (hovered: boolean) => void;
 }
 
-export const PlayerProofs: FC<Props> = ({ otherPlayers, proofCharacterId }) => {
+export const PlayerProofs: FC<Props> = ({
+  otherPlayers,
+  proofCharacterId,
+  onHoverPlayer,
+}) => {
   // This can never be undefined, set to first player if not found
-  const playerProof =
-    otherPlayers.find((player) => player.characterId === proofCharacterId) ??
-    otherPlayers[0]!;
+  const playerProof = otherPlayers.find(
+    (player) => player.characterId === proofCharacterId,
+  );
+
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const onMouseEnter = () => {
+      onHoverPlayer(true);
+    };
+
+    if (containerRef.current) {
+      const container = containerRef.current;
+      container.addEventListener("mouseenter", onMouseEnter);
+
+      return () => {
+        container.removeEventListener("mouseenter", onMouseEnter);
+      };
+    }
+  }, [onHoverPlayer]);
+
+  if (!playerProof) return <></>;
 
   const character = CHARACTERS[playerProof.characterId];
   const textColor = `${character.color}.main`;
 
+  if (!playerProof.isVerified && !playerProof.isBot) {
+    return (
+      <Stack ref={containerRef} sx={styles.container}>
+        <Stack sx={styles.resultsHeading}>
+          <Typography variant="body1" color={textColor}>
+            <Box component="span">{character.name} </Box>
+            {text.match.resultBotHuman}
+          </Typography>
+        </Stack>
+      </Stack>
+    );
+  }
   return (
-    <Stack sx={styles.container}>
+    <Stack ref={containerRef} sx={styles.container}>
       <Stack sx={styles.resultsHeading}>
         <Typography variant="body1" color={textColor}>
           <Box component="span">{character.name} </Box>

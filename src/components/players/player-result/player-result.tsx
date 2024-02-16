@@ -1,8 +1,8 @@
-import { type FC } from "react";
 import { Stack } from "@mui/material";
-import { type PlayerType } from "~/types/index.js";
+import { type FC } from "react";
 import { Player } from "~/components/index.js";
 import { CHARACTERS } from "~/constants/index.js";
+import { CharacterId, type PlayerType } from "~/types/index.js";
 
 import { styles } from "./styles.js";
 
@@ -11,7 +11,8 @@ interface Props {
   hasGuessed: boolean;
   isProofSelected: boolean;
   isSelected?: boolean;
-  onSelectPlayer?: () => void;
+  onSelectPlayer: () => void;
+  onHoverPlayer?: (anchor: HTMLDivElement, playerId?: CharacterId) => void;
 }
 
 export const PlayerResult: FC<Props> = ({
@@ -20,6 +21,7 @@ export const PlayerResult: FC<Props> = ({
   isProofSelected,
   isSelected,
   onSelectPlayer,
+  onHoverPlayer,
 }) => {
   const character = CHARACTERS[player.characterId]!;
 
@@ -33,6 +35,7 @@ export const PlayerResult: FC<Props> = ({
         isProofSelected={isProofSelected}
         isSelected={isSelected}
         onSelectPlayer={onSelectPlayer}
+        onHoverPlayer={onHoverPlayer}
       />
     </Stack>
   );

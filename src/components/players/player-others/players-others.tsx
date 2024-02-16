@@ -1,5 +1,5 @@
-import { Stack, Typography } from "@mui/material";
-import { type FC, useState } from "react";
+import { Popper, Stack, Typography } from "@mui/material";
+import { useState, type FC } from "react";
 import { useErrorBoundary } from "react-error-boundary";
 import { usePlaySFX } from "~/hooks/sounds.js";
 import { text } from "~/assets/text/index.js";
@@ -7,14 +7,15 @@ import { PlayerData } from "~/components/players/player-data/index.js";
 import { PlayerProofs } from "~/components/players/player-proofs/index.js";
 import { PrimaryButton } from "~/components/primary-button/index.js";
 import { Timer } from "~/components/timer/index.js";
+import { errorMessage } from "~/constants/error-messages.js";
 import { VOTING_TIME_MS } from "~/constants/index.js";
 import {
   type CharacterId,
   type MatchRoom,
   type PlayerType,
 } from "~/types/index.js";
-import { errorMessage } from "~/constants/error-messages.js";
 
+import { useDelayedVisibility } from "~/utils/delay.js";
 import { styles } from "./styles.js";
 
 interface Props {
@@ -32,12 +33,16 @@ export const PlayersOthers: FC<Props> = ({
 }) => {
   const { showBoundary } = useErrorBoundary();
   const [isLoadingVotes, setIsLoadingVotes] = useState(false);
+  const [popperHover, setPopperHover] = useState(false);
+  const [anchorEl, setAnchorEl] = useState<HTMLDivElement | null>(null);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const playSfx = usePlaySFX();
   const [proofCharacterId, setProofCharacterId] = useState<
     CharacterId | undefined
-  >(room.players[0]?.characterId);
+  >();
   const { stage, players, votingAt } = room;
+
+  const { isVisible, show } = useDelayedVisibility(500);
 
   const [resultHeading, resultSubheading] = (() => {
     if (room.stage !== "results") return ["", ""];
@@ -76,6 +81,12 @@ export const PlayersOthers: FC<Props> = ({
 
       return Array.from(idsSet);
     });
+  };
+
+  const handleOnHover = (anchor: HTMLDivElement, playerId?: CharacterId) => {
+    setProofCharacterId(playerId);
+    setAnchorEl(anchor);
+    show();
   };
 
   const handleVote = async () => {
@@ -146,6 +157,7 @@ export const PlayersOthers: FC<Props> = ({
                   ? selectPlayer(player.userId)
                   : setProofCharacterId(player.characterId);
               }}
+              onHoverPlayer={handleOnHover}
             />
           );
         })}
@@ -170,10 +182,31 @@ export const PlayersOthers: FC<Props> = ({
       )}
 
       {stage === "results" && (
-        <PlayerProofs
-          otherPlayers={otherPlayers}
-          proofCharacterId={proofCharacterId}
-        />
+        <>
+          <Popper
+            id={"id"}
+            open={isVisible || popperHover}
+            anchorEl={anchorEl}
+            placement="bottom"
+            modifiers={[
+              {
+                name: "flip",
+                enabled: false,
+                options: {
+                  altBoundary: true,
+                  rootBoundary: "document",
+                  padding: 8,
+                },
+              },
+            ]}
+          >
+            <PlayerProofs
+              otherPlayers={otherPlayers}
+              proofCharacterId={proofCharacterId}
+              onHoverPlayer={(hovered: boolean) => setPopperHover(hovered)}
+            />
+          </Popper>
+        </>
       )}
     </Stack>
   );
