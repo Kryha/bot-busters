@@ -29,7 +29,11 @@ export const CharacterAvatar: FC<Props> = ({
   isBot,
   onSelectPlayer,
 }) => {
-  const animation = getCharacterAnimation(character.name, isBot, isSelected);
+  const { animation, speed } = getCharacterAnimation(
+    character.name,
+    isBot,
+    isSelected,
+  );
   const [segments, setSegments] = useState<number[][]>([[]]);
 
   const playSfx = usePlaySFX();
@@ -70,6 +74,7 @@ export const CharacterAvatar: FC<Props> = ({
           segments={segments}
           play
           loop
+          speed={speed}
         />
       )}
     </Stack>
