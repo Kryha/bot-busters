@@ -1,19 +1,21 @@
+import { type User } from "~/server/db/schema.js";
+
 class LobbyQueue {
   private _listeners = new Map<string, number>();
-  private _queue: string[] = [];
+  private _queue: User[] = [];
 
   get queue() {
     return this._queue;
   }
 
-  join(userId: string) {
-    const count = this._listeners.get(userId);
+  join(user: User) {
+    const count = this._listeners.get(user.id);
     const newCount = count ? count + 1 : 1;
 
-    this._listeners.set(userId, newCount);
+    this._listeners.set(user.id, newCount);
 
     if (newCount === 1) {
-      this._queue.push(userId);
+      this._queue.push(user);
     }
 
     return newCount;
@@ -27,7 +29,7 @@ class LobbyQueue {
     if (count <= 1) {
       this._listeners.delete(userId);
 
-      const index = this._queue.indexOf(userId);
+      const index = this._queue.findIndex((u) => u.id === userId);
       this._queue.splice(index, 1);
     } else {
       this._listeners.set(userId, count - 1);
@@ -35,15 +37,15 @@ class LobbyQueue {
   }
 
   pickPlayers(humansInMatch: number) {
-    const ids = this._queue.splice(0, humansInMatch);
+    const users = this._queue.splice(0, humansInMatch);
 
-    ids.forEach((id) => this._listeners.delete(id));
+    users.forEach((user) => this._listeners.delete(user.id));
 
-    return ids;
+    return users;
   }
 
   getPlayerPosition(userId: string) {
-    return this._queue.indexOf(userId) + 1;
+    return this._queue.findIndex((u) => u.id === userId) + 1;
   }
 
   has(userId: string) {
