@@ -6,7 +6,7 @@ import { Stack, Typography } from "@mui/material";
 import { text } from "~/assets/text/index.js";
 import {
   ALERT_TIME_MS,
-  MATCHMAKING_DELAY,
+  MATCHMAKING_DELAY_MS,
   SPLASH_SCREEN_TIME_MS,
 } from "~/constants/main.js";
 import { pages } from "~/router.js";
@@ -55,7 +55,7 @@ export const Timer: FC<Props> = ({
     if (time) {
       const intervalId = setInterval(() => {
         const elapsedTime =
-          Date.now() - time - SPLASH_SCREEN_TIME_MS - MATCHMAKING_DELAY;
+          Date.now() - time - SPLASH_SCREEN_TIME_MS - MATCHMAKING_DELAY_MS;
         const newRemainingTime = Math.max(0, duration - elapsedTime);
         setRemainingTime(newRemainingTime);
       }, 1000);
