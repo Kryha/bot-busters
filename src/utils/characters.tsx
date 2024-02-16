@@ -41,6 +41,7 @@ import {
   TransitionLinesVoting,
 } from "~/assets/animations/index.js";
 import { theme } from "~/styles/index.js";
+import { getRandomInt } from "~/utils/math";
 
 export const getCharacterAvatar = (characterName: CharacterName) => {
   const avatarMap = {
@@ -80,7 +81,7 @@ export const getCharacterAnimation = (
 
   // If the blink animation is selected, return it with a random speed between 1 and 0.7
   if (animation === characterAnimations.blink) {
-    const speed = Math.random() * (1 - 0.7) + 0.7; // Generates a random speed between 1 and 0.7
+    const speed = getRandomInt(0.7, 1); // Generates a random speed between 1 and 0.7
     return { animation: animation, speed: speed.toFixed(2) };
   }
 
