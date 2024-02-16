@@ -23,6 +23,7 @@ export const match = {
   bustedResultFail: "You failed. Try again.",
   resultHumanTitle: "was played by a human!",
   resultBotTitle: "was played by a bot!",
+  resultBotHuman: "was played by an unverified human!",
   resultBot: "A Proof of AI was generated upon selecting this bot using Aleo.",
   resultHuman: "A Proof of Humanity was generated using zPass and Aleo.",
   verifyProof: "Check and verify the proof",
