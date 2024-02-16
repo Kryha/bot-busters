@@ -1,5 +1,6 @@
 import { type ReactNode } from "react";
 import { type CharacterName } from "~/types/index.js";
+import { getRandomInt } from "~/utils/math.js";
 import {
   AvatarAsh,
   AvatarDot,
@@ -41,7 +42,6 @@ import {
   TransitionLinesVoting,
 } from "~/assets/animations/index.js";
 import { theme } from "~/styles/index.js";
-import { getRandomInt } from "~/utils/math";
 
 export const getCharacterAvatar = (characterName: CharacterName) => {
   const avatarMap = {
