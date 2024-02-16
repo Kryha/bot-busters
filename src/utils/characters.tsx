@@ -68,12 +68,23 @@ export const getCharacterAnimation = (
   };
 
   const characterAnimations = animations[characterName];
+  let animation;
 
   if (isSelected) {
-    return isBot ? characterAnimations.botBusted : characterAnimations.blink;
+    animation = isBot
+      ? characterAnimations.botBusted
+      : characterAnimations.blink;
+  } else {
+    animation = isBot ? characterAnimations.botWin : characterAnimations.blink;
   }
 
-  return isBot ? characterAnimations.botWin : characterAnimations.blink;
+  // If the blink animation is selected, return it with a random speed between 1 and 0.7
+  if (animation === characterAnimations.blink) {
+    const speed = Math.random() * (1 - 0.7) + 0.7; // Generates a random speed between 1 and 0.7
+    return { animation: animation, speed: speed.toFixed(2) };
+  }
+
+  return { animation: animation, speed: 1 };
 };
 
 export const getCharacterSplashScreen = (
