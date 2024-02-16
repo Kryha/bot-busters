@@ -93,8 +93,8 @@ export class Agent {
 
     const waitTime =
       this._match.messages.length === 1
-        ? getRandomInt({ min: 11500, max: 16000 }) // First reply would be longer in response to host prompt
-        : getRandomInt({ min: 7500, max: 16000 }); // Otherwise replying to ongoing conversation
+        ? getRandomInt({ min: 10500, max: 15000 }) // First reply would be longer in response to host prompt
+        : getRandomInt({ min: 6500, max: 12000 }); // Otherwise replying to ongoing conversation
 
     await wait(waitTime);
 
@@ -217,9 +217,9 @@ export class Agent {
   }
 
   parseResponse(input: string): string {
-    // Removes //ufffd || </s> || *some expresion* || [INST]
+    // Removes //ufffd || </s> || *some expresion* || [INST] || (words in parenthesis)
     return input.replace(
-      /(\ufffd|<\/s>|(\*[^*]*\*)|\[INST\]|\[\/INST\]|\[INST(?:\])?)/g,
+      /(\ufffd|<\/s>|(\*[^*]*\*)|\[INST\]|\[\/INST\]|\[INST(?:\])?|\([^)]*\))/g,
       "",
     );
   }
