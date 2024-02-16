@@ -9,7 +9,7 @@ import {
   uuid,
   varchar,
 } from "drizzle-orm/pg-core";
-import { createInsertSchema } from "drizzle-zod";
+import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { type z } from "zod";
 
 import { PUBLIC_KEY_LENGTH } from "~/constants/index.js";
@@ -35,7 +35,7 @@ export const usersRelations = relations(users, ({ one }) => ({
   }),
 }));
 
-export const userSchema = createInsertSchema(users);
+export const userSchema = createSelectSchema(users);
 export type User = z.infer<typeof userSchema>;
 
 export const userAchievements = bbPgTable("user_achievement", {

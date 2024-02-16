@@ -20,6 +20,7 @@ import {
   userAchievements,
   type UserAchievements,
   users,
+  type User,
 } from "~/server/db/schema.js";
 import {
   selectMatchPlayedByUser,
@@ -91,7 +92,7 @@ export class Match {
     return this._agents;
   }
 
-  constructor(playerIds: string[], botsInMatch: number) {
+  constructor(users: User[], botsInMatch: number) {
     this._id = uuid();
 
     this._agents = lodash.range(0, botsInMatch).map(() => {
@@ -101,16 +102,18 @@ export class Match {
 
     const botPlayers = this.agents.map((agent) => agent.toPlayer());
 
-    const humanPlayers = playerIds.map((id) => {
+    const humanPlayers = users.map((user) => {
       const characterId = this.popCharacterId();
-      return this.generatePlayer(id, characterId);
+      return this.generatePlayer(user, characterId);
     });
 
     this._players = lodash.shuffle([...botPlayers, ...humanPlayers]);
 
     this.addPrompt();
 
-    this.initMatch(playerIds).catch((err) =>
+    const userIds = users.map((u) => u.id);
+
+    this.initMatch(userIds).catch((err) =>
       console.error("Error initializing match: ", err),
     );
 
@@ -122,7 +125,6 @@ export class Match {
 
   private async initMatch(playerIds: string[]) {
     await this.getPlayerStats();
-    await this.checkVerifiedPlayers();
 
     ee.emit("readyToPlay", {
       roomId: this._id,
@@ -172,9 +174,9 @@ export class Match {
     return characterId;
   }
 
-  private generatePlayer(userId: string, characterId: CharacterId): PlayerType {
+  private generatePlayer(user: User, characterId: CharacterId): PlayerType {
     return {
-      userId,
+      userId: user.id,
       characterId,
       score: 0,
       isBot: false,
@@ -189,6 +191,7 @@ export class Match {
       correctGuesses: 0,
       achievements: [],
       isOnline: true,
+      isVerified: !!(user.username && user.address),
     };
   }
 
@@ -240,18 +243,6 @@ export class Match {
     this.allPlayersVoted = humanPlayers.every(
       (player) => player.votes !== undefined,
     );
-  }
-
-  private async checkVerifiedPlayers() {
-    const promises = this.players
-      .filter((player) => !player.isBot)
-      .map(async (player) => {
-        if (player.isVerified !== undefined) return;
-
-        const checkPlayer = await selectUserById(player.userId);
-        player.isVerified = !!(checkPlayer?.username && checkPlayer?.address);
-      });
-    await Promise.allSettled(promises);
   }
 
   // TODO: make a proper DB relation with user and matches instead of doing this
