@@ -47,9 +47,6 @@ const MatchInternal: FC<Props> = ({ roomId, session }) => {
       onData() {
         void roomData.refetch();
       },
-      onError(error) {
-        showBoundary(error);
-      },
       enabled: roomData.data && !roomData.data.arePointsCalculated,
     },
   );
