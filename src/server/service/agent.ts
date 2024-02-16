@@ -182,6 +182,7 @@ export class Agent {
       votes: [],
       achievements: [],
       isOnline: true,
+      isVerified: true,
     };
   }
 

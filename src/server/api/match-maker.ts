@@ -39,19 +39,19 @@ const makeMatch = () => {
     let botsInMatch = getRandomInt({ max: MAX_BOTS_PER_MATCH, min: 1 });
     const humansInMatch = env.PLAYERS_PER_MATCH - botsInMatch;
 
-    const playerIds = lobbyQueue.pickPlayers(humansInMatch);
+    const humans = lobbyQueue.pickPlayers(humansInMatch);
 
-    if (playerIds.length < humansInMatch) {
-      botsInMatch = env.PLAYERS_PER_MATCH - playerIds.length;
+    if (humans.length < humansInMatch) {
+      botsInMatch = env.PLAYERS_PER_MATCH - humans.length;
     }
 
-    const totalPlayers = playerIds.length + botsInMatch;
+    const totalPlayers = humans.length + botsInMatch;
 
     if (
       botsInMatch <= MAX_BOTS_PER_MATCH &&
       totalPlayers === env.PLAYERS_PER_MATCH
     ) {
-      const match = new Match(playerIds, botsInMatch);
+      const match = new Match(humans, botsInMatch);
 
       matches.set(match.id, match);
     }

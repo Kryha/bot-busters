@@ -63,7 +63,7 @@ export const playerSchema = z.object({
   humansFooledScore: z.number(),
   correctGuesses: z.number(),
   votes: z.array(z.string().uuid()).optional(), // array of voted ids
-  isVerified: z.boolean().optional(),
+  isVerified: z.boolean(),
   achievements: z.array(achievementIdSchema), // array of achievement ids
   isOnline: z.boolean(),
 });

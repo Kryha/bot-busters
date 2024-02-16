@@ -3,6 +3,7 @@ import { observable } from "@trpc/server/observable";
 
 import type { QueueUpdatePayload, ReadyToPlayPayload } from "~/types/index.js";
 import { lobbyQueue } from "~/server/service/index.js";
+import { selectUserById } from "~/server/db/user.js";
 
 import { createTRPCRouter, protectedProcedure } from "../trpc.js";
 import { ee, getOngoingMatchByUserId } from "../match-maker.js";
@@ -34,9 +35,13 @@ export const lobbyRouter = createTRPCRouter({
       };
     });
   }),
-  join: protectedProcedure.mutation(({ ctx }) => {
+  join: protectedProcedure.mutation(async ({ ctx }) => {
     const { id } = ctx.session.user;
-    const joinCount = lobbyQueue.join(id);
+    const user = await selectUserById(id);
+
+    if (!user) throw new TRPCError({ code: "FORBIDDEN" });
+
+    const joinCount = lobbyQueue.join(user);
     const userIsPlaying = !!getOngoingMatchByUserId(id);
 
     if (joinCount > 1 || userIsPlaying) {
