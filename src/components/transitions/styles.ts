@@ -16,7 +16,7 @@ export const styles = {
     justifyContent: "center",
     alignItems: "center",
     "& > svg": {
-      width: "60%",
+      width: "80%",
       height: "auto",
     },
   },
@@ -30,7 +30,7 @@ export const styles = {
     justifyContent: "center",
     alignItems: "center",
     "& > svg": {
-      width: "60%",
+      width: "80%",
       height: "auto",
     },
   },

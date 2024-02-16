@@ -1,7 +1,8 @@
 import { type FC, useEffect, useState } from "react";
+import { usePlayMusic } from "~/hooks/sounds.js";
+
 import { type MatchStage } from "~/types/index.js";
 import { type TrackId } from "~/constants/sounds.js";
-import { usePlayMusic } from "~/hooks/sounds.js";
 import { Stack, Typography } from "@mui/material";
 import { text } from "~/assets/text/index.js";
 import {
