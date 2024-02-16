@@ -1,6 +1,5 @@
 import { type ReactNode } from "react";
 import { type CharacterName } from "~/types/index.js";
-import { getRandomInt } from "~/utils/math.js";
 import {
   AvatarAsh,
   AvatarDot,
@@ -81,8 +80,8 @@ export const getCharacterAnimation = (
 
   // If the blink animation is selected, return it with a random speed between 1 and 0.7
   if (animation === characterAnimations.blink) {
-    const speed = getRandomInt({ min: 0.7, max: 1 }); // Generates a random speed between 1 and 0.7
-    return { animation: animation, speed: speed };
+    const speed = Math.random() * (1 - 0.7) + 0.7; // Generates a random speed between 1 and 0.7
+    return { animation: animation, speed: speed.toFixed(2) };
   }
 
   return { animation: animation, speed: 1 };
