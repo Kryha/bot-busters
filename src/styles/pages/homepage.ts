@@ -22,6 +22,7 @@ export const styles = {
     mb: 5,
     ml: 4,
     width: "800px",
+    height: "220px",
     textAlign: "center",
     justifyContent: "start",
   },

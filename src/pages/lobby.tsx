@@ -8,7 +8,7 @@ import { api } from "~/utils/api.js";
 import { pages } from "~/router.js";
 import { LobbyCharacterLoader } from "~/components/lobby-character-loader/index.js";
 import { errorMessage } from "~/constants/error-messages.js";
-import { MATCHMAKING_DELAY } from "~/constants/index.js";
+import { MATCHMAKING_DELAY_MS } from "~/constants/index.js";
 
 const Lobby: FC = () => {
   const { showBoundary } = useErrorBoundary();
@@ -61,7 +61,7 @@ const Lobby: FC = () => {
       setMatchReady(true);
       setTimeout(() => {
         void push({ pathname: pages.match, query: { roomId } });
-      }, MATCHMAKING_DELAY);
+      }, MATCHMAKING_DELAY_MS);
     },
     onError(e) {
       e instanceof Error

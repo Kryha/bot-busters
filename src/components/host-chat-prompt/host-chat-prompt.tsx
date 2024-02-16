@@ -1,10 +1,7 @@
 import { Stack, Typography } from "@mui/material";
-import { useState, type FC, useEffect } from "react";
+import { type FC, useEffect, useState } from "react";
 
-import {
-  SPLASH_SCREEN_DURATION,
-  HOST_TYPING_SPEED,
-} from "~/constants/index.js";
+import { HOST_TYPING_SPEED } from "~/constants/index.js";
 
 import { text } from "~/assets/text/index.js";
 import { wait } from "~/utils/timer.js";
@@ -25,11 +22,7 @@ export const HostChatPrompt: FC<Props> = ({ stage, message }) => {
 
       if (writtenMessage.length < message.length) {
         // wait time is longer in the beginning because of the character animation
-        await wait(
-          writtenMessage.length === 0
-            ? SPLASH_SCREEN_DURATION
-            : HOST_TYPING_SPEED,
-        );
+        await wait(HOST_TYPING_SPEED);
         const nextChar = message[writtenMessage.length];
 
         if (!nextChar) return;

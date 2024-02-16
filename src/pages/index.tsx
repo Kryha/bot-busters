@@ -12,7 +12,8 @@ import { PlayButton } from "~/components/play-button/index.js";
 import { errorMessage } from "~/constants/error-messages.js";
 import { EMPTY_RES } from "~/constants/index.js";
 import { usePlayMusic, usePlaySFX } from "~/hooks/sounds.js";
-
+import { useAndRequireContext } from "~/hooks/use-and-require-context.js";
+import { ContextRef } from "~/containers/sound-provider/index.js";
 import { api } from "~/utils/api.js";
 import { pages } from "~/router.js";
 import { styles } from "~/styles/pages/homepage.js";
@@ -20,6 +21,12 @@ import { styles } from "~/styles/pages/homepage.js";
 const Homepage = () => {
   const { push } = useRouter();
   const playSfx = usePlaySFX();
+
+  const { mainContainerRef } = useAndRequireContext(
+    ContextRef,
+    "Homepage",
+    "sound-provider",
+  );
 
   usePlayMusic("HomePage", true, pages.home);
 
@@ -62,7 +69,7 @@ const Homepage = () => {
   };
 
   return (
-    <Stack sx={styles.wrapper}>
+    <Stack ref={mainContainerRef} sx={styles.wrapper}>
       <Navbar />
       <LandingPageAnimation />
       <Stack sx={styles.container}>

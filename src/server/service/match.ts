@@ -11,14 +11,15 @@ import {
   POINTS_BOT_BUSTED,
   POINTS_HUMAN_BUSTED,
   POINTS_HUMAN_FOOLED,
+  SPLASH_SCREEN_TIME_MS,
   VOTING_TIME_MS,
 } from "~/constants/index.js";
 import { ee, matchEvent } from "~/server/api/match-maker.js";
 import { type BBPgTransaction } from "~/server/db/index.js";
 import {
   userAchievements,
-  users,
   type UserAchievements,
+  users,
 } from "~/server/db/schema.js";
 import {
   selectMatchPlayedByUser,
@@ -43,7 +44,7 @@ export class Match {
   private _id: string;
   private _messages: ChatMessagePayload[] = [];
   private _createdAt = Date.now(); // unix timestamp
-  private _votingAt = Date.now() + CHAT_TIME_MS; // unix timestamp
+  private _votingAt = Date.now() + CHAT_TIME_MS + SPLASH_SCREEN_TIME_MS; // unix timestamp
   private _availableCharacterIds: CharacterId[] = lodash.shuffle([
     "1",
     "2",
@@ -133,14 +134,15 @@ export class Match {
   }
 
   private matchLoop() {
-    const roomAge = Date.now() - this.createdAt;
+    const roomAge = Date.now() - this.createdAt - SPLASH_SCREEN_TIME_MS;
 
     if (this.stage === "chat" && roomAge >= CHAT_TIME_MS) {
       this.stage = "voting";
       ee.emit(matchEvent(this.id, "stageChange"));
     }
 
-    const votingTimeRanOut = roomAge >= CHAT_TIME_MS + VOTING_TIME_MS;
+    const votingTimeRanOut =
+      roomAge >= CHAT_TIME_MS + VOTING_TIME_MS + SPLASH_SCREEN_TIME_MS;
 
     if (this.stage === "voting" && (this.allPlayersVoted || votingTimeRanOut)) {
       this.stage = "results";

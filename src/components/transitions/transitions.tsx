@@ -10,7 +10,7 @@ import {
   getCharacterSplashScreen,
   getCharacterTitle,
 } from "~/utils/characters.jsx";
-import { CHARACTERS, SPLASH_SCREEN_TEXT_DURATION } from "~/constants/index.js";
+import { CHARACTERS, SPLASH_SCREEN_TEXT_DELAY_MS } from "~/constants/index.js";
 
 import { pages } from "~/router.js";
 import { theme } from "~/styles/index.js";
@@ -47,7 +47,7 @@ export const Transitions: FC<Props> = ({
     setTimeout(() => {
       playSfx(track);
       setShowLabel(true);
-    }, SPLASH_SCREEN_TEXT_DURATION);
+    }, SPLASH_SCREEN_TEXT_DELAY_MS);
   }, [track, playSfx, splashScreenVariant]);
 
   return (
@@ -80,7 +80,6 @@ export const Transitions: FC<Props> = ({
                 <LetsBustSomeBots aria-label={"voting-stage"} />
               </Stack>
             </Slide>
-            ,
           </Stack>
         </SplashScreen>
       )}
