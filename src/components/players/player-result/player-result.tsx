@@ -2,7 +2,7 @@ import { Stack } from "@mui/material";
 import { type FC } from "react";
 import { Player } from "~/components/index.js";
 import { CHARACTERS } from "~/constants/index.js";
-import { type PlayerType } from "~/types/index.js";
+import { CharacterId, type PlayerType } from "~/types/index.js";
 
 import { styles } from "./styles.js";
 
@@ -12,7 +12,7 @@ interface Props {
   isProofSelected: boolean;
   isSelected?: boolean;
   onSelectPlayer: () => void;
-  onHoverPlayer?: (hovering: boolean) => void;
+  onHoverPlayer?: (anchor: HTMLDivElement, playerId?: CharacterId) => void;
 }
 
 export const PlayerResult: FC<Props> = ({

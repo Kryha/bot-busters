@@ -4,7 +4,11 @@ import { useEffect, useRef, type FC } from "react";
 import { BotArrowIcon } from "~/assets/icons/index.js";
 import { text } from "~/assets/text/index.js";
 import { CharacterAvatar } from "~/components/character-avatar/index.js";
-import { type Character, type MatchStage } from "~/types/index.js";
+import {
+  type Character,
+  type CharacterId,
+  type MatchStage,
+} from "~/types/index.js";
 import { Skeleton } from "./skeleton.jsx";
 
 import { styles } from "./styles.js";
@@ -18,7 +22,7 @@ interface Props {
   isBot?: boolean;
   onSelectPlayer?: () => void;
   stage?: MatchStage;
-  onHoverPlayer?: (hovering: boolean) => void;
+  onHoverPlayer?: (anchor: HTMLDivElement, playerId?: CharacterId) => void;
 }
 
 export const Player: FC<Props> = ({
@@ -41,28 +45,20 @@ export const Player: FC<Props> = ({
 
   useEffect(() => {
     const onMouseEnter = () => {
-      if (onHoverPlayer) {
-        onHoverPlayer(true);
-      }
-    };
-
-    const onMouseLeave = () => {
-      if (onHoverPlayer) {
-        onHoverPlayer(false);
+      if (onHoverPlayer && containerRef.current !== null) {
+        onHoverPlayer(containerRef.current, character.id);
       }
     };
 
     if (containerRef.current) {
       const container = containerRef.current;
       container.addEventListener("mouseenter", onMouseEnter);
-      container.addEventListener("mouseleave", onMouseLeave);
 
       return () => {
         container.removeEventListener("mouseenter", onMouseEnter);
-        container.removeEventListener("mouseleave", onMouseLeave);
       };
     }
-  }, [onHoverPlayer]);
+  }, [character.id, onHoverPlayer]);
 
   if (!name) return <Skeleton />;
 
@@ -80,7 +76,7 @@ export const Player: FC<Props> = ({
   const textResult = getTextResult();
 
   return (
-    <Stack ref={containerRef} sx={styles.container}>
+    <Stack id={character.id} ref={containerRef} sx={styles.container}>
       {stage !== "chat" && (
         <Typography variant="body1" sx={styles.character} color={textColor}>
           {name}

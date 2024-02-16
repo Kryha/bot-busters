@@ -23,6 +23,7 @@ export const styles = {
         flexDirection: "row",
         mt: 10,
       },
+      gap: 1,
     };
   },
   playerHeading: {

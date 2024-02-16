@@ -1,4 +1,4 @@
-import { Stack, Typography } from "@mui/material";
+import { Popper, Stack, Typography } from "@mui/material";
 import { useState, type FC } from "react";
 import { useErrorBoundary } from "react-error-boundary";
 
@@ -15,6 +15,7 @@ import {
   type PlayerType,
 } from "~/types/index.js";
 
+import { useDelayedVisibility } from "~/utils/delay.js";
 import { styles } from "./styles.js";
 
 interface Props {
@@ -32,11 +33,15 @@ export const PlayersOthers: FC<Props> = ({
 }) => {
   const { showBoundary } = useErrorBoundary();
   const [isLoadingVotes, setIsLoadingVotes] = useState(false);
+  const [popperHover, setPopperHover] = useState(false);
+  const [anchorEl, setAnchorEl] = useState<HTMLDivElement | null>(null);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [proofCharacterId, setProofCharacterId] = useState<
     CharacterId | undefined
   >();
   const { stage, players, votingAt } = room;
+
+  const { isVisible, show } = useDelayedVisibility(500);
 
   const [resultHeading, resultSubheading] = (() => {
     if (room.stage !== "results") return ["", ""];
@@ -75,6 +80,12 @@ export const PlayersOthers: FC<Props> = ({
 
       return Array.from(idsSet);
     });
+  };
+
+  const handleOnHover = (anchor: HTMLDivElement, playerId?: CharacterId) => {
+    setProofCharacterId(playerId);
+    setAnchorEl(anchor);
+    show();
   };
 
   const handleVote = async () => {
@@ -144,11 +155,7 @@ export const PlayersOthers: FC<Props> = ({
                   ? selectPlayer(player.userId)
                   : setProofCharacterId(player.characterId);
               }}
-              onHoverPlayer={(hovering: boolean) =>
-                hovering
-                  ? setProofCharacterId(player.characterId)
-                  : setProofCharacterId(undefined)
-              }
+              onHoverPlayer={handleOnHover}
             />
           );
         })}
@@ -168,10 +175,31 @@ export const PlayersOthers: FC<Props> = ({
       )}
 
       {stage === "results" && (
-        <PlayerProofs
-          otherPlayers={otherPlayers}
-          proofCharacterId={proofCharacterId}
-        />
+        <>
+          <Popper
+            id={"id"}
+            open={isVisible || popperHover}
+            anchorEl={anchorEl}
+            placement="bottom"
+            modifiers={[
+              {
+                name: "flip",
+                enabled: false,
+                options: {
+                  altBoundary: true,
+                  rootBoundary: "document",
+                  padding: 8,
+                },
+              },
+            ]}
+          >
+            <PlayerProofs
+              otherPlayers={otherPlayers}
+              proofCharacterId={proofCharacterId}
+              onHoverPlayer={(hovered: boolean) => setPopperHover(hovered)}
+            />
+          </Popper>
+        </>
       )}
     </Stack>
   );

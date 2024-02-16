@@ -2,7 +2,11 @@ import { type FC } from "react";
 
 import { Player, PlayerResult, PlayerVote } from "~/components/index.js";
 import { CHARACTERS } from "~/constants/index.js";
-import { type MatchStage, type PlayerType } from "~/types/index.js";
+import {
+  type CharacterId,
+  type MatchStage,
+  type PlayerType,
+} from "~/types/index.js";
 
 export interface Props {
   stage: MatchStage;
@@ -12,7 +16,7 @@ export interface Props {
   isSelected?: boolean;
   color?: string;
   onSelectPlayer: () => void;
-  onHoverPlayer?: (hovering: boolean) => void;
+  onHoverPlayer?: (anchor: HTMLDivElement, playerId?: CharacterId) => void;
 }
 
 export const PlayerData: FC<Props> = ({
