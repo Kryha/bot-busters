@@ -1,15 +1,11 @@
-import { type FC } from "react";
 import { Box, Slide } from "@mui/material";
 import { AnimationPlayer } from "~/components/animation/index.js";
 import { HomePageOutro } from "~/assets/animations/index.js";
 import { styles } from "./styles.js";
 
-interface Props {
-  slideAnimation: boolean;
-}
-export const HomePageOutroAnimation: FC<Props> = ({ slideAnimation }) => {
+export const HomePageOutroAnimation = () => {
   return (
-    <Slide direction="left" in={slideAnimation} mountOnEnter unmountOnExit>
+    <Slide direction="left" in={true} mountOnEnter unmountOnExit>
       <Box component={"div"} sx={styles.container}>
         <AnimationPlayer
           animationData={HomePageOutro}

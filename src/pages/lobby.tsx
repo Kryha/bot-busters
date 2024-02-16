@@ -83,7 +83,7 @@ const Lobby: FC = () => {
   return (
     <>
       {slideAnimation ? (
-        <HomePageOutroAnimation slideAnimation={slideAnimation} />
+        <HomePageOutroAnimation />
       ) : (
         <LobbyCharacterLoader
           playerQueuePosition={lobbyQueue.playerQueuePosition}
