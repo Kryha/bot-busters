@@ -81,8 +81,8 @@ export const getCharacterAnimation = (
 
   // If the blink animation is selected, return it with a random speed between 1 and 0.7
   if (animation === characterAnimations.blink) {
-    const speed = getRandomInt(0.7, 1); // Generates a random speed between 1 and 0.7
-    return { animation: animation, speed: speed.toFixed(2) };
+    const speed = getRandomInt({ min: 0.7, max: 1 }); // Generates a random speed between 1 and 0.7
+    return { animation: animation, speed: speed };
   }
 
   return { animation: animation, speed: 1 };
