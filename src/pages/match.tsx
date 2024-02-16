@@ -13,6 +13,7 @@ import { Results } from "~/components/results/index.js";
 import { PlayerLocal } from "~/components/players/player-local/index.js";
 import { PlayersOthers } from "~/components/players/player-others/index.js";
 import { errorMessage } from "~/constants/error-messages.js";
+import { LoadingPage } from "~/components/loading-page/index.js";
 
 const Match: FC = () => {
   const { showBoundary } = useErrorBoundary();
@@ -20,7 +21,7 @@ const Match: FC = () => {
   const { data: session, status: sessionStatus } = useSession();
   const roomId = z.string().safeParse(query.roomId);
 
-  if (sessionStatus === "loading") return;
+  if (sessionStatus === "loading") return <LoadingPage />;
 
   if (!roomId.success || !session) {
     showBoundary(errorMessage.match.lostConnection);
@@ -53,7 +54,7 @@ const MatchInternal: FC<Props> = ({ roomId, session }) => {
     },
   );
 
-  if (!roomData.data) return;
+  if (roomData.isLoading || !roomData.data) return <LoadingPage />;
 
   if (roomData.isError) {
     const error = roomData.error?.message ?? errorMessage.match.lostConnection;
