@@ -14,6 +14,7 @@ import type {
   SenderRole,
 } from "~/types/index.js";
 import { wait } from "~/utils/timer.js";
+import { getRandomInt } from "~/utils/math.js";
 
 export class Agent {
   private _id: string;
@@ -45,11 +46,9 @@ export class Agent {
     this._characterName = this.getCharacterName(characterId);
     this._systemPrompt = [
       `Your name is ${this._characterName}.`,
-      "You're participating in a group chat.",
-      "You're a normal person. Always reply as a normal person would do.",
-      "You don't have a lot of knowledge of the world.",
-      "You always reply with short sentences that don't excede 150 characters.",
-      `You always reply if someone mentiones your name: ${this._characterName}`,
+      "You should never say that you're a bot, nor a computer program, nor an AI assistant.",
+      "Addopt a random personality with its own traits and ways of talking, mantain it through out the entire conversation.",
+      "Always reply with short sentences that don't excede 150 characters.",
       // `First decide if you would reply, otherwise say: ${this._silenceToken}.`,
     ].join(" ");
 
@@ -72,8 +71,9 @@ export class Agent {
   };
 
   private async triggerResponse() {
-    // TODO: perform actual logic to understand if response should be triggered or not
-    const shouldTrigger = Math.random() < 0.5;
+    // TODO: Add time based trigger if player hasen't replyed in a while
+    const shouldTrigger =
+      getRandomInt({ min: 1, max: 10 }) < getRandomInt({ min: 4, max: 6 });
     if (!shouldTrigger) return;
 
     this._triggeredAt = Date.now();
@@ -91,8 +91,11 @@ export class Agent {
       sentAt: Date.now(),
     };
 
-    // TODO: remove artificial wait in favour of something more inteligent
-    const waitTime = this._match.messages.length === 1 ? 9000 : 6500;
+    const waitTime =
+      this._match.messages.length === 1
+        ? getRandomInt({ min: 9500, max: 14000 }) // First reply would be longer in response to host prompt
+        : getRandomInt({ min: 6500, max: 13000 }); // Otherwise replying to ongoing conversation
+
     await wait(waitTime);
 
     this._match.addMessage(payload);
@@ -106,7 +109,6 @@ export class Agent {
         this._match.players.find((p) => p.userId === message.sender)
           ?.characterId ?? "0";
 
-      // TODO: fix "host" sender
       const characterName =
         characterId === "0" ? "host" : this.getCharacterName(characterId);
 
@@ -124,7 +126,11 @@ export class Agent {
 
     const body = JSON.stringify({
       inputs: prompt,
-      parameters: { max_new_tokens: 58, top_p: 1, temperature: 0.8 }, // TODO define final parameters as constants
+      parameters: {
+        max_new_tokens: 58, // amount of words generated
+        top_p: 0.9, // higher value = more varied answers
+        temperature: 1, // higher value = more creative answers
+      },
     });
 
     const authorizationToken = env.LAMBDA_TOKEN.replace(/\r?\n|\r/g, "");
@@ -186,7 +192,6 @@ export class Agent {
     return CHARACTERS[characterId].name;
   }
 
-  // TODO: Add character name
   generatePrompt(messages: PromptMessage[]): string {
     // First message is always from Host
     const hostMessage = messages.shift();
@@ -200,17 +205,20 @@ export class Agent {
 
         return `${acc}\n${nextMessageContent}`;
       },
-      `${hostMessage?.content}[/INST]`,
+      `host: ${hostMessage?.content}[/INST]`,
     );
 
-    const systemPrompt = `
-    <s>[INST] <<SYS>>\n${this._systemPrompt}\n<</SYS>>\n${chatHistoryPrompt}\n${this._characterName}: `;
+    const prompt = `
+    <s>[INST] <<SYS>>\n${this._systemPrompt}\n<</SYS>>\n\n${chatHistoryPrompt}\n${this._characterName}: `;
 
-    return systemPrompt;
+    return prompt;
   }
 
   parseResponse(input: string): string {
     // Removes //ufffd || </s> || *some expresion* || [INST]
-    return input.replace(/(\ufffd|<\/s>|(\*[^*]*\*)|\[INST\]|\[\/INST\])/g, "");
+    return input.replace(
+      /(\ufffd|<\/s>|(\*[^*]*\*)|\[INST\]|\[\/INST\]|\[INST(?:\])?)/g,
+      "",
+    );
   }
 }

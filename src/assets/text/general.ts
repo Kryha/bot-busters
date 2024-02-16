@@ -27,7 +27,7 @@ export const general = {
   dailyScore: "Daily score",
   aleoCreditsPayout: "Aleo credits payouts",
   clickChat: "Click on the chat to open messages",
-  username: "AnonymousBuster",
+  username: "anon",
   newCredits: "new",
   enterUsername: "enter username",
   usernameRules: "Max 12 Characters, no spaces, no special characters.",
