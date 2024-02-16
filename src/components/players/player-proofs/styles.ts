@@ -5,7 +5,7 @@ export const styles = {
   container: {
     mb: 2,
     mt: 2,
-    width: "70%",
+    width: "60%",
     flexDirection: "column",
     border: `4px solid ${theme.palette.customGrey.main}`,
     [`@media (max-width: ${breakpoints.md}px)`]: {
