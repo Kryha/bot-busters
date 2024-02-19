@@ -159,8 +159,6 @@ export class Agent {
         signal: AbortSignal.timeout(60000),
       });
 
-      // const resDate = response.headers.get("date");
-
       const textRes = await response.text();
       if (!textRes) return this._silenceToken;
 
