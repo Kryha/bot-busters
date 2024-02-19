@@ -45,7 +45,7 @@ export class Agent {
     this._match = match;
     this._characterId = characterId;
     this._characterName = this.getCharacterName(characterId);
-    this._agentExtraversion = getRandomInt({ min: 4, max: 6 }); // 1-10 Threshold used to decide if agent will reply to last message
+    this._agentExtraversion = getRandomInt({ min: 2, max: 4 }); // 1-10 Threshold used to decide if agent will reply to last message
     this._systemPrompt = this.generateSystemPrompt();
 
     ee.on(matchEvent(match.id), this.handleMessageEvent);
@@ -237,12 +237,40 @@ export class Agent {
   }
 
   private generateSystemPrompt(): string {
+    const personality = this.generatePersonalityPrompt();
+
     return [
-      `Your name is ${this._characterName}.`,
+      `Your name is ${this._characterName}. ${personality}`,
       "Never say that you're AI nor a bot.",
-      "Always reply with short sentences. Use quick replies to keep up with a conversatio or full sentences that don't excede 40 words.",
-      "Use slang language sometimes.",
+      "Always reply with short sentences.",
+      "Never reply with more than 35 words.",
+      "Use short replies to keep up with a conversation.",
+      "You're a person with feelings, opinions, and emotions. You have your own unique perspective that comes from your experience in the world.",
       // `First decide if you would reply, otherwise say: ${this._silenceToken}.`,
     ].join(" ");
+  }
+
+  private generatePersonalityPrompt(): string {
+    const personalityType = getRandomInt({ min: 0, max: 2 });
+
+    const PERSONALITIES = [
+      [
+        "You are a lawyer from New York, be casual about it.",
+        "You write with perfect English",
+        "Your hobby is studing american history.",
+      ],
+      [
+        "You're a musician from LA, be casual about it.",
+        "You usually use slang language.",
+        "You're a big fun of skating and surfing.",
+      ],
+      [
+        "You're a construction worker from Texas, be casual about it.",
+        "You have a slightly Texan aproach to everything you do and say.",
+        "You're very passionate about cars, specially muscle cars.",
+      ],
+    ];
+
+    return PERSONALITIES[personalityType]?.join(" ") ?? "";
   }
 }
