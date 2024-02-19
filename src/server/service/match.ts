@@ -109,7 +109,7 @@ export class Match {
 
     this._players = lodash.shuffle([...botPlayers, ...humanPlayers]);
 
-    this.addPrompt();
+    this.addHostPrompt();
 
     const userIds = users.map((u) => u.id);
 
@@ -153,7 +153,7 @@ export class Match {
     }
   }
 
-  private addPrompt() {
+  private addHostPrompt() {
     const randomPrompt =
       matchPrompts[getRandomInt({ max: matchPrompts.length })];
     if (!randomPrompt) throw new Error("No random prompt found");
