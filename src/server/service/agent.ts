@@ -221,9 +221,9 @@ export class Agent {
   }
 
   parseLLMResponse(input: string): string {
-    // Removes //ufffd || </s> || *some expresion* || [INST] || (words in parenthesis)
+    // Removes //ufffd || </s> || *some expresion* || [INST] || (words in parenthesis) || gender symbols
     return input.replace(
-      /(\ufffd|<\/s>|(\*[^*]*\*)|\[INST\]|\[\/INST\]|\[INST(?:\])?|\([^)]*\))/g,
+      /(\ufffd|<\/s>|(\*[^*]*\*)|\[INST\]|\[\/INST\]|\[INST(?:\])?|\([^)]*\)|\u2642|\u2640)/g,
       "",
     );
   }
