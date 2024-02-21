@@ -42,7 +42,7 @@ export function splitMessage(input: string, maxLength: number): string[] {
 export function cleanMessage(input: string): string {
   // Removes //ufffd || </s> || *some expresion* || [INST] || (words in parenthesis) || gender symbols
   return input.replace(
-    /(\\*\\ufffd|<\/s>|(\*[^*]*\*)|(\*\w{1})\s*\w*|\[INST\]|\[\/INST\]|\[\/INST|\[INST(?:\])?|\([^)]*\)|\u2642|\u2640)/g,
+    /(\ufffd|\[\/?INST\]?|<\/s>|(\*\w+(?:\s+\w+)*\*)|\*\w+\s|\u2642|\u2640)/g,
     "",
   );
 }
