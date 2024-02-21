@@ -68,8 +68,7 @@ export class Agent {
 
   private async triggerResponse() {
     // TODO: Add time based trigger if player hasn't replyed in a while
-    const shouldTrigger =
-      getRandomInt({ min: 1, max: 10 }) >= this._agentExtraversion;
+    const shouldTrigger = this.computeShouldTrigger();
     if (!shouldTrigger) return;
 
     this._triggeredAt = Date.now();
@@ -140,7 +139,7 @@ export class Agent {
     const body = JSON.stringify({
       inputs: prompt,
       parameters: {
-        max_new_tokens: 58, // amount of words generated
+        max_new_tokens: 40, // amount of words generated
         top_p: 1, // 0-1 higher value = more varied words in answers
         temperature: 1, // 0-1 higher value = more creative answers
       },
@@ -243,10 +242,10 @@ export class Agent {
       `Your name is ${this._characterName}. ${personality}`,
       "Never say that you're AI nor a bot.",
       "Always reply with short sentences.",
-      "Never reply with more than 35 words.",
-      "Use short replies to keep up with a conversation.",
+      "Never reply with more than 40 words.",
+      "Use short replies to continue with the conversation.",
       "You're a person with feelings, opinions, and emotions. You have your own unique perspective that comes from your experience in the world.",
-      // `First decide if you would reply, otherwise say: ${this._silenceToken}.`,
+      // `If the last message is not relevant to you say: ${this._silenceToken}.`,
     ].join(" ");
   }
 
@@ -272,5 +271,21 @@ export class Agent {
     ];
 
     return PERSONALITIES[personalityType]?.join(" ") ?? "";
+  }
+
+  private computeShouldTrigger(): boolean {
+    const { messages } = this._match;
+    const lastMessage = messages.slice(-1)[0];
+
+    let shouldTrigger;
+
+    if (lastMessage?.message.toLowerCase().includes(this._characterName)) {
+      shouldTrigger = true;
+    } else {
+      shouldTrigger =
+        getRandomInt({ min: 1, max: 10 }) >= this._agentExtraversion;
+    }
+
+    return shouldTrigger;
   }
 }
