@@ -15,6 +15,7 @@ import type {
 } from "~/types/index.js";
 import { wait } from "~/utils/timer.js";
 import { getRandomInt } from "~/utils/math.js";
+import { cleanMessage, splitMessage } from "~/utils/messages.js";
 
 export class Agent {
   private _id: string;
@@ -68,54 +69,49 @@ export class Agent {
 
   private async triggerResponse() {
     // TODO: Add time based trigger if player hasn't replyed in a while
-    const shouldTrigger =
-      getRandomInt({ min: 1, max: 10 }) >= this._agentExtraversion;
+    const shouldTrigger = this.computeShouldTrigger();
     if (!shouldTrigger) return;
 
     this._triggeredAt = Date.now();
 
     const response = await this.requestMessageFromLLM();
 
-    // If inference failed or bot decided not to reply, let the agent be silent
+    // If inference failed or agent decided not to reply, let the agent be silent
     if (!response || response.includes(this._silenceToken)) return;
 
-    const cleanResponse = this.parseLLMResponse(response);
+    const cleanResponse = cleanMessage(response);
     if (!cleanResponse) return; // Stay silent if something went wrong with parsing
 
-    const waitTime = this.calculateWaitingTime(cleanResponse);
-    await wait(waitTime);
+    const messagesToSend = splitMessage(cleanResponse, 110); // Split if longer than 110 char
 
-    const payload: ChatMessagePayload = {
-      sender: this.id,
-      message: cleanResponse,
-      sentAt: Date.now(),
-    };
-    this._match.addMessage(payload);
+    for (const chatMessage of messagesToSend) {
+      await this.sendChatMessage(chatMessage);
+    }
   }
 
   private calculateWaitingTime(response: string) {
     const inferenceTime = Date.now() - this._triggeredAt;
 
-    const hostPromptOffsetTime = 6000; // Waiting for host prompt to be rendered & players to read it
-    const typingTime = response.length * 275; // Average typing time per character in a word is 0.3s
-    const minTypingTime = typingTime * 0.8;
+    const hostPromptOffsetTime = 5000; // Waiting for host prompt to be rendered & players to read it
+    const typingTime = response.length * 300; // Average typing time per character in a word is 0.3s
+    const minTypingTime = typingTime * 0.7;
     const maxTypingTime = typingTime * 1;
 
-    const waitTime =
-      this._match.messages.length === 1 // Check if it's the start of the match with one message from host
-        ? getRandomInt({
-            min: minTypingTime + hostPromptOffsetTime,
-            max: maxTypingTime + hostPromptOffsetTime,
-          }) // First reply would be longer in response to host prompt
-        : getRandomInt({
-            min: minTypingTime,
-            max: maxTypingTime,
-          }); // Otherwise reply to ongoing conversation
+    // Check if it's the start of the match with one message from host
+    // First reply would be longer in response to host prompt
+    // Otherwise reply to ongoing conversation
+    const hostPromptWaitingTime =
+      this._match.messages.length === 1 ? hostPromptOffsetTime : 0;
+
+    const waitTime = getRandomInt({
+      min: minTypingTime + hostPromptWaitingTime,
+      max: maxTypingTime + hostPromptWaitingTime,
+    });
 
     return waitTime - inferenceTime;
   }
 
-  private async requestMessageFromLLM() {
+  private async requestMessageFromLLM(): Promise<string> {
     const { messages } = this._match;
 
     const promptDialog = messages.map((message): PromptMessage => {
@@ -140,7 +136,7 @@ export class Agent {
     const body = JSON.stringify({
       inputs: prompt,
       parameters: {
-        max_new_tokens: 58, // amount of words generated
+        max_new_tokens: 50, // 1 token ~ 4 characters
         top_p: 1, // 0-1 higher value = more varied words in answers
         temperature: 1, // 0-1 higher value = more creative answers
       },
@@ -159,13 +155,14 @@ export class Agent {
         signal: AbortSignal.timeout(60000),
       });
 
-      const textRes = await response.text();
-      if (!textRes) return this._silenceToken;
+      const data = (await response.json()) as {
+        statusCode: number;
+        body: string;
+      };
 
-      const result = JSON.parse(textRes) as { body: string };
-      const responseBody = JSON.parse(result.body) as string;
+      if (data.statusCode >= 300) return this._silenceToken; // Something went wrong, stay silent
 
-      return responseBody;
+      return data.body;
     } catch (error) {
       console.error(error);
       return this._silenceToken;
@@ -220,14 +217,6 @@ export class Agent {
     return prompt;
   }
 
-  parseLLMResponse(input: string): string {
-    // Removes //ufffd || </s> || *some expresion* || [INST] || (words in parenthesis) || gender symbols
-    return input.replace(
-      /(\ufffd|<\/s>|(\*[^*]*\*)|\[INST\]|\[\/INST\]|\[INST(?:\])?|\([^)]*\)|\u2642|\u2640)/g,
-      "",
-    );
-  }
-
   private getMessageRole(senderID: string): SenderRole {
     return senderID === this._id ? "assistant" : "user";
   }
@@ -243,10 +232,10 @@ export class Agent {
       `Your name is ${this._characterName}. ${personality}`,
       "Never say that you're AI nor a bot.",
       "Always reply with short sentences.",
-      "Never reply with more than 35 words.",
-      "Use short replies to keep up with a conversation.",
+      "Never reply with more than 40 words.",
+      "Use short replies to continue with the conversation.",
       "You're a person with feelings, opinions, and emotions. You have your own unique perspective that comes from your experience in the world.",
-      // `First decide if you would reply, otherwise say: ${this._silenceToken}.`,
+      // `If the last message is not relevant for you to reply to, say: ${this._silenceToken}.`,
     ].join(" ");
   }
 
@@ -272,5 +261,33 @@ export class Agent {
     ];
 
     return PERSONALITIES[personalityType]?.join(" ") ?? "";
+  }
+
+  private computeShouldTrigger(): boolean {
+    const { messages } = this._match;
+    const lastMessage = messages.slice(-1)[0];
+
+    let shouldTrigger;
+
+    if (lastMessage?.message.toLowerCase().includes(this._characterName)) {
+      shouldTrigger = true; // Always reply if last message has ref to Character Name
+    } else {
+      shouldTrigger =
+        getRandomInt({ min: 1, max: 10 }) >= this._agentExtraversion;
+    }
+
+    return shouldTrigger;
+  }
+
+  private async sendChatMessage(content: string) {
+    const waitTime = this.calculateWaitingTime(content);
+    await wait(waitTime);
+
+    const payload: ChatMessagePayload = {
+      sender: this.id,
+      message: content,
+      sentAt: Date.now(),
+    };
+    this._match.addMessage(payload);
   }
 }

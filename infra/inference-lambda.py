@@ -30,7 +30,7 @@ def lambda_handler(event, context):
         # Return the updated data in the response
         response = {
             "statusCode": 200,
-            "body": json.dumps(reply)
+            "body": reply['generated_text']
         }
         return response
     except Exception:
