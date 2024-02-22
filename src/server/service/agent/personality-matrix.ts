@@ -45,10 +45,8 @@ const personalityMatrix: Record<PersonalityTrait, TraitDescriptions> = {
 export function describePersonality(
   traits: Record<PersonalityTrait, TraitValue>,
 ): string {
-  console.log("🚀 ~ returnObject.entries ~ traits:", traits);
   const personalityDescription = Object.entries(traits).map(
     ([trait, value]) => {
-      // Directly access the descriptions without needing a type assertion
       const description = personalityMatrix[trait as PersonalityTrait][value];
       if (!description) {
         throw new Error(
