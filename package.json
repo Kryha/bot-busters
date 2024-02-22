@@ -98,7 +98,6 @@
     "next-plugin-svgr": "^1.1.10",
     "pg": "^8.11.3",
     "prettier": "3.1.1",
-    "puppeteer": "^21.5.2",
     "react-fps": "^1.0.6",
     "rimraf": "^5.0.5",
     "tsc-alias": "^1.8.8",
