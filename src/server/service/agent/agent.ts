@@ -9,20 +9,23 @@ import type {
   CharacterId,
   CharacterName,
   ChatMessagePayload,
+  PersonalityTrait,
   PlayerType,
   PromptMessage,
   SenderRole,
+  TraitValue,
 } from "~/types/index.js";
 import { wait } from "~/utils/timer.js";
 import { getRandomInt } from "~/utils/math.js";
 import { cleanMessage, splitMessage } from "~/utils/messages.js";
+import { describePersonality } from "~/server/service/agent/personality-matrix.js";
 
 export class Agent {
   private _id: string;
   private _characterId: CharacterId;
   private _characterName: CharacterName;
   private _match: Match;
-  private _agentExtraversion: number;
+  private _agentPersonality: Record<PersonalityTrait, TraitValue>;
   private _systemPrompt: string;
 
   private _triggeredAt = Date.now();
@@ -46,7 +49,7 @@ export class Agent {
     this._match = match;
     this._characterId = characterId;
     this._characterName = this.getCharacterName(characterId);
-    this._agentExtraversion = getRandomInt({ min: 2, max: 4 }); // 1-10 Threshold used to decide if agent will reply to last message
+    this._agentPersonality = this.generatePersonality();
     this._systemPrompt = this.generateSystemPrompt();
 
     ee.on(matchEvent(match.id), this.handleMessageEvent);
@@ -136,7 +139,7 @@ export class Agent {
     const body = JSON.stringify({
       inputs: prompt,
       parameters: {
-        max_new_tokens: 50, // 1 token ~ 4 characters
+        max_new_tokens: 58, // 1 token ~ 4 characters
         top_p: 1, // 0-1 higher value = more varied words in answers
         temperature: 1, // 0-1 higher value = more creative answers
       },
@@ -203,7 +206,7 @@ export class Agent {
       (acc, currentMessage) => {
         const nextMessageContent =
           currentMessage.role === "assistant"
-            ? `${currentMessage.characterName}: ${currentMessage.content}`
+            ? `${currentMessage.content}`
             : `[INST] ${currentMessage.characterName}: ${currentMessage.content} [/INST]`;
 
         return `${acc}\n${nextMessageContent}`;
@@ -226,7 +229,7 @@ export class Agent {
   }
 
   private generateSystemPrompt(): string {
-    const personality = this.generatePersonalityPrompt();
+    const personality = describePersonality(this._agentPersonality);
 
     return [
       `Your name is ${this._characterName}. ${personality}`,
@@ -239,30 +242,6 @@ export class Agent {
     ].join(" ");
   }
 
-  private generatePersonalityPrompt(): string {
-    const personalityType = getRandomInt({ min: 0, max: 2 });
-
-    const PERSONALITIES = [
-      [
-        "You are a lawyer from New York, be casual about it.",
-        "You write with perfect English",
-        "Your hobby is studing american history.",
-      ],
-      [
-        "You're a musician from LA, be casual about it.",
-        "You usually use slang language.",
-        "You're a big fun of skating and surfing.",
-      ],
-      [
-        "You're a construction worker from Texas, be casual about it.",
-        "You have a slightly Texan aproach to everything you do and say.",
-        "You're very passionate about cars, specially muscle cars.",
-      ],
-    ];
-
-    return PERSONALITIES[personalityType]?.join(" ") ?? "";
-  }
-
   private computeShouldTrigger(): boolean {
     const { messages } = this._match;
     const lastMessage = messages.slice(-1)[0];
@@ -273,7 +252,8 @@ export class Agent {
       shouldTrigger = true; // Always reply if last message has ref to Character Name
     } else {
       shouldTrigger =
-        getRandomInt({ min: 1, max: 10 }) >= this._agentExtraversion;
+        getRandomInt({ min: this._agentPersonality.extraversion, max: 10 }) >=
+        5;
     }
 
     return shouldTrigger;
@@ -289,5 +269,15 @@ export class Agent {
       sentAt: Date.now(),
     };
     this._match.addMessage(payload);
+  }
+
+  private generatePersonality(): Record<PersonalityTrait, TraitValue> {
+    return {
+      openness: getRandomInt({ min: 1, max: 5 }),
+      conscientiousness: getRandomInt({ min: 1, max: 5 }),
+      extraversion: getRandomInt({ min: 1, max: 5 }),
+      agreeableness: getRandomInt({ min: 1, max: 5 }),
+      neuroticism: getRandomInt({ min: 1, max: 5 }),
+    };
   }
 }
