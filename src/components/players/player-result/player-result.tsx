@@ -2,7 +2,7 @@ import { Stack } from "@mui/material";
 import { type FC } from "react";
 import { Player } from "~/components/index.js";
 import { CHARACTERS } from "~/constants/index.js";
-import { CharacterId, type PlayerType } from "~/types/index.js";
+import type { CharacterId, PlayerType } from "~/types/index.js";
 
 import { styles } from "./styles.js";
 
