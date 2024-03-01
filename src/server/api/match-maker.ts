@@ -13,6 +13,7 @@ import type {
 import { getRandomInt } from "~/utils/math.js";
 
 const MAX_BOTS_PER_MATCH = env.PLAYERS_PER_MATCH > 3 ? 3 : 2;
+const MIN_HUMANS_PER_MATCH = env.PLAYERS_PER_MATCH - MAX_BOTS_PER_MATCH;
 
 export const ee = new EventEmitter();
 
@@ -32,10 +33,7 @@ export const getOngoingMatchByUserId = (userId: string) => {
 };
 
 const makeMatch = () => {
-  const minHumansInMatch = env.PLAYERS_PER_MATCH - MAX_BOTS_PER_MATCH;
-
-  // TODO: Benchmark and check what's the maximum amount of matches we can handle at a time
-  while (lobbyQueue.queue.length >= minHumansInMatch) {
+  while (lobbyQueue.queue.length >= MIN_HUMANS_PER_MATCH) {
     let botsInMatch = getRandomInt({ max: MAX_BOTS_PER_MATCH, min: 1 });
     const humansInMatch = env.PLAYERS_PER_MATCH - botsInMatch;
 
@@ -111,12 +109,19 @@ const storeScoresAndMatches = async () => {
 setInterval(() => {
   try {
     makeMatch();
+  } catch (error) {
+    console.error("Matchmaking error:", error);
+  }
+}, 30000);
+
+setInterval(() => {
+  try {
     deleteStaleMatches();
 
     storeScoresAndMatches().catch((error) =>
       console.error("Error storing matches:", error),
     );
   } catch (error) {
-    console.error("Main loop error:", error);
+    console.error("Clean up loop error:", error);
   }
 }, 10000);
