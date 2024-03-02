@@ -1,12 +1,13 @@
 import { Stack, Tooltip, Typography } from "@mui/material";
-import { type FC } from "react";
+import { type FC, useEffect } from "react";
 
 import { text } from "~/assets/text/index.js";
 import { POINTS_ACHIEVEMENTS } from "~/constants/main.js";
 import { type PlayerType } from "~/types/index.js";
 // TODO: decouple from server
 import { matchAchievements } from "~/server/service/achievements.js";
-
+import { usePlaySFX } from "~/hooks/sounds.js";
+import { LOSE_SFX, type TrackId, WIN_SFX } from "~/constants/sounds.js";
 import { styles } from "./styles.js";
 
 interface ScoreRowProps {
@@ -60,6 +61,38 @@ interface ScoreProps {
 }
 
 export const Score: FC<ScoreProps> = ({ player }) => {
+  const playSfx = usePlaySFX();
+  const loseInt = Math.floor(Math.random() * LOSE_SFX) + 1;
+  const winInt = Math.floor(Math.random() * WIN_SFX) + 1;
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (player.score === 0) {
+        playSfx("Lose6");
+      }
+
+      if (player.botsBusted > 0) {
+        playSfx(`Win${winInt}` as TrackId);
+      }
+
+      if (player.humansBusted > 0) {
+        playSfx(`Lose${loseInt}` as TrackId);
+      }
+
+      if (player.humansFooled > 0) {
+        playSfx(`Lose${winInt}` as TrackId);
+      }
+    }, 12000);
+  }, [
+    loseInt,
+    playSfx,
+    player.botsBusted,
+    player.humansBusted,
+    player.humansFooled,
+    player.score,
+    winInt,
+  ]);
+
   const tableContent = () => {
     if (player.score === 0) return <BetterLuckNextTime />;
 

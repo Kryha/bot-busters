@@ -29,12 +29,13 @@ export const CharacterAvatar: FC<Props> = ({
   isBot,
   onSelectPlayer,
 }) => {
-  const { animation, speed } = getCharacterAnimation(
+  const { animation, speed, delay } = getCharacterAnimation(
     character.name,
     isBot,
     isSelected,
   );
   const [segments, setSegments] = useState<number[][]>([[]]);
+  const [play, setPlay] = useState(false);
 
   const playSfx = usePlaySFX();
 
@@ -49,13 +50,21 @@ export const CharacterAvatar: FC<Props> = ({
     if (isBot) {
       if (isSelected && isBot) {
         setSegments(BOT_BUSTED_ANIMATION_SEGMENT);
-        playSfx("BotBustedHeadPop");
+        setTimeout(() => {
+          playSfx("BotBustedHeadPop");
+          setPlay(true);
+        }, delay);
       } else {
         setSegments(BOT_WIN_ANIMATION_SEGMENT);
-        playSfx("BotWins");
+        setTimeout(() => {
+          playSfx("BotWins");
+          setPlay(true);
+        }, delay);
       }
+    } else {
+      setPlay(true);
     }
-  }, [isBot, isSelected, playSfx]);
+  }, [isBot, isSelected, playSfx, delay]);
 
   return (
     <Stack
@@ -66,13 +75,22 @@ export const CharacterAvatar: FC<Props> = ({
       }
       onClick={handleSelectPlayer}
     >
-      {stage === "voting" ? (
-        getCharacterAvatar(character.name)
-      ) : (
+      {stage === "voting" && getCharacterAvatar(character.name)}
+      {stage === "chat" && (
         <AnimationPlayer
           animationData={animation}
           segments={segments}
           play
+          loop
+          speed={speed}
+        />
+      )}
+
+      {stage === "results" && (
+        <AnimationPlayer
+          animationData={animation}
+          segments={segments}
+          play={play}
           loop
           speed={speed}
         />

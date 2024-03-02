@@ -3,16 +3,15 @@ import { breakpoints } from "~/styles/theme.js";
 
 export const styles = {
   container: {
-    position: "relative",
     display: "flex",
-    flex: "1 1 auto",
     flexDirection: "row",
     justifyContent: "center",
+    position: "relative",
     width: "100%",
-    maxWidth: "1800px !important",
-    pb: "0px !important",
-    pl: "0px !important",
-    pr: "0px !important",
+    height: "calc(100vh - 67px)",
+    pl: 2,
+    pr: 2,
+    flex: "1 1 auto",
     [`@media (max-width: ${breakpoints.md}px)`]: {
       gap: 4,
       flexDirection: "column",

@@ -9,15 +9,15 @@ export const styles = {
       [`@media (max-width: ${breakpoints.md}px)`]: {
         pr: 0,
       },
-      width: stage === "chat" ? "auto" : "50%",
+      width: stage === "chat" ? "auto" : "auto",
     };
   },
   list: (stage: MatchStage) => {
     return {
       width: stage === "chat" ? "auto" : "850px",
-      justifyContent: "center",
-      mt: 2,
-      mb: 2,
+      justifyContent: stage === "results" ? "flex-start" : "center",
+      mt: stage === "chat" ? 0 : 2,
+      mb: stage === "chat" ? 0 : 2,
       flexDirection: stage === "chat" ? "column" : "row",
       [`@media (max-width: ${breakpoints.md}px)`]: {
         flexDirection: "row",
@@ -52,14 +52,14 @@ export const styles = {
   },
   //TODO: Might join these two styles in future
   voting: {
-    mt: 4,
+    mt: 3,
     pr: 2,
     pl: 2,
     gap: 4,
     mb: 3,
   },
   results: {
-    mt: 4,
+    mt: 3,
     pr: 2,
     pl: 2,
     gap: 4,
