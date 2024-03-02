@@ -14,7 +14,7 @@ export const Header: FC<Props> = ({ cells }) => {
         {cells.map((cell, index) => (
           <TableCell key={index} sx={{ padding: 1 }}>
             <Typography
-              variant="body2"
+              variant="body1"
               sx={{
                 ...styles.tableHeader,
                 ...(index === 1 && styles.busterCell),
