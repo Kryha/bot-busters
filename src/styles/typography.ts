@@ -60,8 +60,8 @@ export const typography = (): Typography => {
       textTransform: "uppercase" as const,
     },
     h2: {
-      fontSize: "clamp(3rem, 7.2vw + 1rem, 7rem)", //110px
-      lineHeight: "clamp(3rem, 7.2vw + 1rem, 8rem)",
+      fontSize: "clamp(6.25rem, 4vw + 2rem, 12.5rem);", //110px
+      lineHeight: "clamp(6.25rem, 4vw + 2rem, 12.5rem);",
       fontFamily: headingsFont.style.fontFamily,
       fontWeight: 400,
       textTransform: "uppercase" as const,
@@ -77,7 +77,7 @@ export const typography = (): Typography => {
       fontFamily: subHeadingsFont.style.fontFamily,
       fontSize: "clamp(0.5rem, 2vw + 1rem, 2rem);",
       fontWeight: 400,
-      lineHeight: "38.1px", // TODO to be converted to rem
+      lineHeight: "24px",
       textTransform: "uppercase" as const,
     },
     h5: {
