@@ -1,9 +1,8 @@
-import { type FC, useEffect, useState } from "react";
+import { type FC, useState } from "react";
 import { useRouter } from "next/router.js";
 import { useErrorBoundary } from "react-error-boundary";
 import { usePlayMusic } from "~/hooks/sounds.js";
 import { type TrackId } from "~/constants/sounds.js";
-import { HomePageOutroAnimation } from "~/components/homepage-outro/index.js";
 import { LobbyCharacterLoader } from "~/components/lobby-character-loader/index.js";
 import { api } from "~/utils/api.js";
 import { pages } from "~/router.js";
@@ -21,7 +20,6 @@ const Lobby: FC = () => {
 
   const [track, setTrack] = useState<TrackId>("MatchMaking");
   const [matchReady, setMatchReady] = useState(false);
-  const [slideAnimation, setSlideAnimation] = useState(false);
 
   const delayInSeconds = track === "MatchMakingOutro" ? 0 : 1;
 
@@ -73,25 +71,12 @@ const Lobby: FC = () => {
     },
   });
 
-  useEffect(() => {
-    setSlideAnimation(true);
-    setTimeout(() => {
-      setSlideAnimation(false);
-    }, 1000);
-  }, []);
-
   return (
-    <>
-      {slideAnimation ? (
-        <HomePageOutroAnimation />
-      ) : (
-        <LobbyCharacterLoader
-          playerQueuePosition={lobbyQueue.playerQueuePosition}
-          queueLength={lobbyQueue.queueLength}
-          matchReady={matchReady}
-        />
-      )}
-    </>
+    <LobbyCharacterLoader
+      playerQueuePosition={lobbyQueue.playerQueuePosition}
+      queueLength={lobbyQueue.queueLength}
+      matchReady={matchReady}
+    />
   );
 };
 
