@@ -40,7 +40,7 @@ export const HostChatPrompt: FC<Props> = ({ stage, message }) => {
           <Typography variant="subtitle1" color="white">
             {text.chat.prompt}
           </Typography>
-          <Typography variant="body1" color="white">
+          <Typography sx={{ lineHeight: "20px" }} variant="body1" color="white">
             {writtenMessage}
           </Typography>
         </Stack>

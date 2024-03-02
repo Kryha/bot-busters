@@ -13,7 +13,9 @@ export const styles = {
   container: (stage: MatchStage) => {
     return {
       mb: 2,
-      width: stage === "chat" ? "1300px" : "750px",
+      mr: stage === "chat" ? 3 : 0,
+      ml: stage === "chat" ? 3 : 0,
+      width: stage === "chat" ? "1100px" : "750px",
     };
   },
 };
