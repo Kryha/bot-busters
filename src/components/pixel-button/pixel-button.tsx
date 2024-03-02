@@ -4,7 +4,7 @@ import { Button } from "@mui/base";
 
 import { usePlaySFX } from "~/hooks/sounds.js";
 import { SelectIcon } from "~/assets/icons/index.js";
-import { theme } from "~/styles/theme.js";
+import { breakpoints, theme } from "~/styles/theme.js";
 
 interface Props {
   text: string;
@@ -22,7 +22,10 @@ const PixelButtonStyle = styled(Button)({
   cursor: "pointer",
   textAlign: "left",
   gap: 24,
-  fontSize: "72px",
+  fontSize: "64px",
+  [`@media (min-width: ${breakpoints.xl}px)`]: {
+    fontSize: "72px",
+  },
   lineHeight: "normal",
   color: theme.palette.text.secondary,
   fontFamily: theme.typography.h2.fontFamily,
