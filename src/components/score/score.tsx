@@ -7,7 +7,12 @@ import { type PlayerType } from "~/types/index.js";
 // TODO: decouple from server
 import { matchAchievements } from "~/server/service/achievements.js";
 import { usePlaySFX } from "~/hooks/sounds.js";
-import { LOSE_SFX, type TrackId, WIN_SFX } from "~/constants/sounds.js";
+import {
+  LOSE_SFX,
+  RESULTS_SFX_TIME_MS,
+  type TrackId,
+  WIN_SFX,
+} from "~/constants/sounds.js";
 import { styles } from "./styles.js";
 
 interface ScoreRowProps {
@@ -82,7 +87,7 @@ export const Score: FC<ScoreProps> = ({ player }) => {
       if (player.humansFooled > 0) {
         playSfx(`Lose${winInt}` as TrackId);
       }
-    }, 12000);
+    }, RESULTS_SFX_TIME_MS);
   }, [
     loseInt,
     playSfx,
