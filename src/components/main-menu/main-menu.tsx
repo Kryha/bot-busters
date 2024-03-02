@@ -1,15 +1,15 @@
-import { Button, Dialog, Slide } from "@mui/material";
+import { Dialog, Slide } from "@mui/material";
 import { type TransitionProps } from "@mui/material/transitions";
-import { useRouter } from "next/router";
 import { type FC, forwardRef, type ReactElement, type Ref } from "react";
-
+import { useRouter } from "next/router";
 import { BotBustersIcon } from "~/assets/icons/index.js";
+import { usePlaySFX } from "~/hooks/sounds.js";
 import { MenuOptions } from "~/components/main-menu/menu-options.jsx";
 import { NavbarMenu } from "~/components/main-menu/navbar-menu.jsx";
-import { styles } from "~/components/main-menu/styles.js";
-import { usePlaySFX } from "~/hooks/sounds.js";
-import { pages } from "~/router.js";
 import { Footer } from "./footer.jsx";
+import { LogoButton } from "~/components/logo-button/index.js";
+import { pages } from "~/router.js";
+import { styles } from "~/components/main-menu/styles.js";
 
 const Transition = forwardRef(function Transition(
   props: TransitionProps & {
@@ -48,7 +48,7 @@ export const MainMenu: FC<Props> = ({ open, setOpen }) => {
       sx={styles.dialog}
     >
       <NavbarMenu handleClose={handleClose} />
-      <Button
+      <LogoButton
         variant="text"
         sx={styles.dialogLogo}
         onClick={() => {
@@ -57,7 +57,7 @@ export const MainMenu: FC<Props> = ({ open, setOpen }) => {
         }}
       >
         <BotBustersIcon />
-      </Button>
+      </LogoButton>
       <MenuOptions handleClose={handleClose} />
       <Footer handleClose={handleClose} />
     </Dialog>
