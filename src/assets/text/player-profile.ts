@@ -5,4 +5,5 @@ export const playerProfile = {
   connectWallet: "Connect Wallet",
 
   profileColumns: ["Rank", "Games", "Score"],
+  achievementColumns: ["Achievement", "Description", "Streak"],
 };
