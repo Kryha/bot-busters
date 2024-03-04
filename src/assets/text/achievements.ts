@@ -2,7 +2,7 @@ export const achievements = {
   scoreBreakdown: "score breakdown",
   totalScore: "total",
   betterLuckNextTime: "better luck next time",
-
+  title: "Achievements",
   yourScore: (correctGuesses: number) =>
     `Your score: ${correctGuesses} correct answers`,
   points: (score: number) => `+${score}`,

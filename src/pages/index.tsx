@@ -1,4 +1,4 @@
-import { Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/router.js";
 import { useErrorBoundary } from "react-error-boundary";
@@ -69,46 +69,44 @@ const Homepage = () => {
   };
 
   return (
-    <Stack ref={mainContainerRef} sx={styles.wrapper}>
+    <Box component="main" ref={mainContainerRef} sx={styles.wrapper}>
       <Navbar />
       <LandingPageAnimation />
-      <Stack sx={styles.container}>
-        <Stack sx={styles.logo}>
-          <Typography variant="body1">
-            {text.homepage.descriptionPart1}
-          </Typography>
-          <BotBusterLogoAnimation />
-          <Typography variant="body1" sx={styles.aleoSystems}>
-            {text.homepage.aleoSystems}
-          </Typography>
-        </Stack>
-        <Stack sx={styles.actions}>
-          {match.data && match.data !== EMPTY_RES ? (
-            <PixelButton
-              disabled={loggedUser.isLoading || match.isLoading}
-              onClick={() => void handleGoToMatch()}
-              text={text.homepage.continueGame}
-            />
-          ) : (
-            <PlayButton
-              disabled={loggedUser.isLoading || match.isLoading}
-              onClick={() => void handleGameStart()}
-            />
-          )}
-          <Stack sx={styles.menuActions}>
-            <PixelButton
-              onClick={() => openHandler(pages.leaderboard)}
-              text={text.homepage.leaderboard}
-            />
-            <PixelButton
-              onClick={() => openHandler(pages.about)}
-              text={text.homepage.about}
-            />
-          </Stack>
+      <Stack component="div" sx={styles.logo}>
+        <Typography variant="body1" sx={styles.whoIsABot}>
+          {text.homepage.descriptionPart1}
+        </Typography>
+        <BotBusterLogoAnimation />
+        <Typography variant="body1" sx={styles.aleoSystems}>
+          {text.homepage.aleoSystems}
+        </Typography>
+      </Stack>
+      <Stack sx={styles.actions}>
+        {match.data && match.data !== EMPTY_RES ? (
+          <PixelButton
+            disabled={loggedUser.isLoading || match.isLoading}
+            onClick={() => void handleGoToMatch()}
+            text={text.homepage.continueGame}
+          />
+        ) : (
+          <PlayButton
+            disabled={loggedUser.isLoading || match.isLoading}
+            onClick={() => void handleGameStart()}
+          />
+        )}
+        <Stack sx={styles.menuActions}>
+          <PixelButton
+            onClick={() => openHandler(pages.leaderboard)}
+            text={text.homepage.leaderboard}
+          />
+          <PixelButton
+            onClick={() => openHandler(pages.about)}
+            text={text.homepage.about}
+          />
         </Stack>
       </Stack>
       <TopRanked />
-    </Stack>
+    </Box>
   );
 };
 
