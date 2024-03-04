@@ -1,3 +1,5 @@
+import { getRandomInt } from "~/utils/math";
+
 export type MusicTrack = {
   trackId: string;
   url: string;
@@ -123,11 +125,11 @@ export const LosesTracks: TrackId[] = [
 ];
 
 export const getWinTrack = (): TrackId => {
-  const randomIndex = Math.floor(Math.random() * WinTracks.length);
+  const randomIndex = getRandomInt({ min: 1, max: WinTracks.length });
   return WinTracks[randomIndex]!;
 };
 
 export const getLoseTrack = (): TrackId => {
-  const randomIndex = Math.floor(Math.random() * LosesTracks.length);
+  const randomIndex = getRandomInt({ min: 1, max: LosesTracks.length });
   return LosesTracks[randomIndex]!;
 };
