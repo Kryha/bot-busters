@@ -14,6 +14,7 @@ export const styles = {
   },
   resultsHeading: {
     p: 2,
+    backgroundColor: "common.black",
     justifyContent: "center",
     alignItems: "center",
     borderBottom: `4px solid ${theme.palette.customGrey.main}`,
@@ -26,6 +27,7 @@ export const styles = {
   },
   proof: {
     p: 2,
+    backgroundColor: "common.black",
     height: "150px",
     justifyContent: "center",
     alignItems: "center",
