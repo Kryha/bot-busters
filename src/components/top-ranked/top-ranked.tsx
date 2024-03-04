@@ -1,11 +1,10 @@
 import { type FC } from "react";
 import { Box, Stack, Typography } from "@mui/material";
 
-import { text } from "~/assets/text/index.js";
-
-import { styles } from "./styles.js";
-import { theme } from "~/styles/theme.js";
 import { api } from "~/utils/api.js";
+import { theme } from "~/styles/theme.js";
+import { text } from "~/assets/text/index.js";
+import { styles } from "./styles.js";
 
 export const TopRanked: FC = () => {
   const animationStyles = [styles.topRankedBanner1, styles.topRankedBanner2];
@@ -22,7 +21,7 @@ export const TopRanked: FC = () => {
   // Use sliding animation if more than 2 entries
   if (rankList.length > 2) {
     return (
-      <Stack sx={styles.container}>
+      <Stack component="footer" sx={styles.container}>
         <Typography variant="subtitle1" sx={styles.title}>
           {text.homepage.topRankedTitle}
         </Typography>

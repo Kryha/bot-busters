@@ -1,5 +1,5 @@
 import { type SxProps } from "@mui/material";
-import { theme } from "~/styles/index.js";
+import { breakpoints, theme } from "~/styles/index.js";
 import { zIndex } from "~/styles/z-index.js";
 import type { SxStyleRecord } from "~/types/sx-style-record.js";
 
@@ -10,6 +10,9 @@ export const styles = {
     bottom: 0,
     zIndex: zIndex.front,
     height: 65,
+    [`@media (min-width: ${breakpoints.xl}px)`]: {
+      height: 80,
+    },
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: theme.palette.pink.main,
