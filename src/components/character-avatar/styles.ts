@@ -22,8 +22,8 @@ export const styles = {
     const fill = determineBorderFill();
 
     return {
-      width: stage !== "chat" ? "200px" : "140px",
-      height: stage !== "chat" ? "200px" : "140px",
+      width: stage !== "chat" ? "170px" : "140px",
+      height: stage !== "chat" ? "170px" : "140px",
       [`@media (max-width: ${breakpoints.md}px)`]: {
         width: "140px",
         height: "140px",
@@ -78,9 +78,14 @@ export const styles = {
     return {
       width: stage !== "chat" ? "200px" : "140px",
       height: stage !== "chat" ? "200px" : "140px",
+
+      [`@media (min-width: ${breakpoints.xl}px)`]: {
+        width: "160px",
+        height: "160px",
+      },
       [`@media (max-width: ${breakpoints.md}px)`]: {
-        width: "140px",
-        height: "140px",
+        width: "120px",
+        height: "120px",
       },
       cursor: "default",
       "& > div": {
@@ -95,7 +100,7 @@ export const styles = {
           content: "''",
           backgroundImage: determineBorderArrow(),
           position: "absolute",
-          top: "27px",
+          top: "44px",
           zIndex: 1,
           width: "16px",
           height: "10px",

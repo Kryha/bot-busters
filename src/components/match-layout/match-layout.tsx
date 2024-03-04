@@ -1,4 +1,4 @@
-import { Container } from "@mui/material";
+import { Stack } from "@mui/material";
 import { type FC, type ReactNode, useEffect, useState } from "react";
 import { type PlayerType } from "~/types/index.js";
 import { Transitions } from "~/components/transitions/index.js";
@@ -27,7 +27,7 @@ export const MatchLayout: FC<Props> = ({
   }, [splashScreenVariant]);
 
   return (
-    <Container component="section" sx={styles.container}>
+    <Stack component="section" sx={styles.container}>
       {showSplashScreen ? (
         <Transitions
           splashScreenVariant={splashScreenVariant}
@@ -37,6 +37,6 @@ export const MatchLayout: FC<Props> = ({
       ) : (
         children
       )}
-    </Container>
+    </Stack>
   );
 };
