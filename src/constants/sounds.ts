@@ -3,8 +3,6 @@ export type MusicTrack = {
   url: string;
 };
 
-export const LOSE_SFX = 11;
-export const WIN_SFX = 8;
 export const BOTBUSTED_TIME_MS = 5000;
 export const RESULTS_SFX_TIME_MS = 12000;
 
@@ -96,6 +94,8 @@ export const soundtracks: Record<TrackId, string> = {
   Lose10: "./music/voice-over/player-loses/Loss_TheyGotAway_02.mp3",
   Lose11: "./music/voice-over/player-loses/Loss_TodayWereDefeated.mp3",
 };
+
+// We use these tracks to play a random track when the player wins or loses
 
 export const WinTracks: TrackId[] = [
   "Win1",
