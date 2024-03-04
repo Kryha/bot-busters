@@ -96,3 +96,38 @@ export const soundtracks: Record<TrackId, string> = {
   Lose10: "./music/voice-over/player-loses/Loss_TheyGotAway_02.mp3",
   Lose11: "./music/voice-over/player-loses/Loss_TodayWereDefeated.mp3",
 };
+
+export const WinTracks: TrackId[] = [
+  "Win1",
+  "Win2",
+  "Win3",
+  "Win4",
+  "Win5",
+  "Win6",
+  "Win7",
+  "Win8",
+];
+
+export const LosesTracks: TrackId[] = [
+  "Lose1",
+  "Lose2",
+  "Lose3",
+  "Lose4",
+  "Lose5",
+  "Lose6",
+  "Lose7",
+  "Lose8",
+  "Lose9",
+  "Lose10",
+  "Lose11",
+];
+
+export const getWinTrack = (): TrackId => {
+  const randomIndex = Math.floor(Math.random() * WinTracks.length);
+  return WinTracks[randomIndex]!;
+};
+
+export const getLoseTrack = (): TrackId => {
+  const randomIndex = Math.floor(Math.random() * LosesTracks.length);
+  return LosesTracks[randomIndex]!;
+};

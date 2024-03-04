@@ -8,10 +8,9 @@ import { type PlayerType } from "~/types/index.js";
 import { matchAchievements } from "~/server/service/achievements.js";
 import { usePlaySFX } from "~/hooks/sounds.js";
 import {
-  LOSE_SFX,
+  getLoseTrack,
+  getWinTrack,
   RESULTS_SFX_TIME_MS,
-  type TrackId,
-  WIN_SFX,
 } from "~/constants/sounds.js";
 import { styles } from "./styles.js";
 
@@ -54,7 +53,7 @@ const ScoreRow: FC<ScoreRowProps> = ({ description, score, title }) => {
 
 const BetterLuckNextTime = () => (
   <Typography
-    variant="body2"
+    variant="body1"
     sx={{ margin: "auto", textTransform: "uppercase", p: 4 }}
   >
     {text.achievements.betterLuckNextTime}
@@ -67,8 +66,8 @@ interface ScoreProps {
 
 export const Score: FC<ScoreProps> = ({ player }) => {
   const playSfx = usePlaySFX();
-  const loseInt = Math.floor(Math.random() * LOSE_SFX) + 1;
-  const winInt = Math.floor(Math.random() * WIN_SFX) + 1;
+  const winTrack = getWinTrack();
+  const loseTrack = getLoseTrack();
 
   useEffect(() => {
     setTimeout(() => {
@@ -77,25 +76,25 @@ export const Score: FC<ScoreProps> = ({ player }) => {
       }
 
       if (player.botsBusted > 0) {
-        playSfx(`Win${winInt}` as TrackId);
+        playSfx(loseTrack);
       }
 
       if (player.humansBusted > 0) {
-        playSfx(`Lose${loseInt}` as TrackId);
+        playSfx(winTrack);
       }
 
       if (player.humansFooled > 0) {
-        playSfx(`Lose${winInt}` as TrackId);
+        playSfx(loseTrack);
       }
     }, RESULTS_SFX_TIME_MS);
   }, [
-    loseInt,
+    loseTrack,
     playSfx,
     player.botsBusted,
     player.humansBusted,
     player.humansFooled,
     player.score,
-    winInt,
+    winTrack,
   ]);
 
   const tableContent = () => {
