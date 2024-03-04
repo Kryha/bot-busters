@@ -1,7 +1,12 @@
+import { getRandomInt } from "~/utils/math";
+
 export type MusicTrack = {
   trackId: string;
   url: string;
 };
+
+export const BOTBUSTED_TIME_MS = 5000;
+export const RESULTS_SFX_TIME_MS = 12000;
 
 export type TrackId =
   | "HomePage"
@@ -26,7 +31,26 @@ export type TrackId =
   | "TextSent"
   | "TextReceived"
   | "Bonus"
-  | "Denied";
+  | "Denied"
+  | "Win1"
+  | "Win2"
+  | "Win3"
+  | "Win4"
+  | "Win5"
+  | "Win6"
+  | "Win7"
+  | "Win8"
+  | "Lose1"
+  | "Lose2"
+  | "Lose3"
+  | "Lose4"
+  | "Lose5"
+  | "Lose6"
+  | "Lose7"
+  | "Lose8"
+  | "Lose9"
+  | "Lose10"
+  | "Lose11";
 
 export const soundtracks: Record<TrackId, string> = {
   HomePage: "./music/BotBusters_Theme_Instrumental.mp3",
@@ -52,30 +76,60 @@ export const soundtracks: Record<TrackId, string> = {
   TextReceived: "./sounds/BB_UI_TextRecieved.mp3",
   Bonus: "./sounds/BB_UI_Bonus.mp3",
   Denied: "./sounds/BB_UI_Denied.mp3",
+  Win1: "./music/voice-over/player-wins/Win_BeatItBots.mp3",
+  Win2: "./music/voice-over/player-wins/Win_BeepBoopBusted.mp3",
+  Win3: "./music/voice-over/player-wins/Win_GoodJob.mp3",
+  Win4: "./music/voice-over/player-wins/Win_Haha_WeGotEm.mp3",
+  Win5: "./music/voice-over/player-wins/Win_NothingButACalculator.mp3",
+  Win6: "./music/voice-over/player-wins/Win_NotInMyHouse.mp3",
+  Win7: "./music/voice-over/player-wins/Win_NowThatsWhatICall.mp3",
+  Win8: "./music/voice-over/player-wins/Win_RobotsSeeYaLater.mp3",
+  Lose1: "./music/voice-over/player-loses/Loss_BucketOfBolts.mp3",
+  Lose2: "./music/voice-over/player-loses/Loss_IHateBots.mp3",
+  Lose3: "./music/voice-over/player-loses/Loss_IKnewIt.mp3",
+  Lose4: "./music/voice-over/player-loses/Loss_IKnewWeCoulntTrustThatOne.mp3",
+  Lose5: "./music/voice-over/player-loses/Loss_MayNextTime.mp3",
+  Lose6: "./music/voice-over/player-loses/Loss_NextTime.mp3",
+  Lose7: "./music/voice-over/player-loses/Loss_Outsmarted.mp3",
+  Lose8: "./music/voice-over/player-loses/Loss_StupidRobots.mp3",
+  Lose9: "./music/voice-over/player-loses/Loss_TheyGotAway_01.mp3",
+  Lose10: "./music/voice-over/player-loses/Loss_TheyGotAway_02.mp3",
+  Lose11: "./music/voice-over/player-loses/Loss_TodayWereDefeated.mp3",
 };
 
-//TODO: play randomly based on achievements
-export const playerWin = {
-  1: "./music/voice-overs/player-wins/Win_BeatItBots.mp3",
-  2: "./music/voice-overs/player-wins/Win_BeepBoopBusted.mp3",
-  3: "./music/voice-overs/player-wins/Win_GoodJob.mp3",
-  4: "./music/voice-overs/player-wins/Win_Haha_WeGotEm.mp3",
-  5: "./music/voice-overs/player-wins/Win_NothingButACalculator.mp3",
-  6: "./music/voice-overs/player-wins/Win_NotInMyHouse.mp3",
-  7: "./music/voice-overs/player-wins/Win_NowThatsWhatICall.mp3",
-  8: "./music/voice-overs/player-wins/Win_RobotsSeeYaLater.mp3",
+// We use these tracks to play a random track when the player wins or loses
+
+export const WinTracks: TrackId[] = [
+  "Win1",
+  "Win2",
+  "Win3",
+  "Win4",
+  "Win5",
+  "Win6",
+  "Win7",
+  "Win8",
+];
+
+export const LosesTracks: TrackId[] = [
+  "Lose1",
+  "Lose2",
+  "Lose3",
+  "Lose4",
+  "Lose5",
+  "Lose6",
+  "Lose7",
+  "Lose8",
+  "Lose9",
+  "Lose10",
+  "Lose11",
+];
+
+export const getWinTrack = (): TrackId => {
+  const randomIndex = getRandomInt({ min: 1, max: WinTracks.length });
+  return WinTracks[randomIndex]!;
 };
 
-export const playerLose = {
-  1: "./music/voice-overs/player-loses/Loss_BucketOfBolts.mp3",
-  2: "./music/voice-overs/player-loses/Loss_IHateBots.mp3",
-  3: "./music/voice-overs/player-loses/Loss_IKnewIt.mp3",
-  4: "./music/voice-overs/player-loses/Loss_IKnewWeCoulntTrustThatOne.mp3",
-  5: "./music/voice-overs/player-loses/Loss_MayNextTime.mp3",
-  6: "./music/voice-overs/player-loses/Loss_NextTime.mp3",
-  7: "./music/voice-overs/player-loses/Loss_Outsmarted.mp3",
-  8: "./music/voice-overs/player-loses/Loss_StupidRobots.mp3",
-  9: "./music/voice-overs/player-loses/Loss_TheyGotAway_01.mp3",
-  10: "./music/voice-overs/player-loses/Loss_TheyGotAway_02.mp3",
-  11: "./music/voice-overs/player-loses/Loss_TodayWereDefeated.mp3",
+export const getLoseTrack = (): TrackId => {
+  const randomIndex = getRandomInt({ min: 1, max: LosesTracks.length });
+  return LosesTracks[randomIndex]!;
 };

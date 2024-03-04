@@ -20,6 +20,7 @@ export const styles: Record<string, SxProps> = {
   },
   button: {
     width: "100%",
+    cursor: "pointer",
   },
   buttonContainer: {
     flex: 0,

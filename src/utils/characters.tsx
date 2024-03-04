@@ -40,6 +40,7 @@ import {
   TransitionLinesRoy,
   TransitionLinesVoting,
 } from "~/assets/animations/index.js";
+import { BOTBUSTED_TIME_MS } from "~/constants/sounds.js";
 import { theme } from "~/styles/index.js";
 
 export const getCharacterAvatar = (characterName: CharacterName) => {
@@ -69,13 +70,16 @@ export const getCharacterAnimation = (
 
   const characterAnimations = animations[characterName];
   let animation;
+  let delay;
 
   if (isSelected) {
     animation = isBot
       ? characterAnimations.botBusted
       : characterAnimations.blink;
+    delay = isBot ? BOTBUSTED_TIME_MS : 0;
   } else {
     animation = isBot ? characterAnimations.botWin : characterAnimations.blink;
+    delay = 0;
   }
 
   // If the blink animation is selected, return it with a random speed between 1 and 0.7
@@ -84,7 +88,7 @@ export const getCharacterAnimation = (
     return { animation: animation, speed: speed.toFixed(2) };
   }
 
-  return { animation: animation, speed: 1 };
+  return { animation: animation, speed: 1, delay: delay };
 };
 
 export const getCharacterSplashScreen = (

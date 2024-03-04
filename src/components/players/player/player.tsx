@@ -1,5 +1,5 @@
 import { Stack, Typography } from "@mui/material";
-import { useEffect, useRef, type FC } from "react";
+import { type FC, useEffect, useRef } from "react";
 
 import { BotArrowIcon } from "~/assets/icons/index.js";
 import { text } from "~/assets/text/index.js";
@@ -76,12 +76,13 @@ export const Player: FC<Props> = ({
   const textResult = getTextResult();
 
   return (
-    <Stack id={character.id} ref={containerRef} sx={styles.container}>
+    <Stack id={character.id} ref={containerRef} sx={styles.container(stage)}>
       {stage !== "chat" && (
         <Typography variant="body1" sx={styles.character} color={textColor}>
           {name}
         </Typography>
       )}
+
       <CharacterAvatar
         stage={stage}
         character={character}

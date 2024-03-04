@@ -11,7 +11,7 @@ import { isVerifiedUser } from "~/utils/user.js";
 import { PageLayout } from "~/containers/page-layout/index.js";
 import { PageHeader } from "~/containers/page-header/index.js";
 import { LoadingPage } from "~/components/loading-page/index.js";
-import { AchievementsTable } from "~/components/tables/achievements-table.js";
+import { AchievementsTable } from "~/components/tables/index.js";
 import { text } from "~/assets/text/index.js";
 import { styles } from "~/styles/pages/player-profile.js";
 

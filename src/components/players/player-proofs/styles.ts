@@ -3,9 +3,8 @@ import { type SxStyleRecord } from "~/types/sx-style-record.js";
 
 export const styles = {
   container: {
-    mb: 2,
     mt: 2,
-    width: "60%",
+    width: "500px",
     flexDirection: "column",
     border: `4px solid ${theme.palette.customGrey.main}`,
     [`@media (max-width: ${breakpoints.md}px)`]: {

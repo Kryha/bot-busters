@@ -1,13 +1,17 @@
 import { type SxProps } from "@mui/material";
+import { type MatchStage } from "~/types/index.js";
 import { theme } from "~/styles/theme.js";
 import { zIndex } from "~/styles/z-index.js";
 
 export const styles = {
-  container: {
-    position: "relative",
-    flexDirection: "column",
-    alignItems: "center",
-    gap: 1,
+  container: (stage: MatchStage) => {
+    return {
+      position: "relative",
+      flexDirection: "column",
+      alignItems: "center",
+      gap: 1,
+      width: stage !== "chat" ? "200px" : "120px",
+    };
   },
   character: {
     textTransform: "uppercase",
