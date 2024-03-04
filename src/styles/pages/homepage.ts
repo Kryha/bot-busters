@@ -1,36 +1,51 @@
 import { type SxProps } from "@mui/material";
 import { type SxStyleRecord } from "~/types/sx-style-record.js";
 import { zIndex } from "~/styles/z-index.js";
-import { theme } from "~/styles/index.js";
+import { breakpoints } from "~/styles/index.js";
 
 export const styles = {
   wrapper: {
+    overflow: "hidden !important",
     position: "relative",
-    justifyContent: "start",
     width: "100%",
     height: "100vh",
   },
   container: {
-    backgroundColor: theme.palette.purple.dark,
-    width: "100vw",
+    position: "absolute",
+    inset: 0,
     height: "100%",
   },
   logo: {
     position: "relative",
+    flexDirection: "column",
     zIndex: zIndex.front,
+    ml: 3,
     mt: 3,
     mb: 5,
-    ml: 4,
-    width: "800px",
-    height: "220px",
+    width: "70vw",
     textAlign: "center",
-    justifyContent: "start",
+    minWidth: "1080px",
+    minHeight: "250px",
+    [`@media (min-width: ${breakpoints.xl}px)`]: {
+      mt: 10,
+    },
+  },
+  whoIsABot: {
+    position: "absolute",
+    zIndex: zIndex.front,
+    top: "0",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
   },
   aleoSystems: {
-    zIndex: zIndex.front,
     position: "absolute",
-    right: "40px",
+    zIndex: zIndex.front,
+    right: "20%",
     bottom: 0,
+    fontSize: "14px",
+    [`@media (min-width: ${breakpoints.xl}px)`]: {
+      bottom: "20px",
+    },
   },
   startGameButton: {
     width: "100%",
@@ -39,13 +54,16 @@ export const styles = {
     p: "12px 120px",
   },
   actions: {
+    position: "absolute",
+    left: "150px",
+    bottom: "calc(20vh - 65px)",
     zIndex: zIndex.front,
     gap: 2,
     flexDirection: "column",
     alignItems: "flex-start",
-    marginLeft: "100px",
   },
   menuActions: {
+    marginTop: "32px",
     zIndex: zIndex.front,
     transform: " skew(-15deg)",
     pt: 2,

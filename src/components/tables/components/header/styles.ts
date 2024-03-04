@@ -11,6 +11,6 @@ export const styles = {
     color: theme.palette.secondary.main,
   },
   busterCell: {
-    textAlign: "start",
+    textAlign: "center",
   },
 } satisfies SxStyleRecord;

@@ -54,4 +54,7 @@ export const general = {
   dateAndCredits: (date: string, credits: number) =>
     `${date} - ${credits} Aleo credits`,
   numberPosition: (val: number) => `#${val}`,
+  mobileNotSupported:
+    "is only playable on a desktop device – Phones are for phone calls anyways \n" +
+    "ya noodlebrain!",
 };

@@ -3,15 +3,17 @@ import React from "react";
 import { useRouter } from "next/router.js";
 import { usePlaySFX } from "~/hooks/sounds.js";
 
-import { text } from "~/assets/text/index.js";
 import { pages } from "~/router.js";
-import { styles } from "~/styles/pages/player-profile.js";
 import { api } from "~/utils/api.js";
 import { PrimaryButton } from "~/components/primary-button/index.js";
 import { PlayerTable } from "~/components/index.js";
 import { isVerifiedUser } from "~/utils/user.js";
 import { PageLayout } from "~/containers/page-layout/index.js";
+import { PageHeader } from "~/containers/page-header/index.js";
 import { LoadingPage } from "~/components/loading-page/index.js";
+import { AchievementsTable } from "~/components/tables/achievements-table.js";
+import { text } from "~/assets/text/index.js";
+import { styles } from "~/styles/pages/player-profile.js";
 
 const PlayerProfile = () => {
   const router = useRouter();
@@ -35,6 +37,15 @@ const PlayerProfile = () => {
         <Stack sx={styles.table}>
           <PlayerTable playerProfile={user.data} />
         </Stack>
+      )}
+
+      {user.data && (
+        <>
+          <PageHeader text={text.achievements.title} />
+          <Stack sx={styles.table}>
+            <AchievementsTable playerProfile={user.data} />
+          </Stack>
+        </>
       )}
 
       {!isVerifiedUser(user.data) && (

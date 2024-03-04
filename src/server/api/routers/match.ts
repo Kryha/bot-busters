@@ -5,7 +5,11 @@ import { TRPCError } from "@trpc/server";
 
 import { db } from "~/server/db/index.js";
 import { matches as matchesTable } from "~/server/db/schema.js";
-import { matchRoomSchema, type ChatMessagePayload } from "~/types/index.js";
+import {
+  matchRoomSchema,
+  type ChatMessagePayload,
+  type TypingPayload,
+} from "~/types/index.js";
 
 import { createTRPCRouter, protectedProcedure } from "../trpc.js";
 import {
@@ -36,8 +40,8 @@ export const matchRouter = createTRPCRouter({
   onMessage: protectedProcedure
     .input(z.object({ roomId: z.string().uuid() }))
     .subscription(({ ctx, input }) => {
-      const { player }= verifyPlayer(ctx.session.user.id, input.roomId);
-     
+      const { player } = verifyPlayer(ctx.session.user.id, input.roomId);
+
       if (player) player.isOnline = true;
 
       return observable<ChatMessagePayload>((emit) => {
@@ -100,6 +104,30 @@ export const matchRouter = createTRPCRouter({
           ee.off(matchEvent(input.roomId, "stageChange"), handleEvent);
         };
       });
+    }),
+
+  onTyping: protectedProcedure
+    .input(z.object({ roomId: z.string().uuid() }))
+    .subscription(({ ctx, input }) => {
+      verifyPlayer(ctx.session.user.id, input.roomId);
+
+      return observable<TypingPayload>((emit) => {
+        const handleEvent = (payload: TypingPayload) => {
+          emit.next(payload);
+        };
+
+        ee.on(matchEvent(input.roomId, "typing"), handleEvent);
+        return () => {
+          ee.off(matchEvent(input.roomId, "typing"), handleEvent);
+        };
+      });
+    }),
+
+  sendTyping: protectedProcedure
+    .input(z.object({ roomId: z.string().uuid() }))
+    .mutation(({ ctx, input }) => {
+      const { room } = verifyPlayer(ctx.session.user.id, input.roomId);
+      room.setTyping(ctx.session.user.id);
     }),
 
   getRoom: protectedProcedure

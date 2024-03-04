@@ -41,7 +41,7 @@ export const PlayerTable: FC<Props> = ({ playerProfile }) => {
             </TableCell>
 
             <TableCell align="center">
-              <Typography variant="body2" color="customGrey.main">
+              <Typography variant="body2" color="common.white">
                 {playerProfile.score}
               </Typography>
             </TableCell>
