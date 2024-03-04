@@ -28,27 +28,6 @@ export const LogoButtonStyle = styled(Button)({
   },
 });
 
-export const NavbarLogoButtonStyle = styled(LogoButtonStyle)({
-  color: theme.palette.secondary.main,
-  "& > svg": {
-    "& > path": {
-      fill: theme.palette.secondary.main,
-      transform: "scale(0.67) translate(11px, 5px)",
-    },
-  },
-  "&:hover": {
-    color: theme.palette.secondary.main,
-  },
-  "&:active": {
-    color: theme.palette.secondary.main,
-    "& > svg": {
-      "& > path": {
-        fill: theme.palette.secondary.main,
-      },
-    },
-  },
-});
-
 export const LogoButton: FC<Props> = ({ ...props }) => {
   return (
     <LogoButtonStyle {...props}>

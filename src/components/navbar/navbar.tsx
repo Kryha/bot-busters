@@ -1,4 +1,4 @@
-import { Button, Stack, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import { type FC, useState } from "react";
 import { usePlaySFX } from "~/hooks/sounds.js";
@@ -11,7 +11,7 @@ import { BotBustersIcon, UserIcon } from "~/assets/icons/index.js";
 import { text } from "~/assets/text/index.js";
 import { pages } from "~/router.js";
 import { api } from "~/utils/api.js";
-
+import { LogoButton } from "~/components/logo-button/index.js";
 import { styles } from "./styles.js";
 
 export const Navbar: FC = () => {
@@ -31,7 +31,7 @@ export const Navbar: FC = () => {
   const isHomePage = router.pathname === pages.home;
 
   return (
-    <Stack sx={styles.container}>
+    <Stack component="header" sx={styles.container}>
       <Stack sx={styles.wrapper}>
         <Stack
           onClick={() => handleNavigation(pages.playerProfile)}
@@ -45,7 +45,7 @@ export const Navbar: FC = () => {
           </Typography>
         </Stack>
         {!isHomePage && (
-          <Button
+          <LogoButton
             variant="text"
             sx={styles.mainLogo}
             onClick={() => {
@@ -54,7 +54,7 @@ export const Navbar: FC = () => {
             }}
           >
             <BotBustersIcon />
-          </Button>
+          </LogoButton>
         )}
         <Stack direction={"row"} rowGap={4} sx={styles.navbarEnd}>
           <AudioSettings />

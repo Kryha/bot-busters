@@ -28,6 +28,7 @@ export const Message: FC<Props> = ({ message, color, characterName }) => {
           </Typography>
         </Stack>
       </Stack>
+      <Stack sx={styles.avatar(color)}>{isLocalSender && <UserIcon />}</Stack>
     </Stack>
   );
 };

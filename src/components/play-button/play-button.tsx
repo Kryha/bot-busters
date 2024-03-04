@@ -35,6 +35,7 @@ export const PlayButton: FC<Props> = ({ onClick, disabled }) => {
         segments={segments}
         play
         loop
+        style={{ width: 278, height: 118 }}
       />
     </Box>
   );
