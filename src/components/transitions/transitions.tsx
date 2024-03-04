@@ -1,4 +1,4 @@
-import { Slide, Stack } from "@mui/material";
+import { Box, Slide, Stack } from "@mui/material";
 import { type FC, useEffect, useState } from "react";
 import { usePlayMusic, usePlaySFX } from "~/hooks/sounds.js";
 
@@ -58,15 +58,17 @@ export const Transitions: FC<Props> = ({
           characterName={name}
           backgroundColor={backgroundColor}
         >
-          <Stack sx={styles.splashSection}>
-            <Slide direction="left" in={showLabel} mountOnEnter unmountOnExit>
-              <Stack sx={styles.splashText}>
-                <StartChatting aria-label={"start-chatting"} />
-                <Stack sx={styles.splashHeading}>{characterTitle}</Stack>
-              </Stack>
-            </Slide>
-            <Stack sx={styles.avatar}>{characterSplashScreen}</Stack>
-          </Stack>
+          <Slide direction="left" in={showLabel} mountOnEnter unmountOnExit>
+            <Stack sx={styles.splashText}>
+              <StartChatting aria-label={"start-chatting"} />
+              <Box component="div" sx={styles.splashHeading}>
+                {characterTitle}
+              </Box>
+            </Stack>
+          </Slide>
+          <Box component="div" sx={styles.avatar}>
+            {characterSplashScreen}
+          </Box>
         </SplashScreen>
       )}
       {splashScreenVariant === "voting" && (

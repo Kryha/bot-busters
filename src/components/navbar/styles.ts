@@ -21,8 +21,8 @@ export const styles = {
   wrapper: {
     pt: 1,
     pb: 1,
-    pl: 2,
-    pr: 2,
+    pl: 3,
+    pr: 3,
     flexDirection: "row",
     justifyContent: "space-between",
     [`@media (max-width: ${breakpoints.sm}px)`]: {
@@ -39,6 +39,9 @@ export const styles = {
           fill: theme.palette.secondary.main,
         },
       },
+    },
+    "&:active": {
+      backgroundColor: "transparent",
     },
     [`@media (max-width: ${breakpoints.sm}px)`]: {
       display: "none",

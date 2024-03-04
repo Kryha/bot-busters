@@ -64,11 +64,11 @@ export const styles = {
     },
   },
   footer: {
-    pl: 3,
+    pl: 7,
     pr: 3,
-    pb: 3,
+    pb: 5,
     flexDirection: "row",
-    justifyContent: "space-between",
+    gap: "78px",
     [`@media (max-width: ${breakpoints.sm}px)`]: {
       pl: 2,
       pr: 2,

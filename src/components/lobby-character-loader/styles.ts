@@ -3,9 +3,12 @@ import { breakpoints, theme } from "~/styles/theme.js";
 export const styles = {
   container: {
     justifyContent: "center",
+    width: "100%",
     gap: 4,
+    pl: 4,
+    pr: 4,
     flexDirection: "column",
-    height: "100%",
+    height: "calc(100vh - 67px)",
     [theme.breakpoints.up("xl")]: {
       gap: 6,
     },
@@ -15,6 +18,9 @@ export const styles = {
     alignItems: "flex-end",
     flexDirection: "row",
     flex: 1,
+    [`@media (min-width: ${breakpoints.xl}px)`]: {
+      flex: 0,
+    },
   },
   character: (activatedIndices: Set<number>, index: number) => {
     const isActivated = activatedIndices.has(index);
@@ -61,7 +67,9 @@ export const styles = {
   },
   hostContainer: {
     flexDirection: "row",
+    gap: 4,
     justifyContent: "center",
+    width: "100%",
     marginLeft: "auto",
     marginRight: "auto",
   },
@@ -69,6 +77,10 @@ export const styles = {
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
+    [`@media (min-width: ${breakpoints.xl}px)`]: {
+      maxHeight: "600px",
+      maxWidth: "600px",
+    },
     maxHeight: "300px",
     maxWidth: "300px",
     minHeight: "200px",

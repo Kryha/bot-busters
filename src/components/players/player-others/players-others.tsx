@@ -1,5 +1,5 @@
 import { Popper, Stack, Typography } from "@mui/material";
-import { useState, type FC } from "react";
+import { type FC, useState } from "react";
 import { useErrorBoundary } from "react-error-boundary";
 import { usePlaySFX } from "~/hooks/sounds.js";
 import { text } from "~/assets/text/index.js";
@@ -187,7 +187,7 @@ export const PlayersOthers: FC<Props> = ({
             id={"id"}
             open={isVisible || popperHover}
             anchorEl={anchorEl}
-            placement="bottom"
+            placement="bottom-end"
             modifiers={[
               {
                 name: "flip",
