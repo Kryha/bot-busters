@@ -27,7 +27,7 @@ export class Agent {
   private _match: Match;
   private _agentPersonality: Record<PersonalityTrait, TraitValue>;
   private _systemPrompt: string;
-
+  private _seed: number;
   private _triggeredAt = Date.now();
   private readonly _silenceToken = "001001";
   private _isGeneratingResponse = false;
@@ -51,6 +51,7 @@ export class Agent {
     this._characterName = this.getCharacterName(characterId);
     this._agentPersonality = this.generatePersonality();
     this._systemPrompt = this.generateSystemPrompt();
+    this._seed = getRandomInt({ min: 0, max: 2 ^ 48 });
 
     ee.on(matchEvent(match.id), this.handleMessageEvent);
   }
@@ -139,9 +140,17 @@ export class Agent {
     const body = JSON.stringify({
       inputs: prompt,
       parameters: {
-        max_new_tokens: 58, // 1 token ~ 4 characters
-        top_p: 1, // 0-1 higher value = more varied words in answers
-        temperature: 1, // 0-1 higher value = more creative answers
+        temperature: 0.98, // 0-1 higher value = more creative answers
+        max_new_tokens: 52, // 1 token ~ 4 characters
+        repetition_penalty: 1.2, // higer prevents repetition in words
+        return_full_text: false, // inlcude inpute text in the response
+        details: false, // Provide extra debugging details in the response
+        stop: ["</s>"], // Prevent further token generation after finding this
+        truncate: 96, // Amount of characters to truncate after
+        do_sample: true, // Pick from a probabilitic pool
+        seed: this._seed, // 0 - 2^64
+        top_k: 35, // limits the pool of next-word candidates to the k most likely words. (20-60)
+        top_p: 0.9, // chooses the smallest set of words whose cumulative probability exceeds the value p
       },
     });
 
