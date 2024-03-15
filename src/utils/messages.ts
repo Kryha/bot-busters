@@ -1,22 +1,31 @@
 /**
  * Finds the nearest punctuation index to the middle of the string.
  * @param input The input string.
- * @param middle The middle index of the string.
  * @returns The optimal index to split the string.
  */
-function findSplitIndex(input: string, middle: number): number {
-  const periodIndex = input.lastIndexOf(".", middle);
-  const commaIndex = input.lastIndexOf(",", middle);
-  // Choose the closest punctuation to the middle, preferring periods.
-  let splitIndex = periodIndex > commaIndex ? periodIndex : commaIndex;
-  if (splitIndex === -1) {
-    // If no punctuation found in the first half, search in the second half.
-    splitIndex = Math.min(
-      periodIndex === -1 ? input.length : periodIndex,
-      commaIndex === -1 ? input.length : commaIndex,
-    );
-  }
+function findSplitIndex(input: string): number {
+  const middle = Math.ceil(input.length / 2);
+  const lastSpace = input.lastIndexOf(" ", middle);
+
+  const splitCharacters = [".", "!", "?"];
+
+  const charIndexList = splitCharacters.map((character) =>
+    input.lastIndexOf(character, middle),
+  );
+
+  const highestIndex = Math.max(...charIndexList);
+
+  const splitIndex = highestIndex === -1 ? lastSpace : highestIndex;
+
   return splitIndex;
+}
+
+function removeTrailingCommaOrDot(input: string): string {
+  const lastChar = input.charAt(input.length - 1);
+  if (lastChar === "," || lastChar === ".") {
+    return input.slice(0, -1);
+  }
+  return input;
 }
 
 /**
@@ -27,7 +36,7 @@ function findSplitIndex(input: string, middle: number): number {
 export function splitMessage(input: string, maxLength: number): string[] {
   if (input.length <= maxLength) return [input]; // Return early if no split is needed.
 
-  let splitIndex = findSplitIndex(input, Math.ceil(input.length / 2));
+  let splitIndex = findSplitIndex(input);
 
   // Adjust splitIndex to account for cases where no suitable punctuation was found.
   if (splitIndex === -1) {
@@ -36,7 +45,10 @@ export function splitMessage(input: string, maxLength: number): string[] {
     splitIndex += 1; // Include the punctuation in the first part for a natural break.
   }
 
-  return [input.substring(0, splitIndex), input.substring(splitIndex)];
+  const firstSegment = removeTrailingCommaOrDot(input.substring(0, splitIndex));
+  const secondSegment = removeTrailingCommaOrDot(input.substring(splitIndex));
+
+  return [firstSegment, secondSegment];
 }
 
 export function cleanMessage(input: string): string {
