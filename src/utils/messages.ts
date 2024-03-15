@@ -48,13 +48,15 @@ export function splitMessage(input: string, maxLength: number): string[] {
   const firstSegment = removeTrailingCommaOrDot(input.substring(0, splitIndex));
   const secondSegment = removeTrailingCommaOrDot(input.substring(splitIndex));
 
-  return [firstSegment, secondSegment];
+  return [firstSegment.trimStart(), secondSegment.trimStart()];
 }
 
 export function cleanMessage(input: string): string {
   // Removes //ufffd || </s> || *some expresion* || [INST] || (words in parenthesis) || gender symbols
-  return input.replace(
-    /(\ufffd|\u2642|\u2640|\[\/?INST\]?|<\/s>|(\*\w+(?:\s+\w+)*\*)|\*\w+\s)/g,
-    "",
-  );
+  return input
+    .trimStart()
+    .replace(
+      /(\ufffd|\u2642|\u2640|\[\/?INST\]?|<\/s>|(\*\w+(?:\s+\w+)*\*)|\*\w+\s)|(\(\w+(?:\s+\w+)*\))/g,
+      "",
+    );
 }
