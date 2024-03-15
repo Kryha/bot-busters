@@ -15,7 +15,7 @@ export const MATCHMAKING_DELAY_MS = 1800; // 1.8 seconds
 
 export const DEFAULT_MAX_PLAYERS_PER_ROOM = 5;
 
-export const MAX_CHARACTERS_CHAT_MESSAGE = 150;
+export const MAX_CHARACTERS_CHAT_MESSAGE = 160;
 
 /* MATERIAL UI  */
 export const FONT_SIZE = 16;
