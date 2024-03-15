@@ -63,7 +63,6 @@ export const matchPrompts = [
   "What cartoon character do you relate to the most?",
   "Would you time travel to the past or future?",
   "What game show do you think you'd be able to win?",
-  "Has anyone really been far even as decided to use even go want to do look more like?",
   "What album would you bring to a desert island?",
   "What's the last thing you did before playing this game?",
   "What is the perfect name for a pet cat?",
