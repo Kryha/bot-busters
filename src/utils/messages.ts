@@ -56,7 +56,7 @@ export function cleanMessage(input: string): string {
   return input
     .trimStart()
     .replace(
-      /(\ufffd|\u2642|\u2640|\[\/?INST\]?|<\/s>|(\*\w+(?:\s+\w+)*\*)|\*\w+\s)|(\(\w+(?:\s+\w+)*\))/g,
+      /(\ufffd|\u2642|\u2640|\[\/?\w+\]?|<\/s>|(\*\w+(?:\s+\w+)*\*)|\*\w+\s)|(\(\w+(?:\s+\w+)*\))/g,
       "",
     );
 }
