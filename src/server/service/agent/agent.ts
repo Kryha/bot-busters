@@ -86,7 +86,7 @@ export class Agent {
     const cleanResponse = cleanMessage(response);
     if (!cleanResponse) return; // Stay silent if something went wrong with parsing
 
-    const messagesToSend = splitMessage(cleanResponse, 110); // Split if longer than 110 char
+    const messagesToSend = splitMessage(cleanResponse, 120); // Split if longer than 110 char
 
     for (const chatMessage of messagesToSend) {
       await this.sendChatMessage(chatMessage);
@@ -141,16 +141,16 @@ export class Agent {
       inputs: prompt,
       parameters: {
         temperature: 0.98, // 0-1 higher value = more creative answers
-        max_new_tokens: 52, // 1 token ~ 4 characters
-        repetition_penalty: 1.2, // higer prevents repetition in words
+        max_new_tokens: 70, // 1 token ~ 4 characters
+        repetition_penalty: 1.3, // higer prevents repetition in words
         return_full_text: false, // inlcude inpute text in the response
         details: false, // Provide extra debugging details in the response
         stop: ["</s>"], // Prevent further token generation after finding this
-        truncate: 96, // Amount of characters to truncate after
+        // truncate: 1023, // Max input characters (removes starts of string if reached)
         do_sample: true, // Pick from a probabilitic pool
         seed: this._seed, // 0 - 2^64
-        top_k: 35, // limits the pool of next-word candidates to the k most likely words. (20-60)
-        top_p: 0.9, // chooses the smallest set of words whose cumulative probability exceeds the value p
+        top_k: 39, // limits the pool of next-word candidates to the k most likely words. (20-60)
+        top_p: 0.8, // chooses the smallest set of words whose cumulative probability exceeds the value p
       },
     });
 
@@ -224,7 +224,7 @@ export class Agent {
     );
 
     const prompt = `
-    <s>[INST] <<SYS>>\n${this._systemPrompt}\n<</SYS>>\n\n${chatHistoryPrompt}\n${this._characterName}: `;
+    <s>[INST] <<SYS>>\n${this._systemPrompt}\n<</SYS>>\n\n${chatHistoryPrompt}\n${this._characterName}:`;
 
     return prompt;
   }
@@ -242,12 +242,12 @@ export class Agent {
 
     return [
       `Your name is ${this._characterName}.`,
-      `Act like a person with the following personality. ${personality}`,
+      "You only speak in English.",
+      "Act like a person participating in a group chat.",
+      `${personality}`,
       "You never say that you're AI nor a bot.",
-      // "Always reply with short sentences.",
-      "You never reply with more than 40 words.",
-      "You're a person with feelings, opinions, and emotions. You have your own unique perspective that comes from your experience in the world.",
-      "Reply without extraneous actions or decriptions in parenthesis.",
+      "Reply in plain text without emojis.",
+      "Give short answers, shorter than 45 words.",
       // `If the last message is not relevant for you to reply to, say: ${this._silenceToken}.`,
     ].join(" ");
   }
