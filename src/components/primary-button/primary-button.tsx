@@ -22,7 +22,7 @@ const PrimaryButtonStyle = styled(Button)({
   minWidth: "320px",
   fontSize: "24px",
   padding: "24px 24px",
-  lineHeight: "normal",
+  lineHeight: "unset",
   color: theme.palette.primary.main,
   fontFamily: theme.typography.h3.fontFamily,
   textTransform: "uppercase",
