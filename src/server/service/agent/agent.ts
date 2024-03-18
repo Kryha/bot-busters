@@ -271,12 +271,12 @@ export class Agent {
   }
 
   private async sendChatMessage(content: string) {
-    this.sendIsTyping(true);
+    this.broadcastIsTyping(true);
 
     const waitTime = this.calculateWaitingTime(content);
     await wait(waitTime);
 
-    this.sendIsTyping(false);
+    this.broadcastIsTyping(false);
 
     const payload: ChatMessagePayload = {
       sender: this.id,
@@ -296,7 +296,7 @@ export class Agent {
     };
   }
 
-  private sendIsTyping(isTyping: boolean) {
+  private broadcastIsTyping(isTyping: boolean) {
     ee.emit(matchEvent(this._match.id, "typing"), {
       isTyping: isTyping,
       sender: this._id,
