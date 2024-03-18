@@ -14,6 +14,7 @@ import type {
   PromptMessage,
   SenderRole,
   TraitValue,
+  TypingPayload,
 } from "~/types/index.js";
 import { wait } from "~/utils/timer.js";
 import { getRandomInt } from "~/utils/math.js";
@@ -270,8 +271,12 @@ export class Agent {
   }
 
   private async sendChatMessage(content: string) {
+    this.broadcastIsTyping(true);
+
     const waitTime = this.calculateWaitingTime(content);
     await wait(waitTime);
+
+    this.broadcastIsTyping(false);
 
     const payload: ChatMessagePayload = {
       sender: this.id,
@@ -289,5 +294,12 @@ export class Agent {
       agreeableness: getRandomInt({ min: 1, max: 5 }),
       neuroticism: getRandomInt({ min: 1, max: 5 }),
     };
+  }
+
+  private broadcastIsTyping(isTyping: boolean) {
+    ee.emit(matchEvent(this._match.id, "typing"), {
+      isTyping: isTyping,
+      sender: this._id,
+    } satisfies TypingPayload);
   }
 }
