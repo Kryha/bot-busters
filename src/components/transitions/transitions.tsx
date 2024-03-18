@@ -11,7 +11,7 @@ import {
   getCharacterTitle,
 } from "~/utils/characters.jsx";
 import { CHARACTERS, SPLASH_SCREEN_TEXT_DELAY_MS } from "~/constants/index.js";
-
+import { BotAvatar } from "~/assets/characters/index.js";
 import { pages } from "~/router.js";
 import { theme } from "~/styles/index.js";
 import { styles } from "./styles.js";
@@ -76,13 +76,14 @@ export const Transitions: FC<Props> = ({
           showSplashScreen={showSplashScreen}
           backgroundColor={theme.palette.purple.dark}
         >
-          <Stack sx={styles.splashSection}>
-            <Slide direction="left" in={showLabel} mountOnEnter unmountOnExit>
-              <Stack sx={styles.letsBustSomeBots}>
-                <LetsBustSomeBots aria-label={"voting-stage"} />
-              </Stack>
-            </Slide>
-          </Stack>
+          <Slide direction="left" in={showLabel} mountOnEnter unmountOnExit>
+            <Stack sx={styles.letsBustSomeBots}>
+              <LetsBustSomeBots aria-label={"voting-stage"} />
+            </Stack>
+          </Slide>
+          <Box component="div" sx={styles.avatar}>
+            <BotAvatar />
+          </Box>
         </SplashScreen>
       )}
     </>
