@@ -37,18 +37,18 @@ export const CharacterTypingIndicator: FC<Props> = ({ room, roomId }) => {
         updatedTypingUsers.has(player.userId),
       );
 
-      let separator = ",";
+      let typingMessage = ",";
       if (typingUsersArray.length > 1) {
         const names = typingUsersArray.map(
           (player) => CHARACTERS[player.characterId].name,
         );
         const last = names.pop();
-        separator = `${names.join(", ")} and ${last}`;
+        typingMessage = `${names.join(", ")} and ${last}`;
       } else if (typingUsersArray.length === 1) {
-        separator = CHARACTERS[typingUsersArray[0]!.characterId].name;
+        typingMessage = CHARACTERS[typingUsersArray[0]!.characterId].name;
       }
 
-      setCharacterTyping(separator);
+      setCharacterTyping(typingMessage);
       setIsTyping(updatedTypingUsers.size > 0);
 
       return updatedTypingUsers;
