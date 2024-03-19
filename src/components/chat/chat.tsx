@@ -1,4 +1,4 @@
-import { Box, Stack, Typography } from "@mui/material";
+import { Stack } from "@mui/material";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router.js";
 import { type FC, type KeyboardEvent, useMemo, useState } from "react";
@@ -8,13 +8,13 @@ import {
   type ChatMessagePayload,
   type MatchRoom,
   type MessageData,
-  type TypingPayload,
 } from "~/types/index.js";
 
 import { HostChatPrompt } from "~/components/host-chat-prompt/index.js";
 import { InputField } from "~/components/input-field/index.js";
 import { Messages } from "~/components/messages/index.js";
 import { Timer } from "~/components/timer/index.js";
+import { CharacterTypingIndicator } from "~/components/character-typing/index.js";
 import {
   CHARACTERS,
   CHAT_TIME_MS,
@@ -47,49 +47,12 @@ export const Chat: FC<Props> = ({ roomId, room }) => {
   const [typingSoundPlayed, setTypingSoundPlayed] = useState(false);
   const [messages, setMessages] = useState<ChatMessagePayload[]>(room.messages);
   const [messageError, setValidation] = useState("");
-  const [characterTyping, setCharacterTyping] = useState("");
-  const [, setTypingUsers] = useState(new Set<string>());
-  const [isTyping, setIsTyping] = useState(false);
 
   const appendMessage = (newMessage: ChatMessagePayload) => {
     if (newMessage.sender !== session?.user?.id) {
       playSfx("TextReceived");
     }
     setMessages((prev) => [...prev, newMessage]);
-  };
-
-  const whoIsTyping = (typing: TypingPayload) => {
-    setTypingUsers((currentTypingUsers) => {
-      // Clone the current set to avoid direct state mutation
-      const updatedTypingUsers = new Set(currentTypingUsers);
-
-      if (typing.isTyping) {
-        updatedTypingUsers.add(typing.sender);
-      } else {
-        updatedTypingUsers.delete(typing.sender);
-      }
-
-      // Update the character typing display
-      const typingUsersArray = players.filter((player) =>
-        updatedTypingUsers.has(player.userId),
-      );
-
-      let separator = ",";
-      if (typingUsersArray.length > 1) {
-        const names = typingUsersArray.map(
-          (player) => CHARACTERS[player.characterId].name,
-        );
-        const last = names.pop();
-        separator = `${names.join(", ")} and ${last}`;
-      } else if (typingUsersArray.length === 1) {
-        separator = CHARACTERS[typingUsersArray[0]!.characterId].name;
-      }
-
-      setCharacterTyping(separator);
-      setIsTyping(updatedTypingUsers.size > 0);
-
-      return updatedTypingUsers;
-    });
   };
 
   const handleMessageChange = (event: { target: { value: string } }) => {
@@ -117,19 +80,6 @@ export const Chat: FC<Props> = ({ roomId, room }) => {
     {
       onData(payload) {
         appendMessage(payload);
-      },
-      onError(error) {
-        console.error("Chat message error:", error);
-        void push(pages.home);
-      },
-    },
-  );
-
-  api.match.onTyping.useSubscription(
-    { roomId },
-    {
-      onData(payload) {
-        whoIsTyping(payload);
       },
       onError(error) {
         console.error("Chat message error:", error);
@@ -193,14 +143,7 @@ export const Chat: FC<Props> = ({ roomId, room }) => {
     <Stack sx={styles.container(stage)}>
       <Stack component="section" sx={styles.section}>
         <HostChatPrompt stage={stage} message={hostMessageData?.message} />
-        {stage === "chat" && (
-          <Stack sx={styles.typingDialog(isTyping)}>
-            <Typography variant="caption" sx={styles.typing}>
-              {characterTyping} is typing
-            </Typography>
-            <Box component="div" sx={styles.dots} />
-          </Stack>
-        )}
+        <CharacterTypingIndicator roomId={roomId} room={room} />
         <Messages messageData={messageData} />
       </Stack>
       {!isChatDisabled && (
