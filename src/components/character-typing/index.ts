@@ -1,1 +1,1 @@
-export * from "./character-typing-indicator.js";
+export * from "./character-typing-indicator.jsx";
