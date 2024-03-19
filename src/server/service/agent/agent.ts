@@ -20,6 +20,7 @@ import { wait } from "~/utils/timer.js";
 import { getRandomInt } from "~/utils/math.js";
 import { cleanMessage, splitMessage } from "~/utils/messages.js";
 import { describePersonality } from "~/server/service/agent/personality-matrix.js";
+import { profanityFilter } from "~/service/index.js";
 
 export class Agent {
   private _id: string;
@@ -271,6 +272,10 @@ export class Agent {
   }
 
   private async sendChatMessage(content: string) {
+    const message = profanityFilter.exists(content)
+      ? profanityFilter.censor(content)
+      : content;
+
     this.broadcastIsTyping(true);
 
     const waitTime = this.calculateWaitingTime(content);
@@ -280,7 +285,7 @@ export class Agent {
 
     const payload: ChatMessagePayload = {
       sender: this.id,
-      message: content,
+      message: message,
       sentAt: Date.now(),
     };
     this._match.addMessage(payload);
