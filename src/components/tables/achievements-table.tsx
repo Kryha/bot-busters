@@ -7,7 +7,7 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-
+import { COLUMN_WIDTH } from "~/components/tables/constants.js";
 import { type LoggedUserProfileData } from "~/types/index.js";
 import { Header } from "./components/index.js";
 import { text } from "~/assets/text/index.js";
@@ -24,8 +24,14 @@ export const AchievementsTable: FC<Props> = ({ playerProfile }) => {
   return (
     <TableContainer sx={styles.wrapper}>
       <Table sx={styles.table} aria-label="simple table">
+        <colgroup>
+          <col width={COLUMN_WIDTH.md} />
+          <col width={COLUMN_WIDTH.lg} />
+          <col width={COLUMN_WIDTH.sm} />
+          <col width={COLUMN_WIDTH.sm} />
+          <col width={COLUMN_WIDTH.sm} />
+        </colgroup>
         <Header cells={text.playerProfile.achievementColumns} />
-
         <TableBody>
           <TableRow sx={styles.tableRow}>
             <TableCell align="center">

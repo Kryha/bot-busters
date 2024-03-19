@@ -3,10 +3,13 @@ import type { SxStyleRecord } from "~/types/sx-style-record.js";
 
 export const styles = {
   tableRow: {
-    "& .MuiTableCell-root": { pl: 0 },
+    "& .MuiTableCell-root": { pl: 0, verticalAlign: "bottom" },
+    "th:first-child ": {
+      pl: 6,
+      textAlign: "left",
+    },
   },
   tableHeader: {
-    textAlign: "center",
     textTransform: "uppercase",
     color: theme.palette.secondary.main,
   },

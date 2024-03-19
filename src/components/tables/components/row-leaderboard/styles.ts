@@ -15,7 +15,7 @@ export const styles = {
     alignItems: "center",
   },
   cell: {
-    textAlign: "center",
+    textAlign: "start",
     color: theme.palette.primary.main,
   },
   userCell: {
@@ -27,6 +27,6 @@ export const styles = {
     fontSize: theme.typography.h4.fontSize,
     textAlign: "end",
     color: theme.palette.primary.main,
-    pr: "10px",
+    pr: "50px",
   } satisfies SxProps,
 };

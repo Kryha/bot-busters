@@ -1,9 +1,17 @@
 export const playerProfile = {
   profile: "Profile",
+  leaderboardTitle: "Leaderboard Position",
+  achievementsTitle: "Achievements",
   createProfile: "Create a profile and add your score to the leaderboard.",
   top10ReceiveCredits: "The daily top 10 receives Aleo credits!",
   connectWallet: "Connect Wallet",
 
-  profileColumns: ["Rank", "Games", "Score"],
-  achievementColumns: ["Achievement", "Description", "Streak"],
+  profileColumns: ["Buster", "Games", "Current Rank", "Highest Rank", "Score"],
+  achievementColumns: [
+    "Achievement",
+    "Description",
+    "Streak",
+    "Point Value",
+    "Points Earned",
+  ],
 };

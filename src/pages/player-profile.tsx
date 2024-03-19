@@ -9,7 +9,6 @@ import { PrimaryButton } from "~/components/primary-button/index.js";
 import { PlayerTable } from "~/components/index.js";
 import { isVerifiedUser } from "~/utils/user.js";
 import { PageLayout } from "~/containers/page-layout/index.js";
-import { PageHeader } from "~/containers/page-header/index.js";
 import { LoadingPage } from "~/components/loading-page/index.js";
 import { AchievementsTable } from "~/components/tables/index.js";
 import { text } from "~/assets/text/index.js";
@@ -34,14 +33,21 @@ const PlayerProfile = () => {
   return (
     <PageLayout title={user.data?.username ?? text.playerProfile.profile}>
       {user.data && (
-        <Stack sx={styles.table}>
-          <PlayerTable playerProfile={user.data} />
-        </Stack>
+        <>
+          <Typography variant="h2" sx={styles.title}>
+            {text.playerProfile.leaderboardTitle}
+          </Typography>
+          <Stack sx={styles.table}>
+            <PlayerTable playerProfile={user.data} />
+          </Stack>
+        </>
       )}
 
       {user.data && (
         <>
-          <PageHeader text={text.achievements.title} />
+          <Typography variant="h2" sx={styles.title}>
+            {text.playerProfile.achievementsTitle}
+          </Typography>
           <Stack sx={styles.table}>
             <AchievementsTable playerProfile={user.data} />
           </Stack>
