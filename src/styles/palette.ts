@@ -4,6 +4,7 @@ import { grey } from "@mui/material/colors";
 export const palette = (theme: Theme): Palette => {
   return {
     ...theme.palette,
+    mode: "dark",
     common: {
       black: "#000000",
       white: "#FFFFFF",
