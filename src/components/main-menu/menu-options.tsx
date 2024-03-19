@@ -11,6 +11,7 @@ import { styles } from "./styles.js";
 import { MenuOptionsButton } from "~/components/menu-options-button/index.js";
 import { useBBWallet } from "~/service/bb-wallet.js";
 import { isVerifiedUser } from "~/utils/user.js";
+import { EMPTY_RES } from "~/constants/main.js";
 
 interface Props {
   handleClose: () => void;
@@ -20,6 +21,7 @@ export const MenuOptions: FC<Props> = ({ handleClose }) => {
   const router = useRouter();
   const join = api.lobby.join.useMutation();
   const { disconnect: disconnectWallet } = useBBWallet();
+  const match = api.match.getOngoingMatch.useQuery();
 
   const user = api.user.getLoggedUser.useQuery(undefined, {
     retry: false,
@@ -35,15 +37,35 @@ export const MenuOptions: FC<Props> = ({ handleClose }) => {
     handleClose();
   };
 
+  const handleGoToMatch = async () => {
+    if (match.isLoading || !match.data || match.data === EMPTY_RES) return;
+
+    await router.push({
+      pathname: pages.match,
+      query: { roomId: match.data.id },
+    });
+
+    handleClose();
+  };
+
   return (
     <Stack sx={styles.menuButtonContainer}>
-      <MenuOptionsButton
-        disabled={join.status === "loading"}
-        // TODO: LOGIN the user with anonymous account
-        onClick={() => handleNavigation(pages.lobby)}
-      >
-        {text.general.playNewGame}
-      </MenuOptionsButton>
+      {match.data && match.data !== EMPTY_RES ? (
+        <MenuOptionsButton
+          disabled={join.status === "loading"}
+          onClick={() => void handleGoToMatch()}
+        >
+          {text.homepage.continueGame}
+        </MenuOptionsButton>
+      ) : (
+        <MenuOptionsButton
+          disabled={join.status === "loading"}
+          // TODO: LOGIN the user with anonymous account
+          onClick={() => handleNavigation(pages.lobby)}
+        >
+          {text.general.playNewGame}
+        </MenuOptionsButton>
+      )}
       <MenuOptionsButton onClick={() => handleNavigation(pages.playerProfile)}>
         {text.general.playerProfile}
       </MenuOptionsButton>

@@ -26,6 +26,7 @@ export const NavbarMenu: FC<Props> = ({ handleClose }) => {
   const handleNavigation = (path: string) => {
     playSfx("NavClick");
     void router.push(path);
+    handleClose();
   };
 
   return (

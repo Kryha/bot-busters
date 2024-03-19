@@ -10,4 +10,9 @@ export const styles = {
     flexDirection: "column",
     alignItems: "center",
   },
+  connectWallet: {
+    alignItems: "center",
+    gap: 4,
+    mb: 20,
+  },
 } satisfies SxStyleRecord;
