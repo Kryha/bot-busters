@@ -8,7 +8,12 @@ import {
   publicProcedure,
 } from "~/server/api/trpc.js";
 import { db } from "~/server/db/index.js";
-import { ranks, users, usersToMatches } from "~/server/db/schema.js";
+import {
+  ranks,
+  userAchievements,
+  users,
+  usersToMatches,
+} from "~/server/db/schema.js";
 import { deleteUser } from "~/server/db/user.js";
 import { leaderboard } from "~/server/service/index.js";
 import { profanityFilter } from "~/service/index.js";
@@ -125,6 +130,20 @@ export const userRouter = createTRPCRouter({
     if (!selectedUser) throw new Error("User not found");
 
     return selectedUser;
+  }),
+
+  getUserAchievements: protectedProcedure.query(async ({ ctx }) => {
+    const { id } = ctx.session.user;
+
+    const achievements = await db
+      .select({
+        id: userAchievements.achievementId,
+      })
+      .from(userAchievements)
+      .where(eq(userAchievements.userId, id));
+
+    const achievementIds = achievements.map((achievement) => achievement.id);
+    return achievementIds;
   }),
 
   getLoggedUserProfile: protectedProcedure.query(async ({ ctx }) => {

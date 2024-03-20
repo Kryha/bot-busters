@@ -27,6 +27,11 @@ const PlayerProfile = () => {
     retry: false,
   });
 
+  // TODO: Consume achievements.data in AchievementsTable
+  const achievements = api.user.getUserAchievements.useQuery(undefined, {
+    retry: false,
+  });
+
   if (user.isLoading) {
     return <LoadingPage />;
   }
