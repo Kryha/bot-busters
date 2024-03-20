@@ -19,6 +19,7 @@ export const styles = {
     mt: 2,
   } satisfies SxProps,
   wrapper: {
+    position: "relative",
     pt: 1,
     pb: 1,
     pl: 3,
@@ -32,7 +33,10 @@ export const styles = {
     },
   },
   mainLogo: {
-    transform: "scale(0.7) translateY(6px)",
+    position: "absolute",
+    top: "35%",
+    left: "50%",
+    transform: "scale(0.7) translate(-50%, -50%)",
     "&:hover": {
       "& > svg": {
         "& > path": {

@@ -2,7 +2,7 @@ import type { SxStyleRecord } from "~/types/sx-style-record.js";
 
 export const styles = {
   container: {
-    w: "100%",
+    mx: "auto",
     alignSelf: "center",
   },
   errorMessage: {

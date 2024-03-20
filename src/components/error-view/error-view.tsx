@@ -22,15 +22,16 @@ export function ErrorFallback({
   };
   return (
     <AppContainer>
-      <PageLayout title={errorMessage.generalHeading} />
-      <Stack sx={styles.container}>
-        <Typography variant="body1" sx={styles.errorMessage}>
-          {error.message}
-        </Typography>
-        <PrimaryButton onClick={handleClick}>
-          {errorMessage.tryAgain}
-        </PrimaryButton>
-      </Stack>
+      <PageLayout title={errorMessage.generalHeading}>
+        <Stack sx={styles.container}>
+          <Typography variant="body1" sx={styles.errorMessage}>
+            {error.message}
+          </Typography>
+          <PrimaryButton onClick={handleClick}>
+            {errorMessage.tryAgain}
+          </PrimaryButton>
+        </Stack>
+      </PageLayout>
     </AppContainer>
   );
 }

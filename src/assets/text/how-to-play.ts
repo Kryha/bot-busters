@@ -55,7 +55,7 @@ export const howToPlay = {
   ],
   leaderboard: [
     "Ranks are based on total scores.",
-    "Scores in each round make up a players total score",
+    "Scores in each round make up a players total score.",
   ],
   playerProfiles: [
     {

@@ -1,5 +1,4 @@
 import { useEffect, useMemo } from "react";
-import { CircularProgress } from "@mui/material";
 import { useErrorBoundary } from "react-error-boundary";
 
 import { LeaderboardTable } from "~/components/tables/index.js";
@@ -8,6 +7,7 @@ import { api } from "~/utils/api.js";
 import { isClient } from "~/utils/client.js";
 import { PageLayout } from "~/containers/page-layout/index.js";
 import { errorMessage } from "~/constants/error-messages.js";
+import { LoadingPage } from "~/components/loading-page/index.js";
 
 const USERS_PER_PAGE = 20;
 
@@ -64,7 +64,7 @@ const LeaderBoard = () => {
     };
   }, [getRankedUsers, showBoundary]);
 
-  if (getRankedUsers.isLoading) return <CircularProgress />;
+  if (getRankedUsers.isLoading) return <LoadingPage />;
 
   return (
     <PageLayout title={text.leaderboard.leaderboard}>

@@ -7,6 +7,7 @@ export const match = {
   isBot: "Bot",
   isHuman: "Human",
   localPlayer: "(YOU)",
+  calculatingVotes: "Calculating votes",
   bustTheBots: "Bust the bots",
   bustTheBotsDescription: "Click to vote for one or multiple suspected BOTS.",
   bustTheBotsDisabled: "Bust the bots",

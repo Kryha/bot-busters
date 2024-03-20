@@ -18,6 +18,7 @@ export const styles = {
   progress: {
     gap: 10,
     alignItems: "center",
+    justifyContent: "center",
   },
   text: { alignItems: "center", mb: 10 },
   textOrange: {

@@ -1,4 +1,4 @@
-import { Popper, Stack, Typography } from "@mui/material";
+import { Box, Popper, Stack, Typography } from "@mui/material";
 import { type FC, useState } from "react";
 import { useErrorBoundary } from "react-error-boundary";
 import { usePlaySFX } from "~/hooks/sounds.js";
@@ -48,7 +48,7 @@ export const PlayersOthers: FC<Props> = ({
     if (room.stage !== "results") return ["", ""];
 
     if (localPlayer.botsBusted === 0 && localPlayer.humansBusted === 0) {
-      return [text.match.bummer, text.match.bustedResultFail];
+      return [text.match.bummer, ""];
     }
 
     const [totalBots, totalHumans] = room.players
@@ -66,7 +66,7 @@ export const PlayersOthers: FC<Props> = ({
       return [text.match.busted, ""];
     }
 
-    return [text.match.goodJobKinda, text.match.bustedResultPass];
+    return [text.match.goodJobKinda, ""];
   })();
 
   const selectPlayer = (userId: string) => {
@@ -115,14 +115,24 @@ export const PlayersOthers: FC<Props> = ({
           <Typography variant="h2" sx={styles.playerHeading}>
             {text.match.bustTheBots}
           </Typography>
-          <Typography
-            variant="body1"
-            sx={styles.playerSubHeading(isVoteEnabled)}
-          >
-            {isVoteEnabled
-              ? text.match.bustTheBotsDescription
-              : text.match.bustTheBotsDisabledDescription}
-          </Typography>
+          {isLoadingVotes ? (
+            <Typography
+              variant="body1"
+              sx={styles.playerSubHeading(isVoteEnabled)}
+            >
+              {text.match.calculatingVotes}
+              <Box component="span" sx={styles.loading} />
+            </Typography>
+          ) : (
+            <Typography
+              variant="body1"
+              sx={styles.playerSubHeading(isVoteEnabled)}
+            >
+              {isVoteEnabled
+                ? text.match.bustTheBotsDescription
+                : text.match.bustTheBotsDisabledDescription}
+            </Typography>
+          )}
         </Stack>
       )}
 
