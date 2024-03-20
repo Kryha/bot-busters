@@ -1,11 +1,10 @@
 import { type FC, useCallback } from "react";
-import { Button } from "@mui/material";
-import { SoundOffIcon, SoundOnIcon } from "~/assets/icons/index.js";
 import {
   useChangeMasterVolume,
   useChangeMusicVolume,
   useChangeSFXVolume,
 } from "~/hooks/volume.js";
+import { SoundButton } from "~/components/sound-button/index.js";
 import {
   AUDIO_OFF,
   DEFAULT_MASTER_VOLUME,
@@ -59,9 +58,11 @@ export const AudioSettings: FC = () => {
 
   return (
     <>
-      <Button variant="text" onClick={disableAudio}>
-        {masterVolume === AUDIO_OFF ? <SoundOffIcon /> : <SoundOnIcon />}
-      </Button>
+      <SoundButton
+        variant="text"
+        onClick={disableAudio}
+        masterVolume={masterVolume}
+      />
       {/*<Menu*/}
       {/*  open={open}*/}
       {/*  anchorEl={anchorEl}*/}

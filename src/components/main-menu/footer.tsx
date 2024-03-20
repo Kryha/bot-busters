@@ -45,7 +45,7 @@ export const Footer: FC<Props> = ({ handleClose }) => {
         </Typography>
       </Link>
       <Link
-        href={text.general.obscuraWebsite}
+        href={text.general.zpassWebsite}
         target="_blank"
         style={{ textDecoration: "none" }}
       >

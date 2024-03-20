@@ -49,7 +49,7 @@ const PlayerProfile = () => {
       )}
 
       {!isVerifiedUser(user.data) && (
-        <Stack alignItems="center" gap={4}>
+        <Stack sx={styles.connectWallet}>
           <Stack alignItems="center" gap={2}>
             <Typography variant="body1">
               {text.playerProfile.createProfile}

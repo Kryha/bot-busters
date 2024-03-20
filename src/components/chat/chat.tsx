@@ -14,6 +14,7 @@ import { HostChatPrompt } from "~/components/host-chat-prompt/index.js";
 import { InputField } from "~/components/input-field/index.js";
 import { Messages } from "~/components/messages/index.js";
 import { Timer } from "~/components/timer/index.js";
+import { CharacterTypingIndicator } from "~/components/character-typing/index.js";
 import {
   CHARACTERS,
   CHAT_TIME_MS,
@@ -40,6 +41,7 @@ export const Chat: FC<Props> = ({ roomId, room }) => {
   const playSfx = usePlaySFX();
 
   const sendMessage = api.match.sendMessage.useMutation();
+  const sendTyping = api.match.sendTyping.useMutation();
 
   const [message, setMessage] = useState("");
   const [typingSoundPlayed, setTypingSoundPlayed] = useState(false);
@@ -63,6 +65,7 @@ export const Chat: FC<Props> = ({ roomId, room }) => {
     } else if (inputValue.length > MAX_CHARACTERS_CHAT_MESSAGE) {
       setMessage(inputValue.slice(0, MAX_CHARACTERS_CHAT_MESSAGE));
     }
+    sendTyping.mutate({ roomId });
   };
 
   const validateForm = (newMessage: string) => {
@@ -140,6 +143,7 @@ export const Chat: FC<Props> = ({ roomId, room }) => {
     <Stack sx={styles.container(stage)}>
       <Stack component="section" sx={styles.section}>
         <HostChatPrompt stage={stage} message={hostMessageData?.message} />
+        <CharacterTypingIndicator roomId={roomId} room={room} />
         <Messages messageData={messageData} />
       </Stack>
       {!isChatDisabled && (
