@@ -51,12 +51,24 @@ export function splitMessage(input: string, maxLength: number): string[] {
   return [firstSegment.trimStart(), secondSegment.trimStart()];
 }
 
+function removeEmojis(text: string): string {
+  // Emoji matching pattern
+  const emojiPattern =
+    /([\u2700-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDD10-\uDDFF])/g;
+  // Replace emojis with an empty string
+  return text.replace(emojiPattern, "");
+}
+
 export function cleanMessage(input: string): string {
   // Removes //ufffd || </s> || *some expresion* || [INST] || (words in parenthesis) || gender symbols
-  return input
+  const parsedMessage = input
     .trimStart()
     .replace(
       /(\ufffd|\u2642|\u2640|\[\/?\w+\]?|<\/s>|(\*\w+(?:\s+\w+)*\*)|\*\w+\s)|(\(\w+(?:\s+\w+)*\))/g,
       "",
     );
+
+  const noEmojisMessage = removeEmojis(parsedMessage);
+
+  return noEmojisMessage;
 }
