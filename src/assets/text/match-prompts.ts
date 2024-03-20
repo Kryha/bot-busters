@@ -83,7 +83,7 @@ export const matchPrompts = [
   "Where were you in 1998 when the Undertaker threw Mankind off of hell in a cell and he plummeted 16 feet before crashing through an announcers table?",
   "If you were a flavor, which one would you be and why?",
   "In a zombie apocalypse, what would be your survival strategy?",
-  "What wear a costume every day for the rest of your life, what would it be?",
+  "If you would wear the same costume for the rest of your life, what would it be?",
   "What would 10 year old you think of adult you?",
   "If you had a third ear, where would you put it?",
   "What's your favorite type of potato?",
