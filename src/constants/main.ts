@@ -54,7 +54,7 @@ export const BOTBUSTERS_LOGO_ANIMATION_SEGMENT = [
 ];
 
 export const LANDING_PAGE_ANIMATION_SEGMENT = [
-  [170, 480],
+  [240, 480],
   [240, 480],
 ];
 

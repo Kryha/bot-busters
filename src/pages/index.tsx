@@ -6,7 +6,7 @@ import { useErrorBoundary } from "react-error-boundary";
 import { text } from "~/assets/text/index.js";
 import { BotBusterLogoAnimation } from "~/components/bot-buster-logo/index.js";
 import { Navbar, TopRanked } from "~/components/index.js";
-import { LandingPageAnimation } from "~/components/landing-page-animation/index.js";
+import { HomePageAnimation } from "~/components/landing-page-animation/index.js";
 import { PixelButton } from "~/components/pixel-button/index.js";
 import { PlayButton } from "~/components/play-button/index.js";
 import { errorMessage } from "~/constants/error-messages.js";
@@ -35,6 +35,7 @@ const Homepage = () => {
     retry: false,
   });
   const match = api.match.getOngoingMatch.useQuery();
+  const matchStatus = match.data && match.data !== EMPTY_RES;
 
   const handleGameStart = async () => {
     if (loggedUser.isLoading || match.isLoading) return;
@@ -71,7 +72,7 @@ const Homepage = () => {
   return (
     <Box component="main" ref={mainContainerRef} sx={styles.wrapper}>
       <Navbar />
-      <LandingPageAnimation />
+      <HomePageAnimation />
       <Stack component="div" sx={styles.logo}>
         <Typography variant="body1" sx={styles.whoIsABot}>
           {text.homepage.descriptionPart1}
@@ -82,19 +83,20 @@ const Homepage = () => {
         </Typography>
       </Stack>
       <Stack sx={styles.actions}>
-        {match.data && match.data !== EMPTY_RES ? (
-          <PixelButton
-            disabled={loggedUser.isLoading || match.isLoading}
-            onClick={() => void handleGoToMatch()}
-            text={text.homepage.continueGame}
-          />
-        ) : (
+        {!matchStatus && (
           <PlayButton
             disabled={loggedUser.isLoading || match.isLoading}
             onClick={() => void handleGameStart()}
           />
         )}
         <Stack sx={styles.menuActions}>
+          {matchStatus && (
+            <PixelButton
+              disabled={loggedUser.isLoading || match.isLoading}
+              onClick={() => void handleGoToMatch()}
+              text={text.homepage.continueGame}
+            />
+          )}
           <PixelButton
             onClick={() => openHandler(pages.leaderboard)}
             text={text.homepage.leaderboard}
