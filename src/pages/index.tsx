@@ -1,4 +1,4 @@
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/router.js";
 import { useErrorBoundary } from "react-error-boundary";
@@ -73,15 +73,7 @@ const Homepage = () => {
     <Box component="main" ref={mainContainerRef} sx={styles.wrapper}>
       <Navbar />
       <HomePageAnimation />
-      <Stack component="div" sx={styles.logo}>
-        <Typography variant="body1" sx={styles.whoIsABot}>
-          {text.homepage.descriptionPart1}
-        </Typography>
-        <BotBusterLogoAnimation />
-        <Typography variant="body1" sx={styles.aleoSystems}>
-          {text.homepage.aleoSystems}
-        </Typography>
-      </Stack>
+      <BotBusterLogoAnimation />
       <Stack sx={styles.actions}>
         {!matchStatus && (
           <PlayButton
