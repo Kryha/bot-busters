@@ -14,7 +14,7 @@ export const styles = {
   },
   list: (stage: MatchStage) => {
     return {
-      width: stage === "chat" ? "auto" : "850px",
+      width: stage === "chat" ? "auto" : "100%",
       justifyContent: stage === "results" ? "flex-start" : "center",
       mt: stage === "chat" ? 0 : 2,
       mb: stage === "chat" ? 0 : 2,
@@ -40,8 +40,7 @@ export const styles = {
     };
   },
   timeSection: {
-    pr: 2,
-    pl: 2,
+    px: 2,
     gap: 2,
     justifyContent: "center",
     alignItems: "center",
@@ -52,16 +51,40 @@ export const styles = {
   },
   //TODO: Might join these two styles in future
   voting: {
-    mt: 3,
-    pr: 2,
-    pl: 2,
+    my: 3,
+    px: 2,
     gap: 4,
-    mb: 3,
   },
   results: {
     mt: 3,
-    pr: 2,
-    pl: 2,
+    px: 2,
     gap: 4,
+  },
+  loading: {
+    mr: 4,
+    fontSize: "16px",
+    fontFamily: theme.typography.body1.fontFamily,
+    "@keyframes dots": {
+      "0%, 20%": {
+        color: "rgba(0,0,0,0)",
+        textShadow: ".25em 0 0 rgba(0,0,0,0), .5em 0 0 rgba(0,0,0,0)",
+      },
+      "40%": {
+        color: "black ",
+        textShadow: ".25em 0 0 rgba(0,0,0,0),.5em 0 0 rgba(0,0,0,0)",
+      },
+      "60%": {
+        color: "white ",
+        textShadow: ".25em 0 0 black, .5em 0 0 black",
+      },
+      "80%, 100%": {
+        color: "white ",
+        textShadow: ".25em 0 0 white, .5em 0 0 white",
+      },
+    },
+    "&:after": {
+      content: "'.'",
+      animation: "dots 1s steps(5, end) infinite",
+    },
   },
 };

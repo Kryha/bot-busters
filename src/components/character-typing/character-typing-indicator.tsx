@@ -43,9 +43,11 @@ export const CharacterTypingIndicator: FC<Props> = ({ room, roomId }) => {
           (player) => CHARACTERS[player.characterId].name,
         );
         const last = names.pop();
-        typingMessage = `${names.join(", ")} and ${last}`;
+        typingMessage = `${names.join(", ")} and ${last} are`;
       } else if (typingUsersArray.length === 1) {
-        typingMessage = CHARACTERS[typingUsersArray[0]!.characterId].name;
+        typingMessage = `${
+          CHARACTERS[typingUsersArray[0]!.characterId].name
+        } is`;
       }
 
       setCharacterTyping(typingMessage);
@@ -73,9 +75,9 @@ export const CharacterTypingIndicator: FC<Props> = ({ room, roomId }) => {
       {stage === "chat" && (
         <Stack sx={styles.typingDialog(isTyping)}>
           <Typography variant="caption" sx={styles.typing}>
-            {characterTyping} is typing
+            {characterTyping} typing
           </Typography>
-          <Box component="div" sx={styles.dots} />
+          <Box component="div" sx={styles.loading} />
         </Stack>
       )}
     </>

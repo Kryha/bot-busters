@@ -1,12 +1,9 @@
-import { Stack, Typography } from "@mui/material";
-import Image from "next/image";
-import { default as spinner } from "~/assets/images/spinner.gif";
+import { CircularProgress, Stack, Typography } from "@mui/material";
 import { text } from "~/assets/text/index.js";
 import { PageLayout } from "~/containers/page-layout/index.js";
 import { processTextToLink } from "~/utils/links.jsx";
 import { styles } from "./styles.js";
 
-const SPINNER_SIZE = 34;
 export const LoginLoading = () => {
   return (
     <PageLayout title={text.auth.connectWallet}>
@@ -18,12 +15,9 @@ export const LoginLoading = () => {
         </Stack>
 
         <Stack sx={styles.progress}>
-          <Image
-            src={spinner}
-            alt="spinner"
-            width={SPINNER_SIZE}
-            height={SPINNER_SIZE}
-          />
+          <Stack width="100%" pt="10vh" alignItems="center">
+            <CircularProgress />
+          </Stack>
         </Stack>
       </Stack>
     </PageLayout>

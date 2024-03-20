@@ -11,7 +11,7 @@ export const processTextToLink = (
 
     if (isLink) {
       return (
-        <a key={index} href={wordsToLink[part]}>
+        <a key={index} href={wordsToLink[part]} target={"_blank"}>
           {part}
         </a>
       );

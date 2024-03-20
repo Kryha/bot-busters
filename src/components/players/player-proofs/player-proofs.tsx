@@ -1,7 +1,5 @@
 import { Box, Stack, Typography } from "@mui/material";
-import { useEffect, useRef, type FC } from "react";
-
-import { BotArrowIcon } from "~/assets/icons/index.js";
+import { type FC, useEffect, useRef } from "react";
 import { text } from "~/assets/text/index.js";
 import { CHARACTERS } from "~/constants/index.js";
 import { type CharacterId, type PlayerType } from "~/types/index.js";
@@ -75,10 +73,10 @@ export const PlayerProofs: FC<Props> = ({
         </Typography>
 
         {/*// TODO: Add proof from server*/}
-        <Stack sx={styles.verifyProof}>
-          <Typography variant="body1">{text.match.verifyProof}</Typography>
-          <BotArrowIcon />
-        </Stack>
+        {/*<Stack sx={styles.verifyProof}>*/}
+        {/*  <Typography variant="body1">{text.match.verifyProof}</Typography>*/}
+        {/*  <BotArrowIcon />*/}
+        {/*</Stack>*/}
       </Stack>
     </Stack>
   );

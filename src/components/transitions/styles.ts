@@ -37,6 +37,7 @@ export const styles = {
     inset: 0,
     width: "100%",
     height: "100%",
+    zIndex: zIndex.front,
     justifyContent: "center",
     alignItems: "center",
     "& > svg": {
