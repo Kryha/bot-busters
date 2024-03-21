@@ -52,21 +52,20 @@ export const formatDate = (date: string | number): string => {
   }
 };
 
-export const longDateFormat = (timestamp: number) => {
-  const inputDate = new Date(timestamp);
-
-  const options: Intl.DateTimeFormatOptions = {
-    day: "numeric",
-    month: "long",
+export const getHumanReadableDate = (date: Date): string => {
+  // Locale 'en-US' can be replaced with 'default' for the user's current locale
+  // Options can be adjusted as needed for different levels of detail
+  const formatter = new Intl.DateTimeFormat("en-US", {
     year: "numeric",
-  };
-  const date = inputDate.toLocaleDateString("en-US", options);
-
-  return `${formatDate(timestamp)}, ${date}`;
+    month: "long",
+    day: "2-digit",
+    weekday: "long",
+  });
+  return formatter.format(date);
 };
 
 // TODO: optimize these functions
-const formattedDate = (date: Date) => {
+export const formattedDate = (date: Date) => {
   const options: Intl.DateTimeFormatOptions = { day: "numeric", month: "long" };
   return date.toLocaleDateString("en-US", options);
 };
