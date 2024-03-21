@@ -62,3 +62,7 @@ export const NavbarMenuButton: FC<Props> = ({ ...props }) => {
     </NavbarMenuButtonStyle>
   );
 };
+
+export const ExitLobbyButton: FC<Props> = ({ ...props }) => {
+  return <MenuButtonStyle {...props}>{text.general.quitLobby}</MenuButtonStyle>;
+};

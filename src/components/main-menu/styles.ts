@@ -9,15 +9,6 @@ export const styles = {
       justifyContent: "space-between",
     },
   },
-  dialogLogo: {
-    display: "none",
-    [`@media (max-width: ${breakpoints.sm}px)`]: {
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      width: "100%",
-    },
-  },
   buttonWrapper: {
     alignItems: "flex-end",
     pt: 3,

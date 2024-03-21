@@ -34,9 +34,9 @@ export const styles = {
   },
   mainLogo: {
     position: "absolute",
-    top: "35%",
+    top: "50%",
     left: "50%",
-    transform: "scale(0.7) translate(-50%, -50%)",
+    transform: "translate(-50%, -50%)",
     "&:hover": {
       "& > svg": {
         "& > path": {
@@ -67,6 +67,7 @@ export const styles = {
     justifyContent: "center",
     color: theme.palette.primary.main,
     gap: 1,
+    height: 40,
     cursor: "pointer",
     "&:hover": {
       color: theme.palette.secondary.main,
@@ -90,6 +91,7 @@ export const styles = {
     },
     fontStyle: "italic",
     width: 200,
+    height: 40,
     gap: 3,
     justifyContent: "center",
   } satisfies SxProps,
@@ -98,4 +100,10 @@ export const styles = {
     width: 300,
     justifyContent: "flex-start",
   } satisfies SxProps,
+  lobby: {
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    gap: 3,
+    mr: 2,
+  },
 };
