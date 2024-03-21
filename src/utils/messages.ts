@@ -59,16 +59,33 @@ function removeEmojis(text: string): string {
   return text.replace(emojiPattern, "");
 }
 
-export function cleanMessage(input: string): string {
+function removeFillerWords(text: string): string {
+  // List of common filler words to be removed
+  const fillerWords = ["Ugh", "Oh", "Umm"];
+  // Escape special characters in filler words for use in regex and join into a regex pattern
+  const fillerWordsPattern = fillerWords
+    .map((fw) => fw.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&"))
+    .join("|");
+  // Regex pattern to find filler words
+  const regex = new RegExp(`\\b(${fillerWordsPattern})\\b`, "gi");
+  // Replace filler words with an empty string
+  return text.replace(regex, "").trim();
+}
+
+function removePromptAnomalies(input: string): string {
   // Removes //ufffd || </s> || *some expresion* || [INST] || (words in parenthesis) || gender symbols
-  const parsedMessage = input
-    .trimStart()
-    .replace(
-      /(\ufffd|\u2642|\u2640|\[\/?\w+\]?|<\/s>|(\*\w+(?:\s+\w+)*\*)|\*\w+\s)|(\(\w+(?:\s+\w+)*\))/g,
-      "",
-    );
+  const parsedMessage = input.replace(
+    /(\ufffd|\u2642|\u2640|\[\/?\w+\]?|<\/s>|(\*\w+(?:\s+\w+)*\*)|\*\w+\s)|(\(\w+(?:\s+\w+)*\))/g,
+    "",
+  );
 
+  return parsedMessage;
+}
+
+export function cleanMessage(input: string): string {
+  const parsedMessage = removePromptAnomalies(input);
   const noEmojisMessage = removeEmojis(parsedMessage);
+  const cleanMessage = removeFillerWords(noEmojisMessage);
 
-  return noEmojisMessage;
+  return cleanMessage.trimStart();
 }
