@@ -11,11 +11,12 @@ import {
   type AchievementId,
   type LoggedUserProfileData,
 } from "~/types/index.js";
+
 import { api } from "~/utils/api.js";
 import { Header } from "./components/index.js";
 import { text } from "~/assets/text/index.js";
 import { matchAchievements } from "~/server/service/achievements.js";
-import { POINTS_ACHIEVEMENTS } from "~/constants/main.js";
+import { achievementsRecord, POINTS_ACHIEVEMENTS } from "~/constants/main.js";
 import { styles } from "./styles.js";
 
 interface Props {
@@ -39,18 +40,7 @@ export const AchievementsTable: FC<Props> = ({ playerProfile }) => {
 
   if (!playerProfile) return;
 
-  const achievementsRecord: Record<AchievementId, string> = {
-    busterStreak: "x5",
-    fiveDayStreak: "x2",
-    firstTimer: "0",
-    beginnersLuck: "0",
-    goodBust: "0",
-    masterBuster: "0",
-    realHuman: "0",
-    dailyStreakCounter: "0",
-  };
-
-  const countAchievement = (achievementId: AchievementId) => {
+  const calculatePointsEarned = (achievementId: AchievementId) => {
     const numberOfAchievements = achievements?.data?.filter(
       (a) => a === achievementId,
     ).length;
@@ -65,7 +55,9 @@ export const AchievementsTable: FC<Props> = ({ playerProfile }) => {
     .map(([achievementId, streak]): AchievementRow => {
       // Object.entries coverts achievementId to string, so we turn it back to AchievementId
       const achievementInfo = matchAchievements[achievementId as AchievementId];
-      const pointsEarned = countAchievement(achievementId as AchievementId);
+      const pointsEarned = calculatePointsEarned(
+        achievementId as AchievementId,
+      );
       const pointValue = POINTS_ACHIEVEMENTS[achievementId as AchievementId];
 
       if (!achievementInfo) {

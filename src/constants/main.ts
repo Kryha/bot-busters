@@ -38,6 +38,17 @@ export const POINTS_ACHIEVEMENTS: Record<AchievementId, number> = {
   masterBuster: 9,
 };
 
+export const achievementsRecord: Record<AchievementId, string> = {
+  busterStreak: "x5",
+  fiveDayStreak: "x2",
+  firstTimer: "0",
+  beginnersLuck: "0",
+  goodBust: "0",
+  masterBuster: "0",
+  realHuman: "0",
+  dailyStreakCounter: "0",
+};
+
 // run the entire animation once, then infinitely loop the second half
 export const BOT_BUSTED_ANIMATION_SEGMENT = [
   [0, 120],

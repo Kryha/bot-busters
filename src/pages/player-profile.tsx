@@ -42,11 +42,6 @@ const PlayerProfile = () => {
           <Stack sx={styles.table}>
             <PlayerTable playerProfile={user.data} />
           </Stack>
-        </>
-      )}
-
-      {user.data && (
-        <>
           <Typography variant="h2" sx={styles.title}>
             {text.playerProfile.achievementsTitle}
           </Typography>
