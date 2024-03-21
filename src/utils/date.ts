@@ -53,8 +53,6 @@ export const formatDate = (date: string | number): string => {
 };
 
 export const getHumanReadableDate = (date: Date): string => {
-  // Locale 'en-US' can be replaced with 'default' for the user's current locale
-  // Options can be adjusted as needed for different levels of detail
   const formatter = new Intl.DateTimeFormat("en-US", {
     year: "numeric",
     month: "long",
