@@ -16,7 +16,7 @@ import { api } from "~/utils/api.js";
 import { Header } from "./components/index.js";
 import { text } from "~/assets/text/index.js";
 import { matchAchievements } from "~/server/service/achievements.js";
-import { achievementsRecord, POINTS_ACHIEVEMENTS } from "~/constants/main.js";
+import { POINTS_ACHIEVEMENTS } from "~/constants/main.js";
 import { styles } from "./styles.js";
 
 interface Props {
@@ -38,6 +38,17 @@ export const AchievementsTable: FC<Props> = ({ playerProfile }) => {
     retry: false,
   });
 
+  const achievementsDataStructure: Record<AchievementId, string> = {
+    busterStreak: "x5",
+    fiveDayStreak: "x2",
+    firstTimer: "0",
+    beginnersLuck: "0",
+    goodBust: "0",
+    masterBuster: "0",
+    realHuman: "0",
+    dailyStreakCounter: "0",
+  };
+
   if (!playerProfile) return;
 
   const calculatePointsEarned = (achievementId: AchievementId) => {
@@ -50,7 +61,9 @@ export const AchievementsTable: FC<Props> = ({ playerProfile }) => {
     return numberOfAchievements * POINTS_ACHIEVEMENTS[achievementId];
   };
 
-  const achievementRow: AchievementRow[] = Object.entries(achievementsRecord)
+  const achievementRow: AchievementRow[] = Object.entries(
+    achievementsDataStructure,
+  )
     .filter(([achievementId]) => achievementId !== "dailyStreakCounter") // Filter out the dailyStreakCounter early
     .map(([achievementId, streak]): AchievementRow => {
       // Object.entries coverts achievementId to string, so we turn it back to AchievementId
