@@ -6,6 +6,11 @@ export const styles = {
     return {
       "&:last-child td, &:last-child th": { border: 0 },
       "& .MuiTableCell-root": { pl: 0 },
+      "td:first-child": { pl: 20, pr: 5 },
+      "td:last-child": { pr: 20 },
+      td: {
+        pl: 0,
+      },
       filter: isBlurred ? "blur(2.5px)" : "none",
     };
   },
@@ -15,18 +20,22 @@ export const styles = {
     alignItems: "center",
   },
   cell: {
-    textAlign: "start",
     color: theme.palette.primary.main,
   },
   userCell: {
     position: "sticky",
     color: theme.palette.common.white,
   },
+  rank: {
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    alignItems: "center",
+    width: "100%",
+  },
   ranking: {
     fontFamily: theme.typography.h2.fontFamily,
     fontSize: theme.typography.h4.fontSize,
     textAlign: "end",
     color: theme.palette.primary.main,
-    pr: "50px",
   } satisfies SxProps,
 };

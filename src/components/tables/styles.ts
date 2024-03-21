@@ -1,5 +1,4 @@
 import { theme } from "~/styles/theme.js";
-import type { SxStyleRecord } from "~/types/sx-style-record.js";
 
 export const styles = {
   wrapper: {
@@ -10,7 +9,6 @@ export const styles = {
   },
   table: {
     minWidth: 750,
-    maxWidth: 1080,
     width: "100vw",
     borderCollapse: "separate",
     "& td, & th": {
@@ -21,10 +19,20 @@ export const styles = {
   },
   tableContainer: { height: "100vh", overflowY: "hidden" },
   tableRow: {
-    "&:last-child td, &:last-child th": { border: 0 },
-    "td:first-child": { pl: 6 },
+    "td:first-child": { pl: 20 },
+    "td:last-child": { pr: 20 },
     td: {
       pl: 0,
     },
   },
-} satisfies SxStyleRecord;
+  achievementTableRow: (pointsEarned: boolean) => {
+    return {
+      "td:first-child": { pl: 20 },
+      "td:last-child": { pr: 20 },
+      td: {
+        pl: 0,
+        color: pointsEarned ? theme.palette.primary.main : "customGrey.main",
+      },
+    };
+  },
+};

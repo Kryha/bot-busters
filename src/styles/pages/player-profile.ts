@@ -5,7 +5,11 @@ export const styles = {
     mb: 5,
     textAlign: "center",
   },
+  container: {
+    justifyContent: "center",
+  },
   title: {
+    textAlign: "center",
     fontSize: 50,
     color: "orange.main",
     fontWeight: "bold",

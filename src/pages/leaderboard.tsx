@@ -1,13 +1,14 @@
-import { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
+import { Stack } from "@mui/material";
 import { useErrorBoundary } from "react-error-boundary";
-
+import { LoadingPage } from "~/components/loading-page/index.js";
+import { PageHeader } from "~/containers/page-header/index.js";
 import { LeaderboardTable } from "~/components/tables/index.js";
 import { text } from "~/assets/text/index.js";
 import { api } from "~/utils/api.js";
 import { isClient } from "~/utils/client.js";
-import { PageLayout } from "~/containers/page-layout/index.js";
 import { errorMessage } from "~/constants/error-messages.js";
-import { LoadingPage } from "~/components/loading-page/index.js";
+import { styles } from "~/styles/pages/leaderboard.js";
 
 const USERS_PER_PAGE = 20;
 
@@ -67,9 +68,10 @@ const LeaderBoard = () => {
   if (getRankedUsers.isLoading) return <LoadingPage />;
 
   return (
-    <PageLayout title={text.leaderboard.leaderboard}>
+    <Stack sx={styles.container}>
+      <PageHeader text={text.leaderboard.leaderboard} />
       <LeaderboardTable leaderboard={leaderboardData} />
-    </PageLayout>
+    </Stack>
   );
 };
 

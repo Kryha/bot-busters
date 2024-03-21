@@ -5,16 +5,17 @@ import { styles } from "./styles.js";
 
 interface Props {
   cells: string[];
+  cellsToAlign?: number;
 }
 
-export const Header: FC<Props> = ({ cells }) => {
+export const Header: FC<Props> = ({ cells, cellsToAlign = 0 }) => {
   return (
     <TableHead>
       <TableRow sx={styles.tableRow}>
         {cells.map((cell, index) => (
           <TableCell
             key={index}
-            sx={{ padding: 1, ...(index > 0 && styles.busterCell) }}
+            sx={{ padding: 1, ...(index > cellsToAlign && styles.busterCell) }}
           >
             <Typography
               variant="body1"

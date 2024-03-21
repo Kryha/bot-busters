@@ -23,8 +23,6 @@ const COLUMN_WIDTH = { sm: "8.6%", md: "15.5%", lg: "30%" };
 export const PlayerTable: FC<Props> = ({ playerProfile }) => {
   if (!playerProfile) return;
 
-  console.log(playerProfile.username);
-
   return (
     <TableContainer sx={styles.wrapper}>
       <Table sx={styles.table} aria-label="simple table">
@@ -40,9 +38,7 @@ export const PlayerTable: FC<Props> = ({ playerProfile }) => {
           <TableRow sx={styles.tableRow}>
             <TableCell align="left">
               <Typography variant="body1" color="common.white">
-                {playerProfile.username === null
-                  ? "Anonymous"
-                  : playerProfile.username}
+                {playerProfile.username ?? "Anonymous"}
               </Typography>
             </TableCell>
 
@@ -59,9 +55,7 @@ export const PlayerTable: FC<Props> = ({ playerProfile }) => {
             </TableCell>
 
             <TableCell align="center">
-              <Typography variant="body1" color="customGrey.main">
-                NULL
-              </Typography>
+              <Typography variant="body1" color="customGrey.main"></Typography>
             </TableCell>
 
             <TableCell align="center">
