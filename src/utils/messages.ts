@@ -59,16 +59,19 @@ function removeEmojis(text: string): string {
   return text.replace(emojiPattern, "");
 }
 
-export function cleanMessage(input: string): string {
+function removePromptAnomalies(input: string): string {
   // Removes //ufffd || </s> || *some expresion* || [INST] || (words in parenthesis) || gender symbols
-  const parsedMessage = input
-    .trimStart()
-    .replace(
-      /(\ufffd|\u2642|\u2640|\[\/?\w+\]?|<\/s>|(\*\w+(?:\s+\w+)*\*)|\*\w+\s)|(\(\w+(?:\s+\w+)*\))/g,
-      "",
-    );
+  const parsedMessage = input.replace(
+    /(\ufffd|\u2642|\u2640|\[\/?\w+\]?|<\/s>|(\*\w+(?:\s+\w+)*\*)|\*\w+\s)|(\(\w+(?:\s+\w+)*\))|\.$/g,
+    "",
+  );
 
+  return parsedMessage;
+}
+
+export function cleanMessage(input: string): string {
+  const parsedMessage = removePromptAnomalies(input);
   const noEmojisMessage = removeEmojis(parsedMessage);
 
-  return noEmojisMessage;
+  return noEmojisMessage.trimStart();
 }
