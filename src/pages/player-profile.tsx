@@ -5,11 +5,10 @@ import { usePlaySFX } from "~/hooks/sounds.js";
 
 import { pages } from "~/router.js";
 import { api } from "~/utils/api.js";
+import { PageHeader } from "~/containers/page-header/index.js";
 import { PrimaryButton } from "~/components/primary-button/index.js";
 import { PlayerTable } from "~/components/index.js";
 import { isVerifiedUser } from "~/utils/user.js";
-import { PageLayout } from "~/containers/page-layout/index.js";
-import { PageHeader } from "~/containers/page-header/index.js";
 import { LoadingPage } from "~/components/loading-page/index.js";
 import { AchievementsTable } from "~/components/tables/index.js";
 import { text } from "~/assets/text/index.js";
@@ -27,26 +26,25 @@ const PlayerProfile = () => {
     retry: false,
   });
 
-  // TODO: Consume achievements.data in AchievementsTable
-  const achievements = api.user.getUserAchievements.useQuery(undefined, {
-    retry: false,
-  });
-
   if (user.isLoading) {
     return <LoadingPage />;
   }
 
   return (
-    <PageLayout title={user.data?.username ?? text.playerProfile.profile}>
-      {user.data && (
-        <Stack sx={styles.table}>
-          <PlayerTable playerProfile={user.data} />
-        </Stack>
-      )}
+    <Stack sx={styles.container}>
+      <PageHeader text={text.playerProfile.profile} />
 
       {user.data && (
         <>
-          <PageHeader text={text.achievements.title} />
+          <Typography variant="h2" sx={styles.title}>
+            {text.playerProfile.leaderboardTitle}
+          </Typography>
+          <Stack sx={styles.table}>
+            <PlayerTable playerProfile={user.data} />
+          </Stack>
+          <Typography variant="h2" sx={styles.title}>
+            {text.playerProfile.achievementsTitle}
+          </Typography>
           <Stack sx={styles.table}>
             <AchievementsTable playerProfile={user.data} />
           </Stack>
@@ -70,7 +68,7 @@ const PlayerProfile = () => {
           </PrimaryButton>
         </Stack>
       )}
-    </PageLayout>
+    </Stack>
   );
 };
 

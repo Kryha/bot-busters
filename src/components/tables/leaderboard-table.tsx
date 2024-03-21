@@ -27,7 +27,7 @@ export const LeaderboardTable: FC<Props> = ({ leaderboard = [] }) => {
           <col width={COLUMN_WIDTH.md} />
           <col width={COLUMN_WIDTH.md} />
         </colgroup>
-        <Header cells={text.leaderboard.leaderboardColumns} />
+        <Header cells={text.leaderboard.leaderboardColumns} cellsToAlign={1} />
         <TableBody>
           {user.data?.username && (
             <RowLeaderboard userRow leaderboard={user.data} />
