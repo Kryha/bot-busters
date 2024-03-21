@@ -4,10 +4,20 @@
   margin: 0;
 }
 
+
+browser[type="content-primary"],
+browser[type="content"] {
+  background: black !important;
+}
+
 a {
   color: #5cff00;
   cursor: pointer;
   text-decoration: underline;
+}
+
+html, body {
+  background-color: black !important;
 }
 
 button {

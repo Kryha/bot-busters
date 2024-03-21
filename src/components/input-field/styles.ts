@@ -103,6 +103,9 @@ export const styles = {
   },
   inputFieldProps: {
     flexGrow: 1,
+    fieldset: {
+      border: "none",
+    },
     "&:hover fieldset": {
       border: "none",
     },

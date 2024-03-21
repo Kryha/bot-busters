@@ -5884,6 +5884,7 @@ __metadata:
     leva: ^0.9.35
     lodash: ^4.17.21
     lottie-react: ^2.4.0
+    lottie-web: ^5.12.2
     minidenticons: ^4.2.0
     naughty-words: ^1.2.0
     next: 13.4.12
@@ -10048,7 +10049,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lottie-web@npm:^5.10.2, lottie-web@npm:^5.7.6":
+"lottie-web@npm:^5.10.2, lottie-web@npm:^5.12.2, lottie-web@npm:^5.7.6":
   version: 5.12.2
   resolution: "lottie-web@npm:5.12.2"
   checksum: af5bc3bc405fd760de8b17a36158d5a8c3e8c586c711d0c63681ddf056b65bc6b54ea36b1fcad782fb02dbe12e696a40e0ba72daf41b8f10ab5b5d1113793636

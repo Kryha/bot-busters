@@ -7,6 +7,8 @@ export const styles = {
   dialog: {
     "& .MuiDialog-paper": {
       justifyContent: "space-between",
+      backgroundColor: theme.palette.background.paper,
+      backgroundImage: "unset",
     },
   },
   buttonWrapper: {
