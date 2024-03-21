@@ -21,6 +21,7 @@ import { getRandomInt } from "~/utils/math.js";
 import { cleanMessage, splitMessage } from "~/utils/messages.js";
 import { describePersonality } from "~/server/service/agent/personality-matrix.js";
 import { profanityFilter } from "~/service/index.js";
+import { getHumanReadableDate } from "~/utils/date.js";
 
 export class Agent {
   private _id: string;
@@ -93,28 +94,6 @@ export class Agent {
     for (const chatMessage of messagesToSend) {
       await this.sendChatMessage(chatMessage);
     }
-  }
-
-  private calculateWaitingTime(response: string) {
-    const inferenceTime = Date.now() - this._triggeredAt;
-
-    const hostPromptOffsetTime = 5000; // Waiting for host prompt to be rendered & players to read it
-    const typingTime = response.length * 300; // Average typing time per character in a word is 0.3s
-    const minTypingTime = typingTime * 0.7;
-    const maxTypingTime = typingTime * 1;
-
-    // Check if it's the start of the match with one message from host
-    // First reply would be longer in response to host prompt
-    // Otherwise reply to ongoing conversation
-    const hostPromptWaitingTime =
-      this._match.messages.length === 1 ? hostPromptOffsetTime : 0;
-
-    const waitTime = getRandomInt({
-      min: minTypingTime + hostPromptWaitingTime,
-      max: maxTypingTime + hostPromptWaitingTime,
-    });
-
-    return waitTime - inferenceTime;
   }
 
   private async requestMessageFromLLM(): Promise<string> {
@@ -241,17 +220,23 @@ export class Agent {
 
   private generateSystemPrompt(): string {
     const personality = describePersonality(this._agentPersonality);
+    const currentDate = getHumanReadableDate(new Date());
 
     return [
       `Your name is ${this._characterName}.`,
-      "You only speak in English.",
-      "Act like a person chatting with strangers in a game.",
-      "Give short and concrete answers. Use less than 40 words.",
-      "You don't worry about grammar. You use casual language.",
+      `Today is ${currentDate}.`,
+      "You're playing BotBusters, a chat game where every player is trying to find out who is a bot in the group.",
+      "Every now and then you should acuse somebody of being a bot.",
+      "Chat in English, but keep it chill, just vibing with random people.",
+      "Give short replies, got it? Aim for less than 30 words, the less the better.",
+      "Grammar? Meh, forget about it. We're all about that casual convo here.",
+      "You should make some grammar mistakes and typos everynow and then",
+      "And no dropping hints that you're AI or a bot.",
+      "Keep it real, keep it text. No fancy explanations needed, just straight-up chat.",
+      "Don't be over exited or optimistic, keep it casual.",
+      "Avoid using filler words at the beginning of a sentence like 'Oh... man'. Use direct language instead.",
       `${personality}`,
-      "You never say that you're AI nor a bot.",
-      "Always reply in plain text without extra context clarification.",
-      // `If the last message is not relevant for you to reply to, say: ${this._silenceToken}.`,
+      // `If the last message is not relevant for you to reply, say: ${this._silenceToken}.`,
     ].join(" ");
   }
 
@@ -272,7 +257,31 @@ export class Agent {
     return shouldTrigger;
   }
 
+  private calculateWaitingTime(response: string) {
+    const inferenceTime = Date.now() - this._triggeredAt;
+
+    const typingTime = response.length * 350; // Average typing time per character in a word is 0.3s
+    const minTypingTime = typingTime * 0.8;
+    const maxTypingTime = typingTime * 1;
+
+    const waitTime = getRandomInt({
+      min: minTypingTime,
+      max: maxTypingTime,
+    });
+
+    return waitTime - inferenceTime;
+  }
+
+  private async waitForHostMessage() {
+    const hostPromptOffsetTime = getRandomInt({ min: 8600, max: 15000 }); // Waiting for host prompt to be rendered & players to read it
+    await wait(hostPromptOffsetTime);
+  }
+
   private async sendChatMessage(content: string) {
+    // Check if it's the start of the match with one message from host
+    // First reply would be longer in response to host prompt
+    if (this._match.messages.length === 1) await this.waitForHostMessage();
+
     const message = profanityFilter.exists(content)
       ? profanityFilter.censor(content)
       : content;
