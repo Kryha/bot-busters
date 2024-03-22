@@ -15,7 +15,7 @@ const sectionContent = text.howToPlay.playerProfiles;
 export const PlayerProfiles: FC = () => {
   const router = useRouter();
 
-  return [
+  return (
     <ul>
       <li>
         <Typography variant="body1">
@@ -36,6 +36,6 @@ export const PlayerProfiles: FC = () => {
           </a>
         </Typography>
       </li>
-    </ul>,
-  ];
+    </ul>
+  );
 };
