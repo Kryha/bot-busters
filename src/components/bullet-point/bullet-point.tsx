@@ -29,16 +29,12 @@ export const BulletPoint: FC<BulletPointProps> = ({
   children,
 }) => (
   <Stack sx={{ ...styles.container, ...sxContainer }}>
-    {/* transform dot symbol to bullet point */}
     <li>
-      {/* render text if present */}
       {text && (
         <Typography variant={variant} sx={{ ...styles.text, ...sxText }}>
           {text}
         </Typography>
       )}
-
-      {/* render children if present */}
       <Stack sx={styles.childContainer}>{children && children}</Stack>
     </li>
   </Stack>
