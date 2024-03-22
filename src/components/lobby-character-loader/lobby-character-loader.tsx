@@ -5,6 +5,8 @@ import { CHARACTERS, DEFAULT_MAX_PLAYERS_PER_ROOM } from "~/constants/index.js";
 import { text } from "~/assets/text/index.js";
 import { LobbyProgressBar } from "~/components/lobby-progress-bar/index.js";
 import { HostAvatar } from "~/assets/characters/index.js";
+import { wait } from "~/utils/timer.js";
+import { getRandomInt } from "~/utils/math.js";
 import { theme } from "~/styles/theme.js";
 import { styles } from "./styles.js";
 
@@ -13,8 +15,6 @@ interface Props {
   queueLength: number;
   matchReady: boolean;
 }
-
-const MATCH_READY_SET = new Set<number>([1, 2, 3, 4, 5]);
 
 export const LobbyCharacterLoader: FC<Props> = ({
   playerQueuePosition,
@@ -27,26 +27,41 @@ export const LobbyCharacterLoader: FC<Props> = ({
 
   useEffect(() => {
     if (matchReady) {
-      setActivatedCharacters(MATCH_READY_SET);
-      return;
-    }
+      const addCharactersWithDelay = async () => {
+        for (let i = 1; i <= DEFAULT_MAX_PLAYERS_PER_ROOM; i++) {
+          if (!activatedCharacters.has(i)) {
+            setActivatedCharacters((prevSet) => new Set(prevSet).add(i));
+          }
+          const delay = getRandomInt({ min: 280, max: 380 });
+          await wait(delay);
+        }
+      };
 
+      void addCharactersWithDelay();
+    } else {
+      const newSet = new Set<number>();
+      if (
+        playerQueuePosition !== 0 &&
+        playerQueuePosition <= DEFAULT_MAX_PLAYERS_PER_ROOM
+      ) {
+        const upperLimit = Math.min(queueLength, DEFAULT_MAX_PLAYERS_PER_ROOM);
+        for (let i = 1; i <= upperLimit; i++) {
+          newSet.add(i);
+        }
+      }
+      setActivatedCharacters(newSet);
+    }
+  }, [matchReady, playerQueuePosition, queueLength]);
+
+  useEffect(() => {
     if (
-      playerQueuePosition === 0 ||
-      playerQueuePosition > DEFAULT_MAX_PLAYERS_PER_ROOM
+      !matchReady &&
+      (playerQueuePosition === 0 ||
+        playerQueuePosition > DEFAULT_MAX_PLAYERS_PER_ROOM)
     ) {
       setActivatedCharacters(new Set());
-      return;
     }
-
-    const newSet = new Set<number>();
-    const upperLimit = Math.min(queueLength, DEFAULT_MAX_PLAYERS_PER_ROOM);
-    for (let i = 1; i <= upperLimit; i++) {
-      newSet.add(i);
-    }
-
-    setActivatedCharacters(newSet);
-  }, [matchReady, playerQueuePosition, queueLength]);
+  }, [matchReady, playerQueuePosition]);
 
   return (
     <Stack sx={styles.container}>
