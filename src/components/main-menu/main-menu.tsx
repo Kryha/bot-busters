@@ -1,7 +1,6 @@
 import { Dialog, Slide } from "@mui/material";
 import { type TransitionProps } from "@mui/material/transitions";
 import { type FC, forwardRef, type ReactElement, type Ref } from "react";
-import { useRouter } from "next/router";
 import { usePlaySFX } from "~/hooks/sounds.js";
 import { MenuOptions } from "~/components/main-menu/menu-options.jsx";
 import { NavbarMenu } from "~/components/main-menu/navbar-menu.jsx";
@@ -23,7 +22,6 @@ interface Props {
 }
 
 export const MainMenu: FC<Props> = ({ open, setOpen }) => {
-  const router = useRouter();
   const playSfx = usePlaySFX();
 
   const handleClose = () => {
