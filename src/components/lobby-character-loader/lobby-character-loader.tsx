@@ -32,7 +32,7 @@ export const LobbyCharacterLoader: FC<Props> = ({
           if (!activatedCharacters.has(i)) {
             setActivatedCharacters((prevSet) => new Set(prevSet).add(i));
           }
-          const delay = getRandomInt(280, 380);
+          const delay = getRandomInt({ min: 280, max: 380 });
           await wait(delay);
         }
       };
