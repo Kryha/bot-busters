@@ -3,7 +3,6 @@ import React, { type FC } from "react";
 
 import { text as copywrite } from "~/assets/text/index.js";
 import {
-  BulletPoint,
   GameRules,
   PlayerProfiles,
   PointsAndPenalties,
@@ -38,9 +37,11 @@ const HowToPlay: FC = () => {
         {pageContent.headings.leaderboard}
       </Typography>
       <Stack sx={styles.section}>
-        {pageContent.leaderboard.map((content, idx) => (
-          <BulletPoint key={"leaderboard" + idx} text={content} />
-        ))}
+        <ul>
+          {pageContent.leaderboard.map((content, idx) => (
+            <li key={"leaderboard" + idx}>{content}</li>
+          ))}
+        </ul>
       </Stack>
 
       <Typography variant="h1" sx={styles.heading}>

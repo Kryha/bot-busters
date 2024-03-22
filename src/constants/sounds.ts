@@ -88,7 +88,7 @@ export const soundtracks: Record<TrackId, string> = {
   Lose2: "./music/voice-over/player-loses/Loss_IHateBots.mp3",
   Lose3: "./music/voice-over/player-loses/Loss_IKnewIt.mp3",
   Lose4: "./music/voice-over/player-loses/Loss_IKnewWeCoulntTrustThatOne.mp3",
-  Lose5: "./music/voice-over/player-loses/Loss_MayNextTime.mp3",
+  Lose5: "./music/voice-over/player-loses/Loss_MaybeNextTime.mp3",
   Lose6: "./music/voice-over/player-loses/Loss_NextTime.mp3",
   Lose7: "./music/voice-over/player-loses/Loss_Outsmarted.mp3",
   Lose8: "./music/voice-over/player-loses/Loss_StupidRobots.mp3",
