@@ -75,6 +75,9 @@ export const MenuOptions: FC<Props> = ({ handleClose }) => {
       <MenuOptionsButton onClick={() => handleNavigation(pages.howToPlay)}>
         {text.general.howToPlay}
       </MenuOptionsButton>
+      <MenuOptionsButton onClick={() => handleNavigation(pages.about)}>
+        {text.general.about}
+      </MenuOptionsButton>
       {isVerifiedUser(user.data) ? (
         <MenuOptionsButton onClick={() => void logOut()}>
           {text.general.signOut}
@@ -84,9 +87,6 @@ export const MenuOptions: FC<Props> = ({ handleClose }) => {
           {text.general.connectWallet}
         </MenuOptionsButton>
       )}
-      <MenuOptionsButton onClick={() => handleNavigation(pages.about)}>
-        {text.general.about}
-      </MenuOptionsButton>
     </Stack>
   );
 };

@@ -1,6 +1,15 @@
 import { theme } from "~/styles/theme.js";
 
 export const styles = {
+  container: {
+    flexDirection: "row",
+    width: "100%",
+  },
+  filler: {
+    height: "100%",
+    width: "18px",
+    background: theme.palette.divider,
+  },
   typing: {
     color: "common.black",
     fontSize: 16,
@@ -10,7 +19,8 @@ export const styles = {
     return {
       opacity: typing ? 1 : 0,
       flexDirection: "row",
-      flex: "flex-start",
+      justifyContent: "flex-start",
+      flexGrow: 1,
       alignItems: "center",
       px: 2,
       py: 2,

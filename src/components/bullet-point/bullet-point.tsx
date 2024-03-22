@@ -1,6 +1,6 @@
-import React, { type ReactNode, type FC } from "react";
+import React, { type FC, type ReactNode } from "react";
 import type { Variant } from "@mui/material/styles/createTypography.js";
-import { type SxProps, type Theme, Typography, Stack } from "@mui/material";
+import { Stack, type SxProps, type Theme, Typography } from "@mui/material";
 
 import { styles } from "./styles.js";
 
@@ -30,18 +30,16 @@ export const BulletPoint: FC<BulletPointProps> = ({
 }) => (
   <Stack sx={{ ...styles.container, ...sxContainer }}>
     {/* transform dot symbol to bullet point */}
-    <Typography variant={variant} sx={styles.transformPointToBullet}>
-      .
-    </Typography>
+    <li>
+      {/* render text if present */}
+      {text && (
+        <Typography variant={variant} sx={{ ...styles.text, ...sxText }}>
+          {text}
+        </Typography>
+      )}
 
-    {/* render text if present */}
-    {text && (
-      <Typography variant={variant} sx={{ ...styles.text, ...sxText }}>
-        {text}
-      </Typography>
-    )}
-
-    {/* render children if present */}
-    <Stack sx={styles.childContainer}>{children && children}</Stack>
+      {/* render children if present */}
+      <Stack sx={styles.childContainer}>{children && children}</Stack>
+    </li>
   </Stack>
 );
