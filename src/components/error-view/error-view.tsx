@@ -4,11 +4,10 @@ import { usePlaySFX } from "~/hooks/sounds.js";
 import { PageLayout } from "~/containers/page-layout/index.js";
 import { AppContainer } from "~/containers/index.js";
 import { errorMessage } from "~/constants/error-messages.js";
-
-import { styles } from "./style.js";
 import { PrimaryButton } from "../primary-button/index.js";
 import { useRouter } from "next/router";
-import { pages } from "~/router";
+import { pages } from "~/router.js";
+import { styles } from "./style.js";
 
 export function ErrorFallback({
   error,
