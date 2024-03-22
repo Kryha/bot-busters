@@ -8,6 +8,7 @@ export const errorMessage = {
   generalHeading: "Error",
   tryRefreshing: "Try refreshing the page",
   tryAgain: "Try Again",
+  goHome: "Return to Home",
   goBack: "Go Back",
   match: {
     general: "An error occurred while loading the match",

@@ -14,6 +14,7 @@ import { PlayerLocal } from "~/components/players/player-local/index.js";
 import { PlayersOthers } from "~/components/players/player-others/index.js";
 import { errorMessage } from "~/constants/error-messages.js";
 import { LoadingPage } from "~/components/loading-page/index.js";
+import { pages } from "~/router.js";
 
 const Match: FC = () => {
   const { showBoundary } = useErrorBoundary();
@@ -39,7 +40,25 @@ interface Props {
 const MatchInternal: FC<Props> = ({ roomId, session }) => {
   const { showBoundary } = useErrorBoundary();
   const vote = api.match.vote.useMutation();
+  const { events, replace } = useRouter();
   const roomData = api.match.getRoom.useQuery({ roomId });
+
+  // During a match, if the user navigates back to the lobby,
+  // they should be redirected back to the match, unless they are at the results stage.
+  useEffect(() => {
+    if (roomData?.data?.stage === "results") return;
+    const handleRouteChange = (url: string) => {
+      if (url === pages.lobby && window.history.state) {
+        void replace(pages.home);
+      }
+    };
+
+    events.on("routeChangeStart", handleRouteChange);
+
+    return () => {
+      events.off("routeChangeStart", handleRouteChange);
+    };
+  }, [events, replace, roomData]);
 
   api.match.onStageChange.useSubscription(
     { roomId },

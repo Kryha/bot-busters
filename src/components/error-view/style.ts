@@ -9,4 +9,8 @@ export const styles = {
     textAlign: "center",
     mb: "100px",
   },
+  buttons: {
+    flexDirection: "column",
+    gap: 2,
+  },
 } satisfies SxStyleRecord;
