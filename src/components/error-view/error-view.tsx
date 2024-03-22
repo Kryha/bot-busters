@@ -21,6 +21,7 @@ export function ErrorFallback({
   const playSfx = usePlaySFX();
   const handleClick = () => {
     playSfx("BlipUp");
+    void router.reload();
     resetErrorBoundary();
   };
 
