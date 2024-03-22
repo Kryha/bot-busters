@@ -37,16 +37,10 @@ const Homepage = () => {
   });
   const match = api.match.getOngoingMatch.useQuery();
   const matchStatus = match.data && match.data !== EMPTY_RES;
-  const [disabled, setDisabled] = useState(
-    loggedUser.isLoading || match.isLoading,
-  );
+  const [disabled, setDisabled] = useState(false);
 
   useEffect(() => {
-    if (loggedUser.isLoading || match.isLoading) {
-      setDisabled(true);
-    } else {
-      setDisabled(false);
-    }
+    setDisabled(loggedUser.isLoading || match.isLoading);
   }, [loggedUser.isLoading, match.isLoading]);
 
   const handleGameStart = async () => {
