@@ -17,6 +17,8 @@ interface Props {
   character: Character;
   stage: MatchStage;
   isSelected?: boolean;
+  isVoteEnabled?: boolean;
+  isLoadingVotes?: boolean;
   hasGuessed?: boolean;
   isBot?: boolean;
   onSelectPlayer?: () => void;
@@ -26,6 +28,8 @@ export const CharacterAvatar: FC<Props> = ({
   stage,
   character,
   isSelected,
+  isVoteEnabled,
+  isLoadingVotes,
   isBot,
   onSelectPlayer,
 }) => {
@@ -38,6 +42,12 @@ export const CharacterAvatar: FC<Props> = ({
   const [play, setPlay] = useState(false);
 
   const playSfx = usePlaySFX();
+  const shouldDisableVoting = () => {
+    // If voting is not enabled, return true as voting should be disabled.
+    // If voting is enabled but votes are loading, return true to disable voting during loading.
+    // In all other cases, return false to enable voting.
+    return !isVoteEnabled || isLoadingVotes;
+  };
 
   const handleSelectPlayer = () => {
     if (onSelectPlayer) {
@@ -70,7 +80,7 @@ export const CharacterAvatar: FC<Props> = ({
     <Stack
       sx={
         stage == "voting"
-          ? styles.avatar(stage, isSelected, isBot)
+          ? styles.avatar(stage, shouldDisableVoting(), isSelected, isBot)
           : styles.animation(stage, isSelected, isBot)
       }
       onClick={handleSelectPlayer}

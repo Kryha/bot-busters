@@ -20,6 +20,8 @@ interface Props {
   isLocalPlayer?: boolean;
   hasGuessed?: boolean;
   isBot?: boolean;
+  isVoteEnabled?: boolean;
+  isLoadingVotes?: boolean;
   onSelectPlayer?: () => void;
   stage?: MatchStage;
   onHoverPlayer?: (anchor: HTMLDivElement, playerId?: CharacterId) => void;
@@ -31,6 +33,8 @@ export const Player: FC<Props> = ({
   isSelected,
   isProofSelected,
   hasGuessed,
+  isVoteEnabled,
+  isLoadingVotes,
   isBot,
   onSelectPlayer,
   onHoverPlayer,
@@ -39,7 +43,8 @@ export const Player: FC<Props> = ({
   const { name, color } = character;
   const textColor = `${color}.main`;
 
-  const isBotSelected = stage === "voting" && isSelected;
+  const isBotSelected =
+    stage === "voting" && isSelected && isVoteEnabled && !isLoadingVotes;
 
   const containerRef = useRef<HTMLDivElement | null>(null);
 
@@ -89,6 +94,8 @@ export const Player: FC<Props> = ({
         isSelected={isSelected}
         hasGuessed={hasGuessed}
         isBot={isBot}
+        isVoteEnabled={isVoteEnabled}
+        isLoadingVotes={isLoadingVotes}
         onSelectPlayer={onSelectPlayer}
       />
       {stage === "chat" && (
