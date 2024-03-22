@@ -30,7 +30,6 @@ export const PlayerTable: FC<Props> = ({ playerProfile }) => {
           <col width={COLUMN_WIDTH.lg} />
           <col width={COLUMN_WIDTH.sm} />
           <col width={COLUMN_WIDTH.md} />
-          <col width={COLUMN_WIDTH.md} />
           <col width={COLUMN_WIDTH.sm} />
         </colgroup>
         <Header cells={text.playerProfile.profileColumns} />
@@ -52,10 +51,6 @@ export const PlayerTable: FC<Props> = ({ playerProfile }) => {
               <Typography variant="body1" color="common.white">
                 {playerProfile.rank}
               </Typography>
-            </TableCell>
-
-            <TableCell align="center">
-              <Typography variant="body1" color="customGrey.main"></Typography>
             </TableCell>
 
             <TableCell align="center">

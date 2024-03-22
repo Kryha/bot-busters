@@ -2,8 +2,9 @@ import { Box } from "@mui/material";
 import { type FC } from "react";
 import { PlayButtonAnimation } from "~/assets/animations/index.js";
 import { AnimationPlayer } from "~/components/animation/index.js";
-import { styles } from "./styles.js";
 import { usePlaySFX } from "~/hooks/sounds.js";
+import { PlayButtonDisabled } from "~/assets/icons/index.js";
+import { styles } from "./styles.js";
 
 interface Props {
   onClick: () => void;
@@ -30,13 +31,17 @@ export const PlayButton: FC<Props> = ({ onClick, disabled }) => {
       aria-label={"Start"}
       sx={styles.playButton}
     >
-      <AnimationPlayer
-        animationData={PlayButtonAnimation}
-        segments={segments}
-        play
-        loop
-        style={{ width: 278, height: 118 }}
-      />
+      {disabled ? (
+        <PlayButtonDisabled width={278} height={118} />
+      ) : (
+        <AnimationPlayer
+          animationData={PlayButtonAnimation}
+          segments={segments}
+          play
+          loop
+          style={{ width: 278, height: 118 }}
+        />
+      )}
     </Box>
   );
 };

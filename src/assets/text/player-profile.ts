@@ -6,7 +6,7 @@ export const playerProfile = {
   top10ReceiveCredits: "The daily top 10 receives Aleo credits!",
   connectWallet: "Connect Wallet",
 
-  profileColumns: ["Buster", "Games", "Current Rank", "Highest Rank", "Score"],
+  profileColumns: ["Buster", "Games", "Current Rank", "Score"],
   achievementColumns: [
     "Achievement",
     "Description",

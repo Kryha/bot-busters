@@ -2,6 +2,7 @@ import { styled } from "@mui/material/styles";
 import { Button } from "@mui/base";
 import { type FC } from "react";
 import { SoundOnIcon } from "~/assets/icons/index.js";
+import { theme } from "~/styles/theme.js";
 
 interface Props extends React.ComponentProps<typeof Button> {
   text?: string;
@@ -19,8 +20,10 @@ export const SoundButtonStyle = styled(Button)(({ audio }) => ({
   textAlign: "left",
   padding: "0 !important",
   "& > svg > g > path": {
-    fill: audio > 0 ? "#5CFF00" : "transparent",
-    stroke: audio > 0 ? "#5CFF00" : "transparent",
+    fill:
+      audio > 0 ? theme.palette.primary.main : theme.palette.customGrey.main,
+    stroke:
+      audio > 0 ? theme.palette.primary.main : theme.palette.customGrey.main,
   },
 }));
 

@@ -7,8 +7,10 @@ import CloseIcon from "./close-icon.svg";
 import BotArrowIcon from "./bot-arrow-icon.svg";
 import LetsBustSomeBots from "./lets-bust-some-bots.svg";
 import StartChatting from "./start-chatting.svg";
+import PlayButtonDisabled from "./play-button-disabled.svg";
 
 export {
+  PlayButtonDisabled,
   StartChatting,
   LetsBustSomeBots,
   SelectIcon,
