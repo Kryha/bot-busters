@@ -13,6 +13,7 @@ const Lobby: FC = () => {
   const { showBoundary } = useErrorBoundary();
   const { push } = useRouter();
   const join = api.lobby.join.useMutation();
+
   const [lobbyQueue, setLobbyQueue] = useState({
     playerQueuePosition: 0,
     queueLength: 0,
@@ -49,7 +50,6 @@ const Lobby: FC = () => {
       e instanceof Error
         ? console.error(`[${errorMessage.match.general}]: ${e.message}`, e)
         : console.error(e);
-
       showBoundary(errorMessage.match.general);
     },
   });
