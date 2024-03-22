@@ -12,6 +12,7 @@ export const general = {
   results: "Results",
   playNewGame: "Play new game",
   playerProfile: "Profile",
+  quitLobby: "Quit lobby",
   dailyLeaderboard: "Daily leaderboard",
   howToPlay: "How to play",
   connectWallet: "Connect wallet",
@@ -45,7 +46,7 @@ export const general = {
   confirm: "Confirm",
   aleoWebsite: "https://aleo.org/",
   zpassWebsite: "https://zpass.aleo.org/",
-  obscuraWebsite: "https://obscura.build/",
+  obscuraWebsite: "https://obscura.network/",
   formattedCountdown: (minutes: number, seconds: number): string =>
     `${minutes.toString().padStart(2, "0")}:${seconds
       .toString()
