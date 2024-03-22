@@ -17,6 +17,7 @@ import { ContextRef } from "~/containers/sound-provider/index.js";
 import { api } from "~/utils/api.js";
 import { pages } from "~/router.js";
 import { styles } from "~/styles/pages/homepage.js";
+import { useEffect, useState } from "react";
 
 const Homepage = () => {
   const { push } = useRouter();
@@ -36,12 +37,24 @@ const Homepage = () => {
   });
   const match = api.match.getOngoingMatch.useQuery();
   const matchStatus = match.data && match.data !== EMPTY_RES;
+  const [disabled, setDisabled] = useState(
+    loggedUser.isLoading || match.isLoading,
+  );
+
+  useEffect(() => {
+    if (loggedUser.isLoading || match.isLoading) {
+      setDisabled(true);
+    } else {
+      setDisabled(false);
+    }
+  }, [loggedUser.isLoading, match.isLoading]);
 
   const handleGameStart = async () => {
-    if (loggedUser.isLoading || match.isLoading) return;
+    if (disabled) return;
 
     try {
       if (loggedUser.isError) {
+        setDisabled(true);
         await signIn("credentials", { callbackUrl: pages.lobby });
       } else {
         await push(pages.lobby);
@@ -77,7 +90,7 @@ const Homepage = () => {
       <Stack sx={styles.actions}>
         {!matchStatus && (
           <PlayButton
-            disabled={loggedUser.isLoading || match.isLoading}
+            disabled={disabled}
             onClick={() => void handleGameStart()}
           />
         )}
