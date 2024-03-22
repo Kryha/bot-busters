@@ -5,9 +5,10 @@ import { CHARACTERS, DEFAULT_MAX_PLAYERS_PER_ROOM } from "~/constants/index.js";
 import { text } from "~/assets/text/index.js";
 import { LobbyProgressBar } from "~/components/lobby-progress-bar/index.js";
 import { HostAvatar } from "~/assets/characters/index.js";
+import { wait } from "~/utils/timer.js";
+import { getRandomInt } from "~/utils/math.js";
 import { theme } from "~/styles/theme.js";
 import { styles } from "./styles.js";
-import { wait } from "~/utils/timer.js";
 
 interface Props {
   playerQueuePosition: number;
@@ -31,7 +32,8 @@ export const LobbyCharacterLoader: FC<Props> = ({
           if (!activatedCharacters.has(i)) {
             setActivatedCharacters((prevSet) => new Set(prevSet).add(i));
           }
-          await wait(350);
+          const delay = getRandomInt(280, 380);
+          await wait(delay);
         }
       };
 
