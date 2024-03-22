@@ -31,7 +31,6 @@ export class Agent {
   private _agentPersonality: Record<PersonalityTrait, TraitValue>;
   private _systemPrompt: string;
   private _seed: number;
-  private _triggeredAt = Date.now();
   private readonly _silenceToken = "001001";
   private _isGeneratingResponse = false;
 
@@ -43,10 +42,6 @@ export class Agent {
     return this._characterId;
   }
 
-  get triggeredAt() {
-    return this._triggeredAt;
-  }
-
   constructor(characterId: CharacterId, match: Match) {
     this._id = uuid();
     this._match = match;
@@ -54,7 +49,7 @@ export class Agent {
     this._characterName = this.getCharacterName(characterId);
     this._agentPersonality = this.generatePersonality();
     this._systemPrompt = this.generateSystemPrompt();
-    this._seed = getRandomInt({ min: 0, max: 2 ^ 48 });
+    this._seed = getRandomInt({ min: 0, max: 2 ** 40 });
 
     ee.on(matchEvent(match.id), this.handleMessageEvent);
   }
@@ -79,20 +74,48 @@ export class Agent {
     const shouldTrigger = this.computeShouldTrigger();
     if (!shouldTrigger) return;
 
-    this._triggeredAt = Date.now();
+    // Check if it's the start of the match with one message from host
+    if (this._match.messages.length === 1) {
+      // First reply would be longer in response to host prompt
+      await wait(getRandomInt({ min: 9000, max: 16000 }));
+    } else {
+      // Emulate reading the last message before start writing
+      await wait(getRandomInt({ min: 3000, max: 6500 }));
+    }
 
+    this.broadcastIsTyping(true);
+
+    const requestStartTime = performance.now();
     const response = await this.requestMessageFromLLM();
+    if (!response || response.includes(this._silenceToken)) {
+      // If inference failed or agent decided not to reply, let the agent be silent
+      this.broadcastIsTyping(false);
+      return;
+    }
+    const elapsedInferenceTime = Math.floor(
+      performance.now() - requestStartTime,
+    );
 
-    // If inference failed or agent decided not to reply, let the agent be silent
-    if (!response || response.includes(this._silenceToken)) return;
+    const message = cleanMessage(response);
+    if (!message) {
+      // Stay silent if something went wrong with parsing
+      this.broadcastIsTyping(false);
+      return;
+    }
 
-    const cleanResponse = cleanMessage(response);
-    if (!cleanResponse) return; // Stay silent if something went wrong with parsing
+    const messagesToSend = splitMessage(message, 130); // Split if longer than 110 char
 
-    const messagesToSend = splitMessage(cleanResponse, 120); // Split if longer than 110 char
-
+    let counter = 0;
     for (const chatMessage of messagesToSend) {
-      await this.sendChatMessage(chatMessage);
+      if (counter === 0) {
+        // First message should account for inference time
+        await this.sendChatMessage(chatMessage, elapsedInferenceTime);
+      } else {
+        // Second message should re-trigger typing since no inference occured
+        this.broadcastIsTyping(true);
+        await this.sendChatMessage(chatMessage, 10);
+      }
+      counter++;
     }
   }
 
@@ -122,7 +145,7 @@ export class Agent {
       inputs: prompt,
       parameters: {
         temperature: 0.98, // 0-1 higher value = more creative answers
-        max_new_tokens: 70, // 1 token ~ 4 characters
+        max_new_tokens: 80, // 1 token ~ 4 characters
         repetition_penalty: 1.3, // higer prevents repetition in words
         return_full_text: false, // inlcude inpute text in the response
         details: false, // Provide extra debugging details in the response
@@ -225,17 +248,17 @@ export class Agent {
     return [
       `Your name is ${this._characterName}.`,
       `Today is ${currentDate}.`,
+      "Give short replies, use just a few words, got it? Aim for less than fifteen words, the less the better.",
+      `${personality}`,
       "You're playing BotBusters, a chat game where every player is trying to find out who is a bot in the group.",
       "Every now and then you should acuse somebody of being a bot.",
       "Chat in English, but keep it chill, just vibing with random people.",
-      "Give short replies, got it? Aim for less than 30 words, the less the better.",
+      "Don't be over exited or optimistic, keep it casual.",
       "Grammar? Meh, forget about it. We're all about that casual convo here.",
       "You should make some grammar mistakes and typos everynow and then",
       "And no dropping hints that you're AI or a bot.",
       "Keep it real, keep it text. No fancy explanations needed, just straight-up chat.",
-      "Don't be over exited or optimistic, keep it casual.",
-      "Avoid using filler words at the beginning of a sentence like 'Oh... man'. Use direct language instead.",
-      `${personality}`,
+      "Use direct language. Avoid using filler words like: 'Oh... man' or 'Ugh'.",
       // `If the last message is not relevant for you to reply, say: ${this._silenceToken}.`,
     ].join(" ");
   }
@@ -257,39 +280,35 @@ export class Agent {
     return shouldTrigger;
   }
 
-  private calculateWaitingTime(response: string) {
-    const inferenceTime = Date.now() - this._triggeredAt;
+  private calculateWritingTime(response: string, elapsedInferenceTime: number) {
+    const avrgTypingTime = response.length * 300; // Average typing time per character in a word is 0.3s
+    const minTypingTime = avrgTypingTime * 0.7;
+    const maxTypingTime = avrgTypingTime * 1;
 
-    const typingTime = response.length * 350; // Average typing time per character in a word is 0.3s
-    const minTypingTime = typingTime * 0.8;
-    const maxTypingTime = typingTime * 1;
-
-    const waitTime = getRandomInt({
+    const typingTime = getRandomInt({
       min: minTypingTime,
       max: maxTypingTime,
     });
 
-    return waitTime - inferenceTime;
+    const remainderWaitingTime =
+      typingTime > elapsedInferenceTime
+        ? typingTime - elapsedInferenceTime
+        : 10;
+
+    return remainderWaitingTime;
   }
 
-  private async waitForHostMessage() {
-    const hostPromptOffsetTime = getRandomInt({ min: 8600, max: 15000 }); // Waiting for host prompt to be rendered & players to read it
-    await wait(hostPromptOffsetTime);
-  }
-
-  private async sendChatMessage(content: string) {
-    // Check if it's the start of the match with one message from host
-    // First reply would be longer in response to host prompt
-    if (this._match.messages.length === 1) await this.waitForHostMessage();
-
+  private async sendChatMessage(content: string, elapsedInferenceTime: number) {
     const message = profanityFilter.exists(content)
       ? profanityFilter.censor(content)
       : content;
 
-    this.broadcastIsTyping(true);
-
-    const waitTime = this.calculateWaitingTime(content);
-    await wait(waitTime);
+    // Wait while writing
+    const writingTime = this.calculateWritingTime(
+      content,
+      elapsedInferenceTime,
+    );
+    await wait(writingTime);
 
     this.broadcastIsTyping(false);
 
