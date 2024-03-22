@@ -8,12 +8,16 @@ import { styles } from "./styles.js";
 interface Props {
   character: Character;
   isSelected?: boolean;
+  isVoteEnabled: boolean;
+  isLoadingVotes: boolean;
   onSelectPlayer: (hovered?: boolean) => void;
 }
 
 export const PlayerVote: FC<Props> = ({
   character,
   isSelected,
+  isVoteEnabled,
+  isLoadingVotes,
   onSelectPlayer,
 }) => {
   return (
@@ -22,6 +26,8 @@ export const PlayerVote: FC<Props> = ({
         stage="voting"
         character={character}
         isSelected={isSelected}
+        isLoadingVotes={isLoadingVotes}
+        isVoteEnabled={isVoteEnabled}
         onSelectPlayer={onSelectPlayer}
       />
     </Stack>
