@@ -17,7 +17,6 @@ export const styles = {
     backgroundColor: "common.black",
     justifyContent: "center",
     alignItems: "center",
-    borderBottom: `4px solid ${theme.palette.customGrey.main}`,
     "& > p": {
       textAlign: "center",
       "& > span": {
@@ -27,6 +26,7 @@ export const styles = {
   },
   proof: {
     p: 2,
+    borderTop: `4px solid ${theme.palette.customGrey.main}`,
     backgroundColor: "common.black",
     height: "150px",
     justifyContent: "center",

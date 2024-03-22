@@ -40,6 +40,7 @@ export const PlayersOthers: FC<Props> = ({
   const [proofCharacterId, setProofCharacterId] = useState<
     CharacterId | undefined
   >();
+
   const { stage, players, votingAt } = room;
 
   const { isVisible, show } = useDelayedVisibility(500);
@@ -153,7 +154,6 @@ export const PlayersOthers: FC<Props> = ({
             stage !== "results"
               ? selectedIds.includes(player.userId)
               : localPlayer.votes?.includes(player.userId);
-
           return (
             <PlayerData
               key={index}
@@ -162,6 +162,8 @@ export const PlayersOthers: FC<Props> = ({
               localPlayer={localPlayer}
               isSelected={isSelected}
               isProofSelected={player.characterId === proofCharacterId}
+              isLoadingVotes={isLoadingVotes}
+              isVoteEnabled={isVoteEnabled}
               onSelectPlayer={() => {
                 stage === "voting"
                   ? selectPlayer(player.userId)
@@ -181,13 +183,15 @@ export const PlayersOthers: FC<Props> = ({
             stage={room.stage}
             definedStage={"voting"}
           />
-          <PrimaryButton
-            sx={styles.button}
-            disabled={!isVoteEnabled || isLoadingVotes || !selectedIds.length}
-            onClick={() => void handleVote()}
-          >
-            {text.general.confirm}
-          </PrimaryButton>
+          {!isLoadingVotes && isVoteEnabled && (
+            <PrimaryButton
+              sx={styles.button}
+              disabled={!selectedIds.length}
+              onClick={() => void handleVote()}
+            >
+              {text.general.confirm}
+            </PrimaryButton>
+          )}
         </Stack>
       )}
 

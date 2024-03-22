@@ -13,6 +13,8 @@ export interface Props {
   player: PlayerType;
   localPlayer: PlayerType;
   isProofSelected: boolean;
+  isLoadingVotes: boolean;
+  isVoteEnabled: boolean;
   isSelected?: boolean;
   color?: string;
   onSelectPlayer: () => void;
@@ -24,6 +26,8 @@ export const PlayerData: FC<Props> = ({
   localPlayer,
   stage,
   isProofSelected,
+  isVoteEnabled,
+  isLoadingVotes,
   isSelected,
   onSelectPlayer,
   onHoverPlayer,
@@ -39,6 +43,8 @@ export const PlayerData: FC<Props> = ({
           character={character}
           onSelectPlayer={onSelectPlayer}
           isSelected={isSelected}
+          isLoadingVotes={isLoadingVotes}
+          isVoteEnabled={isVoteEnabled}
         />
       );
 

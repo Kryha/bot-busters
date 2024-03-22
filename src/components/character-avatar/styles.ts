@@ -2,9 +2,14 @@ import { type MatchStage } from "~/types/index.js";
 import { breakpoints, theme } from "~/styles/theme.js";
 
 export const styles = {
-  avatar: (stage: MatchStage, isSelected?: boolean, isBot?: boolean) => {
+  avatar: (
+    stage: MatchStage,
+    isVotingDisabled?: boolean,
+    isSelected?: boolean,
+    isBot?: boolean,
+  ) => {
     const determineBorderFill = () => {
-      if (isSelected) {
+      if (isSelected && !isVotingDisabled) {
         if (stage === "voting") {
           return theme.palette.common.white;
         } else if (stage === "results") {
@@ -28,7 +33,7 @@ export const styles = {
         width: "140px",
         height: "140px",
       },
-      cursor: stage === "voting" ? "pointer" : "default",
+      cursor: stage === "voting" && !isVotingDisabled ? "pointer" : "default",
       "& > svg": {
         width: "100%",
         height: "100%",
@@ -37,7 +42,10 @@ export const styles = {
       "&:hover": {
         "& > svg > g": {
           "& > g > path": {
-            stroke: stage === "voting" ? theme.palette.common.white : fill,
+            stroke:
+              stage === "voting" && !isVotingDisabled
+                ? theme.palette.common.white
+                : fill,
           },
         },
       },
