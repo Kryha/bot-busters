@@ -3,7 +3,6 @@ import { Typography } from "@mui/material";
 import { useRouter } from "next/router";
 
 import { text } from "~/assets/text/index.js";
-import { BulletPoint } from "~/components/index.js";
 import { theme } from "~/styles/theme.js";
 import { pages } from "~/router.js";
 
@@ -17,24 +16,26 @@ export const PlayerProfiles: FC = () => {
   const router = useRouter();
 
   return [
-    <BulletPoint key="playerProfile1">
-      <Typography variant="body1">
-        {sectionContent[0].regular}
-        <span style={{ color: theme.palette.primary.main }}>
-          {sectionContent[0].highlight}
-        </span>
-      </Typography>
-    </BulletPoint>,
-    <BulletPoint key="playerProfile2">
-      <Typography variant="body1">
-        {sectionContent[1].regular}
-        <a
-          onClick={() => void router.push(pages.login)}
-          style={{ color: theme.palette.primary.main }}
-        >
-          {sectionContent[1].highlight}
-        </a>
-      </Typography>
-    </BulletPoint>,
+    <ul>
+      <li>
+        <Typography variant="body1">
+          {sectionContent[0].regular}
+          <span style={{ color: theme.palette.primary.main }}>
+            {sectionContent[0].highlight}
+          </span>
+        </Typography>
+      </li>
+      <li>
+        <Typography variant="body1">
+          {sectionContent[1].regular}
+          <a
+            onClick={() => void router.push(pages.login)}
+            style={{ color: theme.palette.primary.main }}
+          >
+            {sectionContent[1].highlight}
+          </a>
+        </Typography>
+      </li>
+    </ul>,
   ];
 };

@@ -73,11 +73,14 @@ export const CharacterTypingIndicator: FC<Props> = ({ room, roomId }) => {
   return (
     <>
       {stage === "chat" && (
-        <Stack sx={styles.typingDialog(isTyping)}>
-          <Typography variant="caption" sx={styles.typing}>
-            {characterTyping} typing
-          </Typography>
-          <Box component="div" sx={styles.loading} />
+        <Stack sx={styles.container}>
+          <Stack sx={styles.typingDialog(isTyping)}>
+            <Typography variant="caption" sx={styles.typing}>
+              {characterTyping} typing
+            </Typography>
+            <Box component="div" sx={styles.loading} />
+          </Stack>
+          <Box component="div" sx={styles.filler} />
         </Stack>
       )}
     </>

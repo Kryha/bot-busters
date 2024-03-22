@@ -24,6 +24,20 @@ button {
   cursor: pointer;
 }
 
+ul li { padding-top: 8px;
+padding-bottom: 8px;
+}
+
+li {
+  list-style-type: square;
+  padding-inline-start: 1ch;
+
+}
+
+li::marker {
+  font-size: 20px;
+}
+
 /* Animations */
 
 @keyframes infinite_text_primary {
