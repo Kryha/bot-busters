@@ -7,6 +7,8 @@ import { errorMessage } from "~/constants/error-messages.js";
 
 import { styles } from "./style.js";
 import { PrimaryButton } from "../primary-button/index.js";
+import { useRouter } from "next/router";
+import { pages } from "~/router";
 
 export function ErrorFallback({
   error,
@@ -15,11 +17,19 @@ export function ErrorFallback({
   error: Error;
   resetErrorBoundary: () => void;
 }) {
+  const router = useRouter();
   const playSfx = usePlaySFX();
   const handleClick = () => {
     playSfx("BlipUp");
     resetErrorBoundary();
   };
+
+  const handleNavigation = (path: string) => {
+    playSfx("BlipUp");
+    resetErrorBoundary();
+    void router.push(path);
+  };
+
   return (
     <AppContainer>
       <PageLayout title={errorMessage.generalHeading}>
@@ -27,9 +37,14 @@ export function ErrorFallback({
           <Typography variant="body1" sx={styles.errorMessage}>
             {error.message}
           </Typography>
-          <PrimaryButton onClick={handleClick}>
-            {errorMessage.tryAgain}
-          </PrimaryButton>
+          <Stack sx={styles.buttons}>
+            <PrimaryButton onClick={handleClick}>
+              {errorMessage.tryAgain}
+            </PrimaryButton>
+            <PrimaryButton onClick={() => handleNavigation(pages.home)}>
+              {errorMessage.goHome}
+            </PrimaryButton>
+          </Stack>
         </Stack>
       </PageLayout>
     </AppContainer>
