@@ -83,7 +83,7 @@ function filterBlackList(input: string): string {
 }
 
 function filterUm(input: string): string {
-  const combinedRegEx = /(Hm{1,4}|Um{1,4}|Ugh|Uh)(\.{1,3}|,{1})?/gi;
+  const combinedRegEx = /(Oh{1,4}Hm{1,4}|Um{1,4}|Ugh|Uh)(\.{1,3}|,{1})?/gi;
   return input.replace(combinedRegEx, "");
 }
 
