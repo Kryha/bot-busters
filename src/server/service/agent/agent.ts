@@ -77,7 +77,7 @@ export class Agent {
     // Check if it's the start of the match with one message from host
     if (this._match.messages.length === 1) {
       // First reply would be longer in response to host prompt
-      await wait(getRandomInt({ min: 9000, max: 16000 }));
+      await wait(getRandomInt({ min: 10000, max: 17000 }));
     } else {
       // Emulate reading the last message before start writing
       await wait(getRandomInt({ min: 3000, max: 6500 }));
