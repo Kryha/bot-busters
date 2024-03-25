@@ -71,7 +71,13 @@ function removePromptAnomalies(input: string): string {
 
 function filterBlackList(input: string): string {
   // List of blacklisted words and sentences
-  const blacklist = ["tough choice!", "that's tough!", "Oh boy,", "Oh wow,"];
+  const blacklist = [
+    "tough choice!",
+    "that's tough!",
+    "Oh boy,",
+    "Oh wow,",
+    "^_^",
+  ];
   // Create a regex pattern to match any of the blacklisted words or sentences
   // The map function escapes special regex characters to ensure they are treated as literal strings
   const pattern = blacklist
@@ -83,7 +89,8 @@ function filterBlackList(input: string): string {
 }
 
 function filterUm(input: string): string {
-  const combinedRegEx = /(Oh{1,4}Hm{1,4}|Um{1,4}|Ugh|Uh)(\.{1,3}|,{1})?/gi;
+  const combinedRegEx =
+    /(Oh{1,4}|Hm{1,4}|Um{1,4}|Ugh{1,4}|Uh{1,4}|ph{1,4})(\.{1,3}|,{1})?/gi;
   return input.replace(combinedRegEx, "");
 }
 
