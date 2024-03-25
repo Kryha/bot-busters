@@ -69,9 +69,36 @@ function removePromptAnomalies(input: string): string {
   return parsedMessage;
 }
 
+function filterBlackList(input: string): string {
+  // List of blacklisted words and sentences
+  const blacklist = [
+    "tough choice!",
+    "that's tough!",
+    "Oh boy,",
+    "Oh wow,",
+    "^_^",
+  ];
+  // Create a regex pattern to match any of the blacklisted words or sentences
+  // The map function escapes special regex characters to ensure they are treated as literal strings
+  const pattern = blacklist
+    .map((word) => word.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"))
+    .join("|");
+  const regex = new RegExp(pattern, "gi");
+
+  return input.replace(regex, "").trimStart();
+}
+
+function filterUm(input: string): string {
+  const combinedRegEx =
+    /(Oh{1,4}|Hm{1,4}|Um{1,4}|Ugh{1,4}|Uh{1,4}|ph{1,4})(\.{1,3}|,{1})?/gi;
+  return input.replace(combinedRegEx, "");
+}
+
 export function cleanMessage(input: string): string {
   const parsedMessage = removePromptAnomalies(input);
   const noEmojisMessage = removeEmojis(parsedMessage);
+  const whiteListMessage = filterBlackList(noEmojisMessage);
+  const cleanedMessage = filterUm(whiteListMessage);
 
-  return noEmojisMessage.trimStart();
+  return cleanedMessage.trimStart();
 }

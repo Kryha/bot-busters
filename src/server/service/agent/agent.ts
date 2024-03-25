@@ -77,7 +77,7 @@ export class Agent {
     // Check if it's the start of the match with one message from host
     if (this._match.messages.length === 1) {
       // First reply would be longer in response to host prompt
-      await wait(getRandomInt({ min: 9000, max: 16000 }));
+      await wait(getRandomInt({ min: 10000, max: 17000 }));
     } else {
       // Emulate reading the last message before start writing
       await wait(getRandomInt({ min: 3000, max: 6500 }));
@@ -254,7 +254,6 @@ export class Agent {
       "Every now and then you should acuse somebody of being a bot.",
       "Chat in English, but keep it chill, just vibing with random people.",
       "Don't be over exited or optimistic, keep it casual.",
-      "Grammar? Meh, forget about it. We're all about that casual convo here.",
       "You should make some grammar mistakes and typos everynow and then",
       "And no dropping hints that you're AI or a bot.",
       "Keep it real, keep it text. No fancy explanations needed, just straight-up chat.",
