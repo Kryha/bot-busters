@@ -128,3 +128,25 @@ yarn aleo:deploy-leaderboard
 > It's normal for the script to take a while to complete.
 
 If you wish to re-deploy the leaderboard you will have to update its name in the `.env` before re-running the deploy script. Aleo uses program names as identifiers, thus 2 programs with the same name cannot co-exist on the same network.
+
+### Deploy HPA
+
+Create `monitoring` namespace:
+
+```sh
+kubectl create namespace monitoring
+```
+
+Deploy Prometheus:
+
+```sh
+kubectl apply -f deployment/templates/prometheus/
+```
+
+Deploy Prometheus adapter:
+
+```sh
+kubectl apply -f deployment/templates/prometheus-adapter/
+```
+
+You may need to restart the Prometheus adapter pod.

@@ -1,7 +1,7 @@
 resources:
   - deployment.yaml
-  - postgres.yaml
   - service.yaml
   - postgres-service.yaml
+  - autoscaling.yaml
 generatorOptions:
   disableNameSuffixHash: true

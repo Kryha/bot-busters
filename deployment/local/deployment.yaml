@@ -38,9 +38,10 @@ spec:
               value: ws://bot-busters.localhost
             - name: PLAYERS_PER_MATCH
               value: "2"
-            - name: ALEO_NETWORK_URL
+            - name: ALEO_NETWORK_URL # TODO: update to either minikube.internal or obscura URL
               value: http://localhost:3030
             - name: ALEO_PRIVATE_KEY
               value: APrivateKey1zkp8CZNn3yeCseEtxuVPbDCwSyhGW6yZKUYKfgXmcpoGPWH # not a real account
             - name: AWS_INFERENCE_URL
               value: https://nez5g29b86.execute-api.eu-central-1.amazonaws.com/staging/generate
+# missing secrets: AWS_ACCESS_KEY, AWS_SECRET, LAMBDA_TOKEN, OBSCURA_API_KEY (not mandatory for now)

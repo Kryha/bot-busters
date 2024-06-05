@@ -4,6 +4,7 @@ resources:
   - namespace.yaml
   - ingress.yaml
   - secrets.yaml
+  - postgres.yaml
 patchesStrategicMerge:
   - deployment.yaml
 namespace: bot-busters-local

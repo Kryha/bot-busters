@@ -1,9 +1,9 @@
-import { fileURLToPath, pathToFileURL, URL as URL$1 } from "url";
-import fs from "fs";
-import path from "path";
-import moduleExports, { Module } from "module";
-import { EOL } from "os";
-import assert from "assert";
+import { URL as URL$1, fileURLToPath, pathToFileURL } from 'url';
+import fs from 'fs';
+import path from 'path';
+import moduleExports, { Module } from 'module';
+import { EOL } from 'os';
+import assert from 'assert';
 
 const SAFE_TIME = 456789e3;
 
@@ -95,24 +95,24 @@ async function copyImpl(prelayout, postlayout, updateTime, destinationFs, destin
   let updated;
   switch (true) {
     case sourceStat.isDirectory():
-    {
-      updated = await copyFolder(prelayout, postlayout, updateTime, destinationFs, destination, destinationStat, sourceFs, source, sourceStat, opts);
-    }
+      {
+        updated = await copyFolder(prelayout, postlayout, updateTime, destinationFs, destination, destinationStat, sourceFs, source, sourceStat, opts);
+      }
       break;
     case sourceStat.isFile():
-    {
-      updated = await copyFile(prelayout, postlayout, updateTime, destinationFs, destination, destinationStat, sourceFs, source, sourceStat, opts);
-    }
+      {
+        updated = await copyFile(prelayout, postlayout, updateTime, destinationFs, destination, destinationStat, sourceFs, source, sourceStat, opts);
+      }
       break;
     case sourceStat.isSymbolicLink():
-    {
-      updated = await copySymlink(prelayout, postlayout, updateTime, destinationFs, destination, destinationStat, sourceFs, source, sourceStat, opts);
-    }
+      {
+        updated = await copySymlink(prelayout, postlayout, updateTime, destinationFs, destination, destinationStat, sourceFs, source, sourceStat, opts);
+      }
       break;
     default:
-    {
-      throw new Error(`Unsupported file type (${sourceStat.mode})`);
-    }
+      {
+        throw new Error(`Unsupported file type (${sourceStat.mode})`);
+      }
   }
   if (updated || ((_a = destinationStat == null ? void 0 : destinationStat.mtime) == null ? void 0 : _a.getTime()) !== mtime.getTime() || ((_b = destinationStat == null ? void 0 : destinationStat.atime) == null ? void 0 : _b.getTime()) !== atime.getTime()) {
     postlayout.push(() => updateTime(destination, atime, mtime));
@@ -1646,27 +1646,27 @@ function getPackageScopeConfig(resolved, readFileSyncFn) {
 }
 
 /**
- @license
- Copyright Node.js contributors. All rights reserved.
+  @license
+  Copyright Node.js contributors. All rights reserved.
 
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to
- deal in the Software without restriction, including without limitation the
- rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
- sell copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
 
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
- FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
- IN THE SOFTWARE.
- */
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+*/
 function throwImportNotDefined(specifier, packageJSONUrl, base) {
   throw new ERR_PACKAGE_IMPORT_NOT_DEFINED(
     specifier,
