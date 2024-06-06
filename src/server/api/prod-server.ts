@@ -73,8 +73,6 @@ void app.prepare().then(() => {
     wss.close();
   });
 
-  console.log("db url:", env.DATABASE_URL);
-
   server.listen(port);
 
   console.log(
