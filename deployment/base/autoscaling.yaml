@@ -15,6 +15,5 @@ spec:
         metric:
           name: active_connections_total
         target:
-          type: Value
-          # TODO: use a higher value
-          averageValue: "2"
+          type: AverageValue
+          averageValue: "4000"
