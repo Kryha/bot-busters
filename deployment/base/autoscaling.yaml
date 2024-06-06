@@ -16,4 +16,5 @@ spec:
           name: active_connections_total
         target:
           type: Value
-          averageValue: 500m
+          # TODO: use a higher value
+          averageValue: "2"
