@@ -21,10 +21,10 @@ const metrics = {
   },
 
   decrActiveConnections() {
-    if (this.activeConnections <= 0) {
-      this.activeConnections = 0;
-    } else {
+    if (this.activeConnections > 0) {
       this.activeConnections--;
+    } else {
+      this.activeConnections = 0;
     }
   },
 };
