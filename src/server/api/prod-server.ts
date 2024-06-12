@@ -13,10 +13,35 @@ const port = 3000;
 const app = next({ dev: env.NODE_ENV !== "production" });
 const handle = app.getRequestHandler();
 
+const metrics = {
+  activeConnections: 0,
+
+  incrActiveConnections() {
+    this.activeConnections++;
+  },
+
+  decrActiveConnections() {
+    if (this.activeConnections > 0) {
+      this.activeConnections--;
+    } else {
+      this.activeConnections = 0;
+    }
+  },
+};
+
 void app.prepare().then(() => {
   const server = http.createServer((req, res) => {
+    if (req.url === "/metrics") {
+      res.end(
+        "# HELP active_connections_total The amount of total active ws connections\n# TYPE active_connections_total counter\nactive_connections_total " +
+          metrics.activeConnections +
+          "\n",
+      );
+      return;
+    }
+
     const parsedUrl = parse(req.url!, true);
-    void handle(req, res, parsedUrl).catch((error) => {
+    handle(req, res, parsedUrl).catch((error) => {
       console.error("Request handling error:", error);
     });
   });
@@ -30,6 +55,7 @@ void app.prepare().then(() => {
 
   wss.on("connection", (ws) => {
     console.log(`++ Connection (${wss.clients.size})`);
+    metrics.incrActiveConnections();
 
     ws.on("error", (error) => {
       console.error("ws error: ", error);
@@ -37,6 +63,7 @@ void app.prepare().then(() => {
 
     ws.once("close", () => {
       console.log(`-- Connection (${wss.clients.size})`);
+      metrics.decrActiveConnections();
     });
   });
 
