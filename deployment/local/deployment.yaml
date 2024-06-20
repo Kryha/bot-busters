@@ -43,5 +43,5 @@ spec:
             - name: ALEO_PRIVATE_KEY
               value: APrivateKey1zkp8CZNn3yeCseEtxuVPbDCwSyhGW6yZKUYKfgXmcpoGPWH # not a real account
             - name: AWS_INFERENCE_URL
-              value: https://nez5g29b86.execute-api.eu-central-1.amazonaws.com/staging/generate
+              value: https://3dhomhunle.execute-api.us-east-1.amazonaws.com/default/generate
 # missing secrets: AWS_ACCESS_KEY, AWS_SECRET, LAMBDA_TOKEN, OBSCURA_API_KEY (not mandatory for now)
