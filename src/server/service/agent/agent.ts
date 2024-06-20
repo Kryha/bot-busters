@@ -144,7 +144,7 @@ export class Agent {
     const body = JSON.stringify({
       inputs: prompt,
       parameters: {
-        temperature: 0.98, // 0-1 higher value = more creative answers
+        temperature: 0.95, // 0-1 higher value = more creative answers
         max_new_tokens: 80, // 1 token ~ 4 characters
         repetition_penalty: 1.3, // higer prevents repetition in words
         return_full_text: false, // inlcude inpute text in the response

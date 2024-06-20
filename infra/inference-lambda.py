@@ -17,17 +17,15 @@ def query_inference_endpoint(payload):
         ContentType="application/json",
         Body=json.dumps(payload),
     )
-    response = json.loads(response["Body"].read().decode("utf8"))
+    response = json.loads(response["Body"].read())
     return response
 
 def lambda_handler(event, context):
-    logger.info(event)
     try:
         body = {"inputs": event['inputs'], "parameters": event['parameters']}
         
         reply = query_inference_endpoint(body)
-     
-        # Return the updated data in the response
+        
         response = {
             "statusCode": 200,
             "body": reply[0]['generated_text']
