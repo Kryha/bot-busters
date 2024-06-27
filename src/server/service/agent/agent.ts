@@ -1,7 +1,7 @@
 import { v4 as uuid } from "uuid";
 import fetch from "node-fetch";
 
-import { CHARACTERS } from "~/constants/index.js";
+import { AGENT_MODEL, CHARACTERS } from "~/constants/index.js";
 import { env } from "~/env.mjs";
 import { ee, matchEvent } from "~/server/api/match-maker.js";
 import { type Match } from "~/server/service/index.js";
@@ -141,11 +141,13 @@ export class Agent {
 
     const prompt = this.generatePrompt(promptDialog);
 
+    // TODO: Upgeade body constuction for Converse API
     const body = JSON.stringify({
       inputs: prompt,
+      model_id: AGENT_MODEL.LLAMA_2_13B, // select the model to use for output generation
       parameters: {
         temperature: 0.95, // 0-1 higher value = more creative answers
-        max_new_tokens: 80, // 1 token ~ 4 characters
+        max_new_tokens: 85, // 1 token ~ 4 characters
         repetition_penalty: 1.3, // higer prevents repetition in words
         return_full_text: false, // inlcude inpute text in the response
         details: false, // Provide extra debugging details in the response
