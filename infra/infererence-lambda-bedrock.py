@@ -1,47 +1,57 @@
-# import os
 import json
 import boto3
 import logging
 
-model_id = 'meta.llama2-13b-chat-v1' 
-
 # Configure logging
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
-
-# ENDPOINT_NAME = os.environ['ENDPOINT_NAME']
 
 bedrock_runtime = boto3.client(
     service_name='bedrock-runtime', 
     region_name='us-east-1'
 )
 
-def query_inference_endpoint(payload):
+def query_inference_endpoint(payload, model_id):
     response = bedrock_runtime.invoke_model(
         body=json.dumps(payload), 
         modelId=model_id, 
         accept='application/json', 
         contentType='application/json'
     )
+    
     body = response.get('body').read().decode('utf-8')
     response_body = json.loads(body)
     response = response_body['generation'].strip()
     return response
+    
+def parse_properties(source, mappings):
+    """Helper function to extract and rename properties from a source dictionary."""
+    return {new_key: source.get(old_key) for old_key, new_key in mappings.items()}
 
 def lambda_handler(event, context):
-    logger.info(event)
     try:
-        body = {
-            "prompt": event['inputs'], 
-            'max_gen_len': 512,
-            'top_p': 0.9,
-            'temperature': 0.2
+        properties = {
+            "inputs": "prompt",
+            "parameters": {
+                "max_new_tokens": "max_gen_len",
+                "top_p": "top_p",
+                "temperature": "temperature"
+            },
+            "model_id": "model_id"
         }
+
+        # Extract the main inputs
+        body = {"prompt": event.get('inputs')}
+
+        # Extract the nested parameters
+        parameters = parse_properties(event.get('parameters', {}), properties['parameters'])
+
+        # Merge the dictionaries
+        body.update(parameters)
         
-        reply = query_inference_endpoint(body)
-        
-        # Debugging
-        logger.info(reply)
+        model_id = event.get('model_id', 'meta.llama2-13b-chat-v1')
+
+        reply = query_inference_endpoint(body, model_id)  # Call the inference endpoint with the constructed body
         
         # Return the updated data in the response
         response = {
