@@ -8,6 +8,12 @@ const promptMessageSchema = z.object({
 });
 export type PromptMessage = z.infer<typeof promptMessageSchema>;
 
+const conversationMessageSchema = z.object({
+  role: z.enum(["system", "user", "assistant"]),
+  content: z.array(z.object({ text: z.string() })),
+});
+export type ConversationMessage = z.infer<typeof conversationMessageSchema>;
+
 const senderRoleSchema = z.enum(["system", "user", "assistant"]);
 export type SenderRole = z.infer<typeof senderRoleSchema>;
 
@@ -34,3 +40,15 @@ const agentModelsSchema = z.object({
   CLAUDE__3_5_SONNET: z.string(),
 });
 export type AgentModels = z.infer<typeof agentModelsSchema>;
+
+const inferenceReqBodySchema = z.object({
+  modelId: z.string(),
+  messages: z.array(conversationMessageSchema),
+  inferenceConfig: z.object({
+    maxTokens: z.number(),
+    temperature: z.number(),
+    topP: z.number(),
+  }),
+  system: z.string(),
+});
+export type InferenceReqBody = z.infer<typeof inferenceReqBodySchema>;
