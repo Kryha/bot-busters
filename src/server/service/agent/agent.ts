@@ -1,7 +1,7 @@
 import { v4 as uuid } from "uuid";
 import fetch from "node-fetch";
 
-import { AGENT_MODEL, CHARACTERS } from "~/constants/index.js";
+import { AGENT_MODELS, CHARACTERS } from "~/constants/index.js";
 import { env } from "~/env.mjs";
 import { ee, matchEvent } from "~/server/api/match-maker.js";
 import { type Match } from "~/server/service/index.js";
@@ -51,7 +51,7 @@ export class Agent {
     this._characterName = this.getCharacterName(characterId);
     this._agentPersonality = this.generatePersonality();
     this._systemPrompt = this.generateSystemPrompt();
-    this._seed = getRandomInt({ min: 0, max: 2 ** 40 });
+    this._seed = getRandomInt({ min: 0, max: 10 });
     this._authToken = env.LAMBDA_TOKEN.replace(/\r?\n|\r/g, "");
 
     ee.on(matchEvent(match.id), this.handleMessageEvent);
@@ -164,7 +164,7 @@ export class Agent {
     const conversation = this.parseConversation(messages);
 
     const reqBody = {
-      modelId: AGENT_MODEL.LLAMA_3_8B,
+      modelId: AGENT_MODELS[this._seed],
       messages: conversation,
       inferenceConfig: {
         maxTokens: 85, // 1 token ~ 4 characters}
