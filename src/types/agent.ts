@@ -14,6 +14,9 @@ const conversationMessageSchema = z.object({
 });
 export type ConversationMessage = z.infer<typeof conversationMessageSchema>;
 
+const systemPromptSchema = z.array(z.object({ text: z.string() }));
+export type SystemPrompt = z.infer<typeof systemPromptSchema>;
+
 const senderRoleSchema = z.enum(["system", "user", "assistant"]);
 export type SenderRole = z.infer<typeof senderRoleSchema>;
 

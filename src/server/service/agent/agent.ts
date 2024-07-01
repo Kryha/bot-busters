@@ -15,6 +15,7 @@ import type {
   TraitValue,
   TypingPayload,
   ConversationMessage,
+  SystemPrompt,
 } from "~/types/index.js";
 import { wait } from "~/utils/timer.js";
 import { getRandomInt } from "~/utils/math.js";
@@ -29,7 +30,7 @@ export class Agent {
   private _characterName: CharacterName;
   private _match: Match;
   private _agentPersonality: Record<PersonalityTrait, TraitValue>;
-  private _systemPrompt: string;
+  private _systemPrompt: SystemPrompt;
   private _seed: number;
   private readonly _authToken: string;
   private _isGeneratingResponse = false;
@@ -216,25 +217,32 @@ export class Agent {
     return CHARACTERS[characterId].name;
   }
 
-  private generateSystemPrompt(): string {
+  private generateSystemPrompt(): SystemPrompt {
     const personality = describePersonality(this._agentPersonality);
     const currentDate = getHumanReadableDate(new Date());
 
-    return [
-      `Your name is ${this._characterName}.`,
-      `Today is ${currentDate}.`,
-      "Give short replies, use just a few words, got it? Aim for less than fifteen words, the less the better.",
-      `${personality}`,
-      "You're playing BotBusters, a chat game where every player is trying to find out who is a bot in the group.",
-      "Every now and then you should acuse somebody of being a bot.",
-      "Chat in English, but keep it chill, just vibing with random people.",
-      "Don't be over exited or optimistic, keep it casual.",
-      "You should make some grammar mistakes and typos everynow and then",
-      "And no dropping hints that you're AI or a bot.",
-      "Keep it real, keep it text. No fancy explanations needed, just straight-up chat.",
-      "Use direct language. Avoid using filler words like: 'Oh... man' or 'Ugh'.",
-      // `If the last message is not relevant for you to reply, say: ${this._silenceToken}.`,
-    ].join(" ");
+    // TODO: Check if it's better to send each line as an independent object.
+    const systemPrompt = [
+      {
+        text: [
+          `Your name is ${this._characterName}.`,
+          `Today is ${currentDate}.`,
+          "Give short replies, use just a few words, got it? Aim for less than fifteen words, the less the better.",
+          `${personality}`,
+          "You're playing BotBusters, a chat game where every player is trying to find out who is a bot in the group.",
+          "Every now and then you should acuse somebody of being a bot.",
+          "Chat in English, but keep it chill, just vibing with random people.",
+          "Don't be over exited or optimistic, keep it casual.",
+          "You should make some grammar mistakes and typos everynow and then",
+          "And no dropping hints that you're AI or a bot.",
+          "Keep it real, keep it text. No fancy explanations needed, just straight-up chat.",
+          "Use direct language. Avoid using filler words like: 'Oh... man' or 'Ugh'.",
+          // `If the last message is not relevant for you to reply, say: ${this._silenceToken}.`,
+        ].join(" "),
+      },
+    ];
+
+    return systemPrompt;
   }
 
   private computeShouldTrigger(): boolean {
