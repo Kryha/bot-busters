@@ -51,7 +51,7 @@ export class Agent {
     this._characterName = this.getCharacterName(characterId);
     this._agentPersonality = this.generatePersonality();
     this._systemPrompt = this.generateSystemPrompt();
-    this._seed = getRandomInt({ min: 0, max: 10 });
+    this._seed = getRandomInt({ min: 0, max: AGENT_MODELS.length });
     this._authToken = env.LAMBDA_TOKEN.replace(/\r?\n|\r/g, "");
 
     ee.on(matchEvent(match.id), this.handleMessageEvent);
@@ -170,7 +170,7 @@ export class Agent {
         maxTokens: 85, // 1 token ~ 4 characters}
         temperature: 0.95, // 0-1 higher value = more creative answers
         topP: 0.8, // chooses the smallest set of words whose cumulative probability exceeds the value p
-        stopSequences: ["<s>", "<s]"],
+        stopSequences: ["<s>", "<s]", "\\*\\*\\*"],
       },
       systemPrompt: this._systemPrompt,
     };
