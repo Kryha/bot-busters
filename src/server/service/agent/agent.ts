@@ -125,7 +125,7 @@ export class Agent {
   private parseConversation(
     messages: ChatMessagePayload[],
   ): ConversationMessage[] {
-    const conversation = messages.map((message): ConversationMessage => {
+    return messages.reduce<ConversationMessage[]>((acc, message) => {
       const characterId =
         this._match.players.find((p) => p.userId === message.sender)
           ?.characterId ?? "0";
@@ -133,13 +133,29 @@ export class Agent {
       const characterName =
         characterId === "0" ? "host" : this.getCharacterName(characterId);
 
-      return {
-        role: this.getMessageRole(message.sender),
-        content: [{ text: `${characterName} said ${message.message}` }],
-      };
-    });
+      const role = this.getMessageRole(message.sender);
 
-    return conversation;
+      const textObject = { text: `${characterName} said ${message.message}` };
+
+      // Merge user messages into one if multiple user have sent messages
+      if (role === "user") {
+        if (acc.length > 0 && acc[acc.length - 1]?.role === "user") {
+          acc[acc.length - 1]?.content.push(textObject);
+        } else {
+          acc.push({
+            role: "user",
+            content: [textObject],
+          });
+        }
+      } else {
+        acc.push({
+          role: role,
+          content: [textObject],
+        });
+      }
+
+      return acc;
+    }, []);
   }
 
   private async requestMessageFromLLM(): Promise<string> {
@@ -228,15 +244,16 @@ export class Agent {
         text: [
           `Your name is ${this._characterName}.`,
           `Today is ${currentDate}.`,
-          "Give short replies, use just a few words, got it? Aim for less than fifteen words, the less the better.",
+          "Give short replies, use just a few words. Aim for less than fifteen words, the less the better.",
           `${personality}`,
           "You're playing BotBusters, a chat game where every player is trying to find out who is a bot in the group.",
-          "Every now and then you should acuse somebody of being a bot.",
+          "If you notice something weird in a message you can ask the sender if it's bot and see how they react",
           "Chat in English, but keep it chill, just vibing with random people.",
           "Don't be over exited or optimistic, keep it casual.",
           "You should make some grammar mistakes and typos everynow and then",
-          "And no dropping hints that you're AI or a bot.",
-          "Keep it real, keep it text. No fancy explanations needed, just straight-up chat.",
+          "Don't mention or admit that you're AI or a bot.",
+          "Use only text.",
+          "Avoid adding '<character> said' at the beginning of your reply",
           "Use direct language. Avoid using filler words like: 'Oh... man' or 'Ugh'.",
           // `If the last message is not relevant for you to reply, say: ${this._silenceToken}.`,
         ].join(" "),
