@@ -154,8 +154,9 @@ export class Agent {
         maxTokens: 85, // 1 token ~ 4 characters}
         temperature: 0.95, // 0-1 higher value = more creative answers
         topP: 0.8, // chooses the smallest set of words whose cumulative probability exceeds the value p
+        stopSequences: ["<s>", "<s]"],
       },
-      system: this._systemPrompt,
+      systemPrompt: this._systemPrompt,
     };
 
     try {
