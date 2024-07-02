@@ -94,11 +94,19 @@ function filterUm(input: string): string {
   return input.replace(combinedRegEx, "");
 }
 
+function removeCharacterNamePrefix(sentence: string): string {
+  const characterNames = ["hal", "ash", "roy", "eve", "dot"];
+  const regex = new RegExp(`^(${characterNames.join("|")}) said `, "i");
+
+  return sentence.replace(regex, "");
+}
+
 export function cleanMessage(input: string): string {
   const parsedMessage = removePromptAnomalies(input);
   const noEmojisMessage = removeEmojis(parsedMessage);
   const whiteListMessage = filterBlackList(noEmojisMessage);
-  const cleanedMessage = filterUm(whiteListMessage);
+  const noNamePrefix = removeCharacterNamePrefix(whiteListMessage);
+  const cleanedMessage = filterUm(noNamePrefix);
 
   return cleanedMessage.trimStart();
 }
