@@ -66,4 +66,4 @@ spec:
                   name: backend-secrets
                   key: lambda_token
             - name: AWS_INFERENCE_URL
-              value: https://3dhomhunle.execute-api.us-east-1.amazonaws.com/default/generate
+              value: https://3dhomhunle.execute-api.us-east-1.amazonaws.com/default/converse

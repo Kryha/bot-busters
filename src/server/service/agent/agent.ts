@@ -1,7 +1,7 @@
 import { v4 as uuid } from "uuid";
 import fetch from "node-fetch";
 
-import { AGENT_MODEL, CHARACTERS } from "~/constants/index.js";
+import { AGENT_MODELS, CHARACTERS } from "~/constants/index.js";
 import { env } from "~/env.mjs";
 import { ee, matchEvent } from "~/server/api/match-maker.js";
 import { type Match } from "~/server/service/index.js";
@@ -11,10 +11,12 @@ import type {
   ChatMessagePayload,
   PersonalityTrait,
   PlayerType,
-  PromptMessage,
   SenderRole,
   TraitValue,
   TypingPayload,
+  ConversationMessage,
+  SystemPrompt,
+  ConversationText,
 } from "~/types/index.js";
 import { wait } from "~/utils/timer.js";
 import { getRandomInt } from "~/utils/math.js";
@@ -29,10 +31,11 @@ export class Agent {
   private _characterName: CharacterName;
   private _match: Match;
   private _agentPersonality: Record<PersonalityTrait, TraitValue>;
-  private _systemPrompt: string;
+  private _systemPrompt: SystemPrompt;
   private _seed: number;
-  private readonly _silenceToken = "001001";
+  private readonly _authToken: string;
   private _isGeneratingResponse = false;
+  private readonly _silenceToken = "001001";
 
   get id() {
     return this._id;
@@ -49,7 +52,8 @@ export class Agent {
     this._characterName = this.getCharacterName(characterId);
     this._agentPersonality = this.generatePersonality();
     this._systemPrompt = this.generateSystemPrompt();
-    this._seed = getRandomInt({ min: 0, max: 2 ** 40 });
+    this._seed = getRandomInt({ min: 0, max: AGENT_MODELS.length });
+    this._authToken = env.LAMBDA_TOKEN.replace(/\r?\n|\r/g, "");
 
     ee.on(matchEvent(match.id), this.handleMessageEvent);
   }
@@ -119,68 +123,84 @@ export class Agent {
     }
   }
 
+  private getCharacterDetails = (senderId: string) => {
+    const player = this._match.players.find((p) => p.userId === senderId);
+    const characterId = player?.characterId ?? "0";
+    const characterName =
+      characterId === "0" ? "host" : this.getCharacterName(characterId);
+    return { characterId, characterName };
+  };
+
+  // If previous message is also from an unser then merge them into one content array with multiple textObjects
+  private addUserMessageToConversation = (
+    acc: ConversationMessage[],
+    conversationText: ConversationText,
+  ) => {
+    if (acc.length > 0 && acc[acc.length - 1]?.role === "user") {
+      acc[acc.length - 1]?.content.push(conversationText);
+    } else {
+      acc.push({
+        role: "user",
+        content: [conversationText],
+      });
+    }
+    return acc;
+  };
+
+  private parseConversation(
+    messages: ChatMessagePayload[],
+  ): ConversationMessage[] {
+    return messages.reduce<ConversationMessage[]>((acc, message) => {
+      const { characterName } = this.getCharacterDetails(message.sender);
+      const role = this.getMessageRole(message.sender);
+
+      const conversationText = {
+        text: `${characterName} said ${message.message}`,
+      };
+
+      // If User message merge accordingly else add assistant message to the conversation
+      return role === "user"
+        ? this.addUserMessageToConversation(acc, conversationText)
+        : [...acc, { role, content: [conversationText] }];
+    }, []);
+  }
+
   private async requestMessageFromLLM(): Promise<string> {
     const { messages } = this._match;
 
-    const promptDialog = messages.map((message): PromptMessage => {
-      const characterId =
-        this._match.players.find((p) => p.userId === message.sender)
-          ?.characterId ?? "0";
+    const conversation = this.parseConversation(messages);
 
-      const characterName =
-        characterId === "0" ? "host" : this.getCharacterName(characterId);
-
-      const promptMessage: PromptMessage = {
-        role: this.getMessageRole(message.sender),
-        characterName,
-        content: message.message,
-      };
-
-      return promptMessage;
-    });
-
-    const prompt = this.generatePrompt(promptDialog);
-
-    // TODO: Upgeade body constuction for Converse API
-    const body = JSON.stringify({
-      inputs: prompt,
-      model_id: AGENT_MODEL.LLAMA_2_13B, // select the model to use for output generation
-      parameters: {
+    const reqBody = {
+      modelId: AGENT_MODELS[this._seed],
+      messages: conversation,
+      inferenceConfig: {
+        maxTokens: 85, // 1 token ~ 4 characters}
         temperature: 0.95, // 0-1 higher value = more creative answers
-        max_new_tokens: 85, // 1 token ~ 4 characters
-        repetition_penalty: 1.3, // higer prevents repetition in words
-        return_full_text: false, // inlcude inpute text in the response
-        details: false, // Provide extra debugging details in the response
-        stop: ["</s>"], // Prevent further token generation after finding this
-        // truncate: 1023, // Max input characters (removes starts of string if reached)
-        do_sample: true, // Pick from a probabilitic pool
-        seed: this._seed, // 0 - 2^64
-        top_k: 39, // limits the pool of next-word candidates to the k most likely words. (20-60)
-        top_p: 0.8, // chooses the smallest set of words whose cumulative probability exceeds the value p
+        topP: 0.8, // chooses the smallest set of words whose cumulative probability exceeds the value p
+        stopSequences: ["<s>", "<s]", "\\*\\*\\*"],
       },
-    });
-
-    const authorizationToken = env.LAMBDA_TOKEN.replace(/\r?\n|\r/g, "");
+      systemPrompt: this._systemPrompt,
+    };
 
     try {
       const response = await fetch(env.AWS_INFERENCE_URL, {
         headers: {
           "content-type": "application/json",
-          authorizationToken,
+          authorizationToken: this._authToken,
         },
         method: "POST",
-        body,
+        body: JSON.stringify(reqBody),
         signal: AbortSignal.timeout(60000),
       });
 
-      const data = (await response.json()) as {
+      const responseContent = (await response.json()) as {
         statusCode: number;
         body: string;
       };
 
-      if (data.statusCode >= 300) return this._silenceToken; // Something went wrong, stay silent
+      if (responseContent.statusCode >= 300) return this._silenceToken; // Something went wrong, stay silent
 
-      return data.body;
+      return responseContent.body;
     } catch (error) {
       console.error(error);
       return this._silenceToken;
@@ -213,28 +233,6 @@ export class Agent {
     };
   }
 
-  generatePrompt(messages: PromptMessage[]): string {
-    // First message is always from Host
-    const hostMessage = messages.shift();
-
-    const chatHistoryPrompt = messages.reduce(
-      (acc, currentMessage) => {
-        const nextMessageContent =
-          currentMessage.role === "assistant"
-            ? `${currentMessage.content}`
-            : `[INST] ${currentMessage.characterName}: ${currentMessage.content} [/INST]`;
-
-        return `${acc}\n${nextMessageContent}`;
-      },
-      `host: ${hostMessage?.content}[/INST]`,
-    );
-
-    const prompt = `
-    <s>[INST] <<SYS>>\n${this._systemPrompt}\n<</SYS>>\n\n${chatHistoryPrompt}\n${this._characterName}:`;
-
-    return prompt;
-  }
-
   private getMessageRole(senderID: string): SenderRole {
     return senderID === this._id ? "assistant" : "user";
   }
@@ -243,25 +241,33 @@ export class Agent {
     return CHARACTERS[characterId].name;
   }
 
-  private generateSystemPrompt(): string {
+  private generateSystemPrompt(): SystemPrompt {
     const personality = describePersonality(this._agentPersonality);
     const currentDate = getHumanReadableDate(new Date());
 
-    return [
-      `Your name is ${this._characterName}.`,
-      `Today is ${currentDate}.`,
-      "Give short replies, use just a few words, got it? Aim for less than fifteen words, the less the better.",
-      `${personality}`,
-      "You're playing BotBusters, a chat game where every player is trying to find out who is a bot in the group.",
-      "Every now and then you should acuse somebody of being a bot.",
-      "Chat in English, but keep it chill, just vibing with random people.",
-      "Don't be over exited or optimistic, keep it casual.",
-      "You should make some grammar mistakes and typos everynow and then",
-      "And no dropping hints that you're AI or a bot.",
-      "Keep it real, keep it text. No fancy explanations needed, just straight-up chat.",
-      "Use direct language. Avoid using filler words like: 'Oh... man' or 'Ugh'.",
-      // `If the last message is not relevant for you to reply, say: ${this._silenceToken}.`,
-    ].join(" ");
+    // TODO: Check if it's better to send each line as an independent object.
+    const systemPrompt = [
+      {
+        text: [
+          `Your name is ${this._characterName}.`,
+          `Today is ${currentDate}.`,
+          "Give short replies, use just a few words. Aim for less than fifteen words, the less the better.",
+          `${personality}`,
+          "You're playing BotBusters, a chat game where every player is trying to find out who is a bot in the group.",
+          "If you notice something weird in a message you can ask the sender if it's bot and see how they react",
+          "Chat in English, but keep it chill, just vibing with random people.",
+          "Don't be over exited or optimistic, keep it casual.",
+          "You should make some grammar mistakes and typos everynow and then",
+          "Don't mention or admit that you're AI or a bot.",
+          "Use only text.",
+          "Avoid adding '<character> said' at the beginning of your reply",
+          "Use direct language. Avoid using filler words like: 'Oh... man' or 'Ugh'.",
+          // `If the last message is not relevant for you to reply, say: ${this._silenceToken}.`,
+        ].join(" "),
+      },
+    ];
+
+    return systemPrompt;
   }
 
   private computeShouldTrigger(): boolean {
