@@ -16,6 +16,7 @@ import type {
   TypingPayload,
   ConversationMessage,
   SystemPrompt,
+  ConversationText,
 } from "~/types/index.js";
 import { wait } from "~/utils/timer.js";
 import { getRandomInt } from "~/utils/math.js";
@@ -122,39 +123,45 @@ export class Agent {
     }
   }
 
+  private getCharacterDetails = (senderId: string) => {
+    const player = this._match.players.find((p) => p.userId === senderId);
+    const characterId = player?.characterId ?? "0";
+    const characterName =
+      characterId === "0" ? "host" : this.getCharacterName(characterId);
+    return { characterId, characterName };
+  };
+
+  // If previous message is also from an unser then merge them into one content array with multiple textObjects
+  private addUserMessageToConversation = (
+    acc: ConversationMessage[],
+    conversationText: ConversationText,
+  ) => {
+    if (acc.length > 0 && acc[acc.length - 1]?.role === "user") {
+      acc[acc.length - 1]?.content.push(conversationText);
+    } else {
+      acc.push({
+        role: "user",
+        content: [conversationText],
+      });
+    }
+    return acc;
+  };
+
   private parseConversation(
     messages: ChatMessagePayload[],
   ): ConversationMessage[] {
     return messages.reduce<ConversationMessage[]>((acc, message) => {
-      const characterId =
-        this._match.players.find((p) => p.userId === message.sender)
-          ?.characterId ?? "0";
-
-      const characterName =
-        characterId === "0" ? "host" : this.getCharacterName(characterId);
-
+      const { characterName } = this.getCharacterDetails(message.sender);
       const role = this.getMessageRole(message.sender);
 
-      const textObject = { text: `${characterName} said ${message.message}` };
+      const conversationText = {
+        text: `${characterName} said ${message.message}`,
+      };
 
-      // Merge user messages into one if multiple user have sent messages
-      if (role === "user") {
-        if (acc.length > 0 && acc[acc.length - 1]?.role === "user") {
-          acc[acc.length - 1]?.content.push(textObject);
-        } else {
-          acc.push({
-            role: "user",
-            content: [textObject],
-          });
-        }
-      } else {
-        acc.push({
-          role: role,
-          content: [textObject],
-        });
-      }
-
-      return acc;
+      // If User message merge accordingly else add assistant message to the conversation
+      return role === "user"
+        ? this.addUserMessageToConversation(acc, conversationText)
+        : [...acc, { role, content: [conversationText] }];
     }, []);
   }
 

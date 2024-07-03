@@ -8,9 +8,14 @@ const promptMessageSchema = z.object({
 });
 export type PromptMessage = z.infer<typeof promptMessageSchema>;
 
+const conversationTextSchema = z.object({
+  text: z.string(),
+});
+export type ConversationText = z.infer<typeof conversationTextSchema>;
+
 const conversationMessageSchema = z.object({
   role: z.enum(["system", "user", "assistant"]),
-  content: z.array(z.object({ text: z.string() })),
+  content: z.array(conversationTextSchema),
 });
 export type ConversationMessage = z.infer<typeof conversationMessageSchema>;
 
