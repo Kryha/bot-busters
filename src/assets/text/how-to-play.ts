@@ -25,7 +25,7 @@ export const howToPlay = {
     busting: [
       "Time to call out who in the room is a bot",
       "Players can review the full chat history",
-      "Time limit for selection: one minute",
+      "Time limit for selection: 30 seconds",
       "If you fail to vote before the time limit, you get no points",
     ],
     results: [
