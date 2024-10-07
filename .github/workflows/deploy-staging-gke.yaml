@@ -5,7 +5,6 @@ on: push
 env:
   PROJECT_ID: aleo-botbusters
   GKE_CLUSTER: bot-busters
-  GKE_ZONE: europe-west1-b
 
 jobs:
   setup-build-publish-deploy:
