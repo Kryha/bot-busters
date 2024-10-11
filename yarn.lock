@@ -2203,46 +2203,55 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@demox-labs/aleo-wallet-adapter-base@npm:^0.0.19":
-  version: 0.0.19
-  resolution: "@demox-labs/aleo-wallet-adapter-base@npm:0.0.19"
+"@demox-labs/aleo-wallet-adapter-base@npm:^0.0.21":
+  version: 0.0.21
+  resolution: "@demox-labs/aleo-wallet-adapter-base@npm:0.0.21"
   dependencies:
     eventemitter3: ^4.0.7
-  checksum: 5a4d58f5c70b13d5c778ef19bf1955c4431362a829bdc34e3b72815231dd7165417458d550ccc0c762a5777f3e986cdcd8d4d32df70faa923c0053451513c8b5
+  checksum: cac9bee9f16693c06e2a0023be10209d0b55225bc014bd2defc423fc9ed41b94739b01c38079613460952d26ddb0a21d08cc25513a22fcbaa975d910b99b010d
   languageName: node
   linkType: hard
 
-"@demox-labs/aleo-wallet-adapter-leo@npm:^0.0.18":
-  version: 0.0.18
-  resolution: "@demox-labs/aleo-wallet-adapter-leo@npm:0.0.18"
+"@demox-labs/aleo-wallet-adapter-base@npm:^0.0.22":
+  version: 0.0.22
+  resolution: "@demox-labs/aleo-wallet-adapter-base@npm:0.0.22"
   dependencies:
-    "@demox-labs/aleo-wallet-adapter-base": ^0.0.19
+    eventemitter3: ^4.0.7
+  checksum: f7027666fc3287f815fe9a77566887518dfa731d0d4a355c76bf943f5650b4e90fcd3262c0d5ed82b33a27794099cbe53dc3af660905d38e76b4933f3473356d
+  languageName: node
+  linkType: hard
+
+"@demox-labs/aleo-wallet-adapter-leo@npm:^0.0.24":
+  version: 0.0.24
+  resolution: "@demox-labs/aleo-wallet-adapter-leo@npm:0.0.24"
+  dependencies:
+    "@demox-labs/aleo-wallet-adapter-base": ^0.0.21
     nanoid: ^4.0.0
-  checksum: 9191597d778442542e6ed454c5e2eb08e918d9f281f7659dd4c5ed4ba398800dab0f43a94acb9ee2e04ebcac051de7e18e439ee64b5cb676a4c18e022b1e2e65
+  checksum: 95e4241dfc1a199607d68aac0598691317f4b6af61eb2f5c4aadec79853b228ab6b81819ee91a6230828ee0d2333a635ab9bdb5eeb0af4e5fc37d598d9403fd8
   languageName: node
   linkType: hard
 
-"@demox-labs/aleo-wallet-adapter-react@npm:^0.0.18":
-  version: 0.0.18
-  resolution: "@demox-labs/aleo-wallet-adapter-react@npm:0.0.18"
+"@demox-labs/aleo-wallet-adapter-react@npm:^0.0.21":
+  version: 0.0.21
+  resolution: "@demox-labs/aleo-wallet-adapter-react@npm:0.0.21"
   dependencies:
-    "@demox-labs/aleo-wallet-adapter-base": ^0.0.19
+    "@demox-labs/aleo-wallet-adapter-base": ^0.0.22
   peerDependencies:
     react: ^18.2.0
-  checksum: e846cffaa01e73f79b9ff9118ffbef61383549796332ac74fe011cb3fcc2e78e8d248d0a831da988554d1a22f4712dfd81404e5fde414732e2c416b379e3c4eb
+  checksum: 72ea9c2ba6174be2fe58f139838a1b336f37869c9a4ed5faf9ccded4fa04b492c75cfe2613d5b97c60ea7c7650c21e710cc272173d3a01e2aec7a8794110d181
   languageName: node
   linkType: hard
 
-"@demox-labs/aleo-wallet-adapter-reactui@npm:^0.0.30":
-  version: 0.0.30
-  resolution: "@demox-labs/aleo-wallet-adapter-reactui@npm:0.0.30"
+"@demox-labs/aleo-wallet-adapter-reactui@npm:^0.0.35":
+  version: 0.0.35
+  resolution: "@demox-labs/aleo-wallet-adapter-reactui@npm:0.0.35"
   dependencies:
-    "@demox-labs/aleo-wallet-adapter-base": ^0.0.19
-    "@demox-labs/aleo-wallet-adapter-react": ^0.0.18
+    "@demox-labs/aleo-wallet-adapter-base": ^0.0.22
+    "@demox-labs/aleo-wallet-adapter-react": ^0.0.21
   peerDependencies:
     react: ^18.2.0
     react-dom: ^18.2.0
-  checksum: 2256d79575e86c9454813d3d4dd1ef013a31c1278f3cc358d29a455704e44312c79f7d3e0845ce2c712867e686a37a25e9b64eaebeb22d93af2e609cf7413547
+  checksum: 437799f1d05d72e1938e321aa6ddd9b74d89f25dc9899fb5a7068ede58eb965c479c4b6fde0ddf3cfd198d322e63e7f3d42a2043f7110a6973ab83affcebe0ee
   languageName: node
   linkType: hard
 
@@ -5840,10 +5849,10 @@ __metadata:
     "@2toad/profanity": ^2.2.0
     "@aleohq/sdk": ^0.6.9
     "@aws-sdk/client-ses": ^3.496.0
-    "@demox-labs/aleo-wallet-adapter-base": ^0.0.19
-    "@demox-labs/aleo-wallet-adapter-leo": ^0.0.18
-    "@demox-labs/aleo-wallet-adapter-react": ^0.0.18
-    "@demox-labs/aleo-wallet-adapter-reactui": ^0.0.30
+    "@demox-labs/aleo-wallet-adapter-base": ^0.0.22
+    "@demox-labs/aleo-wallet-adapter-leo": ^0.0.24
+    "@demox-labs/aleo-wallet-adapter-react": ^0.0.21
+    "@demox-labs/aleo-wallet-adapter-reactui": ^0.0.35
     "@emotion/react": ^11.11.1
     "@emotion/styled": ^11.11.0
     "@faker-js/faker": ^8.1.0

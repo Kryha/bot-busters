@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import { LeoWalletAdapter } from "@demox-labs/aleo-wallet-adapter-leo";
 import { WalletModalProvider } from "@demox-labs/aleo-wallet-adapter-reactui";
 import { WalletProvider } from "@demox-labs/aleo-wallet-adapter-react";
+import { WalletAdapterNetwork } from "@demox-labs/aleo-wallet-adapter-base";
 import Head from "next/head.js";
 import { ErrorBoundary } from "react-error-boundary";
 
@@ -54,7 +55,10 @@ const MyApp: AppType<{ session: Session | null }> = ({
         <meta name="description" content="Bust the bots!" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <WalletProvider wallets={wallets}>
+      <WalletProvider
+        wallets={wallets}
+        network={WalletAdapterNetwork.MainnetBeta}
+      >
         <WalletModalProvider>
           <ThemeProvider>
             <SessionProvider session={session}>
