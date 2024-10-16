@@ -1,4 +1,6 @@
 {
+  "id": "655da35a-6ec1-4dfd-bea4-5a23ddcdd160",
+  "prevId": "2b419472-28ba-4a53-8597-80facb31a4d8",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -11,6 +13,13 @@
           "type": "uuid",
           "primaryKey": true,
           "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "CURRENT_DATE"
         },
         "room": {
           "name": "room",
@@ -29,6 +38,87 @@
       "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.bot_busters_old_rank": {
+      "name": "bot_busters_old_rank",
+      "schema": "",
+      "columns": {
+        "user_id": {
+          "name": "user_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "year": {
+          "name": "year",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 2024
+        },
+        "month": {
+          "name": "month",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 1
+        },
+        "day": {
+          "name": "day",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 1
+        },
+        "position": {
+          "name": "position",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "score": {
+          "name": "score",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "bots_busted": {
+          "name": "bots_busted",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "bot_busters_old_rank_user_id_bot_busters_user_id_fk": {
+          "name": "bot_busters_old_rank_user_id_bot_busters_user_id_fk",
+          "tableFrom": "bot_busters_old_rank",
+          "tableTo": "bot_busters_user",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "bot_busters_old_rank_user_id_year_month_day_pk": {
+          "name": "bot_busters_old_rank_user_id_year_month_day_pk",
+          "columns": [
+            "user_id",
+            "year",
+            "month",
+            "day"
+          ]
+        }
+      },
       "uniqueConstraints": {}
     },
     "public.bot_busters_rank": {
@@ -53,27 +143,69 @@
         "bot_busters_rank_user_id_bot_busters_user_id_fk": {
           "name": "bot_busters_rank_user_id_bot_busters_user_id_fk",
           "tableFrom": "bot_busters_rank",
+          "tableTo": "bot_busters_user",
           "columnsFrom": [
             "user_id"
           ],
-          "tableTo": "bot_busters_user",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "no action"
+          "onDelete": "no action",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
         "bot_busters_rank_position_unique": {
           "name": "bot_busters_rank_position_unique",
+          "nullsNotDistinct": false,
           "columns": [
             "position"
-          ],
-          "nullsNotDistinct": false
+          ]
         }
       }
+    },
+    "public.bot_busters_user_achievement": {
+      "name": "bot_busters_user_achievement",
+      "schema": "",
+      "columns": {
+        "user_id": {
+          "name": "user_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "achievement_id": {
+          "name": "achievement_id",
+          "type": "varchar(32)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "achieved_at": {
+          "name": "achieved_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "bot_busters_user_achievement_user_id_bot_busters_user_id_fk": {
+          "name": "bot_busters_user_achievement_user_id_bot_busters_user_id_fk",
+          "tableFrom": "bot_busters_user_achievement",
+          "tableTo": "bot_busters_user",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
     },
     "public.bot_busters_user": {
       "name": "bot_busters_user",
@@ -105,6 +237,13 @@
           "notNull": true,
           "default": 0
         },
+        "bots_busted": {
+          "name": "bots_busted",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
         "created_at": {
           "name": "created_at",
           "type": "timestamp",
@@ -119,10 +258,10 @@
       "uniqueConstraints": {
         "bot_busters_user_username_unique": {
           "name": "bot_busters_user_username_unique",
+          "nullsNotDistinct": false,
           "columns": [
             "username"
-          ],
-          "nullsNotDistinct": false
+          ]
         }
       }
     },
@@ -148,28 +287,28 @@
         "bot_busters_user_match_user_id_bot_busters_user_id_fk": {
           "name": "bot_busters_user_match_user_id_bot_busters_user_id_fk",
           "tableFrom": "bot_busters_user_match",
+          "tableTo": "bot_busters_user",
           "columnsFrom": [
             "user_id"
           ],
-          "tableTo": "bot_busters_user",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "cascade"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         },
         "bot_busters_user_match_match_id_bot_busters_match_id_fk": {
           "name": "bot_busters_user_match_match_id_bot_busters_match_id_fk",
           "tableFrom": "bot_busters_user_match",
+          "tableTo": "bot_busters_match",
           "columnsFrom": [
             "match_id"
           ],
-          "tableTo": "bot_busters_match",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "no action"
+          "onDelete": "no action",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {
@@ -186,12 +325,10 @@
   },
   "enums": {},
   "schemas": {},
+  "sequences": {},
   "_meta": {
+    "columns": {},
     "schemas": {},
-    "tables": {},
-    "columns": {}
-  },
-  "id": "82cafdbe-c760-494f-b5c9-f054eb45b2cc",
-  "prevId": "ad7e300d-50a5-4f41-9767-5771f90314f4",
-  "sequences": {}
+    "tables": {}
+  }
 }

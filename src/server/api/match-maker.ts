@@ -11,6 +11,7 @@ import type {
   StoredChatMessage,
 } from "~/types/index.js";
 import { getRandomInt } from "~/utils/math.js";
+import { expireRanks } from "../db/rank.js";
 
 const MAX_BOTS_PER_MATCH = env.PLAYERS_PER_MATCH > 3 ? 3 : 2;
 const MIN_HUMANS_PER_MATCH = env.PLAYERS_PER_MATCH - MAX_BOTS_PER_MATCH;
@@ -124,4 +125,17 @@ setInterval(() => {
   } catch (error) {
     console.error("Clean up loop error:", error);
   }
+}, 10000);
+
+// TODO: make periodic
+setTimeout(() => {
+  console.log("EXPIRING");
+
+  db.transaction((tx) => expireRanks(tx))
+    .then(() => {
+      console.log("Expire success.");
+    })
+    .catch((err) => {
+      console.error("Expire error:", err);
+    });
 }, 10000);

@@ -1,10 +1,8 @@
 {
-  "id": "ad7e300d-50a5-4f41-9767-5771f90314f4",
-  "prevId": "00000000-0000-0000-0000-000000000000",
-  "version": "5",
-  "dialect": "pg",
+  "version": "7",
+  "dialect": "postgresql",
   "tables": {
-    "bot_busters_match": {
+    "public.bot_busters_match": {
       "name": "bot_busters_match",
       "schema": "",
       "columns": {
@@ -26,7 +24,7 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "bot_busters_rank": {
+    "public.bot_busters_rank": {
       "name": "bot_busters_rank",
       "schema": "",
       "columns": {
@@ -48,29 +46,29 @@
         "bot_busters_rank_user_id_bot_busters_user_id_fk": {
           "name": "bot_busters_rank_user_id_bot_busters_user_id_fk",
           "tableFrom": "bot_busters_rank",
-          "tableTo": "bot_busters_user",
           "columnsFrom": [
             "user_id"
           ],
+          "tableTo": "bot_busters_user",
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "no action"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
         "bot_busters_rank_position_unique": {
           "name": "bot_busters_rank_position_unique",
-          "nullsNotDistinct": false,
           "columns": [
             "position"
-          ]
+          ],
+          "nullsNotDistinct": false
         }
       }
     },
-    "bot_busters_user": {
+    "public.bot_busters_user": {
       "name": "bot_busters_user",
       "schema": "",
       "columns": {
@@ -114,14 +112,14 @@
       "uniqueConstraints": {
         "bot_busters_user_username_unique": {
           "name": "bot_busters_user_username_unique",
-          "nullsNotDistinct": false,
           "columns": [
             "username"
-          ]
+          ],
+          "nullsNotDistinct": false
         }
       }
     },
-    "bot_busters_user_match": {
+    "public.bot_busters_user_match": {
       "name": "bot_busters_user_match",
       "schema": "",
       "columns": {
@@ -143,28 +141,28 @@
         "bot_busters_user_match_user_id_bot_busters_user_id_fk": {
           "name": "bot_busters_user_match_user_id_bot_busters_user_id_fk",
           "tableFrom": "bot_busters_user_match",
-          "tableTo": "bot_busters_user",
           "columnsFrom": [
             "user_id"
           ],
+          "tableTo": "bot_busters_user",
           "columnsTo": [
             "id"
           ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "cascade"
         },
         "bot_busters_user_match_match_id_bot_busters_match_id_fk": {
           "name": "bot_busters_user_match_match_id_bot_busters_match_id_fk",
           "tableFrom": "bot_busters_user_match",
-          "tableTo": "bot_busters_match",
           "columnsFrom": [
             "match_id"
           ],
+          "tableTo": "bot_busters_match",
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "no action"
         }
       },
       "compositePrimaryKeys": {
@@ -182,8 +180,11 @@
   "enums": {},
   "schemas": {},
   "_meta": {
-    "columns": {},
     "schemas": {},
-    "tables": {}
-  }
+    "tables": {},
+    "columns": {}
+  },
+  "id": "ad7e300d-50a5-4f41-9767-5771f90314f4",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "sequences": {}
 }

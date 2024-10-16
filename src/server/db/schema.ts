@@ -23,16 +23,15 @@ export const users = bbPgTable("user", {
   address: varchar("address", { length: PUBLIC_KEY_LENGTH }),
   score: integer("score").default(0).notNull(),
   botsBusted: integer("bots_busted").default(0).notNull(),
-  // TODO: add zPass
-  // zPass: json("zPass"),
   createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`),
 });
 
-export const usersRelations = relations(users, ({ one }) => ({
+export const usersRelations = relations(users, ({ one, many }) => ({
   rank: one(ranks, {
     fields: [users.id],
     references: [ranks.userId],
   }),
+  oldRanks: many(oldRanks),
 }));
 
 export const userSchema = createSelectSchema(users);
@@ -56,8 +55,28 @@ export const ranks = bbPgTable("rank", {
   position: integer("position").notNull().unique(),
 });
 
-export const rankSchema = createInsertSchema(ranks);
-export type Rank = z.infer<typeof rankSchema>;
+export const oldRanks = bbPgTable(
+  "old_rank",
+  {
+    userId: uuid("user_id").references(() => users.id),
+    year: integer("year").notNull().default(2024),
+    month: integer("month").notNull().default(1),
+    day: integer("day").notNull().default(1),
+    position: integer("position").notNull(),
+    score: integer("score").default(0).notNull(),
+    botsBusted: integer("bots_busted").default(0).notNull(),
+  },
+  (t) => ({
+    pk: primaryKey({ columns: [t.userId, t.year, t.month, t.day] }),
+  }),
+);
+
+export const oldRanksRelations = relations(oldRanks, ({ one }) => ({
+  user: one(users, {
+    fields: [oldRanks.userId],
+    references: [users.id],
+  }),
+}));
 
 export const matches = bbPgTable("match", {
   id: uuid("id").primaryKey(),

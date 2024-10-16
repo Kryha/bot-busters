@@ -88,3 +88,12 @@ export const getTimeStamp = (time: number) => {
   const formattedMinutes = minutes.toString().padStart(2, "0");
   return `${formattedHours}:${formattedMinutes}`;
 };
+
+export const dateYearMonthDay = (isoDate?: string) => {
+  const date = isoDate ? new Date(isoDate) : new Date();
+  const year = date.getFullYear();
+  const month = date.getMonth();
+  const day = date.getDate();
+
+  return { year, month, day };
+};

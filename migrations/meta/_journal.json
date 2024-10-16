@@ -43,6 +43,13 @@
       "when": 1707230088168,
       "tag": "0005_tidy_prowler",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1729090902770,
+      "tag": "0006_outgoing_baron_zemo",
+      "breakpoints": true
     }
   ]
 }

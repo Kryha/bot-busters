@@ -1,7 +1,8 @@
-import { count, eq } from "drizzle-orm";
+import { and, count, eq } from "drizzle-orm";
 import { z } from "zod";
 
 import { validUsernameSchema } from "~/constants/index.js";
+import { dateYearMonthDay } from "~/utils/date.js";
 import {
   createTRPCRouter,
   protectedProcedure,
@@ -9,6 +10,7 @@ import {
 } from "~/server/api/trpc.js";
 import { db } from "~/server/db/index.js";
 import {
+  oldRanks,
   ranks,
   userAchievements,
   users,
@@ -206,29 +208,67 @@ export const userRouter = createTRPCRouter({
       z.object({
         limit: z.number().min(1).max(100).default(50),
         cursor: z.number().min(0).default(0),
+        // TODO: validate date string
+        isoDate: z.string(),
       }),
     )
     .query(async ({ input }) => {
-      const { cursor, limit } = input;
+      const { cursor, limit, isoDate } = input;
+
+      const currentDate = dateYearMonthDay();
+      const inputDate = dateYearMonthDay(isoDate);
+
+      const isCurrentDate =
+        inputDate.year === currentDate.year &&
+        inputDate.month === currentDate.month &&
+        inputDate.day === currentDate.day;
+
+      if (isCurrentDate) {
+        const players = await db
+          .select({
+            id: users.id,
+            username: users.username,
+            score: users.score,
+            // TODO: count daily matches
+            matchesPlayed: count(usersToMatches.userId),
+            rank: ranks.position,
+          })
+          .from(users)
+          .innerJoin(ranks, eq(users.id, ranks.userId))
+          .orderBy(ranks.position)
+          .offset(cursor)
+          .limit(limit)
+          .innerJoin(usersToMatches, eq(users.id, usersToMatches.userId))
+          .groupBy(users.id, ranks.position);
+
+        const nextCursor = players.length + cursor;
+        return { players, nextCursor };
+      }
 
       const players = await db
         .select({
           id: users.id,
           username: users.username,
-          score: users.score,
+          score: oldRanks.score,
           matchesPlayed: count(usersToMatches.userId),
-          rank: ranks.position,
+          rank: oldRanks.position,
         })
         .from(users)
-        .innerJoin(ranks, eq(users.id, ranks.userId))
-        .orderBy(ranks.position)
+        .innerJoin(oldRanks, eq(users.id, oldRanks.userId))
+        .having(
+          and(
+            eq(oldRanks.year, inputDate.year),
+            eq(oldRanks.month, inputDate.month),
+            eq(oldRanks.day, inputDate.day),
+          ),
+        )
+        .orderBy(oldRanks.position)
         .offset(cursor)
         .limit(limit)
         .innerJoin(usersToMatches, eq(users.id, usersToMatches.userId))
-        .groupBy(users.id, ranks.position);
+        .groupBy(users.id, oldRanks.position);
 
       const nextCursor = players.length + cursor;
-
       return { players, nextCursor };
     }),
 });

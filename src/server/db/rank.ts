@@ -1,11 +1,11 @@
-import { sql } from "drizzle-orm";
+import { isNotNull, sql } from "drizzle-orm";
 
+import { dateYearMonthDay } from "~/utils/date.js";
 import { db, type BBPgTransaction } from "~/server/db/index.js";
-import { ranks, users } from "~/server/db/schema.js";
+import { oldRanks, ranks, users } from "~/server/db/schema.js";
 
 // TODO: At the moment the ranks are decided by the score and the date of creation of the user.
 // A more fair approach would be to make it so the first user to reach that Rank would remain there if another player reaches the same amount of points.
-// TODO: leaderboard has to be calculated based on daily data
 const UPDATE_RANKS_QUERY = sql`
 TRUNCATE TABLE ${ranks};
 
@@ -23,4 +23,25 @@ WHERE
 export const updateRanks = async (tx?: BBPgTransaction) => {
   const dbTx = tx ?? db;
   await dbTx.execute(UPDATE_RANKS_QUERY);
+};
+
+const expireRanksQuery = (year: number, month: number, day: number) => sql`
+INSERT INTO ${oldRanks} (user_id, position, year, month, day, score, bots_busted)
+    SELECT ${ranks.userId}, ${ranks.position}, ${year}, ${month}, ${day}, ${users.score}, ${users.botsBusted}
+    FROM ${ranks} INNER JOIN ${users} ON ${users.id} = ${ranks.userId};
+`;
+
+const TRUNCATE_RANKS_QUERY = sql`TRUNCATE TABLE ${ranks};`;
+
+export const expireRanks = async (tx?: BBPgTransaction) => {
+  const dbTx = tx ?? db;
+
+  const { year, month, day } = dateYearMonthDay();
+
+  await dbTx.execute(expireRanksQuery(year, month, day));
+  await dbTx
+    .update(users)
+    .set({ score: 0, botsBusted: 0 })
+    .where(isNotNull(users.id));
+  await dbTx.execute(TRUNCATE_RANKS_QUERY);
 };

@@ -9,8 +9,11 @@ import { styles } from "./styles.js";
 export const TopRanked: FC = () => {
   const animationStyles = [styles.topRankedBanner1, styles.topRankedBanner2];
 
+  const date = new Date();
+
   const getRankedUsers = api.user.getRankedUsers.useQuery({
     limit: 20,
+    isoDate: date.toISOString(),
   });
 
   const rankList = getRankedUsers.data?.players;
