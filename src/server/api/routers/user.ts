@@ -10,6 +10,7 @@ import {
 } from "~/server/api/trpc.js";
 import { db } from "~/server/db/index.js";
 import {
+  matches,
   oldRanks,
   ranks,
   userAchievements,
@@ -151,19 +152,28 @@ export const userRouter = createTRPCRouter({
   getLoggedUserProfile: protectedProcedure.query(async ({ ctx }) => {
     const { id } = ctx.session.user;
 
+    const currentDate = dateYearMonthDay();
+
     const [userWithMatches] = await db
       .select({
         id: users.id,
         username: users.username,
         address: users.address,
         score: users.score,
-        matchesPlayed: count(usersToMatches.userId),
+        matchesPlayed: count(matches.id),
         rank: ranks.position,
       })
       .from(users)
       .where(eq(users.id, id))
       .innerJoin(ranks, eq(users.id, ranks.userId))
       .innerJoin(usersToMatches, eq(users.id, usersToMatches.userId))
+      .innerJoin(
+        matches,
+        and(
+          eq(matches.id, usersToMatches.matchId),
+          eq(matches.createdAt, currentDate.dashedFull),
+        ),
+      )
       .groupBy(users.id, ranks.position);
 
     if (userWithMatches) return userWithMatches;
@@ -215,8 +225,8 @@ export const userRouter = createTRPCRouter({
     .query(async ({ input }) => {
       const { cursor, limit, isoDate } = input;
 
-      const currentDate = dateYearMonthDay();
       const inputDate = dateYearMonthDay(isoDate);
+      const currentDate = dateYearMonthDay();
 
       const isCurrentDate =
         inputDate.year === currentDate.year &&
@@ -229,8 +239,7 @@ export const userRouter = createTRPCRouter({
             id: users.id,
             username: users.username,
             score: users.score,
-            // TODO: count daily matches
-            matchesPlayed: count(usersToMatches.userId),
+            matchesPlayed: count(matches.id),
             rank: ranks.position,
           })
           .from(users)
@@ -239,6 +248,13 @@ export const userRouter = createTRPCRouter({
           .offset(cursor)
           .limit(limit)
           .innerJoin(usersToMatches, eq(users.id, usersToMatches.userId))
+          .innerJoin(
+            matches,
+            and(
+              eq(matches.id, usersToMatches.matchId),
+              eq(matches.createdAt, currentDate.dashedFull),
+            ),
+          )
           .groupBy(users.id, ranks.position);
 
         const nextCursor = players.length + cursor;
@@ -250,7 +266,7 @@ export const userRouter = createTRPCRouter({
           id: users.id,
           username: users.username,
           score: oldRanks.score,
-          matchesPlayed: count(usersToMatches.userId),
+          matchesPlayed: count(matches.id),
           rank: oldRanks.position,
         })
         .from(users)
@@ -266,6 +282,13 @@ export const userRouter = createTRPCRouter({
         .offset(cursor)
         .limit(limit)
         .innerJoin(usersToMatches, eq(users.id, usersToMatches.userId))
+        .innerJoin(
+          matches,
+          and(
+            eq(matches.id, usersToMatches.matchId),
+            eq(matches.createdAt, currentDate.dashedFull),
+          ),
+        )
         .groupBy(users.id, oldRanks.position);
 
       const nextCursor = players.length + cursor;

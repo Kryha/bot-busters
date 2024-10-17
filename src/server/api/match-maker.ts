@@ -128,14 +128,14 @@ setInterval(() => {
 }, 10000);
 
 // TODO: make periodic
-setTimeout(() => {
-  console.log("EXPIRING");
+// setTimeout(() => {
+//   console.log("EXPIRING");
 
-  db.transaction((tx) => expireRanks(tx))
-    .then(() => {
-      console.log("Expire success.");
-    })
-    .catch((err) => {
-      console.error("Expire error:", err);
-    });
-}, 10000);
+//   db.transaction((tx) => expireRanks(tx))
+//     .then(() => {
+//       console.log("Expire success.");
+//     })
+//     .catch((err) => {
+//       console.error("Expire error:", err);
+//     });
+// }, 10000);
