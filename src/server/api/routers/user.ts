@@ -2,7 +2,6 @@ import { and, count, eq } from "drizzle-orm";
 import { z } from "zod";
 
 import { validUsernameSchema } from "~/constants/index.js";
-import { dateYearMonthDay } from "~/utils/date.js";
 import {
   createTRPCRouter,
   protectedProcedure,
@@ -22,6 +21,7 @@ import { leaderboard } from "~/server/service/index.js";
 import { profanityFilter } from "~/service/index.js";
 import { isValidSession } from "~/utils/session.js";
 import { verifySignature } from "~/utils/wallet.js";
+import { getCurrentSeason } from "~/server/db/rank.js";
 
 export const userRouter = createTRPCRouter({
   mergeScore: protectedProcedure
@@ -152,7 +152,7 @@ export const userRouter = createTRPCRouter({
   getLoggedUserProfile: protectedProcedure.query(async ({ ctx }) => {
     const { id } = ctx.session.user;
 
-    const currentDate = dateYearMonthDay();
+    const currentSeason = await getCurrentSeason();
 
     const [userWithMatches] = await db
       .select({
@@ -171,7 +171,7 @@ export const userRouter = createTRPCRouter({
         matches,
         and(
           eq(matches.id, usersToMatches.matchId),
-          eq(matches.createdAt, currentDate.dashedFull),
+          eq(matches.season, currentSeason),
         ),
       )
       .groupBy(users.id, ranks.position);
@@ -218,22 +218,16 @@ export const userRouter = createTRPCRouter({
       z.object({
         limit: z.number().min(1).max(100).default(50),
         cursor: z.number().min(0).default(0),
-        // TODO: validate date string
-        isoDate: z.string(),
+        season: z.number().optional(),
       }),
     )
     .query(async ({ input }) => {
-      const { cursor, limit, isoDate } = input;
+      const { cursor, limit, season } = input;
 
-      const inputDate = dateYearMonthDay(isoDate);
-      const currentDate = dateYearMonthDay();
+      const currentSeason = await getCurrentSeason();
+      const seasonToGet = season ?? currentSeason;
 
-      const isCurrentDate =
-        inputDate.year === currentDate.year &&
-        inputDate.month === currentDate.month &&
-        inputDate.day === currentDate.day;
-
-      if (isCurrentDate) {
+      if (seasonToGet === currentSeason) {
         const players = await db
           .select({
             id: users.id,
@@ -252,7 +246,7 @@ export const userRouter = createTRPCRouter({
             matches,
             and(
               eq(matches.id, usersToMatches.matchId),
-              eq(matches.createdAt, currentDate.dashedFull),
+              eq(matches.season, seasonToGet),
             ),
           )
           .groupBy(users.id, ranks.position);
@@ -271,13 +265,7 @@ export const userRouter = createTRPCRouter({
         })
         .from(users)
         .innerJoin(oldRanks, eq(users.id, oldRanks.userId))
-        .having(
-          and(
-            eq(oldRanks.year, inputDate.year),
-            eq(oldRanks.month, inputDate.month),
-            eq(oldRanks.day, inputDate.day),
-          ),
-        )
+        .having(eq(oldRanks.season, seasonToGet))
         .orderBy(oldRanks.position)
         .offset(cursor)
         .limit(limit)
@@ -286,7 +274,7 @@ export const userRouter = createTRPCRouter({
           matches,
           and(
             eq(matches.id, usersToMatches.matchId),
-            eq(matches.createdAt, currentDate.dashedFull),
+            eq(matches.season, seasonToGet),
           ),
         )
         .groupBy(users.id, oldRanks.position);

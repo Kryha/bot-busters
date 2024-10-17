@@ -53,21 +53,22 @@ export const ranks = bbPgTable("rank", {
     .references(() => users.id)
     .primaryKey(),
   position: integer("position").notNull().unique(),
+  createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`),
 });
 
 export const oldRanks = bbPgTable(
   "old_rank",
   {
+    season: integer("season").notNull(),
     userId: uuid("user_id").references(() => users.id),
-    year: integer("year").notNull().default(2024),
-    month: integer("month").notNull().default(1),
-    day: integer("day").notNull().default(1),
     position: integer("position").notNull(),
     score: integer("score").default(0).notNull(),
     botsBusted: integer("bots_busted").default(0).notNull(),
+    createdAt: timestamp("created_at"),
+    expiredAt: timestamp("expired_at").default(sql`CURRENT_TIMESTAMP`),
   },
   (t) => ({
-    pk: primaryKey({ columns: [t.userId, t.year, t.month, t.day] }),
+    pk: primaryKey({ columns: [t.userId, t.season] }),
   }),
 );
 
@@ -85,6 +86,7 @@ export const matches = bbPgTable("match", {
     .default(sql`CURRENT_DATE`),
   room: json("room").notNull().$type<MatchRoom>(),
   messages: json("messages").notNull().$type<StoredChatMessage[]>().default([]),
+  season: integer("season").notNull(),
 });
 
 export const usersToMatches = bbPgTable(

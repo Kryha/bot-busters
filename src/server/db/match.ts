@@ -5,6 +5,7 @@ import {
   type UserToMatch,
 } from "~/server/db/schema.js";
 import { type MatchRoom, type StoredChatMessage } from "~/types/index.js";
+import { getCurrentSeason } from "./rank.js";
 
 export const insertMatches = async (
   matches: {
@@ -16,7 +17,15 @@ export const insertMatches = async (
   tx?: BBPgTransaction,
 ) => {
   const dbTx = tx ?? db;
-  await dbTx.insert(matchesTable).values(matches);
+
+  const currentSeason = await getCurrentSeason(tx);
+
+  const matchesWithSeason = matches.map((match) => ({
+    ...match,
+    season: currentSeason,
+  }));
+
+  await dbTx.insert(matchesTable).values(matchesWithSeason);
 
   const promises = matches.map(async (match) => {
     const userMatch: UserToMatch[] = match.room.players

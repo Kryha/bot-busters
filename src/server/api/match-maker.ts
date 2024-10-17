@@ -75,7 +75,6 @@ const storeScoresAndMatches = async () => {
   >();
 
   await db.transaction(async (tx) => {
-    //TODO: Store stats of the match
     const promises = Array.from(matches.values()).map(async (room) => {
       if (room.stage !== "results" || !room.arePointsCalculated) return;
 
@@ -128,14 +127,17 @@ setInterval(() => {
   }
 }, 10000);
 
-schedule.scheduleJob({ hour: env.RANKS_EXPIRATION_HOUR }, () => {
-  console.log("Expiring ranks...");
+schedule.scheduleJob(
+  { hour: env.RANKS_EXPIRATION_HOUR, minute: 0, second: 0 },
+  () => {
+    console.log("Expiring ranks...");
 
-  db.transaction((tx) => expireRanks(tx))
-    .then(() => {
-      console.log("Ranks expired successfully.");
-    })
-    .catch((err) => {
-      console.error("Expire error:", err);
-    });
-});
+    db.transaction((tx) => expireRanks(tx))
+      .then(() => {
+        console.log("Ranks expired successfully.");
+      })
+      .catch((err) => {
+        console.error("Expire error:", err);
+      });
+  },
+);

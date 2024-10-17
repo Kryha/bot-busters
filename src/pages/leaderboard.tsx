@@ -15,12 +15,9 @@ const USERS_PER_PAGE = 20;
 const LeaderBoard = () => {
   const { showBoundary } = useErrorBoundary();
 
-  const date = new Date();
-
   const getRankedUsers = api.user.getRankedUsers.useInfiniteQuery(
     {
       limit: USERS_PER_PAGE,
-      isoDate: date.toISOString(),
     },
     {
       getNextPageParam: (lastPage) => lastPage.nextCursor,

@@ -1,5 +1,5 @@
 {
-  "id": "655da35a-6ec1-4dfd-bea4-5a23ddcdd160",
+  "id": "2d92c8d2-ff4d-40cf-a813-7e9bd264cb4b",
   "prevId": "2b419472-28ba-4a53-8597-80facb31a4d8",
   "version": "7",
   "dialect": "postgresql",
@@ -33,6 +33,12 @@
           "primaryKey": false,
           "notNull": true,
           "default": "'[]'::json"
+        },
+        "season": {
+          "name": "season",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
         }
       },
       "indexes": {},
@@ -44,32 +50,17 @@
       "name": "bot_busters_old_rank",
       "schema": "",
       "columns": {
+        "season": {
+          "name": "season",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
         "user_id": {
           "name": "user_id",
           "type": "uuid",
           "primaryKey": false,
           "notNull": false
-        },
-        "year": {
-          "name": "year",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "default": 2024
-        },
-        "month": {
-          "name": "month",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "default": 1
-        },
-        "day": {
-          "name": "day",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "default": 1
         },
         "position": {
           "name": "position",
@@ -90,6 +81,19 @@
           "primaryKey": false,
           "notNull": true,
           "default": 0
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "expired_at": {
+          "name": "expired_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "CURRENT_TIMESTAMP"
         }
       },
       "indexes": {},
@@ -109,13 +113,11 @@
         }
       },
       "compositePrimaryKeys": {
-        "bot_busters_old_rank_user_id_year_month_day_pk": {
-          "name": "bot_busters_old_rank_user_id_year_month_day_pk",
+        "bot_busters_old_rank_user_id_season_pk": {
+          "name": "bot_busters_old_rank_user_id_season_pk",
           "columns": [
             "user_id",
-            "year",
-            "month",
-            "day"
+            "season"
           ]
         }
       },
@@ -136,6 +138,13 @@
           "type": "integer",
           "primaryKey": false,
           "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "CURRENT_TIMESTAMP"
         }
       },
       "indexes": {},
