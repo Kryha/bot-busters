@@ -54,6 +54,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/jest", "npm:29.5.6"],\
             ["@types/lodash", "npm:4.14.202"],\
             ["@types/node", "npm:18.18.0"],\
+            ["@types/node-schedule", "npm:2.1.7"],\
             ["@types/react", "npm:18.2.23"],\
             ["@types/react-dom", "npm:18.2.8"],\
             ["@types/stats", "npm:0.16.30"],\
@@ -82,6 +83,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["next-auth", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:4.23.1"],\
             ["next-plugin-svgr", "npm:1.1.10"],\
             ["node-fetch", "npm:3.3.2"],\
+            ["node-schedule", "npm:2.1.1"],\
             ["pg", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:8.11.3"],\
             ["postgres", "npm:3.3.5"],\
             ["prettier", "npm:3.1.1"],\
@@ -7435,6 +7437,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["@types/node-schedule", [\
+        ["npm:2.1.7", {\
+          "packageLocation": "./.yarn/cache/@types-node-schedule-npm-2.1.7-4eb8bbbaaf-663dc7aed8.zip/node_modules/@types/node-schedule/",\
+          "packageDependencies": [\
+            ["@types/node-schedule", "npm:2.1.7"],\
+            ["@types/node", "npm:20.8.4"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["@types/parse-json", [\
         ["npm:4.0.0", {\
           "packageLocation": "./.yarn/cache/@types-parse-json-npm-4.0.0-298522afa6-fd6bce2b67.zip/node_modules/@types/parse-json/",\
@@ -8678,6 +8690,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/jest", "npm:29.5.6"],\
             ["@types/lodash", "npm:4.14.202"],\
             ["@types/node", "npm:18.18.0"],\
+            ["@types/node-schedule", "npm:2.1.7"],\
             ["@types/react", "npm:18.2.23"],\
             ["@types/react-dom", "npm:18.2.8"],\
             ["@types/stats", "npm:0.16.30"],\
@@ -8706,6 +8719,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["next-auth", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:4.23.1"],\
             ["next-plugin-svgr", "npm:1.1.10"],\
             ["node-fetch", "npm:3.3.2"],\
+            ["node-schedule", "npm:2.1.1"],\
             ["pg", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:8.11.3"],\
             ["postgres", "npm:3.3.5"],\
             ["prettier", "npm:3.1.1"],\
@@ -9361,6 +9375,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jest-config", "virtual:3a6a7b993b4c5b60edc037a265ed4617431cf4c75aee76d6fbd0f2ca65ea68cee61c092e9bd306baebd90cc377234b4a525791e6755ee4d2193076de2c2bdfed#npm:29.7.0"],\
             ["jest-util", "npm:29.7.0"],\
             ["prompts", "npm:2.4.2"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["cron-parser", [\
+        ["npm:4.9.0", {\
+          "packageLocation": "./.yarn/cache/cron-parser-npm-4.9.0-2a573f98e9-3cf248fc5c.zip/node_modules/cron-parser/",\
+          "packageDependencies": [\
+            ["cron-parser", "npm:4.9.0"],\
+            ["luxon", "npm:3.5.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -13277,6 +13301,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["long-timeout", [\
+        ["npm:0.1.1", {\
+          "packageLocation": "./.yarn/cache/long-timeout-npm-0.1.1-229e1d81ad-48668e5362.zip/node_modules/long-timeout/",\
+          "packageDependencies": [\
+            ["long-timeout", "npm:0.1.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["loose-envify", [\
         ["npm:1.4.0", {\
           "packageLocation": "./.yarn/cache/loose-envify-npm-1.4.0-6307b72ccf-6517e24e0c.zip/node_modules/loose-envify/",\
@@ -13361,6 +13394,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/lru-cache-npm-7.18.3-e68be5b11c-e550d77238.zip/node_modules/lru-cache/",\
           "packageDependencies": [\
             ["lru-cache", "npm:7.18.3"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["luxon", [\
+        ["npm:3.5.0", {\
+          "packageLocation": "./.yarn/cache/luxon-npm-3.5.0-92bb977f7f-f290fe5788.zip/node_modules/luxon/",\
+          "packageDependencies": [\
+            ["luxon", "npm:3.5.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -13963,6 +14005,18 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/node-releases-npm-2.0.14-d39047cad8-59443a2f77.zip/node_modules/node-releases/",\
           "packageDependencies": [\
             ["node-releases", "npm:2.0.14"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["node-schedule", [\
+        ["npm:2.1.1", {\
+          "packageLocation": "./.yarn/cache/node-schedule-npm-2.1.1-749a9bde63-6a8822b16f.zip/node_modules/node-schedule/",\
+          "packageDependencies": [\
+            ["node-schedule", "npm:2.1.1"],\
+            ["cron-parser", "npm:4.9.0"],\
+            ["long-timeout", "npm:0.1.1"],\
+            ["sorted-array-functions", "npm:1.3.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -15697,6 +15751,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["agent-base", "npm:6.0.2"],\
             ["debug", "virtual:2f4f5d4be0c4271f81a756602d102e02c292a5b30d8b7f5dd19d5368d75df8bb2f1bf516e3f835c2b5501d1663eb437d4f00d6d057bcaee770b46e87267a0fa3#npm:4.3.4"],\
             ["socks", "npm:2.7.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["sorted-array-functions", [\
+        ["npm:1.3.0", {\
+          "packageLocation": "./.yarn/cache/sorted-array-functions-npm-1.3.0-19f7959640-673fd39ca3.zip/node_modules/sorted-array-functions/",\
+          "packageDependencies": [\
+            ["sorted-array-functions", "npm:1.3.0"]\
           ],\
           "linkType": "HARD"\
         }]\

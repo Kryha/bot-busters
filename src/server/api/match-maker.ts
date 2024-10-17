@@ -1,4 +1,5 @@
 import { EventEmitter } from "events";
+import schedule from "node-schedule";
 
 import { MATCH_TIME_MS } from "~/constants/main.js";
 import { env } from "~/env.mjs";
@@ -127,15 +128,14 @@ setInterval(() => {
   }
 }, 10000);
 
-// TODO: make periodic
-// setTimeout(() => {
-//   console.log("EXPIRING");
+schedule.scheduleJob({ hour: 17 }, () => {
+  console.log("Expiring ranks...");
 
-//   db.transaction((tx) => expireRanks(tx))
-//     .then(() => {
-//       console.log("Expire success.");
-//     })
-//     .catch((err) => {
-//       console.error("Expire error:", err);
-//     });
-// }, 10000);
+  db.transaction((tx) => expireRanks(tx))
+    .then(() => {
+      console.log("Ranks expired successfully.");
+    })
+    .catch((err) => {
+      console.error("Expire error:", err);
+    });
+});
