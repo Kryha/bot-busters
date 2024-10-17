@@ -128,7 +128,7 @@ setInterval(() => {
   }
 }, 10000);
 
-schedule.scheduleJob({ hour: 17 }, () => {
+schedule.scheduleJob({ hour: env.RANKS_EXPIRATION_HOUR }, () => {
   console.log("Expiring ranks...");
 
   db.transaction((tx) => expireRanks(tx))
