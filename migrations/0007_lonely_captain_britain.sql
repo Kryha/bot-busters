@@ -1,0 +1,1 @@
+ALTER TABLE "bot_busters_old_rank" ADD COLUMN "prize_claimed" boolean DEFAULT false NOT NULL;

@@ -1,5 +1,6 @@
 import { relations, sql } from "drizzle-orm";
 import {
+  boolean,
   date,
   integer,
   json,
@@ -66,6 +67,7 @@ export const oldRanks = bbPgTable(
     botsBusted: integer("bots_busted").default(0).notNull(),
     createdAt: timestamp("created_at"),
     expiredAt: timestamp("expired_at").default(sql`CURRENT_TIMESTAMP`),
+    prizeClaimed: boolean("prize_claimed").default(false).notNull(),
   },
   (t) => ({
     pk: primaryKey({ columns: [t.userId, t.season] }),
