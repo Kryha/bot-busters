@@ -1,23 +1,19 @@
 import { type FC } from "react";
 import { Table, TableBody, TableContainer } from "@mui/material";
 
-import { type LeaderboardData } from "~/types/index.js";
+import { type RankedUser, type RankedLoggedUser } from "~/types/index.js";
 import { text } from "~/assets/text/index.js";
-import { api } from "~/utils/api.js";
 
 import { Header, RowLeaderboard } from "./components/index.js";
 import { COLUMN_WIDTH } from "./constants.js";
 import { styles } from "./styles.js";
 
 interface Props {
-  leaderboard?: LeaderboardData[];
+  rankedUsers: RankedUser[];
+  loggedUser: RankedLoggedUser;
 }
 
-export const LeaderboardTable: FC<Props> = ({ leaderboard = [] }) => {
-  const user = api.user.getLoggedUserProfile.useQuery(undefined, {
-    retry: false,
-  });
-
+export const LeaderboardTable: FC<Props> = ({ rankedUsers, loggedUser }) => {
   return (
     <TableContainer sx={styles.wrapper}>
       <Table sx={styles.table} stickyHeader aria-label="simple table">
@@ -29,11 +25,11 @@ export const LeaderboardTable: FC<Props> = ({ leaderboard = [] }) => {
         </colgroup>
         <Header cells={text.leaderboard.leaderboardColumns} cellsToAlign={1} />
         <TableBody>
-          {user.data?.username && (
-            <RowLeaderboard userRow leaderboard={user.data} />
+          {loggedUser?.username && (
+            <RowLeaderboard userRow rankedUser={loggedUser} />
           )}
-          {leaderboard.map((entry, index) => (
-            <RowLeaderboard key={index} leaderboard={entry} />
+          {rankedUsers.map((entry, index) => (
+            <RowLeaderboard key={index} rankedUser={entry} />
           ))}
         </TableBody>
       </Table>

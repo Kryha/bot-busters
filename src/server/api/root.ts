@@ -5,6 +5,7 @@ import {
   matchRouter,
   lobbyRouter,
   supportRouter,
+  rankRouter,
 } from "./routers/index.js";
 import { createTRPCRouter } from "./trpc.js";
 
@@ -18,6 +19,7 @@ export const appRouter = createTRPCRouter({
   match: matchRouter,
   user: userRouter,
   support: supportRouter,
+  rank: rankRouter,
 });
 
 // export type definition of API

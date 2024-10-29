@@ -1,5 +1,5 @@
-import React, { useEffect, useMemo } from "react";
-import { Stack } from "@mui/material";
+import React, { useEffect, useMemo, useState } from "react";
+import { Stack, Typography } from "@mui/material";
 import { useErrorBoundary } from "react-error-boundary";
 import { LoadingPage } from "~/components/loading-page/index.js";
 import { PageHeader } from "~/containers/page-header/index.js";
@@ -14,21 +14,33 @@ const USERS_PER_PAGE = 20;
 
 const LeaderBoard = () => {
   const { showBoundary } = useErrorBoundary();
+  const [season, setSeason] = useState<"current" | "previous">("current");
+  const { data: currentSeason } = api.rank.getCurrentSeason.useQuery();
+
+  const seasonToRequest = (() => {
+    if (!currentSeason) return;
+    if (season === "current" || currentSeason <= 1) return currentSeason;
+    return currentSeason - 1;
+  })();
 
   const getRankedUsers = api.user.getRankedUsers.useInfiniteQuery(
     {
       limit: USERS_PER_PAGE,
+      season: seasonToRequest,
     },
     {
       getNextPageParam: (lastPage) => lastPage.nextCursor,
       initialCursor: 0,
+      enabled: !!seasonToRequest,
     },
   );
 
   const leaderboardData = useMemo(
-    () => getRankedUsers.data?.pages.flatMap((page) => page.players),
+    () => getRankedUsers.data?.pages.flatMap((page) => page.players) ?? [],
     [getRankedUsers.data?.pages],
   );
+
+  const loggedUser = getRankedUsers.data?.pages[0]?.loggedUser;
 
   useEffect(() => {
     if (!isClient()) return;
@@ -65,12 +77,45 @@ const LeaderBoard = () => {
     };
   }, [getRankedUsers, showBoundary]);
 
-  if (getRankedUsers.isLoading) return <LoadingPage />;
-
   return (
     <Stack sx={styles.container}>
       <PageHeader text={text.leaderboard.leaderboard} />
-      <LeaderboardTable leaderboard={leaderboardData} />
+
+      <Stack flexDirection="row" gap={1}>
+        <Typography
+          variant="h3"
+          sx={
+            season === "previous"
+              ? styles.dateSwitchSelected
+              : styles.dateSwitchUnselected
+          }
+          onClick={() => {
+            if (currentSeason && currentSeason > 1) setSeason("previous");
+          }}
+        >
+          {text.leaderboard.yesterday}
+        </Typography>
+        <Typography
+          variant="h3"
+          sx={
+            season === "current"
+              ? styles.dateSwitchSelected
+              : styles.dateSwitchUnselected
+          }
+          onClick={() => setSeason("current")}
+        >
+          {text.leaderboard.today}
+        </Typography>
+      </Stack>
+
+      {getRankedUsers.isLoading ? (
+        <LoadingPage />
+      ) : (
+        <LeaderboardTable
+          rankedUsers={leaderboardData}
+          loggedUser={loggedUser}
+        />
+      )}
     </Stack>
   );
 };

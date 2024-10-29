@@ -16,7 +16,7 @@ import {
   users,
   usersToMatches,
 } from "~/server/db/schema.js";
-import { deleteUser } from "~/server/db/user.js";
+import { deleteUser, getUserProfile } from "~/server/db/user.js";
 import { leaderboard } from "~/server/service/index.js";
 import { profanityFilter } from "~/service/index.js";
 import { isValidSession } from "~/utils/session.js";
@@ -150,67 +150,8 @@ export const userRouter = createTRPCRouter({
   }),
 
   getLoggedUserProfile: protectedProcedure.query(async ({ ctx }) => {
-    const { id } = ctx.session.user;
-
-    const currentSeason = await getCurrentSeason();
-
-    const [userWithMatches] = await db
-      .select({
-        id: users.id,
-        username: users.username,
-        address: users.address,
-        score: users.score,
-        matchesPlayed: count(matches.id),
-        rank: ranks.position,
-      })
-      .from(users)
-      .where(eq(users.id, id))
-      .innerJoin(ranks, eq(users.id, ranks.userId))
-      .innerJoin(usersToMatches, eq(users.id, usersToMatches.userId))
-      .innerJoin(
-        matches,
-        and(
-          eq(matches.id, usersToMatches.matchId),
-          eq(matches.season, currentSeason),
-        ),
-      )
-      .groupBy(users.id, ranks.position);
-
-    if (userWithMatches) return userWithMatches;
-
-    const [rankedUser] = await db
-      .select({
-        id: users.id,
-        username: users.username,
-        address: users.address,
-        score: users.score,
-        rank: ranks.position,
-      })
-      .from(users)
-      .where(eq(users.id, id))
-      .innerJoin(ranks, eq(users.id, ranks.userId));
-
-    if (rankedUser) return { ...rankedUser, matchesPlayed: 0 };
-
-    const [unrankedUser] = await db
-      .select({
-        id: users.id,
-        username: users.username,
-        address: users.address,
-        score: users.score,
-      })
-      .from(users)
-      .where(eq(users.id, id));
-
-    if (!unrankedUser) throw new Error("User not found");
-
-    const rankRes = await db
-      .select({ ranksCount: count(ranks.position) })
-      .from(ranks);
-
-    const rank = rankRes[0] ? rankRes[0].ranksCount + 1 : 0;
-
-    return { ...unrankedUser, matchesPlayed: 0, rank };
+    const profile = await getUserProfile(ctx.session.user.id);
+    return profile;
   }),
 
   getRankedUsers: publicProcedure
@@ -221,13 +162,17 @@ export const userRouter = createTRPCRouter({
         season: z.number().optional(),
       }),
     )
-    .query(async ({ input }) => {
+    .query(async ({ input, ctx }) => {
       const { cursor, limit, season } = input;
 
       const currentSeason = await getCurrentSeason();
       const seasonToGet = season ?? currentSeason;
 
       if (seasonToGet === currentSeason) {
+        const loggedUser = !ctx.session
+          ? undefined
+          : await getUserProfile(ctx.session.user.id);
+
         const players = await db
           .select({
             id: users.id,
@@ -252,8 +197,40 @@ export const userRouter = createTRPCRouter({
           .groupBy(users.id, ranks.position);
 
         const nextCursor = players.length + cursor;
-        return { players, nextCursor };
+        return { players, nextCursor, loggedUser };
       }
+
+      const [loggedUser] = !ctx.session
+        ? [undefined]
+        : await db
+            .select({
+              id: users.id,
+              username: users.username,
+              score: oldRanks.score,
+              matchesPlayed: count(matches.id),
+              rank: oldRanks.position,
+            })
+            .from(users)
+            .where(eq(users.id, ctx.session.user.id))
+            .innerJoin(oldRanks, eq(users.id, oldRanks.userId))
+            .having(eq(oldRanks.season, seasonToGet))
+            .orderBy(oldRanks.position)
+            .offset(cursor)
+            .limit(limit)
+            .innerJoin(usersToMatches, eq(users.id, usersToMatches.userId))
+            .innerJoin(
+              matches,
+              and(
+                eq(matches.id, usersToMatches.matchId),
+                eq(matches.season, seasonToGet),
+              ),
+            )
+            .groupBy(
+              users.id,
+              oldRanks.position,
+              oldRanks.season,
+              oldRanks.score,
+            );
 
       const players = await db
         .select({
@@ -277,9 +254,9 @@ export const userRouter = createTRPCRouter({
             eq(matches.season, seasonToGet),
           ),
         )
-        .groupBy(users.id, oldRanks.position);
+        .groupBy(users.id, oldRanks.position, oldRanks.season, oldRanks.score);
 
       const nextCursor = players.length + cursor;
-      return { players, nextCursor };
+      return { players, nextCursor, loggedUser };
     }),
 });
