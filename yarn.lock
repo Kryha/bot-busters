@@ -4915,6 +4915,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/luxon@npm:~3.4.0":
+  version: 3.4.2
+  resolution: "@types/luxon@npm:3.4.2"
+  checksum: 6f92d5bd02e89f310395753506bcd9cef3a56f5940f7a50db2a2b9822bce753553ac767d143cb5b4f9ed5ddd4a84e64f89ff538082ceb4d18739af7781b56925
+  languageName: node
+  linkType: hard
+
 "@types/node-schedule@npm:^2.1.7":
   version: 2.1.7
   resolution: "@types/node-schedule@npm:2.1.7"
@@ -5889,6 +5896,7 @@ __metadata:
     "@typescript-eslint/parser": ^6.3.0
     concurrently: ^8.2.1
     copyfiles: ^2.4.1
+    cron: ^3.1.8
     dotenv-cli: ^7.3.0
     drizzle-kit: 0.25.0
     drizzle-orm: 0.34.1
@@ -5908,7 +5916,6 @@ __metadata:
     next-auth: ^4.23.0
     next-plugin-svgr: ^1.1.10
     node-fetch: ^3.3.2
-    node-schedule: ^2.1.1
     pg: ^8.11.3
     postgres: ^3.3.5
     prettier: 3.1.1
@@ -6509,12 +6516,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cron-parser@npm:^4.2.0":
-  version: 4.9.0
-  resolution: "cron-parser@npm:4.9.0"
+"cron@npm:^3.1.8":
+  version: 3.1.8
+  resolution: "cron@npm:3.1.8"
   dependencies:
-    luxon: ^3.2.1
-  checksum: 3cf248fc5cae6c19ec7124962b1cd84b76f02b9bc4f58976b3bd07624db3ef10aaf1548efcc2d2dcdab0dad4f12029d640a55ecce05ea5e1596af9db585502cf
+    "@types/luxon": ~3.4.0
+    luxon: ~3.5.0
+  checksum: 470ada23ae25b64fe9d529d3421df1d9a18716693c710e617ba79263a7883d7d5292f9ef0e067fd47b82019b9fa313a461dacd381c8feadb136849b460ddee4c
   languageName: node
   linkType: hard
 
@@ -9887,13 +9895,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"long-timeout@npm:0.1.1":
-  version: 0.1.1
-  resolution: "long-timeout@npm:0.1.1"
-  checksum: 48668e5362cb74c4b77a6b833d59f149b9bb9e99c5a5097609807e2597cd0920613b2a42b89bd0870848298be3691064d95599a04ae010023d07dba39932afa7
-  languageName: node
-  linkType: hard
-
 "loose-envify@npm:^1.1.0, loose-envify@npm:^1.4.0":
   version: 1.4.0
   resolution: "loose-envify@npm:1.4.0"
@@ -9965,7 +9966,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"luxon@npm:^3.2.1":
+"luxon@npm:~3.5.0":
   version: 3.5.0
   resolution: "luxon@npm:3.5.0"
   checksum: f290fe5788c8e51e748744f05092160d4be12150dca70f9fadc0d233e53d60ce86acd82e7d909a114730a136a77e56f0d3ebac6141bbb82fd310969a4704825b
@@ -10506,17 +10507,6 @@ __metadata:
   version: 2.0.14
   resolution: "node-releases@npm:2.0.14"
   checksum: 59443a2f77acac854c42d321bf1b43dea0aef55cd544c6a686e9816a697300458d4e82239e2d794ea05f7bbbc8a94500332e2d3ac3f11f52e4b16cbe638b3c41
-  languageName: node
-  linkType: hard
-
-"node-schedule@npm:^2.1.1":
-  version: 2.1.1
-  resolution: "node-schedule@npm:2.1.1"
-  dependencies:
-    cron-parser: ^4.2.0
-    long-timeout: 0.1.1
-    sorted-array-functions: ^1.3.0
-  checksum: 6a8822b16fb024277c42efe710bdb35b6f1f6ab3a2f826283640511247d693f34ebd5ddf2863cd91609e7f323574e36c81cd2084dc204fa521f931380f0f963f
   languageName: node
   linkType: hard
 
@@ -11996,13 +11986,6 @@ __metadata:
     ip: ^2.0.0
     smart-buffer: ^4.2.0
   checksum: 259d9e3e8e1c9809a7f5c32238c3d4d2a36b39b83851d0f573bfde5f21c4b1288417ce1af06af1452569cd1eb0841169afd4998f0e04ba04656f6b7f0e46d748
-  languageName: node
-  linkType: hard
-
-"sorted-array-functions@npm:^1.3.0":
-  version: 1.3.0
-  resolution: "sorted-array-functions@npm:1.3.0"
-  checksum: 673fd39ca3b6c92644d4483eac1700bb7d7555713a536822a7522a35af559bef3e72f10d89356b75042dc394cd7c2e2ab6f40024385218ec3c85bb7335032857
   languageName: node
   linkType: hard
 

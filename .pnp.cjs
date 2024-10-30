@@ -64,6 +64,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@typescript-eslint/parser", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:6.7.3"],\
             ["concurrently", "npm:8.2.1"],\
             ["copyfiles", "npm:2.4.1"],\
+            ["cron", "npm:3.1.8"],\
             ["dotenv-cli", "npm:7.3.0"],\
             ["drizzle-kit", "npm:0.25.0"],\
             ["drizzle-orm", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:0.34.1"],\
@@ -83,7 +84,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["next-auth", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:4.23.1"],\
             ["next-plugin-svgr", "npm:1.1.10"],\
             ["node-fetch", "npm:3.3.2"],\
-            ["node-schedule", "npm:2.1.1"],\
             ["pg", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:8.11.3"],\
             ["postgres", "npm:3.3.5"],\
             ["prettier", "npm:3.1.1"],\
@@ -7406,6 +7406,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["@types/luxon", [\
+        ["npm:3.4.2", {\
+          "packageLocation": "./.yarn/cache/@types-luxon-npm-3.4.2-092583f006-6f92d5bd02.zip/node_modules/@types/luxon/",\
+          "packageDependencies": [\
+            ["@types/luxon", "npm:3.4.2"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["@types/node", [\
         ["npm:10.17.60", {\
           "packageLocation": "./.yarn/cache/@types-node-npm-10.17.60-63ac1f669f-2cdb3a77d0.zip/node_modules/@types/node/",\
@@ -8700,6 +8709,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@typescript-eslint/parser", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:6.7.3"],\
             ["concurrently", "npm:8.2.1"],\
             ["copyfiles", "npm:2.4.1"],\
+            ["cron", "npm:3.1.8"],\
             ["dotenv-cli", "npm:7.3.0"],\
             ["drizzle-kit", "npm:0.25.0"],\
             ["drizzle-orm", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:0.34.1"],\
@@ -8719,7 +8729,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["next-auth", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:4.23.1"],\
             ["next-plugin-svgr", "npm:1.1.10"],\
             ["node-fetch", "npm:3.3.2"],\
-            ["node-schedule", "npm:2.1.1"],\
             ["pg", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:8.11.3"],\
             ["postgres", "npm:3.3.5"],\
             ["prettier", "npm:3.1.1"],\
@@ -9379,11 +9388,12 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
-      ["cron-parser", [\
-        ["npm:4.9.0", {\
-          "packageLocation": "./.yarn/cache/cron-parser-npm-4.9.0-2a573f98e9-3cf248fc5c.zip/node_modules/cron-parser/",\
+      ["cron", [\
+        ["npm:3.1.8", {\
+          "packageLocation": "./.yarn/cache/cron-npm-3.1.8-17f4a73a2c-470ada23ae.zip/node_modules/cron/",\
           "packageDependencies": [\
-            ["cron-parser", "npm:4.9.0"],\
+            ["cron", "npm:3.1.8"],\
+            ["@types/luxon", "npm:3.4.2"],\
             ["luxon", "npm:3.5.0"]\
           ],\
           "linkType": "HARD"\
@@ -13301,15 +13311,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
-      ["long-timeout", [\
-        ["npm:0.1.1", {\
-          "packageLocation": "./.yarn/cache/long-timeout-npm-0.1.1-229e1d81ad-48668e5362.zip/node_modules/long-timeout/",\
-          "packageDependencies": [\
-            ["long-timeout", "npm:0.1.1"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
       ["loose-envify", [\
         ["npm:1.4.0", {\
           "packageLocation": "./.yarn/cache/loose-envify-npm-1.4.0-6307b72ccf-6517e24e0c.zip/node_modules/loose-envify/",\
@@ -14005,18 +14006,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/node-releases-npm-2.0.14-d39047cad8-59443a2f77.zip/node_modules/node-releases/",\
           "packageDependencies": [\
             ["node-releases", "npm:2.0.14"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["node-schedule", [\
-        ["npm:2.1.1", {\
-          "packageLocation": "./.yarn/cache/node-schedule-npm-2.1.1-749a9bde63-6a8822b16f.zip/node_modules/node-schedule/",\
-          "packageDependencies": [\
-            ["node-schedule", "npm:2.1.1"],\
-            ["cron-parser", "npm:4.9.0"],\
-            ["long-timeout", "npm:0.1.1"],\
-            ["sorted-array-functions", "npm:1.3.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -15751,15 +15740,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["agent-base", "npm:6.0.2"],\
             ["debug", "virtual:2f4f5d4be0c4271f81a756602d102e02c292a5b30d8b7f5dd19d5368d75df8bb2f1bf516e3f835c2b5501d1663eb437d4f00d6d057bcaee770b46e87267a0fa3#npm:4.3.4"],\
             ["socks", "npm:2.7.1"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["sorted-array-functions", [\
-        ["npm:1.3.0", {\
-          "packageLocation": "./.yarn/cache/sorted-array-functions-npm-1.3.0-19f7959640-673fd39ca3.zip/node_modules/sorted-array-functions/",\
-          "packageDependencies": [\
-            ["sorted-array-functions", "npm:1.3.0"]\
           ],\
           "linkType": "HARD"\
         }]\

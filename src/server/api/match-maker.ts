@@ -1,5 +1,5 @@
 import { EventEmitter } from "events";
-import schedule from "node-schedule";
+import { CronJob } from "cron";
 
 import { MATCH_TIME_MS } from "~/constants/main.js";
 import { env } from "~/env.mjs";
@@ -127,8 +127,8 @@ setInterval(() => {
   }
 }, 10000);
 
-schedule.scheduleJob(
-  { hour: env.RANKS_EXPIRATION_HOUR, minute: 0, second: 0 },
+new CronJob(
+  `0 0 ${env.RANKS_EXPIRATION_HOUR} * * *`,
   () => {
     console.log("Expiring ranks...");
 
@@ -140,4 +140,6 @@ schedule.scheduleJob(
         console.error("Expire error:", err);
       });
   },
+  null,
+  true,
 );
