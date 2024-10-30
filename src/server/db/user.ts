@@ -1,8 +1,9 @@
-import { and, eq, gte } from "drizzle-orm";
+import { and, count, eq, gte } from "drizzle-orm";
 
 import { db, dbSchema, type BBPgTransaction } from "~/server/db/index.js";
 import { getRelativeTimeStamp } from "~/utils/date.js";
-import { userAchievements, usersToMatches } from "./schema.js";
+import { ranks, userAchievements, usersToMatches } from "./schema.js";
+import { getCurrentSeason } from "./rank.js";
 
 const { users, matches } = dbSchema;
 
@@ -114,4 +115,66 @@ export const setUserScore = async (id: string, score: number) => {
     throw new Error("Failed to update user score");
   }
   return updatedUsers.at(0);
+};
+
+export const getUserProfile = async (id: string) => {
+  const currentSeason = await getCurrentSeason();
+
+  const [userWithMatches] = await db
+    .select({
+      id: users.id,
+      username: users.username,
+      address: users.address,
+      score: users.score,
+      matchesPlayed: count(matches.id),
+      rank: ranks.position,
+    })
+    .from(users)
+    .where(eq(users.id, id))
+    .innerJoin(ranks, eq(users.id, ranks.userId))
+    .innerJoin(usersToMatches, eq(users.id, usersToMatches.userId))
+    .innerJoin(
+      matches,
+      and(
+        eq(matches.id, usersToMatches.matchId),
+        eq(matches.season, currentSeason),
+      ),
+    )
+    .groupBy(users.id, ranks.position);
+
+  if (userWithMatches) return userWithMatches;
+
+  const [rankedUser] = await db
+    .select({
+      id: users.id,
+      username: users.username,
+      address: users.address,
+      score: users.score,
+      rank: ranks.position,
+    })
+    .from(users)
+    .where(eq(users.id, id))
+    .innerJoin(ranks, eq(users.id, ranks.userId));
+
+  if (rankedUser) return { ...rankedUser, matchesPlayed: 0 };
+
+  const [unrankedUser] = await db
+    .select({
+      id: users.id,
+      username: users.username,
+      address: users.address,
+      score: users.score,
+    })
+    .from(users)
+    .where(eq(users.id, id));
+
+  if (!unrankedUser) throw new Error("User not found");
+
+  const rankRes = await db
+    .select({ ranksCount: count(ranks.position) })
+    .from(ranks);
+
+  const rank = rankRes[0] ? rankRes[0].ranksCount + 1 : 0;
+
+  return { ...unrankedUser, matchesPlayed: 0, rank };
 };

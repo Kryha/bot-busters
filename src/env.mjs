@@ -35,6 +35,15 @@ export const env = createEnv({
     AWS_SECRET: z.string(),
     AWS_INFERENCE_URL: z.string().url(),
     LAMBDA_TOKEN: z.string(),
+    RANKS_EXPIRATION_HOUR: z
+      .string()
+      .optional()
+      .default("17")
+      .transform((val) => {
+        const numVal = parseInt(val);
+        if (isNaN(numVal)) return 17;
+        return numVal;
+      }),
   },
 
   /**
@@ -77,6 +86,7 @@ export const env = createEnv({
     AWS_SECRET: process.env.AWS_SECRET,
     AWS_INFERENCE_URL: process.env.AWS_INFERENCE_URL,
     LAMBDA_TOKEN: process.env.LAMBDA_TOKEN,
+    RANKS_EXPIRATION_HOUR: process.env.RANKS_EXPIRATION_HOUR,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.

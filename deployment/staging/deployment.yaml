@@ -67,3 +67,5 @@ spec:
                   key: lambda_token
             - name: AWS_INFERENCE_URL
               value: https://3dhomhunle.execute-api.us-east-1.amazonaws.com/default/converse
+            - name: RANKS_EXPIRATION_HOUR
+              value: "17"

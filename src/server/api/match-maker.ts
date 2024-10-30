@@ -1,4 +1,5 @@
 import { EventEmitter } from "events";
+import { CronJob } from "cron";
 
 import { MATCH_TIME_MS } from "~/constants/main.js";
 import { env } from "~/env.mjs";
@@ -11,6 +12,7 @@ import type {
   StoredChatMessage,
 } from "~/types/index.js";
 import { getRandomInt } from "~/utils/math.js";
+import { expireRanks } from "../db/rank.js";
 
 const MAX_BOTS_PER_MATCH = env.PLAYERS_PER_MATCH > 3 ? 3 : 2;
 const MIN_HUMANS_PER_MATCH = env.PLAYERS_PER_MATCH - MAX_BOTS_PER_MATCH;
@@ -73,7 +75,6 @@ const storeScoresAndMatches = async () => {
   >();
 
   await db.transaction(async (tx) => {
-    //TODO: Store stats of the match
     const promises = Array.from(matches.values()).map(async (room) => {
       if (room.stage !== "results" || !room.arePointsCalculated) return;
 
@@ -125,3 +126,20 @@ setInterval(() => {
     console.error("Clean up loop error:", error);
   }
 }, 10000);
+
+new CronJob(
+  `0 0 ${env.RANKS_EXPIRATION_HOUR} * * *`,
+  () => {
+    console.log("Expiring ranks...");
+
+    db.transaction((tx) => expireRanks(tx))
+      .then(() => {
+        console.log("Ranks expired successfully.");
+      })
+      .catch((err) => {
+        console.error("Expire error:", err);
+      });
+  },
+  null,
+  true,
+);

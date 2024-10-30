@@ -7,18 +7,18 @@ import {
   Typography,
 } from "@mui/material";
 
-import { type LeaderboardData } from "~/types/index.js";
+import { type RankedUser } from "~/types/index.js";
 import { BotArrowIcon } from "~/assets/icons/index.js";
 import { styles } from "./styles.js";
 
 interface Props {
-  leaderboard: LeaderboardData;
+  rankedUser: RankedUser;
   isBlurred?: boolean;
   userRow?: boolean;
 }
 
 export const RowLeaderboard: FC<Props> = ({
-  leaderboard,
+  rankedUser,
   isBlurred,
   userRow,
 }) => {
@@ -32,7 +32,7 @@ export const RowLeaderboard: FC<Props> = ({
   } as SxProps;
 
   return (
-    <TableRow key={leaderboard.rank.toString()} sx={styles.tableRow(isBlurred)}>
+    <TableRow key={rankedUser.rank.toString()} sx={styles.tableRow(isBlurred)}>
       <TableCell component="td" scope="row">
         <Stack sx={styles.rank}>
           {userRow && <BotArrowIcon style={{ marginRight: "20px" }} />}
@@ -41,25 +41,25 @@ export const RowLeaderboard: FC<Props> = ({
             sx={rankingCellStyle}
             color="customGrey.main"
           >
-            {leaderboard.rank}
+            {rankedUser.rank}
           </Typography>
         </Stack>
       </TableCell>
       <TableCell align="center">
         <Stack sx={styles.container}>
           <Typography variant="body1" sx={cellStyle} color="customGrey.main">
-            {leaderboard.username}
+            {rankedUser.username}
           </Typography>
         </Stack>
       </TableCell>
       <TableCell align="center">
         <Typography variant="body1" sx={cellStyle} color="customGrey.main">
-          {leaderboard.matchesPlayed}
+          {rankedUser.matchesPlayed}
         </Typography>
       </TableCell>
       <TableCell align="center">
         <Typography variant="body1" sx={cellStyle} color="customGrey.main">
-          {leaderboard.score}
+          {rankedUser.score}
         </Typography>
       </TableCell>
     </TableRow>

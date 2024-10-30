@@ -1,4 +1,6 @@
 {
+  "id": "d04379fc-077b-422f-b0aa-06e097375943",
+  "prevId": "2d92c8d2-ff4d-40cf-a813-7e9bd264cb4b",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -12,6 +14,13 @@
           "primaryKey": true,
           "notNull": true
         },
+        "created_at": {
+          "name": "created_at",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "CURRENT_DATE"
+        },
         "room": {
           "name": "room",
           "type": "json",
@@ -24,11 +33,101 @@
           "primaryKey": false,
           "notNull": true,
           "default": "'[]'::json"
+        },
+        "season": {
+          "name": "season",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
         }
       },
       "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.bot_busters_old_rank": {
+      "name": "bot_busters_old_rank",
+      "schema": "",
+      "columns": {
+        "season": {
+          "name": "season",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "position": {
+          "name": "position",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "score": {
+          "name": "score",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "bots_busted": {
+          "name": "bots_busted",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "expired_at": {
+          "name": "expired_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        "prize_claimed": {
+          "name": "prize_claimed",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "bot_busters_old_rank_user_id_bot_busters_user_id_fk": {
+          "name": "bot_busters_old_rank_user_id_bot_busters_user_id_fk",
+          "tableFrom": "bot_busters_old_rank",
+          "tableTo": "bot_busters_user",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "bot_busters_old_rank_user_id_season_pk": {
+          "name": "bot_busters_old_rank_user_id_season_pk",
+          "columns": [
+            "user_id",
+            "season"
+          ]
+        }
+      },
       "uniqueConstraints": {}
     },
     "public.bot_busters_rank": {
@@ -46,6 +145,13 @@
           "type": "integer",
           "primaryKey": false,
           "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "CURRENT_TIMESTAMP"
         }
       },
       "indexes": {},
@@ -53,25 +159,25 @@
         "bot_busters_rank_user_id_bot_busters_user_id_fk": {
           "name": "bot_busters_rank_user_id_bot_busters_user_id_fk",
           "tableFrom": "bot_busters_rank",
+          "tableTo": "bot_busters_user",
           "columnsFrom": [
             "user_id"
           ],
-          "tableTo": "bot_busters_user",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "no action"
+          "onDelete": "no action",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
         "bot_busters_rank_position_unique": {
           "name": "bot_busters_rank_position_unique",
+          "nullsNotDistinct": false,
           "columns": [
             "position"
-          ],
-          "nullsNotDistinct": false
+          ]
         }
       }
     },
@@ -103,15 +209,15 @@
         "bot_busters_user_achievement_user_id_bot_busters_user_id_fk": {
           "name": "bot_busters_user_achievement_user_id_bot_busters_user_id_fk",
           "tableFrom": "bot_busters_user_achievement",
+          "tableTo": "bot_busters_user",
           "columnsFrom": [
             "user_id"
           ],
-          "tableTo": "bot_busters_user",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "cascade"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
@@ -147,6 +253,13 @@
           "notNull": true,
           "default": 0
         },
+        "bots_busted": {
+          "name": "bots_busted",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
         "created_at": {
           "name": "created_at",
           "type": "timestamp",
@@ -161,10 +274,10 @@
       "uniqueConstraints": {
         "bot_busters_user_username_unique": {
           "name": "bot_busters_user_username_unique",
+          "nullsNotDistinct": false,
           "columns": [
             "username"
-          ],
-          "nullsNotDistinct": false
+          ]
         }
       }
     },
@@ -190,28 +303,28 @@
         "bot_busters_user_match_user_id_bot_busters_user_id_fk": {
           "name": "bot_busters_user_match_user_id_bot_busters_user_id_fk",
           "tableFrom": "bot_busters_user_match",
+          "tableTo": "bot_busters_user",
           "columnsFrom": [
             "user_id"
           ],
-          "tableTo": "bot_busters_user",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "cascade"
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         },
         "bot_busters_user_match_match_id_bot_busters_match_id_fk": {
           "name": "bot_busters_user_match_match_id_bot_busters_match_id_fk",
           "tableFrom": "bot_busters_user_match",
+          "tableTo": "bot_busters_match",
           "columnsFrom": [
             "match_id"
           ],
-          "tableTo": "bot_busters_match",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "no action"
+          "onDelete": "no action",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {
@@ -228,12 +341,10 @@
   },
   "enums": {},
   "schemas": {},
+  "sequences": {},
   "_meta": {
+    "columns": {},
     "schemas": {},
-    "tables": {},
-    "columns": {}
-  },
-  "id": "5e720bad-9795-475f-946f-a08c5e1a16a5",
-  "prevId": "dceceffd-9702-48df-98c0-9c341a362610",
-  "sequences": {}
+    "tables": {}
+  }
 }

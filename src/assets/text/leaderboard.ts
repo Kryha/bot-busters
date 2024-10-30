@@ -10,6 +10,8 @@ export const leaderboard = {
   leaderboardRank: "#5",
   allTimeLeaderboard: "All time leaderboard",
   leaderboard: "leaderboard",
+  today: "Today",
+  yesterday: "Yesterday",
   countdown: (countdown: string | number) =>
     `${countdown} until today's payout`,
   addScoreToLeaderboard: "Add your score to leaderboard",

@@ -1,5 +1,6 @@
 import { relations, sql } from "drizzle-orm";
 import {
+  boolean,
   date,
   integer,
   json,
@@ -23,16 +24,15 @@ export const users = bbPgTable("user", {
   address: varchar("address", { length: PUBLIC_KEY_LENGTH }),
   score: integer("score").default(0).notNull(),
   botsBusted: integer("bots_busted").default(0).notNull(),
-  // TODO: add zPass
-  // zPass: json("zPass"),
   createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`),
 });
 
-export const usersRelations = relations(users, ({ one }) => ({
+export const usersRelations = relations(users, ({ one, many }) => ({
   rank: one(ranks, {
     fields: [users.id],
     references: [ranks.userId],
   }),
+  oldRanks: many(oldRanks),
 }));
 
 export const userSchema = createSelectSchema(users);
@@ -54,10 +54,32 @@ export const ranks = bbPgTable("rank", {
     .references(() => users.id)
     .primaryKey(),
   position: integer("position").notNull().unique(),
+  createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`),
 });
 
-export const rankSchema = createInsertSchema(ranks);
-export type Rank = z.infer<typeof rankSchema>;
+export const oldRanks = bbPgTable(
+  "old_rank",
+  {
+    season: integer("season").notNull(),
+    userId: uuid("user_id").references(() => users.id),
+    position: integer("position").notNull(),
+    score: integer("score").default(0).notNull(),
+    botsBusted: integer("bots_busted").default(0).notNull(),
+    createdAt: timestamp("created_at"),
+    expiredAt: timestamp("expired_at").default(sql`CURRENT_TIMESTAMP`),
+    prizeClaimed: boolean("prize_claimed").default(false).notNull(),
+  },
+  (t) => ({
+    pk: primaryKey({ columns: [t.userId, t.season] }),
+  }),
+);
+
+export const oldRanksRelations = relations(oldRanks, ({ one }) => ({
+  user: one(users, {
+    fields: [oldRanks.userId],
+    references: [users.id],
+  }),
+}));
 
 export const matches = bbPgTable("match", {
   id: uuid("id").primaryKey(),
@@ -66,6 +88,7 @@ export const matches = bbPgTable("match", {
     .default(sql`CURRENT_DATE`),
   room: json("room").notNull().$type<MatchRoom>(),
   messages: json("messages").notNull().$type<StoredChatMessage[]>().default([]),
+  season: integer("season").notNull(),
 });
 
 export const usersToMatches = bbPgTable(
