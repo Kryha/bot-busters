@@ -7,18 +7,18 @@ import CredentialsProvider from "next-auth/providers/credentials";
 
 import { verifySignature } from "~/utils/wallet.js";
 import { env } from "~/env.mjs";
-
 import {
   insertAnonymousUser,
   insertUserWithAddress,
   selectUserByAddress,
-} from "~/server/db/user";
+} from "~/server/db/user.js";
 
 declare module "next-auth" {
   interface User {
     id: string;
     username?: string;
     address?: string;
+    coinbaseUuid?: string;
   }
 
   interface Session extends DefaultSession {
@@ -31,6 +31,7 @@ declare module "next-auth/jwt" {
     userId: string;
     address?: string;
     username?: string;
+    coinbaseUuid?: string;
   }
 }
 
@@ -67,6 +68,7 @@ const credentialsProvider = CredentialsProvider({
           id: user.id,
           username: user.username ?? undefined,
           address: user.address ?? undefined,
+          coinbaseUuid: user.coinbaseUuid ?? undefined,
         };
       }
 
@@ -76,6 +78,7 @@ const credentialsProvider = CredentialsProvider({
       return {
         id: newUser.id,
         address: newUser.address ?? undefined,
+        coinbaseUuid: newUser.coinbaseUuid ?? undefined,
       };
     } catch (e) {
       console.error(e);
@@ -98,6 +101,7 @@ export const authOptions: NextAuthOptions = {
         token.userId = user.id;
         token.address = user.address;
         token.username = user.username;
+        token.coinbaseUuid = user.coinbaseUuid;
       }
       return token;
     },
@@ -107,6 +111,7 @@ export const authOptions: NextAuthOptions = {
           id: token.userId,
           address: token.address,
           username: token.username,
+          coinbaseUuid: token.coinbaseUuid,
         },
         expires: session.expires,
       };

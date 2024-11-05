@@ -6,6 +6,7 @@ import {
   lobbyRouter,
   supportRouter,
   rankRouter,
+  coinbaseRouter,
 } from "./routers/index.js";
 import { createTRPCRouter } from "./trpc.js";
 
@@ -20,6 +21,7 @@ export const appRouter = createTRPCRouter({
   user: userRouter,
   support: supportRouter,
   rank: rankRouter,
+  coinbase: coinbaseRouter,
 });
 
 // export type definition of API

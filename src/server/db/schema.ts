@@ -22,7 +22,7 @@ export const users = bbPgTable("user", {
   id: uuid("id").defaultRandom().primaryKey(),
   username: varchar("username", { length: 32 }).unique(),
   address: varchar("address", { length: PUBLIC_KEY_LENGTH }),
-  // coinbaseUuid: uuid("coinbase_uuid").unique(),
+  coinbaseUuid: uuid("coinbase_uuid").unique(),
   score: integer("score").default(0).notNull(),
   botsBusted: integer("bots_busted").default(0).notNull(),
   createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`),
