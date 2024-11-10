@@ -7,6 +7,7 @@ import {
   DEFAULT_MUSIC_VOLUME,
   DEFAULT_SFX_VOLUME,
 } from "~/constants/index.js";
+import { bbLocalStorage } from "~/utils/local-storage.js";
 
 export const useChangeMasterVolume = () => {
   const { audioContext, masterGainNode, masterVolume, setMasterVolume } =
@@ -16,7 +17,7 @@ export const useChangeMasterVolume = () => {
     if (!isClient() || !audioContext || !masterGainNode) {
       return;
     }
-    const storedMasterVolume = localStorage.getItem("MASTER_VOLUME");
+    const storedMasterVolume = bbLocalStorage.getItem("MASTER_VOLUME");
     const value =
       storedMasterVolume !== null
         ? Number(storedMasterVolume)
@@ -28,7 +29,7 @@ export const useChangeMasterVolume = () => {
   }, [audioContext, masterGainNode, masterVolume, setMasterVolume]);
 
   const changeMasterVolume = (volume: number) => {
-    isClient() && localStorage.setItem("MASTER_VOLUME", String(volume));
+    isClient() && bbLocalStorage.setItem("MASTER_VOLUME", String(volume));
     setMasterVolume(volume);
   };
 
@@ -43,7 +44,7 @@ export const useChangeSFXVolume = () => {
     if (!isClient() || !masterGainNode || !sfxGainNode) {
       return;
     }
-    const storedSFXVolume = localStorage.getItem("SFX_VOLUME");
+    const storedSFXVolume = bbLocalStorage.getItem("SFX_VOLUME");
     const value =
       storedSFXVolume !== null ? Number(storedSFXVolume) : DEFAULT_SFX_VOLUME;
     setSFXVolume(value);
@@ -52,7 +53,7 @@ export const useChangeSFXVolume = () => {
   }, [masterGainNode, setSFXVolume, sfxGainNode, sfxVolume]);
 
   const changeSFXVolume = (volume: number) => {
-    isClient() && localStorage.setItem("SFX_VOLUME", String(volume));
+    isClient() && bbLocalStorage.setItem("SFX_VOLUME", String(volume));
     setSFXVolume(volume);
   };
 
@@ -67,7 +68,7 @@ export const useChangeMusicVolume = () => {
     if (!isClient() || !masterGainNode || !musicGainNode) {
       return;
     }
-    const storedMusicVolume = localStorage.getItem("MUSIC_VOLUME");
+    const storedMusicVolume = bbLocalStorage.getItem("MUSIC_VOLUME");
     const value =
       storedMusicVolume !== null
         ? Number(storedMusicVolume)
@@ -78,7 +79,7 @@ export const useChangeMusicVolume = () => {
   }, [masterGainNode, musicGainNode, musicVolume, setMusicVolume]);
 
   const changeMusicVolume = (volume: number) => {
-    isClient() && localStorage.setItem("MUSIC_VOLUME", String(volume));
+    isClient() && bbLocalStorage.setItem("MUSIC_VOLUME", String(volume));
     setMusicVolume(volume);
   };
 

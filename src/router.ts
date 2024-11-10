@@ -12,4 +12,5 @@ export const pages = {
   privacy: "/privacy",
   animationLab: "/animation-lab",
   termsAndConditions: "/terms-and-conditions",
+  coinbaseLanding: "/coinbase-landing",
 };

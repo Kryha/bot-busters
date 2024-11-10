@@ -5,14 +5,28 @@ import fetch from "node-fetch";
 
 import { oldRanks, users } from "~/server/db/schema.js";
 import { db } from "~/server/db/index.js";
-
-import { createTRPCRouter, protectedProcedure } from "../trpc.js";
 import { coinbase } from "~/server/service/coinbase.js";
+
+import {
+  createTRPCRouter,
+  protectedProcedure,
+  publicProcedure,
+} from "../trpc.js";
 
 const COINBASE_USER_ACTIVITIES_URL =
   "POST api.developer.coinbase.com/api/v3/coinbase.user_activity_report_service.UserActivitiesReportPublicService/ReportUserActivities" as const;
 
 export const coinbaseRouter = createTRPCRouter({
+  checkUuid: publicProcedure
+    .input(z.object({ coinbaseUuid: z.string().uuid() }))
+    .mutation(async ({ input }) => {
+      const usersWithUuid = await db
+        .select()
+        .from(users)
+        .where(eq(users.coinbaseUuid, input.coinbaseUuid));
+      return !!usersWithUuid.length;
+    }),
+
   storeUuid: protectedProcedure
     .input(z.object({ coinbaseUuid: z.string().uuid() }))
     .mutation(async ({ ctx, input }) => {

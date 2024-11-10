@@ -1,7 +1,8 @@
 import { Box, Stack } from "@mui/material";
+import { useEffect, useState } from "react";
+import { useErrorBoundary } from "react-error-boundary";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/router.js";
-import { useErrorBoundary } from "react-error-boundary";
 
 import { text } from "~/assets/text/index.js";
 import { BotBusterLogoAnimation } from "~/components/bot-buster-logo/index.js";
@@ -17,7 +18,6 @@ import { ContextRef } from "~/containers/sound-provider/index.js";
 import { api } from "~/utils/api.js";
 import { pages } from "~/router.js";
 import { styles } from "~/styles/pages/homepage.js";
-import { useEffect, useState } from "react";
 
 const Homepage = () => {
   const { push } = useRouter();
