@@ -16,6 +16,7 @@ import { support } from "./support.js";
 import { termsAndConditions } from "./terms-and-conditions.js";
 import { audio } from "./audio.js";
 import { landing } from "./landing.js";
+import { coinbaseReward } from "./coinbase-reward.js";
 
 export const text = {
   auth,
@@ -36,4 +37,5 @@ export const text = {
   support,
   audio,
   landing,
+  coinbaseReward,
 };

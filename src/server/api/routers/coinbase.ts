@@ -6,6 +6,8 @@ import fetch from "node-fetch";
 import { oldRanks, users } from "~/server/db/schema.js";
 import { db } from "~/server/db/index.js";
 import { coinbase } from "~/server/service/coinbase.js";
+import { WINNING_RANK } from "~/constants/main.js";
+import { selectUserById } from "~/server/db/user.js";
 
 import {
   createTRPCRouter,
@@ -49,7 +51,9 @@ export const coinbaseRouter = createTRPCRouter({
       const { user } = ctx.session;
       const { season } = input;
 
-      if (!user.coinbaseUuid) {
+      const loggedUser = await selectUserById(user.id);
+
+      if (!loggedUser?.coinbaseUuid) {
         throw new TRPCError({
           code: "FORBIDDEN",
           message: "Coinbase account not linked",
@@ -59,7 +63,9 @@ export const coinbaseRouter = createTRPCRouter({
       const [rank] = await db
         .select()
         .from(oldRanks)
-        .where(and(eq(oldRanks.userId, user.id), eq(oldRanks.season, season)));
+        .where(
+          and(eq(oldRanks.userId, loggedUser.id), eq(oldRanks.season, season)),
+        );
 
       if (!rank) {
         throw new TRPCError({ code: "NOT_FOUND", message: "Rank not found" });
@@ -75,10 +81,13 @@ export const coinbaseRouter = createTRPCRouter({
       // TODO: perform rank check with on-chain leaderboard
       // TODO: assign correct tier to activity, define final logic
       const activityName =
-        rank.position <= 100 ? "aleo_botbusters_1" : "aleo_botbusters_play";
+        rank.position <= WINNING_RANK
+          ? "aleo_botbusters_1"
+          : "aleo_botbusters_play";
 
       const token = coinbase.signJwt(COINBASE_USER_ACTIVITIES_URL);
 
+      // TODO: test request
       const cbRes = await fetch(COINBASE_USER_ACTIVITIES_URL, {
         method: "POST",
         body: JSON.stringify({
@@ -86,7 +95,7 @@ export const coinbaseRouter = createTRPCRouter({
             {
               // TODO: check if need to change id type based on tier
               user_identifier_type: 1,
-              user_identifier: user.coinbaseUuid,
+              user_identifier: loggedUser.coinbaseUuid,
               activity_name: activityName,
             },
           ],
@@ -104,6 +113,8 @@ export const coinbaseRouter = createTRPCRouter({
       await db
         .update(oldRanks)
         .set({ prizeClaimed: true })
-        .where(and(eq(oldRanks.userId, user.id), eq(oldRanks.season, season)));
+        .where(
+          and(eq(oldRanks.userId, loggedUser.id), eq(oldRanks.season, season)),
+        );
     }),
 });

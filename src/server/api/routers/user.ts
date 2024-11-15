@@ -173,6 +173,10 @@ export const userRouter = createTRPCRouter({
           ? undefined
           : await getUserProfile(ctx.session.user.id);
 
+        const resUser = loggedUser
+          ? { ...loggedUser, prizeClaimed: false }
+          : undefined;
+
         const players = await db
           .select({
             id: users.id,
@@ -197,7 +201,7 @@ export const userRouter = createTRPCRouter({
           .groupBy(users.id, ranks.position);
 
         const nextCursor = players.length + cursor;
-        return { players, nextCursor, loggedUser };
+        return { players, nextCursor, loggedUser: resUser };
       }
 
       const [loggedUser] = !ctx.session
@@ -209,6 +213,7 @@ export const userRouter = createTRPCRouter({
               score: oldRanks.score,
               matchesPlayed: count(matches.id),
               rank: oldRanks.position,
+              prizeClaimed: oldRanks.prizeClaimed,
             })
             .from(users)
             .where(eq(users.id, ctx.session.user.id))
@@ -230,6 +235,7 @@ export const userRouter = createTRPCRouter({
               oldRanks.position,
               oldRanks.season,
               oldRanks.score,
+              oldRanks.prizeClaimed,
             );
 
       const players = await db

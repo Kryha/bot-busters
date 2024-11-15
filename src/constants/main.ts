@@ -13,6 +13,9 @@ export const SPLASH_SCREEN_TIME_MS = 6500; // 6.5 seconds
 export const SPLASH_SCREEN_TEXT_DELAY_MS = 500; // 0.5 seconds
 export const MATCHMAKING_DELAY_MS = 1800; // 1.8 seconds
 
+// TODO: decide final value
+export const WINNING_RANK = 100;
+
 export const DEFAULT_MAX_PLAYERS_PER_ROOM = 5;
 
 export const MAX_CHARACTERS_CHAT_MESSAGE = 160;

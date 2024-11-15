@@ -18,10 +18,16 @@ import { ContextRef } from "~/containers/sound-provider/index.js";
 import { api } from "~/utils/api.js";
 import { pages } from "~/router.js";
 import { styles } from "~/styles/pages/homepage.js";
+import { usePastSeasonRankedUsers } from "~/hooks/rank.js";
+import { CoinbaseRewardModal } from "~/components/modals/coinbase-reward-modal.jsx";
 
 const Homepage = () => {
   const { push } = useRouter();
   const playSfx = usePlaySFX();
+
+  const { rankedUsers, pastSeason } = usePastSeasonRankedUsers();
+
+  const [modalOpen, setModalOpen] = useState(true);
 
   const { mainContainerRef } = useAndRequireContext(
     ContextRef,
@@ -71,13 +77,25 @@ const Homepage = () => {
     });
   };
 
-  const openHandler = (path: string) => {
+  const handleNavigation = (path: string) => {
     playSfx("BlipUp");
     void push(path);
   };
 
   return (
     <Box component="main" ref={mainContainerRef} sx={styles.wrapper}>
+      {rankedUsers.data?.loggedUser?.rank &&
+        pastSeason &&
+        loggedUser.data?.coinbaseUuid &&
+        !rankedUsers.data.loggedUser.prizeClaimed && (
+          <CoinbaseRewardModal
+            userRank={rankedUsers.data.loggedUser.rank}
+            pastSeason={pastSeason}
+            isOpen={modalOpen}
+            onClose={() => setModalOpen(false)}
+          />
+        )}
+
       <Navbar />
       <HomePageAnimation />
       <BotBusterLogoAnimation />
@@ -97,11 +115,11 @@ const Homepage = () => {
             />
           )}
           <PixelButton
-            onClick={() => openHandler(pages.leaderboard)}
+            onClick={() => handleNavigation(pages.leaderboard)}
             text={text.homepage.leaderboard}
           />
           <PixelButton
-            onClick={() => openHandler(pages.about)}
+            onClick={() => handleNavigation(pages.about)}
             text={text.homepage.about}
           />
         </Stack>
