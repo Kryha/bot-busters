@@ -54,6 +54,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/jest", "npm:29.5.6"],\
             ["@types/jsonwebtoken", "npm:9.0.7"],\
             ["@types/lodash", "npm:4.14.202"],\
+            ["@types/naughty-words", "npm:1.2.3"],\
             ["@types/node", "npm:18.18.0"],\
             ["@types/node-schedule", "npm:2.1.7"],\
             ["@types/react", "npm:18.2.23"],\
@@ -7427,6 +7428,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["@types/naughty-words", [\
+        ["npm:1.2.3", {\
+          "packageLocation": "./.yarn/cache/@types-naughty-words-npm-1.2.3-22f2ae7544-7f161495bd.zip/node_modules/@types/naughty-words/",\
+          "packageDependencies": [\
+            ["@types/naughty-words", "npm:1.2.3"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["@types/node", [\
         ["npm:10.17.60", {\
           "packageLocation": "./.yarn/cache/@types-node-npm-10.17.60-63ac1f669f-2cdb3a77d0.zip/node_modules/@types/node/",\
@@ -8711,6 +8721,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/jest", "npm:29.5.6"],\
             ["@types/jsonwebtoken", "npm:9.0.7"],\
             ["@types/lodash", "npm:4.14.202"],\
+            ["@types/naughty-words", "npm:1.2.3"],\
             ["@types/node", "npm:18.18.0"],\
             ["@types/node-schedule", "npm:2.1.7"],\
             ["@types/react", "npm:18.2.23"],\

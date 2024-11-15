@@ -4931,6 +4931,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/naughty-words@npm:^1.2.3":
+  version: 1.2.3
+  resolution: "@types/naughty-words@npm:1.2.3"
+  checksum: 7f161495bd77b432bf90b200fc5ba259fc15c1ab9beb7e7daa923edbbe67d68cd67c69837134bae21ac40043f41760ec8f9da37e8eb605ecefc40073798acde1
+  languageName: node
+  linkType: hard
+
 "@types/node-schedule@npm:^2.1.7":
   version: 2.1.7
   resolution: "@types/node-schedule@npm:2.1.7"
@@ -5895,6 +5902,7 @@ __metadata:
     "@types/jest": ^29.5.6
     "@types/jsonwebtoken": ^9.0.7
     "@types/lodash": ^4.14.202
+    "@types/naughty-words": ^1.2.3
     "@types/node": ^18.16.0
     "@types/node-schedule": ^2.1.7
     "@types/react": ^18.2.20
