@@ -47,6 +47,7 @@ export const general = {
   aleoWebsite: "https://aleo.org/",
   zpassWebsite: "https://zpass.aleo.org/",
   obscuraWebsite: "https://obscura.network/",
+  error: "An error occurred.",
   formattedCountdown: (minutes: number, seconds: number): string =>
     `${minutes.toString().padStart(2, "0")}:${seconds
       .toString()

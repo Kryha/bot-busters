@@ -27,8 +27,6 @@ const Homepage = () => {
 
   const { rankedUsers, pastSeason } = usePastSeasonRankedUsers();
 
-  const [modalOpen, setModalOpen] = useState(true);
-
   const { mainContainerRef } = useAndRequireContext(
     ContextRef,
     "Homepage",
@@ -91,8 +89,6 @@ const Homepage = () => {
           <CoinbaseRewardModal
             userRank={rankedUsers.data.loggedUser.rank}
             pastSeason={pastSeason}
-            isOpen={modalOpen}
-            onClose={() => setModalOpen(false)}
           />
         )}
 

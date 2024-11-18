@@ -1,5 +1,6 @@
 import { Button, Modal, Stack, Typography } from "@mui/material";
-import { type FC } from "react";
+import { TRPCError } from "@trpc/server";
+import { useState, type FC } from "react";
 
 import { type SxStyleRecord } from "~/types/sx-style-record.js";
 import { text } from "~/assets/text/index.js";
@@ -22,34 +23,39 @@ const styles = {
 interface Props {
   pastSeason: number;
   userRank: number;
-  isOpen: boolean;
-  onClose: () => void;
 }
 
-export const CoinbaseRewardModal: FC<Props> = ({
-  pastSeason,
-  userRank,
-  isOpen,
-  onClose,
-}) => {
+export const CoinbaseRewardModal: FC<Props> = ({ pastSeason, userRank }) => {
+  const [isOpen, setIsOpen] = useState(true);
+  const [errorMessage, setErrorMessage] = useState("");
+
   const claimReward = api.coinbase.claimReward.useMutation();
+
+  const handleClose = () => setIsOpen(false);
 
   const handleClaimReward = async () => {
     if (!pastSeason) return;
 
+    setErrorMessage("");
+
     try {
       await claimReward.mutateAsync({ season: pastSeason });
-      onClose();
+      handleClose();
     } catch (error) {
-      // TODO: handle error properly
       console.error(error);
+
+      if (error instanceof TRPCError) {
+        setErrorMessage(error.message);
+      } else {
+        setErrorMessage(text.general.error);
+      }
     }
   };
 
   return (
     <Modal
       open={isOpen}
-      onClose={() => onClose()}
+      onClose={() => handleClose()}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
       sx={styles.modal}
@@ -63,6 +69,7 @@ export const CoinbaseRewardModal: FC<Props> = ({
         >
           {text.coinbaseReward.claimNow}
         </Button>
+        <Typography>{errorMessage}</Typography>
       </Stack>
     </Modal>
   );
