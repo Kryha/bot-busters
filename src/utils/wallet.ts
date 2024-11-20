@@ -1,4 +1,7 @@
-import { Address, Signature } from "@aleohq/sdk";
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+import { Address, Signature } from "@provablehq/sdk";
 
 import { AUTH_SIGN_MESSAGE } from "~/constants/index.js";
 
@@ -13,5 +16,5 @@ export const verifySignature = (
 
   const isVerified = signature.verify(addressObject, messageBuffer);
 
-  return isVerified;
+  return Boolean(isVerified);
 };

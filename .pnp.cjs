@@ -29,7 +29,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./",\
           "packageDependencies": [\
             ["@2toad/profanity", "npm:2.2.0"],\
-            ["@aleohq/sdk", "npm:0.6.9"],\
             ["@aws-sdk/client-ses", "npm:3.496.0"],\
             ["@demox-labs/aleo-wallet-adapter-base", "npm:0.0.22"],\
             ["@demox-labs/aleo-wallet-adapter-leo", "npm:0.0.24"],\
@@ -41,6 +40,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@mui/base", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:5.0.0-beta.28"],\
             ["@mui/icons-material", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:5.14.11"],\
             ["@mui/material", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:5.14.11"],\
+            ["@provablehq/sdk", "npm:0.7.0"],\
+            ["@provablehq/wasm", "npm:0.7.0"],\
             ["@svgr/webpack", "npm:8.1.0"],\
             ["@t3-oss/env-nextjs", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:0.7.0"],\
             ["@tanstack/react-query", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:4.35.3"],\
@@ -66,6 +67,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@typescript-eslint/parser", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:6.7.3"],\
             ["concurrently", "npm:8.2.1"],\
             ["copyfiles", "npm:2.4.1"],\
+            ["core-js", "npm:3.39.0"],\
             ["cron", "npm:3.1.8"],\
             ["dotenv-cli", "npm:7.3.0"],\
             ["drizzle-kit", "npm:0.25.0"],\
@@ -130,28 +132,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@adobe-css-tools-npm-4.3.1-8afe87e987-ad43456379.zip/node_modules/@adobe/css-tools/",\
           "packageDependencies": [\
             ["@adobe/css-tools", "npm:4.3.1"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["@aleohq/sdk", [\
-        ["npm:0.6.9", {\
-          "packageLocation": "./.yarn/cache/@aleohq-sdk-npm-0.6.9-b0368597eb-df4246c5f0.zip/node_modules/@aleohq/sdk/",\
-          "packageDependencies": [\
-            ["@aleohq/sdk", "npm:0.6.9"],\
-            ["@aleohq/wasm", "npm:0.6.9"],\
-            ["comlink", "npm:4.4.1"],\
-            ["mime", "npm:3.0.0"],\
-            ["sync-request", "npm:6.1.0"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["@aleohq/wasm", [\
-        ["npm:0.6.9", {\
-          "packageLocation": "./.yarn/cache/@aleohq-wasm-npm-0.6.9-2ac3b0ee22-b9641913f9.zip/node_modules/@aleohq/wasm/",\
-          "packageDependencies": [\
-            ["@aleohq/wasm", "npm:0.6.9"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -5518,6 +5498,28 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["@provablehq/sdk", [\
+        ["npm:0.7.0", {\
+          "packageLocation": "./.yarn/cache/@provablehq-sdk-npm-0.7.0-976c980f3f-6780675034.zip/node_modules/@provablehq/sdk/",\
+          "packageDependencies": [\
+            ["@provablehq/sdk", "npm:0.7.0"],\
+            ["@provablehq/wasm", "npm:0.7.0"],\
+            ["comlink", "npm:4.4.1"],\
+            ["mime", "npm:3.0.0"],\
+            ["sync-request", "npm:6.1.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@provablehq/wasm", [\
+        ["npm:0.7.0", {\
+          "packageLocation": "./.yarn/cache/@provablehq-wasm-npm-0.7.0-d17d441d36-dfd21fdd4f.zip/node_modules/@provablehq/wasm/",\
+          "packageDependencies": [\
+            ["@provablehq/wasm", "npm:0.7.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["@radix-ui/primitive", [\
         ["npm:1.0.1", {\
           "packageLocation": "./.yarn/cache/@radix-ui-primitive-npm-1.0.1-cbcafe0446-2b93e161d3.zip/node_modules/@radix-ui/primitive/",\
@@ -8696,7 +8698,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["bot-busters", "workspace:."],\
             ["@2toad/profanity", "npm:2.2.0"],\
-            ["@aleohq/sdk", "npm:0.6.9"],\
             ["@aws-sdk/client-ses", "npm:3.496.0"],\
             ["@demox-labs/aleo-wallet-adapter-base", "npm:0.0.22"],\
             ["@demox-labs/aleo-wallet-adapter-leo", "npm:0.0.24"],\
@@ -8708,6 +8709,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@mui/base", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:5.0.0-beta.28"],\
             ["@mui/icons-material", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:5.14.11"],\
             ["@mui/material", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:5.14.11"],\
+            ["@provablehq/sdk", "npm:0.7.0"],\
+            ["@provablehq/wasm", "npm:0.7.0"],\
             ["@svgr/webpack", "npm:8.1.0"],\
             ["@t3-oss/env-nextjs", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:0.7.0"],\
             ["@tanstack/react-query", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:4.35.3"],\
@@ -8733,6 +8736,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@typescript-eslint/parser", "virtual:f300f9ca08f88846ee888f68092f2db7c28abf2d9018b4f153f056f34c6d9c27fb60107bd1ab3ed29603f9fb1a88fbeaf1b0ab012ec41ecc7fdfd2a20965d21c#npm:6.7.3"],\
             ["concurrently", "npm:8.2.1"],\
             ["copyfiles", "npm:2.4.1"],\
+            ["core-js", "npm:3.39.0"],\
             ["cron", "npm:3.1.8"],\
             ["dotenv-cli", "npm:7.3.0"],\
             ["drizzle-kit", "npm:0.25.0"],\
@@ -9345,6 +9349,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["through2", "npm:2.0.5"],\
             ["untildify", "npm:4.0.0"],\
             ["yargs", "npm:16.2.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["core-js", [\
+        ["npm:3.39.0", {\
+          "packageLocation": "./.yarn/unplugged/core-js-npm-3.39.0-4c420e59a7/node_modules/core-js/",\
+          "packageDependencies": [\
+            ["core-js", "npm:3.39.0"]\
           ],\
           "linkType": "HARD"\
         }]\

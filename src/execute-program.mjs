@@ -7,7 +7,7 @@ import {
   NetworkRecordProvider,
   PrivateKey,
   ProgramManager,
-} from "@aleohq/sdk";
+} from "@provablehq/sdk";
 
 const ALEO_NETWORK_URL = process.env.ALEO_NETWORK_URL;
 const ALEO_PRIVATE_KEY = process.env.ALEO_PRIVATE_KEY;
@@ -41,17 +41,14 @@ const scoresArg =
 
 const sliceNum = "6u8";
 
-const txId = await programManager.execute(
-  LEADERBOARD_PROGRAM_NAME ?? "",
-  transitionName,
-  5,
-  false,
-  [idsArg, scoresArg, sliceNum],
-  undefined,
-  undefined,
-  undefined,
-  undefined,
-  undefined,
-  PrivateKey.from_string(ALEO_PRIVATE_KEY),
-);
-console.log("🚀 ~ txId:", txId);
+const txId = await programManager.execute({
+  programName: LEADERBOARD_PROGRAM_NAME,
+  functionName: transitionName,
+  fee: 5,
+  privateFee: false,
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+  privateKey: PrivateKey.from_string(ALEO_PRIVATE_KEY),
+  inputs: [idsArg, scoresArg, sliceNum],
+});
+
+console.log("Transaction id:", txId);

@@ -26,25 +26,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aleohq/sdk@npm:^0.6.9":
-  version: 0.6.9
-  resolution: "@aleohq/sdk@npm:0.6.9"
-  dependencies:
-    "@aleohq/wasm": ^0.6.0
-    comlink: ^4.4.1
-    mime: ^3.0.0
-    sync-request: ^6.1.0
-  checksum: df4246c5f0906f039d2825380c7758589b89dfcabf56bf8da72e946ddd66c027e0cf372aecefc77792e8d9a981ec1185a5b489728741b1a45309dffa4079bd05
-  languageName: node
-  linkType: hard
-
-"@aleohq/wasm@npm:^0.6.0":
-  version: 0.6.9
-  resolution: "@aleohq/wasm@npm:0.6.9"
-  checksum: b9641913f9ab43ba3587da07911317d05dcacc575ae72ae1c1184f0b320fd6ed99c3f616bd68e11a3cc6f1eefb09fd07c4e28a0c4ddd1486e2afaa6e13739d94
-  languageName: node
-  linkType: hard
-
 "@ampproject/remapping@npm:^2.2.0":
   version: 2.2.1
   resolution: "@ampproject/remapping@npm:2.2.1"
@@ -3535,6 +3516,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@provablehq/sdk@npm:^0.7.0":
+  version: 0.7.0
+  resolution: "@provablehq/sdk@npm:0.7.0"
+  dependencies:
+    "@provablehq/wasm": ^0.7.0
+    comlink: ^4.4.1
+    mime: ^3.0.0
+    sync-request: ^6.1.0
+  checksum: 6780675034f56264243f56f0d26dc75db6e93ad45cfd594d33260e3c469c9a309b024a091e98501ff8d5412580eeca8ee76a6e6b42dc096c09877ab3d0f6292c
+  languageName: node
+  linkType: hard
+
+"@provablehq/wasm@npm:^0.7.0":
+  version: 0.7.0
+  resolution: "@provablehq/wasm@npm:0.7.0"
+  checksum: dfd21fdd4fb97d080fba6dc80b894b68639c514c599f06ec41416e783d6af0a52ff7a2898475998d5ab8b0aa87cc11c293b4fddc3aedd0b2d819b980cd70c44b
+  languageName: node
+  linkType: hard
+
 "@radix-ui/primitive@npm:1.0.1":
   version: 1.0.1
   resolution: "@radix-ui/primitive@npm:1.0.1"
@@ -5877,7 +5877,6 @@ __metadata:
   resolution: "bot-busters@workspace:."
   dependencies:
     "@2toad/profanity": ^2.2.0
-    "@aleohq/sdk": ^0.6.9
     "@aws-sdk/client-ses": ^3.496.0
     "@demox-labs/aleo-wallet-adapter-base": ^0.0.22
     "@demox-labs/aleo-wallet-adapter-leo": ^0.0.24
@@ -5889,6 +5888,8 @@ __metadata:
     "@mui/base": ^5.0.0-beta.27
     "@mui/icons-material": ^5.14.11
     "@mui/material": ^5.14.11
+    "@provablehq/sdk": ^0.7.0
+    "@provablehq/wasm": ^0.7.0
     "@svgr/webpack": ^8.1.0
     "@t3-oss/env-nextjs": ^0.7.0
     "@tanstack/react-query": ^4.32.6
@@ -5914,6 +5915,7 @@ __metadata:
     "@typescript-eslint/parser": ^6.3.0
     concurrently: ^8.2.1
     copyfiles: ^2.4.1
+    core-js: ^3.39.0
     cron: ^3.1.8
     dotenv-cli: ^7.3.0
     drizzle-kit: 0.25.0
@@ -6485,6 +6487,13 @@ __metadata:
   dependencies:
     browserslist: ^4.22.2
   checksum: 6281f7f57a72f254c06611ec088445e11cf84e0b4edfb5f43dece1a1ff8b0ed0e81ed0bc291024761cd90c39d0f007d8bc46548265139808081d311c7cbc9c81
+  languageName: node
+  linkType: hard
+
+"core-js@npm:^3.39.0":
+  version: 3.39.0
+  resolution: "core-js@npm:3.39.0"
+  checksum: 7a3670e9a2a89e0a049daa288d742d09f6e16d27a8945c5e2ef6fc45dc57e5c4bc5db589da05947486f54ae978d14cf27bd3fb1db0b9907000a611e8af37355b
   languageName: node
   linkType: hard
 
