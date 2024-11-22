@@ -44,6 +44,8 @@ export const env = createEnv({
         if (isNaN(numVal)) return 17;
         return numVal;
       }),
+    COINBASE_PRIVATE_KEY: z.string(),
+    COINBASE_ORG: z.string(),
   },
 
   /**
@@ -87,6 +89,8 @@ export const env = createEnv({
     AWS_INFERENCE_URL: process.env.AWS_INFERENCE_URL,
     LAMBDA_TOKEN: process.env.LAMBDA_TOKEN,
     RANKS_EXPIRATION_HOUR: process.env.RANKS_EXPIRATION_HOUR,
+    COINBASE_PRIVATE_KEY: process.env.COINBASE_PRIVATE_KEY,
+    COINBASE_ORG: process.env.COINBASE_ORG,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.

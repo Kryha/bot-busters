@@ -4,7 +4,7 @@ import {
   AleoNetworkClient,
   NetworkRecordProvider,
   ProgramManager,
-} from "@aleohq/sdk";
+} from "@provablehq/sdk";
 
 import { env } from "~/env.mjs";
 

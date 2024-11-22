@@ -1,3 +1,4 @@
+export * from "./coinbase.js";
 export * from "./lobby.js";
 export * from "./match.js";
 export * from "./user.js";

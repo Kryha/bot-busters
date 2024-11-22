@@ -14,7 +14,9 @@ import { navigation } from "./navigation.js";
 import { playerProfile } from "./player-profile.js";
 import { support } from "./support.js";
 import { termsAndConditions } from "./terms-and-conditions.js";
-import { audio } from "~/assets/text/audio.js";
+import { audio } from "./audio.js";
+import { landing } from "./landing.js";
+import { coinbaseReward } from "./coinbase-reward.js";
 
 export const text = {
   auth,
@@ -34,4 +36,6 @@ export const text = {
   achievements,
   support,
   audio,
+  landing,
+  coinbaseReward,
 };

@@ -5,7 +5,7 @@ import {
   NetworkRecordProvider,
   ProgramManager,
   AleoKeyProvider,
-} from "@aleohq/sdk";
+} from "@provablehq/sdk";
 
 const deploy = async () => {
   try {
@@ -44,20 +44,10 @@ const deploy = async () => {
 
     const txId = await programManager.deploy(program, fee, false);
 
-    if (txId instanceof Error) {
-      console.error("Deployment error:", txId);
-      return;
-    }
-
     console.log("TX id:", txId);
 
     // Verify the transaction was successful
     // const transaction = await programManager.networkClient.getTransaction(txId);
-
-    // if (transaction instanceof Error) {
-    //   console.error("Get TX error:", transaction);
-    //   return;
-    // }
 
     // console.log(transaction);
 

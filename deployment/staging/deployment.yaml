@@ -69,3 +69,13 @@ spec:
               value: https://3dhomhunle.execute-api.us-east-1.amazonaws.com/default/converse
             - name: RANKS_EXPIRATION_HOUR
               value: "17"
+            - name: COINBASE_PRIVATE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets
+                  key: coinbase_private_key
+            - name: COINBASE_ORG
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets
+                  key: coinbase_org

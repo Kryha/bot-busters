@@ -1,7 +1,8 @@
 import { Box, Stack } from "@mui/material";
+import { useEffect, useState } from "react";
+import { useErrorBoundary } from "react-error-boundary";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/router.js";
-import { useErrorBoundary } from "react-error-boundary";
 
 import { text } from "~/assets/text/index.js";
 import { BotBusterLogoAnimation } from "~/components/bot-buster-logo/index.js";
@@ -17,11 +18,14 @@ import { ContextRef } from "~/containers/sound-provider/index.js";
 import { api } from "~/utils/api.js";
 import { pages } from "~/router.js";
 import { styles } from "~/styles/pages/homepage.js";
-import { useEffect, useState } from "react";
+import { usePastSeasonRankedUsers } from "~/hooks/rank.js";
+import { CoinbaseRewardModal } from "~/components/modals/coinbase-reward-modal.jsx";
 
 const Homepage = () => {
   const { push } = useRouter();
   const playSfx = usePlaySFX();
+
+  const { rankedUsers, pastSeason } = usePastSeasonRankedUsers();
 
   const { mainContainerRef } = useAndRequireContext(
     ContextRef,
@@ -71,13 +75,23 @@ const Homepage = () => {
     });
   };
 
-  const openHandler = (path: string) => {
+  const handleNavigation = (path: string) => {
     playSfx("BlipUp");
     void push(path);
   };
 
   return (
     <Box component="main" ref={mainContainerRef} sx={styles.wrapper}>
+      {rankedUsers.data?.loggedUser?.rank &&
+        pastSeason &&
+        loggedUser.data?.coinbaseUuid &&
+        !rankedUsers.data.loggedUser.prizeClaimed && (
+          <CoinbaseRewardModal
+            userRank={rankedUsers.data.loggedUser.rank}
+            pastSeason={pastSeason}
+          />
+        )}
+
       <Navbar />
       <HomePageAnimation />
       <BotBusterLogoAnimation />
@@ -97,11 +111,11 @@ const Homepage = () => {
             />
           )}
           <PixelButton
-            onClick={() => openHandler(pages.leaderboard)}
+            onClick={() => handleNavigation(pages.leaderboard)}
             text={text.homepage.leaderboard}
           />
           <PixelButton
-            onClick={() => openHandler(pages.about)}
+            onClick={() => handleNavigation(pages.about)}
             text={text.homepage.about}
           />
         </Stack>
