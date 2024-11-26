@@ -12,11 +12,13 @@ const styles = {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    borderWidth: 0,
   },
   container: {
     alignItems: "center",
     backgroundColor: theme.palette.background.default,
     padding: 10,
+    borderWidth: 0,
   },
 } satisfies SxStyleRecord;
 
