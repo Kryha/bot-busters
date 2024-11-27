@@ -1,12 +1,10 @@
 import { z } from "zod";
 import { and, eq } from "drizzle-orm";
 import { TRPCError } from "@trpc/server";
-import fetch from "node-fetch";
 
 import { oldRanks, users } from "~/server/db/schema.js";
 import { db } from "~/server/db/index.js";
 import { coinbase } from "~/server/service/coinbase.js";
-import { WINNING_RANK } from "~/constants/main.js";
 import { selectUserById } from "~/server/db/user.js";
 
 import {
@@ -14,9 +12,6 @@ import {
   protectedProcedure,
   publicProcedure,
 } from "../trpc.js";
-
-const COINBASE_USER_ACTIVITIES_URL =
-  "POST api.developer.coinbase.com/api/v3/coinbase.user_activity_report_service.UserActivitiesReportPublicService/ReportUserActivities" as const;
 
 export const coinbaseRouter = createTRPCRouter({
   checkUuid: publicProcedure
@@ -78,37 +73,7 @@ export const coinbaseRouter = createTRPCRouter({
         });
       }
 
-      // TODO: perform rank check with on-chain leaderboard
-      // TODO: assign correct tier to activity, define final logic
-      const activityName =
-        rank.position <= WINNING_RANK
-          ? "aleo_botbusters_1"
-          : "aleo_botbusters_play";
-
-      const token = coinbase.signJwt(COINBASE_USER_ACTIVITIES_URL);
-
-      // TODO: test request
-      const cbRes = await fetch(COINBASE_USER_ACTIVITIES_URL, {
-        method: "POST",
-        body: JSON.stringify({
-          user_activities: [
-            {
-              // TODO: check if need to change id type based on tier
-              user_identifier_type: 1,
-              user_identifier: loggedUser.coinbaseUuid,
-              activity_name: activityName,
-            },
-          ],
-        }),
-        headers: { Authorization: `Bearer ${token}` },
-      });
-
-      if (!cbRes.ok) {
-        throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message: "Error from Coinbase API",
-        });
-      }
+      await coinbase.postClaimActivity(rank.position, loggedUser.coinbaseUuid);
 
       await db
         .update(oldRanks)

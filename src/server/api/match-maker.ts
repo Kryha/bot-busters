@@ -5,7 +5,12 @@ import { MATCH_TIME_MS } from "~/constants/main.js";
 import { env } from "~/env.mjs";
 import { db } from "~/server/db/index.js";
 import { insertMatches } from "~/server/db/match.js";
-import { Match, leaderboard, lobbyQueue } from "~/server/service/index.js";
+import {
+  Match,
+  leaderboard,
+  lobbyQueue,
+  coinbase,
+} from "~/server/service/index.js";
 import type {
   MatchEventType,
   MatchRoom,
@@ -129,16 +134,22 @@ setInterval(() => {
 
 new CronJob(
   `0 0 ${env.RANKS_EXPIRATION_HOUR} * * *`,
-  () => {
-    console.log("Expiring ranks...");
+  async () => {
+    console.log("Auto claiming rewards...");
+    try {
+      await db.transaction((tx) => coinbase.autoClaimRewards(tx));
+      console.log("Automatically claimed rewards.");
+    } catch (error) {
+      console.error("Auto claim error:", error);
+    }
 
-    db.transaction((tx) => expireRanks(tx))
-      .then(() => {
-        console.log("Ranks expired successfully.");
-      })
-      .catch((err) => {
-        console.error("Expire error:", err);
-      });
+    console.log("Expiring ranks...");
+    try {
+      await db.transaction((tx) => expireRanks(tx));
+      console.log("Ranks expired successfully.");
+    } catch (error) {
+      console.error("Expire error:", error);
+    }
   },
   null,
   true,
