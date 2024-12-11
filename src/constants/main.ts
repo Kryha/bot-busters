@@ -79,3 +79,6 @@ export const AUDIO_OFF = 0;
 export const DEFAULT_MASTER_VOLUME = 1;
 export const DEFAULT_MUSIC_VOLUME = 0.5;
 export const DEFAULT_SFX_VOLUME = 1;
+
+export const PUZZLE_EXT_URL =
+  "https://chrome.google.com/webstore/detail/fdchdcpieegfofnofhgdombfckhbcokj";

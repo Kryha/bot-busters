@@ -1,8 +1,13 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+
 /**
  * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially useful
  * for Docker builds.
  */
 await import("./src/env.mjs");
+
 /** @type {import("next").NextConfig} */
 const config = {
   reactStrictMode: true,
@@ -20,21 +25,25 @@ const config = {
   experimental: {
     instrumentationHook: true,
   },
+
   webpack: (webpackConfig) => {
-    webpackConfig.module.rules.push({
+    webpackConfig.module.rules.push(
+      {
         test: /\.svg$/i,
         issuer: /\.[jt]sx?$/,
-        use: [{
-          loader:'@svgr/webpack',
-          options: {
-            svgo: false
-          }
-        }],
+        use: [
+          {
+            loader: "@svgr/webpack",
+            options: {
+              svgo: false,
+            },
+          },
+        ],
       },
       {
         test: /\.lottie$/,
         type: "asset/resource",
-      }
+      },
     );
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
@@ -43,7 +52,7 @@ const config = {
       ".jsx": [".tsx", ".jsx"],
       ".mjs": [".mts", ".mjs"],
       ".cjs": [".cts", ".cjs"],
-      '.lottie':[".lottie"]
+      ".lottie": [".lottie"],
     };
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return webpackConfig;
